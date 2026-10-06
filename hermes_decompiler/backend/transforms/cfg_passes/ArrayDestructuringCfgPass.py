@@ -162,13 +162,39 @@ class ArrayDestructuringCfgPass:
         flags = {flag}
         current = taken
 
+        # Binding patterns (`for (const [k, v] of m)`) fill temporaries and
+        # copy each into its target at the next element boundary:
+        # `Mov target <- tmp` leads the following head / close-check block.
+        # All elements must agree on which of the two forms is used.
+        peeled_form: bool | None = None
+        previous_tmp = e1
+
         while True:
-            handlers = _handlers(current)
+            insts = list(current.instructions)
+            peeled = None
+
+            if insts and insts[0].handler == "Mov":
+                ops = _operands(insts[0])
+
+                if len(ops) == 2 and ops[1] == previous_tmp and ops[0] != previous_tmp:
+                    peeled = insts[0]
+                    insts = insts[1:]
+
+            if peeled_form is None:
+                peeled_form = peeled is not None
+            elif peeled_form != (peeled is not None):
+                return None
+
+            if peeled is not None:
+                targets[-1] = _operands(peeled)[0]
+                element_results[-1] = peeled
+
+            handlers = [i.handler for i in insts]
 
             if handlers == ["LoadConstUndefined", "JmpTrue"]:
                 # Element k >= 2.
-                ek = _operands(current.instructions[0])[0]
-                jump_ops = _operands(current.instructions[1])
+                ek = _operands(insts[0])[0]
+                jump_ops = _operands(insts[1])
 
                 if len(jump_ops) != 2 or jump_ops[1] != flag:
                     return None
@@ -215,6 +241,7 @@ class ArrayDestructuringCfgPass:
 
                 targets.append(ek)
                 element_results.append(assign.instructions[0])
+                previous_tmp = ek
                 drop.extend([current, next_block, assign])
                 flags.add(flag2)
                 following = _only_successor(assign)
@@ -226,19 +253,20 @@ class ArrayDestructuringCfgPass:
                 current = following
                 chain_exit = close_check
 
-                if current is not chain_exit and handlers_of(current) != ["LoadConstUndefined", "JmpTrue"]:
+                if current is not chain_exit and handlers_of(current)[-2:] != ["LoadConstUndefined", "JmpTrue"]:
                     return None
 
                 continue
 
             if handlers == ["JmpTrue"]:
                 close_check = current
+                close_insts = insts
                 break
 
             return None
 
         # Close check: JmpTrue f -> J ; fall -> IteratorClose it -> J.
-        jump_ops = _operands(close_check.instructions[0])
+        jump_ops = _operands(close_insts[0])
         branch = _taken_fall(close_check)
 
         if len(jump_ops) != 2 or jump_ops[1] != flag or branch is None:
@@ -263,11 +291,21 @@ class ArrayDestructuringCfgPass:
                 if predecessor is not head and predecessor.id not in dropped_ids:
                     return None
 
+        # A chain inside a try (a for-of body, say) is fine as long as the
+        # try covers all of it: the dropped blocks just leave the handler's
+        # list. A try that starts or ends inside the chain is not.
         for handler in self.cfg.exception_handlers:
-            if handler["handler_block"].id in dropped_ids or any(b.id in dropped_ids for b in handler["try_blocks"]):
+            covered = {b.id for b in handler["try_blocks"]}
+
+            if handler["handler_block"].id in dropped_ids:
                 return None
 
-            if any(b is head for b in handler["try_blocks"]):
+            inside = dropped_ids & covered
+
+            if inside and (inside != dropped_ids or head.id not in covered):
+                return None
+
+            if not inside and head.id in covered:
                 return None
 
         if len(set(targets)) != len(targets):
@@ -327,6 +365,9 @@ class ArrayDestructuringCfgPass:
 
         dropped_ids = {block.id for block in drop}
         self.cfg.blocks = [block for block in self.cfg.blocks if block.id not in dropped_ids]
+
+        for handler in self.cfg.exception_handlers:
+            handler["try_blocks"] = [b for b in handler["try_blocks"] if b.id not in dropped_ids]
 
         for register, definitions in list(self.cfg.reg_definitions.items()):
             self.cfg.reg_definitions[register] = [d for d in definitions if id(d[2]) not in removed]

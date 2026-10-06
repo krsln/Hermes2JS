@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
+from hermes_decompiler.ir.terminators import TerminatorJump
 from hermes_decompiler.backend.regions import CatchRegion, IfRegion, LoopRegion, SequenceRegion, TryRegion
 from hermes_decompiler.ir.expressions import Expression, Identifier
 from hermes_decompiler.ir.expressions.Literals import Literal, TemplateLiteral
@@ -456,13 +457,26 @@ class _HandlerBuilder:
         for index in range(start_idx, len(body.children)):
             item = body.children[index]
 
+            # A latch right at the start means the try wraps the whole loop
+            # (the ordinary path); returning no extent sends it there.
+            if index == start_idx and (
+                    item in latches if isinstance(item, BasicBlock) else latches & item.covered_blocks
+            ):
+                break
+
             if isinstance(item, BasicBlock):
-                if item in latches:
+                # A latch that decides whether to loop again (do-while test,
+                # `i++` before a conditional jump) is never part of the try
+                # body. One that only jumps back is just the end of the body:
+                # for-of puts its last statements there.
+                if item in latches and not isinstance(item.terminator, TerminatorJump):
                     break
+
                 addresses = [item.address]
             else:
                 if latches & item.covered_blocks:
                     break
+
                 addresses = [block.address for block in item.covered_blocks]
 
             if any(address < handler_end for address in addresses):

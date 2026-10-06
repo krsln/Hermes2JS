@@ -82,76 +82,15 @@ function mapTest() {
     console.log(r2.size)
     // CODE → addr:180 | <Mov>: <Reg8: 3, Reg8: 2>
     r3 = r2
-    // CODE → addr:183 | <IteratorBegin>: <Reg8: 5, Reg8: 3>
-    r5 = GetIterator(r3)
-    // LOOP → START (while)
-    while (!(r8 === undefined)) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → addr:186 | <Mov>: <Reg8: 8, Reg8: 3>
-        r8 = r2
-        // CODE → addr:189 | <IteratorNext>: <Reg8: 9, Reg8: 5, Reg8: 8>
-        r9 = r5.next()
-        // CODE → addr:193 | <Mov>: <Reg8: 8, Reg8: 5>
-        r8 = r5
-        try {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr:200 | <Mov>: <Reg8: 11, Reg8: 9>
-            r11 = r9
-            // CODE → addr:203 | <IteratorBegin>: <Reg8: 8, Reg8: 11>
-            r8 = GetIterator(r11)
-            // CODE → addr:209 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 9>
-            r12 = r8.next()
-            // CODE → addr:213 | <Mov>: <Reg8: 9, Reg8: 8>
-            r9 = r8
-            // CODE → addr:216 | <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 0>
-            r9 = r9 === undefined
-            // CODE → addr:220 | <LoadConstUndefined>: <Reg8: 10>
-            r10 = undefined
-            if (!r9) {
-                // ──────────────── Block 3 ──────────────── 
-                // CODE → addr:225 | <Mov>: <Reg8: 10, Reg8: 12>
-                r10 = r12
-            }
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → addr:228 | <Mov>: <Reg8: 7, Reg8: 10>
-            r7 = r10
-            // CODE → addr:231 | <LoadConstUndefined>: <Reg8: 10>
-            r10 = undefined
-            if (!r9) {
-                // ──────────────── Block 5 ──────────────── 
-                // CODE → addr:236 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 11>
-                r12 = r8.next()
-                // CODE → addr:240 | <Mov>: <Reg8: 11, Reg8: 8>
-                r11 = r8
-                // CODE → addr:243 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 0>
-                r11 = r11 === undefined
-                // CODE → addr:247 | <LoadConstUndefined>: <Reg8: 10>
-                r10 = undefined
-                // CODE → addr:249 | <Mov>: <Reg8: 9, Reg8: 11>
-                r9 = r11
-                if (!r11) {
-                    // ──────────────── Block 6 ──────────────── 
-                    // CODE → addr:255 | <Mov>: <Reg8: 10, Reg8: 12>
-                    r10 = r12
-                    // CODE → addr:258 | <Mov>: <Reg8: 9, Reg8: 11>
-                    r9 = r11
-                }
-            }
-            // ──────────────── Block 7 ──────────────── 
-            // CODE → addr:261 | <Mov>: <Reg8: 6, Reg8: 10>
-            r6 = r10
-            if (!r9) {
-                // ──────────────── Block 8 ──────────────── 
-                // CODE → addr:267 | <IteratorClose>: <Reg8: 8, UInt8: 0>
-                r8.return()
-            }
-        } catch (caughtException) {
-            // ──────────────── Block 10 ──────────────── 
-            // CODE → addr:297 | <IteratorClose>: <Reg8: 5, UInt8: 1>
-            r5.return()
-            // CODE → addr:300 | <Throw>: <Reg8: 3>
-            throw r3;
-        }
+    // LOOP → START (for_of)
+    for (const r9 of r3) {
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → addr:200 | <Mov>: <Reg8: 11, Reg8: 9>
+        r11 = r9
+        // CODE → addr:203 | <IteratorBegin>: <Reg8: 8, Reg8: 11>
+        [r7, r6] = r11
+        // CODE → addr:228 | <Mov>: <Reg8: 7, Reg8: 10>
+        // CODE → addr:261 | <Mov>: <Reg8: 6, Reg8: 10>
         // ──────────────── Block 9 ──────────────── 
         // CODE → addr:270 | <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r11 = console;

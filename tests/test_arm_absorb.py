@@ -222,8 +222,19 @@ def test_for_of_does_not_leave_its_iterator_setup_behind():
 
 
 def test_iterator_setup_is_kept_when_the_register_is_still_read():
-    # Destructuring inside a for-of (`mapTest`) is not a plain for-of: nothing
-    # folds, so the iterator the loop body reads must stay defined.
+    # `nestedArrayDestructureTest` is not (yet) folded into patterns: its
+    # `r1.next()` / `r1.return()` still read the iterator, which must stay defined.
+    out = _render_98(9487, "nestedArrayDestructureTest")
+
+    assert "r1 = GetIterator(r6)" in out
+
+
+def test_for_of_with_destructured_element_is_recognized():
+    # hermes-98 `mapTest`: `for (const [k, v] of map)` keeps its close scaffold
+    # INSIDE the loop (the try covers the body only). It used to print as
+    # `while (!(r8 === undefined)) { ...; try { ... } catch { r5.return(); throw } }`.
     out = _render_98(9495, "mapTest")
 
-    assert "GetIterator" in out
+    assert "for (const r9 of r3) {" in out
+    assert "[r7, r6] = r11" in out
+    assert "while" not in out and "caughtException" not in out and ".return()" not in out and "GetIterator" not in out

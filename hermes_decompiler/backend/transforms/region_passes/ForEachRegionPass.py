@@ -103,6 +103,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
     def visit_LoopRegion(self, node: LoopRegion) -> None:
         self._try_recognize_for_in(node)
         self.visit(node.body)
+        self._try_recognize_for_of_with_inner_try(node)
 
     # -----------------------------------------------------------------
     # for-of
@@ -152,6 +153,61 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
         if scaffold is not None:
             self._unwrap_try(try_region, loop)
+
+        self._drop_iterator_setup(iterator_expr)
+
+    def _try_recognize_for_of_with_inner_try(self, loop: LoopRegion) -> None:
+        """for-of whose close scaffold sits INSIDE the loop body.
+
+        Plain `for (x of xs) { ... }` has the loop inside the try. When the
+        body starts by destructuring the element (`for (const [k, v] of m)`),
+        the try covers only the body - after the `next()` header - and
+        TryStructurer nests it in the loop: `while (...) { <next>; try {
+        body } catch (e) { it.return(); throw e } }`. Same construct, same
+        scaffold, one level down.
+        """
+        if loop.loop_kind is not LoopKind.WHILE:
+            return
+
+        try_region = next((c for c in loop.body.children if isinstance(c, TryRegion)), None)
+
+        if try_region is None or try_region.finally_ is not None:
+            return
+
+        next_call, next_instr, header_block = self._match_header_call(loop, "next")
+
+        if next_call is None:
+            return
+
+        raw_iterator_ref = next_call.callee.obj
+        iterator_expr = self._resolve_identifier(raw_iterator_ref, next_instr, header_block)
+        iterable = self._match_call(iterator_expr, "GetIterator")
+
+        if iterable is None:
+            return
+
+        scaffold = self._close_scaffold(try_region)
+
+        if scaffold is None or not self._close_body_matches(scaffold, raw_iterator_ref, iterator_expr):
+            return
+
+        loop.loop_kind = LoopKind.FOR_OF
+        loop.iterable = iterable
+        loop.loop_binding = next_instr.dest_reg
+
+        self._strip_next_call_scaffold(header_block, next_instr)
+
+        body = loop.body
+        index = body.children.index(try_region)
+        inner = list(try_region.try_body.children)
+
+        body.children[index:index + 1] = inner
+
+        for child in inner:
+            if hasattr(child, "parent"):
+                child.parent = body
+
+        body.invalidate_coverage()
 
         self._drop_iterator_setup(iterator_expr)
 

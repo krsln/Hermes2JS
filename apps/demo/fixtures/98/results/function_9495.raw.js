@@ -97,55 +97,9 @@ function mapTest() {
     // CODE → addr:200 | <Mov>: <Reg8: 11, Reg8: 9>
     r11 = r9
     // CODE → addr:203 | <IteratorBegin>: <Reg8: 8, Reg8: 11>
-    r8 = GetIterator(r11)
-    // CODE → addr:206 | <Mov>: <Reg8: 9, Reg8: 11>
-    r9 = r11
-    // CODE → addr:209 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 9>
-    r12 = r8.next()
-    // CODE → addr:213 | <Mov>: <Reg8: 9, Reg8: 8>
-    r9 = r8
-    // CODE → addr:216 | <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 0>
-    r9 = r9 === undefined
-    // CODE → addr:220 | <LoadConstUndefined>: <Reg8: 10>
-    r10 = undefined
-    // CODE → addr:222 | <JmpTrue>: <Addr8: 6, Reg8: 9>  # Address: 000000e4
-    if (r9) goto label_228;
-    // ──────────────── Block 3 ──────────────── 
-    // CODE → addr:225 | <Mov>: <Reg8: 10, Reg8: 12>
-    r10 = r12
-    // ──────────────── Block 4 ──────────────── 
+    [r7, r6] = r11
     // CODE → addr:228 | <Mov>: <Reg8: 7, Reg8: 10>
-    r7 = r10
-    // CODE → addr:231 | <LoadConstUndefined>: <Reg8: 10>
-    r10 = undefined
-    // CODE → addr:233 | <JmpTrue>: <Addr8: 28, Reg8: 9>  # Address: 00000105
-    if (r9) goto label_261;
-    // ──────────────── Block 5 ──────────────── 
-    // CODE → addr:236 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 11>
-    r12 = r8.next()
-    // CODE → addr:240 | <Mov>: <Reg8: 11, Reg8: 8>
-    r11 = r8
-    // CODE → addr:243 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 0>
-    r11 = r11 === undefined
-    // CODE → addr:247 | <LoadConstUndefined>: <Reg8: 10>
-    r10 = undefined
-    // CODE → addr:249 | <Mov>: <Reg8: 9, Reg8: 11>
-    r9 = r11
-    // CODE → addr:252 | <JmpTrue>: <Addr8: 9, Reg8: 11>  # Address: 00000105
-    if (r11) goto label_261;
-    // ──────────────── Block 6 ──────────────── 
-    // CODE → addr:255 | <Mov>: <Reg8: 10, Reg8: 12>
-    r10 = r12
-    // CODE → addr:258 | <Mov>: <Reg8: 9, Reg8: 11>
-    r9 = r11
-    // ──────────────── Block 7 ──────────────── 
     // CODE → addr:261 | <Mov>: <Reg8: 6, Reg8: 10>
-    r6 = r10
-    // CODE → addr:264 | <JmpTrue>: <Addr8: 6, Reg8: 9>  # Address: 0000010e
-    if (r9) goto label_270;
-    // ──────────────── Block 8 ──────────────── 
-    // CODE → addr:267 | <IteratorClose>: <Reg8: 8, UInt8: 0>
-    r8.return()
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr:270 | <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r11 = console;

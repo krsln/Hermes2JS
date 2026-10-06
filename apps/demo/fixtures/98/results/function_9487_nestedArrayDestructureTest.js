@@ -54,37 +54,9 @@ function nestedArrayDestructureTest() {
         // CODE → addr: 98 | <Mov>: <Reg8: 11, Reg8: 5>
         r11 = (r1 === undefined) ? undefined : r2
         // CODE → addr:101 | <IteratorBegin>: <Reg8: 2, Reg8: 11>
-        r2 = GetIterator(r11)
-        // CODE → addr:107 | <IteratorNext>: <Reg8: 12, Reg8: 2, Reg8: 5>
-        r12 = r2.next()
-        // CODE → addr:114 | <StrictEq>: <Reg8: 5, Reg8: 5, Reg8: 3>
-        // USED → r5 = r2 === undefined;
-        // CODE → addr:118 | <LoadConstUndefined>: <Reg8: 9>
-        r9 = (r2 === undefined) ? undefined : r12
-        // ──────────────── Block 4 ──────────────── 
+        [r8, r7] = r11
         // CODE → addr:126 | <Mov>: <Reg8: 8, Reg8: 9>
-        r8 = (r2 === undefined) ? undefined : r12
-        // CODE → addr:129 | <LoadConstUndefined>: <Reg8: 9>
-        r9 = undefined
-        if (r2 !== undefined) {
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → addr:134 | <IteratorNext>: <Reg8: 12, Reg8: 2, Reg8: 11>
-            r12 = r2.next()
-            // CODE → addr:141 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 3>
-            // USED → r11 = r2 === undefined;
-            // CODE → addr:145 | <LoadConstUndefined>: <Reg8: 9>
-            r9 = undefined
-            // CODE → addr:147 | <Mov>: <Reg8: 5, Reg8: 11>
-            r5 = r2 === undefined || r2 === undefined
-        }
-        // ──────────────── Block 7 ──────────────── 
         // CODE → addr:159 | <Mov>: <Reg8: 7, Reg8: 9>
-        r7 = r12
-        if (r11 !== undefined) {
-            // ──────────────── Block 8 ──────────────── 
-            // CODE → addr:165 | <IteratorClose>: <Reg8: 2, UInt8: 0>
-            r2.return()
-        }
     } catch (caughtException) {
         // ──────────────── Block 42 ──────────────── 
         // CODE → addr:535 | <Mov>: <Reg8: 2, Reg8: 4>
