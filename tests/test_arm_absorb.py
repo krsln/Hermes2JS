@@ -238,3 +238,26 @@ def test_for_of_with_destructured_element_is_recognized():
     assert "for (const r9 of r3) {" in out
     assert "[r7, r6] = r11" in out
     assert "while" not in out and "caughtException" not in out and ".return()" not in out and "GetIterator" not in out
+
+
+def test_catch_keeps_the_rethrow_that_closes_it():
+    # hermes-98 `spreadArrayTest`: `catch (e) { if (!done) it.return(); throw e }`.
+    # The catch body stopped at the post-dominator, which is the catch's OWN
+    # `throw` block, so the rethrow was printed after the try as `throw r2;`.
+    import re
+
+    out = _render_98(9492, "spreadArrayTest")
+
+    catch = re.search(r"catch \(caughtException\) \{(.*?)\n        \}\n", out, re.S)
+
+    assert catch is not None, out
+    assert "throw caughtException;" in catch.group(1)
+    assert "throw r2" not in out
+
+
+def test_rethrow_names_the_catch_parameter():
+    # `Catch` is folded into the catch parameter, so nothing in the CFG defined
+    # `r0` any more and `throw r0` stayed bare.
+    out = _render_98(9487, "nestedArrayDestructureTest")
+
+    assert "throw r0" not in out

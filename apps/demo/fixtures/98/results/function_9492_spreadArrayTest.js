@@ -100,10 +100,10 @@ function spreadArrayTest() {
                 // CODE → addr:199 | <IteratorClose>: <Reg8: 3, UInt8: 1>
                 r3.return()
             }
+            // ──────────────── Block 7 ──────────────── 
+            // CODE → addr:202 | <Throw>: <Reg8: 2>
+            throw caughtException;
         }
-        // ──────────────── Block 7 ──────────────── 
-        // CODE → addr:202 | <Throw>: <Reg8: 2>
-        throw r2;
     }
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:204 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

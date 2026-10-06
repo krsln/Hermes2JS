@@ -4,6 +4,7 @@ import dataclasses
 from collections import deque
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
+from hermes_decompiler.backend.regions import CatchRegion
 from hermes_decompiler.backend.transforms.shared import structural_key
 from hermes_decompiler.ir.expressions import (
     ArrayExpression, AwaitExpression, CallExpression, Identifier, Literal, ObjectExpression, YieldExpression,
@@ -195,7 +196,7 @@ class ReturnValueResolutionPass(RegionPass):
                 queue.extend(block.predecessors)
 
             if not found_values:
-                return None, None
+                return self._catch_parameter(reg, before_block), None
 
             first, first_instr = found_values[0]
 
@@ -209,6 +210,21 @@ class ReturnValueResolutionPass(RegionPass):
             return None, None
 
         return found, found_instr
+
+    def _catch_parameter(self, reg: int, block: BasicBlock):
+        """`catch (e) { ...; throw rN }`: nothing in the CFG defines `rN`
+        because the handler's own `Catch` was consumed into the catch
+        parameter. If the enclosing catch bound exactly this register and no
+        path inside it wrote the register again, the throw rethrows `e`."""
+        region = self.graph.owner(block)
+
+        while region is not None and not isinstance(region, CatchRegion):
+            region = getattr(region, "parent", None)
+
+        if region is None or region.exception_reg != reg or not region.exception:
+            return None
+
+        return Identifier(name=region.exception)
 
     @staticmethod
     def _find_definition_in_instructions(instructions, reg: int, stop_before=None):

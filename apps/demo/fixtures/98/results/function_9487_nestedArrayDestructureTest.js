@@ -200,7 +200,7 @@ function nestedArrayDestructureTest() {
         }
         // ──────────────── Block 38 ──────────────── 
         // CODE → addr:513 | <Throw>: <Reg8: 0>
-        throw r0;
+        throw caughtException;
     }
     // ──────────────── Block 24 ──────────────── 
     // CODE → addr:349 | <Mov>: <Reg8: 15, Reg8: 12>
