@@ -2,12 +2,6 @@ function nestedArrayDestructureTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 3>
     // USED → r3 = undefined;
-    // CODE → addr:  2 | <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined
-    // CODE → addr:  4 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    // CODE → addr:  6 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
     // CODE → addr:  8 | <GetGlobalObject>: <Reg8: 10>
     // USED → r10 = globalThis;
     // CODE → addr: 10 | <TryGetById>: <Reg8: 4, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

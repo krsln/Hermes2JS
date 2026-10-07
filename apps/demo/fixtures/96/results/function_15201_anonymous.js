@@ -12,8 +12,6 @@ function function_15201(param1) {
     r2 = r1[2]
     // CODE → addr: 18 | <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
     // USED → r5 = r2.default;
-    // CODE → addr: 23 | <LoadConstUndefined>: <Reg8: 3>
-    r3 = undefined
     // CODE → addr: 25 | <LoadParam>: <Reg8: 2, UInt8: 1>
     // USED → r2 = param1;
     // CODE → addr: 28 | <Call3>: <Reg8: 2, Reg8: 5, Reg8: 3, Reg8: 4, Reg8: 2>

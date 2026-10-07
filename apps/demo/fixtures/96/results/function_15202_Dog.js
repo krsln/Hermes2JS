@@ -12,8 +12,6 @@ function Dog(param1, param2) {
     r2 = getEnvironment(0)
     // CODE → addr: 18 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
     r3 = Dog
-    // CODE → addr: 22 | <LoadConstUndefined>: <Reg8: 2>
-    r2 = undefined
     // CODE → addr: 24 | <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3>
     r1 = r1.default.call(undefined, this, r3)
     // CODE → addr: 30 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 0>

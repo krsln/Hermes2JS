@@ -2,8 +2,6 @@ function tryLoopMultiReturnTest(param1) {
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr:  0 | <LoadParam>: <Reg8: 3, UInt8: 1>
     // USED → r3 = param1;
-    // CODE → addr:  3 | <LoadConstUndefined>: <Reg8: 4>
-    r4 = undefined
     // CODE → addr:  5 | <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → addr:  7 | <TryGetById>: <Reg8: 5, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

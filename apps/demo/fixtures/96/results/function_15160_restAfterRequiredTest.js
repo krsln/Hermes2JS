@@ -2,8 +2,6 @@ function restAfterRequiredTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → addr:  2 | <LoadConstUndefined>: <Reg8: 5>
-    r5 = undefined
     // CODE → addr:  4 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → addr:  6 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

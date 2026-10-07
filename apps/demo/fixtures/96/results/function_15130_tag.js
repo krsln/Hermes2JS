@@ -4,8 +4,6 @@ function tag(param1) {
     r0 = createEnvironment()
     // CODE → addr:  2 | <LoadParam>: <Reg8: 3, UInt8: 1>
     // USED → r3 = param1;
-    // CODE → addr:  5 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
     // CODE → addr:  7 | <GetArgumentsLength>: <Reg8: 6, Reg8: 7>
     r6 = arguments.length
     // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 1>

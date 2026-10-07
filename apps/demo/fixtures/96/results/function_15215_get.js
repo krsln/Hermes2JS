@@ -22,8 +22,6 @@ function get() {
     r2 = Counter
     // CODE → addr: 41 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 6>
     r1 = r0[6]
-    // CODE → addr: 45 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
     // CODE → addr: 47 | <Call3>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
     r0 = r1.default.call(undefined, r2, r1)
     // CODE → addr: 53 | <GetByVal>: <Reg8: 0, Reg8: 0, Reg8: 1>

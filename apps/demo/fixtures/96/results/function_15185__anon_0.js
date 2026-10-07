@@ -2,8 +2,6 @@ async function _anon_0_(param1) {
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 10 | <LoadConstUndefined>: <Reg8: 7>
     // USED → r7 = undefined;
-    // CODE → addr: 12 | <LoadConstUndefined>: <Reg8: 1>
-    r1 = undefined
     // CODE → addr: 14 | <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
     // CODE → addr: 16 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

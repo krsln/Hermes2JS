@@ -365,3 +365,23 @@ def test_rest_element_is_part_of_the_destructuring_pattern():
 
     assert "[r5, ...r4] = r7" in out
     assert "GetIterator" not in out and "for (const" not in out and "caughtException" not in out
+
+
+def test_entry_undefined_stores_of_destructured_bindings_are_dropped():
+    # hermes-98 `nestedArrayDestructureTest`: Hermes initialises the three
+    # bindings to `undefined`, the pattern then writes every one of them.
+    out = _render_98(9487, "nestedArrayDestructureTest")
+
+    assert "[[r8, r7], , [, r0]] = r6" in out
+    for reg in ("r8", "r7", "r0"):
+        assert f"{reg} = undefined" not in out
+
+
+def test_entry_undefined_store_stays_when_the_return_reads_it():
+    # hermes-96 `tryFinallyLoopBreakTest`: `r0` is only assigned on some paths
+    # through the try, `return r0` reads the entry `undefined` on the others.
+    from tests.test_register_semantics import decompile
+
+    out = decompile("96", 15084)
+
+    assert "r0 = undefined" in out and "return r0" in out

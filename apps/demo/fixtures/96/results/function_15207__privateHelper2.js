@@ -8,8 +8,6 @@ function _privateHelper2() {
     // USED → r4 = r1.default;
     // CODE → addr: 12 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 5>
     r3 = r0[5]
-    // CODE → addr: 16 | <LoadConstUndefined>: <Reg8: 2>
-    r2 = undefined
     // CODE → addr: 18 | <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → addr: 21 | <Call3>: <Reg8: 1, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 3>

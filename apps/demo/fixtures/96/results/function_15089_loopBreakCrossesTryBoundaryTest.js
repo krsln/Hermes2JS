@@ -6,8 +6,6 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // USED → r8 = param1;
     // CODE → addr:  6 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → addr:  8 | <LoadConstUndefined>: <Reg8: 9>
-    r9 = undefined
     // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → addr: 12 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

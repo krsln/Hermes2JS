@@ -20,8 +20,6 @@ function Counter() {
         r2 = throwTypeError("Cannot initialize private field twice.")
     } else {
         // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 25 | <LoadConstUndefined>: <Reg8: 1>
-        r1 = undefined
         // CODE → addr: 27 | <AddOwnPrivateBySym>: <Reg8: 2, Reg8: 1, Reg8: 4>
         r2.#__private_1__ = r3[5]
         // CODE → addr: 31 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 6>

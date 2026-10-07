@@ -5,6 +5,7 @@ from .BooleanChainRegionPass import BooleanChainRegionPass
 from .ConditionalExpressionRegionPass import ConditionalExpressionRegionPass
 from .DeadMovEliminationPass import DeadMovEliminationPass
 from .DeadThisPlaceholderPass import DeadThisPlaceholderPass
+from .DeadUndefinedStorePass import DeadUndefinedStorePass, FlowSnapshot
 from .ForEachRegionPass import ForEachRegionPass
 from .GeneratorStateMachineRegionPass import GeneratorStateMachineRegionPass
 from .IfTailMergeRegionPass import IfTailMergeRegionPass
@@ -24,6 +25,7 @@ __all__ = [
     "ConditionalExpressionRegionPass",
     "DeadMovEliminationPass",
     "DeadThisPlaceholderPass",
+    "DeadUndefinedStorePass", "FlowSnapshot",
     "ForEachRegionPass",
     "GeneratorStateMachineRegionPass",
     "IfTailMergeRegionPass",

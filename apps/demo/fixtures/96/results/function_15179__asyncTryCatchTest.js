@@ -1,9 +1,5 @@
 function _asyncTryCatchTest() {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 4>
-    r4 = undefined
-    // CODE → addr:  2 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
     // CODE → addr:  4 | <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → addr:  7 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 1>

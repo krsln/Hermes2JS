@@ -1,7 +1,5 @@
 function parallelAwaitTest() {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
     // CODE → addr:  2 | <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → addr:  5 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 10>

@@ -2,8 +2,6 @@ function defaultWithRestTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → addr:  2 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
     // CODE → addr:  4 | <GetArgumentsLength>: <Reg8: 1, Reg8: 7>
     // USED → r1 = arguments.length;
     // CODE → addr:  7 | <LoadConstZero>: <Reg8: 8>

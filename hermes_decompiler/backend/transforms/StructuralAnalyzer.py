@@ -11,6 +11,8 @@ from hermes_decompiler.backend.transforms.region_passes import (
     UnfoldedMergeRepairPass,
     DeadThisPlaceholderPass,
     DeadMovEliminationPass,
+    DeadUndefinedStorePass,
+    FlowSnapshot,
     ForEachRegionPass,
     GeneratorStateMachineRegionPass,
     InductionVariableNamingPass,
@@ -86,6 +88,7 @@ class StructuralAnalyzer:
         # this pass performs can no longer be expressed as a simple
         # CFG edit.
         ShortCircuitConditionCfgPass(self.cfg).run()
+        flow = FlowSnapshot(self.cfg)
 
         # ---- 2. structurers -------------------------------------------
         root = SequenceStructurer(self.cfg).run()
@@ -249,6 +252,12 @@ class StructuralAnalyzer:
         # rather than risking a copy some earlier pass still expected
         # to find in place.
         DeadMovEliminationPass(graph, self.cfg).run()
+
+        # Removes the function-entry `rN = undefined;` of a binding whose real
+        # value is assigned later (Hermes initialises every local). Needs real
+        # liveness over the CFG, so it sits after every pass that still
+        # rewrites reads (and after the one above, which can expose more).
+        DeadUndefinedStorePass(graph, self.cfg, flow).run()
 
         # Drops the function's own final `return undefined;` (falling off
         # the end of a JS function already IS that). Needs

@@ -4,8 +4,6 @@ function tryFinallyLoopBreakTest(param1) {
     // USED → r6 = param1;
     // CODE → addr:  3 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
-    // CODE → addr:  5 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
     // CODE → addr:  7 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → addr:  9 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

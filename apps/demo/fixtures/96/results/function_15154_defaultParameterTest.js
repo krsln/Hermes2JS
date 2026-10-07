@@ -2,8 +2,6 @@ function defaultParameterTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → addr:  2 | <LoadConstUndefined>: <Reg8: 2>
-    r2 = undefined
     // CODE → addr:  4 | <GetArgumentsLength>: <Reg8: 3, Reg8: 2>
     // USED → r3 = arguments.length;
     // CODE → addr:  7 | <LoadConstUInt8>: <Reg8: 1, UInt8: 1>

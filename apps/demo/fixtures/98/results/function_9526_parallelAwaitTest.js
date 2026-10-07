@@ -2,8 +2,6 @@ async function parallelAwaitTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → addr:  2 | <LoadConstUndefined>: <Reg8: 1>
-    r1 = undefined
     // CODE → addr:  4 | <ReifyArgumentsStrict>: <Reg8: 1>
     // USED → r1 = arguments;
     // CODE → addr:  6 | <Mov>: <Reg8: 4, Reg8: 1>

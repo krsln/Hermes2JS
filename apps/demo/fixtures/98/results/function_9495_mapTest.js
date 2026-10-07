@@ -2,10 +2,6 @@ function mapTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → addr:  2 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    // CODE → addr:  4 | <LoadConstUndefined>: <Reg8: 6>
-    r6 = undefined
     // CODE → addr:  6 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → addr:  8 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
