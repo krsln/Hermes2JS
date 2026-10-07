@@ -102,9 +102,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
             r9 = r4
             // CODE → addr:174 | <Mov>: <Reg8: 2, Reg8: 8>
             r2 = param1
-            // CODE → addr:177 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-            r2 = r2.length
-        } while (r4 < r2);
+        } while (r4 < r2.length);
         // LOOP → END
     }
     // ──────────────── Block 8 ──────────────── 

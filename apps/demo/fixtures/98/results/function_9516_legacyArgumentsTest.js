@@ -50,9 +50,7 @@ function legacyArgumentsTest() {
             r0 = r0 + 1
             // CODE → addr: 90 | <Mov>: <Reg8: 6, Reg8: 7>
             r6 = undefined
-            // CODE → addr: 93 | <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
-            r6 = arguments.length
-        } while (r0 < r6);
+        } while (r0 < arguments.length);
         // LOOP → END
     }
     // ──────────────── Block 2 ──────────────── 

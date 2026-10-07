@@ -99,9 +99,7 @@ function complexTest() {
             // ──────────────── Block 8 ──────────────── 
             // CODE → addr:201 | <Inc>: <Reg8: 11, Reg8: 1>
             r11 = r1 + 1
-            // CODE → addr:204 | <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-            r1 = r12.length
-        } while (r11 < r1);
+        } while (r11 < r12.length);
         // LOOP → END
     }
     // ──────────────── Block 9 ──────────────── 

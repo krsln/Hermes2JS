@@ -128,6 +128,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         if header in loop.latches:
             if self._consume_guard(header, loop, LoopKind.DO_WHILE, update_block=None):
                 loop.continue_target = header
+                self._inline_condition_operands(loop, loop.condition_block)
                 return
 
             logger.warning(
@@ -455,7 +456,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                     # Only a loop that stays a `for`: its header is checked
                     # before the first iteration, which is what the safety
                     # checks above vouch for.
-                    self._inline_condition_operands(loop, induction_reg)
+                    self._inline_condition_operands(loop, loop.update_block, induction_reg)
                     self._extract_update(loop)
                     return True
 
@@ -471,15 +472,18 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                 loop.loop_kind = LoopKind.DO_WHILE
                 loop.update_block = None
                 loop.continue_target = latch
+                self._inline_condition_operands(loop, loop.condition_block)
                 return True
 
         if self._consume_guard(latch, loop, LoopKind.DO_WHILE, update_block=None):
             loop.continue_target = latch
+            self._inline_condition_operands(loop, loop.condition_block)
             return True
 
         return False
 
-    def _inline_condition_operands(self, loop: LoopRegion, induction_reg: int) -> None:
+    def _inline_condition_operands(self, loop: LoopRegion, block: BasicBlock | None,
+                                   induction_reg: int | None = None) -> None:
         """Fold the bound the latch recomputes into the loop condition.
 
         A bottom-tested loop reloads its bound right before the compare
@@ -493,9 +497,11 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         Only for a plain value (no calls/assignments), read by nothing but
         the condition: not later in the function, and not by the next
         iteration before it writes the register again.
-        """
-        block = loop.update_block
 
+        `block` is the one the condition is evaluated at the end of: the
+        update block of a `for`, or the latch of a `do-while` (`do { ... r1 = r12.length }
+        while (r11 < r1)` becomes `while (r11 < r12.length)`).
+        """
         if loop.condition is None or block is None:
             return
 
@@ -519,7 +525,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                     or instruction.statement is not None
                     or instruction.definition_used
                     or has_side_effects(value)
-                    or induction_reg in self._registers_read(value)
+                    or (induction_reg is not None and induction_reg in self._registers_read(value))
                     or self._is_unsafe_to_reorder(block, index, value)
                     or self._definition_is_read_elsewhere(loop, reg, instruction)
             ):

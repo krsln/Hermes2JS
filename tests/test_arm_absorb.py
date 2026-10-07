@@ -268,14 +268,34 @@ def test_for_condition_reads_the_bound_the_latch_recomputes():
     assert "r7 = r14.length" not in out
 
 
-def test_bound_stays_in_the_body_when_the_loop_is_not_a_for():
+def test_do_while_condition_reads_the_bound_the_latch_recomputes():
     # hermes-98 `generatorWithLoopTest`: the entry value of the register the
     # condition reads is NOT the loop variable (the guard compares the other
     # way round), so a `for` header would test the wrong thing first. It stays a
-    # `do { } while` and keeps the bound reload.
+    # `do { } while`, but the latch's reloads go into its condition.
     out = _render_98(12483, "generatorWithLoopTest")
 
-    assert "do {" in out and "r5 = r1[1][0]" in out and "} while (r7 < r5);" in out
+    assert "do {" in out and "} while (r1[1][1] < r1[1][0]);" in out
+    assert "for (;" not in out and "r5 = r1[1][0]" not in out
+
+
+def test_do_while_bound_reload_is_not_left_behind():
+    # hermes-98 `tryFinallyLoopBreakTest`: `r2 = param1.length` right before
+    # `if (r3 < r2) goto body` was printed as the last statement of the body.
+    out = _render_98(9472, "tryFinallyLoopBreakTest")
+
+    assert "} while (r3 < param1.length);" in out
+    # Only the entry guard's copy is left; the one in the body is gone.
+    assert out.count("r2 = param1.length") == 1
+
+
+def test_do_while_keeps_the_bound_when_something_else_reads_it():
+    # hermes-98 `tryCatchInsideLoopTest`: `r4 = r2 + 1` (the next iteration's index) is
+    # read at the top of the next iteration, so it stays a statement; only the
+    # bound moves into the condition.
+    out = _render_98(9473, "tryCatchInsideLoopTest")
+
+    assert "r4 = r2 + 1" in out and "} while (r4 < param1.length);" in out
 
 
 def test_array_hole_prints_its_comma():

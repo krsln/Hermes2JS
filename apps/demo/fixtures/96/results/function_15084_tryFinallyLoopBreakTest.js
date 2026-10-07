@@ -60,9 +60,7 @@ function tryFinallyLoopBreakTest(param1) {
                 r3 = r3 + 1
                 // CODE → addr: 93 | <Mov>: <Reg8: 7, Reg8: 3>
                 r7 = r3
-                // CODE → addr: 96 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-                r2 = r2.length
-            } while (r3 < r2);
+            } while (r3 < r2.length);
             // LOOP → END
         }
     } finally {

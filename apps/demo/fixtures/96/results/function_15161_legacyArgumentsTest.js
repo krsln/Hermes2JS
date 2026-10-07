@@ -42,9 +42,7 @@ function legacyArgumentsTest() {
             console.log(r2)
             // CODE → addr: 77 | <Inc>: <Reg8: 3, Reg8: 3>
             r3 = r3 + 1
-            // CODE → addr: 80 | <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
-            r2 = arguments.length
-        } while (r3 < r2);
+        } while (r3 < arguments.length);
         // LOOP → END
     }
     // ──────────────── Block 2 ──────────────── 

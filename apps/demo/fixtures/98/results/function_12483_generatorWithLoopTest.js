@@ -66,11 +66,7 @@ function* generatorWithLoopTest(param1) {
             r7 = r7 + 1
             // CODE → addr:256 | <StoreNPToEnvironment>: <Reg8: 5, UInt8: 1, Reg8: 7>
             r1[1][1] = r7
-            // CODE → addr:260 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 1>
-            r7 = r1[1][1]
-            // CODE → addr:264 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 0>
-            r5 = r1[1][0]
-        } while (r7 < r5);
+        } while (r1[1][1] < r1[1][0]);
         // LOOP → END
     }
     // ──────────────── Block 14 ──────────────── 

@@ -84,9 +84,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr:149 | <AddN>: <Reg8: 2, Reg8: 0, Reg8: 6>
             r2 = r0 + 1
-            // CODE → addr:153 | <GetByIdShort>: <Reg8: 0, Reg8: 8, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-            r0 = param1.length
-        } while (r2 < r0);
+        } while (r2 < param1.length);
         // LOOP → END
     }
     // ──────────────── Block 8 ──────────────── 

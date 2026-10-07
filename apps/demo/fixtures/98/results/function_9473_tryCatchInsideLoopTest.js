@@ -86,13 +86,11 @@ function tryCatchInsideLoopTest(param1) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr:149 | <AddN>: <Reg8: 4, Reg8: 2, Reg8: 8>
             r4 = r2 + 1
-            // CODE → addr:153 | <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-            r2 = param1.length
             // CODE → addr:158 | <Mov>: <Reg8: 3, Reg8: 12>
             r3 = r12
             // CODE → addr:161 | <Mov>: <Reg8: 0, Reg8: 3>
             r0 = r3
-        } while (r4 < r2);
+        } while (r4 < param1.length);
         // LOOP → END
     }
     // ──────────────── Block 6 ──────────────── 

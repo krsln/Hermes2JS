@@ -95,9 +95,7 @@ function tryCatchInsideLoopTest(param1) {
             r8 = r3
             // CODE → addr:167 | <Mov>: <Reg8: 2, Reg8: 7>
             r2 = param1
-            // CODE → addr:170 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-            r2 = r2.length
-        } while (r3 < r2);
+        } while (r3 < r2.length);
         // LOOP → END
     }
     // ──────────────── Block 6 ──────────────── 
