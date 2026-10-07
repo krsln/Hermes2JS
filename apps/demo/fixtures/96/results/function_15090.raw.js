@@ -11,9 +11,9 @@ function switchInsideTryTest(param1) {
     // CODE → addr: 16 | <LoadConstString>: <Reg8: 2, string_id: 4684>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/start' (String)
     // USED → r2 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/start";
     // CODE → addr: 20 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start");
     // CODE → addr: 25 | <Mov>: <Reg8: 2, Reg8: 0>
-    r2 = param1
+    r2 = param1;
     // CODE → addr: 28 | <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // CODE → addr: 30 | <JStrictEqual>: <Addr8: 65, Reg8: 0, Reg8: 2>  # Address: 0000005f
@@ -31,7 +31,7 @@ function switchInsideTryTest(param1) {
     // CODE → addr: 52 | <LoadConstString>: <Reg8: 0, string_id: 4678>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default";
     // CODE → addr: 56 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default")
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default");
     // CODE → addr: 61 | <Jmp>: <Addr8: 54>  # Address: 00000073
     goto label_115;
     // ──────────────── Block 3 ──────────────── 
@@ -48,7 +48,7 @@ function switchInsideTryTest(param1) {
     // CODE → addr: 85 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Error("case 1 throws");
     // CODE → addr: 89 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    r0 = new Error("case 1 throws")
+    r0 = new Error("case 1 throws");
     // CODE → addr: 93 | <Throw>: <Reg8: 0>
     throw r0;
     // ──────────────── Block 4 ──────────────── 
@@ -59,13 +59,13 @@ function switchInsideTryTest(param1) {
     // CODE → addr:106 | <LoadConstString>: <Reg8: 0, string_id: 2266>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0";
     // CODE → addr:110 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0")
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0");
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr:115 | <Jmp>: <Addr8: 24>  # Address: 0000008b
     goto label_139;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:117 | <Catch>: <Reg8: 0>
-    r0 = caughtException
+    r0 = caughtException;
     // CODE → addr:119 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:125 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -73,7 +73,7 @@ function switchInsideTryTest(param1) {
     // CODE → addr:130 | <LoadConstString>: <Reg8: 0, string_id: 4680>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block";
     // CODE → addr:134 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block")
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block");
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:139 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
@@ -82,7 +82,7 @@ function switchInsideTryTest(param1) {
     // CODE → addr:150 | <LoadConstString>: <Reg8: 0, string_id: 4683>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block";
     // CODE → addr:154 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block")
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block");
     // CODE → addr:159 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:165 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -90,14 +90,14 @@ function switchInsideTryTest(param1) {
     // CODE → addr:170 | <LoadConstString>: <Reg8: 0, string_id: 4682>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/end' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/end";
     // CODE → addr:174 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end")
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end");
     // CODE → addr:179 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    r0 = undefined;
     // CODE → addr:181 | <Ret>: <Reg8: 0>
     return r0;
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:183 | <Catch>: <Reg8: 0>
-    r0 = caughtException
+    r0 = caughtException;
     // CODE → addr:185 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:191 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -105,7 +105,7 @@ function switchInsideTryTest(param1) {
     // CODE → addr:196 | <LoadConstString>: <Reg8: 1, string_id: 4683>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block";
     // CODE → addr:200 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block")
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block");
     // CODE → addr:205 | <Throw>: <Reg8: 0>
     throw r0;
 }

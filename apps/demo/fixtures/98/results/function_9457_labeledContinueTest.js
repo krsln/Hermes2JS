@@ -9,7 +9,7 @@ function labeledContinueTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 9, string_id: 4795>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/start' (String)
     // USED → r9 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 9>
-    console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/start")
+    console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/start");
     // CODE → addr: 22 | <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
     // USED → r3 = 1;
     // CODE → addr: 25 | <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
@@ -23,12 +23,12 @@ function labeledContinueTest() {
     for (i = 0; i < 3; i = r2 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 38 | <Mov>: <Reg8: 2, Reg8: 4>
-        r2 = i
+        r2 = i;
         // LOOP → START (for)
         for (j = 0; j < 3; j = r1 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 43 | <Mov>: <Reg8: 1, Reg8: 0>
-            r1 = j
+            r1 = j;
             if (r1 === 1) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → addr: 93 | <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -36,7 +36,7 @@ function labeledContinueTest() {
                 // CODE → addr: 99 | <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                 // USED → r11 = console.log;
                 // CODE → addr:104 | <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 10>
-                console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
+                console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer");
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → addr:  0 | ContinueStatement
                 continue loop_1;
@@ -47,7 +47,7 @@ function labeledContinueTest() {
             // CODE → addr: 56 | <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
             // USED → r11 = console.log;
             // CODE → addr: 61 | <Call3>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 2, Reg8: 1>
-            console.log(r2, r1)
+            console.log(r2, r1);
         }
         // LOOP → END
         // ──────────────── Block 4 ──────────────── 
@@ -56,7 +56,7 @@ function labeledContinueTest() {
         // CODE → addr: 81 | <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r11 = console.log;
         // CODE → addr: 86 | <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 9>
-        console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
+        console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1");
     }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
@@ -67,7 +67,7 @@ function labeledContinueTest() {
     // CODE → addr:128 | <LoadConstString>: <Reg8: 8, string_id: 4791>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/end' (String)
     // USED → r8 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/end";
     // CODE → addr:132 | <Call2>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 8>
-    console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/end")
+    console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/end");
     // CODE → addr:137 | <LoadConstUndefined>: <Reg8: 7>
     // USED → r7 = undefined;
     // CODE → addr:139 | <Ret>: <Reg8: 7>

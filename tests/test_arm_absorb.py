@@ -119,8 +119,8 @@ def test_a_write_in_one_arm_is_not_inlined_into_a_read_after_the_merge():
 
     # Before: `if (r3 == null) { }` and `"url": r2[3]` - the arm printed
     # nothing and the object claimed the arm's value unconditionally.
-    assert "if (r3 == null) {\n        r3 = r2[3]\n    }" in out
-    assert "= r3\n" in out  # the object slot reads r3, not the arm's `r2[3]`
+    assert "if (r3 == null) {\n        r3 = r2[3];\n    }" in out
+    assert "= r3;\n" in out  # the object slot reads r3, not the arm's `r2[3]`
     assert "slot_0 = r2[3]" not in out
 
 
@@ -385,3 +385,17 @@ def test_entry_undefined_store_stays_when_the_return_reads_it():
     out = decompile("96", 15084)
 
     assert "r0 = undefined" in out and "return r0" in out
+
+
+def test_every_statement_line_is_terminated():
+    # A destructuring pattern starts with `[`: unterminated, it would glue onto
+    # the previous line (`a = b\n[x] = y` parses as `a = b[x] = y`).
+    out = _render_98(9487, "nestedArrayDestructureTest")
+
+    assert "[[r8, r7], , [, r0]] = r6;" in out
+
+    for line in out.splitlines():
+        text = line.strip()
+
+        if text and not text.startswith("//"):
+            assert text[-1] in ";{}:,", line

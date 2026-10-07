@@ -9,7 +9,7 @@ function get() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 1, string_id: 4532>  # String: '__BC:Classes/ClassTests/Animal/get-description' (String)
     // USED → r1 = "__BC:Classes/ClassTests/Animal/get-description";
     // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:Classes/ClassTests/Animal/get-description")
+    console.log("__BC:Classes/ClassTests/Animal/get-description");
     // CODE → addr: 22 | <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → addr: 25 | <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 176>  # String: 'name' (Identifier)
@@ -23,7 +23,7 @@ function get() {
     // CODE → addr: 45 | <LoadConstString>: <Reg8: 0, string_id: 1072>  # String: ' the animal' (String)
     // USED → r0 = " the animal";
     // CODE → addr: 49 | <Call3>: <Reg8: 0, Reg8: 2, Reg8: 1, Reg8: 3, Reg8: 0>
-    r0 = HermesInternal.concat.call("", this.name, " the animal")
+    r0 = HermesInternal.concat.call("", this.name, " the animal");
     // CODE → addr: 55 | <Ret>: <Reg8: 0>
     return r0;
 }

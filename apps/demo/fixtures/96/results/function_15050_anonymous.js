@@ -13,17 +13,17 @@ function function_15050(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 18 | <LoadConstTrue>: <Reg8: 0>
     // USED → r0 = true;
     // CODE → addr: 20 | <PutNewOwnByIdShort>: <Reg8: 2, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
-    r2 = { "value": true }
+    r2 = { "value": true };
     // CODE → addr: 24 | <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → addr: 28 | <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 2>
-    r0 = Object.defineProperty(param6, "__esModule", r2)
+    r0 = Object.defineProperty(param6, "__esModule", r2);
     // CODE → addr: 35 | <CreateEnvironment>: <Reg8: 0>
-    r0 = createEnvironment()
+    r0 = createEnvironment();
     // CODE → addr: 37 | <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15051>  # Function: [#15051 forTest of 135 bytes]: 1 params @ offset 0x00267ccf
     // USED → r0 = forTest;
     // CODE → addr: 42 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10341>  # String: 'forTest' (Identifier)
-    param6.forTest = forTest
+    param6.forTest = forTest;
     // CODE → addr: 48 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 50 | <Ret>: <Reg8: 0>

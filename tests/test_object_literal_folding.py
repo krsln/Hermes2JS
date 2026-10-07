@@ -52,7 +52,7 @@ def test_a_property_whose_value_is_a_printed_definition_stays_a_statement():
     # so the store is not folded (it would reorder the inner literal).
     out = decompile("96", 15095)  # objectLiteralTest
 
-    assert re.search(r"r3 = \{[^\n]*\}\n(?:.*\n)*?\s*r2\.d = r3\n", out)
+    assert re.search(r"r3 = \{[^\n]*\};\n(?:.*\n)*?\s*r2\.d = r3;\n", out)
     assert dangling_registers(out) == []
 
 
@@ -75,8 +75,8 @@ def test_repeated_key_keeps_the_later_store_as_a_statement():
     out = _decompile_text(hasm, 15146)
 
     assert re.search(r'r0 = \{ "increment": \w+ \}', out)
-    assert re.search(r"\n\s*r0\.increment = \w+\n", out)
-    assert re.search(r"\n\s*r0\.value = \w+\n", out)
+    assert re.search(r"\n\s*r0\.increment = \w+;\n", out)
+    assert re.search(r"\n\s*r0\.value = \w+;\n", out)
 
 
 def test_literal_definition_in_a_boolean_chain_arm_is_not_dropped():

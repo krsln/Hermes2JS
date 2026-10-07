@@ -11,39 +11,39 @@ async function _anon_0_(param1) {
     // CODE → addr: 27 | <LoadConstString>: <Reg8: 3, string_id: 4754>  # String: '__BC:Functions/AsyncTests/asyncLoopTest/start' (String)
     // USED → r3 = "__BC:Functions/AsyncTests/asyncLoopTest/start";
     // CODE → addr: 31 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    console.log("__BC:Functions/AsyncTests/asyncLoopTest/start")
+    console.log("__BC:Functions/AsyncTests/asyncLoopTest/start");
     // CODE → addr: 36 | <LoadConstZero>: <Reg8: 1>
-    r1 = 0
+    r1 = 0;
     // CODE → addr: 38 | <LoadParam>: <Reg8: 6, UInt8: 1>
-    r6 = param1
+    r6 = param1;
     // CODE → addr: 41 | <IteratorBegin>: <Reg8: 4, Reg8: 6>
-    r4 = GetIterator(param1)
+    r4 = GetIterator(param1);
     // CODE → addr: 44 | <GetEnvironment>: <Reg8: 5, UInt8: 2>
-    r5 = getEnvironment(2)
+    r5 = getEnvironment(2);
     // LOOP → START (for_of)
     for (const r9 of param1) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 58 | <Mov>: <Reg8: 8, Reg8: 1>
-        r8 = r1
+        r8 = r1;
         // CODE → addr: 61 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
         // USED → r3 = delay;
         // CODE → addr: 65 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
-        r3 = await delay(r9)
+        r3 = await delay(r9);
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
-        r3 = await yield
+        r3 = await yield;
         // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
         // USED → r9 = __resumeIsReturn;
         if (__resumeIsReturn) {
             // ──────────────── Block 7 ──────────────── 
             // CODE → addr: 86 | <IteratorClose>: <Reg8: 4, UInt8: 0>
-            r4.return()
+            r4.return();
             // CODE → addr: 90 | <Ret>: <Reg8: 3>
             return r3;
         }
         // ──────────────── Block 6 ──────────────── 
         // CODE → addr: 80 | <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
-        r1 = r8 + r3
+        r1 = r8 + r3;
     }
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 
@@ -55,7 +55,7 @@ async function _anon_0_(param1) {
     // CODE → addr:105 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → addr:110 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 1>
-    console.log(r1)
+    console.log(r1);
     // CODE → addr:115 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:121 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -63,7 +63,7 @@ async function _anon_0_(param1) {
     // CODE → addr:126 | <LoadConstString>: <Reg8: 2, string_id: 4751>  # String: '__BC:Functions/AsyncTests/asyncLoopTest/end' (String)
     // USED → r2 = "__BC:Functions/AsyncTests/asyncLoopTest/end";
     // CODE → addr:130 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log("__BC:Functions/AsyncTests/asyncLoopTest/end")
+    console.log("__BC:Functions/AsyncTests/asyncLoopTest/end");
     // CODE → addr:136 | <Ret>: <Reg8: 1>
     return r1;
 }

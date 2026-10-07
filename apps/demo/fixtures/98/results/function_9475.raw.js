@@ -10,7 +10,7 @@ function mayThrow(param1) {
     // CODE → addr:  9 | <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → addr: 12 | <Mul>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    r0 = param1 * 2
+    r0 = param1 * 2;
     // CODE → addr: 16 | <Ret>: <Reg8: 0>
     return r0;
     // ──────────────── Block 2 ──────────────── 
@@ -27,7 +27,7 @@ function mayThrow(param1) {
     // CODE → addr: 37 | <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
     // USED → r1 = new Error("negative");
     // CODE → addr: 41 | <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-    r1 = new Error("negative")
+    r1 = new Error("negative");
     // CODE → addr: 45 | <Throw>: <Reg8: 1>
     throw r1;
 }

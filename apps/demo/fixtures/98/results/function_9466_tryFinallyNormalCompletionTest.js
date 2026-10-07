@@ -9,7 +9,7 @@ function tryFinallyNormalCompletionTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 4903>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/start' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/start");
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → addr: 22 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -19,7 +19,7 @@ function tryFinallyNormalCompletionTest() {
         // CODE → addr: 33 | <LoadConstString>: <Reg8: 0, string_id: 4904>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/try-block' (String)
         // USED → r0 = "__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/try-block";
         // CODE → addr: 37 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-        console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/try-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/try-block");
     } finally {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 88 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -29,7 +29,7 @@ function tryFinallyNormalCompletionTest() {
         // CODE → addr: 99 | <LoadConstString>: <Reg8: 1, string_id: 4901>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/finally-block' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/finally-block";
         // CODE → addr:103 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/finally-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/finally-block");
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 62 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -39,7 +39,7 @@ function tryFinallyNormalCompletionTest() {
     // CODE → addr: 73 | <LoadConstString>: <Reg8: 0, string_id: 3024>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end";
     // CODE → addr: 77 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end")
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end");
     // CODE → addr: 82 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 84 | <Ret>: <Reg8: 0>

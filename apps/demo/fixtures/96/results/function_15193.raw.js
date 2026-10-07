@@ -3,7 +3,7 @@ async function _anon_0_() {
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    r0 = await yield
+    r0 = await yield;
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r1 = __resumeIsReturn;
     // CODE → addr:  4 | <JmpTrueLong>: <Addr32: 149, Reg8: 1>  # Address: 00000099
@@ -18,15 +18,15 @@ async function _anon_0_() {
     // CODE → addr: 23 | <LoadConstString>: <Reg8: 1, string_id: 4759>  # String: '__BC:Functions/AsyncTests/callAsyncTests/start' (String)
     // USED → r1 = "__BC:Functions/AsyncTests/callAsyncTests/start";
     // CODE → addr: 27 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:Functions/AsyncTests/callAsyncTests/start")
+    console.log("__BC:Functions/AsyncTests/callAsyncTests/start");
     // CODE → addr: 32 | <GetEnvironment>: <Reg8: 4, UInt8: 2>
-    r4 = getEnvironment(2)
+    r4 = getEnvironment(2);
     // CODE → addr: 35 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 3>
     // USED → r1 = simpleAsyncTest;
     // CODE → addr: 39 | <LoadConstUndefined>: <Reg8: 5>
     // USED → r5 = undefined;
     // CODE → addr: 41 | <Call1>: <Reg8: 1, Reg8: 1, Reg8: 5>
-    r1 = await simpleAsyncTest()
+    r1 = await simpleAsyncTest();
     // CODE → addr: 45 | <SaveGenerator>: <Addr8: 4>  # Address: 00000031
     goto label_49;
     // ──────────────── Block 2 ──────────────── 
@@ -34,7 +34,7 @@ async function _anon_0_() {
     return r1;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 49 | <ResumeGenerator>: <Reg8: 1, Reg8: 2>
-    r1 = await yield
+    r1 = await yield;
     // CODE → addr: 49 | <ResumeGenerator>: <Reg8: 1, Reg8: 2>
     // USED → r2 = __resumeIsReturn;
     // CODE → addr: 52 | <JmpTrue>: <Addr8: 98, Reg8: 2>  # Address: 00000096
@@ -43,7 +43,7 @@ async function _anon_0_() {
     // CODE → addr: 55 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 4, UInt8: 5>
     // USED → r2 = asyncTryCatchTest;
     // CODE → addr: 59 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    r2 = await asyncTryCatchTest()
+    r2 = await asyncTryCatchTest();
     // CODE → addr: 63 | <SaveGenerator>: <Addr8: 4>  # Address: 00000043
     goto label_67;
     // ──────────────── Block 5 ──────────────── 
@@ -51,7 +51,7 @@ async function _anon_0_() {
     return r2;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 67 | <ResumeGenerator>: <Reg8: 2, Reg8: 3>
-    r2 = await yield
+    r2 = await yield;
     // CODE → addr: 67 | <ResumeGenerator>: <Reg8: 2, Reg8: 3>
     // USED → r3 = __resumeIsReturn;
     // CODE → addr: 70 | <JmpTrue>: <Addr8: 77, Reg8: 3>  # Address: 00000093
@@ -60,9 +60,9 @@ async function _anon_0_() {
     // CODE → addr: 73 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 7>
     // USED → r7 = asyncLoopTest;
     // CODE → addr: 77 | <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
-    r3 = [1, 2, 3]
+    r3 = [1, 2, 3];
     // CODE → addr: 85 | <Call2>: <Reg8: 3, Reg8: 7, Reg8: 5, Reg8: 3>
-    r3 = await asyncLoopTest(r3)
+    r3 = await asyncLoopTest(r3);
     // CODE → addr: 90 | <SaveGenerator>: <Addr8: 4>  # Address: 0000005e
     goto label_94;
     // ──────────────── Block 8 ──────────────── 
@@ -70,7 +70,7 @@ async function _anon_0_() {
     return r3;
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr: 94 | <ResumeGenerator>: <Reg8: 3, Reg8: 7>
-    r3 = await yield
+    r3 = await yield;
     // CODE → addr: 94 | <ResumeGenerator>: <Reg8: 3, Reg8: 7>
     // USED → r7 = __resumeIsReturn;
     // CODE → addr: 97 | <JmpTrue>: <Addr8: 47, Reg8: 7>  # Address: 00000090
@@ -79,7 +79,7 @@ async function _anon_0_() {
     // CODE → addr:100 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 9>
     // USED → r4 = parallelAwaitTest;
     // CODE → addr:104 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 5>
-    r4 = await parallelAwaitTest()
+    r4 = await parallelAwaitTest();
     // CODE → addr:108 | <SaveGenerator>: <Addr8: 4>  # Address: 00000070
     goto label_112;
     // ──────────────── Block 11 ──────────────── 
@@ -87,7 +87,7 @@ async function _anon_0_() {
     return r4;
     // ──────────────── Block 12 ──────────────── 
     // CODE → addr:112 | <ResumeGenerator>: <Reg8: 4, Reg8: 7>
-    r4 = await yield
+    r4 = await yield;
     // CODE → addr:112 | <ResumeGenerator>: <Reg8: 4, Reg8: 7>
     // USED → r7 = __resumeIsReturn;
     // CODE → addr:115 | <JmpTrue>: <Addr8: 26, Reg8: 7>  # Address: 0000008d
@@ -100,7 +100,7 @@ async function _anon_0_() {
     // CODE → addr:129 | <LoadConstString>: <Reg8: 6, string_id: 2895>  # String: '__BC:Functions/AsyncTests/callAsyncTests/end' (String)
     // USED → r6 = "__BC:Functions/AsyncTests/callAsyncTests/end";
     // CODE → addr:133 | <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
-    console.log("__BC:Functions/AsyncTests/callAsyncTests/end")
+    console.log("__BC:Functions/AsyncTests/callAsyncTests/end");
     // CODE → addr:138 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:139 | <Ret>: <Reg8: 5>

@@ -9,7 +9,7 @@ function tryCatchNoFinallyTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 1, string_id: 4881>  # String: '__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/start' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/start");
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → addr: 22 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -19,7 +19,7 @@ function tryCatchNoFinallyTest() {
         // CODE → addr: 33 | <LoadConstString>: <Reg8: 1, string_id: 4882>  # String: '__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/try-block' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/try-block";
         // CODE → addr: 37 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/try-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/try-block");
         // CODE → addr: 42 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
         // USED → r3 = Error;
         // CODE → addr: 48 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
@@ -43,13 +43,13 @@ function tryCatchNoFinallyTest() {
         // CODE → addr: 82 | <LoadConstString>: <Reg8: 1, string_id: 4880>  # String: '__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/catch-block' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/catch-block";
         // CODE → addr: 86 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/catch-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/catch-block");
         // CODE → addr: 91 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r2 = console;
         // CODE → addr: 97 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r1 = console.log;
         // CODE → addr:102 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-        console.log(caughtException)
+        console.log(caughtException);
         // CODE → addr:107 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r2 = console;
         // CODE → addr:113 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -57,7 +57,7 @@ function tryCatchNoFinallyTest() {
         // CODE → addr:118 | <LoadConstString>: <Reg8: 0, string_id: 734>  # String: '__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/end' (String)
         // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/end";
         // CODE → addr:122 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/end")
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/end");
         // CODE → addr:127 | <LoadConstUndefined>: <Reg8: 0>
         // USED → r0 = undefined;
         // CODE → addr:129 | <Ret>: <Reg8: 0>

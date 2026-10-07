@@ -13,9 +13,9 @@ function greet() {
     // CODE → addr: 21 | <LoadConstString>: <Reg8: 0, string_id: 6584>  # String: 'hello' (String)
     // USED → r0 = "hello";
     // CODE → addr: 25 | <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
-    console.log("hello", this.name)
+    console.log("hello", this.name);
     // CODE → addr: 31 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    r0 = undefined;
     // CODE → addr: 33 | <Ret>: <Reg8: 0>
     return r0;
 }

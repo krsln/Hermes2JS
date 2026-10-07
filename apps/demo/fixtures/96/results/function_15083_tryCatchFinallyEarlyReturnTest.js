@@ -10,7 +10,7 @@ function tryCatchFinallyEarlyReturnTest() {
         // CODE → addr: 13 | <LoadConstString>: <Reg8: 1, string_id: 4691>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/try-block' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/try-block";
         // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/try-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/try-block");
         // CODE → addr: 22 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
         // USED → r2 = Error;
         // CODE → addr: 28 | <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
@@ -39,7 +39,7 @@ function tryCatchFinallyEarlyReturnTest() {
         // CODE → addr: 97 | <LoadConstString>: <Reg8: 1, string_id: 4690>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block";
         // CODE → addr:101 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block");
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 78 | <LoadConstFalse>: <Reg8: 0>

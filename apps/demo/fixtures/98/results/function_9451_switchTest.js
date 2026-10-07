@@ -9,7 +9,7 @@ function switchTest(param1) {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 2, string_id: 4808>  # String: '__BC:ControlFlow/SwitchTests/switchTest/start' (String)
     // USED → r2 = "__BC:ControlFlow/SwitchTests/switchTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log("__BC:ControlFlow/SwitchTests/switchTest/start")
+    console.log("__BC:ControlFlow/SwitchTests/switchTest/start");
     // CODE → addr: 22 | <LoadParam>: <Reg8: 2, UInt8: 1>
     // USED → r2 = param1;
     // CODE → addr: 25 | <LoadConstZero>: <Reg8: 0>
@@ -25,7 +25,7 @@ function switchTest(param1) {
             // CODE → addr:177 | <LoadConstString>: <Reg8: 1, string_id: 4807>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-0' (String)
             // USED → r1 = "__BC:ControlFlow/SwitchTests/switchTest/case-0";
             // CODE → addr:181 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-0")
+            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-0");
             // CODE → addr:186 | <LoadConstString>: <Reg8: 1, string_id: 597>  # String: 'zero' (String)
             // USED → r1 = "zero";
             // CODE → addr:190 | <Ret>: <Reg8: 1>
@@ -39,7 +39,7 @@ function switchTest(param1) {
             // CODE → addr:151 | <LoadConstString>: <Reg8: 2, string_id: 2021>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-1' (String)
             // USED → r2 = "__BC:ControlFlow/SwitchTests/switchTest/case-1";
             // CODE → addr:155 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-1")
+            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-1");
             // CODE → addr:160 | <LoadConstString>: <Reg8: 2, string_id: 6956>  # String: 'one' (Identifier)
             // USED → r2 = "one";
             // CODE → addr:164 | <Ret>: <Reg8: 2>
@@ -53,7 +53,7 @@ function switchTest(param1) {
             // CODE → addr:125 | <LoadConstString>: <Reg8: 2, string_id: 919>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-2' (String)
             // USED → r2 = "__BC:ControlFlow/SwitchTests/switchTest/case-2";
             // CODE → addr:129 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-2")
+            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-2");
             // CODE → addr:134 | <LoadConstString>: <Reg8: 2, string_id: 9241>  # String: 'two' (Identifier)
             // USED → r2 = "two";
             // CODE → addr:138 | <Ret>: <Reg8: 2>
@@ -68,7 +68,7 @@ function switchTest(param1) {
             // CODE → addr: 99 | <LoadConstString>: <Reg8: 2, string_id: 1730>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-3-4' (String)
             // USED → r2 = "__BC:ControlFlow/SwitchTests/switchTest/case-3-4";
             // CODE → addr:103 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-3-4")
+            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-3-4");
             // CODE → addr:108 | <LoadConstString>: <Reg8: 2, string_id: 3949>  # String: 'three-four' (String)
             // USED → r2 = "three-four";
             // CODE → addr:112 | <Ret>: <Reg8: 2>
@@ -82,7 +82,7 @@ function switchTest(param1) {
             // CODE → addr: 73 | <LoadConstString>: <Reg8: 2, string_id: 3462>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-default' (String)
             // USED → r2 = "__BC:ControlFlow/SwitchTests/switchTest/case-default";
             // CODE → addr: 77 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-default")
+            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-default");
             // CODE → addr: 82 | <LoadConstString>: <Reg8: 2, string_id: 1861>  # String: 'other' (String)
             // USED → r2 = "other";
             // CODE → addr: 86 | <Ret>: <Reg8: 2>

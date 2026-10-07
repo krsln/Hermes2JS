@@ -159,7 +159,20 @@ class RegionPrinter:
                 if self.ctx.verbose:
                     self.ctx.write(lines, f"// USED → {rendered};")
             else:
-                self.ctx.write(lines, f"{rendered}" if rendered.startswith("[") else rendered)
+                self.ctx.write(lines, self._terminate(rendered))
+
+    @staticmethod
+    def _terminate(rendered: str) -> str:
+        """Ends an expression statement with `;`.
+
+        Every statement line is terminated, so a line that starts with `[`
+        or `(` (a destructuring pattern, an IIFE) can never be glued onto
+        the previous one by automatic semicolon insertion rules.
+        """
+        if not rendered or rendered.endswith(";") or rendered.lstrip().startswith("//"):
+            return rendered
+
+        return rendered + ";"
 
     # ------------------------------------------------------------------
     # sequence

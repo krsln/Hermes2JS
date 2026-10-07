@@ -9,9 +9,9 @@ function complexTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 7, string_id: 4754>  # String: '__BC:ControlFlow/ComplexTests/complexTest/start' (String)
     // USED → r7 = "__BC:ControlFlow/ComplexTests/complexTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
-    console.log("__BC:ControlFlow/ComplexTests/complexTest/start")
+    console.log("__BC:ControlFlow/ComplexTests/complexTest/start");
     // CODE → addr: 22 | <NewArrayWithBuffer>: <Reg8: 14, UInt16: 5, UInt16: 5, UInt16: 4497>  # Array: [1, 2, 3, 4, 5]
-    r14 = [1, 2, 3, 4, 5]
+    r14 = [1, 2, 3, 4, 5];
     // CODE → addr: 30 | <GetByIdShort>: <Reg8: 7, Reg8: 14, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     // USED → r7 = r14.length;
     // CODE → addr: 37 | <Less>: <Reg8: 5, Reg8: 0, Reg8: 7>
@@ -39,9 +39,9 @@ function complexTest() {
         for (i = 0; i < r14.length; i = r1 + 1) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 80 | <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
-            r7 = r14[i]
+            r7 = r14[i];
             // CODE → addr: 84 | <Mov>: <Reg8: 1, Reg8: 0>
-            r1 = i
+            r1 = i;
             // Switch → START
             switch (r7) {
                 case 1:
@@ -51,7 +51,7 @@ function complexTest() {
                     // CODE → addr:191 | <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                     // USED → r7 = console.log;
                     // CODE → addr:196 | <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 13>
-                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1")
+                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1");
                     break;
                 case 2:
                     // ──────────────── Block 6 ──────────────── 
@@ -60,7 +60,7 @@ function complexTest() {
                     // CODE → addr:173 | <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                     // USED → r7 = console.log;
                     // CODE → addr:178 | <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 12>
-                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-2-continue")
+                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-2-continue");
                     break;
                 case 3:
                     // ──────────────── Block 5 ──────────────── 
@@ -69,13 +69,13 @@ function complexTest() {
                     // CODE → addr:139 | <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                     // USED → r7 = console.log;
                     // CODE → addr:144 | <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 11>
-                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-3")
+                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-3");
                     // CODE → addr:149 | <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                     // USED → r15 = console;
                     // CODE → addr:155 | <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                     // USED → r7 = console.log;
                     // CODE → addr:160 | <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 10>
-                    console.log("three")
+                    console.log("three");
                     break;
                 default:
                     // ──────────────── Block 4 ──────────────── 
@@ -84,13 +84,13 @@ function complexTest() {
                     // CODE → addr:105 | <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                     // USED → r7 = console.log;
                     // CODE → addr:110 | <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 9>
-                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-default")
+                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-default");
                     // CODE → addr:115 | <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                     // USED → r15 = console;
                     // CODE → addr:121 | <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                     // USED → r7 = console.log;
                     // CODE → addr:126 | <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 8>
-                    console.log("other")
+                    console.log("other");
                     break;
             }
             // Switch → END
@@ -105,7 +105,7 @@ function complexTest() {
     // CODE → addr:228 | <LoadConstString>: <Reg8: 6, string_id: 4751>  # String: '__BC:ControlFlow/ComplexTests/complexTest/end' (String)
     // USED → r6 = "__BC:ControlFlow/ComplexTests/complexTest/end";
     // CODE → addr:232 | <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
-    console.log("__BC:ControlFlow/ComplexTests/complexTest/end")
+    console.log("__BC:ControlFlow/ComplexTests/complexTest/end");
     // CODE → addr:237 | <LoadConstUndefined>: <Reg8: 5>
     // USED → r5 = undefined;
     // CODE → addr:239 | <Ret>: <Reg8: 5>

@@ -9,7 +9,7 @@ function switchInsideTryTest(param1) {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 4124>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/start' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start");
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → addr: 22 | <LoadParam>: <Reg8: 2, UInt8: 1>
@@ -27,7 +27,7 @@ function switchInsideTryTest(param1) {
                 // CODE → addr: 98 | <LoadConstString>: <Reg8: 0, string_id: 4852>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0' (String)
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0";
                 // CODE → addr:102 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0")
+                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0");
                 break;
             case 1:
                 // ──────────────── Block 3 ──────────────── 
@@ -54,7 +54,7 @@ function switchInsideTryTest(param1) {
                 // CODE → addr: 49 | <LoadConstString>: <Reg8: 0, string_id: 4853>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default' (String)
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default";
                 // CODE → addr: 53 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default")
+                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default");
                 break;
         }
         // Switch → END
@@ -67,7 +67,7 @@ function switchInsideTryTest(param1) {
         // CODE → addr:122 | <LoadConstString>: <Reg8: 0, string_id: 3688>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block' (String)
         // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block";
         // CODE → addr:126 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block")
+        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block");
     } finally {
         // ──────────────── Block 8 ──────────────── 
         // CODE → addr:177 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -77,7 +77,7 @@ function switchInsideTryTest(param1) {
         // CODE → addr:188 | <LoadConstString>: <Reg8: 1, string_id: 4857>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block";
         // CODE → addr:192 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block")
+        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block");
     }
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:151 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -87,7 +87,7 @@ function switchInsideTryTest(param1) {
     // CODE → addr:162 | <LoadConstString>: <Reg8: 0, string_id: 4855>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/end' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/end";
     // CODE → addr:166 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end")
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end");
     // CODE → addr:171 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:173 | <Ret>: <Reg8: 0>

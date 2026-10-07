@@ -13,15 +13,15 @@ function nestedTemplateTest(param1, param2) {
     // CODE → addr: 19 | <LoadConstString>: <Reg8: 3, string_id: 4860>  # String: '__BC:Strings/TemplateLiteralTests/nestedTemplateTest/start' (String)
     // USED → r3 = "__BC:Strings/TemplateLiteralTests/nestedTemplateTest/start";
     // CODE → addr: 23 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    console.log("__BC:Strings/TemplateLiteralTests/nestedTemplateTest/start")
+    console.log("__BC:Strings/TemplateLiteralTests/nestedTemplateTest/start");
     // CODE → addr: 28 | <Add>: <Reg8: 4, Reg8: 2, Reg8: 1>
-    r4 = param1 + param2
+    r4 = param1 + param2;
     // CODE → addr: 32 | <LoadConstUInt8>: <Reg8: 3, UInt8: 10>
     // USED → r3 = 10;
     if (r4 > 10) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 70 | <Add>: <Reg8: 5, Reg8: 2, Reg8: 1>
-        r5 = param1 + param2
+        r5 = param1 + param2;
         // CODE → addr: 74 | <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 14>  # String: 'HermesInternal' (Identifier)
         // USED → r1 = HermesInternal;
         // CODE → addr: 80 | <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 4, string_id: 96>  # String: 'concat' (Identifier)
@@ -31,11 +31,11 @@ function nestedTemplateTest(param1, param2) {
         // CODE → addr: 89 | <LoadConstString>: <Reg8: 1, string_id: 876>  # String: ')' (String)
         // USED → r1 = ")";
         // CODE → addr: 93 | <Call3>: <Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5, Reg8: 1>
-        r3 = HermesInternal.concat.call("big (", r5, ")")
+        r3 = HermesInternal.concat.call("big (", r5, ")");
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 39 | <Add>: <Reg8: 6, Reg8: 2, Reg8: 1>
-        r6 = param1 + param2
+        r6 = param1 + param2;
         // CODE → addr: 43 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 3, string_id: 14>  # String: 'HermesInternal' (Identifier)
         // USED → r3 = HermesInternal;
         // CODE → addr: 49 | <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 4, string_id: 96>  # String: 'concat' (Identifier)
@@ -45,7 +45,7 @@ function nestedTemplateTest(param1, param2) {
         // CODE → addr: 58 | <LoadConstString>: <Reg8: 3, string_id: 876>  # String: ')' (String)
         // USED → r3 = ")";
         // CODE → addr: 62 | <Call3>: <Reg8: 3, Reg8: 5, Reg8: 4, Reg8: 6, Reg8: 3>
-        r3 = HermesInternal.concat.call("small (", r6, ")")
+        r3 = HermesInternal.concat.call("small (", r6, ")");
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 99 | <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 14>  # String: 'HermesInternal' (Identifier)
@@ -55,13 +55,13 @@ function nestedTemplateTest(param1, param2) {
     // CODE → addr:110 | <LoadConstString>: <Reg8: 1, string_id: 1321>  # String: 'sum is ' (String)
     // USED → r1 = "sum is ";
     // CODE → addr:114 | <Call2>: <Reg8: 3, Reg8: 2, Reg8: 1, Reg8: 3>
-    r3 = HermesInternal.concat.call("sum is ", r3)
+    r3 = HermesInternal.concat.call("sum is ", r3);
     // CODE → addr:119 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr:125 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = console.log;
     // CODE → addr:130 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    console.log(r3)
+    console.log(r3);
     // CODE → addr:135 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr:141 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -69,7 +69,7 @@ function nestedTemplateTest(param1, param2) {
     // CODE → addr:146 | <LoadConstString>: <Reg8: 0, string_id: 4857>  # String: '__BC:Strings/TemplateLiteralTests/nestedTemplateTest/end' (String)
     // USED → r0 = "__BC:Strings/TemplateLiteralTests/nestedTemplateTest/end";
     // CODE → addr:150 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    console.log("__BC:Strings/TemplateLiteralTests/nestedTemplateTest/end")
+    console.log("__BC:Strings/TemplateLiteralTests/nestedTemplateTest/end");
     // CODE → addr:155 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:157 | <Ret>: <Reg8: 0>

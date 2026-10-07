@@ -1,7 +1,7 @@
 function function_15061(param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <CreateEnvironment>: <Reg8: 0>
-    r0 = createEnvironment()
+    r0 = createEnvironment();
     // CODE → addr:  2 | <LoadParam>: <Reg8: 1, UInt8: 6>
     // USED → r1 = param6;
     // CODE → addr:  5 | <GetGlobalObject>: <Reg8: 2>
@@ -15,21 +15,21 @@ function function_15061(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 20 | <LoadConstTrue>: <Reg8: 2>
     // USED → r2 = true;
     // CODE → addr: 22 | <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 2, string_id: 205>  # String: 'value' (Identifier)
-    r3 = { "value": true }
+    r3 = { "value": true };
     // CODE → addr: 26 | <LoadConstString>: <Reg8: 2, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r2 = "__esModule";
     // CODE → addr: 30 | <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
-    r2 = Object.defineProperty(param6, "__esModule", r3)
+    r2 = Object.defineProperty(param6, "__esModule", r3);
     // CODE → addr: 37 | <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15062>  # Function: [#15062 ifTest of 241 bytes]: 2 params @ offset 0x0026812c
     // USED → r2 = ifTest;
     // CODE → addr: 42 | <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 8596>  # String: 'ifTest' (Identifier)
-    param6.ifTest = ifTest
+    param6.ifTest = ifTest;
     // CODE → addr: 48 | <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15063>  # Function: [#15063 ifElseChainTest of 231 bytes]: 3 params @ offset 0x0026821d
     // USED → r0 = ifElseChainTest;
     // CODE → addr: 53 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 10899>  # String: 'ifElseChainTest' (Identifier)
-    param6.ifElseChainTest = ifElseChainTest
+    param6.ifElseChainTest = ifElseChainTest;
     // CODE → addr: 59 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    r0 = undefined;
     // CODE → addr: 61 | <Ret>: <Reg8: 0>
     return r0;
 }

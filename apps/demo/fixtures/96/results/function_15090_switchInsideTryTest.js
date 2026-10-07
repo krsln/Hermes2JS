@@ -11,11 +11,11 @@ function switchInsideTryTest(param1) {
     // CODE → addr: 16 | <LoadConstString>: <Reg8: 2, string_id: 4684>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/start' (String)
     // USED → r2 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/start";
     // CODE → addr: 20 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start");
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → addr: 25 | <Mov>: <Reg8: 2, Reg8: 0>
-        r2 = param1
+        r2 = param1;
         // CODE → addr: 28 | <LoadConstZero>: <Reg8: 0>
         // USED → r0 = 0;
         // Switch → START
@@ -29,7 +29,7 @@ function switchInsideTryTest(param1) {
                 // CODE → addr:106 | <LoadConstString>: <Reg8: 0, string_id: 2266>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0' (String)
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0";
                 // CODE → addr:110 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0")
+                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0");
                 break;
             case 1:
                 // ──────────────── Block 3 ──────────────── 
@@ -58,7 +58,7 @@ function switchInsideTryTest(param1) {
                 // CODE → addr: 52 | <LoadConstString>: <Reg8: 0, string_id: 4678>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default' (String)
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default";
                 // CODE → addr: 56 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default")
+                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default");
                 break;
         }
         // Switch → END
@@ -71,7 +71,7 @@ function switchInsideTryTest(param1) {
         // CODE → addr:130 | <LoadConstString>: <Reg8: 0, string_id: 4680>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block' (String)
         // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block";
         // CODE → addr:134 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block")
+        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block");
     } finally {
         // ──────────────── Block 8 ──────────────── 
         // CODE → addr:185 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -81,7 +81,7 @@ function switchInsideTryTest(param1) {
         // CODE → addr:196 | <LoadConstString>: <Reg8: 1, string_id: 4683>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block";
         // CODE → addr:200 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block")
+        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block");
     }
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:159 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -91,7 +91,7 @@ function switchInsideTryTest(param1) {
     // CODE → addr:170 | <LoadConstString>: <Reg8: 0, string_id: 4682>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/end' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/end";
     // CODE → addr:174 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end")
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end");
     // CODE → addr:179 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:181 | <Ret>: <Reg8: 0>

@@ -9,7 +9,7 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 4722>  # String: '__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/start' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/start");
     // CODE → addr: 22 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr: 28 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -17,7 +17,7 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr: 33 | <LoadConstString>: <Reg8: 0, string_id: 4723>  # String: '__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/try-block' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/try-block";
     // CODE → addr: 37 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/try-block")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/try-block");
     // CODE → addr: 42 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
     // USED → r3 = Error;
     // CODE → addr: 48 | <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
@@ -31,7 +31,7 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr: 64 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Error("original");
     // CODE → addr: 68 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    r0 = new Error("original")
+    r0 = new Error("original");
     // CODE → addr: 72 | <Throw>: <Reg8: 0>
     throw r0;
     // ──────────────── Block 1 ──────────────── 
@@ -44,13 +44,13 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr: 87 | <LoadConstString>: <Reg8: 0, string_id: 4720>  # String: '__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/catch-block' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/catch-block";
     // CODE → addr: 91 | <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/catch-block")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/catch-block");
     // CODE → addr: 96 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
     // USED → r3 = Error;
     // CODE → addr:102 | <LoadConstString>: <Reg8: 0, string_id: 3427>  # String: 'wrapped: ' (String)
     // USED → r0 = "wrapped: ";
     // CODE → addr:106 | <Add>: <Reg8: 5, Reg8: 0, Reg8: 2>
-    r5 = "wrapped: " + caughtException
+    r5 = "wrapped: " + caughtException;
     // CODE → addr:110 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = Error.prototype;
     // CODE → addr:115 | <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 3>
@@ -60,12 +60,12 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr:122 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Error(r5);
     // CODE → addr:126 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    r0 = new Error(r5)
+    r0 = new Error(r5);
     // CODE → addr:130 | <Throw>: <Reg8: 0>
     throw r0;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:132 | <Catch>: <Reg8: 0>
-    r0 = caughtException
+    r0 = caughtException;
     // CODE → addr:134 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:140 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -73,7 +73,7 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr:145 | <LoadConstString>: <Reg8: 1, string_id: 4721>  # String: '__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/finally-block' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/finally-block";
     // CODE → addr:149 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/finally-block")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/finally-block");
     // CODE → addr:154 | <Throw>: <Reg8: 0>
     throw r0;
 }

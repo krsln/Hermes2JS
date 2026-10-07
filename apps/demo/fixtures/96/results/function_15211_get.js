@@ -9,21 +9,21 @@ function get() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 342>  # String: '__BC:Classes/PrivateStaticTests/Counter/get-value' (String)
     // USED → r0 = "__BC:Classes/PrivateStaticTests/Counter/get-value";
     // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    console.log("__BC:Classes/PrivateStaticTests/Counter/get-value")
+    console.log("__BC:Classes/PrivateStaticTests/Counter/get-value");
     // CODE → addr: 22 | <GetEnvironment>: <Reg8: 0, UInt8: 1>
-    r0 = getEnvironment(1)
+    r0 = getEnvironment(1);
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 4>
-    r1 = r0[4]
+    r1 = r0[4];
     // CODE → addr: 29 | <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
     // USED → r4 = r1.default;
     // CODE → addr: 34 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 5>
-    r3 = r0[5]
+    r3 = r0[5];
     // CODE → addr: 40 | <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → addr: 43 | <Call3>: <Reg8: 1, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 3>
-    r1 = r1.default.call(undefined, this, r3)
+    r1 = r1.default.call(undefined, this, r3);
     // CODE → addr: 49 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 5>
-    r0 = r0[5]
+    r0 = r0[5];
     // CODE → addr: 53 | <GetByVal>: <Reg8: 0, Reg8: 1, Reg8: 0>
     // USED → r0 = r1[r0];
     // CODE → addr: 57 | <Ret>: <Reg8: 0>

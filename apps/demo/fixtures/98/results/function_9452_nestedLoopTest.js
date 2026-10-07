@@ -9,7 +9,7 @@ function nestedLoopTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 11, string_id: 4806>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/start' (String)
     // USED → r11 = "__BC:ControlFlow/NestedTests/nestedLoopTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 11, Reg8: 12, Reg8: 13, Reg8: 11>
-    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/start")
+    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/start");
     // CODE → addr: 22 | <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → addr: 25 | <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
@@ -26,12 +26,12 @@ function nestedLoopTest() {
     for (i = 0; i < 3; i = r4 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 44 | <Mov>: <Reg8: 4, Reg8: 3>
-        r4 = i
+        r4 = i;
         // LOOP → START (for)
         for (j = 0; j < 4; j = r1 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 49 | <Mov>: <Reg8: 1, Reg8: 0>
-            r1 = j
+            r1 = j;
             if (r4 === 1 && r1 === 2) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 60 | <TryGetById>: <Reg8: 14, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -39,13 +39,13 @@ function nestedLoopTest() {
                 // CODE → addr: 66 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                 // USED → r13 = console.log;
                 // CODE → addr: 71 | <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 12>
-                console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if")
+                console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if");
                 // CODE → addr: 76 | <TryGetById>: <Reg8: 14, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                 // USED → r14 = console;
                 // CODE → addr: 82 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                 // USED → r13 = console.log;
                 // CODE → addr: 87 | <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 11>
-                console.log("nested")
+                console.log("nested");
             }
         }
         // LOOP → END
@@ -59,7 +59,7 @@ function nestedLoopTest() {
     // CODE → addr:119 | <LoadConstString>: <Reg8: 10, string_id: 4805>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/end' (String)
     // USED → r10 = "__BC:ControlFlow/NestedTests/nestedLoopTest/end";
     // CODE → addr:123 | <Call2>: <Reg8: 10, Reg8: 11, Reg8: 12, Reg8: 10>
-    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/end")
+    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/end");
     // CODE → addr:128 | <LoadConstUndefined>: <Reg8: 9>
     // USED → r9 = undefined;
     // CODE → addr:130 | <Ret>: <Reg8: 9>

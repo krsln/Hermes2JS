@@ -9,7 +9,7 @@ function* _anon_0_generatorWithLoopTest(param1) {
     // CODE → addr: 23 | <LoadConstString>: <Reg8: 2, string_id: 4786>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/start' (String)
     // USED → r2 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/start";
     // CODE → addr: 27 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/start")
+    console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/start");
     // CODE → addr: 34 | <Less>: <Reg8: 6, Reg8: 4, Reg8: 5>
     // USED → r6 = 0 < param1;
     // CODE → addr: 38 | <LoadConstString>: <Reg8: 3, string_id: 4783>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/skip' (String)
@@ -21,7 +21,7 @@ function* _anon_0_generatorWithLoopTest(param1) {
         for (i = 0; i < param1; i = r6 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 48 | <Mov>: <Reg8: 6, Reg8: 4>
-            r6 = i
+            r6 = i;
             if (r6 === 2) {
                 // ──────────────── Block 7 ──────────────── 
                 // CODE → addr: 72 | <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -29,11 +29,11 @@ function* _anon_0_generatorWithLoopTest(param1) {
                 // CODE → addr: 78 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
                 // USED → r7 = console.log;
                 // CODE → addr: 83 | <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
-                console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/skip")
+                console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/skip");
             } else {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr: 55 | <Mul>: <Reg8: 7, Reg8: 6, Reg8: 6>
-                r7 = r6 * r6
+                r7 = r6 * r6;
             }
         }
         // LOOP → END
@@ -49,7 +49,7 @@ function* _anon_0_generatorWithLoopTest(param1) {
     // CODE → addr:106 | <LoadConstString>: <Reg8: 1, string_id: 4782>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/end' (String)
     // USED → r1 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/end";
     // CODE → addr:110 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/end")
+    console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/end");
     // CODE → addr:115 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr:118 | <Ret>: <Reg8: 1>

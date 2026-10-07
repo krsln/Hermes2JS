@@ -61,8 +61,8 @@ def test_unfoldable_store_stays_a_plain_statement():
     # separate `r1[1] = r9`.
     out = _fixture("96", 15189)
 
-    assert re.search(r"r1 = \[r6\]\n", out)
-    assert re.search(r"\n\s*r1\[1\] = r9\n", out)
+    assert re.search(r"r1 = \[r6\];\n", out)
+    assert re.search(r"\n\s*r1\[1\] = r9;\n", out)
 
 
 def test_ternary_default_keeps_the_array_not_the_element():
@@ -72,7 +72,7 @@ def test_ternary_default_keeps_the_array_not_the_element():
     out = _decompile((_DATA / "array_literal_resolvePath.hasm").read_text(encoding="utf-8"), 10215)
 
     assert "r0 = [param2]" in out
-    assert "r3 = r0\n" in out
+    assert "r3 = r0;\n" in out
     assert "r3 = r0[0]" not in out
 
 

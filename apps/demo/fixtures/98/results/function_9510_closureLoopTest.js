@@ -11,11 +11,11 @@ function closureLoopTest() {
     // CODE → addr: 16 | <LoadConstString>: <Reg8: 0, string_id: 4927>  # String: '__BC:Functions/ClosureTests/closureLoopTest/start' (String)
     // USED → r0 = "__BC:Functions/ClosureTests/closureLoopTest/start";
     // CODE → addr: 20 | <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
-    console.log("__BC:Functions/ClosureTests/closureLoopTest/start")
+    console.log("__BC:Functions/ClosureTests/closureLoopTest/start");
     // CODE → addr: 25 | <NewArray>: <Reg8: 0, UInt16: 0>
-    r0 = []
+    r0 = [];
     // CODE → addr: 29 | <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
-    __environment__[0] = r0
+    __environment__[0] = r0;
     // CODE → addr: 33 | <CreateClosure>: <Reg8: 6, Reg8: 2, function_id: 12480>  # Function: [#12480 _loop of 39 bytes]: 2 params @ offset 0x00243e88
     // USED → r6 = _loop;
     // CODE → addr: 38 | <LoadConstZero>: <Reg8: 5>
@@ -25,19 +25,19 @@ function closureLoopTest() {
     // CODE → addr: 43 | <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
     // USED → r3 = 3;
     // CODE → addr: 46 | <LoadConstZero>: <Reg8: 2>
-    r2 = 0
+    r2 = 0;
     // LOOP → START (do_while)
     do {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 48 | <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 2>
-        r7 = _loop.call(0, r2)
+        r7 = _loop.call(0, r2);
         // CODE → addr: 53 | <AddN>: <Reg8: 2, Reg8: 2, Reg8: 4>
-        r2 = r2 + 1
+        r2 = r2 + 1;
     } while (r2 < 3);
     // LOOP → END
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 61 | <Mov>: <Reg8: 2, Reg8: 0>
-    r2 = r0
+    r2 = r0;
     // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (for_of)
@@ -48,9 +48,9 @@ function closureLoopTest() {
         // CODE → addr: 89 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r5 = console.log;
         // CODE → addr: 94 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-        r4 = r4()
+        r4 = r4();
         // CODE → addr: 98 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-        console.log(r4)
+        console.log(r4);
     }
     // LOOP → END
     // ──────────────── Block 6 ──────────────── 
@@ -61,6 +61,6 @@ function closureLoopTest() {
     // CODE → addr:123 | <LoadConstString>: <Reg8: 1, string_id: 4924>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
     // USED → r1 = "__BC:Functions/ClosureTests/closureLoopTest/end";
     // CODE → addr:127 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:Functions/ClosureTests/closureLoopTest/end")
+    console.log("__BC:Functions/ClosureTests/closureLoopTest/end");
     // CODE → addr:132 | <Ret>: <Reg8: 0>
 }

@@ -9,7 +9,7 @@ function tryCatchTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 4890>  # String: '__BC:Exceptions/ExceptionTests/tryCatchTest/start' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/start");
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → addr: 22 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -19,7 +19,7 @@ function tryCatchTest() {
         // CODE → addr: 33 | <LoadConstString>: <Reg8: 0, string_id: 4891>  # String: '__BC:Exceptions/ExceptionTests/tryCatchTest/try-block' (String)
         // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchTest/try-block";
         // CODE → addr: 37 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/try-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/try-block");
         // CODE → addr: 42 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
         // USED → r3 = Error;
         // CODE → addr: 48 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
@@ -43,13 +43,13 @@ function tryCatchTest() {
         // CODE → addr: 82 | <LoadConstString>: <Reg8: 0, string_id: 4888>  # String: '__BC:Exceptions/ExceptionTests/tryCatchTest/catch-block' (String)
         // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchTest/catch-block";
         // CODE → addr: 86 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/catch-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/catch-block");
         // CODE → addr: 91 | <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r2 = console;
         // CODE → addr: 97 | <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r0 = console.log;
         // CODE → addr:102 | <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 3>
-        console.log(caughtException)
+        console.log(caughtException);
     } finally {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:173 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -59,7 +59,7 @@ function tryCatchTest() {
         // CODE → addr:184 | <LoadConstString>: <Reg8: 2, string_id: 4889>  # String: '__BC:Exceptions/ExceptionTests/tryCatchTest/finally-block' (String)
         // USED → r2 = "__BC:Exceptions/ExceptionTests/tryCatchTest/finally-block";
         // CODE → addr:188 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/finally-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/finally-block");
         // CODE → addr:193 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r3 = console;
         // CODE → addr:199 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -67,7 +67,7 @@ function tryCatchTest() {
         // CODE → addr:204 | <LoadConstString>: <Reg8: 1, string_id: 11290>  # String: 'finally' (Identifier)
         // USED → r1 = "finally";
         // CODE → addr:208 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("finally")
+        console.log("finally");
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:147 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -77,7 +77,7 @@ function tryCatchTest() {
     // CODE → addr:158 | <LoadConstString>: <Reg8: 0, string_id: 3600>  # String: '__BC:Exceptions/ExceptionTests/tryCatchTest/end' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchTest/end";
     // CODE → addr:162 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/end")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/end");
     // CODE → addr:167 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:169 | <Ret>: <Reg8: 0>

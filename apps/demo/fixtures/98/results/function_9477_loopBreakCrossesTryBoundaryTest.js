@@ -11,7 +11,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr: 16 | <LoadConstString>: <Reg8: 0, string_id: 4831>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start";
     // CODE → addr: 20 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start");
     // CODE → addr: 25 | <GetByIdShort>: <Reg8: 0, Reg8: 8, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     // USED → r0 = param1.length;
     // CODE → addr: 30 | <LoadConstZero>: <Reg8: 7>
@@ -27,16 +27,16 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr: 47 | <LoadConstString>: <Reg8: 4, string_id: 4830>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item";
     // CODE → addr: 51 | <LoadConstZero>: <Reg8: 2>
-    r2 = 0
+    r2 = 0;
     if (0 < param1.length) {
         // LOOP → START (do_while)
         do {
             try {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → addr: 59 | <Mov>: <Reg8: 0, Reg8: 2>
-                r0 = r2
+                r0 = r2;
                 // CODE → addr: 62 | <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
-                r9 = param1[r0]
+                r9 = param1[r0];
                 if (r9 < 0) {
                     // ──────────────── Block 7 ──────────────── 
                     // CODE → addr:164 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -46,13 +46,13 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                     // CODE → addr:175 | <LoadConstString>: <Reg8: 0, string_id: 4823>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break' (String)
                     // USED → r0 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break";
                     // CODE → addr:179 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break")
+                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break");
                     // CODE → addr:  0 | BreakStatement
                     break;
                 }
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → addr: 70 | <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
-                r9 = param1[r0]
+                r9 = param1[r0];
                 if (r9 === 0) {
                     // ──────────────── Block 4 ──────────────── 
                     // CODE → addr:117 | <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -60,7 +60,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                     // CODE → addr:123 | <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                     // USED → r9 = console.log;
                     // CODE → addr:128 | <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 5>
-                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue")
+                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue");
                 } else {
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → addr: 78 | <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -68,9 +68,9 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                     // CODE → addr: 84 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                     // USED → r10 = console.log;
                     // CODE → addr: 89 | <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
-                    r9 = param1[r0]
+                    r9 = param1[r0];
                     // CODE → addr: 93 | <Call3>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 4, Reg8: 9>
-                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", r9)
+                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", r9);
                 }
             } finally {
                 // ──────────────── Block 9 ──────────────── 
@@ -79,11 +79,11 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                 // CODE → addr:232 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                 // USED → r1 = console.log;
                 // CODE → addr:237 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-                console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
+                console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally");
             }
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr:149 | <AddN>: <Reg8: 2, Reg8: 0, Reg8: 6>
-            r2 = r0 + 1
+            r2 = r0 + 1;
         } while (r2 < param1.length);
         // LOOP → END
     }
@@ -95,7 +95,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr:211 | <LoadConstString>: <Reg8: 0, string_id: 4825>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end";
     // CODE → addr:215 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end")
+    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end");
     // CODE → addr:220 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:222 | <Ret>: <Reg8: 0>

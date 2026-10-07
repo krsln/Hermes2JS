@@ -9,7 +9,7 @@ function tryFinallyNoCatchTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 4899>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/start' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/start");
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → addr: 22 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -19,7 +19,7 @@ function tryFinallyNoCatchTest() {
         // CODE → addr: 33 | <LoadConstString>: <Reg8: 0, string_id: 4900>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/try-block' (String)
         // USED → r0 = "__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/try-block";
         // CODE → addr: 37 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-        console.log("__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/try-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/try-block");
         // CODE → addr: 42 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
         // USED → r3 = Error;
         // CODE → addr: 48 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
@@ -43,6 +43,6 @@ function tryFinallyNoCatchTest() {
         // CODE → addr: 82 | <LoadConstString>: <Reg8: 1, string_id: 4896>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/finally-block' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/finally-block";
         // CODE → addr: 86 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/finally-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/finally-block");
     }
 }

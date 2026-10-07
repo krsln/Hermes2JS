@@ -11,7 +11,7 @@ function ifTest(param1) {
     // CODE → addr: 16 | <LoadConstString>: <Reg8: 1, string_id: 4603>  # String: '__BC:ControlFlow/IfTests/ifTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/IfTests/ifTest/start";
     // CODE → addr: 20 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-    console.log("__BC:ControlFlow/IfTests/ifTest/start")
+    console.log("__BC:ControlFlow/IfTests/ifTest/start");
     // CODE → addr: 25 | <LoadConstUInt8>: <Reg8: 1, UInt8: 10>
     // USED → r1 = 10;
     if (param1 > 10) {
@@ -23,7 +23,7 @@ function ifTest(param1) {
         // CODE → addr:188 | <LoadConstString>: <Reg8: 1, string_id: 1939>  # String: '__BC:ControlFlow/IfTests/ifTest/branch-big' (String)
         // USED → r1 = "__BC:ControlFlow/IfTests/ifTest/branch-big";
         // CODE → addr:192 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:ControlFlow/IfTests/ifTest/branch-big")
+        console.log("__BC:ControlFlow/IfTests/ifTest/branch-big");
         // CODE → addr:197 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = console;
         // CODE → addr:203 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -31,7 +31,7 @@ function ifTest(param1) {
         // CODE → addr:208 | <LoadConstString>: <Reg8: 1, string_id: 2969>  # String: 'big' (String)
         // USED → r1 = "big";
         // CODE → addr:212 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("big")
+        console.log("big");
     } else if (param1 > 5) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr:135 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -41,7 +41,7 @@ function ifTest(param1) {
         // CODE → addr:146 | <LoadConstString>: <Reg8: 1, string_id: 4597>  # String: '__BC:ControlFlow/IfTests/ifTest/branch-medium' (String)
         // USED → r1 = "__BC:ControlFlow/IfTests/ifTest/branch-medium";
         // CODE → addr:150 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:ControlFlow/IfTests/ifTest/branch-medium")
+        console.log("__BC:ControlFlow/IfTests/ifTest/branch-medium");
         // CODE → addr:155 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = console;
         // CODE → addr:161 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -49,7 +49,7 @@ function ifTest(param1) {
         // CODE → addr:166 | <LoadConstString>: <Reg8: 1, string_id: 10914>  # String: 'medium' (Identifier)
         // USED → r1 = "medium";
         // CODE → addr:170 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("medium")
+        console.log("medium");
     } else if (param1 === 0) {
         // ──────────────── Block 4 ──────────────── 
         // CODE → addr: 93 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -59,7 +59,7 @@ function ifTest(param1) {
         // CODE → addr:104 | <LoadConstString>: <Reg8: 1, string_id: 4598>  # String: '__BC:ControlFlow/IfTests/ifTest/branch-zero' (String)
         // USED → r1 = "__BC:ControlFlow/IfTests/ifTest/branch-zero";
         // CODE → addr:108 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:ControlFlow/IfTests/ifTest/branch-zero")
+        console.log("__BC:ControlFlow/IfTests/ifTest/branch-zero");
         // CODE → addr:113 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = console;
         // CODE → addr:119 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -67,7 +67,7 @@ function ifTest(param1) {
         // CODE → addr:124 | <LoadConstString>: <Reg8: 1, string_id: 615>  # String: 'zero' (String)
         // USED → r1 = "zero";
         // CODE → addr:128 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("zero")
+        console.log("zero");
     } else {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 48 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -77,7 +77,7 @@ function ifTest(param1) {
         // CODE → addr: 59 | <LoadConstString>: <Reg8: 1, string_id: 523>  # String: '__BC:ControlFlow/IfTests/ifTest/branch-small' (String)
         // USED → r1 = "__BC:ControlFlow/IfTests/ifTest/branch-small";
         // CODE → addr: 63 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:ControlFlow/IfTests/ifTest/branch-small")
+        console.log("__BC:ControlFlow/IfTests/ifTest/branch-small");
         // CODE → addr: 68 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = console;
         // CODE → addr: 74 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -85,7 +85,7 @@ function ifTest(param1) {
         // CODE → addr: 79 | <LoadConstString>: <Reg8: 1, string_id: 9676>  # String: 'small' (Identifier)
         // USED → r1 = "small";
         // CODE → addr: 83 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("small")
+        console.log("small");
     }
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:217 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -95,7 +95,7 @@ function ifTest(param1) {
     // CODE → addr:228 | <LoadConstString>: <Reg8: 0, string_id: 4600>  # String: '__BC:ControlFlow/IfTests/ifTest/end' (String)
     // USED → r0 = "__BC:ControlFlow/IfTests/ifTest/end";
     // CODE → addr:232 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    console.log("__BC:ControlFlow/IfTests/ifTest/end")
+    console.log("__BC:ControlFlow/IfTests/ifTest/end");
     // CODE → addr:237 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:239 | <Ret>: <Reg8: 0>

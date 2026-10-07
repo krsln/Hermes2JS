@@ -79,7 +79,7 @@ def test_loop_bound_reads_the_items_register_not_a_dangling_one():
     out = decompile("96", 15084)
 
     assert dangling_registers(out) == []
-    assert re.search(r"r2 = param1\n", out)
+    assert re.search(r"r2 = param1;\n", out)
 
 
 def test_default_destructuring_reads_the_fetched_value_once():
@@ -89,7 +89,7 @@ def test_default_destructuring_reads_the_fetched_value_once():
     out = decompile("96", 15104)
 
     assert "r5 = r3" in out
-    assert "r4 = r2\n" in out
+    assert "r4 = r2;\n" in out
     # one READ of each property (`.timeout` also appears once more as the
     # config literal's own `r2.timeout = 500`)
     assert out.count("= r2.timeout") == 1

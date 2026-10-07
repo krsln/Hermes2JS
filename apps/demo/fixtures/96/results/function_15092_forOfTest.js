@@ -9,9 +9,9 @@ function forOfTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 4804>  # String: '__BC:Iterators/IteratorTests/forOfTest/start' (String)
     // USED → r0 = "__BC:Iterators/IteratorTests/forOfTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Iterators/IteratorTests/forOfTest/start")
+    console.log("__BC:Iterators/IteratorTests/forOfTest/start");
     // CODE → addr: 22 | <NewArrayWithBuffer>: <Reg8: 2, UInt16: 4, UInt16: 4, UInt16: 20817>  # Array: [1, 2, 3, 4]
-    r2 = [1, 2, 3, 4]
+    r2 = [1, 2, 3, 4];
     // CODE → addr: 33 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (for_of)
@@ -22,7 +22,7 @@ function forOfTest() {
         // CODE → addr: 52 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r4 = console.log;
         // CODE → addr: 57 | <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
-        console.log(r6)
+        console.log(r6);
     }
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 
@@ -33,6 +33,6 @@ function forOfTest() {
     // CODE → addr: 82 | <LoadConstString>: <Reg8: 1, string_id: 4803>  # String: '__BC:Iterators/IteratorTests/forOfTest/end' (String)
     // USED → r1 = "__BC:Iterators/IteratorTests/forOfTest/end";
     // CODE → addr: 86 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:Iterators/IteratorTests/forOfTest/end")
+    console.log("__BC:Iterators/IteratorTests/forOfTest/end");
     // CODE → addr: 91 | <Ret>: <Reg8: 0>
 }
