@@ -81,7 +81,7 @@ function classTest() {
     // CODE → addr:173 | <Mov>: <Reg8: 9, Reg8: 3>
     // USED → r9 = CreateThisForSuper(r6);
     // CODE → addr:176 | <CallWithNewTarget>: <Reg8: 2, Reg8: 6, Reg8: 4, UInt8: 3>
-    r2 = Reflect.construct(r6, ["Rex", "Woof"], r2[1]);
+    r2 = Reflect.construct(r6, ["Rex", "Woof"], r4);
     // CODE → addr:181 | <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
     r3 = r2;
     // CODE → addr:185 | <LoadConstEmpty>: <Reg8: 2>

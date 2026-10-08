@@ -31,7 +31,7 @@ function spreadObjectTest() {
     // CODE → addr: 64 | <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 4>
     console.log(r4);
     // CODE → addr: 69 | <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 41>  # String: 'x' (Identifier)
-    // USED → r5 = r4.x;
+    r5 = r4.x;
     // CODE → addr: 74 | <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0);
     // CODE → addr: 77 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 1>
@@ -49,7 +49,7 @@ function spreadObjectTest() {
     // CODE → addr:104 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
     // CODE → addr:109 | <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
-    console.log(r4.x, r4);
+    console.log(r5, r4);
     // CODE → addr:115 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:121 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

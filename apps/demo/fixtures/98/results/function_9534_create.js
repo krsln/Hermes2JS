@@ -13,7 +13,7 @@ function create(param1) {
     // CODE → addr: 20 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Classes/ClassTests/Dog/static-create");
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 0, UInt8: 2>
-    // USED → r5 = r0[2];
+    r5 = r0[2];
     if (typeof r0[2] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 41 | <LoadConstString>: <Reg8: 7, string_id: 4299>  # String: 'Trying to call a non-function' (String)
@@ -35,7 +35,7 @@ function create(param1) {
     // CODE → addr: 68 | <Mov>: <Reg8: 8, Reg8: 2>
     // USED → r8 = CreateThisForSuper(r3);
     // CODE → addr: 71 | <CallWithNewTarget>: <Reg8: 0, Reg8: 3, Reg8: 5, UInt8: 3>
-    r0 = Reflect.construct(r3, [param1, "Woof"], r0[2]);
+    r0 = Reflect.construct(r3, [param1, "Woof"], r5);
     // CODE → addr: 76 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
     // CODE → addr: 80 | <LoadConstEmpty>: <Reg8: 2>
     // USED → r2 = /* empty */;

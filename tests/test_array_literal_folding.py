@@ -82,5 +82,8 @@ def test_conditional_arm_defining_an_array_is_not_folded_into_a_ternary():
     # into `cond ? a : b`, deleting the statement that creates the array.
     out = _decompile((_DATA / "array_literal_in_conditional_arm.hasm").read_text(encoding="utf-8"), 9241)
 
-    assert "r7 = [-r0.x, -r0.y, -r0.z]" in out
+    # `r0` is reassigned (`r0 = r2`) before the arm runs, so the operands are
+    # read from the registers that still hold them, not re-read through `r0`.
+    assert "r7 = [r6];" in out and "r7[1] = r5;" in out
+    assert "r0 = r7[r2]" in out
     assert "(r8 !== r7) ?" not in out

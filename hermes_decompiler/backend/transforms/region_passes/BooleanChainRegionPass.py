@@ -9,6 +9,7 @@ from hermes_decompiler.backend.transforms.shared import (
     negate_condition, is_pure, has_side_effects, repoint_references, reclaim_definition,
     reclaim_unfolded_definition, absorb_arm_definitions, TRIVIAL_NODE_TYPES
 )
+from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
@@ -217,6 +218,14 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             min_block_id=then_block.id,
             exclude={then_result, last},
         )
+
+        # A later reader that names the register (`r9 = r4`, kept as a read
+        # because the operands were redefined in between) needs the fold
+        # result as a statement of its own.
+        if last.definition_used and _reads_register_by_name(
+                self.cfg, last.dest_reg, max(last.entry.address, then_result.entry.address),
+        ):
+            last.definition_used = False
 
         return True
 

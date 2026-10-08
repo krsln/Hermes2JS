@@ -11,7 +11,9 @@ from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.frontend.batch_pipeline.tables import CreatorFacts
-from hermes_decompiler.ir.expressions import Identifier
+from hermes_decompiler.ir.expressions import (
+    AwaitExpression, CallExpression, Identifier, NewExpression, YieldExpression,
+)
 from .RegisterState import RegisterState
 
 logger = get_logger(__name__)
@@ -138,6 +140,17 @@ class HermesAnalysis:
 
             if name == own and current is state:
                 kind = "self"
+            elif (
+                    current is not None
+                    and name != own
+                    and not isinstance(state.value, Identifier)
+                    and self._redefinition_prints(current)
+            ):
+                # A computed expression over a register that was since
+                # reassigned by a statement that STAYS in the output (a call
+                # result: `r6 = r7.index` ... `r7 = r9.getItemCount(...)`).
+                # Inlined, it would read the new value.
+                return "other"
             elif isinstance(state.value, Identifier) and self._REGISTER_NAME_RE.fullmatch(state.value.name):
                 # A bare register alias (`Mov r5, r4` -> value `r4`): the
                 # alias only means anything while r4 still holds what it
@@ -148,6 +161,14 @@ class HermesAnalysis:
                 return "other"
 
         return kind
+
+    @staticmethod
+    def _redefinition_prints(state: RegisterState) -> bool:
+        """The definition is kept as a statement of its own: a call/construct
+        result is never folded into a reader, and a pinned one prints too."""
+        return state.definition.definition_pinned or isinstance(
+            state.value, (CallExpression, NewExpression, AwaitExpression, YieldExpression),
+        )
 
     def may_inline(self, state: RegisterState) -> bool:
         """Whether `state.value` can be substituted at the read being handled."""

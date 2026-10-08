@@ -516,3 +516,42 @@ def test_defaulted_parameter_is_still_named_by_a_later_return():
 
     assert 'r1 = (param1 !== undefined) ? param1 : "none";' in code
     assert code.index('r1 = (param1') < code.index("return r1;")
+
+
+_OPTIONAL_CHAIN_ARGS_HASM = """
+=> [Function #13659 "" of 67 bytes]: 3 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x0025df99
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000003: <LoadParam>: <Reg8: 7, UInt8: 2>
+==> 00000006: <GetParentEnvironment>: <Reg8: 3, UInt8: 1>
+==> 00000009: <LoadFromEnvironment>: <Reg8: 6, Reg8: 3, UInt8: 0>
+==> 0000000d: <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 0>
+==> 00000011: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 2>
+==> 00000015: <Mov>: <Reg8: 4, Reg8: 3>
+==> 00000018: <JmpFalse>: <Addr8: 7, Reg8: 4>  # Address: 0000001f
+==> 0000001b: <GetByVal>: <Reg8: 4, Reg8: 3, Reg8: 7>
+==> 0000001f: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 3>
+==> 00000023: <Mov>: <Reg8: 3, Reg8: 2>
+==> 00000026: <JmpFalse>: <Addr8: 7, Reg8: 3>  # Address: 0000002d
+==> 00000029: <GetByVal>: <Reg8: 3, Reg8: 2, Reg8: 7>
+==> 0000002d: <LoadParam>: <Reg8: 10, UInt8: 1>
+==> 00000030: <LoadConstUndefined>: <Reg8: 0>
+==> 00000032: <LoadConstUndefined>: <Reg8: 12>
+==> 00000034: <Mov>: <Reg8: 11, Reg8: 5>
+==> 00000037: <Mov>: <Reg8: 9, Reg8: 4>
+==> 0000003a: <Mov>: <Reg8: 8, Reg8: 3>
+==> 0000003d: <Call>: <Reg8: 1, Reg8: 6, UInt8: 5>
+==> 00000041: <Ret>: <Reg8: 0>
+"""
+
+
+def test_chain_result_read_by_name_after_a_redefinition_is_still_assigned():
+    # `r4 = a && a[k]` is read again by `Mov r9, r4` after `r2` was
+    # reassigned, so the read stays `r9 = r4` and r4 needs its statement.
+    out = Decompiler.render(Decompiler.build_context(_OPTIONAL_CHAIN_ARGS_HASM, 13659), verbose=False)
+    code = "\n".join(line for line in out.splitlines() if not line.strip().startswith("//"))
+
+    assert "r4 = r2[2] && r2[2][param2];" in code
+    assert code.index("r4 = r2[2] &&") < code.index("r9 = r4;")
