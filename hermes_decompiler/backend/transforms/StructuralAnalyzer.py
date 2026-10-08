@@ -239,7 +239,7 @@ class StructuralAnalyzer:
         # it sees the fully-settled block contents (e.g. induction
         # aliasing already resolved by LoopInductionAliasPass) rather
         # than a still-aliased register name.
-        ReturnValueResolutionPass(graph, self.cfg).run()
+        ReturnValueResolutionPass(graph, self.cfg, flow).run()
 
         # Removes a dead `rN = rM;` register-copy instruction (see its
         # own docstring for the concrete motivating case -

@@ -428,3 +428,34 @@ def test_environment_destructuring_is_kept_when_a_temporary_slot_is_read_elsewhe
     out = Decompiler.render(Decompiler.build_context(hasm, 13745, batch_tables=_batch("98")), verbose=False)
 
     assert "GetIterator" in out and "[r1[2][0]" not in out
+
+
+_EXIT_APP_HASM = """
+=> [Function #3370 "exitApp" of 36 bytes]: 1 params, frame size=11, strict=1, exc handler=0, debug info=0  @ offset 0x00189ca6
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
+==> 00000007: <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 0, string_id: 115>  # String: 'default' (Identifier)
+==> 0000000c: <LoadConstUndefined>: <Reg8: 0>
+==> 0000000e: <JmpTrue>: <Addr8: 5, Reg8: 2>  # Address: 00000013
+==> 00000011: <Ret>: <Reg8: 0>
+==> 00000013: <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 0, string_id: 115>  # String: 'default' (Identifier)
+==> 00000018: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 17351>  # String: 'invokeDefaultBackPressHandler' (Identifier)
+==> 0000001e: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000022: <Ret>: <Reg8: 0>
+"""
+
+
+def test_return_after_a_merged_if_tail_still_resolves_its_value():
+    # `if (x) { ... } return undefined` where the early-return arm and the
+    # tail return were merged: the tail block lost its predecessors, so
+    # `return r0` was left naming a register whose `r0 = undefined` had
+    # already been consumed by the other arm (dangling `r0`).
+    out = Decompiler.render(Decompiler.build_context(_EXIT_APP_HASM, 3370), verbose=False)
+    code = "\n".join(line for line in out.splitlines() if not line.strip().startswith("//"))
+
+    assert "return r0" not in code
+    assert "r0" not in code
+    assert "invokeDefaultBackPressHandler()" in code

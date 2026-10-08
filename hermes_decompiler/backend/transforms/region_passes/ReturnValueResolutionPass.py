@@ -47,6 +47,10 @@ class ReturnValueResolutionPass(RegionPass):
     codebase's region passes - always prefers the former.
     """
 
+    def __init__(self, graph, cfg, flow=None):
+        super().__init__(graph, cfg)
+        self.flow = flow
+
     def run(self) -> None:
         for block in list(self.graph.blocks()):
             for instr in list(block.instructions):
@@ -195,6 +199,12 @@ class ReturnValueResolutionPass(RegionPass):
 
                 queue.extend(block.predecessors)
 
+            if not found_values and not before_block.predecessors and self.flow is not None:
+                # The structurers detached this block from its predecessors
+                # (an if-tail that was merged), so the live CFG says nothing
+                # about what reaches it; the original flow does.
+                return self._resolve_from_flow(reg, before_instr)
+
             if not found_values:
                 return self._catch_parameter(reg, before_block), None
 
@@ -210,6 +220,58 @@ class ReturnValueResolutionPass(RegionPass):
             return None, None
 
         return found, found_instr
+
+    def _resolve_from_flow(self, reg: int, before_instr):
+        """Same reaching-definition walk, over the pre-structuring flow."""
+        by_id = {bid: (succ, instrs) for bid, succ, instrs in self.flow.blocks}
+        predecessors: dict[int, list[int]] = {bid: [] for bid in by_id}
+
+        for bid, (succ, _) in by_id.items():
+            for target in succ:
+                predecessors.setdefault(target, []).append(bid)
+
+        start = next(
+            (bid for bid, (_, instrs) in by_id.items() if any(i is before_instr for i in instrs)), None
+        )
+
+        if start is None:
+            return None, None
+
+        value, instr = self._find_definition_in_instructions(by_id[start][1], reg, stop_before=before_instr)
+
+        if value is None:
+            visited = {start}
+            queue = deque(predecessors.get(start, ()))
+            found_values = []
+
+            while queue:
+                bid = queue.popleft()
+
+                if bid in visited:
+                    continue
+
+                visited.add(bid)
+                found, found_instr = self._find_definition_in_instructions(by_id[bid][1], reg)
+
+                if found is not None:
+                    found_values.append((found, found_instr))
+                    continue
+
+                queue.extend(predecessors.get(bid, ()))
+
+            if not found_values:
+                return None, None
+
+            value, instr = found_values[0]
+
+            for other, _ in found_values[1:]:
+                if structural_key(other) != structural_key(value):
+                    return None, None
+
+        if isinstance(value, (ObjectExpression, ArrayExpression, CallExpression, YieldExpression, AwaitExpression)):
+            return None, None
+
+        return value, instr
 
     def _catch_parameter(self, reg: int, block: BasicBlock):
         """`catch (e) { ...; throw rN }`: nothing in the CFG defines `rN`
