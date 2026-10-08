@@ -165,3 +165,26 @@ def test_printed_literal_definition_before_a_nested_if_is_not_skipped():
 
     assert 'r9 = { "context": r8, "memoizedValue": r8._currentValue2, "next": null }' in out
     assert "r4 = r5[114]" in out
+
+
+def test_define_own_by_id_name_is_resolved_in_98():
+    # hermes-98 `spreadObjectTest`: `{...x, z: 3}`. The short `DefineOwnById`
+    # was the only `*ById` opcode without a `string_id` tag, so the property
+    # printed as `r5.string_6711`.
+    from tests.test_register_semantics import decompile
+
+    out = decompile("98", 9493)
+
+    assert "r5.z = 3" in out
+    assert "string_6711" not in out
+
+
+def test_no_98_fixture_prints_an_unresolved_property_name():
+    from pathlib import Path
+
+    results = Path(__file__).resolve().parents[1] / "apps" / "demo" / "fixtures" / "98" / "results"
+
+    for path in results.glob("function_*.js"):
+        assert "string_" not in "".join(
+            line for line in path.read_text(encoding="utf-8").splitlines(True) if not line.lstrip().startswith("//")
+        ).replace("string_id", ""), path.name

@@ -20,8 +20,8 @@ function spreadObjectTest() {
     r3 = copyDataProperties(r9, r8);
     // CODE → addr: 37 | <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
     // USED → r0 = 3;
-    // CODE → addr: 40 | <DefineOwnById>: <Reg8: 5, Reg8: 0, UInt8: 0, UInt16: 6711>
-    r5.string_6711 = 3;
+    // CODE → addr: 40 | <DefineOwnById>: <Reg8: 5, Reg8: 0, UInt8: 0, string_id: 6711>  # String: 'z' (Identifier)
+    r5.z = 3;
     // CODE → addr: 46 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 52 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
