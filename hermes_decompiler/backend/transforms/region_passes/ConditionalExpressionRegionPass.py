@@ -6,6 +6,7 @@ from hermes_decompiler.backend.transforms.shared import (
     negate_condition, has_side_effects, repoint_references, reclaim_definition, is_unfolded_literal_definition,
     absorb_arm_definitions, substitute_register,
 )
+from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import ConditionalExpression, Expression, Identifier
@@ -143,6 +144,16 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             )
             last.value = new_expr
 
+            # Something after the merge still names the register (`return r1`
+            # after a defaulted parameter): the ternary's own statement must
+            # keep printing, or that bare read dangles. (The readers that were
+            # already handed the arm's value keep a copy of the ternary: it is
+            # pure, and repointing them to the register is only sound where
+            # nothing reassigned it in between.)
+            named_later = _reads_register_by_name(
+                self.cfg, last.dest_reg, max(last.entry.address, arm_result.entry.address),
+            )
+
             reclaim_definition(
                 self.cfg, self.graph.root, last, default_expr, arm_result,
                 ignore_blocks={arm_block}, ignore_regions={if_region},
@@ -156,6 +167,10 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                 min_block_id=arm_block.id,
                 exclude={arm_result, last},
             )
+
+            if named_later:
+                last.definition_used = False
+
             return True
 
         return False

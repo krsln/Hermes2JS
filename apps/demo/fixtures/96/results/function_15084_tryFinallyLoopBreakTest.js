@@ -3,7 +3,7 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr:  0 | <LoadParam>: <Reg8: 6, UInt8: 1>
     // USED → r6 = param1;
     // CODE → addr:  3 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined;
+    // USED → r0 = undefined;
     // CODE → addr:  7 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → addr:  9 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -82,5 +82,4 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr:140 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end");
     // CODE → addr:145 | <Ret>: <Reg8: 0>
-    return r0;
 }

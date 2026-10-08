@@ -199,14 +199,16 @@ class ReturnValueResolutionPass(RegionPass):
 
                 queue.extend(block.predecessors)
 
-            if not found_values and not before_block.predecessors and self.flow is not None:
-                # The structurers detached this block from its predecessors
-                # (an if-tail that was merged), so the live CFG says nothing
-                # about what reaches it; the original flow does.
-                return self._resolve_from_flow(reg, before_instr)
-
             if not found_values:
-                return self._catch_parameter(reg, before_block), None
+                parameter = self._catch_parameter(reg, before_block)
+
+                if parameter is not None or self.flow is None:
+                    return parameter, None
+
+                # The structurers detached this block (an if-tail that was
+                # merged, a try whose body moved out), so the live CFG says
+                # nothing about what reaches it; the original flow does.
+                return self._resolve_from_flow(reg, before_instr)
 
             first, first_instr = found_values[0]
 

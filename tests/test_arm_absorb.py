@@ -377,14 +377,27 @@ def test_entry_undefined_stores_of_destructured_bindings_are_dropped():
         assert f"{reg} = undefined" not in out
 
 
-def test_entry_undefined_store_stays_when_the_return_reads_it():
-    # hermes-96 `tryFinallyLoopBreakTest`: `r0` is only assigned on some paths
-    # through the try, `return r0` reads the entry `undefined` on the others.
+def test_entry_undefined_store_stays_when_something_reads_it():
+    # hermes-96 `callGeneratorTests`: `r5.return(r0)` names the entry
+    # `undefined` store, so it must keep printing.
+    from tests.test_register_semantics import decompile
+
+    out = decompile("96", 15170)
+
+    assert "r0 = undefined;" in out and "r5.return(r0)" in out
+
+
+def test_try_finally_function_has_no_leftover_return_register():
+    # hermes-96 `tryFinallyLoopBreakTest`: `r0 = undefined` at entry and a
+    # `return r0` at the end. The try/finally structuring left the return's
+    # block without usable predecessors, so the value could not be resolved
+    # and the pair stayed as `r0 = undefined; ... return r0;`.
     from tests.test_register_semantics import decompile
 
     out = decompile("96", 15084)
 
-    assert "r0 = undefined" in out and "return r0" in out
+    assert "r0" not in out
+    assert "return" not in out
 
 
 def test_every_statement_line_is_terminated():
@@ -459,3 +472,47 @@ def test_return_after_a_merged_if_tail_still_resolves_its_value():
     assert "return r0" not in code
     assert "r0" not in code
     assert "invokeDefaultBackPressHandler()" in code
+
+
+_NORMALIZE_FILL_MODE_HASM = """
+=> [Function #8521 "normalizeFillMode" of 101 bytes]: 1 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x001efba3
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 0>
+==> 00000005: <JStrictNotEqual>: <Addr8: 8, Reg8: 1, Reg8: 0>  # Address: 0000000d
+==> 00000009: <LoadConstString>: <Reg8: 1, string_id: 6761>  # String: 'none' (Identifier)
+==> 0000000d: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000010: <LoadFromEnvironment>: <Reg8: 2, Reg8: 3, UInt8: 3>
+==> 00000014: <GetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 14782>  # String: 'VALID_FILL_MODES' (Identifier)
+==> 0000001a: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 1, string_id: 11>  # String: 'has' (Identifier)
+==> 0000001f: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 4, Reg8: 1>
+==> 00000024: <JmpTrue>: <Addr8: 63, Reg8: 2>  # Address: 00000063
+==> 00000027: <GetGlobalObject>: <Reg8: 2>
+==> 00000029: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 0000002f: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 4>
+==> 00000033: <GetById>: <Reg8: 3, Reg8: 5, UInt8: 3, string_id: 16759>  # String: 'invalidFillMode' (Identifier)
+==> 00000039: <Call2>: <Reg8: 5, Reg8: 3, Reg8: 5, Reg8: 1>
+==> 0000003e: <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 4, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000044: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 5, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000049: <LoadConstString>: <Reg8: 2, string_id: 4477>  # String: '[Reanimated] ' (String)
+==> 0000004d: <Call2>: <Reg8: 6, Reg8: 3, Reg8: 2, Reg8: 5>
+==> 00000052: <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 6>
+==> 00000056: <Mov>: <Reg8: 7, Reg8: 3>
+==> 00000059: <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
+==> 0000005d: <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
+==> 00000061: <Throw>: <Reg8: 2>
+==> 00000063: <Ret>: <Reg8: 1>
+"""
+
+
+def test_defaulted_parameter_is_still_named_by_a_later_return():
+    # `fillMode = "none"` then `return fillMode`: the default folds into a
+    # ternary that the calls take, but `return r1` still names the register,
+    # so `r1 = (param1 !== undefined) ? param1 : "none"` must keep printing.
+    out = Decompiler.render(Decompiler.build_context(_NORMALIZE_FILL_MODE_HASM, 8521), verbose=False)
+    code = "\n".join(line for line in out.splitlines() if not line.strip().startswith("//"))
+
+    assert 'r1 = (param1 !== undefined) ? param1 : "none";' in code
+    assert code.index('r1 = (param1') < code.index("return r1;")
