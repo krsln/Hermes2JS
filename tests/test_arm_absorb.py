@@ -399,3 +399,32 @@ def test_every_statement_line_is_terminated():
 
         if text and not text.startswith("//"):
             assert text[-1] in ";{}:,", line
+
+
+def test_destructuring_into_environment_slots_is_one_statement():
+    # hermes-98 `parallelAwaitTest` body: `const [a, b] = await Promise.all(...)`
+    # with `a`/`b` living in the environment. The iterator protocol goes
+    # through two environment temporaries; the pattern is one statement.
+    out = _render_98(13745, "_anon_0_parallelAwaitTest")
+
+    assert "[r1[2][0], r1[2][1]] = r5;" in out
+    assert "GetIterator" not in out and ".next()" not in out and ".return()" not in out
+    assert "r1[1] = " not in out
+
+
+def test_environment_destructuring_is_kept_when_a_temporary_slot_is_read_elsewhere(monkeypatch):
+    # The same function, but the code after the pattern reads the value
+    # temporary (slot 1): collapsing would delete the stores it reads.
+    from tests.test_register_semantics import _FIXTURES
+
+    path = next((_FIXTURES / "98" / "sections").glob("function_13745_*.hasm"))
+    hasm = path.read_text(encoding="utf-8").replace(
+        "000000bf: <LoadFromEnvironment>: <Reg8: 7, Reg8: 1, UInt8: 2>",
+        "000000bf: <LoadFromEnvironment>: <Reg8: 7, Reg8: 1, UInt8: 1>",
+    )
+
+    from tests.test_register_semantics import _batch
+
+    out = Decompiler.render(Decompiler.build_context(hasm, 13745, batch_tables=_batch("98")), verbose=False)
+
+    assert "GetIterator" in out and "[r1[2][0]" not in out
