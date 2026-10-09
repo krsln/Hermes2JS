@@ -65,26 +65,49 @@ DEF_PATTERNS = [
 # Patterns that introduce multiple definitions (destructuring, params, …)
 GROUP_DEF_PATTERNS = [
     re.compile(r"\b(?:const|let|var)\s+[\[{]([^\]}]*)[\]}]"),
-    re.compile(r"(?m)^\s*[\[{]([^\]}\n]*)[\]}]\s*=(?!=)"),
+    # Destructuring assignment statement: `[a, b] = src`, and the nested /
+    # holey / defaulted / rest forms `[[a, b], , [, c]] = src`,
+    # `[a = 0, ...b] = src`. The pattern runs from the opening bracket to the
+    # LAST `]`/`}` that is followed by `=` on the line (lazy, so the first such
+    # one); a class that excluded `]` stopped at the first inner bracket and
+    # left the nested targets looking undefined.
+    re.compile(r"(?m)^\s*[\[{]([^\n]*?)[\]}]\s*=(?![=>])"),
     re.compile(r"\bfunction\b[^(\n]*\(([^)]*)\)"),
     re.compile(r"\(([^()]*)\)\s*=>"),
 ]
-
 
 # ---------------------------------------------------------------------------
 # Analysis helpers
 # ---------------------------------------------------------------------------
 
+# Comments and string literals are matched by ONE alternation, left to right,
+# so whichever starts first wins. Stripping comments in a separate earlier pass
+# treated the `//` inside a string ("https://...") as a line comment, deleted
+# the rest of the line including the closing quote, and the orphaned `"` then
+# swallowed code up to the next quote - hiding real definitions and producing
+# false "never defined" / "read before defined" results.
+#
+# '...' and "..." cannot contain a raw newline in JS, so they never span
+# lines; a stray quote can no longer run on into later statements. Template
+# literals can span lines.
+_COMMENT_OR_STRING_RE = re.compile(
+    r"""
+      /\*.*?\*/                      # block comment
+    | //[^\n]*                       # line comment
+    | "(?:\\.|[^"\\\n])*"            # double-quoted string
+    | '(?:\\.|[^'\\\n])*'            # single-quoted string
+    | `(?:\\.|[^`\\])*`              # template literal
+    """,
+    re.S | re.X,
+)
+
+
 def strip_comments_and_strings(js: str) -> str:
     """Remove comments and replace string/template literals with empty strings."""
-    js = re.sub(r"/\*.*?\*/", "", js, flags=re.S)
-    js = re.sub(r"//[^\n]*", "", js)
-    js = re.sub(
-        r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|`(?:\\.|[^`\\])*`',
-        '""',
+    return _COMMENT_OR_STRING_RE.sub(
+        lambda m: '""' if m.group(0)[0] in "\"'`" else "",
         js,
     )
-    return js
 
 
 def analyze(js: str) -> tuple[set[str], set[str]]:
@@ -152,6 +175,7 @@ def build_batch_tables(sections_dir: Path) -> Any:
 # ---------------------------------------------------------------------------
 SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT = SCRIPT_DIR / "dangling.json"
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(
