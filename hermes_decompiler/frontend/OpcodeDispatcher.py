@@ -85,6 +85,7 @@ class OpcodeDispatcher:
         # Static, one-time backward-jump scan - see `compute_loop_ranges`.
         # Shared by both passes below.
         loop_ranges = OpcodeDispatcher.compute_loop_ranges(entries)
+        skip_ranges = OpcodeDispatcher.compute_skip_ranges(entries)
 
         # --- Pass 1 (scratch, discarded) ---------------------------------
         # Runs the exact same dispatch as the real pass, on a throwaway
@@ -98,6 +99,7 @@ class OpcodeDispatcher:
         # still reported/raised by pass 2 below.
         scratch = HermesAnalysis(metadata=analysis.metadata)
         scratch.loop_ranges = loop_ranges
+        scratch.skip_ranges = skip_ranges
         OpcodeDispatcher._run_pass(
             entries, scratch, strict=False, function_id=function_id, batch_tables=batch_tables,
         )
@@ -115,6 +117,7 @@ class OpcodeDispatcher:
         # with both the loop ranges and the loop-carried write addresses
         # harvested above - see `HermesAnalysis.defined_and_used_in_same_loop`.
         analysis.loop_ranges = loop_ranges
+        analysis.skip_ranges = skip_ranges
         analysis.loop_carried_writes = loop_carried_writes
         OpcodeDispatcher._run_pass(
             entries, analysis, strict=strict, function_id=function_id, batch_tables=batch_tables,
@@ -183,6 +186,20 @@ class OpcodeDispatcher:
 
         if prev.handler.startswith("Call") and isinstance(prev.value, Expression):
             prev.value = AwaitExpression(argument=prev.value)
+
+    @staticmethod
+    def compute_skip_ranges(entries: list[OpcodeEntry]) -> list[tuple[int, int]]:
+        """
+        Spans `(jump address, target address)` of every FORWARD jump: whatever
+        lies strictly inside is skipped when the jump is taken, so a write
+        there happens on only one path. Static and CFG-free, like
+        `compute_loop_ranges`; `HermesAnalysis._is_phi_write` is the reader.
+        """
+        return [
+            (entry.address, entry.target_address)
+            for entry in entries
+            if entry.target_address is not None and entry.target_address > entry.address
+        ]
 
     @staticmethod
     def compute_loop_ranges(entries: list[OpcodeEntry]) -> list[tuple[int, int]]:

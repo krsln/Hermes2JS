@@ -7,7 +7,7 @@ function Counter() {
     // CODE → addr:  6 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 3, UInt8: 2>
     r0 = r3[2];
     // CODE → addr: 10 | <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r1 = r0.default;
+    r1 = r0.default;
     // CODE → addr: 15 | <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0);
     // CODE → addr: 18 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
@@ -15,7 +15,7 @@ function Counter() {
     // CODE → addr: 22 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 24 | <Call3>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 8, Reg8: 2>
-    r1 = r0.default(this, r2);
+    r1 = r1(this, r2);
     // CODE → addr: 30 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → addr: 32 | <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 2, string_id: 24>  # String: 'Object' (Identifier)

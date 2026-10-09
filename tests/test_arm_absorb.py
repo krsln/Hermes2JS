@@ -555,3 +555,17 @@ def test_chain_result_read_by_name_after_a_redefinition_is_still_assigned():
 
     assert "r4 = r2[2] && r2[2][param2];" in code
     assert code.index("r4 = r2[2] &&") < code.index("r9 = r4;")
+
+
+def test_value_is_not_inlined_across_a_conditional_redefinition_of_its_operand():
+    # `r6 = r3[0]` reads the parent environment held in r3 at that point. r3
+    # is then rewritten on only one path (`Mov r3, r2` / `JmpFalse` /
+    # `GetByVal r3, ...`), so after the join the call `r6(...)` must not
+    # re-read `r3[0]`: that would index the `r2 && r2[param2]` result.
+    out = Decompiler.render(Decompiler.build_context(_OPTIONAL_CHAIN_ARGS_HASM, 13659), verbose=False)
+    code = "\n".join(line for line in out.splitlines() if not line.strip().startswith("//"))
+
+    assert "r3[0](" not in code
+    assert "r6 = r3[0];" in code
+    assert "r6(" in code
+    assert code.index("r6 = r3[0];") < code.index("r1 = r6(")

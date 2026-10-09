@@ -52,6 +52,14 @@ class HermesAnalysis:
         self.current_entry = None
         # Addresses where each register is written inside a loop.
         self.loop_carried_writes: dict[str, list[int]] = {}
+        # Forward-jump spans `(jump address, target address)`: an instruction
+        # strictly inside one is skipped on the path that takes the jump, so
+        # a write there is conditional (see `_is_phi_write`).
+        self.skip_ranges: list[tuple[int, int]] = []
+        # Every definition of each register, in order. `RegisterState.version`
+        # is the index into this list, so `history[name][v + 1:]` is exactly
+        # what redefined version `v` (see `stale_kind`).
+        self.history: dict[str, list[RegisterState]] = {}
 
     def add_result(self, result: OpcodeResult) -> None:
         self.results.append(result)
@@ -67,9 +75,11 @@ class HermesAnalysis:
         # reads as stale as soon as this very definition replaces it.
         operand_versions = self._capture_operand_versions(result)
 
-        self.registers[result.name] = RegisterState(
+        state = RegisterState(
             definition=result, version=version, operand_versions=operand_versions,
         )
+        self.registers[result.name] = state
+        self.history.setdefault(result.name, []).append(state)
 
     _REGISTER_NAME_RE = re.compile(r"r\d+")
 
@@ -144,12 +154,14 @@ class HermesAnalysis:
                     current is not None
                     and name != own
                     and not isinstance(state.value, Identifier)
-                    and self._redefinition_prints(current)
+                    and self._redefined_by_kept_write(name, version)
             ):
                 # A computed expression over a register that was since
                 # reassigned by a statement that STAYS in the output (a call
-                # result: `r6 = r7.index` ... `r7 = r9.getItemCount(...)`).
-                # Inlined, it would read the new value.
+                # result: `r6 = r7.index` ... `r7 = r9.getItemCount(...)`),
+                # or by a write on only one path into the join being read
+                # (`r6 = r3[0]` ... `r3 = r2 && r2[k]`). Inlined, it would
+                # read the new value.
                 return "other"
             elif isinstance(state.value, Identifier) and self._REGISTER_NAME_RE.fullmatch(state.value.name):
                 # A bare register alias (`Mov r5, r4` -> value `r4`): the
@@ -161,6 +173,31 @@ class HermesAnalysis:
                 return "other"
 
         return kind
+
+    def _redefined_by_kept_write(self, name: str, version: int) -> bool:
+        """Some definition of `name` after `version` is certain to leave the
+        register changed in the printed output - not just the latest one: an
+        earlier call result stays printed even if a folded load overwrote it
+        afterwards."""
+        for later in self.history.get(name, ())[version + 1:]:
+            if self._redefinition_prints(later) or self._is_phi_write(later):
+                return True
+
+        return False
+
+    def _is_phi_write(self, state: RegisterState) -> bool:
+        """The definition ran on only one path into the join the current
+        instruction reads after: it sits inside a forward jump's skipped span
+        whose target is already behind us. The register then holds different
+        values per path, so no single folded expression can stand for it -
+        it is printed (as an `if` arm write or a folded `&&`/`||`/`?:`
+        assignment), and a value computed from the older one is stale."""
+        current = self.current_address
+        if current is None:
+            return False
+
+        address = state.definition.address
+        return any(start < address < end <= current for start, end in self.skip_ranges)
 
     @staticmethod
     def _redefinition_prints(state: RegisterState) -> bool:

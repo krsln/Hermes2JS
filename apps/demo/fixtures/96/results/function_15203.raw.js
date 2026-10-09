@@ -17,7 +17,7 @@ function makeSound() {
     // CODE → addr: 28 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 1>
     r0 = r0[1];
     // CODE → addr: 32 | <GetByIdShort>: <Reg8: 6, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r6 = r0.default;
+    r6 = r0.default;
     // CODE → addr: 37 | <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0);
     // CODE → addr: 40 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 0, UInt8: 0>
@@ -33,7 +33,7 @@ function makeSound() {
     // CODE → addr: 55 | <Mov>: <Reg8: 8, Reg8: 1>
     r8 = this;
     // CODE → addr: 58 | <Call>: <Reg8: 4, Reg8: 6, UInt8: 5>
-    r4 = r0.default(r11, r10, r9, r8, r7);
+    r4 = r6(r11, r10, r9, r8, r7);
     // CODE → addr: 62 | <NewArray>: <Reg8: 3, UInt16: 0>
     r3 = [];
     // CODE → addr: 66 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>

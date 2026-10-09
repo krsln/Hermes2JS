@@ -33,13 +33,13 @@ function nestedObjectDestructureTest() {
     // CODE → addr: 63 | <PutNewOwnById>: <Reg8: 0, Reg8: 2, string_id: 7222>  # String: 'body' (Identifier)
     r0.body = r2;
     // CODE → addr: 68 | <GetByIdShort>: <Reg8: 5, Reg8: 0, UInt8: 3, string_id: 235>  # String: 'status' (Identifier)
-    // USED → r5 = r0.status;
+    r5 = r0.status;
     // CODE → addr: 73 | <GetById>: <Reg8: 0, Reg8: 0, UInt8: 4, string_id: 7222>  # String: 'body' (Identifier)
     r0 = r0.body;
     // CODE → addr: 79 | <GetById>: <Reg8: 2, Reg8: 0, UInt8: 5, string_id: 7459>  # String: 'user' (Identifier)
     r2 = r0.user;
     // CODE → addr: 85 | <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 6, string_id: 176>  # String: 'name' (Identifier)
-    // USED → r4 = r2.name;
+    r4 = r2.name;
     // CODE → addr: 90 | <GetById>: <Reg8: 2, Reg8: 0, UInt8: 7, string_id: 10786>  # String: 'meta' (Identifier)
     r2 = r0.meta;
     // CODE → addr: 96 | <LoadConstUndefined>: <Reg8: 0>
@@ -63,7 +63,7 @@ function nestedObjectDestructureTest() {
     // CODE → addr:123 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
     // CODE → addr:128 | <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4, Reg8: 6>
-    console.log(r0.status, r2.name, r6);
+    console.log(r5, r4, r6);
     // CODE → addr:135 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:141 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

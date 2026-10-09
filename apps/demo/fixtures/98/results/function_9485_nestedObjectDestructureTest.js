@@ -13,7 +13,7 @@ function nestedObjectDestructureTest() {
     // CODE → addr: 22 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1917, UInt16: 48463>  # Object: {'id': 1, 'name': 'Ada'}
     r3 = { "id": 1, "name": "Ada" };
     // CODE → addr: 28 | <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
-    // USED → r6 = r3.name;
+    r6 = r3.name;
     // CODE → addr: 33 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1918, UInt16: 93>  # Object: {'page': 1}
     r3 = { "page": 1 };
     // CODE → addr: 39 | <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 12200>  # String: 'page' (Identifier)
@@ -28,7 +28,7 @@ function nestedObjectDestructureTest() {
     // CODE → addr: 65 | <LoadConstUInt8>: <Reg8: 0, UInt8: 200>
     // USED → r0 = 200;
     // CODE → addr: 68 | <Call4>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 6, Reg8: 5>
-    console.log(200, r3.name, (r3.page !== undefined) ? r3.page : 1);
+    console.log(200, r6, (r3.page !== undefined) ? r3.page : 1);
     // CODE → addr: 75 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 81 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

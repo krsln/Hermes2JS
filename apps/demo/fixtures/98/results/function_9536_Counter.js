@@ -39,7 +39,7 @@ function Counter() {
         // CODE → addr: 58 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
         console.log("__BC:Classes/PrivateStaticTests/Counter/constructor");
         // CODE → addr: 63 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 2>
-        // USED → r5 = r3[2];
+        r5 = r3[2];
         // CODE → addr: 67 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 4>
         r4 = r3[4];
         // CODE → addr: 71 | <GetOwnPrivateBySym>: <Reg8: 3, Reg8: 5, UInt8: 1, Reg8: 4>
@@ -47,7 +47,7 @@ function Counter() {
         // CODE → addr: 76 | <Inc>: <Reg8: 3, Reg8: 3>
         r3 = r3 + 1;
         // CODE → addr: 79 | <PutOwnPrivateBySym>: <Reg8: 5, Reg8: 3, UInt8: 1, Reg8: 4>
-        r3[2].#__private_4__ = r3;
+        r5.#__private_4__ = r3;
         // CODE → addr: 84 | <Ret>: <Reg8: 2>
         return r2;
     }

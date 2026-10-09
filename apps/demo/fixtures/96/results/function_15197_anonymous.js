@@ -11,7 +11,7 @@ function function_15197() {
     // CODE → addr: 14 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 4>
     r0 = r0[4];
     // CODE → addr: 18 | <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r2 = r0.default;
+    r2 = r0.default;
     // CODE → addr: 23 | <NewObject>: <Reg8: 0>
     // USED → r0 = {  };
     // CODE → addr: 25 | <LoadConstString>: <Reg8: 1, string_id: 10340>  # String: 'makeSound' (Identifier)
@@ -39,9 +39,9 @@ function function_15197() {
     // CODE → addr: 69 | <PutOwnByIndex>: <Reg8: 1, Reg8: 0, UInt8: 1>
     r1[1] = r0;
     // CODE → addr: 73 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined;
+    // USED → r0 = undefined;
     // CODE → addr: 75 | <Call3>: <Reg8: 0, Reg8: 2, Reg8: 0, Reg8: 3, Reg8: 1>
-    r0 = r0.default(Animal, r1);
+    r0 = r2(Animal, r1);
     // CODE → addr: 81 | <Ret>: <Reg8: 0>
     return r0;
 }
