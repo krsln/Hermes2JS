@@ -60,7 +60,7 @@ function defaultParameterTest(param1) {
     // CODE → addr:106 | <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → addr:109 | <Add>: <Reg8: 1, Reg8: 1, Reg8: 5>
-    r1 = param1 + ((r3 === undefined) ? 10 : arguments[1]);
+    r1 = param1 + r5;
     // CODE → addr:113 | <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1>
     console.log(r4, r1);
     // CODE → addr:119 | <Ret>: <Reg8: 0>

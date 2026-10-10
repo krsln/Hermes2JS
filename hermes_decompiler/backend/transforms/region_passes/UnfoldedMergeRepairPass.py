@@ -3,7 +3,7 @@ from __future__ import annotations
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion
 from hermes_decompiler.backend.transforms.shared import (
-    has_side_effects, repoint_references, reclaim_definition, TRIVIAL_NODE_TYPES,
+    has_side_effects, repoint_references, reclaim_definition, TRIVIAL_NODE_TYPES, prints_definition,
 )
 from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
 from hermes_decompiler.core.logging import get_logger
@@ -186,11 +186,17 @@ class UnfoldedMergeRepairPass(RegionPass):
             return
 
         if not write.definition_used:
-            # The arm's write already prints, so readers after the `if` name the
-            # register and need nothing repointed. The OTHER path of the phi
-            # still needs its value: the default that was current before the
-            # `if` and that the `if`'s own condition may have consumed inline.
+            # The arm's write already prints. A reader after the `if` normally
+            # names the register and needs nothing repointed - unless a fold
+            # handed it a COPY of the arm's value (`r5 = c ? a : b` folded inside
+            # the arm, the `Add` after the `if` repointed to the same ternary):
+            # on the path that skips the arm it reads the wrong thing.
+            #
+            # The OTHER path of the phi still needs its value: the default that
+            # was current before the `if` and that the `if`'s own condition may
+            # have consumed inline.
             self._reprint_default_for_printed_write(if_region, write, region_blocks)
+            self._repoint_copies_of_printed_write(write, arm_set, region_blocks, arm_blocks, is_last)
             return
 
         # `this` placeholders have no surface syntax; nothing to name.
@@ -250,6 +256,41 @@ class UnfoldedMergeRepairPass(RegionPass):
         logger.debug("unfolded merge: r%s written in one arm is read after the if", write.dest_reg)
 
         self._reprint_default(if_region, write)
+
+    def _default_prints(self, write, region_blocks) -> bool:
+        """Is the register assigned on the path that skips the arm? The copy is
+        a pure value that needs no register; the register read in its place
+        only has one when an earlier definition outside the `if` prints."""
+        earlier = [
+            i for blk in self.cfg.blocks if blk not in region_blocks for i in blk.instructions
+            if i.address < write.address and i.dest_reg == write.dest_reg and i.value is not None
+        ]
+
+        return bool(earlier) and prints_definition(max(earlier, key=lambda i: i.address))
+
+    def _repoint_copies_of_printed_write(self, write, arm_set, region_blocks, arm_blocks, is_last) -> None:
+        """Readers outside the `if` that hold the printed arm write's value
+        itself read `rN` instead (see `_repair_write`). Only a pure value that is
+        the arm's last write of the register, and only a non-trivial one: a bare
+        literal or identifier is shared by unrelated readers."""
+        if (
+                not is_last
+                or isinstance(write.value, (ThisPlaceholder,) + TRIVIAL_NODE_TYPES)
+                or has_side_effects(write.value)
+                or not self._read_after_the_if(write, region_blocks)
+                or not self._default_prints(write, region_blocks)
+        ):
+            return
+
+        repoint_references(
+            self.cfg, self.graph.root, write.value, Identifier(name=f"r{write.dest_reg}"),
+            min_block_id=min(b.id for b in arm_blocks),
+            exclude=arm_set,
+            structural=False,
+        )
+
+        self._index = None
+        logger.debug("unfolded merge: copies of printed r%s after the if read the register", write.dest_reg)
 
     def _named_after_the_if(self, write, region_blocks) -> bool:
         """Does code after the `if` read `write`'s register BY NAME, before

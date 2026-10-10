@@ -105,6 +105,23 @@ def repoint_node(node, old_expr, new_expr, *, structural: bool = True):
     return dataclasses.replace(node, **updates), True
 
 
+def _computes_the_same_value(instr, old_expr, structural: bool) -> bool:
+    """A definition whose WHOLE value merely equals `old_expr` structurally
+    (`r4 = r4[0]` next to an arm's `r6 = r4[0]`) computes that value itself:
+    it is not a reader of the arm's, so it must not become `r4 = r6`. A `Mov`
+    carrying a copy is the reader the structural fallback exists for."""
+    value = instr.value
+
+    return (
+            structural
+            and value is not old_expr
+            and not instr.entry.opcode.startswith("Mov")
+            and not isinstance(old_expr, TRIVIAL_NODE_TYPES)
+            and isinstance(value, type(old_expr))
+            and value.structurally_equal(old_expr)
+    )
+
+
 def _node_count(node, limit: int) -> int:
     """Number of IR nodes under `node`, counting stops once `limit` is hit."""
     count = 1
@@ -203,7 +220,10 @@ def repoint_references(
             if instr in exclude:
                 continue
 
-            new_value, value_changed = repoint_node(instr.value, old_expr, new_expr, structural=structural)
+            if _computes_the_same_value(instr, old_expr, structural):
+                new_value, value_changed = instr.value, False
+            else:
+                new_value, value_changed = repoint_node(instr.value, old_expr, new_expr, structural=structural)
 
             if value_changed:
                 instr.value = new_value
