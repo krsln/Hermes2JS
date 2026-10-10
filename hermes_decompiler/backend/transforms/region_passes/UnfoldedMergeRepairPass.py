@@ -282,10 +282,13 @@ class UnfoldedMergeRepairPass(RegionPass):
         ):
             return
 
+        # Only readers OUTSIDE the `if`: the sibling arm holds the very same value
+        # object (`guard.call(.., r0.message)` next to `r18 = r0.message`) and runs
+        # on a path where the register was never written.
         repoint_references(
             self.cfg, self.graph.root, write.value, Identifier(name=f"r{write.dest_reg}"),
             min_block_id=min(b.id for b in arm_blocks),
-            exclude=arm_set,
+            exclude={i for blk in region_blocks for i in blk.instructions},
             structural=False,
         )
 
