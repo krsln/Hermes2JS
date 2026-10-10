@@ -149,6 +149,7 @@ class UnfoldedMergeRepairPass(RegionPass):
 
     def run(self) -> None:
         self._index = None
+        self._made: set[int] = set()  # ids of the replacement identifiers this pass created
 
         collector = _IfCollector()
         collector.visit(self.graph.root)
@@ -207,12 +208,13 @@ class UnfoldedMergeRepairPass(RegionPass):
             logger.debug("unfolded merge: r%s written in an arm is named after the if", write.dest_reg)
             return
 
-        # The same node object defined by several instructions (constant
-        # loads share one literal) cannot tell whose value a reader holds. A
-        # holder that is a READER (`Mov r11, r5` carrying the arm's value) is
-        # exactly what gets repointed: only other instructions of the write's
-        # own opcode make the object ambiguous.
-        if sum(
+        # The same node object defined by several instructions (constant loads
+        # share one literal, a parameter load its `param1`) cannot tell whose
+        # value a reader holds. A holder of ANOTHER opcode is a reader (`Mov r11,
+        # r5` carrying the arm's value) and is exactly what gets repointed.
+        # An object an earlier repair of this pass created (`Identifier r0`
+        # handed to every reader it repointed) is shared on purpose.
+        if id(write.value) not in self._made and sum(
                 1 for b in self.cfg.blocks for i in b.instructions
                 if i.value is write.value and i.entry.opcode == write.entry.opcode
         ) > 1:
@@ -235,6 +237,7 @@ class UnfoldedMergeRepairPass(RegionPass):
 
         replacement = Identifier(name=f"r{write.dest_reg}")
         old_value = write.value
+        self._made.add(id(replacement))
 
         repoint_references(
             self.cfg, self.graph.root, old_value, replacement,
