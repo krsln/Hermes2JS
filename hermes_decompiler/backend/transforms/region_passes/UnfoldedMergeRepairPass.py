@@ -208,8 +208,14 @@ class UnfoldedMergeRepairPass(RegionPass):
             return
 
         # The same node object defined by several instructions (constant
-        # loads share one literal) cannot tell whose value a reader holds.
-        if sum(1 for b in self.cfg.blocks for i in b.instructions if i.value is write.value) > 1:
+        # loads share one literal) cannot tell whose value a reader holds. A
+        # holder that is a READER (`Mov r11, r5` carrying the arm's value) is
+        # exactly what gets repointed: only other instructions of the write's
+        # own opcode make the object ambiguous.
+        if sum(
+                1 for b in self.cfg.blocks for i in b.instructions
+                if i.value is write.value and i.entry.opcode == write.entry.opcode
+        ) > 1:
             return
 
         # Every path writes the same thing: no phi, the inlined copy is right.
@@ -318,6 +324,22 @@ class UnfoldedMergeRepairPass(RegionPass):
         default = max(head, key=lambda i: i.address)
 
         if isinstance(default.value, ThisPlaceholder):
+            return
+
+        # A parameter load (`r1 = param1`) shares its `param1` node with every
+        # other reader of the parameter, so "is something else still holding
+        # it" is always yes and `reclaim_definition` never prints it: the
+        # skipping path then reads an `r1` nothing assigned. Print it - unless
+        # every path overwrites the register anyway.
+        if default.entry.opcode.startswith("LoadParam"):
+            if not (
+                    if_region.else_body is not None
+                    and _always_assigns(if_region.then_body, write.dest_reg)
+                    and _always_assigns(if_region.else_body, write.dest_reg)
+            ):
+                default.definition_used = False
+                self._index = None
+
             return
 
         reclaim_definition(

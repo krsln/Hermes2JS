@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
-from hermes_decompiler.backend.transforms.shared import prints_non_constant_statement
+from hermes_decompiler.backend.transforms.shared import prints_definition
 from hermes_decompiler.backend.regions import (
     SequenceRegion,
     LoopKind,
@@ -297,11 +297,12 @@ class RegionPrinter:
             if instruction.terminator is not None:
                 return False
 
-            # Only constant loads are "values being prepared". Any other
-            # printed instruction defines a register that later code reads
-            # by name, so skipping the block would delete its only
-            # definition (see `prints_non_constant_statement`).
-            if prints_non_constant_statement(instruction):
+            # A block is only clutter when everything in it is folded into the
+            # nested condition (`definition_used`). A PRINTED definition - a
+            # constant load included (`r5 = undefined`, the default a later
+            # `if (!r5)` reads by name) - is a statement of its own: skipping
+            # the block deletes its only definition.
+            if prints_definition(instruction):
                 return False
 
             tuple_expressions = (
