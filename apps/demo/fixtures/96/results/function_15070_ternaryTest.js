@@ -36,7 +36,7 @@ function ternaryTest(param1) {
     // CODE → addr: 67 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
     console.log(r5);
     // CODE → addr: 72 | <LoadConstUInt8>: <Reg8: 3, UInt8: 100>
-    // USED → r3 = 100;
+    r3 = 100;
     // CODE → addr: 75 | <Greater>: <Reg8: 4, Reg8: 2, Reg8: 3>
     // USED → r4 = param1 > 100;
     if (param1 <= 100) {

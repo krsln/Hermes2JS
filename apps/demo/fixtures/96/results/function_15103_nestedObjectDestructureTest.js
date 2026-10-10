@@ -19,7 +19,7 @@ function nestedObjectDestructureTest() {
     // CODE → addr: 31 | <NewObject>: <Reg8: 2>
     r2 = {  };
     // CODE → addr: 33 | <LoadConstUInt8>: <Reg8: 6, UInt8: 1>
-    // USED → r6 = 1;
+    r6 = 1;
     // CODE → addr: 36 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 2, UInt16: 2, UInt16: 12808, UInt16: 23461>  # Object: {'id': 1, 'name': 'Ada'}
     r3 = { "id": 1, "name": "Ada" };
     // CODE → addr: 46 | <PutNewOwnById>: <Reg8: 2, Reg8: 3, string_id: 7459>  # String: 'user' (Identifier)

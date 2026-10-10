@@ -3,11 +3,13 @@ from __future__ import annotations
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion
 from hermes_decompiler.backend.transforms.shared import (
-    has_side_effects, repoint_references, reclaim_definition,
+    has_side_effects, repoint_references, reclaim_definition, TRIVIAL_NODE_TYPES,
 )
+from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import Identifier, ThisPlaceholder
+from hermes_decompiler.ir.terminators import TerminatorReturn, TerminatorThrow
 from ._base import RegionPass
 
 logger = get_logger(__name__)
@@ -75,6 +77,44 @@ def _always_writes(body, register: int, value) -> bool:
     return False
 
 
+def _always_assigns(body, register: int) -> bool:
+    """Does every path through `body` that reaches the code after it write `rN`
+    (whatever the value)? A path that returns or throws never reaches it."""
+    if body is None:
+        return False
+
+    if isinstance(body, IfRegion):
+        return (
+                body.else_body is not None
+                and _always_assigns(body.then_body, register)
+                and _always_assigns(body.else_body, register)
+        )
+
+    if isinstance(body, BasicBlock):
+        return (
+                isinstance(body.terminator, (TerminatorReturn, TerminatorThrow))
+                or any(i.dest_reg == register and i.value is not None for i in body.instructions)
+        )
+
+    for child in reversed(getattr(body, "children", ())):
+        if isinstance(child, IfRegion):
+            if _always_assigns(child, register):
+                return True
+
+            continue
+
+        if isinstance(child, BasicBlock):
+            if _always_assigns(child, register):
+                return True
+
+            continue
+
+        # A loop / try / switch: whether it runs, or finishes, is not known here.
+        return False
+
+    return False
+
+
 def _blocks_of(body) -> list[BasicBlock]:
     if body is None:
         return []
@@ -128,15 +168,43 @@ class UnfoldedMergeRepairPass(RegionPass):
             other_blocks = set(_blocks_of(if_region.then_body)) | set(_blocks_of(if_region.else_body))
             arm_set = set(arm_instructions)
 
-            for write in reversed(arm_instructions):
-                self._repair_write(if_region, write, arm_set, other_blocks, arm_blocks)
+            reaching: set[int] = set()
 
-    def _repair_write(self, if_region, write, arm_set, region_blocks, arm_blocks) -> None:
-        if write.dest_reg is None or not write.definition_used or write.value is None:
+            for write in reversed(arm_instructions):
+                # The first write met walking backwards is the arm's LAST write
+                # of that register: the one that reaches the code after the `if`.
+                is_last = write.dest_reg is not None and write.dest_reg not in reaching
+
+                if write.dest_reg is not None:
+                    reaching.add(write.dest_reg)
+
+                self._repair_write(if_region, write, arm_set, other_blocks, arm_blocks, is_last)
+
+    def _repair_write(self, if_region, write, arm_set, region_blocks, arm_blocks, is_last=False) -> None:
+        if write.dest_reg is None or write.value is None:
+            return
+
+        if not write.definition_used:
+            # The arm's write already prints, so readers after the `if` name the
+            # register and need nothing repointed. The OTHER path of the phi
+            # still needs its value: the default that was current before the
+            # `if` and that the `if`'s own condition may have consumed inline.
+            self._reprint_default_for_printed_write(if_region, write, region_blocks)
             return
 
         # `this` placeholders have no surface syntax; nothing to name.
         if isinstance(write.value, ThisPlaceholder):
+            return
+
+        # The code after the `if` names the register (`r2.call(...)`) rather than
+        # holding a copy of this value, and this is the write that reaches it on
+        # this arm's path: the statement has to print, whatever else inlined the
+        # value inside the arm (`r3[12] = y`). Nothing is repointed - the reader
+        # already says `rN`.
+        if is_last and not has_side_effects(write.value) and self._named_after_the_if(write, region_blocks):
+            write.definition_used = False
+            self._index = None
+            logger.debug("unfolded merge: r%s written in an arm is named after the if", write.dest_reg)
             return
 
         # The same node object defined by several instructions (constant
@@ -173,6 +241,35 @@ class UnfoldedMergeRepairPass(RegionPass):
         logger.debug("unfolded merge: r%s written in one arm is read after the if", write.dest_reg)
 
         self._reprint_default(if_region, write)
+
+    def _named_after_the_if(self, write, region_blocks) -> bool:
+        """Does code after the `if` read `write`'s register BY NAME, before
+        anything writes it again?"""
+        end = max(
+            (i.address for blk in region_blocks for i in blk.instructions),
+            default=write.address,
+        )
+
+        return _reads_register_by_name(self.cfg, write.dest_reg, end)
+
+    def _reprint_default_for_printed_write(self, if_region, write, region_blocks) -> None:
+        """`rN = d; if (c) { rN = v }; ...rN...` where `rN = v` prints: when `c`
+        keeps the arm from running, the code after the `if` reads `d`, so
+        `rN = d` has to print. It does not when the `if`'s condition inlined
+        `d` (a constant compared against) and flagged it `definition_used`.
+
+        Left alone when every path through the `if` writes the register (no
+        path keeps the default), when nothing after the `if` names it, and
+        when the default already prints."""
+        register = write.dest_reg
+
+        if isinstance(write.value, ThisPlaceholder):
+            return
+
+        if not self._named_after_the_if(write, region_blocks):
+            return
+
+        self._reprint_unprinted_default(if_region, write)
 
     def _holders(self) -> dict[int, set]:
         """id(node) -> the blocks holding that node in a value, statement or
@@ -226,5 +323,49 @@ class UnfoldedMergeRepairPass(RegionPass):
         reclaim_definition(
             self.cfg, self.graph.root, default, default.value, write,
             ignore_blocks=set(_blocks_of(if_region.then_body)) | set(_blocks_of(if_region.else_body)),
+            ignore_regions={if_region},
+        )
+
+    def _reprint_unprinted_default(self, if_region, write) -> None:
+        """The definition that was current before the `if` - for an arm write
+        that already prints - when nothing prints it.
+
+        That is the LATEST earlier definition of the register outside the `if`:
+        when it already prints there is nothing to do - an older definition
+        that happens to be unprinted is dead, and printing it would add a
+        statement nothing reads. Nothing is repointed on this path, so a
+        condition that inlined the default keeps its copy; only the path that
+        skips the arm needs the register assigned."""
+        # Every path through the `if` writes the register: no path keeps the
+        # default, so it is dead.
+        if _always_assigns(if_region.then_body, write.dest_reg) and _always_assigns(if_region.else_body, write.dest_reg):
+            return
+
+        region_blocks = set(_blocks_of(if_region.then_body)) | set(_blocks_of(if_region.else_body))
+
+        earlier = [
+            i for blk in self.cfg.blocks if blk not in region_blocks for i in blk.instructions
+            if i.address < write.address and i.dest_reg == write.dest_reg and i.value is not None
+        ]
+
+        if not earlier:
+            return
+
+        default = max(earlier, key=lambda i: i.address)
+
+        if not default.definition_used or isinstance(default.value, ThisPlaceholder):
+            return
+
+        # A literal or a plain name is free to evaluate twice, so printing it as
+        # well as leaving the copies other readers hold cannot change anything;
+        # `reclaim_definition` would refuse because the condition it was folded
+        # into (`r4 = param1 > 100`) still holds the very same node.
+        if isinstance(default.value, TRIVIAL_NODE_TYPES):
+            default.definition_used = False
+            return
+
+        reclaim_definition(
+            self.cfg, self.graph.root, default, default.value, write,
+            ignore_blocks=region_blocks,
             ignore_regions={if_region},
         )

@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import IfRegion, SequenceRegion
-from hermes_decompiler.backend.transforms.shared import is_unfolded_literal_definition, prints_non_constant_statement
+from hermes_decompiler.backend.transforms.shared import is_unfolded_literal_definition, prints_definition
 from hermes_decompiler.ir.Operators import LogicalOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, UnaryExpression
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
@@ -41,10 +41,12 @@ def is_inert_block(item) -> bool:
         # later code reads by name: not inert (see `is_unfolded_literal_definition`).
         if is_unfolded_literal_definition(instr):
             return False
-        # Any other PRINTED, non-constant definition (`r6 = r4`, `r4 = r5[1]`)
-        # is a statement later code reads by name. Looking past it as clutter
-        # lets a fold delete its only definition. Constant loads stay inert.
-        if prints_non_constant_statement(instr):
+        # Any other PRINTED definition (`r6 = r4`, `r4 = r5[1]`, `r2 = 1`) is a
+        # statement later code may read by name. Looking past it as clutter lets
+        # a fold delete its only definition. A constant load is no exception:
+        # the constant being embedded in the nested condition does not help a
+        # reader that names the register.
+        if prints_definition(instr):
             return False
     return True
 
