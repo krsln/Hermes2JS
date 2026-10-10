@@ -15,6 +15,11 @@ class RegisterState:
     #: refers to, captured when this definition was created - see
     #: `HermesAnalysis.is_stale_value`.
     operand_versions: tuple[tuple[str, int], ...] = ()
+    #: `len(HermesAnalysis.store_log)` when `definition.value` read memory
+    #: (a member/environment load), else `None` - see `HermesAnalysis.stale_kind`.
+    memory_epoch: int | None = None
+    #: the member expressions it read
+    memory_reads: tuple = ()
 
     @property
     def value(self) -> Expression | None:

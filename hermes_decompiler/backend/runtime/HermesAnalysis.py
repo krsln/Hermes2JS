@@ -4,6 +4,7 @@ from typing import Any
 from hermes_decompiler.backend.analysis.cfg import CFG
 from hermes_decompiler.backend.emit import JSEmitter
 from hermes_decompiler.backend.transforms import StructuralAnalyzer
+from hermes_decompiler.backend.transforms.shared import may_alias, read_members, stored_member
 from hermes_decompiler.backend.transforms.cfg_passes import (
     ArrayDestructuringCfgPass, EnvArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass,
     SharedReturnDuplicationCfgPass, generator_dispatch,
@@ -13,7 +14,7 @@ from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.frontend.batch_pipeline.tables import CreatorFacts
 from hermes_decompiler.ir.expressions import (
-    AwaitExpression, CallExpression, Identifier, NewExpression, YieldExpression,
+    AwaitExpression, CallExpression, Identifier, MemberExpression, NewExpression, YieldExpression,
 )
 from .RegisterState import RegisterState
 
@@ -61,9 +62,19 @@ class HermesAnalysis:
         # is the index into this list, so `history[name][v + 1:]` is exactly
         # what redefined version `v` (see `stale_kind`).
         self.history: dict[str, list[RegisterState]] = {}
+        # Memory stores (`Put*`, `Store*`, `Del*` of a property, not a literal
+        # being built), as the assigned member (None when unknown), in order. A
+        # value that READS memory is stale once a store that may alias it
+        # follows its load (see `stale_kind`).
+        self.store_log: list[MemberExpression | None] = []
+
+    _MEMORY_STORE_RE = re.compile(r"(Put|Store|Del)")
 
     def add_result(self, result: OpcodeResult) -> None:
         self.results.append(result)
+
+        if self._MEMORY_STORE_RE.match(result.entry.opcode):
+            self._log_store(result)
 
         if not result.name:
             return
@@ -76,11 +87,24 @@ class HermesAnalysis:
         # reads as stale as soon as this very definition replaces it.
         operand_versions = self._capture_operand_versions(result)
 
+        reads_memory = (
+                result.value is not None
+                and not result.entry.opcode.startswith("Put")
+                and any(isinstance(node, MemberExpression) for node in result.value.walk())
+        )
+
         state = RegisterState(
             definition=result, version=version, operand_versions=operand_versions,
+            memory_epoch=len(self.store_log) if reads_memory else None,
+            memory_reads=read_members(result.value) if reads_memory else (),
         )
         self.registers[result.name] = state
         self.history.setdefault(result.name, []).append(state)
+
+    def _log_store(self, result: OpcodeResult) -> None:
+        member = stored_member(result.value)
+        if member is not False:
+            self.store_log.append(member)
 
     _REGISTER_NAME_RE = re.compile(r"r\d+")
 
@@ -141,6 +165,11 @@ class HermesAnalysis:
         if state.handler.startswith("Put"):
             return None
 
+        if state.memory_epoch is not None and self._stored_since(state):
+            # `r0 = r3[25]; r3[25] = null; throw r0`: the load ran before the
+            # store, so its value is not what `r3[25]` reads now.
+            return "memory"
+
         kind = None
         own = state.definition.name
 
@@ -174,6 +203,13 @@ class HermesAnalysis:
                 return "other"
 
         return kind
+
+    def _stored_since(self, state: RegisterState) -> bool:
+        """A store since `state`'s load may have written a location it read."""
+        for store in self.store_log[state.memory_epoch:]:
+            if any(may_alias(read, store) for read in state.memory_reads):
+                return True
+        return False
 
     def _redefined_by_kept_write(self, name: str, version: int) -> bool:
         """Some definition of `name` after `version` is certain to leave the

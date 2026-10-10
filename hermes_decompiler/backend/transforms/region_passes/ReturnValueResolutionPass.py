@@ -1,13 +1,15 @@
 from __future__ import annotations
 
 import dataclasses
+import re
 from collections import deque
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import CatchRegion
-from hermes_decompiler.backend.transforms.shared import structural_key
+from hermes_decompiler.backend.transforms.shared import may_alias, read_members, stored_member, structural_key
 from hermes_decompiler.ir.expressions import (
-    ArrayExpression, AwaitExpression, CallExpression, Identifier, Literal, ObjectExpression, YieldExpression,
+    ArrayExpression, AwaitExpression, CallExpression, Identifier, Literal, MemberExpression, ObjectExpression,
+    YieldExpression,
 )
 from hermes_decompiler.ir.statements import ReturnStatement, ThrowStatement
 from ._base import RegionPass
@@ -179,7 +181,18 @@ class ReturnValueResolutionPass(RegionPass):
             before_block.instructions, reg, stop_before=before_instr
         )
 
+        # Instructions that run between the definition and `before_instr`
+        # (all of them on the paths the walk below crosses): a memory store
+        # among them makes a memory read stale (`_stored_after_read`).
+        between: list = []
+        definition_instrs: list = [found_instr] if found is not None else []
+
+        if found is not None:
+            instructions = before_block.instructions
+            between = instructions[instructions.index(found_instr) + 1:instructions.index(before_instr)]
+
         if found is None:
+            between = list(before_block.instructions[:before_block.instructions.index(before_instr)])
             visited = {before_block}
             queue = deque(before_block.predecessors)
             found_values = []
@@ -195,8 +208,11 @@ class ReturnValueResolutionPass(RegionPass):
 
                 if value is not None:
                     found_values.append((value, value_instr))
+                    definition_instrs.append(value_instr)
+                    between.extend(block.instructions[block.instructions.index(value_instr) + 1:])
                     continue
 
+                between.extend(block.instructions)
                 queue.extend(block.predecessors)
 
             if not found_values:
@@ -221,7 +237,37 @@ class ReturnValueResolutionPass(RegionPass):
         if isinstance(found, (ObjectExpression, ArrayExpression, CallExpression, YieldExpression, AwaitExpression)):
             return None, None
 
+        if self._stored_after_read(found, between):
+            # The load was already folded into an earlier reader (its
+            # statement suppressed); the bare `rN` this leaves behind needs
+            # it printed, or it dangles.
+            for instr in definition_instrs:
+                instr.definition_pinned = True
+                instr.definition_used = False
+            return None, None
+
         return found, found_instr
+
+    _MEMORY_STORE_RE = re.compile(r"(Put|Store|Del)")
+
+    @classmethod
+    def _stored_after_read(cls, value, between) -> bool:
+        """`r0 = r3[25]; r3[25] = null; throw r0`: a value that reads memory
+        no longer holds once a store that may alias it ran between the load
+        and its use."""
+        reads = read_members(value)
+        if not reads:
+            return False
+
+        for instr in between:
+            if not cls._MEMORY_STORE_RE.match(instr.entry.opcode):
+                continue
+
+            store = stored_member(instr.value)
+            if store is not False and any(may_alias(read, store) for read in reads):
+                return True
+
+        return False
 
     def _resolve_from_flow(self, reg: int, before_instr):
         """Same reaching-definition walk, over the pre-structuring flow."""
