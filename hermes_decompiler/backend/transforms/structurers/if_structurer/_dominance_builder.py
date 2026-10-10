@@ -11,6 +11,8 @@ from hermes_decompiler.backend.transforms.shared import negate_condition, is_loo
 from hermes_decompiler.backend.transforms.structurers import RegionStructurer
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral
+from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from ._predicates import is_backward_branch, representative_block
 
@@ -279,7 +281,17 @@ class _DominanceIfBuilder(RegionStructurer):
         if (
                 goto_block is not None
                 and goto_block is not merge_block
-                and self._arm_leaves_the_region(region, then_start, goto_block)
+                and (
+                self._arm_leaves_the_region(region, then_start, goto_block)
+                or (
+                        # Only once shared returns were given private copies:
+                        # until then the arm's own exit can still be the block
+                        # the else side owns, and a join would drop it silently.
+                        getattr(self.cfg, "duplicated_returns", False)
+                        and merge_block is None
+                        and self._arm_tests_into(then_entry, goto_block)
+                )
+        )
                 and any(
             pred is not block and self.cfg.dominator_tree.dominates(then_entry, pred)
             for pred in goto_block.predecessors
@@ -420,6 +432,32 @@ class _DominanceIfBuilder(RegionStructurer):
     # -------------------------------------------------------------
     # Reachability fallback (see `_convert`'s own comment)
     # -------------------------------------------------------------
+
+    def _arm_tests_into(self, then_entry: BasicBlock, goto_block: BasicBlock) -> bool:
+        """True if a conditional branch inside the fallthrough arm jumps to
+        `goto_block` (`a || b` shape: both tests share the target)."""
+        dominators = self.cfg.dominator_tree
+        return any(
+            isinstance(pred.terminator, TerminatorConditionalBranch)
+            and pred.terminator.target == goto_block.address
+            and dominators.dominates(then_entry, pred)
+            and not self._is_constant_comparison(pred.terminator.condition)
+            for pred in goto_block.predecessors
+        )
+
+    @staticmethod
+    def _is_constant_comparison(condition) -> bool:
+        """`x === 3` / `x === undefined`: a link of a `case` chain, whose
+        shared targets (`case 3: case 4:`) `SwitchStructurer` expects to
+        find as a cascade of if/else, not as a join."""
+        return (
+                isinstance(condition, BinaryExpression)
+                and condition.operator in (BinaryOperator.STRICT_EQUAL, BinaryOperator.STRICT_NOT_EQUAL)
+                and isinstance(condition.right, (Literal, UndefinedLiteral))
+                or isinstance(condition, BinaryExpression)
+                and condition.operator in (BinaryOperator.STRICT_EQUAL, BinaryOperator.STRICT_NOT_EQUAL)
+                and isinstance(condition.left, (Literal, UndefinedLiteral))
+        )
 
     @staticmethod
     def _arm_leaves_the_region(region, then_start: int, goto_block) -> bool:

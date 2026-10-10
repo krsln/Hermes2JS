@@ -5,7 +5,8 @@ from hermes_decompiler.backend.analysis.cfg import CFG
 from hermes_decompiler.backend.emit import JSEmitter
 from hermes_decompiler.backend.transforms import StructuralAnalyzer
 from hermes_decompiler.backend.transforms.cfg_passes import (
-    ArrayDestructuringCfgPass, EnvArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass, generator_dispatch,
+    ArrayDestructuringCfgPass, EnvArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass,
+    SharedReturnDuplicationCfgPass, generator_dispatch,
 )
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
 from hermes_decompiler.core.logging import get_logger
@@ -273,6 +274,33 @@ class HermesAnalysis:
             raw: bool = False,
             creator_facts: CreatorFacts | None = None,
     ) -> list[str]:
+        lines, reason = self._generate_js(verbose, raw, creator_facts, duplicate_returns=False)
+
+        if not raw and self._has_goto(lines):
+            # A `return` block shared between early exits in different `if`
+            # arms can leave a test without its exit (a raw `goto`). Only
+            # then are the shared returns copied per jumper - doing it
+            # always would restyle every function that merely has one.
+            retry, retry_reason = self._generate_js(verbose, raw, creator_facts, duplicate_returns=True)
+            if not self._has_goto(retry):
+                lines, reason = retry, retry_reason
+
+        if raw:
+            return lines
+
+        return self._warn_if_invalid_js(lines, reason)
+
+    @staticmethod
+    def _has_goto(lines: list[str]) -> bool:
+        return any("goto label_" in line for line in lines)
+
+    def _generate_js(
+            self,
+            verbose: bool,
+            raw: bool,
+            creator_facts: CreatorFacts | None,
+            duplicate_returns: bool,
+    ) -> tuple[list[str], tuple[str, bool] | None]:
         # Clone every result before handing it to the CFG/structuring
         # passes below: those passes routinely reassign an OpcodeResult's
         # `.value`/`.statement`/`.terminator`/`.definition_used` in place
@@ -357,6 +385,8 @@ class HermesAnalysis:
         # rewrite above, and before any analysis is computed.
         ArrayDestructuringCfgPass(cfg).run()
         EnvArrayDestructuringCfgPass(cfg).run()
+        if duplicate_returns:
+            SharedReturnDuplicationCfgPass(cfg).run()
 
         cfg.verify()
         cfg.compute_dominators()
@@ -384,9 +414,9 @@ class HermesAnalysis:
             # The raw renderer's whole point is the unstructured form -
             # `goto`/`if (...) goto` here is expected output, not a defect
             # to flag.
-            return lines
+            return lines, unresolved_dispatch_reason
 
-        return self._warn_if_invalid_js(lines, unresolved_dispatch_reason)
+        return lines, unresolved_dispatch_reason
 
     @staticmethod
     def _warn_if_invalid_js(
