@@ -117,7 +117,7 @@ def representative_block(item) -> BasicBlock | None:
     region (IfRegion/LoopRegion/TryRegion), any covered block works -
     a single-entry region is dominated as a unit, so every member
     shares the same dominance relationship to blocks outside it. The
-    lowest-id block is picked for a deterministic result.
+    lowest-id real block is picked for a deterministic result.
     """
     if isinstance(item, BasicBlock):
         return item
@@ -126,4 +126,9 @@ def representative_block(item) -> BasicBlock | None:
     if not covered:
         return None
 
-    return min(covered, key=lambda b: b.id)
+    # A synthetic block (a `break`/`continue` marker the loop structurers
+    # add, address -1) is not in the dominator tree: picking it as the
+    # representative makes `dominates()` fail for the whole region.
+    real = [b for b in covered if b.address >= 0]
+
+    return min(real or covered, key=lambda b: b.id)

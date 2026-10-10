@@ -46,16 +46,14 @@ function tripleNestedLabeledTest() {
                     // CODE → addr:  0 | ContinueStatement
                     continue loop_2;
                 }
-                if (r11 === 2) {
-                    if (r7 === 2) {
-                        // ──────────────── Block 11 ──────────────── 
-                        // CODE → addr:  0 | BreakStatement
-                        break loop_1;
-                    }
-                    // ──────────────── Block 6 ──────────────── 
-                    // CODE → addr: 74 | <Mov>: <Reg8: 0, Reg8: 3>
-                    r0 = r3;
+                if (r11 === 2 && r7 === 2) {
+                    // ──────────────── Block 11 ──────────────── 
+                    // CODE → addr:  0 | BreakStatement
+                    break loop_1;
                 }
+                // ──────────────── Block 6 ──────────────── 
+                // CODE → addr: 74 | <Mov>: <Reg8: 0, Reg8: 3>
+                r0 = r3;
             }
             // LOOP → END
             // ──────────────── Block 7 ──────────────── 

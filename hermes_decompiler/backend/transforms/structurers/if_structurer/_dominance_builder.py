@@ -276,6 +276,23 @@ class _DominanceIfBuilder(RegionStructurer):
             if self._is_reachable(then_entry, goto_block):
                 merge_block = goto_block
 
+        if (
+                goto_block is not None
+                and goto_block is not merge_block
+                and self._arm_leaves_the_region(region, then_start, goto_block)
+                and any(
+            pred is not block and self.cfg.dominator_tree.dominates(then_entry, pred)
+            for pred in goto_block.predecessors
+        )
+        ):
+            # The fallthrough arm itself flows into the branch target, so
+            # the target is the join, not an `else` arm. The post-dominator
+            # can miss it when another path of the arm leaves the region
+            # (`if (a) { if (b) break; } x();` with `x` the loop latch).
+            # Gated on such a carved-out exit: a plain case-fallthrough
+            # chain (`switchTest`) needs `has_else` at every link.
+            merge_block = goto_block
+
         has_else = goto_block is not merge_block and goto_block is not None
 
         # else_root = None
@@ -304,6 +321,7 @@ class _DominanceIfBuilder(RegionStructurer):
 
         index = then_start
         boundary = len(region.children)
+        last_side: list | None = None
 
         while index < len(region.children):
 
@@ -315,11 +333,20 @@ class _DominanceIfBuilder(RegionStructurer):
 
             rep = representative_block(item)
 
-            if dominators.dominates(then_entry, rep):
+            if rep is not None and rep.address < 0 and last_side is not None:
+                # A region made only of synthetic blocks (`if (c) break;`
+                # after the loop structurers ran) has no node in the
+                # dominator tree. It stays with the item it follows:
+                # that item's conditional branch is what it replaced.
+                last_side.append(item)
+
+            elif dominators.dominates(then_entry, rep):
                 then_items.append(item)
+                last_side = then_items
 
             elif has_else and dominators.dominates(else_entry, rep):
                 else_items.append(item)
+                last_side = else_items
 
             else:
                 # Neither side dominates - this is the true merge
@@ -393,6 +420,18 @@ class _DominanceIfBuilder(RegionStructurer):
     # -------------------------------------------------------------
     # Reachability fallback (see `_convert`'s own comment)
     # -------------------------------------------------------------
+
+    @staticmethod
+    def _arm_leaves_the_region(region, then_start: int, goto_block) -> bool:
+        """True if a loop-exit marker (a synthetic `break`/`continue`
+        block) sits between the branch and `goto_block` in the sequence."""
+        for item in region.children[then_start:]:
+            if item is goto_block:
+                return False
+            rep = representative_block(item)
+            if rep is not None and rep.address < 0:
+                return True
+        return False
 
     @staticmethod
     def _is_reachable(start: BasicBlock, target: BasicBlock) -> bool:
