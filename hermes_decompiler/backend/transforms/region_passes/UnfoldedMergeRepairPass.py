@@ -250,7 +250,7 @@ class UnfoldedMergeRepairPass(RegionPass):
             default=write.address,
         )
 
-        return _reads_register_by_name(self.cfg, write.dest_reg, end)
+        return _reads_register_by_name(self.cfg, write.dest_reg, end, root=self.graph.root)
 
     def _reprint_default_for_printed_write(self, if_region, write, region_blocks) -> None:
         """`rN = d; if (c) { rN = v }; ...rN...` where `rN = v` prints: when `c`
@@ -338,7 +338,8 @@ class UnfoldedMergeRepairPass(RegionPass):
         skips the arm needs the register assigned."""
         # Every path through the `if` writes the register: no path keeps the
         # default, so it is dead.
-        if _always_assigns(if_region.then_body, write.dest_reg) and _always_assigns(if_region.else_body, write.dest_reg):
+        if _always_assigns(if_region.then_body, write.dest_reg) and _always_assigns(if_region.else_body,
+                                                                                    write.dest_reg):
             return
 
         region_blocks = set(_blocks_of(if_region.then_body)) | set(_blocks_of(if_region.else_body))

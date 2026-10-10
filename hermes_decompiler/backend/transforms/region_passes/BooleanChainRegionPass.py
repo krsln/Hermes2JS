@@ -13,7 +13,8 @@ from hermes_decompiler.backend.transforms.shared._repoint import _reads_register
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
-from hermes_decompiler.ir.expressions import BinaryExpression, Expression
+from hermes_decompiler.ir.expressions import BinaryExpression, Expression, Identifier
+from hermes_decompiler.backend.transforms.structurers.if_structurer._predicates import is_negation, unwrap_negation
 
 logger = get_logger(__name__)
 
@@ -188,17 +189,21 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
         if tail is not last.value:
             tested.append(tail)
 
-        for candidate in tested:
-            if negate_condition(candidate).structurally_equal(condition):
-                operator = LogicalOperator.OR
-                break
+        operator = self._register_test_operator(condition, last.dest_reg)
+        tested_by_register = operator is not None
 
-            if candidate.structurally_equal(condition):
-                operator = LogicalOperator.AND
-                break
+        if operator is None:
+            for candidate in tested:
+                if negate_condition(candidate).structurally_equal(condition):
+                    operator = LogicalOperator.OR
+                    break
 
-        else:
-            return self._decline(last, then_result, then_block, if_region)
+                if candidate.structurally_equal(condition):
+                    operator = LogicalOperator.AND
+                    break
+
+            else:
+                return self._decline(last, then_result, then_block, if_region)
 
         old_tail_expr = then_result.value
         old_last_value = last.value
@@ -217,17 +222,42 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             last.value,
             min_block_id=then_block.id,
             exclude={then_result, last},
+            # Identity only when the arm's value was rewritten to the register-free
+            # `tail_value` (its `old_tail_expr` names registers - `r3 != null` -
+            # that a LATER arm re-defines under the very same text), or when the
+            # test named the register: no copy of the arm's value was inlined
+            # anywhere then, and a structural match would hit an unrelated
+            # identical literal (`[]`).
+            structural=tail_value is old_tail_expr and not tested_by_register,
         )
 
         # A later reader that names the register (`r9 = r4`, kept as a read
         # because the operands were redefined in between) needs the fold
         # result as a statement of its own.
         if last.definition_used and _reads_register_by_name(
-                self.cfg, last.dest_reg, max(last.entry.address, then_result.entry.address),
+                self.cfg, last.dest_reg, max(last.entry.address, then_result.entry.address), root=self.graph.root,
         ):
             last.definition_used = False
 
         return True
+
+    @staticmethod
+    def _register_test_operator(condition, register: int):
+        """`if (!rN)` / `if (rN)` straight after the write of `rN` tests the
+        value built so far by name (a join value the reader could not inline:
+        `r0 = a; if (!r0) r0 = b; if (!r0) r0 = c`), which is `a || b` for the
+        next arm. None when the condition is anything else."""
+        name = f"r{register}"
+
+        if isinstance(condition, Identifier) and condition.name == name:
+            return LogicalOperator.AND
+
+        if (is_negation(condition)
+                and isinstance(unwrap_negation(condition), Identifier)
+                and unwrap_negation(condition).name == name):
+            return LogicalOperator.OR
+
+        return None
 
     def _decline(self, last, then_result, then_block, if_region) -> bool:
         """The shape matched but the fold is refused: the merge stays an

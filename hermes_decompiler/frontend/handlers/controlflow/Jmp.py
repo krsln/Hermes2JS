@@ -80,7 +80,23 @@ class JmpTrue(OpcodeHandler):
         target = ctx.entry.target_address or (ctx.entry.address + offset)
         ctx.analysis.goto_list.append(target)
 
-        condition = self.build_condition(self.get_register_expression(ctx.analysis, reg))
+        state = ctx.analysis.get_register_state(reg)
+
+        if state is not None and state.reads == 0 and ctx.analysis.is_join_value(state):
+            # The test reads a value two paths merged into (`r0 = a; if (!r0)
+            # r0 = b; if (r0) ...`). Inlining the arm's `b` would test only
+            # one of them, and a negated condition (`JmpFalse`) is a new
+            # expression no later fold can repoint: keep the register (only when
+            # this branch is the first reader: an earlier one already inlined the
+            # arm's value and the repair passes expect that shape). The
+            # arm's write stays unprinted for now (a fold may still absorb it;
+            # `UnfoldedMergeRepairPass` prints it when none does).
+            state.mark_read()
+            value = Identifier(name=f"r{reg}")
+        else:
+            value = self.get_register_expression(ctx.analysis, reg)
+
+        condition = self.build_condition(value)
 
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
 

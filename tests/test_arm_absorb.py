@@ -343,7 +343,13 @@ def test_catch_keeps_the_rethrow_that_closes_it(monkeypatch):
 
     out = _render_98_unfolded(monkeypatch, 9487, "nestedArrayDestructureTest")
 
-    catch = re.search(r"catch \(caughtException\) \{\n        if \(r7 !== undefined\) \{(.*?)\n    \}\n", out, re.S)
+    # The flag the `if` tests is either folded into it (`r7 !== undefined`) or
+    # kept as the join value it is (`r8 = r7 === undefined; if (!r8)`).
+    catch = re.search(
+        r"catch \(caughtException\) \{\n(?:        r8 = r7 === undefined;\n)?"
+        r"        if \((?:r7 !== undefined|!r8)\) \{(.*?)\n    \}\n",
+        out, re.S,
+    )
 
     assert catch is not None, out
     assert "throw caughtException;" in catch.group(1)

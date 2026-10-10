@@ -199,6 +199,13 @@ class HermesAnalysis:
         address = state.definition.address
         return any(start < address < end <= current for start, end in self.skip_ranges)
 
+    def is_join_value(self, state: RegisterState) -> bool:
+        """The register's current definition is a one-path write into the join
+        being read AND an earlier definition reaches the same join on the
+        skipping path (`r0 = a; if (!r0) { r0 = b }; <read r0>`): the read sees
+        a merge of the two, so the arm's value alone is not what it holds."""
+        return state.version > 0 and self._is_phi_write(state)
+
     @staticmethod
     def _redefinition_prints(state: RegisterState) -> bool:
         """The definition is kept as a statement of its own: a call/construct

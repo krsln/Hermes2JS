@@ -151,7 +151,7 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             # pure, and repointing them to the register is only sound where
             # nothing reassigned it in between.)
             named_later = _reads_register_by_name(
-                self.cfg, last.dest_reg, max(last.entry.address, arm_result.entry.address),
+                self.cfg, last.dest_reg, max(last.entry.address, arm_result.entry.address), root=self.graph.root,
             )
 
             reclaim_definition(
