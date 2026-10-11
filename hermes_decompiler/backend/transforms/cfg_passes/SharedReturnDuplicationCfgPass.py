@@ -25,6 +25,7 @@ import copy
 import dataclasses
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
+from hermes_decompiler.backend.transforms.shared._purity import TRIVIAL_NODE_TYPES
 from hermes_decompiler.ir.terminators import (
     TerminatorConditionalBranch,
     TerminatorJump,
@@ -64,10 +65,24 @@ class SharedReturnDuplicationCfgPass:
     def _eligible(self, block: BasicBlock) -> bool:
         if not isinstance(block.terminator, TerminatorReturn):
             return False
-        if len(block.instructions) != 1 or len(block.predecessors) < 2:
+        if len(block.instructions) > self._MAX_LEAD + 1 or len(block.predecessors) < 2:
+            return False
+        # `r0 = false; return r0` is as much a lone return as `return r0`:
+        # only constant loads / copies may lead up to the terminator.
+        if not all(self._is_plain_load(i) for i in block.instructions[:-1]):
             return False
         # The function's closing `return` is joined by everything; leave it.
         return any(other.address > block.address for other in self.cfg.blocks)
+
+    _MAX_LEAD = 2
+
+    @staticmethod
+    def _is_plain_load(instruction) -> bool:
+        return (
+                instruction.terminator is None
+                and instruction.value is not None
+                and isinstance(instruction.value, TRIVIAL_NODE_TYPES)
+        )
 
     @staticmethod
     def _jumps_to(pred: BasicBlock, block: BasicBlock) -> bool:

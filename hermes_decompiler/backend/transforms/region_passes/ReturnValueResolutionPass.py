@@ -270,7 +270,29 @@ class ReturnValueResolutionPass(RegionPass):
         return False
 
     def _resolve_from_flow(self, reg: int, before_instr):
-        """Same reaching-definition walk, over the pre-structuring flow."""
+        """Same reaching-definition walk, over the pre-structuring flow. A
+        `Ret` that tail-merging made out of several arms' copies is resolved
+        along every one of them, and all must agree."""
+        merged = getattr(self.cfg, "tail_origins", {}).get(id(before_instr), ())
+        results = [self._resolve_from_flow_at(reg, origin) for origin in (before_instr, *merged)]
+
+        first = results[0]
+
+        for other in results[1:]:
+            if first[0] is None or other[0] is None or structural_key(other[0]) != structural_key(first[0]):
+                # The merged `return rN` stays bare, so every arm's own
+                # `rN = ...` has to print (an arm's constant may have been
+                # inlined into a `return` that no longer exists).
+                for _, definition in results:
+                    if definition is not None:
+                        definition.definition_pinned = True
+                        definition.definition_used = False
+
+                return None, None
+
+        return first
+
+    def _resolve_from_flow_at(self, reg: int, before_instr):
         by_id = {bid: (succ, instrs) for bid, succ, instrs in self.flow.blocks}
         predecessors: dict[int, list[int]] = {bid: [] for bid in by_id}
 
