@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion
 from hermes_decompiler.backend.transforms.shared import (
@@ -220,11 +222,24 @@ class UnfoldedMergeRepairPass(RegionPass):
         # r5` carrying the arm's value) and is exactly what gets repointed.
         # An object an earlier repair of this pass created (`Identifier r0`
         # handed to every reader it repointed) is shared on purpose.
-        if id(write.value) not in self._made and sum(
-                1 for b in self.cfg.blocks for i in b.instructions
+        if id(write.value) not in self._made:
+            holders = [
+                i for b in self.cfg.blocks for i in b.instructions
                 if i.value is write.value and i.entry.opcode == write.entry.opcode
-        ) > 1:
-            return
+            ]
+
+            if len(holders) > 1:
+                # The extra holders being `Mov`s that read this register are
+                # the readers of the join value; only THEY take the register
+                # (a global repoint would also hit every other register the
+                # value was copied into). Anything else is ambiguous.
+                readers = [i for i in holders if i is not write and self._is_reader_mov_of(i, write)]
+
+                if len(holders) - len(readers) > 1 or not readers:
+                    return
+
+                self._repoint_reader_movs(write, if_region, region_blocks, arm_blocks)
+                return
 
         # Every path writes the same thing: no phi, the inlined copy is right.
         if (
@@ -275,11 +290,15 @@ class UnfoldedMergeRepairPass(RegionPass):
         literal or identifier is shared by unrelated readers."""
         if (
                 not is_last
-                or isinstance(write.value, (ThisPlaceholder,) + TRIVIAL_NODE_TYPES)
+                or isinstance(write.value, ThisPlaceholder)
                 or has_side_effects(write.value)
                 or not self._read_after_the_if(write, region_blocks)
                 or not self._default_prints(write, region_blocks)
         ):
+            return
+
+        if isinstance(write.value, TRIVIAL_NODE_TYPES):
+            self._repoint_movs_of_printed_write(write, arm_blocks, region_blocks)
             return
 
         # Only readers OUTSIDE the `if`: the sibling arm holds the very same value
@@ -294,6 +313,63 @@ class UnfoldedMergeRepairPass(RegionPass):
 
         self._index = None
         logger.debug("unfolded merge: copies of printed r%s after the if read the register", write.dest_reg)
+
+    _MOV_SOURCE_RE = re.compile(r"Reg(?:8|32):\s*\d+,\s*Reg(?:8|32):\s*(\d+)")
+
+    def _repoint_reader_movs(self, write, if_region, region_blocks, arm_blocks) -> None:
+        if (not isinstance(write.value, TRIVIAL_NODE_TYPES) or has_side_effects(write.value)
+                or not self._read_after_the_if(write, region_blocks)):
+            return
+
+        self._repoint_movs_of_printed_write(write, arm_blocks, region_blocks)
+
+        self._index = None
+        write.definition_used = False
+        logger.debug("unfolded merge: r%s read by Mov after the if", write.dest_reg)
+        self._reprint_default(if_region, write)
+
+    def _is_reader_mov_of(self, instruction, write) -> bool:
+        """A `Mov rX, rN` (X != N) holding the write's value is its reader."""
+        if instruction is write or instruction.dest_reg == write.dest_reg:
+            return False
+
+        if instruction.entry.opcode not in ("Mov", "MovLong"):
+            return False
+
+        source = self._MOV_SOURCE_RE.match(instruction.entry.args)
+
+        return source is not None and int(source.group(1)) == write.dest_reg
+
+    def _repoint_movs_of_printed_write(self, write, arm_blocks, region_blocks) -> None:
+        """A bare identifier/literal is shared by unrelated readers, so only a
+        `Mov` that reads this very register and holds the arm's value takes the
+        register: `r3 = 2; if (c) { r3 = r4 }; r8 = r3` printed `r8 = r4`."""
+        inside = {i for blk in region_blocks for i in blk.instructions}
+        minimum = min(b.id for b in arm_blocks)
+        changed = False
+
+        for block in self.cfg.blocks:
+            if block.id < minimum:
+                continue
+
+            for instruction in block.instructions:
+                if instruction in inside or instruction.value is not write.value:
+                    continue
+
+                if instruction.entry.opcode not in ("Mov", "MovLong"):
+                    continue
+
+                source = self._MOV_SOURCE_RE.match(instruction.entry.args)
+
+                if source is None or int(source.group(1)) != write.dest_reg:
+                    continue
+
+                instruction.value = Identifier(name=f"r{write.dest_reg}")
+                changed = True
+
+        if changed:
+            self._index = None
+            logger.debug("unfolded merge: Mov of printed r%s after the if reads the register", write.dest_reg)
 
     def _named_after_the_if(self, write, region_blocks) -> bool:
         """Does code after the `if` read `write`'s register BY NAME, before
