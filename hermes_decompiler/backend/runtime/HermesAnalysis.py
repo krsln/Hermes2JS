@@ -79,14 +79,21 @@ class HermesAnalysis:
         # value that READS memory is stale once a store that may alias it
         # follows its load (see `stale_kind`).
         self.store_log: list[MemberExpression | None] = []
+        # Calls so far: one may write anything a still-folded member read
+        # loaded (`x = o.count; f(); use(x)`), see `_changed_by_a_call`.
+        self.call_count = 0
 
     _MEMORY_STORE_RE = re.compile(r"(Put|Store|Del)")
+    # A call runs arbitrary code, which may write any property.
+    _CALL_RE = re.compile(r"(Call|Construct)")
 
     def add_result(self, result: OpcodeResult) -> None:
         self.results.append(result)
 
         if self._MEMORY_STORE_RE.match(result.entry.opcode):
             self._log_store(result)
+        elif self._CALL_RE.match(result.entry.opcode):
+            self.call_count += 1
 
         if not result.name:
             return
@@ -108,6 +115,7 @@ class HermesAnalysis:
         state = RegisterState(
             definition=result, version=version, operand_versions=operand_versions,
             memory_epoch=len(self.store_log) if reads_memory else None,
+            call_epoch=self.call_count,
             memory_reads=read_members(result.value) if reads_memory else (),
         )
         self.registers[result.name] = state
@@ -177,7 +185,7 @@ class HermesAnalysis:
         if state.handler.startswith("Put"):
             return None
 
-        if state.memory_epoch is not None and self._stored_since(state):
+        if state.memory_epoch is not None and (self._stored_since(state) or self._changed_by_a_call(state)):
             # `r0 = r3[25]; r3[25] = null; throw r0`: the load ran before the
             # store, so its value is not what `r3[25]` reads now.
             return "memory"
@@ -215,6 +223,34 @@ class HermesAnalysis:
                 return "other"
 
         return kind
+
+    _CALLEE_OPERANDS_RE = re.compile(r"\s*Reg(?:8|32):\s*\d+,\s*Reg(?:8|32):\s*(\d+)(?:,\s*Reg(?:8|32):\s*(\d+))?")
+
+    def _changed_by_a_call(self, state: RegisterState) -> bool:
+        """A call ran since a member read was loaded and the read is DATA
+        (`n = o.count; f(); use(n)`). A load consumed as the callee/`this` of
+        the call being handled (`console.log` fetched before the argument's
+        own call) is evaluated in that order by the source too."""
+        if self.call_count == state.call_epoch:
+            return False
+
+        # `arguments.length` / `arguments[i]` are the call's own, which no
+        # callee can change.
+        if all(
+                isinstance(read.obj, Identifier) and read.obj.name == "arguments"
+                for read in state.memory_reads
+        ):
+            return False
+
+        entry = self.current_entry
+        if entry is not None and self._CALL_RE.match(entry.opcode):
+            operands = self._CALLEE_OPERANDS_RE.match(entry.args)
+            if operands is not None and state.definition.name in {
+                f"r{group}" for group in operands.groups() if group is not None
+            }:
+                return False
+
+        return True
 
     def _stored_since(self, state: RegisterState) -> bool:
         """A store since `state`'s load may have written a location it read."""

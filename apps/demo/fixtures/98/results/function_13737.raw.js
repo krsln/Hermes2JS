@@ -322,7 +322,7 @@ async function _anon_0_runAllTests() {
     await r7.callAsyncTests.call(undefined);
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 67 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 0>
-    // USED → r5 = r1[0];
+    r5 = r1[0];
     // CODE → addr: 71 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 26>
     r7 = r1[0][26];
     // CODE → addr: 75 | <GetById>: <Reg8: 8, Reg8: 7, UInt8: 0, string_id: 10699>  # String: 'classTest' (Identifier)
@@ -332,7 +332,7 @@ async function _anon_0_runAllTests() {
     // CODE → addr: 83 | <Call1>: <Reg8: 8, Reg8: 8, Reg8: 7>
     r8 = r7.classTest();
     // CODE → addr: 87 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 27>
-    r5 = r1[0][27];
+    r5 = r5[27];
     // CODE → addr: 91 | <GetById>: <Reg8: 5, Reg8: 5, UInt8: 1, string_id: 11131>  # String: 'privateStaticTest' (Identifier)
     // USED → r5 = r5.privateStaticTest;
     // CODE → addr: 97 | <Call1>: <Reg8: 5, Reg8: 5, Reg8: 7>

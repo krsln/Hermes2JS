@@ -30,7 +30,7 @@ async function _anon_0_simpleAsyncTest() {
     await r7[0].call(0, 42);
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 67 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 0>
-    // USED → r5 = r1[0];
+    r5 = r1[0];
     // CODE → addr: 71 | <StoreToEnvironment>: <Reg8: 5, UInt8: 0, Reg8: 0>
     r1[0][0] = param2;
     // CODE → addr: 75 | <GetGlobalObject>: <Reg8: 7>
@@ -52,11 +52,11 @@ async function _anon_0_simpleAsyncTest() {
     // CODE → addr:112 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 10, Reg8: 7>
     console.log("__BC:Functions/AsyncTests/simpleAsyncTest/end");
     // CODE → addr:117 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 0>
-    // USED → r7 = r1[0][0];
+    // USED → r7 = r5[0];
     // CODE → addr:128 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
     // USED → r5 = { "value": null, "done": true };
     // CODE → addr:134 | <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 7, UInt8: 0>
-    r5 = { "value": r1[0][0], "done": true };
+    r5 = { "value": r5[0], "done": true };
     // CODE → addr:138 | <Ret>: <Reg8: 5>
     return r5;
 }

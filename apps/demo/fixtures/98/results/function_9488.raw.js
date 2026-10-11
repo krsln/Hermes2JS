@@ -3,7 +3,7 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr:  0 | <LoadParam>: <Reg8: 3, UInt8: 1>
     // USED → r3 = param1;
     // CODE → addr:  3 | <GetByIdShort>: <Reg8: 9, Reg8: 3, UInt8: 0, string_id: 28>  # String: 'id' (Identifier)
-    // USED → r9 = param1.id;
+    r9 = param1.id;
     // CODE → addr:  8 | <GetByIdShort>: <Reg8: 8, Reg8: 3, UInt8: 1, string_id: 187>  # String: 'name' (Identifier)
     r8 = param1.name;
     // CODE → addr: 13 | <LoadConstUndefined>: <Reg8: 1>
@@ -38,7 +38,7 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr:120 | <Mov>: <Reg8: 15, Reg8: 5>
     r15 = console;
     // CODE → addr:123 | <Mov>: <Reg8: 14, Reg8: 9>
-    r14 = param1.id;
+    r14 = r9;
     // CODE → addr:126 | <Mov>: <Reg8: 13, Reg8: 8>
     r13 = "anon";
     // CODE → addr:129 | <Mov>: <Reg8: 12, Reg8: 7>

@@ -20,6 +20,8 @@ class RegisterState:
     memory_epoch: int | None = None
     #: the member expressions it read
     memory_reads: tuple = ()
+    #: `HermesAnalysis.call_count` when it was defined.
+    call_epoch: int = 0
 
     @property
     def value(self) -> Expression | None:

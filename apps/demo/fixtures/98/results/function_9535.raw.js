@@ -29,7 +29,7 @@ function privateStaticTest() {
     // CODE → addr: 54 | <NewObjectWithParent>: <Reg8: 9, Reg8: 6>
     r9 = Object.create(r4.prototype);
     // CODE → addr: 57 | <LoadFromEnvironment>: <Reg8: 12, Reg8: 5, UInt8: 5>
-    // USED → r12 = r5[5];
+    r12 = r5[5];
     // CODE → addr: 61 | <PrivateIsIn>: <Reg8: 1, Reg8: 12, Reg8: 9, Reg8: 0>
     // USED → r1 = r5[5] in r9;
     // CODE → addr: 66 | <JmpTrueLong>: <Addr32: 329, Reg8: 1>  # Address: 0000018b
@@ -40,7 +40,7 @@ function privateStaticTest() {
     // CODE → addr: 74 | <AddOwnPrivateBySym>: <Reg8: 9, Reg8: 1, Reg8: 12>
     r9.#__private_1__ = r5[5];
     // CODE → addr: 78 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 5, UInt8: 6>
-    // USED → r10 = r5[6];
+    r10 = r5[6];
     // CODE → addr: 82 | <LoadConstZero>: <Reg8: 0>
     r0 = 0;
     // CODE → addr: 84 | <AddOwnPrivateBySym>: <Reg8: 9, Reg8: 0, Reg8: 10>
@@ -54,7 +54,7 @@ function privateStaticTest() {
     // CODE → addr:103 | <Call2>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 11>
     console.log("__BC:Classes/PrivateStaticTests/Counter/constructor");
     // CODE → addr:108 | <LoadFromEnvironment>: <Reg8: 8, Reg8: 5, UInt8: 2>
-    // USED → r8 = r5[2];
+    r8 = r5[2];
     // CODE → addr:112 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 4>
     r7 = r5[4];
     // CODE → addr:116 | <GetOwnPrivateBySym>: <Reg8: 6, Reg8: 8, UInt8: 1, Reg8: 7>
@@ -64,7 +64,7 @@ function privateStaticTest() {
     // CODE → addr:124 | <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
     r5[2].#__private_7__ = r6;
     // CODE → addr:129 | <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
-    r6 = CreateThisForNew(r5[0]);
+    r6 = CreateThisForNew(r4);
     // CODE → addr:133 | <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000095
     if (typeof r4 === "function") goto label_149;
     // ──────────────── Block 4 ──────────────── 
@@ -78,14 +78,14 @@ function privateStaticTest() {
     // CODE → addr:154 | <NewObjectWithParent>: <Reg8: 6, Reg8: 6>
     r6 = Object.create(r4.prototype);
     // CODE → addr:157 | <PrivateIsIn>: <Reg8: 2, Reg8: 12, Reg8: 6, Reg8: 2>
-    // USED → r2 = r5[5] in r6;
+    // USED → r2 = r12 in r6;
     // CODE → addr:162 | <JmpTrueLong>: <Addr32: 225, Reg8: 2>  # Address: 00000183
-    if (r5[5] in r6) goto label_387;
+    if (r12 in r6) goto label_387;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:168 | <AddOwnPrivateBySym>: <Reg8: 6, Reg8: 1, Reg8: 12>
-    r6.#__private_1__ = r5[5];
+    r6.#__private_1__ = r12;
     // CODE → addr:172 | <AddOwnPrivateBySym>: <Reg8: 6, Reg8: 0, Reg8: 10>
-    r6.#__private_0__ = r5[6];
+    r6.#__private_0__ = r10;
     // CODE → addr:176 | <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r10 = console;
     // CODE → addr:182 | <GetByIdShort>: <Reg8: 6, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -93,11 +93,11 @@ function privateStaticTest() {
     // CODE → addr:187 | <Call2>: <Reg8: 6, Reg8: 6, Reg8: 10, Reg8: 11>
     console.log("__BC:Classes/PrivateStaticTests/Counter/constructor");
     // CODE → addr:192 | <GetOwnPrivateBySym>: <Reg8: 6, Reg8: 8, UInt8: 1, Reg8: 7>
-    r6 = r5[2].#__private_7__;
+    r6 = r8.#__private_7__;
     // CODE → addr:197 | <Inc>: <Reg8: 6, Reg8: 6>
     r6 = r6 + 1;
     // CODE → addr:200 | <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
-    r5[2].#__private_7__ = r6;
+    r8.#__private_7__ = r6;
     // CODE → addr:205 | <GetById>: <Reg8: 6, Reg8: 9, UInt8: 3, string_id: 11123>  # String: 'increment' (Identifier)
     // USED → r6 = r9.increment;
     // CODE → addr:211 | <Call1>: <Reg8: 6, Reg8: 6, Reg8: 9>

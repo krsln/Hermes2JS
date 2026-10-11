@@ -87,5 +87,7 @@ def test_literal_definition_in_a_boolean_chain_arm_is_not_dropped():
     hasm = (_DATA / "object_literal_in_boolean_chain_arm.hasm").read_text(encoding="utf-8")
     out = _decompile_text(hasm, 13197)
 
-    assert 'r7 = { "color": param1.tintColor }' in out
+    # The property read happened before the calls in between, so it is named
+    # (`r8 = param1.tintColor`) rather than re-read at the literal.
+    assert re.search(r'r7 = \{ "color": (param1\.tintColor|r8) \}', out)
     assert "&& r7" not in out

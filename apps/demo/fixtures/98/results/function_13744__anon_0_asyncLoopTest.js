@@ -185,7 +185,7 @@ async function _anon_0_asyncLoopTest(param1) {
             // CODE → addr:194 | <StoreToEnvironment>: <Reg8: 1, UInt8: 4, Reg8: 15>
             r1[4] = __environment__;
             // CODE → addr:198 | <LoadFromEnvironment>: <Reg8: 14, Reg8: 1, UInt8: 0>
-            // USED → r14 = r1[0];
+            r14 = r1[0];
             // CODE → addr:202 | <StoreNPToEnvironment>: <Reg8: 15, UInt8: 0, Reg8: 10>
             __environment__[0] = undefined;
             // CODE → addr:206 | <StoreNPToEnvironment>: <Reg8: 15, UInt8: 1, Reg8: 10>
@@ -199,9 +199,9 @@ async function _anon_0_asyncLoopTest(param1) {
             // CODE → addr:226 | <StoreNPToEnvironment>: <Reg8: 15, UInt8: 0, Reg8: 13>
             __environment__[0] = 0;
             // CODE → addr:230 | <StoreToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 14>
-            r1[2] = r1[0];
+            r1[2] = r14;
             // CODE → addr:234 | <Mov>: <Reg8: 15, Reg8: 14>
-            r15 = r1[0];
+            r15 = r14;
             // CODE → addr:237 | <IteratorBegin>: <Reg8: 14, Reg8: 15>
             r14 = GetIterator(r15);
             // CODE → addr:240 | <StoreToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 15>
@@ -220,7 +220,7 @@ async function _anon_0_asyncLoopTest(param1) {
             if (r14 === undefined) {
                 // ──────────────── Block 15 ──────────────── 
                 // CODE → addr:328 | <LoadFromEnvironment>: <Reg8: 14, Reg8: 1, UInt8: 4>
-                // USED → r14 = r1[4];
+                r14 = r1[4];
                 // CODE → addr:332 | <TryGetById>: <Reg8: 17, Reg8: 12, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                 // USED → r17 = console;
                 // CODE → addr:338 | <GetByIdShort>: <Reg8: 16, Reg8: 17, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -236,7 +236,7 @@ async function _anon_0_asyncLoopTest(param1) {
                 // CODE → addr:363 | <Call2>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11>
                 console.log("__BC:Functions/AsyncTests/asyncLoopTest/end");
                 // CODE → addr:368 | <LoadFromEnvironment>: <Reg8: 15, Reg8: 14, UInt8: 0>
-                // USED → r15 = r1[4][0];
+                // USED → r15 = r14[0];
                 // CODE → addr:372 | <Mov>: <Reg8: 2, Reg8: 7>
                 r2 = 3;
                 // CODE → addr:375 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 7>
@@ -244,7 +244,7 @@ async function _anon_0_asyncLoopTest(param1) {
                 // CODE → addr:379 | <NewObjectWithBuffer>: <Reg8: 14, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
                 // USED → r14 = { "value": null, "done": true };
                 // CODE → addr:385 | <PutOwnBySlotIdx>: <Reg8: 14, Reg8: 15, UInt8: 0>
-                r14 = { "value": r1[4][0], "done": true };
+                r14 = { "value": r14[0], "done": true };
             } else {
                 // ──────────────── Block 14 ──────────────── 
                 // CODE → addr:268 | <LoadFromEnvironment>: <Reg8: 14, Reg8: 1, UInt8: 4>

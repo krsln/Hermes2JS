@@ -66,7 +66,7 @@ async function _anon_0_asyncTryCatchTest() {
     if (param1 === 2) goto label_184;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:115 | <LoadFromEnvironment>: <Reg8: 18, Reg8: 1, UInt8: 0>
-    // USED → r18 = r1[0];
+    r18 = r1[0];
     // CODE → addr:119 | <StoreToEnvironment>: <Reg8: 18, UInt8: 0, Reg8: 0>
     r1[0][0] = param2;
     // CODE → addr:123 | <TryGetById>: <Reg8: 21, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -78,7 +78,7 @@ async function _anon_0_asyncTryCatchTest() {
     // CODE → addr:138 | <Call3>: <Reg8: 19, Reg8: 20, Reg8: 21, Reg8: 8, Reg8: 19>
     console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/awaited", r19);
     // CODE → addr:144 | <LoadFromEnvironment>: <Reg8: 18, Reg8: 18, UInt8: 0>
-    r18 = r1[0][0];
+    r18 = r18[0];
     // CODE → addr:148 | <JStrictEqual>: <Addr8: 10, Reg8: 18, Reg8: 5>  # Address: 0000009e
     if (r18 === 1) goto label_158;
     // ──────────────── Block 8 ──────────────── 
