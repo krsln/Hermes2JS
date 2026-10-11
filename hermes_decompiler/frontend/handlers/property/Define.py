@@ -1,6 +1,8 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT16, \
     UINT32
-from hermes_decompiler.frontend.handlers.shared import fold_array_element, fold_object_property, property_access
+from hermes_decompiler.frontend.handlers.shared import (
+    define_non_enumerable, fold_array_element, fold_object_property, property_access,
+)
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
@@ -93,20 +95,22 @@ class DefineOwnByVal(OpcodeHandler):
         # Only an ENUMERABLE define is what an object-literal property is. A
         # non-enumerable one (`enumerable == 0`: class methods - 1,136 of the
         # 1,278 in the hermes-98 bundle) would turn enumerable if folded
-        # into a literal, so it stays a statement.
+        # into a literal, so it stays a statement - printed as
+        # `Object.defineProperty(...)`, since `obj[key] = value` would make it
+        # enumerable (and run a setter).
         if enumerable == 1:
             folded = fold_object_property(ctx, obj_reg, key, right)
 
             if folded is not None:
                 return folded
 
-        left = MemberExpression(
-            obj=self.get_register_expression(ctx.analysis, obj_reg),
-            prop=key,
-            computed=True,
-        )
+        obj = self.get_register_expression(ctx.analysis, obj_reg)
 
-        expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
+        if enumerable != 1:
+            expression = define_non_enumerable(obj, key, right)
+        else:
+            left = MemberExpression(obj=obj, prop=key, computed=True)
+            expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
         ctx.analysis.add_result(result)

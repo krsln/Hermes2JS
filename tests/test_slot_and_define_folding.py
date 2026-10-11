@@ -141,7 +141,8 @@ def test_non_enumerable_define_is_never_folded_into_a_literal():
     )
 
     assert '"k": param1' not in out
-    assert 'r0["k"] = param1' in out
+    # `r0["k"] = param1` would make it enumerable (and run a setter).
+    assert 'Object.defineProperty(r0, "k", { value: param1, writable: true, enumerable: false, configurable: true });' in out, out
 
 
 def test_dense_array_elements_fold_into_one_literal():
@@ -188,3 +189,23 @@ def test_no_98_fixture_prints_an_unresolved_property_name():
         assert "string_" not in "".join(
             line for line in path.read_text(encoding="utf-8").splitlines(True) if not line.lstrip().startswith("//")
         ).replace("string_id", ""), path.name
+
+
+def test_non_enumerable_put_own_by_value_is_a_define_too():
+    # `PutOwnByVal` obj, VALUE, KEY, enumerable: operand order differs from `PutByVal`.
+    out = _out(
+        _PARAM, "<NewObject>: <Reg8: 0>", "<LoadConstString>: <Reg8: 2, string_id: 6>  # String: 'k' (String)",
+        "<PutOwnByVal>: <Reg8: 0, Reg8: 1, Reg8: 2, UInt8: 0>", _RET,
+    )
+
+    assert 'Object.defineProperty(r0, "k", { value: param1, writable: true, enumerable: false, configurable: true });' in out, out
+    assert 'r0["k"] = param1' not in out
+
+
+def test_enumerable_put_own_by_value_stays_an_assignment_or_literal_property():
+    out = _out(
+        _PARAM, "<NewObject>: <Reg8: 0>", "<LoadConstString>: <Reg8: 2, string_id: 6>  # String: 'k' (String)",
+        "<PutOwnByVal>: <Reg8: 0, Reg8: 1, Reg8: 2, UInt8: 1>", _RET,
+    )
+
+    assert "defineProperty" not in out, out

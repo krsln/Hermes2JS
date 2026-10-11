@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from hermes_decompiler.ir.expressions import (
-    ArrayExpression, AssignmentExpression, Identifier, MemberExpression, NumericLiteral, ObjectExpression,
+    ArrayExpression, AssignmentExpression, CallExpression, Identifier, MemberExpression, NumericLiteral,
+    ObjectExpression,
     StringLiteral,
 )
 from ._structural_key import structural_key
@@ -30,6 +31,15 @@ def stored_member(value) -> MemberExpression | None | bool:
         return value.left
     if isinstance(value, (ArrayExpression, ObjectExpression)):
         return False
+    if (
+            isinstance(value, CallExpression)
+            and isinstance(value.callee, MemberExpression)
+            and isinstance(value.callee.obj, Identifier) and value.callee.obj.name == "Object"
+            and isinstance(value.callee.prop, Identifier) and value.callee.prop.name == "defineProperty"
+            and len(value.arguments) >= 2
+    ):
+        # A define is a store to `obj[key]`.
+        return MemberExpression(obj=value.arguments[0], prop=value.arguments[1], computed=True)
     return None
 
 

@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
-from hermes_decompiler.frontend.handlers.shared import fold_object_property
+from hermes_decompiler.frontend.handlers.shared import define_non_enumerable, fold_object_property
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpression
@@ -106,8 +106,8 @@ class PutOwnByVal(OpcodeHandler):
     is the property key. Naming both handlers' parameters the same way
     (obj_reg, key_reg, value_reg) silently swapped key and value here.
 
-    The trailing UInt8 contains Hermes-specific flags (enumerable) and is
-    currently ignored.
+    The trailing UInt8 is the enumerable flag; a clear one is printed as
+    `Object.defineProperty` (see `define_non_enumerable`).
     """
 
     ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, UINT8), "Reg8, Reg8, Reg8, UInt8 (total size 4)")
@@ -130,13 +130,13 @@ class PutOwnByVal(OpcodeHandler):
             if folded is not None:
                 return folded
 
-        left = MemberExpression(
-            obj=self.get_register_reference(ctx.analysis, obj_reg),
-            prop=key,
-            computed=True,
-        )
+        obj = self.get_register_reference(ctx.analysis, obj_reg)
 
-        expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
+        if enumerable != 1:
+            expression = define_non_enumerable(obj, key, right)
+        else:
+            left = MemberExpression(obj=obj, prop=key, computed=True)
+            expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
         ctx.analysis.add_result(result)
