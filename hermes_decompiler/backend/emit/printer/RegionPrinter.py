@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.transforms.shared import prints_definition
 from hermes_decompiler.backend.regions import (
@@ -426,6 +428,24 @@ class RegionPrinter:
 
         return self.expressions.print(value)
 
+    _COUNTER_UPDATE_RE = re.compile(r"(?P<name>[A-Za-z_$][\w$]*) = (?P=name) (?P<op>[+-]) (?P<step>\d+)")
+
+    @classmethod
+    def _shorten_counter_update(cls, update: str) -> str:
+        """`i = i + 1` -> `i++`, `i = i - 1` -> `i--`, `i = i + 2` -> `i += 2`
+        (only the whole update clause, never part of a larger expression)."""
+        match = cls._COUNTER_UPDATE_RE.fullmatch(update)
+
+        if match is None:
+            return update
+
+        name, op, step = match["name"], match["op"], match["step"]
+
+        if step == "1":
+            return f"{name}{op}{op}"
+
+        return f"{name} {op}= {step}"
+
     def _emit_for(self, region: LoopRegion, lines: list[str]) -> None:
         initializer = self._render_for_component(region.initializer)
 
@@ -435,7 +455,7 @@ class RegionPrinter:
             else ""
         )
 
-        update = self._render_for_component(region.update)
+        update = self._shorten_counter_update(self._render_for_component(region.update))
 
         self.ctx.write(lines, f"for ({initializer}; {condition}; {update}) {{")
 

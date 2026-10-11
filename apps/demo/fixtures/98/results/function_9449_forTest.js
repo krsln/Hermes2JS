@@ -21,7 +21,7 @@ function forTest() {
     // CODE → addr: 35 | <LoadConstUInt8>: <Reg8: 5, UInt8: 3>
     // USED → r5 = 3;
     // LOOP → START (for)
-    for (i = 0; i < 10; i = i + 1) {
+    for (i = 0; i < 10; i++) {
         if (i === 3) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr: 91 | <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

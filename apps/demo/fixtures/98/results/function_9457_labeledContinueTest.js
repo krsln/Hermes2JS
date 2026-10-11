@@ -20,9 +20,9 @@ function labeledContinueTest() {
     // USED → r9 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1";
     loop_1:
     // LOOP → START (for)
-    for (i = 0; i < 3; i = i + 1) {
+    for (i = 0; i < 3; i++) {
         // LOOP → START (for)
-        for (j = 0; j < 3; j = j + 1) {
+        for (j = 0; j < 3; j++) {
             if (j === 1) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → addr: 93 | <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

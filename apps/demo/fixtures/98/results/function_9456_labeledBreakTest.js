@@ -16,9 +16,9 @@ function labeledBreakTest() {
     // USED → r6 = 3;
     loop_1:
     // LOOP → START (for)
-    for (i = 0; i < 3; i = i + 1) {
+    for (i = 0; i < 3; i++) {
         // LOOP → START (for)
-        for (j = 0; j < 3; j = j + 1) {
+        for (j = 0; j < 3; j++) {
             if (i !== 1) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 46 | <TryGetById>: <Reg8: 10, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

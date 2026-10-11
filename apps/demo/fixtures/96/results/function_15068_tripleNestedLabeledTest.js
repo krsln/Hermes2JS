@@ -20,18 +20,18 @@ function tripleNestedLabeledTest() {
     r2 = 0;
     loop_1:
     // LOOP → START (for)
-    for (i = 0; i < 3; i = i + 1) {
+    for (i = 0; i < 3; i++) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 35 | <Mov>: <Reg8: 10, Reg8: 2>
         r10 = r2;
         loop_2:
         // LOOP → START (for)
-        for (j = 0; j < 3; j = j + 1) {
+        for (j = 0; j < 3; j++) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 43 | <Mov>: <Reg8: 13, Reg8: 10>
             r13 = r10;
             // LOOP → START (for)
-            for (k = 0; k < 3; k = k + 1) {
+            for (k = 0; k < 3; k++) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr: 51 | <Inc>: <Reg8: 4, Reg8: 13>
                 r4 = r13 + 1;

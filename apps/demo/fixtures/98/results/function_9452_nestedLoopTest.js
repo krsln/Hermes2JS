@@ -23,9 +23,9 @@ function nestedLoopTest() {
     // CODE → addr: 39 | <LoadConstUInt8>: <Reg8: 8, UInt8: 2>
     // USED → r8 = 2;
     // LOOP → START (for)
-    for (i = 0; i < 3; i = i + 1) {
+    for (i = 0; i < 3; i++) {
         // LOOP → START (for)
-        for (j = 0; j < 4; j = j + 1) {
+        for (j = 0; j < 4; j++) {
             if (i === 1 && j === 2) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 60 | <TryGetById>: <Reg8: 14, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

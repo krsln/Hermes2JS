@@ -18,7 +18,7 @@ function* _anon_0_generatorWithLoopTest(param1) {
     // USED → r2 = 2;
     if (0 < param1) {
         // LOOP → START (for)
-        for (i = 0; i < param1; i = i + 1) {
+        for (i = 0; i < param1; i++) {
             if (i === 2) {
                 // ──────────────── Block 7 ──────────────── 
                 // CODE → addr: 72 | <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

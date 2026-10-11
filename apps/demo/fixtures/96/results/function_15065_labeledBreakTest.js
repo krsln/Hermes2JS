@@ -21,7 +21,7 @@ function labeledBreakTest() {
         // CODE → addr: 30 | <Mov>: <Reg8: 5, Reg8: 1>
         r5 = i;
         // LOOP → START (for)
-        for (j = 0; j < 3; j = j + 1) {
+        for (j = 0; j < 3; j++) {
             if (r5 !== 1) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 46 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

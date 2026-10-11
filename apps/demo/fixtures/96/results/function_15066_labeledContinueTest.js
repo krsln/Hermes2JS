@@ -20,7 +20,7 @@ function labeledContinueTest() {
     // USED → r2 = 1;
     loop_1:
     // LOOP → START (for)
-    for (i = 0; i < 3; i = i + 1) {
+    for (i = 0; i < 3; i++) {
         // LOOP → START (for)
         for (j = 0; j < 3; j = r9 + 1) {
             // ──────────────── Block 2 ──────────────── 

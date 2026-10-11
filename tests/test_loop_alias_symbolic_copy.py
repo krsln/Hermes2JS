@@ -57,6 +57,6 @@ Bytecode listing:
 def test_symbolic_counter_copy_is_merged_into_the_counter():
     js = Decompiler.render(Decompiler.build_context(_HASM, 4378, strict=False), verbose=False, raw=False)
 
-    assert "for (i = 0; i < param1.length; i = i + 1) {" in js
+    assert "for (i = 0; i < param1.length; i++) {" in js
     assert "r1 = i;" not in js
     assert not re.search(r"\br1\b", js)
