@@ -780,7 +780,9 @@ class ArrayDestructuringCfgPass:
 
         # Handlers that guarded only the pattern (the rest loop's cleanup,
         # the iterator-close cleanup of a nested pattern) go with it; any
-        # other just loses the dropped blocks from its range.
+        # other just loses the dropped blocks from its range (and the cleanup
+        # blocks too: a surrounding try covers those as well, and a block
+        # left in its list is gone from the CFG - dominators then fail on it).
         removed_ids = {id(handler) for handler in removed_handlers}
         self.cfg.exception_handlers = [
             handler for handler in self.cfg.exception_handlers
@@ -788,7 +790,7 @@ class ArrayDestructuringCfgPass:
         ]
 
         for handler in self.cfg.exception_handlers:
-            handler["try_blocks"] = [b for b in handler["try_blocks"] if b.id not in dropped_ids]
+            handler["try_blocks"] = [b for b in handler["try_blocks"] if b.id not in gone_ids]
 
         for register, definitions in list(self.cfg.reg_definitions.items()):
             self.cfg.reg_definitions[register] = [d for d in definitions if id(d[2]) not in removed]

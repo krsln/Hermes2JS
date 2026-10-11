@@ -113,10 +113,10 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./ap
 ## 96
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --log-level WARNING
-# WARNING 3026
+# WARNING 2113
 ## 98
 python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/
 python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --log-level WARNING
-# WARNING 2891
+# WARNING 1915
 ```
 

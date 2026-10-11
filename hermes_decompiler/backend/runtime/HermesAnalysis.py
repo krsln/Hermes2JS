@@ -1,3 +1,4 @@
+import logging
 import re
 from typing import Any
 
@@ -19,6 +20,17 @@ from hermes_decompiler.ir.expressions import (
 from .RegisterState import RegisterState
 
 logger = get_logger(__name__)
+
+
+class _RecordBuffer(logging.Handler):
+    """Collects log records so a discarded attempt can be silenced."""
+
+    def __init__(self):
+        super().__init__(logging.NOTSET)
+        self.records: list[logging.LogRecord] = []
+
+    def emit(self, record: logging.LogRecord) -> None:
+        self.records.append(record)
 
 
 class HermesAnalysis:
@@ -310,21 +322,55 @@ class HermesAnalysis:
             raw: bool = False,
             creator_facts: CreatorFacts | None = None,
     ) -> list[str]:
-        lines, reason = self._generate_js(verbose, raw, creator_facts, duplicate_returns=False)
+        first = self._attempt(verbose, raw, creator_facts, duplicate_returns=False)
+        chosen = first
 
-        if not raw and self._has_goto(lines):
+        if not raw and self._has_goto(first[0]):
             # A `return` block shared between early exits in different `if`
             # arms can leave a test without its exit (a raw `goto`). Only
             # then are the shared returns copied per jumper - doing it
             # always would restyle every function that merely has one.
-            retry, retry_reason = self._generate_js(verbose, raw, creator_facts, duplicate_returns=True)
-            if not self._has_goto(retry):
-                lines, reason = retry, retry_reason
+            retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=True)
+            if retry[3] and not self._has_goto(retry[0]):
+                chosen = retry
+
+        lines, reason, _, _, records = chosen  # (lines, reason, failed, ok, records)
+        # Only the attempt that is used speaks: the other one's warnings
+        # (unstructured blocks, ...) describe output nobody sees.
+        for record in records:
+            logging.getLogger(record.name).handle(record)
 
         if raw:
             return lines
 
         return self._warn_if_invalid_js(lines, reason)
+
+    def _attempt(self, verbose, raw, creator_facts, duplicate_returns):
+        """One `_generate_js` run with its log records held back.
+
+        Returns `(lines, reason, failed, ok, records)`; an exception inside
+        the retry is treated as "no better output" instead of failing the
+        function the first attempt already produced."""
+        handler = _RecordBuffer()
+        package_logger = logging.getLogger("hermes_decompiler")
+        # The CLI's console handler sits on this very logger: take it off for
+        # the attempt, or the records print once per attempt AND once again
+        # when the chosen attempt's are replayed.
+        saved_handlers = package_logger.handlers[:]
+        saved_propagate = package_logger.propagate
+        package_logger.handlers = [handler]
+        package_logger.propagate = False
+
+        try:
+            lines, reason = self._generate_js(verbose, raw, creator_facts, duplicate_returns)
+            return lines, reason, False, True, handler.records
+        except Exception:
+            if not duplicate_returns:
+                raise
+            return [], None, True, False, []
+        finally:
+            package_logger.handlers = saved_handlers
+            package_logger.propagate = saved_propagate
 
     @staticmethod
     def _has_goto(lines: list[str]) -> bool:
