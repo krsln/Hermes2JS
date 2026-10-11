@@ -273,8 +273,20 @@ class ReturnValueResolutionPass(RegionPass):
         """Same reaching-definition walk, over the pre-structuring flow. A
         `Ret` that tail-merging made out of several arms' copies is resolved
         along every one of them, and all must agree."""
-        merged = getattr(self.cfg, "tail_origins", {}).get(id(before_instr), ())
-        results = [self._resolve_from_flow_at(reg, origin) for origin in (before_instr, *merged)]
+        table = getattr(self.cfg, "tail_origins", {})
+        origins, pending = [], [before_instr]
+
+        # Tail merges nest (`if / else if / else`): follow the copies' own copies.
+        while pending:
+            instruction = pending.pop()
+
+            if any(instruction is seen for seen in origins):
+                continue
+
+            origins.append(instruction)
+            pending.extend(table.get(id(instruction), ()))
+
+        results = [self._resolve_from_flow_at(reg, origin) for origin in origins]
 
         first = results[0]
 

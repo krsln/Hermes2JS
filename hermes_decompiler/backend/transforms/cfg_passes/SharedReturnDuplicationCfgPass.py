@@ -50,8 +50,15 @@ class SharedReturnDuplicationCfgPass:
             jumpers = [p for p in block.predecessors if self._jumps_to(p, block)]
             fallers = [p for p in block.predecessors if p not in jumpers]
 
-            if not jumpers or not fallers:
+            if not jumpers:
                 continue
+
+            if not fallers:
+                # Only jumps reach it (`a === 1 || a === 2` chains ending in
+                # `return true`): the last jumper keeps the original.
+                if len(jumpers) < 2:
+                    continue
+                jumpers = jumpers[:-1]
 
             for pred in jumpers:
                 self._give_private_copy(pred, block)
@@ -71,8 +78,12 @@ class SharedReturnDuplicationCfgPass:
         # only constant loads / copies may lead up to the terminator.
         if not all(self._is_plain_load(i) for i in block.instructions[:-1]):
             return False
-        # The function's closing `return` is joined by everything; leave it.
-        return any(other.address > block.address for other in self.cfg.blocks)
+        # The function's closing `return` is joined by everything; leave it
+        # unless nothing falls into it (decided in `run`).
+        return (
+                any(other.address > block.address for other in self.cfg.blocks)
+                or not any(p not in block.predecessors or not self._jumps_to(p, block) for p in block.predecessors)
+        )
 
     _MAX_LEAD = 2
 
