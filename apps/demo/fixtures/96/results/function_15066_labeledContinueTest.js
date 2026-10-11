@@ -20,10 +20,7 @@ function labeledContinueTest() {
     // USED → r2 = 1;
     loop_1:
     // LOOP → START (for)
-    for (i = 0; i < 3; i = r7 + 1) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 38 | <Mov>: <Reg8: 7, Reg8: 1>
-        r7 = i;
+    for (i = 0; i < 3; i = i + 1) {
         // LOOP → START (for)
         for (j = 0; j < 3; j = r9 + 1) {
             // ──────────────── Block 2 ──────────────── 
@@ -47,7 +44,7 @@ function labeledContinueTest() {
             // CODE → addr: 56 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r10 = console.log;
             // CODE → addr: 61 | <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 7, Reg8: 9>
-            console.log(r7, r9);
+            console.log(i, r9);
         }
         // LOOP → END
         // ──────────────── Block 4 ──────────────── 

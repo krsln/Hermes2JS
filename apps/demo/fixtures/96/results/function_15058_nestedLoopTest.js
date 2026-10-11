@@ -23,16 +23,10 @@ function nestedLoopTest() {
     // CODE → addr: 39 | <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // LOOP → START (for)
-    for (i = 0; i < 3; i = r9 + 1) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 44 | <Mov>: <Reg8: 9, Reg8: 1>
-        r9 = i;
+    for (i = 0; i < 3; i = i + 1) {
         // LOOP → START (for)
-        for (j = 0; j < 4; j = r11 + 1) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 49 | <Mov>: <Reg8: 11, Reg8: 10>
-            r11 = j;
-            if (r9 === 1 && r11 === 2) {
+        for (j = 0; j < 4; j = j + 1) {
+            if (i === 1 && j === 2) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 60 | <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r13 = console;

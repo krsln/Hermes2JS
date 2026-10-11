@@ -20,33 +20,27 @@ function tripleNestedLabeledTest() {
     r10 = 0;
     loop_1:
     // LOOP → START (for)
-    for (i = 0; i < 3; i = r11 + 1) {
+    for (i = 0; i < 3; i = i + 1) {
         // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 35 | <Mov>: <Reg8: 11, Reg8: 9>
-        r11 = i;
         // CODE → addr: 38 | <Mov>: <Reg8: 5, Reg8: 10>
         r5 = r10;
         loop_2:
         // LOOP → START (for)
-        for (j = 0; j < 3; j = r7 + 1) {
+        for (j = 0; j < 3; j = j + 1) {
             // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 43 | <Mov>: <Reg8: 7, Reg8: 6>
-            r7 = j;
             // CODE → addr: 46 | <Mov>: <Reg8: 0, Reg8: 5>
             r0 = r5;
             // LOOP → START (for)
-            for (k = 0; k < 3; k = r4 + 1) {
+            for (k = 0; k < 3; k = k + 1) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr: 51 | <AddN>: <Reg8: 3, Reg8: 0, Reg8: 2>
                 r3 = r0 + 1;
-                // CODE → addr: 55 | <Mov>: <Reg8: 4, Reg8: 1>
-                r4 = k;
-                if (r4 === 1) {
+                if (k === 1) {
                     // ──────────────── Block 10 ──────────────── 
                     // CODE → addr:  0 | ContinueStatement
                     continue loop_2;
                 }
-                if (r11 === 2 && r7 === 2) {
+                if (i === 2 && j === 2) {
                     // ──────────────── Block 11 ──────────────── 
                     // CODE → addr:  0 | BreakStatement
                     break loop_1;

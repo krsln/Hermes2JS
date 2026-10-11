@@ -264,7 +264,7 @@ def test_for_condition_reads_the_bound_the_latch_recomputes():
     # stayed behind as the last statement of the body.
     out = _render_98(9453, "complexTest")
 
-    assert "for (i = 0; i < r14.length; i = r1 + 1) {" in out
+    assert "for (i = 0; i < r14.length; i = i + 1) {" in out
     assert "r7 = r14.length" not in out
 
 
