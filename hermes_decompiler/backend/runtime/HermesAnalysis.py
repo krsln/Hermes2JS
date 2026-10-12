@@ -15,7 +15,8 @@ from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.frontend.batch_pipeline.tables import CreatorFacts
 from hermes_decompiler.ir.expressions import (
-    AwaitExpression, CallExpression, Identifier, MemberExpression, NewExpression, YieldExpression,
+    AwaitExpression, CallExpression, Identifier, Literal, MemberExpression, NewExpression, UndefinedLiteral,
+    YieldExpression,
 )
 from .RegisterState import RegisterState
 
@@ -264,11 +265,24 @@ class HermesAnalysis:
         register changed in the printed output - not just the latest one: an
         earlier call result stays printed even if a folded load overwrote it
         afterwards."""
+        branch_read = self._reading_for_a_branch()
+
         for later in self.history.get(name, ())[version + 1:]:
             if self._redefinition_prints(later) or self._is_phi_write(later):
                 return True
 
+            # A constant written between a test's operands and its jump
+            # (`r4 = r5.params == null; r5 = undefined; if (r4)`) is the
+            # default of a join that prints later: whether it does is not known
+            # yet, and a condition re-evaluated after it would read it.
+            if branch_read and isinstance(later.value, (Literal, UndefinedLiteral)):
+                return True
+
         return False
+
+    def _reading_for_a_branch(self) -> bool:
+        entry = self.current_entry
+        return entry is not None and entry.opcode.startswith("J")
 
     def _is_phi_write(self, state: RegisterState) -> bool:
         """The definition ran on only one path into the join the current
