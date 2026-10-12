@@ -104,7 +104,51 @@ class CallBuiltin(OpcodeHandler):
     # How many instructions back a write still counts as "setting up THIS
     # call's arguments" when telling window candidates apart.
     _RECENT_WRITE_RANGE = 14
+    # Distance between the frame size and the window's `this` slot, per
+    # bytecode version: measured over every windowed builtin call of the
+    # hermes-96 and hermes-98 bundles (2594 and 4930 calls; the evidence
+    # heuristic agreed on all but ~1.2%, and where they differed the rule was
+    # the one that matched the code - e.g. 96/2877, 98/11966).
+    # NOT verified for hbc99 (no sample), so only versions measured here count.
+    _FRAME_DISTANCES = {96: 7, 98: 8}
+    # Opcodes that exist in exactly one of the two measured versions.
+    _ONLY_IN_96 = frozenset({"PutById", "PutByVal", "PutOwnByVal", "PutNewOwnById", "TryPutById", "DelById",
+                             "StartGenerator", "ResumeGenerator", "SaveGenerator", "CallDirect", "CreateThis"})
+    _ONLY_IN_98 = frozenset({"PutByIdStrict", "PutByIdLoose", "PutByValStrict", "PutByValLoose", "DefineOwnById",
+                             "DefineOwnByVal", "CreateFunctionEnvironment", "GetParentEnvironment", "JmpTypeOfIs",
+                             "CreateThisForNew", "CreateThisForSuper", "TryPutByIdStrict", "TryPutByIdLoose"})
     _REG_OPERAND_RE = re.compile(r"Reg(?:8|32):\s*(\d+)")
+
+    @classmethod
+    def _frame_distance(cls, ctx: OpcodeContext) -> int | None:
+        """The window distance for this function's bytecode version, read off
+        the opcodes themselves (the decompiler is not told the version).
+        None when the opcodes do not settle it (or contradict each other)."""
+        names = {entry.opcode for entry in ctx.entries}
+        versions = {
+            version for version, only in ((96, cls._ONLY_IN_96), (98, cls._ONLY_IN_98)) if names & only
+        }
+
+        return cls._FRAME_DISTANCES[versions.pop()] if len(versions) == 1 else None
+
+    @classmethod
+    def _ruled_top(cls, ctx: OpcodeContext, real_arg_count: int) -> int | None:
+        frame_size = ctx.analysis.metadata.get("frame_size")
+        distance = cls._frame_distance(ctx)
+
+        if not isinstance(frame_size, int) or distance is None:
+            return None
+
+        top = frame_size - distance
+
+        # Sanity: the window must fit and its argument slots must have been
+        # written by something before this call.
+        slots = range(top - 1, top - 1 - real_arg_count, -1)
+
+        if real_arg_count and (min(slots) < 0 or not all(f"r{slot}" in ctx.analysis.registers for slot in slots)):
+            return None
+
+        return top
 
     @classmethod
     def _window_top(cls, ctx: OpcodeContext, real_arg_count: int) -> int:
@@ -162,7 +206,21 @@ class CallBuiltin(OpcodeHandler):
 
             return sum(1 for reg in slots if reg in recent) - (1 if top in recent else 0)
 
-        return max((highest + 1, highest), key=lambda top: (evidence(top), top == highest + 1))
+        # The frame size in the function header pins the window exactly: the
+        # `this` slot sits a fixed distance below it, and that distance is a
+        # property of the bytecode version (see `_frame_distance`). When it
+        # is known, the rule decides - the "recent writes" evidence below can
+        # be fooled by an unrelated recent write one slot above the real
+        # window (98/11966: the message is in r29, but r30 held the `this` of
+        # an earlier `Call`), while the rule was right in every case checked.
+        ruled = cls._ruled_top(ctx, real_arg_count)
+
+        if ruled is not None:
+            return ruled
+
+        candidates = [highest + 1, highest]
+
+        return max(candidates, key=lambda top: (evidence(top), top == highest + 1))
 
 
 # Reg8, UInt8, UInt32 (total size 6)
