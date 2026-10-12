@@ -9,7 +9,7 @@ from hermes_decompiler.backend.transforms.shared import (
     negate_condition, is_pure, has_side_effects, repoint_references, reclaim_definition,
     reclaim_unfolded_definition, absorb_arm_definitions, TRIVIAL_NODE_TYPES
 )
-from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
+from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name, _is_referenced
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
@@ -167,6 +167,24 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             # dropped along with its side effect.
             if has_side_effects(earlier.value) and not self._is_operand_of(
                     earlier.value, then_result.value
+            ):
+                return self._decline(last, then_result, then_block, if_region)
+
+            # A write to ANOTHER register is deleted with the arm as well. When
+            # code after the `if` holds its value inline (`r8 = r18; r2 = r4 ||
+            # r4`: `StoreToEnvironment r8` reads it) the fold would leave that
+            # reader claiming the arm's value on the path that skips the arm.
+            # Keep the `if`; the repair pass that follows names the register.
+            if (
+                    earlier.dest_reg is not None
+                    and earlier.dest_reg != last.dest_reg
+                    and not self._is_operand_of(earlier.value, then_result.value)
+                    and not self._is_operand_of(earlier.value, tail_value)
+                    and _is_referenced(
+                self.cfg, self.graph.root, earlier.value,
+                ignore_blocks={then_block}, ignore_instructions={last},
+                ignore_regions={if_region},
+            )
             ):
                 return self._decline(last, then_result, then_block, if_region)
 
