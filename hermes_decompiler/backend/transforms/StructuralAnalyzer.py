@@ -19,6 +19,7 @@ from hermes_decompiler.backend.transforms.region_passes import (
     IfTailMergeRegionPass,
     LoopConditionRegionPass,
     LoopContinueRegionPass,
+    LoopGuardInitializerPass,
     LoopInductionAliasPass,
     NullishAssignmentRegionPass,
     RedundantJumpRegionPass,
@@ -179,6 +180,7 @@ class StructuralAnalyzer:
         # before ForEachRegionPass (fewer, unaliased registers make
         # that pass's own register-resolution walk less likely to
         # land on the wrong candidate).
+        LoopGuardInitializerPass(graph, self.cfg).run()
         LoopInductionAliasPass(graph, self.cfg).run()
 
         # Converts residual unconditional jumps to the loop latch into

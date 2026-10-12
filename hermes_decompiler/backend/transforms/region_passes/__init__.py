@@ -11,6 +11,7 @@ from .GeneratorStateMachineRegionPass import GeneratorStateMachineRegionPass
 from .IfTailMergeRegionPass import IfTailMergeRegionPass
 from .InductionVariableNamingPass import InductionVariableNamingPass
 from .LoopConditionRegionPass import LoopConditionRegionPass
+from .LoopGuardInitializerPass import LoopGuardInitializerPass
 from .LoopInductionAliasPass import LoopInductionAliasPass
 from .LoopContinueRegionPass import LoopContinueRegionPass
 from .NullishAssignmentRegionPass import NullishAssignmentRegionPass
@@ -31,6 +32,7 @@ __all__ = [
     "IfTailMergeRegionPass",
     "InductionVariableNamingPass",
     "LoopConditionRegionPass",
+    "LoopGuardInitializerPass",
     "LoopInductionAliasPass",
     "LoopContinueRegionPass",
     "NullishAssignmentRegionPass",
