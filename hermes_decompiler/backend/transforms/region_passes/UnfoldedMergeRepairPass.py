@@ -10,7 +10,7 @@ from hermes_decompiler.backend.transforms.shared import (
 from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
-from hermes_decompiler.ir.expressions import Identifier, ThisPlaceholder
+from hermes_decompiler.ir.expressions import ConditionalExpression, Identifier, ThisPlaceholder
 from hermes_decompiler.ir.terminators import TerminatorReturn, TerminatorThrow
 from ._base import RegionPass
 
@@ -317,7 +317,7 @@ class UnfoldedMergeRepairPass(RegionPass):
     _MOV_SOURCE_RE = re.compile(r"Reg(?:8|32):\s*\d+,\s*Reg(?:8|32):\s*(\d+)")
 
     def _repoint_reader_movs(self, write, if_region, region_blocks, arm_blocks) -> None:
-        if (not isinstance(write.value, TRIVIAL_NODE_TYPES) or has_side_effects(write.value)
+        if (not isinstance(write.value, (*TRIVIAL_NODE_TYPES, ConditionalExpression)) or has_side_effects(write.value)
                 or not self._read_after_the_if(write, region_blocks)):
             return
 
