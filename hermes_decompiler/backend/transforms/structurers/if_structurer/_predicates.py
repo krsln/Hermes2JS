@@ -12,8 +12,8 @@ from __future__ import annotations
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import IfRegion, SequenceRegion
 from hermes_decompiler.backend.transforms.shared import is_unfolded_literal_definition, prints_definition
-from hermes_decompiler.ir.Operators import LogicalOperator, UnaryOperator
-from hermes_decompiler.ir.expressions import BinaryExpression, UnaryExpression
+from hermes_decompiler.ir.Operators import BinaryOperator, LogicalOperator, UnaryOperator
+from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral, UnaryExpression
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
 
 
@@ -132,3 +132,15 @@ def representative_block(item) -> BasicBlock | None:
     real = [b for b in covered if b.address >= 0]
 
     return min(real or covered, key=lambda b: b.id)
+
+
+def is_constant_comparison(condition) -> bool:
+    """`x === 3` / `x === undefined`: a link of a `case` chain, whose
+    shared targets (`case 3: case 4:`) `SwitchStructurer` expects to
+    find as a cascade of if/else, not as a join."""
+    return (
+            isinstance(condition, BinaryExpression)
+            and condition.operator in (BinaryOperator.STRICT_EQUAL, BinaryOperator.STRICT_NOT_EQUAL)
+            and (isinstance(condition.right, (Literal, UndefinedLiteral))
+                 or isinstance(condition.left, (Literal, UndefinedLiteral)))
+    )

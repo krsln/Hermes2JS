@@ -14,7 +14,7 @@ from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral
 from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
-from ._predicates import is_backward_branch, representative_block
+from ._predicates import is_backward_branch, is_constant_comparison, representative_block
 
 logger = get_logger(__name__)
 
@@ -318,7 +318,6 @@ class _DominanceIfBuilder(RegionStructurer):
                 # goto target isn't a distinct sibling in this region -
                 # bail rather than guess.
                 return False
-
             else_entry = representative_block(else_root)
 
         # -------------------------------------------------------------
@@ -441,22 +440,8 @@ class _DominanceIfBuilder(RegionStructurer):
             isinstance(pred.terminator, TerminatorConditionalBranch)
             and pred.terminator.target == goto_block.address
             and dominators.dominates(then_entry, pred)
-            and not self._is_constant_comparison(pred.terminator.condition)
+            and not is_constant_comparison(pred.terminator.condition)
             for pred in goto_block.predecessors
-        )
-
-    @staticmethod
-    def _is_constant_comparison(condition) -> bool:
-        """`x === 3` / `x === undefined`: a link of a `case` chain, whose
-        shared targets (`case 3: case 4:`) `SwitchStructurer` expects to
-        find as a cascade of if/else, not as a join."""
-        return (
-                isinstance(condition, BinaryExpression)
-                and condition.operator in (BinaryOperator.STRICT_EQUAL, BinaryOperator.STRICT_NOT_EQUAL)
-                and isinstance(condition.right, (Literal, UndefinedLiteral))
-                or isinstance(condition, BinaryExpression)
-                and condition.operator in (BinaryOperator.STRICT_EQUAL, BinaryOperator.STRICT_NOT_EQUAL)
-                and isinstance(condition.left, (Literal, UndefinedLiteral))
         )
 
     @staticmethod

@@ -106,14 +106,17 @@ def test_constant_return_shared_by_a_guard_chain_has_no_goto():
     js = _js(_IS_IGNORED, 2336)
 
     assert "goto" not in js
-    assert js.count("return false;") == 2
+    # One `return false` for the whole guard (`!(a && b)` folded to one test),
+    # not one per jumper: both exits are the same constant.
+    assert js.count("return false;") == 1
+    assert "return r1;" in js
 
 
 def test_arms_returning_different_values_keep_the_register_return():
     js = _js(_IS_PLAIN_OBJECT, 5366)
 
     assert "goto" not in js
-    assert js.count("r0 = false;") == 2
+    assert js.count("r0 = false;") == 1
     assert "r0 = r2 === Object.prototype;" in js
     assert re.search(r"return r0;\n}$", js.strip())
 

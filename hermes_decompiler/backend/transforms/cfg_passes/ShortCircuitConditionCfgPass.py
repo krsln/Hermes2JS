@@ -5,6 +5,7 @@ from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
+from hermes_decompiler.backend.transforms.shared import negate_condition, TRIVIAL_NODE_TYPES
 
 
 class ShortCircuitConditionCfgPass:
@@ -119,7 +120,9 @@ class ShortCircuitConditionCfgPass:
             # original per-iteration test blocks intact.
             return False
 
-        if not self._is_pure_test_block(successor):
+        pure = self._is_pure_test_block(successor)
+
+        if not pure and not self._is_inlined_setup_block(successor):
             # Has real work in it (side effects) - not just a test,
             # can't be folded into block's condition.
             return False
@@ -141,12 +144,106 @@ class ShortCircuitConditionCfgPass:
             # coincide with branch.target.
             return False
 
-        if next_branch.target != branch.target:
-            # Different targets - different logical condition.
-            return False
+        if next_branch.target != branch.target or not pure:
+            # Different targets: not a same-target chain. It can still be the
+            # crossed form (see `_try_merge_crossed`).
+            return self._try_merge_crossed(block, successor, next_branch)
 
         self._merge(block, successor, next_branch)
         return True
+
+    def _try_merge_crossed(self, block, successor, next_branch) -> bool:
+        """`if (!a || b) { A } END` compiles to
+
+            X: if (!a) goto A          (first jump lands on the second
+            Y: if (b') goto END         test's fall-through)
+            A: ...
+
+        `END` is reached exactly when X's test fails and Y's holds, so the
+        two blocks are one test `!c1 && c2` jumping to `END`, falling through
+        to `A`. The tests may have been given their constants as setup
+        (`r3 = "px"; if (r4 !== r3)`) that the condition already inlined.
+        """
+        branch = block.terminator
+        fall_through = self._fallthrough(successor)
+
+        if fall_through is None or fall_through.address != branch.target:
+            return False
+
+        if not self._is_inlined_setup_block(successor) or self._setup_feeds_a_join(successor,
+                                                                                   self._arm_of(block, branch)):
+            return False
+
+        combined = BinaryExpression(
+            left=negate_condition(branch.condition),
+            operator=LogicalOperator.AND,
+            right=next_branch.condition,
+        )
+
+        merged = TerminatorConditionalBranch(condition=combined, target=next_branch.target)
+
+        # `block` now jumps to Y's old target and falls through to `A`.
+        self._rewire_crossed(block, successor, branch, merged)
+        return True
+
+    @staticmethod
+    def _is_inlined_setup_block(block: BasicBlock) -> bool:
+        """Only constants the test already inlined, plus its own branch."""
+        for instr in block.instructions:
+            if instr.terminator is not None:
+                continue
+
+            if not (instr.definition_used and isinstance(instr.value, TRIVIAL_NODE_TYPES)):
+                return False
+
+        return True
+
+    def _arm_of(self, block, branch):
+        return next(s for s in block.successors if s.address == branch.target)
+
+    @staticmethod
+    def _setup_feeds_a_join(successor: BasicBlock, arm: BasicBlock) -> bool:
+        """True if `arm` (the other way out of the pair) writes a register the
+        removed setup writes and then flows straight into the exit. The two
+        writes are the arms of one join (`r14 = r20` / `r14 = null`, then
+        `r14` is read): deleting one with the block leaves the readers on
+        the wrong value."""
+        written = {i.dest_reg for i in successor.instructions if i.dest_reg is not None}
+
+        if not written or len(arm.successors) != 1:
+            return False
+
+        end_block = next((s for s in successor.successors if s is not arm), None)
+
+        return (
+                end_block is not None
+                and arm.successors[0] is end_block
+                and any(i.dest_reg in written for i in arm.instructions)
+        )
+
+    def _rewire_crossed(self, block, successor, branch, merged) -> None:
+        end_block = next(s for s in successor.successors if s.address == merged.target)
+        a_block = next(s for s in block.successors if s.address == branch.target)
+
+        block.terminator = merged
+
+        for instr in block.instructions:
+            if instr.terminator is branch:
+                instr.terminator = merged
+                break
+
+        successor.instructions.clear()
+
+        for target in (end_block, a_block):
+            if successor in target.predecessors:
+                target.predecessors.remove(successor)
+
+        block.successors = []
+        self._connect(block, end_block)
+        self._connect(block, a_block)
+
+        if successor in self.cfg.blocks:
+            self.cfg.blocks.remove(successor)
 
     @staticmethod
     def _fallthrough(block: BasicBlock) -> BasicBlock | None:

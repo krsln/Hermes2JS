@@ -13,9 +13,10 @@ from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorReturn
 from ._predicates import (
     is_backward_branch,
+    is_constant_comparison,
     is_empty_body,
     is_negation,
     make_logical_and,
@@ -313,6 +314,19 @@ class _CompoundConditionFolder:
                 # unconverted rather than guess.
                 return False
 
+        # Dropping the jump means "after the rest, continue where the region
+        # continues". When T already sits in the SIBLING arm of an enclosing
+        # `if`, that is not where the jump went (`if (c) { return null } else
+        # { if (x < 0) goto <that return>; return x }`): the jump must stay.
+        if (
+                target_block is not None
+                and isinstance(target_block.terminator, TerminatorReturn)
+                # A `case` test's shared target is `SwitchStructurer`'s business.
+                and not is_constant_comparison(branch.condition)
+                and self._sits_in_sibling_arm(region, target_block)
+        ):
+            return False
+
         rest = self.graph.splice_out(region, index + 1, len(region.children))
         if not rest:
             return False
@@ -339,6 +353,24 @@ class _CompoundConditionFolder:
             insert_at += 1
         self.graph.insert_at(region, insert_at, if_region)
         return True
+
+    @staticmethod
+    def _sits_in_sibling_arm(region, target_block) -> bool:
+        """Is `target_block` inside the other arm of an `if` that encloses `region`?"""
+        node = region
+
+        while node is not None and getattr(node, "parent", None) is not None:
+            parent = node.parent
+
+            if isinstance(parent, IfRegion):
+                other = parent.else_body if node is parent.then_body else parent.then_body
+
+                if other is not None and node is not other and target_block in other.covered_blocks:
+                    return True
+
+            node = parent
+
+        return False
 
     def _try_fold_and_or_cascade(self, outer: IfRegion) -> bool:
         """Recover the `a && b` / `a || b` / `else` cascade in place.
