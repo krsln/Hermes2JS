@@ -238,7 +238,16 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
         # register we care about was already read into `resumed_reg`
         # above) makes such a walk pass straight through to whatever
         # real definition comes before it instead.
-        resume_block.instructions = []
+        #
+        # Only the resume pair itself is protocol. The entry block also holds
+        # the body's own setup in front of it (`r2 = createEnvironment()`,
+        # the parameter loads): dropping those left every `r2[0] = …` after
+        # the fold reading an environment nothing defined.
+        resume_block.instructions = resume_block.instructions[:-2]
+
+        if all(instruction.handler == "LoadParam" for instruction in resume_block.instructions):
+            # Parameters are read by name already; nothing to keep.
+            resume_block.instructions = []
 
         # A None else_body means the resume-guard was the last thing in
         # its enclosing block (most commonly: a yield as the final
@@ -304,6 +313,9 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
             yield_block.terminator = None
 
             new_children.append(yield_block)
+
+        if resume_block.instructions:
+            new_children.append(resume_block)
 
         if if_region.else_body is not None:
             new_children.extend(if_region.else_body.children)
