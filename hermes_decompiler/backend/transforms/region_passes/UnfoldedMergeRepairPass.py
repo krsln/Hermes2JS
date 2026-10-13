@@ -465,11 +465,30 @@ class UnfoldedMergeRepairPass(RegionPass):
 
             return
 
-        reclaim_definition(
-            self.cfg, self.graph.root, default, default.value, write,
-            ignore_blocks=set(_blocks_of(if_region.then_body)) | set(_blocks_of(if_region.else_body)),
-            ignore_regions={if_region},
-        )
+        if reclaim_definition(
+                self.cfg, self.graph.root, default, default.value, write,
+                ignore_blocks=set(_blocks_of(if_region.then_body)) | set(_blocks_of(if_region.else_body)),
+                ignore_regions={if_region},
+        ):
+            return
+
+        # Still held by something else - the `if`'s own condition, as a rule
+        # (`r0 = this.context; if (r0) { r0 = x }; return !!r0`). A pure value
+        # is free to evaluate twice, and the path that skips the arm reads
+        # the register.
+        if (
+                not has_side_effects(default.value)
+                and not isinstance(write.value, TRIVIAL_NODE_TYPES)
+                and self._condition_holds(if_region, default.value)
+        ):
+            default.definition_used = False
+
+    @staticmethod
+    def _condition_holds(if_region, value) -> bool:
+        """Is `value` (this very node) part of the `if`'s own condition?"""
+        condition = if_region.condition
+
+        return isinstance(condition, Node) and any(node is value for node in condition.walk())
 
     def _reprint_unprinted_default(self, if_region, write) -> None:
         """The definition that was current before the `if` - for an arm write
