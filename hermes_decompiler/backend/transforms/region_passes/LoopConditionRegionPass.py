@@ -526,6 +526,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                     or instruction.definition_used
                     or has_side_effects(value)
                     or (induction_reg is not None and induction_reg in self._registers_read(value))
+                    or self._header_would_read_the_bound(loop, reg, value, induction_reg)
                     or self._is_unsafe_to_reorder(block, index, value)
                     or self._definition_is_read_elsewhere(loop, reg, instruction)
             ):
@@ -533,6 +534,20 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
 
             loop.condition = substitute_register(loop.condition, f"r{reg}", value)
             block.instructions.pop(index)
+
+    def _header_would_read_the_bound(self, loop: LoopRegion, reg: int, value, induction_reg: int | None) -> bool:
+        """`r1 = r1.length` reads the register it defines. A `for` header also
+        runs before the FIRST iteration, so when the entry guard already
+        replaced `r1` by that same length (`decode`, 96/7575) the inlined
+        `r1.length` would read a number; the statement stays and the condition
+        reads `r1`. When `r1` still holds the array going in (the usual
+        `i < arr.length` loop) the inlined form is exactly right."""
+        if induction_reg is None or reg not in self._registers_read(value):
+            return False
+
+        outside = self._find_pre_loop_definition(loop, reg)
+
+        return outside is not None and repr(outside.value) == repr(value)
 
     def _definition_is_read_elsewhere(self, loop: LoopRegion, reg: int, definition) -> bool:
         """True when something other than the (already extracted) loop
