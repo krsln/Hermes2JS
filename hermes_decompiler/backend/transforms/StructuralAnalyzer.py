@@ -9,6 +9,7 @@ from hermes_decompiler.backend.transforms.region_passes import (
     BooleanChainRegionPass,
     ConditionalExpressionRegionPass,
     UnfoldedMergeRepairPass,
+    LoopCarriedDefinitionPass,
     DeadThisPlaceholderPass,
     DeadMovEliminationPass,
     DeadUndefinedStorePass,
@@ -158,6 +159,9 @@ class StructuralAnalyzer:
 
         # After EVERY fold pass: it repairs only the merges they left as an `if`.
         UnfoldedMergeRepairPass(graph, self.cfg).run()
+
+        # A register a loop overwrites and the code after it reads by name.
+        LoopCarriedDefinitionPass(graph, self.cfg).run()
 
         # Placeholders nothing consumed or reads (see the pass docstring).
         DeadThisPlaceholderPass(graph, self.cfg).run()
