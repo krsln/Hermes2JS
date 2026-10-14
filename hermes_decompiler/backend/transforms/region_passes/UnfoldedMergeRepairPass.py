@@ -6,6 +6,7 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion
 from hermes_decompiler.backend.transforms.shared import (
     has_side_effects, repoint_references, reclaim_definition, TRIVIAL_NODE_TYPES, prints_definition,
+    substitute_register,
 )
 from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
 from hermes_decompiler.core.logging import get_logger
@@ -299,6 +300,7 @@ class UnfoldedMergeRepairPass(RegionPass):
 
         if isinstance(write.value, TRIVIAL_NODE_TYPES):
             self._repoint_movs_of_printed_write(write, arm_blocks, region_blocks)
+            self._repoint_alias_readers_of_printed_write(write, arm_blocks, region_blocks)
             return
 
         # Only readers OUTSIDE the `if`: the sibling arm holds the very same value
@@ -370,6 +372,85 @@ class UnfoldedMergeRepairPass(RegionPass):
         if changed:
             self._index = None
             logger.debug("unfolded merge: Mov of printed r%s after the if reads the register", write.dest_reg)
+
+    _REGISTER_NAME_RE = re.compile(r"r\d+")
+    _OPERAND_REGISTER_RE = re.compile(r"Reg(?:8|32):\s*(\d+)")
+
+    def _repoint_alias_readers_of_printed_write(self, write, arm_blocks, region_blocks) -> None:
+        """`Mov r2, r4` printed in an arm (`r2 = r4`) hands the register alias `r4`
+        to whatever reads `r2` next - a store (`r0.baseState = r2`), a call
+        argument. Read after the `if` that is the arm's value alone, and on the
+        paths that skip the arm `r2` holds something else (`useReducer` 96/2215).
+
+        The readers are found by the bytecode, not by the node they hold: every
+        read of the alias gets a copy of its own, and a node shared between
+        several arms' writes cannot say whose it is. An instruction that has
+        this register as an operand, runs before the register is written again
+        and does not also read the alias's own register (that `r4` could be a
+        genuine read of it) reads the register."""
+        value = write.value
+
+        if not isinstance(value, Identifier) or not self._REGISTER_NAME_RE.fullmatch(value.name):
+            return
+
+        if value.name == f"r{write.dest_reg}":
+            return
+
+        source = int(value.name[1:])
+        inside = {i for blk in region_blocks for i in blk.instructions}
+
+        # The alias travels on through copies (`Mov r18, r17` hands `r17`'s value
+        # to `r18`), and a reader of THAT copy reads `r18`, not this register. Only
+        # what runs before this register is written again can be its reader.
+        limit = min(
+            (
+                i.address for blk in self.cfg.blocks for i in blk.instructions
+                if i.address > write.address and i.dest_reg == write.dest_reg and i not in inside
+                   and i.value is not None
+            ),
+            default=None,
+        )
+
+        replacement = Identifier(name=f"r{write.dest_reg}")
+        minimum = min(b.id for b in arm_blocks)
+        changed = False
+
+        for block in self.cfg.blocks:
+            if block.id < minimum:
+                continue
+
+            for instruction in block.instructions:
+                if (
+                        instruction in inside
+                        or instruction.address <= write.address
+                        or (limit is not None and instruction.address >= limit)
+                        or instruction.dest_reg == write.dest_reg
+                ):
+                    continue
+
+                operands = {int(n) for n in self._OPERAND_REGISTER_RE.findall(instruction.entry.args)}
+
+                if write.dest_reg not in operands or source in operands:
+                    continue
+
+                if instruction.value is not None:
+                    new_value = substitute_register(instruction.value, value.name, replacement)
+
+                    if new_value is not instruction.value:
+                        instruction.value = new_value
+                        changed = True
+
+                if instruction.statement is not None:
+                    new_statement = substitute_register(instruction.statement, value.name, replacement)
+
+                    if new_statement is not instruction.statement:
+                        instruction.statement = new_statement
+                        changed = True
+
+        if changed:
+            self._index = None
+            logger.debug("unfolded merge: readers of the alias of printed r%s after the if read the register",
+                         write.dest_reg)
 
     def _named_after_the_if(self, write, region_blocks) -> bool:
         """Does code after the `if` read `write`'s register BY NAME, before

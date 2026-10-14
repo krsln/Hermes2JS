@@ -233,11 +233,22 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             ignore_blocks={then_block}, ignore_regions={if_region},
         )
 
+        # The fold result is PRINTED (`r3 = f(x, r3) && a !== b`) and a later
+        # reader holds a copy of the arm's value (`Mov r2, r3` at the join):
+        # copying the whole chain there would evaluate the call a SECOND time
+        # and read `r3` after the statement above has already replaced it
+        # (`r0 = r5(param1, r3) && ...`, `isArrayish` 96/12935). The register
+        # holds the merged value from here on, so the copy reads it by name.
+        replacement = last.value
+
+        if not last.definition_used and self._copy_would_reevaluate(old_last_value, last.dest_reg):
+            replacement = Identifier(name=f"r{last.dest_reg}")
+
         repoint_references(
             self.cfg,
             self.graph.root,
             old_tail_expr,
-            last.value,
+            replacement,
             min_block_id=then_block.id,
             exclude={then_result, last},
             # Identity only when the arm's value was rewritten to the register-free
@@ -258,6 +269,19 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             last.definition_used = False
 
         return True
+
+    @staticmethod
+    def _copy_would_reevaluate(head: Expression, register: int) -> bool:
+        """A copy of the chain `head && tail` outside the statement that prints it
+        is not the same value: `head` calls something (a second call), or it reads
+        the chain's own destination (`r3 = f(x, r3) && ...`), which holds the
+        chain's RESULT everywhere but inside that statement."""
+        if has_side_effects(head):
+            return True
+
+        name = f"r{register}"
+
+        return any(isinstance(node, Identifier) and node.name == name for node in head.walk())
 
     @staticmethod
     def _register_test_operator(condition, register: int):

@@ -105,7 +105,8 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
         # promoted to "the default" in its place.
         considered: set[int] = set()
 
-        for last in reversed(block.instructions):
+        for position in range(len(block.instructions) - 1, -1, -1):
+            last = block.instructions[position]
             if last.dest_reg is None or not isinstance(last.value, Expression):
                 continue
             if last.dest_reg in considered:
@@ -117,6 +118,17 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             arm_block, arm_result, arm_value = then_arm
             default_expr = last.value
             arm_expr = arm_result.value
+
+            # A ternary that PRINTS is written where `last` stands, so its test
+            # and the arm's value are read THERE. A register the block
+            # (re)defines after `last` holds something else at that point
+            # (`r1 = closure; ...; r4 = r4.IS_WEB; if (!r4) r1 = other` would
+            # print `r1 = !r4 ? ...` above the line that sets `r4`,
+            # `useScrollOffset` 96/11152). Checked below, once it is known
+            # whether the statement prints: a ternary folded into its reader
+            # is read where the reader stands.
+            moved = self._redefined_after(block, position, condition, arm_value)
+            was_used = last.definition_used
 
             # `dest = default; if (cond) dest = arm` runs `default`
             # unconditionally and BEFORE `cond`. As `cond ? arm : default`
@@ -159,6 +171,11 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                 ignore_blocks={arm_block}, ignore_regions={if_region},
             )
 
+            if moved and (named_later or not last.definition_used):
+                last.value = default_expr
+                last.definition_used = was_used
+                continue
+
             repoint_references(
                 self.cfg,
                 self.graph.root,
@@ -172,6 +189,19 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                 last.definition_used = False
 
             return True
+
+        return False
+
+    @staticmethod
+    def _redefined_after(block, position: int, *expressions) -> bool:
+        """True if an instruction after `block.instructions[position]` defines a
+        register that one of `expressions` reads by name."""
+        for later in block.instructions[position + 1:]:
+            if later.dest_reg is None:
+                continue
+
+            if any(_mentions_register(expression, later.dest_reg) for expression in expressions):
+                return True
 
         return False
 
