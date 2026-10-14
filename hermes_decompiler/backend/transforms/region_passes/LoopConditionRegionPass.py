@@ -937,7 +937,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                 # place (see docstring above).
                 continue
 
-            if self._is_unsafe_to_reorder(update_block, index, instruction.value):
+            if self._is_unsafe_to_reorder(update_block, index, instruction.value, instruction.dest_reg):
                 # Extracting this instruction into the header's update
                 # slot moves it to run AFTER everything else still left
                 # in `update_block` (the Printer renders `for`'s update
@@ -976,7 +976,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
             return
 
     @staticmethod
-    def _is_unsafe_to_reorder(update_block: BasicBlock, index: int, value) -> bool:
+    def _is_unsafe_to_reorder(update_block: BasicBlock, index: int, value, dest_reg: int | None = None) -> bool:
         """True when some instruction AFTER `update_block.instructions[index]`
         (up to, but not including, the block's terminator) writes a
         register that `value` - the candidate update instruction's own
@@ -993,14 +993,19 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         """
         read_registers = LoopConditionRegionPass._registers_read(value)
 
-        if not read_registers:
-            return False
-
         for later in update_block.instructions[index + 1:]:
             if later.terminator is not None:
                 continue
 
             if later.dest_reg is not None and later.dest_reg in read_registers:
+                return True
+
+            # The update also moves PAST every later reader of the register it
+            # writes: `Inc r2, r2; Mov r7, r2` stores the incremented value,
+            # and a header update that runs after the body's last statement
+            # would store the old one (`decode`, 96/7575).
+            if dest_reg is not None and later.value is not None and \
+                    dest_reg in LoopConditionRegionPass._registers_read(later.value):
                 return True
 
         return False

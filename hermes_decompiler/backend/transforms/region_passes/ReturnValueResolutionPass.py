@@ -196,6 +196,7 @@ class ReturnValueResolutionPass(RegionPass):
             visited = {before_block}
             queue = deque(before_block.predecessors)
             found_values = []
+            detached_path = False
 
             while queue:
                 block = queue.popleft()
@@ -214,6 +215,31 @@ class ReturnValueResolutionPass(RegionPass):
 
                 between.extend(block.instructions)
                 queue.extend(block.predecessors)
+
+                # A path that ends at a block nothing enters (a handler: the
+                # exceptional edge is not in the CFG) without a definition
+                # comes from somewhere this walk cannot see. The definitions
+                # found on the other paths are then not ALL of them.
+                if not block.predecessors and block is not self.cfg.entry:
+                    detached_path = True
+
+            if found_values and detached_path and not all(isinstance(v, Literal) for v, _ in found_values):
+                # Inside the handler of a `catch (e)` that bound this register
+                # the unseen path is the one that delivered the exception: it
+                # agrees with the definitions found only when they all copy `e`.
+                parameter = self._catch_parameter(reg, before_block)
+
+                if parameter is not None and all(
+                        structural_key(value) == structural_key(parameter) for value, _ in found_values
+                ):
+                    found_values = found_values[:1]
+                else:
+                    # The bare `rN` stays, so what defined it has to print.
+                    for instr in definition_instrs:
+                        instr.definition_pinned = True
+                        instr.definition_used = False
+
+                    return None, None
 
             if not found_values:
                 parameter = self._catch_parameter(reg, before_block)
