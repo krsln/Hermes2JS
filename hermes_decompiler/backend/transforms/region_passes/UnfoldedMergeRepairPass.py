@@ -250,8 +250,12 @@ class UnfoldedMergeRepairPass(RegionPass):
         ):
             return
 
-        # A write run twice (printed and inlined) would repeat its effect.
-        if has_side_effects(write.value):
+        # A write run twice (printed and inlined) would repeat its effect. The
+        # repoint below MOVES the effect: the arm prints it and the reader
+        # names the register, so it runs once - and only on the path that
+        # takes the arm (`x = c ? new A(a) : a`, `AnimatedAddition` 96/5146).
+        # Only the arm's last write of the register reaches the reader.
+        if has_side_effects(write.value) and not is_last:
             return
 
         if not self._read_after_the_if(write, region_blocks):
