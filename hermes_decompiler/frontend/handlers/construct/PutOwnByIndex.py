@@ -1,12 +1,11 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
+from hermes_decompiler.frontend.handlers.shared import fold_array_element
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
-    ArrayExpression,
     AssignmentExpression,
     MemberExpression,
     NumericLiteral,
-    UndefinedLiteral,
 )
 
 
@@ -25,28 +24,29 @@ class PutOwnByIndex(OpcodeHandler):
 
         dest_reg, value_reg, index = map(int, match.groups())
 
+        # Resolve the element first: inlining it marks its own definition as
+        # folded, which the "nothing else happened since" check below relies on.
         value = self.get_register_expression(ctx.analysis, value_reg)
+
+        # `NewArray` + element stores -> one literal.
+        folded = fold_array_element(ctx, dest_reg, index, value)
+
+        if folded is not None:
+            return folded
+
+        # Not foldable: a plain statement, `arr[i] = value`. It must NOT
+        # define `dest_reg` - the assignment's VALUE is the element, not the
+        # array, so publishing it as `rN = (rN[0] = a)[1] = b` made rN hold
+        # the last element (`"Woof"`) instead of the array.
         array = self.get_register_expression(ctx.analysis, dest_reg)
 
-        if isinstance(array, ArrayExpression):
-            # ArrayExpression is frozen/immutable: pad-and-replace has to
-            # build a new tuple rather than mutate `array.elements`.
-            elements = list(array.elements)
+        expression = AssignmentExpression(
+            left=MemberExpression(obj=array, prop=NumericLiteral(index), computed=True),
+            operator=AssignmentOperator.ASSIGN,
+            right=value,
+        )
 
-            while len(elements) <= index:
-                elements.append(UndefinedLiteral())
-
-            elements[index] = value
-
-            expression = ArrayExpression(elements=tuple(elements))
-        else:
-            expression = AssignmentExpression(
-                left=MemberExpression(obj=array, prop=NumericLiteral(index), computed=True),
-                operator=AssignmentOperator.ASSIGN,
-                right=value,
-            )
-
-        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
         ctx.analysis.add_result(result)
 
         return result

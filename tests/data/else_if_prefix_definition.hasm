@@ -1,0 +1,25 @@
+
+=> [Function #7547 "validateArrayFormatSeparator" of 64 bytes]: 2 params, frame size=11, strict=1, exc handler=0, debug info=0  @ offset 0x001b3fed
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <TypeOf>: <Reg8: 2, Reg8: 0>
+==> 00000006: <LoadConstString>: <Reg8: 1, string_id: 7961>  # String: 'string' (Identifier)
+==> 0000000a: <JStrictNotEqual>: <Addr8: 20, Reg8: 2, Reg8: 1>  # Address: 0000001e
+==> 0000000e: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 169>  # String: 'length' (Identifier)
+==> 00000013: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 00000016: <JStrictNotEqual>: <Addr8: 8, Reg8: 1, Reg8: 0>  # Address: 0000001e
+==> 0000001a: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001c: <Ret>: <Reg8: 0>
+==> 0000001e: <GetGlobalObject>: <Reg8: 0>
+==> 00000020: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 42>  # String: 'TypeError' (Identifier)
+==> 00000026: <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
+==> 0000002b: <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 2>
+==> 0000002f: <LoadConstString>: <Reg8: 3, string_id: 4280>  # String: 'arrayFormatSeparator must be single character string' (String)
+==> 00000033: <Mov>: <Reg8: 4, Reg8: 1>
+==> 00000036: <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
+==> 0000003a: <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 0000003e: <Throw>: <Reg8: 0>
+
+

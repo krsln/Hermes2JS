@@ -5,7 +5,7 @@ function function_12481(param1, param2) {
     // CODE → addr:  3 | <LoadParam>: <Reg8: 0, UInt8: 1>
     // USED → r0 = param1;
     // CODE → addr:  6 | <Add>: <Reg8: 0, Reg8: 0, Reg8: 1>
-    r0 = param1 + param2
+    r0 = param1 + param2;
     // CODE → addr: 10 | <Ret>: <Reg8: 0>
     return r0;
 }

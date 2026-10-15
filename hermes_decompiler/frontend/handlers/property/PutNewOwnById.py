@@ -1,9 +1,8 @@
 from hermes_decompiler.frontend.handlers import OpcodeContext, ArgsPattern, sequence, REG, STRING_ID
+from hermes_decompiler.frontend.handlers.shared import fold_object_property, property_access
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
-from hermes_decompiler.ir.expressions import (
-    AssignmentExpression, Identifier, MemberExpression, ObjectExpression, ObjectProperty, PropertyKind,
-)
+from hermes_decompiler.ir.expressions import AssignmentExpression, StringLiteral
 from .PutById import PutById
 
 
@@ -31,25 +30,22 @@ class PutNewOwnById(PutById):
 
         property_name = ctx.entry.identifier_name or f"string_{string_id}"
 
-        obj_value = self.get_register_expression(ctx.analysis, obj_reg)
+        # Resolve the value first: inlining it marks its own definition as
+        # folded, which the fold's "nothing printed since" check relies on.
         right = self.get_register_expression(ctx.analysis, value_reg)
 
-        # Special Case
-        if isinstance(obj_value, ObjectExpression):
-            new_prop = ObjectProperty(
-                key=Identifier(name=property_name), value=right, kind=PropertyKind.INIT,
-                computed=False, method=False, shorthand=False
-            )
+        # `NewObject` + property stores -> one literal: `{ "x": a, "y": b }`
+        # (string keys, like the literals `NewObjectWithBuffer` builds).
+        folded = fold_object_property(ctx, obj_reg, StringLiteral(property_name), right)
 
-            updated_obj = ObjectExpression(properties=obj_value.properties + (new_prop,))
+        if folded is not None:
+            return folded
 
-            result = OpcodeResult(ctx.entry, value=updated_obj, dest_reg=obj_reg)
-            ctx.analysis.add_result(result)
+        # Plain statement: `obj.name = value`. It defines nothing, so it
+        # never changes what the object register holds.
+        obj_value = self.get_register_expression(ctx.analysis, obj_reg)
 
-            return result
-
-        # Normal Case
-        left = MemberExpression(obj=obj_value, prop=Identifier(name=property_name), computed=False)
+        left = property_access(obj_value, property_name)
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)

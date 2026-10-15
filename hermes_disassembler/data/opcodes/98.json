@@ -732,7 +732,10 @@
         "Reg8",
         "UInt8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "3": "string_id"
+      }
     },
     {
       "name": "DefineOwnByIdLong",

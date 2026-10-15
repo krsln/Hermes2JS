@@ -176,12 +176,26 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
         if body_reg is None:
             return
 
-        alias_instr = self._find_alias_instruction(header, body_reg, loop.initializer)
+        covered = loop.body.covered_blocks
+
+        alias_instr = self._find_alias_instruction(header, body_reg, loop.initializer, induction_reg)
 
         if alias_instr is None:
             return
 
-        covered = loop.body.covered_blocks
+        if (
+                isinstance(alias_instr.value, Identifier)
+                and alias_instr.value.name == f"r{induction_reg}"
+                and any(
+            i.dest_reg == induction_reg
+            for blk in {*covered, header} for i in blk.instructions
+            if i is not alias_instr
+        )
+        ):
+            # The Mov carries the induction register itself (not its initial
+            # literal), so a write to it inside the iteration would make the
+            # copy and the register differ at the update.
+            return
 
         # Position of the alias Mov within the header. Only writes to
         # body_reg from this point forward can invalidate treating
@@ -294,7 +308,7 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
 
         return None
 
-    def _find_alias_instruction(self, header: BasicBlock, body_reg: int, initializer):
+    def _find_alias_instruction(self, header: BasicBlock, body_reg: int, initializer, induction_reg: int):
         """Search the whole header block for the induction alias Mov.
 
         Not just the first instruction (see class docstring point 2):
@@ -318,7 +332,11 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
             if instr.dest_reg != body_reg:
                 continue
 
-            if self._is_induction_alias_copy(instr.value, initializer):
+            if self._is_induction_alias_copy(instr.value, initializer) or (
+                    # A loop-safety guard kept the read symbolic: the Mov then
+                    # carries the induction register itself, not its literal.
+                    isinstance(instr.value, Identifier) and instr.value.name == f"r{induction_reg}"
+            ):
                 return instr
 
         return None

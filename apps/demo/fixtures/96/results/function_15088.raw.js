@@ -11,17 +11,17 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → addr: 16 | <LoadConstString>: <Reg8: 2, string_id: 4698>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/start' (String)
     // USED → r2 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/start";
     // CODE → addr: 20 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/start");
     // CODE → addr: 25 | <GetEnvironment>: <Reg8: 2, UInt8: 0>
-    r2 = getEnvironment(0)
+    r2 = getEnvironment(0);
     // CODE → addr: 28 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
     // USED → r3 = mayThrow;
     // CODE → addr: 32 | <Mov>: <Reg8: 2, Reg8: 0>
-    r2 = param1
+    r2 = param1;
     // CODE → addr: 35 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 37 | <Call2>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2>
-    r0 = mayThrow(r2)
+    r0 = mayThrow(r2);
     // CODE → addr: 42 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 48 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -29,7 +29,7 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → addr: 53 | <LoadConstString>: <Reg8: 2, string_id: 4697>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/result' (String)
     // USED → r2 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/result";
     // CODE → addr: 57 | <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/result", r0)
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/result", r0);
     // CODE → addr: 63 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 69 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -37,12 +37,12 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → addr: 74 | <LoadConstString>: <Reg8: 2, string_id: 4695>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block' (String)
     // USED → r2 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block";
     // CODE → addr: 78 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block");
     // CODE → addr: 83 | <Ret>: <Reg8: 0>
     return r0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 85 | <Catch>: <Reg8: 0>
-    r0 = caughtException
+    r0 = caughtException;
     // CODE → addr: 87 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr: 93 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -50,7 +50,7 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → addr: 98 | <LoadConstString>: <Reg8: 0, string_id: 4694>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/catch-block' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/catch-block";
     // CODE → addr:102 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/catch-block")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/catch-block");
     // CODE → addr:107 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:113 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -58,14 +58,14 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → addr:118 | <LoadConstString>: <Reg8: 0, string_id: 4695>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block";
     // CODE → addr:122 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block");
     // CODE → addr:127 | <LoadConstInt>: <Reg8: 0, Imm32: -1>
-    r0 = -1
+    r0 = -1;
     // CODE → addr:133 | <Ret>: <Reg8: 0>
     return r0;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:135 | <Catch>: <Reg8: 0>
-    r0 = caughtException
+    r0 = caughtException;
     // CODE → addr:137 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:143 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -73,7 +73,7 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → addr:148 | <LoadConstString>: <Reg8: 1, string_id: 4695>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block";
     // CODE → addr:152 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block");
     // CODE → addr:157 | <Throw>: <Reg8: 0>
     throw r0;
 }

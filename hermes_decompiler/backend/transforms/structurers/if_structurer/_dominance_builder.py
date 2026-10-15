@@ -11,8 +11,10 @@ from hermes_decompiler.backend.transforms.shared import negate_condition, is_loo
 from hermes_decompiler.backend.transforms.structurers import RegionStructurer
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral
+from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
-from ._predicates import is_backward_branch, representative_block
+from ._predicates import is_backward_branch, is_constant_comparison, representative_block
 
 logger = get_logger(__name__)
 
@@ -276,6 +278,33 @@ class _DominanceIfBuilder(RegionStructurer):
             if self._is_reachable(then_entry, goto_block):
                 merge_block = goto_block
 
+        if (
+                goto_block is not None
+                and goto_block is not merge_block
+                and (
+                self._arm_leaves_the_region(region, then_start, goto_block)
+                or (
+                        # Only once shared returns were given private copies:
+                        # until then the arm's own exit can still be the block
+                        # the else side owns, and a join would drop it silently.
+                        getattr(self.cfg, "duplicated_returns", False)
+                        and merge_block is None
+                        and self._arm_tests_into(then_entry, goto_block)
+                )
+        )
+                and any(
+            pred is not block and self.cfg.dominator_tree.dominates(then_entry, pred)
+            for pred in goto_block.predecessors
+        )
+        ):
+            # The fallthrough arm itself flows into the branch target, so
+            # the target is the join, not an `else` arm. The post-dominator
+            # can miss it when another path of the arm leaves the region
+            # (`if (a) { if (b) break; } x();` with `x` the loop latch).
+            # Gated on such a carved-out exit: a plain case-fallthrough
+            # chain (`switchTest`) needs `has_else` at every link.
+            merge_block = goto_block
+
         has_else = goto_block is not merge_block and goto_block is not None
 
         # else_root = None
@@ -289,7 +318,6 @@ class _DominanceIfBuilder(RegionStructurer):
                 # goto target isn't a distinct sibling in this region -
                 # bail rather than guess.
                 return False
-
             else_entry = representative_block(else_root)
 
         # -------------------------------------------------------------
@@ -304,6 +332,7 @@ class _DominanceIfBuilder(RegionStructurer):
 
         index = then_start
         boundary = len(region.children)
+        last_side: list | None = None
 
         while index < len(region.children):
 
@@ -315,11 +344,20 @@ class _DominanceIfBuilder(RegionStructurer):
 
             rep = representative_block(item)
 
-            if dominators.dominates(then_entry, rep):
+            if rep is not None and rep.address < 0 and last_side is not None:
+                # A region made only of synthetic blocks (`if (c) break;`
+                # after the loop structurers ran) has no node in the
+                # dominator tree. It stays with the item it follows:
+                # that item's conditional branch is what it replaced.
+                last_side.append(item)
+
+            elif dominators.dominates(then_entry, rep):
                 then_items.append(item)
+                last_side = then_items
 
             elif has_else and dominators.dominates(else_entry, rep):
                 else_items.append(item)
+                last_side = else_items
 
             else:
                 # Neither side dominates - this is the true merge
@@ -393,6 +431,30 @@ class _DominanceIfBuilder(RegionStructurer):
     # -------------------------------------------------------------
     # Reachability fallback (see `_convert`'s own comment)
     # -------------------------------------------------------------
+
+    def _arm_tests_into(self, then_entry: BasicBlock, goto_block: BasicBlock) -> bool:
+        """True if a conditional branch inside the fallthrough arm jumps to
+        `goto_block` (`a || b` shape: both tests share the target)."""
+        dominators = self.cfg.dominator_tree
+        return any(
+            isinstance(pred.terminator, TerminatorConditionalBranch)
+            and pred.terminator.target == goto_block.address
+            and dominators.dominates(then_entry, pred)
+            and not is_constant_comparison(pred.terminator.condition)
+            for pred in goto_block.predecessors
+        )
+
+    @staticmethod
+    def _arm_leaves_the_region(region, then_start: int, goto_block) -> bool:
+        """True if a loop-exit marker (a synthetic `break`/`continue`
+        block) sits between the branch and `goto_block` in the sequence."""
+        for item in region.children[then_start:]:
+            if item is goto_block:
+                return False
+            rep = representative_block(item)
+            if rep is not None and rep.address < 0:
+                return True
+        return False
 
     @staticmethod
     def _is_reachable(start: BasicBlock, target: BasicBlock) -> bool:

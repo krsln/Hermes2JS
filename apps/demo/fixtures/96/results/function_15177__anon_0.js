@@ -9,9 +9,9 @@ async function _anon_0_() {
     // CODE → addr: 20 | <LoadConstString>: <Reg8: 1, string_id: 4765>  # String: '__BC:Functions/AsyncTests/simpleAsyncTest/start' (String)
     // USED → r1 = "__BC:Functions/AsyncTests/simpleAsyncTest/start";
     // CODE → addr: 24 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-    console.log("__BC:Functions/AsyncTests/simpleAsyncTest/start")
+    console.log("__BC:Functions/AsyncTests/simpleAsyncTest/start");
     // CODE → addr: 29 | <GetEnvironment>: <Reg8: 1, UInt8: 2>
-    r1 = getEnvironment(2)
+    r1 = getEnvironment(2);
     // CODE → addr: 32 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>
     // USED → r4 = delay;
     // CODE → addr: 36 | <LoadConstUndefined>: <Reg8: 3>
@@ -19,14 +19,14 @@ async function _anon_0_() {
     // CODE → addr: 38 | <LoadConstUInt8>: <Reg8: 1, UInt8: 42>
     // USED → r1 = 42;
     // CODE → addr: 46 | <SaveGenerator>: <Addr8: 4>  # Address: 00000032
-    r1 = await delay(42)
+    r1 = await delay(42);
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 56 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 62 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → addr: 67 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 1>
-    console.log(r1)
+    console.log(r1);
     // CODE → addr: 72 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 78 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -34,7 +34,7 @@ async function _anon_0_() {
     // CODE → addr: 83 | <LoadConstString>: <Reg8: 2, string_id: 4764>  # String: '__BC:Functions/AsyncTests/simpleAsyncTest/end' (String)
     // USED → r2 = "__BC:Functions/AsyncTests/simpleAsyncTest/end";
     // CODE → addr: 87 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log("__BC:Functions/AsyncTests/simpleAsyncTest/end")
+    console.log("__BC:Functions/AsyncTests/simpleAsyncTest/end");
     // CODE → addr: 93 | <Ret>: <Reg8: 1>
     return r1;
 }

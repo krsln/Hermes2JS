@@ -5,7 +5,7 @@ function logicalShortCircuitTest(param1, param2) {
     // CODE → addr:  3 | <LoadParam>: <Reg8: 2, UInt8: 2>
     // USED → r2 = param2;
     // CODE → addr:  6 | <CreateEnvironment>: <Reg8: 0>
-    r0 = createEnvironment()
+    r0 = createEnvironment();
     // CODE → addr:  8 | <CreateClosure>: <Reg8: 7, Reg8: 0, function_id: 15073>  # Function: [#15073 sideEffect of 31 bytes]: 3 params @ offset 0x00268778
     // USED → r7 = sideEffect;
     // CODE → addr: 13 | <GetGlobalObject>: <Reg8: 1>
@@ -17,43 +17,43 @@ function logicalShortCircuitTest(param1, param2) {
     // CODE → addr: 26 | <LoadConstString>: <Reg8: 0, string_id: 4635>  # String: '__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/start' (String)
     // USED → r0 = "__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/start";
     // CODE → addr: 30 | <Call2>: <Reg8: 0, Reg8: 4, Reg8: 5, Reg8: 0>
-    console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/start")
+    console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/start");
     // CODE → addr: 35 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 37 | <LoadConstString>: <Reg8: 4, string_id: 5116>  # String: 'and-left' (String)
     // USED → r4 = "and-left";
     // CODE → addr: 41 | <Call3>: <Reg8: 4, Reg8: 7, Reg8: 0, Reg8: 4, Reg8: 3>
-    r4 = sideEffect("and-left", param1)
+    r4 = sideEffect("and-left", param1);
     // CODE → addr: 47 | <Mov>: <Reg8: 6, Reg8: 3>
-    r6 = param1
+    r6 = param1;
     if (param1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 53 | <LoadConstString>: <Reg8: 4, string_id: 5117>  # String: 'and-right' (String)
         // USED → r4 = "and-right";
         // CODE → addr: 57 | <Call3>: <Reg8: 4, Reg8: 7, Reg8: 0, Reg8: 4, Reg8: 2>
-        r4 = sideEffect("and-right", param2)
+        r4 = sideEffect("and-right", param2);
         // CODE → addr: 63 | <Mov>: <Reg8: 6, Reg8: 2>
-        r6 = param2
+        r6 = param2;
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 66 | <LoadConstString>: <Reg8: 4, string_id: 1184>  # String: 'or-left' (String)
     // USED → r4 = "or-left";
     // CODE → addr: 70 | <Call3>: <Reg8: 4, Reg8: 7, Reg8: 0, Reg8: 4, Reg8: 3>
-    r4 = sideEffect("or-left", param1)
+    r4 = sideEffect("or-left", param1);
     // CODE → addr: 76 | <Mov>: <Reg8: 5, Reg8: 3>
-    r5 = param1
+    r5 = param1;
     if (!param1) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 82 | <LoadConstString>: <Reg8: 4, string_id: 1951>  # String: 'or-right' (String)
         // USED → r4 = "or-right";
         // CODE → addr: 86 | <Call3>: <Reg8: 4, Reg8: 7, Reg8: 0, Reg8: 4, Reg8: 2>
-        r4 = sideEffect("or-right", param2)
+        r4 = sideEffect("or-right", param2);
         // CODE → addr: 92 | <Mov>: <Reg8: 5, Reg8: 2>
-        r5 = param2
+        r5 = param2;
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 95 | <LoadConstString>: <Reg8: 4, string_id: 74>  # String: 'left' (Identifier)
-    r4 = !param1 ? "left" : null
+    r4 = !param1 ? "left" : null;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:104 | <LoadConstNull>: <Reg8: 3>
     // USED → r3 = null;
@@ -62,9 +62,9 @@ function logicalShortCircuitTest(param1, param2) {
         // CODE → addr:110 | <LoadConstString>: <Reg8: 3, string_id: 3574>  # String: 'nullish-right' (String)
         // USED → r3 = "nullish-right";
         // CODE → addr:114 | <Call3>: <Reg8: 3, Reg8: 7, Reg8: 0, Reg8: 3, Reg8: 2>
-        r3 = sideEffect("nullish-right", param2)
+        r3 = sideEffect("nullish-right", param2);
         // CODE → addr:120 | <Mov>: <Reg8: 4, Reg8: 2>
-        r4 = param2
+        r4 = param2;
     }
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:123 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -72,7 +72,7 @@ function logicalShortCircuitTest(param1, param2) {
     // CODE → addr:129 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
     // CODE → addr:134 | <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 5, Reg8: 4>
-    console.log(r6, r5, r4)
+    console.log(r6, r5, r4);
     // CODE → addr:141 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:147 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -80,6 +80,6 @@ function logicalShortCircuitTest(param1, param2) {
     // CODE → addr:152 | <LoadConstString>: <Reg8: 1, string_id: 4632>  # String: '__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/end' (String)
     // USED → r1 = "__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/end";
     // CODE → addr:156 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/end")
+    console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/end");
     // CODE → addr:161 | <Ret>: <Reg8: 0>
 }

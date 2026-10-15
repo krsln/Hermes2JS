@@ -9,7 +9,7 @@ function forTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 1, string_id: 4585>  # String: '__BC:ControlFlow/ForTests/forTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/ForTests/forTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:ControlFlow/ForTests/forTest/start")
+    console.log("__BC:ControlFlow/ForTests/forTest/start");
     // CODE → addr: 22 | <LoadConstUInt8>: <Reg8: 4, UInt8: 10>
     // USED → r4 = 10;
     // CODE → addr: 25 | <LoadConstString>: <Reg8: 3, string_id: 4584>  # String: '__BC:ControlFlow/ForTests/forTest/if-continue' (String)
@@ -19,20 +19,17 @@ function forTest() {
     // CODE → addr: 32 | <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
     // USED → r1 = 3;
     // LOOP → START (for)
-    for (i = 0; i < 10; i = r6 + 1) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 37 | <Mov>: <Reg8: 6, Reg8: 5>
-        r6 = i
-        if (r6 === 3) {
+    for (i = 0; i < 10; i++) {
+        if (i === 3) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr: 88 | <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r8 = console;
             // CODE → addr: 94 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r7 = console.log;
             // CODE → addr: 99 | <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
-            console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
+            console.log("__BC:ControlFlow/ForTests/forTest/if-continue");
         } else {
-            if (r6 === 8) {
+            if (i === 8) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 66 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r9 = console;
@@ -41,7 +38,7 @@ function forTest() {
                 // CODE → addr: 77 | <LoadConstString>: <Reg8: 7, string_id: 4583>  # String: '__BC:ControlFlow/ForTests/forTest/if-break' (String)
                 // USED → r7 = "__BC:ControlFlow/ForTests/forTest/if-break";
                 // CODE → addr: 81 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
-                console.log("__BC:ControlFlow/ForTests/forTest/if-break")
+                console.log("__BC:ControlFlow/ForTests/forTest/if-break");
                 // CODE → addr: 86 | <Jmp>: <Addr8: 25>  # Address: 0000006f
                 break;
             }
@@ -51,7 +48,7 @@ function forTest() {
             // CODE → addr: 54 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r7 = console.log;
             // CODE → addr: 59 | <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 6>
-            console.log(r6)
+            console.log(i);
             // CODE → addr: 64 | <Jmp>: <Addr8: 40>  # Address: 00000068
             continue;
         }
@@ -65,7 +62,7 @@ function forTest() {
     // CODE → addr:122 | <LoadConstString>: <Reg8: 0, string_id: 3936>  # String: '__BC:ControlFlow/ForTests/forTest/end' (String)
     // USED → r0 = "__BC:ControlFlow/ForTests/forTest/end";
     // CODE → addr:126 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    console.log("__BC:ControlFlow/ForTests/forTest/end")
+    console.log("__BC:ControlFlow/ForTests/forTest/end");
     // CODE → addr:131 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:133 | <Ret>: <Reg8: 0>

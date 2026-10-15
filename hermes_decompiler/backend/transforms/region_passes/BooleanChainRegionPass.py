@@ -7,12 +7,14 @@ from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceR
 from hermes_decompiler.backend.transforms.region_passes._base import RegionPass
 from hermes_decompiler.backend.transforms.shared import (
     negate_condition, is_pure, has_side_effects, repoint_references, reclaim_definition,
-    reclaim_unfolded_definition, TRIVIAL_NODE_TYPES
+    reclaim_unfolded_definition, absorb_arm_definitions, TRIVIAL_NODE_TYPES
 )
+from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name, _is_referenced
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
-from hermes_decompiler.ir.expressions import BinaryExpression, Expression
+from hermes_decompiler.ir.expressions import BinaryExpression, Expression, Identifier
+from hermes_decompiler.backend.transforms.structurers.if_structurer._predicates import is_negation, unwrap_negation
 
 logger = get_logger(__name__)
 
@@ -144,6 +146,15 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
         if not isinstance(then_result.value, Expression):
             return False
 
+        # A definition that is PRINTED (nothing folded it into a reader) is
+        # deleted with the IfRegion; `then_result` names its register as `rN`
+        # (`assert`: `r1 = "Assertion failed: " + param2; ... r0[10](r1)`).
+        # Absorb it into the tail, or refuse the fold.
+        tail_value = absorb_arm_definitions(self.cfg, then_block.instructions, then_result)
+
+        if tail_value is None:
+            return self._decline(last, then_result, then_block, if_region)
+
         for earlier in then_block.instructions[:-1]:
             if not is_pure(earlier):
                 return self._decline(last, then_result, then_block, if_region)
@@ -156,6 +167,24 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             # dropped along with its side effect.
             if has_side_effects(earlier.value) and not self._is_operand_of(
                     earlier.value, then_result.value
+            ):
+                return self._decline(last, then_result, then_block, if_region)
+
+            # A write to ANOTHER register is deleted with the arm as well. When
+            # code after the `if` holds its value inline (`r8 = r18; r2 = r4 ||
+            # r4`: `StoreToEnvironment r8` reads it) the fold would leave that
+            # reader claiming the arm's value on the path that skips the arm.
+            # Keep the `if`; the repair pass that follows names the register.
+            if (
+                    earlier.dest_reg is not None
+                    and earlier.dest_reg != last.dest_reg
+                    and not self._is_operand_of(earlier.value, then_result.value)
+                    and not self._is_operand_of(earlier.value, tail_value)
+                    and _is_referenced(
+                self.cfg, self.graph.root, earlier.value,
+                ignore_blocks={then_block}, ignore_instructions={last},
+                ignore_regions={if_region},
+            )
             ):
                 return self._decline(last, then_result, then_block, if_region)
 
@@ -178,21 +207,25 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
         if tail is not last.value:
             tested.append(tail)
 
-        for candidate in tested:
-            if negate_condition(candidate).structurally_equal(condition):
-                operator = LogicalOperator.OR
-                break
+        operator = self._register_test_operator(condition, last.dest_reg)
+        tested_by_register = operator is not None
 
-            if candidate.structurally_equal(condition):
-                operator = LogicalOperator.AND
-                break
+        if operator is None:
+            for candidate in tested:
+                if negate_condition(candidate).structurally_equal(condition):
+                    operator = LogicalOperator.OR
+                    break
 
-        else:
-            return self._decline(last, then_result, then_block, if_region)
+                if candidate.structurally_equal(condition):
+                    operator = LogicalOperator.AND
+                    break
+
+            else:
+                return self._decline(last, then_result, then_block, if_region)
 
         old_tail_expr = then_result.value
         old_last_value = last.value
-        last.value = BinaryExpression(left=old_last_value, operator=operator, right=old_tail_expr)
+        last.value = BinaryExpression(left=old_last_value, operator=operator, right=tail_value)
 
         # The fold result must be printed as `rN = ...`: see `reclaim_definition`.
         reclaim_definition(
@@ -200,16 +233,73 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             ignore_blocks={then_block}, ignore_regions={if_region},
         )
 
+        # The fold result is PRINTED (`r3 = f(x, r3) && a !== b`) and a later
+        # reader holds a copy of the arm's value (`Mov r2, r3` at the join):
+        # copying the whole chain there would evaluate the call a SECOND time
+        # and read `r3` after the statement above has already replaced it
+        # (`r0 = r5(param1, r3) && ...`, `isArrayish` 96/12935). The register
+        # holds the merged value from here on, so the copy reads it by name.
+        replacement = last.value
+
+        if not last.definition_used and self._copy_would_reevaluate(old_last_value, last.dest_reg):
+            replacement = Identifier(name=f"r{last.dest_reg}")
+
         repoint_references(
             self.cfg,
             self.graph.root,
             old_tail_expr,
-            last.value,
+            replacement,
             min_block_id=then_block.id,
             exclude={then_result, last},
+            # Identity only when the arm's value was rewritten to the register-free
+            # `tail_value` (its `old_tail_expr` names registers - `r3 != null` -
+            # that a LATER arm re-defines under the very same text), or when the
+            # test named the register: no copy of the arm's value was inlined
+            # anywhere then, and a structural match would hit an unrelated
+            # identical literal (`[]`).
+            structural=tail_value is old_tail_expr and not tested_by_register,
         )
 
+        # A later reader that names the register (`r9 = r4`, kept as a read
+        # because the operands were redefined in between) needs the fold
+        # result as a statement of its own.
+        if last.definition_used and _reads_register_by_name(
+                self.cfg, last.dest_reg, max(last.entry.address, then_result.entry.address), root=self.graph.root,
+        ):
+            last.definition_used = False
+
         return True
+
+    @staticmethod
+    def _copy_would_reevaluate(head: Expression, register: int) -> bool:
+        """A copy of the chain `head && tail` outside the statement that prints it
+        is not the same value: `head` calls something (a second call), or it reads
+        the chain's own destination (`r3 = f(x, r3) && ...`), which holds the
+        chain's RESULT everywhere but inside that statement."""
+        if has_side_effects(head):
+            return True
+
+        name = f"r{register}"
+
+        return any(isinstance(node, Identifier) and node.name == name for node in head.walk())
+
+    @staticmethod
+    def _register_test_operator(condition, register: int):
+        """`if (!rN)` / `if (rN)` straight after the write of `rN` tests the
+        value built so far by name (a join value the reader could not inline:
+        `r0 = a; if (!r0) r0 = b; if (!r0) r0 = c`), which is `a || b` for the
+        next arm. None when the condition is anything else."""
+        name = f"r{register}"
+
+        if isinstance(condition, Identifier) and condition.name == name:
+            return LogicalOperator.AND
+
+        if (is_negation(condition)
+                and isinstance(unwrap_negation(condition), Identifier)
+                and unwrap_negation(condition).name == name):
+            return LogicalOperator.OR
+
+        return None
 
     def _decline(self, last, then_result, then_block, if_region) -> bool:
         """The shape matched but the fold is refused: the merge stays an

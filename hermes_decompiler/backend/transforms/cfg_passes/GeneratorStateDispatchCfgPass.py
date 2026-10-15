@@ -35,12 +35,15 @@ from __future__ import annotations
 import re
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
-from hermes_decompiler.backend.transforms.cfg_passes._generator_dispatch import GeneratorDispatch, SuspendSite
+from hermes_decompiler.backend.transforms.cfg_passes._generator_dispatch import (
+    GeneratorDispatch, SuspendSite, _operands, _STORE_ENV_HANDLERS, _LOAD_ENV_HANDLERS, _LOAD_CONST_HANDLERS,
+)
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import AwaitExpression, YieldExpression
+from hermes_decompiler.ir import Node
+from hermes_decompiler.ir.expressions import AwaitExpression, Identifier, YieldExpression
 from hermes_decompiler.ir.expressions.Literals import BooleanLiteral, NullLiteral, NumericLiteral, StringLiteral
-from hermes_decompiler.ir.terminators import TerminatorJump, TerminatorReturn
+from hermes_decompiler.ir.terminators import TerminatorJump, TerminatorReturn, TerminatorThrow
 
 logger = get_logger(__name__)
 
@@ -168,13 +171,295 @@ class GeneratorStateDispatchCfgPass:
             )
             return False
 
+        # Read BEFORE the rewrite deletes the dispatch prologue it lives in.
+        prelude = self._read_prelude()
+
         # Nothing above this point touched `cfg`.
         for site, continuation, cut_index, result in foldable:
             self._apply_fold(site, continuation, cut_index, result)
 
         self._prune_unreachable(entry_block)
+        self._strip_protocol_writes(prelude, entry_block)
+        self._order_by_control_flow(entry_block)
 
         return True
+
+    # ------------------------------------------------------------------
+    # Block order
+    # ------------------------------------------------------------------
+
+    def _order_by_control_flow(self, entry_block: BasicBlock) -> None:
+        """
+        Put `cfg.blocks` in an order every forward edge respects.
+
+        `SequenceStructurer` takes `cfg.blocks` as the top-level statement
+        order, which for ordinary code is address order. Folding the
+        suspend sites breaks that: the compiler lays the resume
+        continuations out *before* the code that reaches them (`yield 1`
+        at 0x12c resumes at 0xdc, which `yield 2` resumes at 0xa5, ...),
+        so address order printed the post-resume body above the code
+        that runs first, and the environment prologue below the reads.
+
+        Kahn's algorithm over the forward edges (successors plus
+        try-block -> handler), always taking the lowest-address ready
+        block, keeps address order wherever it is already valid - so
+        functions the fold did not reorder print exactly as before.
+        Back edges (found by a DFS from the entry) are left out, or a
+        loop header would wait on its own latch.
+        """
+        blocks = self.cfg.blocks
+        ids = {block.id for block in blocks}
+        edges: dict[int, list[BasicBlock]] = {block.id: [] for block in blocks}
+
+        for block in blocks:
+            edges[block.id].extend(s for s in block.successors if s.id in ids)
+
+        for handler in self.cfg.exception_handlers:
+            handler_block = handler["handler_block"]
+
+            if handler_block.id not in ids:
+                continue
+
+            for try_block in handler["try_blocks"]:
+                if try_block.id in ids and try_block is not handler_block:
+                    edges[try_block.id].append(handler_block)
+
+        # Back edges: an edge into a block still on the DFS stack.
+        back: set[tuple[int, int]] = set()
+        state: dict[int, int] = {}  # 1 = on stack, 2 = done
+
+        for root in [entry_block, *sorted(blocks, key=lambda b: b.address)]:
+            if root.id in state:
+                continue
+
+            state[root.id] = 1
+            stack = [(root, iter(edges[root.id]))]
+
+            while stack:
+                node, children = stack[-1]
+
+                for child in children:
+                    if state.get(child.id) == 1:
+                        back.add((node.id, child.id))
+                    elif child.id not in state:
+                        state[child.id] = 1
+                        stack.append((child, iter(edges[child.id])))
+                        break
+                else:
+                    state[node.id] = 2
+                    stack.pop()
+
+        import heapq
+
+        indegree = {block.id: 0 for block in blocks}
+        for block in blocks:
+            for target in edges[block.id]:
+                if (block.id, target.id) not in back:
+                    indegree[target.id] += 1
+
+        heap = [(b.address, b.id, b) for b in blocks if indegree[b.id] == 0]
+        heapq.heapify(heap)
+        ordered: list[BasicBlock] = []
+
+        while heap:
+            _, _, block = heapq.heappop(heap)
+            ordered.append(block)
+
+            for target in edges[block.id]:
+                if (block.id, target.id) in back:
+                    continue
+
+                indegree[target.id] -= 1
+
+                if indegree[target.id] == 0:
+                    heapq.heappush(heap, (target.address, target.id, target))
+
+        if len(ordered) == len(blocks):
+            self.cfg.blocks = ordered
+
+    # ------------------------------------------------------------------
+    # Protocol bookkeeping that outlives the dispatch
+    # ------------------------------------------------------------------
+
+    def _read_prelude(self):
+        """`(env instruction, env register, state slot, state mirror register)`
+        of the dispatch prologue:
+
+            rE = getParentEnvironment(0)
+            rS = rE[state_slot]          # LoadFromEnvironment
+            rM = rS                      # Mov: a register mirror of the state
+
+        or None when the function does not start that way.
+        """
+        entry = min(self.cfg.blocks, key=lambda block: block.address)
+        env_instruction = next(
+            (i for i in entry.instructions if i.handler == "GetParentEnvironment" and i.dest_reg is not None),
+            None,
+        )
+
+        if env_instruction is None:
+            return None
+
+        env_reg = env_instruction.dest_reg
+        state_slot = state_load = mirror = None
+
+        for instruction in entry.instructions:
+            operands = _operands(instruction)
+
+            if state_slot is None:
+                if instruction.handler in _LOAD_ENV_HANDLERS and len(operands) >= 3 and operands[1] == env_reg:
+                    state_load, state_slot = operands[0], operands[2]
+            elif instruction.handler == "Mov" and len(operands) >= 2 and operands[1] == state_load:
+                mirror = operands[0]
+                break
+
+        if state_slot is None or state_slot == self.dispatch.resume_slot:
+            return None
+
+        return env_instruction, env_reg, state_slot, mirror
+
+    def _strip_protocol_writes(self, prelude, entry_block: BasicBlock) -> None:
+        """
+        Remove what is left of the state machine's own bookkeeping, and keep
+        the environment register the real code still reads alive.
+
+        The dispatch is gone, but every suspend site and every completion
+        path still writes the resume slot and the state slot (`r1[1] = 3;
+        r2 = 1; r1[0] = 1; yield 3`), and the prologue that defined `rE`
+        went with the dispatch - so those writes, and every captured
+        variable the body touches (`r1[4]`), named a register nothing
+        defined. The two slots are protocol by construction (the entry
+        dispatch reads them and nothing else), so the writes are dropped; the
+        environment register, which also carries the body's own captured
+        variables, is re-defined at the top of the first user block when
+        anything still reads it.
+        """
+        if prelude is None:
+            return
+
+        env_instruction, env_reg, state_slot, mirror = prelude
+        slots = {self.dispatch.resume_slot, state_slot}
+        freed: set[int] = set()
+
+        for block in self.cfg.blocks:
+            kept = []
+
+            for instruction in block.instructions:
+                operands = _operands(instruction)
+
+                if (
+                        instruction.handler in _STORE_ENV_HANDLERS
+                        and len(operands) >= 3
+                        and operands[0] == env_reg
+                        and operands[1] in slots
+                ):
+                    freed.add(operands[2])
+                    continue
+
+                kept.append(instruction)
+
+            block.instructions = kept
+
+        if mirror is not None and not self._is_read(mirror, ignore_handlers=("Mov",)):
+            for block in self.cfg.blocks:
+                kept = []
+
+                for instruction in block.instructions:
+                    operands = _operands(instruction)
+
+                    if instruction.handler == "Mov" and len(operands) >= 2 and operands[0] == mirror:
+                        freed.add(operands[1])
+                        continue
+
+                    kept.append(instruction)
+
+                block.instructions = kept
+
+        # Constants that only fed the removed writes (`r8 = 1; r1[2] = r8`).
+        for block in self.cfg.blocks:
+            block.instructions = [
+                instruction for instruction in block.instructions
+                if not (
+                        instruction.handler in _LOAD_CONST_HANDLERS
+                        and instruction.dest_reg in freed
+                        and not self._is_read(instruction.dest_reg)
+                )
+            ]
+
+        self._drop_rethrow_only_handlers()
+
+        already_defined = any(env_instruction in block.instructions for block in self.cfg.blocks)
+
+        if not already_defined and self._is_read(env_reg):
+            entry_block.instructions.insert(0, env_instruction)
+
+    def _drop_rethrow_only_handlers(self) -> None:
+        """Remove `catch (e) { throw e }`.
+
+        The generator's own completion handler was `rX = caught; env[state] =
+        COMPLETED; throw rX`. With the state write gone what is left rethrows
+        the exception unchanged, which is what no handler at all does, and
+        would print as a `catch` that only rethrows.
+        """
+        surviving = []
+        dropped_ids: set[int] = set()
+
+        for handler in self.cfg.exception_handlers:
+            block = handler["handler_block"]
+            catch = [i for i in block.instructions if i.handler == "Catch"]
+            # The Throw opcode's own result sits in `instructions` next to the
+            # terminator it became (same as `Ret`, see `_TAIL_HANDLERS`).
+            others = [i for i in block.instructions if i.handler not in ("Catch", "Throw")]
+            terminator = block.terminator
+
+            if (
+                    len(catch) == 1
+                    and not others
+                    and isinstance(terminator, TerminatorThrow)
+                    and isinstance(terminator.value, Identifier)
+                    and terminator.value.name == f"r{catch[0].dest_reg}"
+            ):
+                dropped_ids.add(block.id)
+                continue
+
+            surviving.append(handler)
+
+        if not dropped_ids:
+            return
+
+        self.cfg.exception_handlers = surviving
+        self.cfg.blocks = [b for b in self.cfg.blocks if b.id not in dropped_ids]
+
+        for block in self.cfg.blocks:
+            block.predecessors = [p for p in block.predecessors if p.id not in dropped_ids]
+            block.successors = [x for x in block.successors if x.id not in dropped_ids]
+
+    def _is_read(self, register: int, ignore_handlers: tuple[str, ...] = ()) -> bool:
+        """Is `rN` named by any remaining instruction or terminator?"""
+        name = f"r{register}"
+
+        def mentions(node) -> bool:
+            if isinstance(node, Identifier):
+                return node.name == name
+
+            if not isinstance(node, Node):
+                return False
+
+            return any(mentions(child) for child in node.children if isinstance(child, Node))
+
+        for block in self.cfg.blocks:
+            for instruction in block.instructions:
+                if instruction.handler in ignore_handlers:
+                    continue
+
+                for held in (instruction.value, instruction.statement, instruction.terminator):
+                    if held is not None and mentions(held):
+                        return True
+
+            if block.terminator is not None and mentions(block.terminator):
+                return True
+
+        return False
 
     def _dispatch_survives(
             self,

@@ -1,18 +1,37 @@
+import logging
 import re
 from typing import Any
 
 from hermes_decompiler.backend.analysis.cfg import CFG
 from hermes_decompiler.backend.emit import JSEmitter
 from hermes_decompiler.backend.transforms import StructuralAnalyzer
-from hermes_decompiler.backend.transforms.cfg_passes import GeneratorStateDispatchCfgPass, generator_dispatch
+from hermes_decompiler.backend.transforms.shared import may_alias, read_members, stored_member
+from hermes_decompiler.backend.transforms.cfg_passes import (
+    ArrayDestructuringCfgPass, EnvArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass,
+    SharedReturnDuplicationCfgPass, generator_dispatch,
+)
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.frontend.batch_pipeline.tables import CreatorFacts
-from hermes_decompiler.ir.expressions import Identifier
+from hermes_decompiler.ir.expressions import (
+    AwaitExpression, CallExpression, Identifier, Literal, MemberExpression, NewExpression, UndefinedLiteral,
+    YieldExpression,
+)
 from .RegisterState import RegisterState
 
 logger = get_logger(__name__)
+
+
+class _RecordBuffer(logging.Handler):
+    """Collects log records so a discarded attempt can be silenced."""
+
+    def __init__(self):
+        super().__init__(logging.NOTSET)
+        self.records: list[logging.LogRecord] = []
+
+    def emit(self, record: logging.LogRecord) -> None:
+        self.records.append(record)
 
 
 class HermesAnalysis:
@@ -48,9 +67,34 @@ class HermesAnalysis:
         self.current_entry = None
         # Addresses where each register is written inside a loop.
         self.loop_carried_writes: dict[str, list[int]] = {}
+        # Forward-jump spans `(jump address, target address)`: an instruction
+        # strictly inside one is skipped on the path that takes the jump, so
+        # a write there is conditional (see `_is_phi_write`).
+        self.skip_ranges: list[tuple[int, int]] = []
+        # Every definition of each register, in order. `RegisterState.version`
+        # is the index into this list, so `history[name][v + 1:]` is exactly
+        # what redefined version `v` (see `stale_kind`).
+        self.history: dict[str, list[RegisterState]] = {}
+        # Memory stores (`Put*`, `Store*`, `Del*` of a property, not a literal
+        # being built), as the assigned member (None when unknown), in order. A
+        # value that READS memory is stale once a store that may alias it
+        # follows its load (see `stale_kind`).
+        self.store_log: list[MemberExpression | None] = []
+        # Calls so far: one may write anything a still-folded member read
+        # loaded (`x = o.count; f(); use(x)`), see `_changed_by_a_call`.
+        self.call_count = 0
+
+    _MEMORY_STORE_RE = re.compile(r"(Put|Store|Del)")
+    # A call runs arbitrary code, which may write any property.
+    _CALL_RE = re.compile(r"(Call|Construct)")
 
     def add_result(self, result: OpcodeResult) -> None:
         self.results.append(result)
+
+        if self._MEMORY_STORE_RE.match(result.entry.opcode):
+            self._log_store(result)
+        elif self._CALL_RE.match(result.entry.opcode):
+            self.call_count += 1
 
         if not result.name:
             return
@@ -63,9 +107,25 @@ class HermesAnalysis:
         # reads as stale as soon as this very definition replaces it.
         operand_versions = self._capture_operand_versions(result)
 
-        self.registers[result.name] = RegisterState(
-            definition=result, version=version, operand_versions=operand_versions,
+        reads_memory = (
+                result.value is not None
+                and not result.entry.opcode.startswith("Put")
+                and any(isinstance(node, MemberExpression) for node in result.value.walk())
         )
+
+        state = RegisterState(
+            definition=result, version=version, operand_versions=operand_versions,
+            memory_epoch=len(self.store_log) if reads_memory else None,
+            call_epoch=self.call_count,
+            memory_reads=read_members(result.value) if reads_memory else (),
+        )
+        self.registers[result.name] = state
+        self.history.setdefault(result.name, []).append(state)
+
+    def _log_store(self, result: OpcodeResult) -> None:
+        member = stored_member(result.value)
+        if member is not False:
+            self.store_log.append(member)
 
     _REGISTER_NAME_RE = re.compile(r"r\d+")
 
@@ -126,6 +186,11 @@ class HermesAnalysis:
         if state.handler.startswith("Put"):
             return None
 
+        if state.memory_epoch is not None and (self._stored_since(state) or self._changed_by_a_call(state)):
+            # `r0 = r3[25]; r3[25] = null; throw r0`: the load ran before the
+            # store, so its value is not what `r3[25]` reads now.
+            return "memory"
+
         kind = None
         own = state.definition.name
 
@@ -136,6 +201,19 @@ class HermesAnalysis:
 
             if name == own and current is state:
                 kind = "self"
+            elif (
+                    current is not None
+                    and name != own
+                    and not isinstance(state.value, Identifier)
+                    and self._redefined_by_kept_write(name, version)
+            ):
+                # A computed expression over a register that was since
+                # reassigned by a statement that STAYS in the output (a call
+                # result: `r6 = r7.index` ... `r7 = r9.getItemCount(...)`),
+                # or by a write on only one path into the join being read
+                # (`r6 = r3[0]` ... `r3 = r2 && r2[k]`). Inlined, it would
+                # read the new value.
+                return "other"
             elif isinstance(state.value, Identifier) and self._REGISTER_NAME_RE.fullmatch(state.value.name):
                 # A bare register alias (`Mov r5, r4` -> value `r4`): the
                 # alias only means anything while r4 still holds what it
@@ -146,6 +224,94 @@ class HermesAnalysis:
                 return "other"
 
         return kind
+
+    _CALLEE_OPERANDS_RE = re.compile(r"\s*Reg(?:8|32):\s*\d+,\s*Reg(?:8|32):\s*(\d+)(?:,\s*Reg(?:8|32):\s*(\d+))?")
+
+    def _changed_by_a_call(self, state: RegisterState) -> bool:
+        """A call ran since a member read was loaded and the read is DATA
+        (`n = o.count; f(); use(n)`). A load consumed as the callee/`this` of
+        the call being handled (`console.log` fetched before the argument's
+        own call) is evaluated in that order by the source too."""
+        if self.call_count == state.call_epoch:
+            return False
+
+        # `arguments.length` / `arguments[i]` are the call's own, which no
+        # callee can change.
+        if all(
+                isinstance(read.obj, Identifier) and read.obj.name == "arguments"
+                for read in state.memory_reads
+        ):
+            return False
+
+        entry = self.current_entry
+        if entry is not None and self._CALL_RE.match(entry.opcode):
+            operands = self._CALLEE_OPERANDS_RE.match(entry.args)
+            if operands is not None and state.definition.name in {
+                f"r{group}" for group in operands.groups() if group is not None
+            }:
+                return False
+
+        return True
+
+    def _stored_since(self, state: RegisterState) -> bool:
+        """A store since `state`'s load may have written a location it read."""
+        for store in self.store_log[state.memory_epoch:]:
+            if any(may_alias(read, store) for read in state.memory_reads):
+                return True
+        return False
+
+    def _redefined_by_kept_write(self, name: str, version: int) -> bool:
+        """Some definition of `name` after `version` is certain to leave the
+        register changed in the printed output - not just the latest one: an
+        earlier call result stays printed even if a folded load overwrote it
+        afterwards."""
+        branch_read = self._reading_for_a_branch()
+
+        for later in self.history.get(name, ())[version + 1:]:
+            if self._redefinition_prints(later) or self._is_phi_write(later):
+                return True
+
+            # A constant written between a test's operands and its jump
+            # (`r4 = r5.params == null; r5 = undefined; if (r4)`) is the
+            # default of a join that prints later: whether it does is not known
+            # yet, and a condition re-evaluated after it would read it.
+            if branch_read and isinstance(later.value, (Literal, UndefinedLiteral)):
+                return True
+
+        return False
+
+    def _reading_for_a_branch(self) -> bool:
+        entry = self.current_entry
+        return entry is not None and entry.opcode.startswith("J")
+
+    def _is_phi_write(self, state: RegisterState) -> bool:
+        """The definition ran on only one path into the join the current
+        instruction reads after: it sits inside a forward jump's skipped span
+        whose target is already behind us. The register then holds different
+        values per path, so no single folded expression can stand for it -
+        it is printed (as an `if` arm write or a folded `&&`/`||`/`?:`
+        assignment), and a value computed from the older one is stale."""
+        current = self.current_address
+        if current is None:
+            return False
+
+        address = state.definition.address
+        return any(start < address < end <= current for start, end in self.skip_ranges)
+
+    def is_join_value(self, state: RegisterState) -> bool:
+        """The register's current definition is a one-path write into the join
+        being read AND an earlier definition reaches the same join on the
+        skipping path (`r0 = a; if (!r0) { r0 = b }; <read r0>`): the read sees
+        a merge of the two, so the arm's value alone is not what it holds."""
+        return state.version > 0 and self._is_phi_write(state)
+
+    @staticmethod
+    def _redefinition_prints(state: RegisterState) -> bool:
+        """The definition is kept as a statement of its own: a call/construct
+        result is never folded into a reader, and a pinned one prints too."""
+        return state.definition.definition_pinned or isinstance(
+            state.value, (CallExpression, NewExpression, AwaitExpression, YieldExpression),
+        )
 
     def may_inline(self, state: RegisterState) -> bool:
         """Whether `state.value` can be substituted at the read being handled."""
@@ -206,6 +372,67 @@ class HermesAnalysis:
             raw: bool = False,
             creator_facts: CreatorFacts | None = None,
     ) -> list[str]:
+        first = self._attempt(verbose, raw, creator_facts, duplicate_returns=False)
+        chosen = first
+
+        if not raw and self._has_goto(first[0]):
+            # A `return` block shared between early exits in different `if`
+            # arms can leave a test without its exit (a raw `goto`). Only
+            # then are the shared returns copied per jumper - doing it
+            # always would restyle every function that merely has one.
+            retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=True)
+            if retry[3] and not self._has_goto(retry[0]):
+                chosen = retry
+
+        lines, reason, _, _, records = chosen  # (lines, reason, failed, ok, records)
+        # Only the attempt that is used speaks: the other one's warnings
+        # (unstructured blocks, ...) describe output nobody sees.
+        for record in records:
+            logging.getLogger(record.name).handle(record)
+
+        if raw:
+            return lines
+
+        return self._warn_if_invalid_js(lines, reason)
+
+    def _attempt(self, verbose, raw, creator_facts, duplicate_returns):
+        """One `_generate_js` run with its log records held back.
+
+        Returns `(lines, reason, failed, ok, records)`; an exception inside
+        the retry is treated as "no better output" instead of failing the
+        function the first attempt already produced."""
+        handler = _RecordBuffer()
+        package_logger = logging.getLogger("hermes_decompiler")
+        # The CLI's console handler sits on this very logger: take it off for
+        # the attempt, or the records print once per attempt AND once again
+        # when the chosen attempt's are replayed.
+        saved_handlers = package_logger.handlers[:]
+        saved_propagate = package_logger.propagate
+        package_logger.handlers = [handler]
+        package_logger.propagate = False
+
+        try:
+            lines, reason = self._generate_js(verbose, raw, creator_facts, duplicate_returns)
+            return lines, reason, False, True, handler.records
+        except Exception:
+            if not duplicate_returns:
+                raise
+            return [], None, True, False, []
+        finally:
+            package_logger.handlers = saved_handlers
+            package_logger.propagate = saved_propagate
+
+    @staticmethod
+    def _has_goto(lines: list[str]) -> bool:
+        return any("goto label_" in line for line in lines)
+
+    def _generate_js(
+            self,
+            verbose: bool,
+            raw: bool,
+            creator_facts: CreatorFacts | None,
+            duplicate_returns: bool,
+    ) -> tuple[list[str], tuple[str, bool] | None]:
         # Clone every result before handing it to the CFG/structuring
         # passes below: those passes routinely reassign an OpcodeResult's
         # `.value`/`.statement`/`.terminator`/`.definition_used` in place
@@ -285,6 +512,14 @@ class HermesAnalysis:
                     True,
                 )
 
+        # `[a, b] = src` as one statement instead of the iterator-protocol
+        # diamonds. Needs to see the final block order, after the generator
+        # rewrite above, and before any analysis is computed.
+        ArrayDestructuringCfgPass(cfg).run()
+        EnvArrayDestructuringCfgPass(cfg).run()
+        if duplicate_returns:
+            SharedReturnDuplicationCfgPass(cfg).run()
+
         cfg.verify()
         cfg.compute_dominators()
         cfg.compute_post_dominators()
@@ -311,9 +546,9 @@ class HermesAnalysis:
             # The raw renderer's whole point is the unstructured form -
             # `goto`/`if (...) goto` here is expected output, not a defect
             # to flag.
-            return lines
+            return lines, unresolved_dispatch_reason
 
-        return self._warn_if_invalid_js(lines, unresolved_dispatch_reason)
+        return lines, unresolved_dispatch_reason
 
     @staticmethod
     def _warn_if_invalid_js(

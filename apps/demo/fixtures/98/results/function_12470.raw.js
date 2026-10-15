@@ -16,7 +16,7 @@ function function_12470(param1, param2) {
     // CODE → addr: 23 | <LoadConstString>: <Reg8: 3, string_id: 4758>  # String: '__BC:ControlFlow/ForEachTests/forEachTest/if-middle' (String)
     // USED → r3 = "__BC:ControlFlow/ForEachTests/forEachTest/if-middle";
     // CODE → addr: 27 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 6, Reg8: 3>
-    console.log("__BC:ControlFlow/ForEachTests/forEachTest/if-middle")
+    console.log("__BC:ControlFlow/ForEachTests/forEachTest/if-middle");
     // CODE → addr: 32 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 38 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -24,7 +24,7 @@ function function_12470(param1, param2) {
     // CODE → addr: 43 | <LoadConstString>: <Reg8: 2, string_id: 7929>  # String: 'middle' (Identifier)
     // USED → r2 = "middle";
     // CODE → addr: 47 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log("middle")
+    console.log("middle");
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 52 | <LoadParam>: <Reg8: 4, UInt8: 1>
     // USED → r4 = param1;
@@ -35,9 +35,9 @@ function function_12470(param1, param2) {
     // CODE → addr: 63 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
     // CODE → addr: 68 | <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
-    console.log(param2, param1)
+    console.log(param2, param1);
     // CODE → addr: 74 | <LoadConstUndefined>: <Reg8: 1>
-    r1 = undefined
+    r1 = undefined;
     // CODE → addr: 76 | <Ret>: <Reg8: 1>
     return r1;
 }

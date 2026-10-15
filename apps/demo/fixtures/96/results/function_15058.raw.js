@@ -9,7 +9,7 @@ function nestedLoopTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 1, string_id: 4627>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/NestedTests/nestedLoopTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/start")
+    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/start");
     // CODE → addr: 22 | <LoadConstUInt8>: <Reg8: 7, UInt8: 3>
     // USED → r7 = 3;
     // CODE → addr: 25 | <LoadConstUInt8>: <Reg8: 6, UInt8: 4>
@@ -23,15 +23,15 @@ function nestedLoopTest() {
     // CODE → addr: 39 | <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → addr: 42 | <LoadConstZero>: <Reg8: 1>
-    r1 = 0
+    r1 = 0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 44 | <Mov>: <Reg8: 9, Reg8: 1>
-    r9 = r1
+    r9 = r1;
     // CODE → addr: 47 | <LoadConstZero>: <Reg8: 10>
-    r10 = 0
+    r10 = 0;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 49 | <Mov>: <Reg8: 11, Reg8: 10>
-    r11 = r10
+    r11 = r10;
     // CODE → addr: 52 | <JStrictNotEqual>: <Addr8: 40, Reg8: 9, Reg8: 2>  # Address: 0000005c
     if (r9 !== 1) goto label_92;
     // ──────────────── Block 3 ──────────────── 
@@ -43,21 +43,21 @@ function nestedLoopTest() {
     // CODE → addr: 66 | <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r12 = console.log;
     // CODE → addr: 71 | <Call2>: <Reg8: 12, Reg8: 12, Reg8: 13, Reg8: 5>
-    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if")
+    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if");
     // CODE → addr: 76 | <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r13 = console;
     // CODE → addr: 82 | <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r12 = console.log;
     // CODE → addr: 87 | <Call2>: <Reg8: 12, Reg8: 12, Reg8: 13, Reg8: 4>
-    console.log("nested")
+    console.log("nested");
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 92 | <Inc>: <Reg8: 10, Reg8: 11>
-    r10 = r11 + 1
+    r10 = r11 + 1;
     // CODE → addr: 95 | <JLess>: <Addr8: -46, Reg8: 10, Reg8: 6>  # Address: 00000031
     if (r10 < 4) goto label_49;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 99 | <Inc>: <Reg8: 1, Reg8: 9>
-    r1 = r9 + 1
+    r1 = r9 + 1;
     // CODE → addr:102 | <JLess>: <Addr8: -58, Reg8: 1, Reg8: 7>  # Address: 0000002c
     if (r1 < 3) goto label_44;
     // ──────────────── Block 7 ──────────────── 
@@ -68,9 +68,9 @@ function nestedLoopTest() {
     // CODE → addr:117 | <LoadConstString>: <Reg8: 0, string_id: 4625>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/end' (String)
     // USED → r0 = "__BC:ControlFlow/NestedTests/nestedLoopTest/end";
     // CODE → addr:121 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/end")
+    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/end");
     // CODE → addr:126 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    r0 = undefined;
     // CODE → addr:128 | <Ret>: <Reg8: 0>
     return r0;
 }

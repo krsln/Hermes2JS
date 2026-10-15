@@ -3,13 +3,23 @@ from __future__ import annotations
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceRegion
 from hermes_decompiler.backend.transforms.shared import (
-    negate_condition, has_side_effects, repoint_references, reclaim_definition
+    negate_condition, has_side_effects, repoint_references, reclaim_definition, is_unfolded_literal_definition,
+    absorb_arm_definitions, substitute_register,
 )
+from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import ConditionalExpression, Expression
+from hermes_decompiler.ir import Node
+from hermes_decompiler.ir.expressions import ConditionalExpression, Expression, Identifier
 from ._base import RegionPass
 
 logger = get_logger(__name__)
+
+
+def _mentions_register(node, register: int) -> bool:
+    if isinstance(node, Identifier) and node.name == f"r{register}":
+        return True
+
+    return any(_mentions_register(child, register) for child in node.children if isinstance(child, Node))
 
 
 class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
@@ -95,7 +105,8 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
         # promoted to "the default" in its place.
         considered: set[int] = set()
 
-        for last in reversed(block.instructions):
+        for position in range(len(block.instructions) - 1, -1, -1):
+            last = block.instructions[position]
             if last.dest_reg is None or not isinstance(last.value, Expression):
                 continue
             if last.dest_reg in considered:
@@ -104,9 +115,20 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             then_arm = self._single_result(if_region.then_body, last.dest_reg)
             if then_arm is None:
                 continue
-            arm_block, arm_result = then_arm
+            arm_block, arm_result, arm_value = then_arm
             default_expr = last.value
             arm_expr = arm_result.value
+
+            # A ternary that PRINTS is written where `last` stands, so its test
+            # and the arm's value are read THERE. A register the block
+            # (re)defines after `last` holds something else at that point
+            # (`r1 = closure; ...; r4 = r4.IS_WEB; if (!r4) r1 = other` would
+            # print `r1 = !r4 ? ...` above the line that sets `r4`,
+            # `useScrollOffset` 96/11152). Checked below, once it is known
+            # whether the statement prints: a ternary folded into its reader
+            # is read where the reader stands.
+            moved = self._redefined_after(block, position, condition, arm_value)
+            was_used = last.definition_used
 
             # `dest = default; if (cond) dest = arm` runs `default`
             # unconditionally and BEFORE `cond`. As `cond ? arm : default`
@@ -117,17 +139,42 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             if has_side_effects(default_expr):
                 continue
 
+            # `if (r8 === undefined) r8 = "anon"` tests the very register it
+            # defaults, and that read means the default's value. Folded as-is
+            # the test would still name `r8` while its defining statement
+            # moved inside the ternary, so `r8` would be read before anything
+            # sets it. The default is pure (checked above): name it directly.
+            test = negate_condition(condition)
+
+            if _mentions_register(test, last.dest_reg):
+                test = substitute_register(test, f"r{last.dest_reg}", default_expr)
+
             new_expr = ConditionalExpression(
-                test=negate_condition(condition),
+                test=test,
                 consequent=default_expr,
-                alternate=arm_expr,
+                alternate=arm_value,
             )
             last.value = new_expr
+
+            # Something after the merge still names the register (`return r1`
+            # after a defaulted parameter): the ternary's own statement must
+            # keep printing, or that bare read dangles. (The readers that were
+            # already handed the arm's value keep a copy of the ternary: it is
+            # pure, and repointing them to the register is only sound where
+            # nothing reassigned it in between.)
+            named_later = _reads_register_by_name(
+                self.cfg, last.dest_reg, max(last.entry.address, arm_result.entry.address), root=self.graph.root,
+            )
 
             reclaim_definition(
                 self.cfg, self.graph.root, last, default_expr, arm_result,
                 ignore_blocks={arm_block}, ignore_regions={if_region},
             )
+
+            if moved and (named_later or not last.definition_used):
+                last.value = default_expr
+                last.definition_used = was_used
+                continue
 
             repoint_references(
                 self.cfg,
@@ -137,7 +184,24 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                 min_block_id=arm_block.id,
                 exclude={arm_result, last},
             )
+
+            if named_later:
+                last.definition_used = False
+
             return True
+
+        return False
+
+    @staticmethod
+    def _redefined_after(block, position: int, *expressions) -> bool:
+        """True if an instruction after `block.instructions[position]` defines a
+        register that one of `expressions` reads by name."""
+        for later in block.instructions[position + 1:]:
+            if later.dest_reg is None:
+                continue
+
+            if any(_mentions_register(expression, later.dest_reg) for expression in expressions):
+                return True
 
         return False
 
@@ -179,5 +243,21 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                     return None
                 if has_side_effects(instr.value):
                     return None
+                # A printed array/object literal definition is pure, but the
+                # merge write usually reads it by name (`r7[r2]`): absorbing
+                # the arm would delete the only statement that builds it
+                # (see `is_unfolded_literal_definition`).
+                if is_unfolded_literal_definition(instr):
+                    return None
 
-        return last_block, result
+        # Any other PRINTED definition is deleted with the arm too, and
+        # whatever read its register by name would be left dangling: fold it
+        # into the arm's value (`(r7 - 0.1379) / 7.787`) or refuse.
+        absorbed = absorb_arm_definitions(
+            self.cfg, [i for blk in children for i in blk.instructions], result,
+        )
+
+        if absorbed is None:
+            return None
+
+        return last_block, result, absorbed

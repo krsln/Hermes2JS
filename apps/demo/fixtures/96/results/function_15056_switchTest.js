@@ -11,7 +11,7 @@ function switchTest(param1) {
     // CODE → addr: 16 | <LoadConstString>: <Reg8: 1, string_id: 3590>  # String: '__BC:ControlFlow/SwitchTests/switchTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/SwitchTests/switchTest/start";
     // CODE → addr: 20 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-    console.log("__BC:ControlFlow/SwitchTests/switchTest/start")
+    console.log("__BC:ControlFlow/SwitchTests/switchTest/start");
     // CODE → addr: 25 | <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     // Switch → START
@@ -25,7 +25,7 @@ function switchTest(param1) {
             // CODE → addr:177 | <LoadConstString>: <Reg8: 0, string_id: 2212>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-0' (String)
             // USED → r0 = "__BC:ControlFlow/SwitchTests/switchTest/case-0";
             // CODE → addr:181 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-0")
+            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-0");
             // CODE → addr:186 | <LoadConstString>: <Reg8: 0, string_id: 615>  # String: 'zero' (String)
             // USED → r0 = "zero";
             // CODE → addr:190 | <Ret>: <Reg8: 0>
@@ -39,7 +39,7 @@ function switchTest(param1) {
             // CODE → addr:151 | <LoadConstString>: <Reg8: 1, string_id: 352>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-1' (String)
             // USED → r1 = "__BC:ControlFlow/SwitchTests/switchTest/case-1";
             // CODE → addr:155 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-1")
+            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-1");
             // CODE → addr:160 | <LoadConstString>: <Reg8: 1, string_id: 7531>  # String: 'one' (Identifier)
             // USED → r1 = "one";
             // CODE → addr:164 | <Ret>: <Reg8: 1>
@@ -53,7 +53,7 @@ function switchTest(param1) {
             // CODE → addr:125 | <LoadConstString>: <Reg8: 1, string_id: 946>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-2' (String)
             // USED → r1 = "__BC:ControlFlow/SwitchTests/switchTest/case-2";
             // CODE → addr:129 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-2")
+            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-2");
             // CODE → addr:134 | <LoadConstString>: <Reg8: 1, string_id: 7725>  # String: 'two' (Identifier)
             // USED → r1 = "two";
             // CODE → addr:138 | <Ret>: <Reg8: 1>
@@ -68,7 +68,7 @@ function switchTest(param1) {
             // CODE → addr: 99 | <LoadConstString>: <Reg8: 1, string_id: 1770>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-3-4' (String)
             // USED → r1 = "__BC:ControlFlow/SwitchTests/switchTest/case-3-4";
             // CODE → addr:103 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-3-4")
+            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-3-4");
             // CODE → addr:108 | <LoadConstString>: <Reg8: 1, string_id: 5307>  # String: 'three-four' (String)
             // USED → r1 = "three-four";
             // CODE → addr:112 | <Ret>: <Reg8: 1>
@@ -82,7 +82,7 @@ function switchTest(param1) {
             // CODE → addr: 73 | <LoadConstString>: <Reg8: 1, string_id: 4629>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-default' (String)
             // USED → r1 = "__BC:ControlFlow/SwitchTests/switchTest/case-default";
             // CODE → addr: 77 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-default")
+            console.log("__BC:ControlFlow/SwitchTests/switchTest/case-default");
             // CODE → addr: 82 | <LoadConstString>: <Reg8: 1, string_id: 1881>  # String: 'other' (String)
             // USED → r1 = "other";
             // CODE → addr: 86 | <Ret>: <Reg8: 1>

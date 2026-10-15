@@ -40,7 +40,7 @@ MAX_INLINED_CONDITION_NODES = 30
 _REGION_EXPRESSION_ATTRIBUTES = ("condition", "initializer", "update", "iterable", "discriminant")
 
 
-def repoint_node(node, old_expr, new_expr):
+def repoint_node(node, old_expr, new_expr, *, structural: bool = True):
     """Generic, type-agnostic deep replace of `old_expr` with `new_expr`.
 
     Every IR node (Expression and Statement, e.g. ReturnStatement) is a
@@ -64,7 +64,8 @@ def repoint_node(node, old_expr, new_expr):
     if node is old_expr:
         return new_expr, True
 
-    if (not isinstance(old_expr, TRIVIAL_NODE_TYPES)
+    if (structural
+            and not isinstance(old_expr, TRIVIAL_NODE_TYPES)
             and isinstance(node, type(old_expr))
             and node.structurally_equal(old_expr)):
         return new_expr, True
@@ -78,7 +79,7 @@ def repoint_node(node, old_expr, new_expr):
         value = getattr(node, field.name)
 
         if isinstance(value, Node):
-            new_value, changed = repoint_node(value, old_expr, new_expr)
+            new_value, changed = repoint_node(value, old_expr, new_expr, structural=structural)
 
             if changed:
                 updates[field.name] = new_value
@@ -89,7 +90,7 @@ def repoint_node(node, old_expr, new_expr):
 
             for item in value:
                 if isinstance(item, Node):
-                    new_item, changed = repoint_node(item, old_expr, new_expr)
+                    new_item, changed = repoint_node(item, old_expr, new_expr, structural=structural)
                     tuple_changed = tuple_changed or changed
                     new_items.append(new_item)
                 else:
@@ -102,6 +103,23 @@ def repoint_node(node, old_expr, new_expr):
         return node, False
 
     return dataclasses.replace(node, **updates), True
+
+
+def _computes_the_same_value(instr, old_expr, structural: bool) -> bool:
+    """A definition whose WHOLE value merely equals `old_expr` structurally
+    (`r4 = r4[0]` next to an arm's `r6 = r4[0]`) computes that value itself:
+    it is not a reader of the arm's, so it must not become `r4 = r6`. A `Mov`
+    carrying a copy is the reader the structural fallback exists for."""
+    value = instr.value
+
+    return (
+            structural
+            and value is not old_expr
+            and not instr.entry.opcode.startswith("Mov")
+            and not isinstance(old_expr, TRIVIAL_NODE_TYPES)
+            and isinstance(value, type(old_expr))
+            and value.structurally_equal(old_expr)
+    )
 
 
 def _node_count(node, limit: int) -> int:
@@ -124,7 +142,7 @@ def _node_count(node, limit: int) -> int:
     return count
 
 
-def _repoint_terminator(terminator, old_expr, new_expr):
+def _repoint_terminator(terminator, old_expr, new_expr, structural=True):
     """Terminators are frozen dataclasses but not `Node`s; only their
     expression fields (condition / value / selector) can hold `old_expr`."""
     updates = {}
@@ -133,7 +151,7 @@ def _repoint_terminator(terminator, old_expr, new_expr):
         value = getattr(terminator, field.name)
 
         if isinstance(value, Node):
-            new_value, changed = repoint_node(value, old_expr, new_expr)
+            new_value, changed = repoint_node(value, old_expr, new_expr, structural=structural)
 
             if changed:
                 updates[field.name] = new_value
@@ -153,8 +171,12 @@ class _RegionCollector(RegionVisitor):
         super().visit(node)
 
 
-def repoint_references(cfg, root, old_expr, new_expr, *, min_block_id: int, exclude: set) -> None:
+def repoint_references(
+        cfg, root, old_expr, new_expr, *, min_block_id: int, exclude: set, structural: bool = True,
+) -> None:
     """Make every consumer of `old_expr` read `new_expr` instead.
+
+    `structural=False` matches by identity only (see `repoint_node`).
 
     `min_block_id` skips blocks that precede the fold (they cannot read a
     definition made after them); `exclude` are the instructions the fold
@@ -181,7 +203,8 @@ def repoint_references(cfg, root, old_expr, new_expr, *, min_block_id: int, excl
 
         if key not in replaced_terminators:
             replaced_terminators[key] = (
-                terminator if for_conditions is None else _repoint_terminator(terminator, old_expr, for_conditions)
+                terminator if for_conditions is None else _repoint_terminator(terminator, old_expr, for_conditions,
+                                                                              structural)
             )
 
         return replaced_terminators[key]
@@ -197,13 +220,17 @@ def repoint_references(cfg, root, old_expr, new_expr, *, min_block_id: int, excl
             if instr in exclude:
                 continue
 
-            new_value, value_changed = repoint_node(instr.value, old_expr, new_expr)
+            if _computes_the_same_value(instr, old_expr, structural):
+                new_value, value_changed = instr.value, False
+            else:
+                new_value, value_changed = repoint_node(instr.value, old_expr, new_expr, structural=structural)
 
             if value_changed:
                 instr.value = new_value
 
             if instr.statement is not None:
-                new_statement, statement_changed = repoint_node(instr.statement, old_expr, new_expr)
+                new_statement, statement_changed = repoint_node(instr.statement, old_expr, new_expr,
+                                                                structural=structural)
 
                 if statement_changed:
                     instr.statement = new_statement
@@ -218,11 +245,22 @@ def repoint_references(cfg, root, old_expr, new_expr, *, min_block_id: int, excl
         if for_conditions is None:
             continue
 
+        # An `if`'s test runs BEFORE its arms: when the instructions the fold
+        # owns sit inside the `if`, its condition cannot read what they write
+        # (`if (c && arguments[1] !== undefined) { r5 = arguments[1] }` must not
+        # become `r5 !== undefined`).
+        if (
+                region.__class__.__name__ == "IfRegion"
+                and exclude
+                and any(i in exclude for b in region.covered_blocks for i in b.instructions)
+        ):
+            continue
+
         for attribute in _REGION_EXPRESSION_ATTRIBUTES:
             value = getattr(region, attribute, None)
 
             if isinstance(value, Node):
-                new_value, changed = repoint_node(value, old_expr, for_conditions)
+                new_value, changed = repoint_node(value, old_expr, for_conditions, structural=structural)
 
                 if changed:
                     setattr(region, attribute, new_value)
@@ -231,7 +269,7 @@ def repoint_references(cfg, root, old_expr, new_expr, *, min_block_id: int, excl
             tests = getattr(case, "tests", None)
 
             if tests:
-                case.tests = [repoint_node(test, old_expr, for_conditions)[0] for test in tests]
+                case.tests = [repoint_node(test, old_expr, for_conditions, structural=structural)[0] for test in tests]
 
 
 def _contains(node, target) -> bool:
@@ -328,7 +366,7 @@ def reclaim_definition(cfg, root, last, old_value, arm_result, *, ignore_blocks,
     return True
 
 
-def _reads_register_by_name(cfg, register: int, after_address: int) -> bool:
+def _reads_register_by_name(cfg, register: int, after_address: int, ignore_node=None, root=None) -> bool:
     """True if, going forward in bytecode order from `after_address`, some
     consumer refers to register `rN` BY NAME before `rN` is written again.
 
@@ -340,6 +378,11 @@ def _reads_register_by_name(cfg, register: int, after_address: int) -> bool:
     name = f"r{register}"
 
     def holds_name(node) -> bool:
+        # An inlined copy of the arm's own value reads the register too, but
+        # the fold repoints those copies to the folded expression.
+        if ignore_node is not None and node is ignore_node:
+            return False
+
         if isinstance(node, Identifier):
             return node.name == name
 
@@ -355,17 +398,34 @@ def _reads_register_by_name(cfg, register: int, after_address: int) -> bool:
 
         return False
 
-    later = sorted(
-        (instr for block in cfg.blocks for instr in block.instructions if instr.address > after_address),
-        key=lambda instr: instr.address,
-    )
+    # An `if` the structurers already built keeps its test in the region, not
+    # in a terminator, so a bare `if (r5)` is only visible through `root`. It
+    # is read just before the region's first block.
+    events = [
+        (instr.address, 1, [instr.value, instr.statement, instr.terminator], instr.dest_reg)
+        for block in cfg.blocks for instr in block.instructions if instr.address > after_address
+    ]
 
-    for instr in later:
-        for held in (instr.value, instr.statement, instr.terminator):
+    if root is not None:
+        collector = _RegionCollector()
+        collector.visit(root)
+
+        for region in collector.regions:
+            condition = getattr(region, "condition", None)
+            covered = region.covered_blocks if condition is not None else None
+
+            if covered:
+                start = min(block.address for block in covered)
+
+                if start > after_address:
+                    events.append((start - 0.5, 0, [condition], None))
+
+    for _, _, held_nodes, dest_reg in sorted(events, key=lambda event: event[:2]):
+        for held in held_nodes:
             if held is not None and holds_name(held):
                 return True
 
-        if instr.dest_reg == register:
+        if dest_reg == register:
             return False
 
     return False

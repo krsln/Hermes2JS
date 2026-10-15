@@ -228,7 +228,7 @@ def test_hoisted_pure_call_folds_back_into_the_source_ternary():
     # the same three expressions, which is why this matches assignments only).
     assignments = [
         line for line in out.split("\n")
-        if re.match(r"\s*r\d+ = \(r\d+ > 0\.008856\) \? exponentiationOperator\(", line)
+        if re.match(r"\s*r\d+ = \(exponentiationOperator\(r9, r8\) > 0\.008856\) \? exponentiationOperator\(", line)
     ]
 
     assert len(assignments) == 3, out

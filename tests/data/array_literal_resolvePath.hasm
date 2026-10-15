@@ -1,0 +1,23 @@
+
+=> [Function #10215 "resolvePath" of 61 bytes]: 3 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x001f045c
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 2>
+==> 00000003: <GetGlobalObject>: <Reg8: 0>
+==> 00000005: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 6>  # String: 'Array' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 2, string_id: 5>  # String: 'isArray' (Identifier)
+==> 00000010: <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 1>
+==> 00000015: <Mov>: <Reg8: 3, Reg8: 1>
+==> 00000018: <JmpTrue>: <Addr8: 14, Reg8: 0>  # Address: 00000026
+==> 0000001b: <NewArray>: <Reg8: 0, UInt16: 1>
+==> 0000001f: <PutOwnByIndex>: <Reg8: 0, Reg8: 1, UInt8: 0>
+==> 00000023: <Mov>: <Reg8: 3, Reg8: 0>
+==> 00000026: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 210>  # String: 'reduce' (Identifier)
+==> 0000002b: <CreateEnvironment>: <Reg8: 0>
+==> 0000002d: <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 10216>  # Function: [#10216  of 78 bytes]: 3 params @ offset 0x001f0499
+==> 00000032: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000035: <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 0>
+==> 0000003b: <Ret>: <Reg8: 0>
+
+

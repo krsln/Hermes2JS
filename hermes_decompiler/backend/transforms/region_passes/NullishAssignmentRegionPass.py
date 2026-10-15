@@ -8,7 +8,7 @@ from hermes_decompiler.backend.regions import (
     IfRegion,
     SequenceRegion,
 )
-from hermes_decompiler.backend.transforms.shared import is_pure
+from hermes_decompiler.backend.transforms.shared import is_pure, prints_non_constant_statement
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import (
     AssignmentOperator,
@@ -238,7 +238,10 @@ class NullishAssignmentRegionPass(RegionPass, RegionVisitor):
         silently absorbed into the fold.
         """
 
-        return all(is_pure(instruction) for instruction in block.instructions[:-1])
+        return all(
+            is_pure(instruction) and not prints_non_constant_statement(instruction)
+            for instruction in block.instructions[:-1]
+        )
 
     # ------------------------------------------------------------------
     # Condition analysis

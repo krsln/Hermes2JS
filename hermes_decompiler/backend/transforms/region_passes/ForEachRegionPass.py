@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import (
     RegionVisitor,
@@ -8,12 +10,16 @@ from hermes_decompiler.backend.regions import (
     SequenceRegion,
     TryRegion,
 )
+from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
 from hermes_decompiler.backend.transforms.shared import structural_key
 from hermes_decompiler.backend.transforms.shared import resolve_identifier as _shared_resolve_identifier
 from hermes_decompiler.backend.transforms.shared import is_bare_register
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Expression
-from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
+from hermes_decompiler.ir.expressions import (
+    ArrayExpression, AssignmentExpression, CallExpression, Identifier, MemberExpression,
+)
+from hermes_decompiler.ir.expressions.Collections import SpreadElement
 from hermes_decompiler.ir.terminators import TerminatorThrow
 from ._base import RegionPass
 
@@ -100,6 +106,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
     def visit_LoopRegion(self, node: LoopRegion) -> None:
         self._try_recognize_for_in(node)
         self.visit(node.body)
+        self._try_recognize_for_of_with_inner_try(node)
 
     # -----------------------------------------------------------------
     # for-of
@@ -149,6 +156,166 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
         if scaffold is not None:
             self._unwrap_try(try_region, loop)
+
+        self._drop_iterator_setup(iterator_expr)
+        self._fold_binding_pattern(loop)
+
+    def _try_recognize_for_of_with_inner_try(self, loop: LoopRegion) -> None:
+        """for-of whose close scaffold sits INSIDE the loop body.
+
+        Plain `for (x of xs) { ... }` has the loop inside the try. When the
+        body starts by destructuring the element (`for (const [k, v] of m)`),
+        the try covers only the body - after the `next()` header - and
+        TryStructurer nests it in the loop: `while (...) { <next>; try {
+        body } catch (e) { it.return(); throw e } }`. Same construct, same
+        scaffold, one level down.
+        """
+        if loop.loop_kind is not LoopKind.WHILE:
+            return
+
+        try_region = next((c for c in loop.body.children if isinstance(c, TryRegion)), None)
+
+        if try_region is None or try_region.finally_ is not None:
+            return
+
+        next_call, next_instr, header_block = self._match_header_call(loop, "next")
+
+        if next_call is None:
+            return
+
+        raw_iterator_ref = next_call.callee.obj
+        iterator_expr = self._resolve_identifier(raw_iterator_ref, next_instr, header_block)
+        iterable = self._match_call(iterator_expr, "GetIterator")
+
+        if iterable is None:
+            return
+
+        scaffold = self._close_scaffold(try_region)
+
+        if scaffold is None or not self._close_body_matches(scaffold, raw_iterator_ref, iterator_expr):
+            return
+
+        loop.loop_kind = LoopKind.FOR_OF
+        loop.iterable = iterable
+        loop.loop_binding = next_instr.dest_reg
+
+        self._strip_next_call_scaffold(header_block, next_instr)
+
+        body = loop.body
+        index = body.children.index(try_region)
+        inner = list(try_region.try_body.children)
+
+        body.children[index:index + 1] = inner
+
+        for child in inner:
+            if hasattr(child, "parent"):
+                child.parent = body
+
+        body.invalidate_coverage()
+
+        self._drop_iterator_setup(iterator_expr)
+        self._fold_binding_pattern(loop)
+
+    def _fold_binding_pattern(self, loop: LoopRegion) -> None:
+        """`for (const x of xs) { [a, b] = x; ... }` -> `for (const [a, b] of xs)`.
+
+        Hermes binds the element to a register and destructures it as the
+        body's first statement (through one more copy, `Mov t <- x`). Folded
+        only when nothing afterwards still names the element register or the
+        copy.
+        """
+        element = loop.loop_binding
+
+        if not isinstance(element, int) or not isinstance(loop.body, SequenceRegion):
+            return
+
+        found = []
+
+        for child in loop.body.children:
+            if not isinstance(child, BasicBlock):
+                break
+
+            found.extend((child, instr) for instr in child.instructions)
+
+            if len(found) >= 2:
+                break
+
+        def is_pattern(instr, source: int) -> bool:
+            value = instr.value
+
+            return (
+                    instr.dest_reg is None
+                    and isinstance(value, AssignmentExpression)
+                    and isinstance(value.left, ArrayExpression)
+                    and isinstance(value.right, Identifier)
+                    and value.right.name == f"r{source}"
+            )
+
+        doomed = []
+        copy_reg = None
+
+        if found and is_pattern(found[0][1], element):
+            doomed = [found[0]]
+            pattern_instr = found[0][1]
+        elif (
+                len(found) >= 2
+                and found[0][1].dest_reg is not None
+                and isinstance(found[0][1].value, Identifier)
+                and found[0][1].value.name == f"r{element}"
+                and is_pattern(found[1][1], found[0][1].dest_reg)
+        ):
+            copy_reg = found[0][1].dest_reg
+            doomed = [found[0], found[1]]
+            pattern_instr = found[1][1]
+        else:
+            return
+
+        live = SimpleNamespace(blocks=[b for b in self.cfg.blocks if b in self.graph.root.covered_blocks])
+        pattern = pattern_instr.value.left
+
+        # Nothing after the two statements may still name either register.
+        for register in (element, copy_reg):
+            if register is not None and _reads_register_by_name(live, register, pattern_instr.address):
+                return
+
+        names = []
+
+        for item in pattern.elements:
+            if isinstance(item, SpreadElement):
+                names.append(f"...{item.argument.name}")
+            elif isinstance(item, Identifier):
+                names.append(item.name)
+            else:
+                return
+
+        for block, instr in doomed:
+            block.instructions.remove(instr)
+
+        loop.loop_binding = f"[{', '.join(names)}]"
+
+    def _drop_iterator_setup(self, iterator_expr) -> None:
+        """Remove the `rN = GetIterator(src)` the for-of now stands for.
+
+        `for (const x of src)` creates and advances the iterator itself;
+        the IteratorBegin statement in front of the loop is left over, and
+        printing it (`r3 = GetIterator(r2)`) shows an iterator nothing uses.
+        Only when no later code still names that register.
+        """
+        # The unwrapped try's close/rethrow blocks still sit in `cfg.blocks`
+        # (and still say `rN.return()`), but nothing prints them any more:
+        # only blocks the region tree still covers can read the register.
+        live = SimpleNamespace(blocks=[b for b in self.cfg.blocks if b in self.graph.root.covered_blocks])
+
+        for block in self.cfg.blocks:
+            for instr in block.instructions:
+                if instr.value is not iterator_expr or instr.handler != "IteratorBegin" or instr.dest_reg is None:
+                    continue
+
+                if _reads_register_by_name(live, instr.dest_reg, instr.address):
+                    return
+
+                block.instructions.remove(instr)
+                return
 
     # -----------------------------------------------------------------
     # for-in

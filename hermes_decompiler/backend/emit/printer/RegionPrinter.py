@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import re
+
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
+from hermes_decompiler.backend.transforms.shared import prints_definition
 from hermes_decompiler.backend.regions import (
     SequenceRegion,
     LoopKind,
@@ -12,6 +15,7 @@ from hermes_decompiler.backend.regions import (
 )
 from hermes_decompiler.ir.expressions import (
     CallExpression,
+    Identifier,
     NewExpression,
     AssignmentExpression,
     UpdateExpression,
@@ -126,6 +130,16 @@ class RegionPrinter:
 
             rendered = self.expressions.print(instruction.value)
 
+            # `rN = rN` changes nothing (e.g. the SelectObject that follows a
+            # `super(...)` call, whose destination is the call's own result
+            # register) - never worth a line of output.
+            if (
+                    instruction.dest_reg is not None
+                    and isinstance(instruction.value, Identifier)
+                    and instruction.value.name == f"r{instruction.dest_reg}"
+            ):
+                continue
+
             if instruction.dest_reg is not None:
                 # # A CallExpression whose result is never read is a discarded
                 # # call. Keep it as a standalone statement so side effects are
@@ -147,7 +161,20 @@ class RegionPrinter:
                 if self.ctx.verbose:
                     self.ctx.write(lines, f"// USED → {rendered};")
             else:
-                self.ctx.write(lines, rendered)
+                self.ctx.write(lines, self._terminate(rendered))
+
+    @staticmethod
+    def _terminate(rendered: str) -> str:
+        """Ends an expression statement with `;`.
+
+        Every statement line is terminated, so a line that starts with `[`
+        or `(` (a destructuring pattern, an IIFE) can never be glued onto
+        the previous one by automatic semicolon insertion rules.
+        """
+        if not rendered or rendered.endswith(";") or rendered.lstrip().startswith("//"):
+            return rendered
+
+        return rendered + ";"
 
     # ------------------------------------------------------------------
     # sequence
@@ -272,6 +299,14 @@ class RegionPrinter:
             if instruction.terminator is not None:
                 return False
 
+            # A block is only clutter when everything in it is folded into the
+            # nested condition (`definition_used`). A PRINTED definition - a
+            # constant load included (`r5 = undefined`, the default a later
+            # `if (!r5)` reads by name) - is a statement of its own: skipping
+            # the block deletes its only definition.
+            if prints_definition(instruction):
+                return False
+
             tuple_expressions = (
                 CallExpression,
                 NewExpression,
@@ -393,6 +428,24 @@ class RegionPrinter:
 
         return self.expressions.print(value)
 
+    _COUNTER_UPDATE_RE = re.compile(r"(?P<name>[A-Za-z_$][\w$]*) = (?P=name) (?P<op>[+-]) (?P<step>\d+)")
+
+    @classmethod
+    def _shorten_counter_update(cls, update: str) -> str:
+        """`i = i + 1` -> `i++`, `i = i - 1` -> `i--`, `i = i + 2` -> `i += 2`
+        (only the whole update clause, never part of a larger expression)."""
+        match = cls._COUNTER_UPDATE_RE.fullmatch(update)
+
+        if match is None:
+            return update
+
+        name, op, step = match["name"], match["op"], match["step"]
+
+        if step == "1":
+            return f"{name}{op}{op}"
+
+        return f"{name} {op}= {step}"
+
     def _emit_for(self, region: LoopRegion, lines: list[str]) -> None:
         initializer = self._render_for_component(region.initializer)
 
@@ -402,7 +455,7 @@ class RegionPrinter:
             else ""
         )
 
-        update = self._render_for_component(region.update)
+        update = self._shorten_counter_update(self._render_for_component(region.update))
 
         self.ctx.write(lines, f"for ({initializer}; {condition}; {update}) {{")
 

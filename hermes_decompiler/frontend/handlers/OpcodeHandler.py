@@ -9,7 +9,7 @@ from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import (
     Expression, Identifier, RawExpression, ObjectExpression,
-    ArrayExpression, Literal, CallExpression, MemberExpression,
+    ArrayExpression, Literal, CallExpression, MemberExpression, ThisPlaceholder,
 )
 from .OpcodeTypes import OpcodeContext, ArgsPattern, OperandMode
 
@@ -169,7 +169,9 @@ class OpcodeHandler(ABC):
         return Identifier(name=f"r{reg}")
 
     @classmethod
-    def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+    def get_register_expression(
+            cls, analysis: HermesAnalysis, reg: int, *, keep_placeholder: bool = False
+    ) -> Expression:
         """
         Return the current expression assigned to a register.
 
@@ -200,6 +202,17 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}")
 
         if isinstance(value, (ObjectExpression, ArrayExpression, CallExpression)):
+            state.mark_read()
+            state.materialize()
+            return Identifier(name=f"r{reg}")
+
+        # The `this` object a `new`/`super` allocates is ONE object with an
+        # identity, not an expression: inlined into every reader it printed as
+        # `CreateThisForNew(r8)._cursor = 0; CreateThisForNew(r8)._size = 0`,
+        # which reads as several objects. Only the opcodes that consume it
+        # (the `new`/`super` call, `Mov` carrying it to its window slot) take
+        # the placeholder itself; everything else reads the register.
+        if isinstance(value, ThisPlaceholder) and not keep_placeholder:
             state.mark_read()
             state.materialize()
             return Identifier(name=f"r{reg}")
@@ -248,12 +261,14 @@ class OpcodeHandler(ABC):
             state.mark_read()
 
             # The defining statement is printed (an earlier read used the
-            # bare `rN`), so `rN` already holds the value: re-inlining a
-            # property read here would fetch it a SECOND time - different
-            # if it is a getter or the object changed in between
-            # (`if (r3 !== undefined) { r5 = r2.timeout }` for `Mov r5, r3`).
-            # Literals / plain identifiers stay duplicated: free and safe.
-            if state.definition.definition_pinned and isinstance(value, MemberExpression):
+            # bare `rN`), so `rN` already holds the value: re-inlining the
+            # expression here would evaluate it a SECOND time - a second
+            # `new Set(...)` (a different object), a second property fetch
+            # (different if it is a getter or the object changed in
+            # between: `if (r3 !== undefined) { r5 = r2.timeout }` for
+            # `Mov r5, r3`). Only literals / plain identifiers stay
+            # duplicated: free and safe.
+            if state.definition.definition_pinned and not isinstance(value, (Literal, Identifier)):
                 return Identifier(name=f"r{reg}")
 
             return dataclasses.replace(value)

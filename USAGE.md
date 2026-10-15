@@ -88,7 +88,7 @@ python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/
 tree -I '__pycache__|__init__.py' hermes_decompiler
 
 # diff | working branch
-git diff main...feature/from-2026-10-01 > ~/Downloads/hermes2js.diff
+git diff main...feature/from-2026-10-15 > ~/Downloads/hermes2js.diff
 
 # ———— fixtures 96—————————————————————————————————————————————————————————
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results
@@ -113,10 +113,10 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./ap
 ## 96
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --log-level WARNING
-# WARNING 1071
+# WARNING 868
 ## 98
 python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/
 python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --log-level WARNING
-# WARNING 1003
+# WARNING 913
 ```
 

@@ -11,7 +11,7 @@ function makeSound() {
     // CODE → addr: 16 | <LoadConstString>: <Reg8: 2, string_id: 3933>  # String: '__BC:Classes/ClassTests/Animal/makeSound' (String)
     // USED → r2 = "__BC:Classes/ClassTests/Animal/makeSound";
     // CODE → addr: 20 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log("__BC:Classes/ClassTests/Animal/makeSound")
+    console.log("__BC:Classes/ClassTests/Animal/makeSound");
     // CODE → addr: 25 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 31 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -23,9 +23,9 @@ function makeSound() {
     // CODE → addr: 47 | <LoadConstString>: <Reg8: 0, string_id: 2375>  # String: 'says' (String)
     // USED → r0 = "says";
     // CODE → addr: 51 | <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 0, Reg8: 1>
-    console.log(this.name, "says", this.sound)
+    console.log(this.name, "says", this.sound);
     // CODE → addr: 58 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    r0 = undefined;
     // CODE → addr: 60 | <Ret>: <Reg8: 0>
     return r0;
 }

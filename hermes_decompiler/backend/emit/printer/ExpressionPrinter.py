@@ -26,6 +26,7 @@ from hermes_decompiler.ir.expressions import (
     NewExpression,
     SpreadElement,
     ArrayExpression,
+    ArrayHole,
     ObjectExpression,
     ObjectProperty,
     PropertyKind,
@@ -72,6 +73,9 @@ class ExpressionPrinter(PrinterVisitor):
         return node.source
 
     def visit_ThisPlaceholder(self, node: ThisPlaceholder) -> str:
+        if node.source is not None:
+            return f"{node.origin}({self.visit(node.source)})"
+
         return f"{node.origin}(r{node.source_reg})"
 
     # ------------------------------------------------------------------
@@ -235,8 +239,17 @@ class ExpressionPrinter(PrinterVisitor):
     # collections
     # ------------------------------------------------------------------
 
+    def visit_ArrayHole(self, node: ArrayHole) -> str:
+        return ""
+
     def visit_ArrayExpression(self, node: ArrayExpression) -> str:
-        return "[" + ", ".join(self.visit(e) for e in node.elements) + "]"
+        body = ", ".join(self.visit(e) for e in node.elements)
+
+        # A trailing hole needs its own comma (`[a, , ]`): `[a, ]` is one element.
+        if node.elements and isinstance(node.elements[-1], ArrayHole):
+            body += ","
+
+        return "[" + body + "]"
 
     def visit_ObjectExpression(self, node: ObjectExpression) -> str:
         return "{ " + ", ".join(self.visit(p) for p in node.properties) + " }"

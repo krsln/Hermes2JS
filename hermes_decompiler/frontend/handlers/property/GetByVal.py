@@ -18,8 +18,12 @@ class GetByVal(OpcodeHandler):
 
         dest_reg, base_reg, prop_reg = map(int, match.groups())
 
-        obj = self.get_register_expression(ctx.analysis, base_reg)
+        # The key is read by NAME, which prints its definition. Read it first:
+        # the object expression is inlined and must see that the key's
+        # register is rewritten by a statement that stays (`r1 = env[0];
+        # r0 = env[1]; r0 = r1[r0]` is `r1[r0]`, not `r0[0][r0]`).
         index = self.get_register_reference(ctx.analysis, prop_reg)
+        obj = self.get_register_expression(ctx.analysis, base_reg)
 
         expression = MemberExpression(obj=obj, prop=index, computed=True)
 

@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import dataclasses
+import re
 from collections import deque
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
-from hermes_decompiler.backend.transforms.shared import structural_key
+from hermes_decompiler.backend.regions import CatchRegion
+from hermes_decompiler.backend.transforms.shared import may_alias, read_members, stored_member, structural_key
 from hermes_decompiler.ir.expressions import (
-    ArrayExpression, AwaitExpression, CallExpression, Identifier, Literal, ObjectExpression, YieldExpression,
+    ArrayExpression, AwaitExpression, CallExpression, Identifier, Literal, MemberExpression, ObjectExpression,
+    YieldExpression,
 )
 from hermes_decompiler.ir.statements import ReturnStatement, ThrowStatement
 from ._base import RegionPass
@@ -45,6 +48,10 @@ class ReturnValueResolutionPass(RegionPass):
     correctness regression, and this pass - like the rest of this
     codebase's region passes - always prefers the former.
     """
+
+    def __init__(self, graph, cfg, flow=None):
+        super().__init__(graph, cfg)
+        self.flow = flow
 
     def run(self) -> None:
         for block in list(self.graph.blocks()):
@@ -174,10 +181,22 @@ class ReturnValueResolutionPass(RegionPass):
             before_block.instructions, reg, stop_before=before_instr
         )
 
+        # Instructions that run between the definition and `before_instr`
+        # (all of them on the paths the walk below crosses): a memory store
+        # among them makes a memory read stale (`_stored_after_read`).
+        between: list = []
+        definition_instrs: list = [found_instr] if found is not None else []
+
+        if found is not None:
+            instructions = before_block.instructions
+            between = instructions[instructions.index(found_instr) + 1:instructions.index(before_instr)]
+
         if found is None:
+            between = list(before_block.instructions[:before_block.instructions.index(before_instr)])
             visited = {before_block}
             queue = deque(before_block.predecessors)
             found_values = []
+            detached_path = False
 
             while queue:
                 block = queue.popleft()
@@ -190,12 +209,48 @@ class ReturnValueResolutionPass(RegionPass):
 
                 if value is not None:
                     found_values.append((value, value_instr))
+                    definition_instrs.append(value_instr)
+                    between.extend(block.instructions[block.instructions.index(value_instr) + 1:])
                     continue
 
+                between.extend(block.instructions)
                 queue.extend(block.predecessors)
 
+                # A path that ends at a block nothing enters (a handler: the
+                # exceptional edge is not in the CFG) without a definition
+                # comes from somewhere this walk cannot see. The definitions
+                # found on the other paths are then not ALL of them.
+                if not block.predecessors and block is not self.cfg.entry:
+                    detached_path = True
+
+            if found_values and detached_path and not all(isinstance(v, Literal) for v, _ in found_values):
+                # Inside the handler of a `catch (e)` that bound this register
+                # the unseen path is the one that delivered the exception: it
+                # agrees with the definitions found only when they all copy `e`.
+                parameter = self._catch_parameter(reg, before_block)
+
+                if parameter is not None and all(
+                        structural_key(value) == structural_key(parameter) for value, _ in found_values
+                ):
+                    found_values = found_values[:1]
+                else:
+                    # The bare `rN` stays, so what defined it has to print.
+                    for instr in definition_instrs:
+                        instr.definition_pinned = True
+                        instr.definition_used = False
+
+                    return None, None
+
             if not found_values:
-                return None, None
+                parameter = self._catch_parameter(reg, before_block)
+
+                if parameter is not None or self.flow is None:
+                    return parameter, None
+
+                # The structurers detached this block (an if-tail that was
+                # merged, a try whose body moved out), so the live CFG says
+                # nothing about what reaches it; the original flow does.
+                return self._resolve_from_flow(reg, before_instr)
 
             first, first_instr = found_values[0]
 
@@ -208,7 +263,138 @@ class ReturnValueResolutionPass(RegionPass):
         if isinstance(found, (ObjectExpression, ArrayExpression, CallExpression, YieldExpression, AwaitExpression)):
             return None, None
 
+        if self._stored_after_read(found, between):
+            # The load was already folded into an earlier reader (its
+            # statement suppressed); the bare `rN` this leaves behind needs
+            # it printed, or it dangles.
+            for instr in definition_instrs:
+                instr.definition_pinned = True
+                instr.definition_used = False
+            return None, None
+
         return found, found_instr
+
+    _MEMORY_STORE_RE = re.compile(r"(Put|Store|Del)")
+
+    @classmethod
+    def _stored_after_read(cls, value, between) -> bool:
+        """`r0 = r3[25]; r3[25] = null; throw r0`: a value that reads memory
+        no longer holds once a store that may alias it ran between the load
+        and its use."""
+        reads = read_members(value)
+        if not reads:
+            return False
+
+        for instr in between:
+            if not cls._MEMORY_STORE_RE.match(instr.entry.opcode):
+                continue
+
+            store = stored_member(instr.value)
+            if store is not False and any(may_alias(read, store) for read in reads):
+                return True
+
+        return False
+
+    def _resolve_from_flow(self, reg: int, before_instr):
+        """Same reaching-definition walk, over the pre-structuring flow. A
+        `Ret` that tail-merging made out of several arms' copies is resolved
+        along every one of them, and all must agree."""
+        table = getattr(self.cfg, "tail_origins", {})
+        origins, pending = [], [before_instr]
+
+        # Tail merges nest (`if / else if / else`): follow the copies' own copies.
+        while pending:
+            instruction = pending.pop()
+
+            if any(instruction is seen for seen in origins):
+                continue
+
+            origins.append(instruction)
+            pending.extend(table.get(id(instruction), ()))
+
+        results = [self._resolve_from_flow_at(reg, origin) for origin in origins]
+
+        first = results[0]
+
+        for other in results[1:]:
+            if first[0] is None or other[0] is None or structural_key(other[0]) != structural_key(first[0]):
+                # The merged `return rN` stays bare, so every arm's own
+                # `rN = ...` has to print (an arm's constant may have been
+                # inlined into a `return` that no longer exists).
+                for _, definition in results:
+                    if definition is not None:
+                        definition.definition_pinned = True
+                        definition.definition_used = False
+
+                return None, None
+
+        return first
+
+    def _resolve_from_flow_at(self, reg: int, before_instr):
+        by_id = {bid: (succ, instrs) for bid, succ, instrs in self.flow.blocks}
+        predecessors: dict[int, list[int]] = {bid: [] for bid in by_id}
+
+        for bid, (succ, _) in by_id.items():
+            for target in succ:
+                predecessors.setdefault(target, []).append(bid)
+
+        start = next(
+            (bid for bid, (_, instrs) in by_id.items() if any(i is before_instr for i in instrs)), None
+        )
+
+        if start is None:
+            return None, None
+
+        value, instr = self._find_definition_in_instructions(by_id[start][1], reg, stop_before=before_instr)
+
+        if value is None:
+            visited = {start}
+            queue = deque(predecessors.get(start, ()))
+            found_values = []
+
+            while queue:
+                bid = queue.popleft()
+
+                if bid in visited:
+                    continue
+
+                visited.add(bid)
+                found, found_instr = self._find_definition_in_instructions(by_id[bid][1], reg)
+
+                if found is not None:
+                    found_values.append((found, found_instr))
+                    continue
+
+                queue.extend(predecessors.get(bid, ()))
+
+            if not found_values:
+                return None, None
+
+            value, instr = found_values[0]
+
+            for other, _ in found_values[1:]:
+                if structural_key(other) != structural_key(value):
+                    return None, None
+
+        if isinstance(value, (ObjectExpression, ArrayExpression, CallExpression, YieldExpression, AwaitExpression)):
+            return None, None
+
+        return value, instr
+
+    def _catch_parameter(self, reg: int, block: BasicBlock):
+        """`catch (e) { ...; throw rN }`: nothing in the CFG defines `rN`
+        because the handler's own `Catch` was consumed into the catch
+        parameter. If the enclosing catch bound exactly this register and no
+        path inside it wrote the register again, the throw rethrows `e`."""
+        region = self.graph.owner(block)
+
+        while region is not None and not isinstance(region, CatchRegion):
+            region = getattr(region, "parent", None)
+
+        if region is None or region.exception_reg != reg or not region.exception:
+            return None
+
+        return Identifier(name=region.exception)
 
     @staticmethod
     def _find_definition_in_instructions(instructions, reg: int, stop_before=None):

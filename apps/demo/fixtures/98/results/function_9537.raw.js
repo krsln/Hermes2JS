@@ -9,15 +9,15 @@ function value() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 316>  # String: '__BC:Classes/PrivateStaticTests/Counter/get-value' (String)
     // USED → r0 = "__BC:Classes/PrivateStaticTests/Counter/get-value";
     // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    console.log("__BC:Classes/PrivateStaticTests/Counter/get-value")
+    console.log("__BC:Classes/PrivateStaticTests/Counter/get-value");
     // CODE → addr: 22 | <GetParentEnvironment>: <Reg8: 0, UInt8: 0>
-    r0 = getParentEnvironment(0)
+    r0 = getParentEnvironment(0);
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 6>
-    r1 = r0[6]
+    r1 = r0[6];
     // CODE → addr: 29 | <LoadParam>: <Reg8: 0, UInt8: 0>
     // USED → r0 = this;
     // CODE → addr: 32 | <GetOwnPrivateBySym>: <Reg8: 0, Reg8: 0, UInt8: 0, Reg8: 1>
-    r0 = this.#__private_1__
+    r0 = this.#__private_1__;
     // CODE → addr: 37 | <Ret>: <Reg8: 0>
     return r0;
 }

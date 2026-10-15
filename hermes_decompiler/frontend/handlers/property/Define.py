@@ -1,4 +1,8 @@
-from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT16, UINT32
+from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT16, \
+    UINT32
+from hermes_decompiler.frontend.handlers.shared import (
+    define_non_enumerable, fold_array_element, fold_object_property, property_access,
+)
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
@@ -9,16 +13,27 @@ from hermes_decompiler.ir.expressions import (
     MemberExpression,
     NumericLiteral,
     ObjectExpression, ObjectProperty,
+    StringLiteral,
 )
 
 
-# Reg8, Reg8, UInt8, UInt16 (total size 5)
+# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
 # DEFINE_OPCODE_4(DefineOwnById, Reg8, Reg8, UInt8, UInt16)
-# Example: <DefineOwnById>: <Reg8: 2, Reg8: 5, UInt8: 1, UInt16: 160>
+# Example: <DefineOwnById>: <Reg8: 5, Reg8: 0, UInt8: 0, string_id: 140>  # String: 'error' (Identifier)
+#
+# The last operand is accepted both as `string_id: N` (hermes_disassembler,
+# which tags it - see tools/hermes/generate_opcode_tables.py for why upstream's
+# own table misses it) and as a bare `UInt16: N` (hermes-dec output, which
+# never tagged this opcode). Only the tagged form carries the `# String: ...`
+# comment `identifier_name` is read from; the bare form falls back to
+# `string_<id>`.
 class DefineOwnById(OpcodeHandler):
     """Define an own object property by string ID: obj.foo = value (fresh property)."""
 
-    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, UINT16), "Reg8, Reg8, UInt8, UInt16")
+    ARGUMENTS = ArgsPattern(
+        sequence(REG, REG, UINT8, r"(?:string_id|UInt16):\s*(\d+)"),
+        "Reg8, Reg8, UInt8, UInt16 (string_id)",
+    )
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = self.match_arguments(ctx)
@@ -29,12 +44,16 @@ class DefineOwnById(OpcodeHandler):
 
         property_name = ctx.entry.identifier_name or f"string_{string_id}"
 
-        left = MemberExpression(
-            obj=self.get_register_expression(ctx.analysis, obj_reg),
-            prop=Identifier(name=property_name),
-            computed=False,
-        )
+        # Resolve the value first (see `fold_into_literal`), then try to fold
+        # the define into the object literal being built in `obj_reg`.
         right = self.get_register_expression(ctx.analysis, value_reg)
+
+        folded = fold_object_property(ctx, obj_reg, StringLiteral(property_name), right)
+
+        if folded is not None:
+            return folded
+
+        left = property_access(self.get_register_expression(ctx.analysis, obj_reg), property_name)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
@@ -46,9 +65,13 @@ class DefineOwnById(OpcodeHandler):
 
 # Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
 # DEFINE_OPCODE_4(DefineOwnByIdLong, Reg8, Reg8, UInt8, UInt32)
-# Example:
+# Example: <DefineOwnByIdLong>: <Reg8: 5, Reg8: 0, UInt8: 0, string_id: 70000>  # String: 'x' (Identifier)
 class DefineOwnByIdLong(DefineOwnById):
-    pass
+    # Inherited pattern is UInt16-only; the Long form's operand is UInt32.
+    ARGUMENTS = ArgsPattern(
+        sequence(REG, REG, UINT8, r"(?:string_id|UInt32):\s*(\d+)"),
+        "Reg8, Reg8, UInt8, UInt32 (string_id)",
+    )
 
 
 # Reg8, Reg8, Reg8, UInt8 (total size 4)
@@ -64,16 +87,30 @@ class DefineOwnByVal(OpcodeHandler):
         if isinstance(match, OpcodeResult):
             return match
 
-        obj_reg, value_reg, key_reg, _enumerable = map(int, match.groups())
+        obj_reg, value_reg, key_reg, enumerable = map(int, match.groups())
 
-        left = MemberExpression(
-            obj=self.get_register_expression(ctx.analysis, obj_reg),
-            prop=self.get_register_expression(ctx.analysis, key_reg),
-            computed=True,
-        )
+        key = self.get_register_expression(ctx.analysis, key_reg)
         right = self.get_register_expression(ctx.analysis, value_reg)
 
-        expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
+        # Only an ENUMERABLE define is what an object-literal property is. A
+        # non-enumerable one (`enumerable == 0`: class methods - 1,136 of the
+        # 1,278 in the hermes-98 bundle) would turn enumerable if folded
+        # into a literal, so it stays a statement - printed as
+        # `Object.defineProperty(...)`, since `obj[key] = value` would make it
+        # enumerable (and run a setter).
+        if enumerable == 1:
+            folded = fold_object_property(ctx, obj_reg, key, right)
+
+            if folded is not None:
+                return folded
+
+        obj = self.get_register_expression(ctx.analysis, obj_reg)
+
+        if enumerable != 1:
+            expression = define_non_enumerable(obj, key, right)
+        else:
+            left = MemberExpression(obj=obj, prop=key, computed=True)
+            expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
         ctx.analysis.add_result(result)
@@ -155,12 +192,23 @@ class DefineOwnByIndex(OpcodeHandler):
 
         obj_reg, value_reg, index = map(int, match.groups())
 
+        right = self.get_register_expression(ctx.analysis, value_reg)
+
+        # An array literal's next element, or - on an object literal - an
+        # index-like key (`{ 0: x }`).
+        folded = fold_array_element(ctx, obj_reg, index, right)
+
+        if folded is None:
+            folded = fold_object_property(ctx, obj_reg, NumericLiteral(value=index), right)
+
+        if folded is not None:
+            return folded
+
         left = MemberExpression(
             obj=self.get_register_expression(ctx.analysis, obj_reg),
             prop=NumericLiteral(value=index),
             computed=True,
         )
-        right = self.get_register_expression(ctx.analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
@@ -191,12 +239,18 @@ class DefineOwnInDenseArray(OpcodeHandler):
 
         obj_reg, value_reg, index = map(int, match.groups())
 
+        right = self.get_register_expression(ctx.analysis, value_reg)
+
+        folded = fold_array_element(ctx, obj_reg, index, right)
+
+        if folded is not None:
+            return folded
+
         left = MemberExpression(
             obj=self.get_register_expression(ctx.analysis, obj_reg),
             prop=NumericLiteral(value=index),
             computed=True,
         )
-        right = self.get_register_expression(ctx.analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 

@@ -8,13 +8,20 @@ from hermes_decompiler.backend.transforms.cfg_passes import (
 from hermes_decompiler.backend.transforms.region_passes import (
     BooleanChainRegionPass,
     ConditionalExpressionRegionPass,
+    UnfoldedMergeRepairPass,
+    ConditionalContinueRegionPass,
+    LoopCarriedDefinitionPass,
+    DeadThisPlaceholderPass,
     DeadMovEliminationPass,
+    DeadUndefinedStorePass,
+    FlowSnapshot,
     ForEachRegionPass,
     GeneratorStateMachineRegionPass,
     InductionVariableNamingPass,
     IfTailMergeRegionPass,
     LoopConditionRegionPass,
     LoopContinueRegionPass,
+    LoopGuardInitializerPass,
     LoopInductionAliasPass,
     NullishAssignmentRegionPass,
     RedundantJumpRegionPass,
@@ -84,6 +91,7 @@ class StructuralAnalyzer:
         # this pass performs can no longer be expressed as a simple
         # CFG edit.
         ShortCircuitConditionCfgPass(self.cfg).run()
+        flow = FlowSnapshot(self.cfg)
 
         # ---- 2. structurers -------------------------------------------
         root = SequenceStructurer(self.cfg).run()
@@ -150,6 +158,15 @@ class StructuralAnalyzer:
         # and only ever touches the one IfRegion it folds.
         NullishAssignmentRegionPass(graph, self.cfg).run()
 
+        # After EVERY fold pass: it repairs only the merges they left as an `if`.
+        UnfoldedMergeRepairPass(graph, self.cfg).run()
+
+        # A register a loop overwrites and the code after it reads by name.
+        LoopCarriedDefinitionPass(graph, self.cfg).run()
+
+        # Placeholders nothing consumed or reads (see the pass docstring).
+        DeadThisPlaceholderPass(graph, self.cfg).run()
+
         # Must run after IfStructurer/SwitchStructurer, not just after
         # the loop structurers above: for a `for` loop, the body's own
         # inner conditions (e.g. `if (i === 3) continue;`) are only
@@ -168,11 +185,15 @@ class StructuralAnalyzer:
         # before ForEachRegionPass (fewer, unaliased registers make
         # that pass's own register-resolution walk less likely to
         # land on the wrong candidate).
+        LoopGuardInitializerPass(graph, self.cfg).run()
         LoopInductionAliasPass(graph, self.cfg).run()
 
         # Converts residual unconditional jumps to the loop latch into
         # a `continue` statement. This requires the final If/Loop nesting.
         LoopContinueRegionPass(graph, self.cfg).run()
+
+        # `if (c) continue;` compiled as a conditional branch back to the loop.
+        ConditionalContinueRegionPass(graph, self.cfg).run()
 
         # Drops a bare unconditional-Jmp block whose target is simply
         # the very next sibling block that already executes right
@@ -228,7 +249,7 @@ class StructuralAnalyzer:
         # it sees the fully-settled block contents (e.g. induction
         # aliasing already resolved by LoopInductionAliasPass) rather
         # than a still-aliased register name.
-        ReturnValueResolutionPass(graph, self.cfg).run()
+        ReturnValueResolutionPass(graph, self.cfg, flow).run()
 
         # Removes a dead `rN = rM;` register-copy instruction (see its
         # own docstring for the concrete motivating case -
@@ -241,6 +262,12 @@ class StructuralAnalyzer:
         # rather than risking a copy some earlier pass still expected
         # to find in place.
         DeadMovEliminationPass(graph, self.cfg).run()
+
+        # Removes the function-entry `rN = undefined;` of a binding whose real
+        # value is assigned later (Hermes initialises every local). Needs real
+        # liveness over the CFG, so it sits after every pass that still
+        # rewrites reads (and after the one above, which can expose more).
+        DeadUndefinedStorePass(graph, self.cfg, flow).run()
 
         # Drops the function's own final `return undefined;` (falling off
         # the end of a JS function already IS that). Needs

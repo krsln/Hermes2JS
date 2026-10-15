@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
+from hermes_decompiler.ir.terminators import TerminatorJump
 from hermes_decompiler.backend.regions import CatchRegion, IfRegion, LoopRegion, SequenceRegion, TryRegion
 from hermes_decompiler.ir.expressions import Expression, Identifier
 from hermes_decompiler.ir.expressions.Literals import Literal, TemplateLiteral
@@ -160,15 +161,7 @@ class _HandlerBuilder:
         if loop_home is not None:
             body, body_start_idx, body_end_idx = loop_home
 
-            merge_block = None
-
-            if self.cfg.post_dominator_tree is not None:
-                merge_block = (
-                    self.cfg.post_dominator_tree
-                    .immediate_post_dominator(handler_block)
-                )
-
-            stop_at = {merge_block} if merge_block is not None else set()
+            stop_at = self._catch_stop_blocks(handler_block)
 
             catch_end = self._find_catch_boundary(
                 lca_seq,
@@ -235,15 +228,7 @@ class _HandlerBuilder:
         if end_idx is None:
             return None
 
-        merge_block = None
-
-        if self.cfg.post_dominator_tree is not None:
-            merge_block = (
-                self.cfg.post_dominator_tree
-                .immediate_post_dominator(handler_block)
-            )
-
-        stop_at = {merge_block} if merge_block is not None else set()
+        stop_at = self._catch_stop_blocks(handler_block)
 
         catch_end = self._find_catch_boundary(
             lca_seq,
@@ -307,6 +292,39 @@ class _HandlerBuilder:
         )
 
         return try_region
+
+    # -------------------------------------------------------------
+
+    def _catch_stop_blocks(self, handler_block: BasicBlock) -> set:
+        """Where the catch body ends: the block its paths merge into.
+
+        That is the handler's immediate post-dominator - unless the catch
+        never rejoins the normal flow. `catch (e) { if (!done) it.return();
+        throw e }` ends in a `throw`, so the post-dominator is the catch's
+        OWN `throw` block, which only the handler reaches. Stopping there cut
+        the `throw` off the catch and printed it after the try. Only a `throw`
+        block qualifies: a post-dominator that is anything else (a `return`,
+        a finally copy) is code that follows the try/catch, even when the try
+        side never gets there.
+        """
+        if self.cfg.post_dominator_tree is None:
+            return set()
+
+        merge_block = self.cfg.post_dominator_tree.immediate_post_dominator(handler_block)
+
+        if merge_block is None:
+            return set()
+
+        dominators = self.cfg.dominator_tree
+
+        if (
+                isinstance(merge_block.terminator, TerminatorThrow)
+                and dominators is not None
+                and dominators.dominates(handler_block, merge_block)
+        ):
+            return set()
+
+        return {merge_block}
 
     # -------------------------------------------------------------
 
@@ -456,13 +474,26 @@ class _HandlerBuilder:
         for index in range(start_idx, len(body.children)):
             item = body.children[index]
 
+            # A latch right at the start means the try wraps the whole loop
+            # (the ordinary path); returning no extent sends it there.
+            if index == start_idx and (
+                    item in latches if isinstance(item, BasicBlock) else latches & item.covered_blocks
+            ):
+                break
+
             if isinstance(item, BasicBlock):
-                if item in latches:
+                # A latch that decides whether to loop again (do-while test,
+                # `i++` before a conditional jump) is never part of the try
+                # body. One that only jumps back is just the end of the body:
+                # for-of puts its last statements there.
+                if item in latches and not isinstance(item.terminator, TerminatorJump):
                     break
+
                 addresses = [item.address]
             else:
                 if latches & item.covered_blocks:
                     break
+
                 addresses = [block.address for block in item.covered_blocks]
 
             if any(address < handler_end for address in addresses):

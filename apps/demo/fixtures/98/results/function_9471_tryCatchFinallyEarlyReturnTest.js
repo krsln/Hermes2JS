@@ -10,15 +10,15 @@ function tryCatchFinallyEarlyReturnTest() {
         // CODE → addr: 13 | <LoadConstString>: <Reg8: 1, string_id: 4864>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/try-block' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/try-block";
         // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/try-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/try-block");
         // CODE → addr: 22 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
         // USED → r2 = Error;
         // CODE → addr: 28 | <CreateThisForNew>: <Reg8: 1, Reg8: 2, UInt8: 3>
-        // USED → r1 = CreateThisForNew(r2);
+        // USED → r1 = CreateThisForNew(Error);
         // CODE → addr: 32 | <LoadConstString>: <Reg8: 4, string_id: 47>  # String: 'test' (Identifier)
         // USED → r4 = "test";
         // CODE → addr: 36 | <Mov>: <Reg8: 5, Reg8: 1>
-        // USED → r5 = CreateThisForNew(r2);
+        // USED → r5 = CreateThisForNew(Error);
         // CODE → addr: 39 | <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
         // USED → r0 = new Error("test");
         // CODE → addr: 43 | <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
@@ -37,7 +37,7 @@ function tryCatchFinallyEarlyReturnTest() {
         // CODE → addr: 92 | <LoadConstString>: <Reg8: 1, string_id: 4863>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block";
         // CODE → addr: 96 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block")
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block");
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 73 | <LoadConstFalse>: <Reg8: 0>

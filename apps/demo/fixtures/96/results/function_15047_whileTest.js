@@ -9,7 +9,7 @@ function whileTest() {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 1, string_id: 4647>  # String: '__BC:ControlFlow/WhileTests/whileTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/WhileTests/whileTest/start";
     // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log("__BC:ControlFlow/WhileTests/whileTest/start")
+    console.log("__BC:ControlFlow/WhileTests/whileTest/start");
     // CODE → addr: 22 | <LoadConstUInt8>: <Reg8: 4, UInt8: 5>
     // USED → r4 = 5;
     // CODE → addr: 25 | <LoadConstString>: <Reg8: 3, string_id: 4131>  # String: '__BC:ControlFlow/WhileTests/whileTest/if-continue' (String)
@@ -26,9 +26,9 @@ function whileTest() {
         // CODE → addr: 44 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r6 = console.log;
         // CODE → addr: 49 | <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 2, Reg8: 5>
-        console.log("while", i)
+        console.log("while", i);
         // CODE → addr: 55 | <Mov>: <Reg8: 7, Reg8: 5>
-        r7 = i
+        r7 = i;
         if (r7 === 2) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr: 67 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -36,11 +36,11 @@ function whileTest() {
             // CODE → addr: 73 | <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r8 = console.log;
             // CODE → addr: 78 | <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 3>
-            console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue")
+            console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue");
         }
         // ──────────────── Block 6 ──────────────── 
         // CODE → addr: 83 | <Inc>: <Reg8: 6, Reg8: 7>
-        r6 = r7 + 1
+        r6 = r7 + 1;
     }
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 
@@ -51,7 +51,7 @@ function whileTest() {
     // CODE → addr:104 | <LoadConstString>: <Reg8: 0, string_id: 4644>  # String: '__BC:ControlFlow/WhileTests/whileTest/end' (String)
     // USED → r0 = "__BC:ControlFlow/WhileTests/whileTest/end";
     // CODE → addr:108 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    console.log("__BC:ControlFlow/WhileTests/whileTest/end")
+    console.log("__BC:ControlFlow/WhileTests/whileTest/end");
     // CODE → addr:113 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:115 | <Ret>: <Reg8: 0>

@@ -2,6 +2,60 @@
 
 ## [Unreleased]
 
+## [2026-10-15]
+
+### Added
+
+* Added CFG-level recognition and reconstruction of array destructuring patterns.
+* Added environment-based array destructuring reconstruction and cleanup of associated iterator scaffolding.
+* Added shared analysis utilities for expression folding, reference repointing, memory aliasing, and side-effect
+  detection.
+* Added regression tests for array and object literal folding, destructuring, conditional expressions, loop
+  reconstruction, register semantics, and reference propagation.
+* Updated Hermes 98 opcode metadata and opcode table generation tooling.
+
+### Changed
+
+* Improved array and object literal folding, including literals used within conditional branches and boolean
+  expressions.
+* Improved `if` / `else if`, short-circuit boolean chains, and ternary expression reconstruction.
+* Improved loop reconstruction, including `for` loop headers, initializer placement, induction variables, loop-carried
+  definitions, and conditional `continue` statements.
+* Improved `for...of` reconstruction and cleanup of iterator-related scaffolding, including patterns involving nested
+  `try` blocks.
+* Improved handling of shared return blocks and control-flow paths that converge on common exits.
+* Improved register and expression tracking across conditional branches, joins, and loop boundaries.
+* Improved memory-store invalidation and alias analysis to prevent stale property reads and unsafe expression folding.
+* Improved side-effect and purity analysis to preserve required computations when simplifying expressions.
+* Improved constructor and function-call handling, including `super()` call argument windows and `this` placeholder
+  cleanup.
+* Improved JavaScript output formatting and statement termination.
+* Updated fixture outputs and usage documentation to reflect the latest reconstruction behavior.
+
+### Fixed
+
+* Fixed incorrect expression folding when conditional branches read or overwrite shared registers.
+* Fixed loss of register definitions required after conditional expressions and control-flow joins.
+* Fixed unsafe reference replacement when expressions have side effects or depend on mutable object properties.
+* Fixed stale member-expression values after potentially mutating function calls or memory stores.
+* Fixed incorrect placement of loop initializers and handling of loop-carried register definitions.
+* Fixed reconstruction issues involving crossed conditional guards and shared exit blocks.
+* Fixed incorrect handling of conditional `continue` statements.
+* Fixed cases where short-circuit and ternary expressions could be moved ahead of computations required to evaluate
+  their conditions.
+* Fixed cleanup of destructuring-related control flow in exception-handling paths.
+* Fixed cases where unused `undefined` stores and constructor `this` placeholders remained in generated output.
+
+### Testing
+
+* Expanded regression coverage across array/object literal folding, destructuring, boolean chains, ternary expressions,
+  and conditional control flow.
+* Added tests for loop headers, loop-carried definitions, loop exit joins, and initializer reconstruction.
+* Added tests for register semantics, alias readers, memory-store staleness, and reference repointing.
+* Added tests for side-effect preservation, short-circuit setup liveness, shared return blocks, and constructor call
+  handling.
+* Updated Hermes 96 and Hermes 98 fixture outputs to reflect the latest decompiler behavior.
+
 ## [2026-10-01]
 
 ### Added

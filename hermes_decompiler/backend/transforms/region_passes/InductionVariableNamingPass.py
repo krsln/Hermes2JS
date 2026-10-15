@@ -106,6 +106,12 @@ class InductionVariableNamingPass(RegionPass, RegionVisitor):
         if self._depth >= len(self._NAMES):
             return False
 
+        # Without a recovered initializer the register's first value is set by
+        # a statement OUTSIDE the loop that keeps its `rN` name; renaming only
+        # the loop would leave `i` read before anything assigns it.
+        if node.initializer is None:
+            return False
+
         new_name = self._NAMES[self._depth]
 
         if node.condition is not None:

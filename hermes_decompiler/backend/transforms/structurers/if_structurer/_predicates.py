@@ -11,8 +11,9 @@ from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import IfRegion, SequenceRegion
-from hermes_decompiler.ir.Operators import LogicalOperator, UnaryOperator
-from hermes_decompiler.ir.expressions import BinaryExpression, UnaryExpression
+from hermes_decompiler.backend.transforms.shared import is_unfolded_literal_definition, prints_definition
+from hermes_decompiler.ir.Operators import BinaryOperator, LogicalOperator, UnaryOperator
+from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral, UnaryExpression
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
 
 
@@ -35,6 +36,17 @@ def is_inert_block(item) -> bool:
         if instr.statement is not None or instr.terminator is not None:
             return False
         if instr.dest_reg is not None and instr.definition_used:
+            return False
+        # A printed array/object literal definition prints a statement that
+        # later code reads by name: not inert (see `is_unfolded_literal_definition`).
+        if is_unfolded_literal_definition(instr):
+            return False
+        # Any other PRINTED definition (`r6 = r4`, `r4 = r5[1]`, `r2 = 1`) is a
+        # statement later code may read by name. Looking past it as clutter lets
+        # a fold delete its only definition. A constant load is no exception:
+        # the constant being embedded in the nested condition does not help a
+        # reader that names the register.
+        if prints_definition(instr):
             return False
     return True
 
@@ -105,7 +117,7 @@ def representative_block(item) -> BasicBlock | None:
     region (IfRegion/LoopRegion/TryRegion), any covered block works -
     a single-entry region is dominated as a unit, so every member
     shares the same dominance relationship to blocks outside it. The
-    lowest-id block is picked for a deterministic result.
+    lowest-id real block is picked for a deterministic result.
     """
     if isinstance(item, BasicBlock):
         return item
@@ -114,4 +126,21 @@ def representative_block(item) -> BasicBlock | None:
     if not covered:
         return None
 
-    return min(covered, key=lambda b: b.id)
+    # A synthetic block (a `break`/`continue` marker the loop structurers
+    # add, address -1) is not in the dominator tree: picking it as the
+    # representative makes `dominates()` fail for the whole region.
+    real = [b for b in covered if b.address >= 0]
+
+    return min(real or covered, key=lambda b: b.id)
+
+
+def is_constant_comparison(condition) -> bool:
+    """`x === 3` / `x === undefined`: a link of a `case` chain, whose
+    shared targets (`case 3: case 4:`) `SwitchStructurer` expects to
+    find as a cascade of if/else, not as a join."""
+    return (
+            isinstance(condition, BinaryExpression)
+            and condition.operator in (BinaryOperator.STRICT_EQUAL, BinaryOperator.STRICT_NOT_EQUAL)
+            and (isinstance(condition.right, (Literal, UndefinedLiteral))
+                 or isinstance(condition.left, (Literal, UndefinedLiteral)))
+    )

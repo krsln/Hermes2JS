@@ -9,21 +9,21 @@ function create(param1) {
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 555>  # String: '__BC:Classes/ClassTests/Dog/static-create' (String)
     // USED → r0 = "__BC:Classes/ClassTests/Dog/static-create";
     // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    console.log("__BC:Classes/ClassTests/Dog/static-create")
+    console.log("__BC:Classes/ClassTests/Dog/static-create");
     // CODE → addr: 22 | <GetEnvironment>: <Reg8: 0, UInt8: 0>
-    r0 = getEnvironment(0)
+    r0 = getEnvironment(0);
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 0>
-    r3 = Dog
+    r3 = Dog;
     // CODE → addr: 29 | <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r0 = r3.prototype;
     // CODE → addr: 34 | <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 3>
-    // USED → r1 = CreateThis(r0);
+    // USED → r1 = CreateThis(r3.prototype);
     // CODE → addr: 38 | <LoadParam>: <Reg8: 5, UInt8: 1>
     // USED → r5 = param1;
     // CODE → addr: 41 | <LoadConstString>: <Reg8: 4, string_id: 3527>  # String: 'Mixed' (String)
     // USED → r4 = "Mixed";
     // CODE → addr: 45 | <Mov>: <Reg8: 6, Reg8: 1>
-    // USED → r6 = CreateThis(r0);
+    // USED → r6 = CreateThis(r3.prototype);
     // CODE → addr: 48 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 3>
     // USED → r0 = new Dog(param1, "Mixed");
     // CODE → addr: 52 | <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>

@@ -1,4 +1,5 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
+from hermes_decompiler.frontend.handlers.shared import define_non_enumerable, fold_object_property
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpression
@@ -105,8 +106,8 @@ class PutOwnByVal(OpcodeHandler):
     is the property key. Naming both handlers' parameters the same way
     (obj_reg, key_reg, value_reg) silently swapped key and value here.
 
-    The trailing UInt8 contains Hermes-specific flags (enumerable) and is
-    currently ignored.
+    The trailing UInt8 is the enumerable flag; a clear one is printed as
+    `Object.defineProperty` (see `define_non_enumerable`).
     """
 
     ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, UINT8), "Reg8, Reg8, Reg8, UInt8 (total size 4)")
@@ -116,17 +117,26 @@ class PutOwnByVal(OpcodeHandler):
         if isinstance(match, OpcodeResult):
             return match
 
-        obj_reg, value_reg, key_reg, _flags = map(int, match.groups())
+        obj_reg, value_reg, key_reg, enumerable = map(int, match.groups())
 
-        left = MemberExpression(
-            obj=self.get_register_reference(ctx.analysis, obj_reg),
-            prop=self.get_register_expression(ctx.analysis, key_reg),
-            computed=True,
-        )
-
+        key = self.get_register_expression(ctx.analysis, key_reg)
         right = self.get_register_expression(ctx.analysis, value_reg)
 
-        expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
+        # An enumerable define is an object-literal property (`{ [k]: v }`);
+        # see `DefineOwnByVal` for why a non-enumerable one is not folded.
+        if enumerable == 1:
+            folded = fold_object_property(ctx, obj_reg, key, right)
+
+            if folded is not None:
+                return folded
+
+        obj = self.get_register_reference(ctx.analysis, obj_reg)
+
+        if enumerable != 1:
+            expression = define_non_enumerable(obj, key, right)
+        else:
+            left = MemberExpression(obj=obj, prop=key, computed=True)
+            expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
         ctx.analysis.add_result(result)

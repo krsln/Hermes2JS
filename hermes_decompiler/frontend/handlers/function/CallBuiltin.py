@@ -1,6 +1,10 @@
+import re
+
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import CallExpression, Identifier
+from hermes_decompiler.ir.expressions import (
+    ArrayExpression, CallExpression, Identifier, MemberExpression, ThisPlaceholder,
+)
 
 
 # /// Call a builtin function.
@@ -29,36 +33,194 @@ class CallBuiltin(OpcodeHandler):
             else f"builtin_{builtin_id}/* unresolved arg */"
         )
 
-        # CallBuiltin's arguments are NOT relative to dest_reg. Per the
-        # Hermes bytecode spec, they are "found in reverse order from the
-        # end of the current frame" - i.e. they occupy the arg_count
-        # registers ending at the highest register index written so far
-        # in this function, with the first logical argument at the
-        # highest register and later arguments at lower ones (confirmed
-        # against the native builtin signatures, e.g.
-        # copyDataProperties(target, source, excludedItems) - target ends
-        # up at the topmost register). dest_reg can be small/unrelated
-        # (it's just where the return value lands), so anchoring on it -
-        # as CallDirect correctly does for its own, different, calling
-        # convention - produces wrong or even negative register indices
-        # here. `Call` (handlers/function/Call.py) already resolves the
-        # analogous case correctly; this mirrors that approach.
-        highest = max(
-            (int(r[1:]) for r in ctx.analysis.registers),
-            default=dest_reg,
-        )
+        # CallBuiltin's arguments are NOT relative to dest_reg (it is only
+        # where the return value lands), they occupy the outgoing-argument
+        # window at the top of the frame: `[this, arg1, ..., argN]`, `this`
+        # at the HIGHEST register of the window (same layout `Construct`
+        # uses). `arg_count` includes that `this` slot, and native builtins
+        # ignore `this`, so the compiler reserves the slot but never writes
+        # it - printing it made every such call end in a dangling `rN`
+        # (`copyDataProperties(r7, r6, r5)` with no `r5` anywhere).
+        real_arg_count = max(arg_count - 1, 0)
+        this_reg = self._window_top(ctx, real_arg_count)
 
-        arguments = tuple(
-            Identifier(name=f"r{reg}")
-            for reg in range(highest, highest - arg_count, -1)
-        )
+        window = list(range(this_reg - 1, this_reg - 1 - real_arg_count, -1))
 
-        expression = CallExpression(callee=callee, arguments=arguments, )
+        expression = self._default_super_call(ctx, callee, window)
+
+        if expression is None:
+            arguments = tuple(self.resolve_call_argument(ctx.analysis, reg) for reg in window)
+
+            expression = CallExpression(callee=callee, arguments=arguments, )
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
 
         return result
+
+    @classmethod
+    def _default_super_call(cls, ctx: OpcodeContext, callee: Identifier, window: list[int]):
+        """`applyArguments(parent, this, new.target)` -> `Reflect.construct(
+        parent, arguments, new.target)`.
+
+        The implicit constructor of a derived class (`constructor(...args) {
+        super(...args); }`) is the one place hermes-98 emits it. Measured over
+        the hermes-98 bundle: all 115 uses have the same shape (the second
+        argument is the `CreateThisForSuper` placeholder, the third is
+        `new.target`), none of those functions declares a parameter, and
+        class-field initialisers follow the call.
+
+        INFERRED, not taken from the Hermes sources: that the builtin forwards
+        the caller's `arguments`. The operands are those of an explicit
+        `super(...)` (`CallWithNewTarget`), and the name says it.
+        """
+        if callee.name != "applyArguments" or len(window) != 3:
+            return None
+
+        parent_reg, this_arg_reg, new_target_reg = window
+        this_state = ctx.analysis.get_register_state(this_arg_reg)
+
+        if not (
+                this_state is not None
+                and isinstance(this_state.value, ThisPlaceholder)
+                and this_state.value.origin == "CreateThisForSuper"
+        ):
+            return None
+
+        # The placeholder is the `this` of the call: consumed, not printed.
+        cls.get_register_expression(ctx.analysis, this_arg_reg, keep_placeholder=True)
+
+        return CallExpression(
+            callee=MemberExpression(
+                obj=Identifier(name="Reflect"), prop=Identifier(name="construct"), computed=False,
+            ),
+            arguments=(
+                cls.get_register_expression(ctx.analysis, parent_reg),
+                Identifier(name="arguments"),
+                cls.get_register_expression(ctx.analysis, new_target_reg),
+            ),
+        )
+
+    # How many instructions back a write still counts as "setting up THIS
+    # call's arguments" when telling window candidates apart.
+    _RECENT_WRITE_RANGE = 14
+    # Distance between the frame size and the window's `this` slot, per
+    # bytecode version: measured over every windowed builtin call of the
+    # hermes-96 and hermes-98 bundles (2594 and 4930 calls; the evidence
+    # heuristic agreed on all but ~1.2%, and where they differed the rule was
+    # the one that matched the code - e.g. 96/2877, 98/11966).
+    # NOT verified for hbc99 (no sample), so only versions measured here count.
+    _FRAME_DISTANCES = {96: 7, 98: 8}
+    # Opcodes that exist in exactly one of the two measured versions.
+    _ONLY_IN_96 = frozenset({"PutById", "PutByVal", "PutOwnByVal", "PutNewOwnById", "TryPutById", "DelById",
+                             "StartGenerator", "ResumeGenerator", "SaveGenerator", "CallDirect", "CreateThis"})
+    _ONLY_IN_98 = frozenset({"PutByIdStrict", "PutByIdLoose", "PutByValStrict", "PutByValLoose", "DefineOwnById",
+                             "DefineOwnByVal", "CreateFunctionEnvironment", "GetParentEnvironment", "JmpTypeOfIs",
+                             "CreateThisForNew", "CreateThisForSuper", "TryPutByIdStrict", "TryPutByIdLoose"})
+    _REG_OPERAND_RE = re.compile(r"Reg(?:8|32):\s*(\d+)")
+
+    @classmethod
+    def _frame_distance(cls, ctx: OpcodeContext) -> int | None:
+        """The window distance for this function's bytecode version, read off
+        the opcodes themselves (the decompiler is not told the version).
+        None when the opcodes do not settle it (or contradict each other)."""
+        names = {entry.opcode for entry in ctx.entries}
+        versions = {
+            version for version, only in ((96, cls._ONLY_IN_96), (98, cls._ONLY_IN_98)) if names & only
+        }
+
+        return cls._FRAME_DISTANCES[versions.pop()] if len(versions) == 1 else None
+
+    @classmethod
+    def _ruled_top(cls, ctx: OpcodeContext, real_arg_count: int) -> int | None:
+        frame_size = ctx.analysis.metadata.get("frame_size")
+        distance = cls._frame_distance(ctx)
+
+        if not isinstance(frame_size, int) or distance is None:
+            return None
+
+        top = frame_size - distance
+
+        # Sanity: the window must fit and its argument slots must have been
+        # written by something before this call.
+        slots = range(top - 1, top - 1 - real_arg_count, -1)
+
+        if real_arg_count and (min(slots) < 0 or not all(f"r{slot}" in ctx.analysis.registers for slot in slots)):
+            return None
+
+        return top
+
+    @classmethod
+    def _window_top(cls, ctx: OpcodeContext, real_arg_count: int) -> int:
+        """Register of the window's `this` slot (its top).
+
+        The top is the same for every windowed call of a function (measured
+        over all 65 functions of the hermes-96/98 fixtures that have one),
+        so `max register seen SO FAR` is wrong whenever nothing has written
+        that top slot yet: a builtin never does, so e.g. in
+        spreadObjectTest the real arguments are r7/r6 but the old
+        "highest so far" put the window one register too low.
+
+        The unwritten `this` slot is at most one above the highest register
+        any instruction of the function mentions, and is that register
+        itself when something else in the function also uses the top slot.
+        Both candidates are tried and the one whose argument slots were
+        actually written just before this call (and whose `this` slot was
+        not) wins; a tie goes to the more common `max + 1` layout.
+        """
+        operands = [
+            int(reg)
+            for entry in ctx.entries
+            for reg in cls._REG_OPERAND_RE.findall(entry.args or "")
+        ]
+
+        if not operands:
+            return real_arg_count
+
+        highest = max(operands)
+
+        if real_arg_count == 0:
+            return highest + 1  # nothing to resolve
+
+        index_of = {entry.address: i for i, entry in enumerate(ctx.entries)}
+        recent: set[int] = set()
+
+        for name, state in ctx.analysis.registers.items():
+            # A `this` placeholder parked in a window slot by an earlier
+            # `new`/`super` call is not an argument of THIS call; counting it
+            # as a recent write moved the window one register up
+            # (`arraySpread(r25, r24, r23)` with r25 a stale `this` slot).
+            if isinstance(state.value, ThisPlaceholder):
+                continue
+
+            defined_at = index_of.get(state.definition.address)
+
+            if defined_at is not None and 0 < ctx.index - defined_at <= cls._RECENT_WRITE_RANGE:
+                recent.add(int(name[1:]))
+
+        def evidence(top: int) -> int:
+            slots = range(top - 1, top - 1 - real_arg_count, -1)
+
+            if min(slots) < 0:
+                return -real_arg_count - 1
+
+            return sum(1 for reg in slots if reg in recent) - (1 if top in recent else 0)
+
+        # The frame size in the function header pins the window exactly: the
+        # `this` slot sits a fixed distance below it, and that distance is a
+        # property of the bytecode version (see `_frame_distance`). When it
+        # is known, the rule decides - the "recent writes" evidence below can
+        # be fooled by an unrelated recent write one slot above the real
+        # window (98/11966: the message is in r29, but r30 held the `this` of
+        # an earlier `Call`), while the rule was right in every case checked.
+        ruled = cls._ruled_top(ctx, real_arg_count)
+
+        if ruled is not None:
+            return ruled
+
+        candidates = [highest + 1, highest]
+
+        return max(candidates, key=lambda top: (evidence(top), top == highest + 1))
 
 
 # Reg8, UInt8, UInt32 (total size 6)

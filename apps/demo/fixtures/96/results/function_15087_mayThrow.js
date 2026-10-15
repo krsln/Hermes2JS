@@ -13,11 +13,11 @@ function mayThrow(param1) {
         // CODE → addr: 26 | <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 2, string_id: 206>  # String: 'prototype' (Identifier)
         // USED → r0 = Error.prototype;
         // CODE → addr: 31 | <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 2>
-        // USED → r1 = CreateThis(r0);
+        // USED → r1 = CreateThis(Error.prototype);
         // CODE → addr: 35 | <LoadConstString>: <Reg8: 3, string_id: 1323>  # String: 'negative' (String)
         // USED → r3 = "negative";
         // CODE → addr: 39 | <Mov>: <Reg8: 4, Reg8: 1>
-        // USED → r4 = CreateThis(r0);
+        // USED → r4 = CreateThis(Error.prototype);
         // CODE → addr: 42 | <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
         // USED → r0 = new Error("negative");
         // CODE → addr: 46 | <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>

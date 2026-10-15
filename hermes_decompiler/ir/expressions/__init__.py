@@ -23,7 +23,7 @@ __all__ = [
     "UnaryExpression", "UpdateExpression", "BinaryExpression", "AssignmentExpression",
     "ConditionalExpression", "SequenceExpression",
 
-    "PropertyKind", "SpreadElement", "ObjectProperty", "ArrayExpression", "ObjectExpression",
+    "PropertyKind", "SpreadElement", "ObjectProperty", "ArrayHole", "ArrayExpression", "ObjectExpression",
 
     "MemberExpression", "CallExpression", "NewExpression",
 

@@ -207,6 +207,16 @@ class IfTailMergeRegionPass(RegionPass, RegionVisitor):
 
         matched_instructions = then_block.instructions[len(then_block.instructions) - match_count:]
 
+        # Both arms' own `Ret` end up as ONE instruction after the merge; the
+        # other arm's copy is remembered so the register it returns can still
+        # be resolved along BOTH paths (`ReturnValueResolutionPass`).
+        for kept, other in zip(
+                matched_instructions,
+                else_block.instructions[len(else_block.instructions) - match_count:],
+        ):
+            origins = self.cfg.__dict__.setdefault("tail_origins", {})
+            origins[id(kept)] = (*origins.get(id(kept), ()), other)
+
         self._trim_trailing(then_body, then_block, match_count)
         self._trim_trailing(else_body, else_block, match_count)
 

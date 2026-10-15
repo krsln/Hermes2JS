@@ -1,0 +1,146 @@
+
+=> [Function #6009 "getNavigateAction" of 603 bytes]: 3 params, frame size=23, strict=1, exc handler=0, debug info=0  @ offset 0x001c051d
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 11, UInt8: 3>
+==> 00000003: <LoadConstUndefined>: <Reg8: 2>
+==> 00000005: <JStrictNotEqual>: <Addr8: 8, Reg8: 11, Reg8: 2>  # Address: 0000000d
+==> 00000009: <LoadConstString>: <Reg8: 11, string_id: 2595>  # String: 'NAVIGATE' (String)
+==> 0000000d: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000010: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 1>
+==> 00000014: <GetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 6750>  # String: 'store' (Identifier)
+==> 0000001a: <GetById>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 15949>  # String: 'assertIsReady' (Identifier)
+==> 00000020: <Call1>: <Reg8: 5, Reg8: 5, Reg8: 6>
+==> 00000024: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 0, string_id: 6750>  # String: 'store' (Identifier)
+==> 0000002a: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 2, string_id: 8924>  # String: 'navigationRef' (Identifier)
+==> 00000030: <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 3, string_id: 57>  # String: 'current' (Identifier)
+==> 00000035: <LoadConstNull>: <Reg8: 1>
+==> 00000037: <JEqualLong>: <Addr32: 519, Reg8: 6, Reg8: 1>  # Address: 0000023e
+==> 0000003e: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 0, string_id: 6750>  # String: 'store' (Identifier)
+==> 00000044: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 4, string_id: 7199>  # String: 'linking' (Identifier)
+==> 0000004a: <JmpTrue>: <Addr8: 32, Reg8: 5>  # Address: 0000006a
+==> 0000004d: <GetGlobalObject>: <Reg8: 5>
+==> 0000004f: <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000055: <CreateThisForNew>: <Reg8: 7, Reg8: 8, UInt8: 6>
+==> 00000059: <LoadConstString>: <Reg8: 14, string_id: 2682>  # String: 'Attempted to link to route when no routes are present' (String)
+==> 0000005d: <Mov>: <Reg8: 15, Reg8: 7>
+==> 00000060: <Construct>: <Reg8: 5, Reg8: 8, UInt8: 2>
+==> 00000064: <SelectObject>: <Reg8: 5, Reg8: 7, Reg8: 5>
+==> 00000068: <Throw>: <Reg8: 5>
+==> 0000006a: <LoadParam>: <Reg8: 9, UInt8: 1>
+==> 0000006d: <LoadParam>: <Reg8: 7, UInt8: 2>
+==> 00000070: <GetById>: <Reg8: 5, Reg8: 6, UInt8: 7, string_id: 17188>  # String: 'getRootState' (Identifier)
+==> 00000076: <Call1>: <Reg8: 8, Reg8: 5, Reg8: 6>
+==> 0000007a: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 3>
+==> 0000007e: <GetById>: <Reg8: 6, Reg8: 5, UInt8: 8, string_id: 10792>  # String: 'resolveHrefStringWithSegments' (Identifier)
+==> 00000084: <GetById>: <Reg8: 10, Reg8: 4, UInt8: 0, string_id: 6750>  # String: 'store' (Identifier)
+==> 0000008a: <GetById>: <Reg8: 5, Reg8: 10, UInt8: 9, string_id: 17190>  # String: 'getRouteInfo' (Identifier)
+==> 00000090: <Call1>: <Reg8: 5, Reg8: 5, Reg8: 10>
+==> 00000094: <Call4>: <Reg8: 7, Reg8: 6, Reg8: 2, Reg8: 9, Reg8: 5, Reg8: 7>
+==> 0000009b: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 2>
+==> 0000009f: <GetById>: <Reg8: 6, Reg8: 5, UInt8: 10, string_id: 15898>  # String: 'applyRedirects' (Identifier)
+==> 000000a5: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 0, string_id: 6750>  # String: 'store' (Identifier)
+==> 000000ab: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 11, string_id: 8518>  # String: 'redirects' (Identifier)
+==> 000000b1: <Call3>: <Reg8: 6, Reg8: 6, Reg8: 2, Reg8: 7, Reg8: 5>
+==> 000000b7: <JNotEqual>: <Addr8: 6, Reg8: 6, Reg8: 1>  # Address: 000000bd
+==> 000000bb: <LoadConstUndefined>: <Reg8: 6>
+==> 000000bd: <JmpTrue>: <Addr8: 5, Reg8: 6>  # Address: 000000c2
+==> 000000c0: <Ret>: <Reg8: 2>
+==> 000000c2: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 0, string_id: 6750>  # String: 'store' (Identifier)
+==> 000000c8: <GetById>: <Reg8: 7, Reg8: 5, UInt8: 4, string_id: 7199>  # String: 'linking' (Identifier)
+==> 000000ce: <GetById>: <Reg8: 5, Reg8: 7, UInt8: 12, string_id: 10884>  # String: 'getStateFromPath' (Identifier)
+==> 000000d4: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 0, string_id: 6750>  # String: 'store' (Identifier)
+==> 000000da: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 4, string_id: 7199>  # String: 'linking' (Identifier)
+==> 000000e0: <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 13, string_id: 106>  # String: 'config' (Identifier)
+==> 000000e5: <Call3>: <Reg8: 7, Reg8: 5, Reg8: 7, Reg8: 6, Reg8: 4>
+==> 000000eb: <JmpFalseLong>: <Addr32: 311, Reg8: 7>  # Address: 00000222
+==> 000000f1: <GetByIdShort>: <Reg8: 4, Reg8: 7, UInt8: 14, string_id: 223>  # String: 'routes' (Identifier)
+==> 000000f6: <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 15, string_id: 177>  # String: 'length' (Identifier)
+==> 000000fb: <LoadConstZero>: <Reg8: 0>
+==> 000000fd: <JStrictEqualLong>: <Addr32: 293, Reg8: 4, Reg8: 0>  # Address: 00000222
+==> 00000104: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 0>
+==> 00000108: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 16, string_id: 16916>  # String: 'findDivergentState' (Identifier)
+==> 0000010e: <LoadConstString>: <Reg8: 9, string_id: 3018>  # String: 'PRELOAD' (String)
+==> 00000112: <StrictEq>: <Reg8: 1, Reg8: 11, Reg8: 9>
+==> 00000116: <Call4>: <Reg8: 4, Reg8: 4, Reg8: 2, Reg8: 7, Reg8: 8, Reg8: 1>
+==> 0000011d: <GetById>: <Reg8: 7, Reg8: 4, UInt8: 17, string_id: 15664>  # String: 'actionStateRoute' (Identifier)
+==> 00000123: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 18, string_id: 13421>  # String: 'navigationState' (Identifier)
+==> 00000129: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 19, string_id: 17166>  # String: 'getPayloadFromStateRoute' (Identifier)
+==> 0000012f: <JmpTrue>: <Addr8: 5, Reg8: 7>  # Address: 00000134
+==> 00000132: <NewObject>: <Reg8: 7>
+==> 00000134: <Call2>: <Reg8: 8, Reg8: 5, Reg8: 2, Reg8: 7>
+==> 00000139: <LoadConstString>: <Reg8: 5, string_id: 655>  # String: 'PUSH' (String)
+==> 0000013d: <JStrictNotEqual>: <Addr8: 21, Reg8: 11, Reg8: 5>  # Address: 00000152
+==> 00000141: <GetByIdShort>: <Reg8: 7, Reg8: 4, UInt8: 20, string_id: 1>  # String: 'type' (Identifier)
+==> 00000146: <LoadConstString>: <Reg8: 9, string_id: 2595>  # String: 'NAVIGATE' (String)
+==> 0000014a: <LoadConstString>: <Reg8: 5, string_id: 7441>  # String: 'stack' (Identifier)
+==> 0000014e: <JStrictNotEqual>: <Addr8: 54, Reg8: 7, Reg8: 5>  # Address: 00000184
+==> 00000152: <GetByIdShort>: <Reg8: 10, Reg8: 4, UInt8: 20, string_id: 1>  # String: 'type' (Identifier)
+==> 00000157: <LoadConstString>: <Reg8: 5, string_id: 3398>  # String: 'JUMP_TO' (String)
+==> 0000015b: <LoadConstString>: <Reg8: 7, string_id: 960>  # String: 'expo-tab' (String)
+==> 0000015f: <Mov>: <Reg8: 9, Reg8: 5>
+==> 00000162: <JStrictEqual>: <Addr8: 34, Reg8: 10, Reg8: 7>  # Address: 00000184
+==> 00000166: <LoadConstString>: <Reg8: 7, string_id: 3906>  # String: 'REPLACE' (String)
+==> 0000016a: <Mov>: <Reg8: 9, Reg8: 11>
+==> 0000016d: <JStrictNotEqual>: <Addr8: 23, Reg8: 9, Reg8: 7>  # Address: 00000184
+==> 00000171: <GetByIdShort>: <Reg8: 10, Reg8: 4, UInt8: 20, string_id: 1>  # String: 'type' (Identifier)
+==> 00000176: <LoadConstString>: <Reg8: 7, string_id: 3537>  # String: 'drawer' (String)
+==> 0000017a: <Mov>: <Reg8: 9, Reg8: 11>
+==> 0000017d: <JStrictNotEqual>: <Addr8: 7, Reg8: 10, Reg8: 7>  # Address: 00000184
+==> 00000181: <Mov>: <Reg8: 9, Reg8: 5>
+==> 00000184: <LoadParam>: <Reg8: 7, UInt8: 4>
+==> 00000187: <JmpFalse>: <Addr8: 39, Reg8: 7>  # Address: 000001ae
+==> 0000018a: <GetByIdShort>: <Reg8: 5, Reg8: 8, UInt8: 21, string_id: 196>  # String: 'params' (Identifier)
+==> 0000018f: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 22, string_id: 7099>  # String: 'initial' (Identifier)
+==> 00000195: <GetByIdShort>: <Reg8: 5, Reg8: 8, UInt8: 21, string_id: 196>  # String: 'params' (Identifier)
+==> 0000019a: <JmpFalse>: <Addr8: 20, Reg8: 5>  # Address: 000001ae
+==> 0000019d: <Not>: <Reg8: 1, Reg8: 7>
+==> 000001a0: <PutByIdStrict>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 7099>  # String: 'initial' (Identifier)
+==> 000001a6: <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 21, string_id: 196>  # String: 'params' (Identifier)
+==> 000001ab: <JmpTrue>: <Addr8: -14, Reg8: 5>  # Address: 0000019d
+==> 000001ae: <LoadParam>: <Reg8: 7, UInt8: 6>
+==> 000001b1: <NewObject>: <Reg8: 5>
+==> 000001b3: <JmpTrue>: <Addr8: 8, Reg8: 7>  # Address: 000001bb
+==> 000001b6: <Mov>: <Reg8: 10, Reg8: 5>
+==> 000001b9: <Jmp>: <Addr8: 33>  # Address: 000001da
+==> 000001bb: <LoadFromEnvironment>: <Reg8: 7, Reg8: 3, UInt8: 4>
+==> 000001bf: <GetById>: <Reg8: 11, Reg8: 7, UInt8: 23, string_id: 9279>  # String: 'INTERNAL_EXPO_ROUTER_IS_PREVIEW_NAVIGATION_PARAM_NAME' (Identifier)
+==> 000001c5: <LoadConstTrue>: <Reg8: 1>
+==> 000001c7: <DefineOwnByVal>: <Reg8: 5, Reg8: 1, Reg8: 11, UInt8: 1>
+==> 000001cc: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 24, string_id: 9282>  # String: 'INTERNAL_EXPO_ROUTER_NO_ANIMATION_PARAM_NAME' (Identifier)
+==> 000001d2: <DefineOwnByVal>: <Reg8: 5, Reg8: 1, Reg8: 7, UInt8: 1>
+==> 000001d7: <Mov>: <Reg8: 10, Reg8: 5>
+==> 000001da: <LoadParam>: <Reg8: 5, UInt8: 5>
+==> 000001dd: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 4>
+==> 000001e1: <GetById>: <Reg8: 7, Reg8: 3, UInt8: 25, string_id: 15887>  # String: 'appendInternalExpoRouterParams' (Identifier)
+==> 000001e7: <GetByIdShort>: <Reg8: 3, Reg8: 8, UInt8: 21, string_id: 196>  # String: 'params' (Identifier)
+==> 000001ec: <Call3>: <Reg8: 7, Reg8: 7, Reg8: 2, Reg8: 3, Reg8: 10>
+==> 000001f2: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1371, UInt16: 17424>  # Object: {'type': null, 'target': null, 'payload': null}
+==> 000001f8: <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 9, UInt8: 0>
+==> 000001fc: <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 26, string_id: 172>  # String: 'key' (Identifier)
+==> 00000201: <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 4, UInt8: 1>
+==> 00000205: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 1372, UInt16: 17424>  # Object: {'name': null, 'params': null, 'singular': null}
+==> 0000020b: <GetByIdShort>: <Reg8: 8, Reg8: 8, UInt8: 27, string_id: 188>  # String: 'screen' (Identifier)
+==> 00000210: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 8, UInt8: 0>
+==> 00000214: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 7, UInt8: 1>
+==> 00000218: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 2>
+==> 0000021c: <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 4, UInt8: 2>
+==> 00000220: <Ret>: <Reg8: 3>
+==> 00000222: <GetGlobalObject>: <Reg8: 3>
+==> 00000224: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 28, string_id: 108>  # String: 'console' (Identifier)
+==> 0000022a: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 29, string_id: 140>  # String: 'error' (Identifier)
+==> 0000022f: <LoadConstString>: <Reg8: 3, string_id: 1261>  # String: 'Could not generate a valid navigation state for the given path: ' (String)
+==> 00000233: <Add>: <Reg8: 3, Reg8: 3, Reg8: 6>
+==> 00000237: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000023c: <Ret>: <Reg8: 2>
+==> 0000023e: <GetGlobalObject>: <Reg8: 3>
+==> 00000240: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000246: <CreateThisForNew>: <Reg8: 4, Reg8: 5, UInt8: 6>
+==> 0000024a: <LoadConstString>: <Reg8: 14, string_id: 2278>  # String: "Couldn't find a navigation object. Is your component inside NavigationContainer?" (String)
+==> 0000024e: <Mov>: <Reg8: 15, Reg8: 4>
+==> 00000251: <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
+==> 00000255: <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>
+==> 00000259: <Throw>: <Reg8: 3>
+
+
