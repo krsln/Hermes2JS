@@ -2,10 +2,12 @@ from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
-from hermes_decompiler.ir import LogicalOperator
-from hermes_decompiler.ir.expressions import BinaryExpression
+from hermes_decompiler.ir import LogicalOperator, Node
+from hermes_decompiler.ir.expressions import BinaryExpression, Identifier
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
-from hermes_decompiler.backend.transforms.shared import negate_condition, TRIVIAL_NODE_TYPES
+from hermes_decompiler.backend.transforms.shared import (
+    negate_condition, TRIVIAL_NODE_TYPES, has_side_effects, substitute_register,
+)
 
 
 class ShortCircuitConditionCfgPass:
@@ -122,7 +124,7 @@ class ShortCircuitConditionCfgPass:
 
         pure = self._is_pure_test_block(successor)
 
-        if not pure and not self._is_inlined_setup_block(successor):
+        if not pure and not self._is_inlined_setup_block(successor) and not self._is_pure_setup_block(successor):
             # Has real work in it (side effects) - not just a test,
             # can't be folded into block's condition.
             return False
@@ -170,14 +172,24 @@ class ShortCircuitConditionCfgPass:
         if fall_through is None or fall_through.address != branch.target:
             return False
 
-        if not self._is_inlined_setup_block(successor) or self._setup_feeds_a_join(successor,
-                                                                                   self._arm_of(block, branch)):
+        second = next_branch.condition
+
+        if not self._is_inlined_setup_block(successor):
+            # A pure value the second test reads through its register
+            # (`r0 = arguments[1]; if (r0 !== undefined)`): the test takes the
+            # value itself when nothing reads the register afterwards.
+            second = self._fold_pure_setup(successor, next_branch, second, self._arm_of(block, branch))
+
+            if second is None:
+                return False
+
+        if self._setup_feeds_a_join(successor, self._arm_of(block, branch)):
             return False
 
         combined = BinaryExpression(
             left=negate_condition(branch.condition),
             operator=LogicalOperator.AND,
-            right=next_branch.condition,
+            right=second,
         )
 
         merged = TerminatorConditionalBranch(condition=combined, target=next_branch.target)
@@ -185,6 +197,68 @@ class ShortCircuitConditionCfgPass:
         # `block` now jumps to Y's old target and falls through to `A`.
         self._rewire_crossed(block, successor, branch, merged)
         return True
+
+    @staticmethod
+    def _is_pure_setup_block(block: BasicBlock) -> bool:
+        """Only side-effect-free value writes plus its own branch (the crossed
+        form folds them into the test, see `_fold_pure_setup`)."""
+        return all(
+            i.terminator is not None
+            or (i.dest_reg is not None and i.value is not None and i.statement is None
+                and not has_side_effects(i.value))
+            for i in block.instructions
+        )
+
+    def _fold_pure_setup(self, successor: BasicBlock, next_branch, condition, arm: BasicBlock):
+        """The second test's condition with its pure setup instructions
+        substituted in, or None when that is not exact.
+
+        Every setup instruction must be a side-effect-free value whose register
+        the code after the pair overwrites before reading (both exits), so
+        dropping the write loses nothing."""
+        end_block = next((s for s in successor.successors if s.address == next_branch.target), None)
+
+        if end_block is None:
+            return None
+
+        setup = [i for i in successor.instructions if i.terminator is None]
+
+        for instruction in reversed(setup):
+            if (
+                    instruction.dest_reg is None
+                    or instruction.value is None
+                    or instruction.statement is not None
+                    or has_side_effects(instruction.value)
+                    or not all(self._overwritten_first(b, instruction.dest_reg) for b in (arm, end_block))
+            ):
+                return None
+
+            condition = substitute_register(condition, f"r{instruction.dest_reg}", instruction.value)
+
+        return condition
+
+    @classmethod
+    def _overwritten_first(cls, block: BasicBlock, register: int) -> bool:
+        """True if `block` writes `rN` before anything in it reads `rN`."""
+        name = f"r{register}"
+
+        for instruction in block.instructions:
+            nodes = [instruction.value, instruction.statement, getattr(instruction.terminator, "condition", None)]
+
+            if any(n is not None and cls._mentions(n, name) for n in nodes):
+                return False
+
+            if instruction.dest_reg == register:
+                return True
+
+        return False
+
+    @classmethod
+    def _mentions(cls, node, name: str) -> bool:
+        if isinstance(node, Identifier):
+            return node.name == name
+
+        return isinstance(node, Node) and any(isinstance(n, Identifier) and n.name == name for n in node.walk())
 
     @staticmethod
     def _is_inlined_setup_block(block: BasicBlock) -> bool:
