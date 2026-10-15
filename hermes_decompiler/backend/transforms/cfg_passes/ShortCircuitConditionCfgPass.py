@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import copy
+import re
+
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir import LogicalOperator, Node
@@ -146,6 +149,17 @@ class ShortCircuitConditionCfgPass:
             # coincide with branch.target.
             return False
 
+        if next_branch.target == branch.target and not pure and not self._is_inlined_setup_block(successor):
+            # `a || (r2 = f; b)` with a pure `f`: the test takes the value.
+            exits = [s for s in (self._arm_of(block, branch), self._fallthrough(successor)) if s is not None]
+            folded = self._fold_pure_setup(successor, next_branch.condition, exits) if len(exits) == 2 else None
+
+            if folded is None:
+                return False
+
+            self._merge(block, successor, next_branch, folded)
+            return True
+
         if next_branch.target != branch.target or not pure:
             # Different targets: not a same-target chain. It can still be the
             # crossed form (see `_try_merge_crossed`).
@@ -178,7 +192,11 @@ class ShortCircuitConditionCfgPass:
             # A pure value the second test reads through its register
             # (`r0 = arguments[1]; if (r0 !== undefined)`): the test takes the
             # value itself when nothing reads the register afterwards.
-            second = self._fold_pure_setup(successor, next_branch, second, self._arm_of(block, branch))
+            end_block = next((x for x in successor.successors if x.address == next_branch.target), None)
+            second = (
+                self._fold_pure_setup(successor, second, [self._arm_of(block, branch), end_block])
+                if end_block is not None else None
+            )
 
             if second is None:
                 return False
@@ -209,18 +227,13 @@ class ShortCircuitConditionCfgPass:
             for i in block.instructions
         )
 
-    def _fold_pure_setup(self, successor: BasicBlock, next_branch, condition, arm: BasicBlock):
+    def _fold_pure_setup(self, successor: BasicBlock, condition, exits: list):
         """The second test's condition with its pure setup instructions
         substituted in, or None when that is not exact.
 
         Every setup instruction must be a side-effect-free value whose register
-        the code after the pair overwrites before reading (both exits), so
-        dropping the write loses nothing."""
-        end_block = next((s for s in successor.successors if s.address == next_branch.target), None)
-
-        if end_block is None:
-            return None
-
+        is dead on entry to both exits of the pair (written before any read,
+        on every path), so dropping the write loses nothing."""
         setup = [i for i in successor.instructions if i.terminator is None]
 
         for instruction in reversed(setup):
@@ -229,29 +242,64 @@ class ShortCircuitConditionCfgPass:
                     or instruction.value is None
                     or instruction.statement is not None
                     or has_side_effects(instruction.value)
-                    or not all(self._overwritten_first(b, instruction.dest_reg) for b in (arm, end_block))
+                    # A copy (`Mov r5, r4`) is an input of a join the exits read
+                    # through another register's inlined value; a fold cannot see
+                    # that, so only values the test itself computes are folded.
+                    or instruction.entry.opcode in ("Mov", "MovLong")
+                    or not all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in exits)
+                    # A handler is entered by an edge the CFG does not have: it
+                    # may read the register the try body had set.
+                    or not all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in self._handlers())
             ):
                 return None
 
-            condition = substitute_register(condition, f"r{instruction.dest_reg}", instruction.value)
+            # A copy: the setup's own node stays the identity a later repair looks for.
+            condition = substitute_register(
+                condition, f"r{instruction.dest_reg}", copy.deepcopy(instruction.value),
+            )
 
         return condition
 
+    def _handlers(self) -> list[BasicBlock]:
+        return [b for b in self.cfg.blocks if not b.predecessors and b is not self.cfg.entry]
+
     @classmethod
-    def _overwritten_first(cls, block: BasicBlock, register: int) -> bool:
-        """True if `block` writes `rN` before anything in it reads `rN`."""
+    def _dead_on_entry(cls, block: BasicBlock, register: int, visited: set) -> bool:
+        """True if no path from the start of `block` reads `rN` before writing it."""
+        if block in visited:
+            return True
+
+        visited.add(block)
         name = f"r{register}"
 
         for instruction in block.instructions:
-            nodes = [instruction.value, instruction.statement, getattr(instruction.terminator, "condition", None)]
+            nodes = [instruction.value, instruction.statement, getattr(instruction.terminator, "condition", None),
+                     getattr(instruction.terminator, "value", None)]
 
-            if any(n is not None and cls._mentions(n, name) for n in nodes):
+            if any(n is not None and cls._mentions(n, name) for n in nodes) or cls._reads_operand(instruction,
+                                                                                                  register):
                 return False
 
-            if instruction.dest_reg == register:
+            if instruction.dest_reg == register and instruction.terminator is None:
                 return True
 
-        return False
+        return all(cls._dead_on_entry(succ, register, visited) for succ in block.successors)
+
+    _OPERAND_RE = re.compile(r"Reg(?:8|32):\s*(\d+)")
+
+    @classmethod
+    def _reads_operand(cls, instruction, register: int) -> bool:
+        """Does the BYTECODE instruction read `rN`? Readers were linearly inlined
+        before any control flow was known, so a read of a join register may no
+        longer name it in the printed tree; the operands still do. The first
+        operand of a writing instruction is its destination."""
+        entry = getattr(instruction, "entry", None)
+        operands = [int(m) for m in cls._OPERAND_RE.findall(getattr(entry, "args", "") or "")]
+
+        if instruction.dest_reg is not None and operands and operands[0] == instruction.dest_reg:
+            operands = operands[1:]
+
+        return register in operands
 
     @classmethod
     def _mentions(cls, node, name: str) -> bool:
@@ -361,6 +409,7 @@ class ShortCircuitConditionCfgPass:
             block: BasicBlock,
             successor: BasicBlock,
             next_branch: TerminatorConditionalBranch,
+            second=None,
     ) -> None:
 
         branch = block.terminator
@@ -373,7 +422,7 @@ class ShortCircuitConditionCfgPass:
         combined_condition = BinaryExpression(
             left=branch.condition,
             operator=LogicalOperator.OR,
-            right=next_branch.condition,
+            right=second if second is not None else next_branch.condition,
         )
 
         merged_terminator = TerminatorConditionalBranch(

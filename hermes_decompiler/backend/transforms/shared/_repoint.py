@@ -245,6 +245,17 @@ def repoint_references(
         if for_conditions is None:
             continue
 
+        # An `if`'s test runs BEFORE its arms: when the instructions the fold
+        # owns sit inside the `if`, its condition cannot read what they write
+        # (`if (c && arguments[1] !== undefined) { r5 = arguments[1] }` must not
+        # become `r5 !== undefined`).
+        if (
+                region.__class__.__name__ == "IfRegion"
+                and exclude
+                and any(i in exclude for b in region.covered_blocks for i in b.instructions)
+        ):
+            continue
+
         for attribute in _REGION_EXPRESSION_ATTRIBUTES:
             value = getattr(region, attribute, None)
 

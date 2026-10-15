@@ -46,15 +46,17 @@ def test_folded_definition_prints_nothing():
 
 
 def test_definition_read_by_the_nested_condition_is_kept():
-    # `if (a) return; else if (param1.length === 1) return undefined;` -
-    # the else branch is `r1 = param1.length; if (r1 === 1) ...`.
+    # `if (typeof s !== "string" || s.length !== 1) throw ...; return;` - the
+    # second test is preceded by `r1 = param1.length`, a pure load both exits
+    # overwrite, so it becomes part of ONE condition. (Kept as a nested
+    # `else if` the throw was missing on the path where the length is not 1.)
     hasm = (_DATA / "else_if_prefix_definition.hasm").read_text(encoding="utf-8")
     out = Decompiler.render(Decompiler.build_context(hasm, 7547), verbose=False)
     out = "\n".join(line for line in out.split("\n") if not line.strip().startswith("//"))
 
-    assert "r1 = param1.length" in out
+    assert 'r2 !== "string" || param1.length !== 1' in out
     assert "else if (r1 === 1)" not in out
-    assert out.index("r1 = param1.length") < out.index("if (r1 === 1)")
+    assert out.count("throw") == 1
 
 
 def test_generator_state_is_loaded_before_the_state_check():
