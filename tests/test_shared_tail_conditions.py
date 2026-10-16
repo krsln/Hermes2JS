@@ -105,3 +105,12 @@ def test_a_stale_inlined_callee_is_not_folded_into_a_wrong_value():
     out = _render("parseScaleX_stale_callee_96_9118.hasm", 9118)
 
     assert "undefined[0]" not in out
+
+
+def test_function_with_handlers_does_not_get_an_edge_block():
+    """98/2917 crashed the dominator pass (`KeyError`): the edge block for a sunk
+    join copy was added in a function with exception handlers, whose try ranges
+    name blocks the merge had dropped. Such a function keeps the old shape."""
+    out = _render("sunk_copy_with_handlers_98_2917.hasm", 2917)
+
+    assert out.strip().startswith("function")

@@ -276,6 +276,10 @@ class ShortCircuitConditionCfgPass:
         blocks = self.cfg.blocks
         index = blocks.index(end_block)
 
+        if self.cfg.exception_handlers:
+            # An edge block would sit outside every try range.
+            return None
+
         if index == 0 or blocks[index - 1] is successor:
             return None
 
