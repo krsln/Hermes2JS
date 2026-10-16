@@ -79,3 +79,29 @@ def test_tail_after_a_value_ternary_keeps_the_ternary_test():
     assert "goto" not in out
     assert "if (r2) {" in out
     assert out.count('"enumerable": true') == 2
+
+
+def test_call_chain_in_the_second_test_folds_into_the_condition():
+    """96/7811: `p === undefined || p === env[0].getId()`; the setup is
+    `r0 = env; r1 = r0[0]; r0 = r1.getId()` - the operands of the one call."""
+    out = _render("getParent_call_in_second_test_96_7811.hasm", 7811)
+
+    assert "goto" not in out
+    assert "param1 === getEnvironment(0)[0].getId()" in out
+
+
+def test_call_chain_through_one_register_keeps_the_whole_condition():
+    """96/11316: `r0 = a.props; r0 = r0.x; r0 = Object.keys(r0.value); r1 = r0.length`."""
+    out = _render("compareProps_call_chain_96_11316.hasm", 11316)
+
+    assert "goto" not in out
+    assert "Object.keys(param1.props.jestAnimatedProps.value.value).length === 0" in out
+
+
+def test_a_stale_inlined_callee_is_not_folded_into_a_wrong_value():
+    """96/9118: the frontend inlines the callee as `r0[0]` while the setup has
+    since set `r0 = undefined` (the call's `this`). Folding that read the
+    constant (`undefined[0](...)`): the fold must refuse instead."""
+    out = _render("parseScaleX_stale_callee_96_9118.hasm", 9118)
+
+    assert "undefined[0]" not in out

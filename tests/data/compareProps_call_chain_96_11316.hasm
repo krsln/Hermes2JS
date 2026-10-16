@@ -1,0 +1,36 @@
+
+=> [Function #11316 "compareProps" of 113 bytes]: 3 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x0020b99d
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 1, string_id: 204>  # String: 'props' (Identifier)
+==> 00000008: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 2, string_id: 18065>  # String: 'jestAnimatedProps' (Identifier)
+==> 0000000e: <JmpFalse>: <Addr8: 48, Reg8: 0>  # Address: 0000003e
+==> 00000011: <GetGlobalObject>: <Reg8: 0>
+==> 00000013: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 3, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000019: <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 4, string_id: 118>  # String: 'keys' (Identifier)
+==> 0000001e: <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 1, string_id: 204>  # String: 'props' (Identifier)
+==> 00000023: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 2, string_id: 18065>  # String: 'jestAnimatedProps' (Identifier)
+==> 00000029: <GetByIdShort>: <Reg8: 0, Reg8: 0, UInt8: 5, string_id: 205>  # String: 'value' (Identifier)
+==> 0000002e: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 3, Reg8: 0>
+==> 00000033: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 6, string_id: 169>  # String: 'length' (Identifier)
+==> 00000038: <LoadConstZero>: <Reg8: 0>
+==> 0000003a: <JStrictEqual>: <Addr8: 33, Reg8: 1, Reg8: 0>  # Address: 0000005b
+==> 0000003e: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000041: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 6>
+==> 00000045: <LoadConstUndefined>: <Reg8: 3>
+==> 00000047: <Call2>: <Reg8: 2, Reg8: 1, Reg8: 3, Reg8: 2>
+==> 0000004c: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 10>
+==> 00000050: <LoadParam>: <Reg8: 0, UInt8: 2>
+==> 00000053: <Call3>: <Reg8: 0, Reg8: 1, Reg8: 3, Reg8: 2, Reg8: 0>
+==> 00000059: <Ret>: <Reg8: 0>
+==> 0000005b: <NewObject>: <Reg8: 0>
+==> 0000005d: <CreateEnvironment>: <Reg8: 1>
+==> 0000005f: <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 11317>  # Function: [#11317 message of 6 bytes]: 1 params @ offset 0x0020ba0e
+==> 00000064: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 174>  # String: 'message' (Identifier)
+==> 00000068: <LoadConstFalse>: <Reg8: 1>
+==> 0000006a: <PutNewOwnById>: <Reg8: 0, Reg8: 1, string_id: 8102>  # String: 'pass' (Identifier)
+==> 0000006f: <Ret>: <Reg8: 0>
+
+

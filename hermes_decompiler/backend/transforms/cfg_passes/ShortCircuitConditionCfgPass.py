@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import copy
+import dataclasses
 import re
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir import LogicalOperator, Node
-from hermes_decompiler.ir.expressions import BinaryExpression, Identifier
+from hermes_decompiler.ir.expressions import BinaryExpression, Identifier, Literal, UndefinedLiteral
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.backend.transforms.shared import (
     negate_condition, TRIVIAL_NODE_TYPES, has_side_effects, substitute_register,
@@ -204,7 +205,7 @@ class ShortCircuitConditionCfgPass:
 
             # Join copies (`Mov r4, r3`) the arm overwrites anyway only matter
             # on the way to END: they move onto that edge (see `_sink_copies`).
-            sunk = self._copies_for_the_end_edge(successor, arm)
+            sunk = self._copies_for_the_end_edge(successor, arm, end_block)
 
             # A pure value the second test reads through its register
             # (`r0 = arguments[1]; if (r0 !== undefined)`): the test takes the
@@ -239,7 +240,7 @@ class ShortCircuitConditionCfgPass:
         self._rewire_crossed(block, successor, branch, merged, end_block, edge)
         return True
 
-    def _copies_for_the_end_edge(self, successor: BasicBlock, arm: BasicBlock) -> list:
+    def _copies_for_the_end_edge(self, successor: BasicBlock, arm: BasicBlock, end_block: BasicBlock) -> list:
         """The `Mov`s of the second test block that only END reads: dead on entry
         to the arm (which writes the register first) and to every handler, and
         not read by anything else of the block."""
@@ -248,21 +249,24 @@ class ShortCircuitConditionCfgPass:
 
         for instruction in setup:
             if (
-                    instruction.entry.opcode in ("Mov", "MovLong")
-                    and instruction.dest_reg is not None
-                    and instruction.value is not None
-                    and instruction.statement is None
-                    and self._dead_on_entry(arm, instruction.dest_reg, set())
-                    and all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in self._handlers())
-                    and not any(
-                other is not instruction and (
-                        self._reads_operand(other, instruction.dest_reg)
-                        or (other.value is not None and self._mentions(other.value, f"r{instruction.dest_reg}"))
-                )
-                for other in successor.instructions
-            )
+                    instruction.dest_reg is None
+                    or instruction.value is None
+                    or instruction.statement is not None
+                    or not self._dead_on_entry(arm, instruction.dest_reg, set())
+                    or not all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in self._handlers())
             ):
-                copies.append(instruction)
+                continue
+
+            if instruction.entry.opcode in ("Mov", "MovLong"):
+                if not any(
+                        other is not instruction and (
+                                self._reads_operand(other, instruction.dest_reg)
+                                or (other.value is not None
+                                    and self._mentions(other.value, f"r{instruction.dest_reg}"))
+                        )
+                        for other in successor.instructions
+                ):
+                    copies.append(instruction)
 
         return copies
 
@@ -322,6 +326,7 @@ class ShortCircuitConditionCfgPass:
         on every path), so dropping the write loses nothing."""
         setup = [i for i in successor.instructions if i.terminator is None and not any(i is k for k in skip)]
         effect_seen = False
+        probe = condition  # what the later instructions have made of it (only to count uses)
 
         for position in range(len(setup) - 1, -1, -1):
             instruction = setup[position]
@@ -332,20 +337,12 @@ class ShortCircuitConditionCfgPass:
                 name = f"r{instruction.dest_reg}"
                 if (
                         effect_seen
-                        or has_side_effects(condition)
-                        or sum(1 for n in condition.walk() if isinstance(n, Identifier) and n.name == name) != 1
-                        or not all(
-                    isinstance(earlier.value, TRIVIAL_NODE_TYPES)
-                    or earlier.definition_used  # already inlined into its reader
-                    or self._mentions(instruction.value, f"r{earlier.dest_reg}")
-                    for earlier in setup[:position]
-                )
+                        or has_side_effects(probe)
+                        or sum(1 for n in probe.walk() if isinstance(n, Identifier) and n.name == name) != 1
+                        or not self._feeds_only(instruction, setup[:position])
                 ):
                     return None
                 effect_seen = True
-                effectful = True
-            else:
-                effectful = False
 
             if (
                     instruction.dest_reg is None
@@ -369,13 +366,90 @@ class ShortCircuitConditionCfgPass:
             )
             ):
                 return None
+            probe = substitute_register(probe, f"r{instruction.dest_reg}", instruction.value)
+
+        # Forward, one register file: a name inside a value means the register as it
+        # was at that instruction, and a register the setup writes twice
+        # (`r0 = env; r1 = r0[0]; r0 = undefined`) is not one name.
+        current: dict = {}
+        writes = [i.dest_reg for i in setup]
+
+        for instruction in setup:
+            # A name that reads a register the setup has since overwritten with a
+            # constant is the frontend's stale inline of the older value
+            # (`r4 = r0[0]` ... `r0 = undefined` ... `r4(r0)`): which one is meant is
+            # not known here.
+            read_here = self._source_registers(instruction)
+
+            for node in instruction.value.walk():
+                if (
+                        isinstance(node, Identifier)
+                        and isinstance(current.get(node.name), (Literal, UndefinedLiteral))
+                        and writes.count(int(node.name[1:])) > 1
+                        # Named by the instruction's own operands, it is that constant.
+                        and int(node.name[1:]) not in read_here
+                ):
+                    return None
 
             # A copy: the setup's own node stays the identity a later repair looks for.
-            condition = substitute_register(
-                condition, f"r{instruction.dest_reg}", copy.deepcopy(instruction.value),
-            )
+            current[f"r{instruction.dest_reg}"] = self._substitute_all(copy.deepcopy(instruction.value), current)
 
-        return condition
+        return self._substitute_all(condition, current)
+
+    @classmethod
+    def _substitute_all(cls, node, mapping: dict):
+        """`node` with every `Identifier` named in `mapping` replaced, at once."""
+        if isinstance(node, Identifier):
+            return mapping.get(node.name, node)
+
+        if not dataclasses.is_dataclass(node) or not isinstance(node, Node):
+            return node
+
+        updates = {}
+
+        for field in dataclasses.fields(node):
+            value = getattr(node, field.name)
+
+            if isinstance(value, Node):
+                new_value = cls._substitute_all(value, mapping)
+
+                if new_value is not value:
+                    updates[field.name] = new_value
+            elif isinstance(value, tuple):
+                items = tuple(cls._substitute_all(i, mapping) if isinstance(i, Node) else i for i in value)
+
+                if any(new is not old for new, old in zip(items, value)):
+                    updates[field.name] = items
+
+        return dataclasses.replace(node, **updates) if updates else node
+
+    @classmethod
+    def _source_registers(cls, instruction) -> set:
+        """The registers the BYTECODE instruction reads (its operands after the destination)."""
+        entry = getattr(instruction, "entry", None)
+        operands = [int(m) for m in cls._OPERAND_RE.findall(getattr(entry, "args", "") or "")]
+
+        if instruction.dest_reg is not None and operands and operands[0] == instruction.dest_reg:
+            operands = operands[1:]
+
+        return set(operands)
+
+    def _feeds_only(self, effect, earlier: list) -> bool:
+        """Is everything set up before `effect` either a constant, already inlined
+        into its reader, or part of the chain that computes `effect`'s operands
+        (`r0 = env; r1 = r0[0]; r0 = r1.getId()`)? Those are evaluated before the
+        effect inside the one expression, as they were."""
+        needed = {n.name for n in effect.value.walk() if isinstance(n, Identifier)}
+
+        for instruction in reversed(earlier):
+            name = f"r{instruction.dest_reg}"
+
+            if name in needed:
+                needed |= {n.name for n in instruction.value.walk() if isinstance(n, Identifier)}
+            elif not (isinstance(instruction.value, TRIVIAL_NODE_TYPES) or instruction.definition_used):
+                return False
+
+        return True
 
     def _handlers(self) -> list[BasicBlock]:
         return [b for b in self.cfg.blocks if not b.predecessors and b is not self.cfg.entry]
