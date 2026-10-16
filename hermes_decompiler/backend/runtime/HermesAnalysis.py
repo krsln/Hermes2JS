@@ -8,7 +8,7 @@ from hermes_decompiler.backend.transforms import StructuralAnalyzer
 from hermes_decompiler.backend.transforms.shared import may_alias, read_members, stored_member
 from hermes_decompiler.backend.transforms.cfg_passes import (
     ArrayDestructuringCfgPass, EnvArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass,
-    SharedReturnDuplicationCfgPass, generator_dispatch,
+    SharedReturnDuplicationCfgPass, SharedTailDuplicationCfgPass, generator_dispatch,
 )
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
 from hermes_decompiler.core.logging import get_logger
@@ -519,6 +519,7 @@ class HermesAnalysis:
         EnvArrayDestructuringCfgPass(cfg).run()
         if duplicate_returns:
             SharedReturnDuplicationCfgPass(cfg).run()
+            SharedTailDuplicationCfgPass(cfg).run()
 
         cfg.verify()
         cfg.compute_dominators()

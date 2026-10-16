@@ -54,7 +54,11 @@ function function_15122(param1, param2, param3, param4, param5, param6, param7) 
     // USED → r0 = undefined;
     // CODE → addr:107 | <Call2>: <Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 3>
     r4 = param2(r3);
-    if (!r4) {
+    if (r4 && r4.__esModule) {
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → addr:120 | <Mov>: <Reg8: 1, Reg8: 4>
+        r1 = r4;
+    } else {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:126 | <NewObject>: <Reg8: 3>
         // USED → r3 = {  };
@@ -62,12 +66,6 @@ function function_15122(param1, param2, param3, param4, param5, param6, param7) 
         r3 = { "default": r4 };
         // CODE → addr:132 | <Mov>: <Reg8: 1, Reg8: 3>
         r1 = r3;
-    } else {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → addr:115 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 48>  # String: '__esModule' (Identifier)
-        // USED → r3 = r4.__esModule;
-        // CODE → addr:120 | <Mov>: <Reg8: 1, Reg8: 4>
-        r1 = r4;
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:135 | <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>

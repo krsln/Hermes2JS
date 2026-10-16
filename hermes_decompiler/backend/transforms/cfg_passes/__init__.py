@@ -5,6 +5,7 @@ from .ArrayDestructuringCfgPass import ArrayDestructuringCfgPass
 from .EnvArrayDestructuringCfgPass import EnvArrayDestructuringCfgPass
 from .GeneratorStateDispatchCfgPass import GeneratorStateDispatchCfgPass
 from .SharedReturnDuplicationCfgPass import SharedReturnDuplicationCfgPass
+from .SharedTailDuplicationCfgPass import SharedTailDuplicationCfgPass
 from .ShortCircuitConditionCfgPass import ShortCircuitConditionCfgPass
 
 __all__ = [
@@ -12,6 +13,7 @@ __all__ = [
     "EnvArrayDestructuringCfgPass",
     "GeneratorStateDispatchCfgPass",
     "SharedReturnDuplicationCfgPass",
+    "SharedTailDuplicationCfgPass",
     "ShortCircuitConditionCfgPass",
     "generator_dispatch",
 ]

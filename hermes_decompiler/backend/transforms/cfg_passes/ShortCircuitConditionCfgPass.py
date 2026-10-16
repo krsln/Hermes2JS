@@ -7,7 +7,7 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir import LogicalOperator, Node
 from hermes_decompiler.ir.expressions import BinaryExpression, Identifier
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.backend.transforms.shared import (
     negate_condition, TRIVIAL_NODE_TYPES, has_side_effects, substitute_register,
 )
@@ -78,8 +78,15 @@ class ShortCircuitConditionCfgPass:
         return frozenset(blocks)
 
     def run(self) -> None:
+        self._created = False
+
         while self._merge_one_pass():
             pass
+
+        if self._created:
+            # An edge block the analyses have not seen: dominance is asked about it.
+            self.cfg.compute_dominators()
+            self.cfg.compute_post_dominators()
 
     def _merge_one_pass(self) -> bool:
         """Find and merge the first eligible (block, fallthrough) pair.
@@ -187,22 +194,36 @@ class ShortCircuitConditionCfgPass:
             return False
 
         second = next_branch.condition
+        arm = self._arm_of(block, branch)
+        end_block = next((x for x in successor.successors if x.address == next_branch.target), None)
+        sunk: list = []
 
         if not self._is_inlined_setup_block(successor):
+            if end_block is None or end_block in self._loop_blocks or arm in self._loop_blocks:
+                return False
+
+            # Join copies (`Mov r4, r3`) the arm overwrites anyway only matter
+            # on the way to END: they move onto that edge (see `_sink_copies`).
+            sunk = self._copies_for_the_end_edge(successor, arm)
+
             # A pure value the second test reads through its register
             # (`r0 = arguments[1]; if (r0 !== undefined)`): the test takes the
             # value itself when nothing reads the register afterwards.
-            end_block = next((x for x in successor.successors if x.address == next_branch.target), None)
-            second = (
-                self._fold_pure_setup(successor, second, [self._arm_of(block, branch), end_block])
-                if end_block is not None else None
-            )
+            second = self._fold_pure_setup(successor, second, [arm, end_block], skip=sunk)
 
             if second is None:
                 return False
 
-        if self._setup_feeds_a_join(successor, self._arm_of(block, branch)):
+        if self._setup_feeds_a_join(successor, arm, ignore={i.dest_reg for i in sunk}):
             return False
+
+        edge = None
+
+        if sunk:
+            edge = self._sink_copies(sunk, end_block, successor)
+
+            if edge is None:
+                return False
 
         combined = BinaryExpression(
             left=negate_condition(branch.condition),
@@ -210,46 +231,142 @@ class ShortCircuitConditionCfgPass:
             right=second,
         )
 
-        merged = TerminatorConditionalBranch(condition=combined, target=next_branch.target)
+        merged = TerminatorConditionalBranch(
+            condition=combined, target=edge.address if edge is not None else next_branch.target,
+        )
 
         # `block` now jumps to Y's old target and falls through to `A`.
-        self._rewire_crossed(block, successor, branch, merged)
+        self._rewire_crossed(block, successor, branch, merged, end_block, edge)
         return True
+
+    def _copies_for_the_end_edge(self, successor: BasicBlock, arm: BasicBlock) -> list:
+        """The `Mov`s of the second test block that only END reads: dead on entry
+        to the arm (which writes the register first) and to every handler, and
+        not read by anything else of the block."""
+        setup = [i for i in successor.instructions if i.terminator is None]
+        copies = []
+
+        for instruction in setup:
+            if (
+                    instruction.entry.opcode in ("Mov", "MovLong")
+                    and instruction.dest_reg is not None
+                    and instruction.value is not None
+                    and instruction.statement is None
+                    and self._dead_on_entry(arm, instruction.dest_reg, set())
+                    and all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in self._handlers())
+                    and not any(
+                other is not instruction and (
+                        self._reads_operand(other, instruction.dest_reg)
+                        or (other.value is not None and self._mentions(other.value, f"r{instruction.dest_reg}"))
+                )
+                for other in successor.instructions
+            )
+            ):
+                copies.append(instruction)
+
+        return copies
+
+    def _sink_copies(self, copies: list, end_block: BasicBlock, successor: BasicBlock):
+        """A block on the edge into `end_block` that runs the copies. It sits right
+        before END; the block that used to fall into END jumps over it."""
+        blocks = self.cfg.blocks
+        index = blocks.index(end_block)
+
+        if index == 0 or blocks[index - 1] is successor:
+            return None
+
+        last = blocks[index - 1]
+
+        if last.terminator is not None and not isinstance(last.terminator, TerminatorJump):
+            if end_block in last.successors:
+                return None
+        elif last.terminator is None:
+            if end_block not in last.successors or last.address >= end_block.address - 1:
+                return None
+
+        edge = BasicBlock(max(b.id for b in blocks) + 1, end_block.address - 1)
+
+        for instruction in copies:
+            duplicate = copy.copy(instruction)
+            duplicate.value = copy.deepcopy(instruction.value)
+            edge.instructions.append(duplicate)
+
+        if last.terminator is None:
+            last.terminator = TerminatorJump(target=end_block.address)
+
+        edge.successors.append(end_block)
+        end_block.predecessors.append(edge)
+        blocks.insert(index, edge)
+        self._created = True
+
+        return edge
 
     @staticmethod
     def _is_pure_setup_block(block: BasicBlock) -> bool:
-        """Only side-effect-free value writes plus its own branch (the crossed
-        form folds them into the test, see `_fold_pure_setup`)."""
-        return all(
-            i.terminator is not None
-            or (i.dest_reg is not None and i.value is not None and i.statement is None
-                and not has_side_effects(i.value))
-            for i in block.instructions
+        """Only value writes plus its own branch (the crossed form folds them
+        into the test, see `_fold_pure_setup`). At most one of them may have an
+        effect (a call): it runs once, on the same path, inside the test."""
+        setup = [i for i in block.instructions if i.terminator is None]
+
+        return (
+                all(i.dest_reg is not None and i.value is not None and i.statement is None for i in setup)
+                and sum(1 for i in setup if has_side_effects(i.value)) <= 1
         )
 
-    def _fold_pure_setup(self, successor: BasicBlock, condition, exits: list):
+    def _fold_pure_setup(self, successor: BasicBlock, condition, exits: list, skip=()):
         """The second test's condition with its pure setup instructions
         substituted in, or None when that is not exact.
 
         Every setup instruction must be a side-effect-free value whose register
         is dead on entry to both exits of the pair (written before any read,
         on every path), so dropping the write loses nothing."""
-        setup = [i for i in successor.instructions if i.terminator is None]
+        setup = [i for i in successor.instructions if i.terminator is None and not any(i is k for k in skip)]
+        effect_seen = False
 
-        for instruction in reversed(setup):
+        for position in range(len(setup) - 1, -1, -1):
+            instruction = setup[position]
+
+            if instruction.value is not None and has_side_effects(instruction.value):
+                # One effect, evaluated once and in order, inside a test that has
+                # no effect of its own; what ran before it is its own operands.
+                name = f"r{instruction.dest_reg}"
+                if (
+                        effect_seen
+                        or has_side_effects(condition)
+                        or sum(1 for n in condition.walk() if isinstance(n, Identifier) and n.name == name) != 1
+                        or not all(
+                    isinstance(earlier.value, TRIVIAL_NODE_TYPES)
+                    or earlier.definition_used  # already inlined into its reader
+                    or self._mentions(instruction.value, f"r{earlier.dest_reg}")
+                    for earlier in setup[:position]
+                )
+                ):
+                    return None
+                effect_seen = True
+                effectful = True
+            else:
+                effectful = False
+
             if (
                     instruction.dest_reg is None
                     or instruction.value is None
                     or instruction.statement is not None
-                    or has_side_effects(instruction.value)
                     # A copy (`Mov r5, r4`) is an input of a join the exits read
                     # through another register's inlined value; a fold cannot see
                     # that, so only values the test itself computes are folded.
                     or instruction.entry.opcode in ("Mov", "MovLong")
-                    or not all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in exits)
+                    or not (
+                    # The global object is the same on every path and every reader
+                    # already inlined it: nothing is left to read the register.
+                    instruction.entry.opcode == "GetGlobalObject"
+                    or all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in exits)
+            )
                     # A handler is entered by an edge the CFG does not have: it
                     # may read the register the try body had set.
-                    or not all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in self._handlers())
+                    or not (
+                    instruction.entry.opcode == "GetGlobalObject"
+                    or all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in self._handlers())
+            )
             ):
                 return None
 
@@ -273,8 +390,17 @@ class ShortCircuitConditionCfgPass:
         name = f"r{register}"
 
         for instruction in block.instructions:
-            nodes = [instruction.value, instruction.statement, getattr(instruction.terminator, "condition", None),
-                     getattr(instruction.terminator, "value", None)]
+            # The bytecode operands are the reads at THIS point. A name inside an
+            # inlined value is only where the value was defined (a join read
+            # prints the arm's copy: `r2[0] = r3` for a read of r1), so names count
+            # only where no operands describe the instruction: a condition merged
+            # from several tests, or an instruction a pass made.
+            described = bool(
+                getattr(getattr(instruction, "entry", None), "args", "")) and instruction.terminator is None
+            nodes = [] if described else [
+                instruction.value, instruction.statement, getattr(instruction.terminator, "condition", None),
+                getattr(instruction.terminator, "value", None),
+            ]
 
             if any(n is not None and cls._mentions(n, name) for n in nodes) or cls._reads_operand(instruction,
                                                                                                   register):
@@ -323,19 +449,23 @@ class ShortCircuitConditionCfgPass:
     def _arm_of(self, block, branch):
         return next(s for s in block.successors if s.address == branch.target)
 
-    @staticmethod
-    def _setup_feeds_a_join(successor: BasicBlock, arm: BasicBlock) -> bool:
+    @classmethod
+    def _setup_feeds_a_join(cls, successor: BasicBlock, arm: BasicBlock, ignore=frozenset()) -> bool:
         """True if `arm` (the other way out of the pair) writes a register the
         removed setup writes and then flows straight into the exit. The two
         writes are the arms of one join (`r14 = r20` / `r14 = null`, then
         `r14` is read): deleting one with the block leaves the readers on
         the wrong value."""
-        written = {i.dest_reg for i in successor.instructions if i.dest_reg is not None}
+        written = {i.dest_reg for i in successor.instructions if i.dest_reg is not None} - set(ignore)
 
         if not written or len(arm.successors) != 1:
             return False
 
         end_block = next((s for s in successor.successors if s is not arm), None)
+
+        if end_block is not None:
+            # Only a register the exit goes on to read is a join.
+            written = {r for r in written if not cls._dead_on_entry(end_block, r, set())}
 
         return (
                 end_block is not None
@@ -343,8 +473,10 @@ class ShortCircuitConditionCfgPass:
                 and any(i.dest_reg in written for i in arm.instructions)
         )
 
-    def _rewire_crossed(self, block, successor, branch, merged) -> None:
-        end_block = next(s for s in successor.successors if s.address == merged.target)
+    def _rewire_crossed(self, block, successor, branch, merged, end_block=None, edge=None) -> None:
+        if end_block is None:
+            end_block = next(s for s in successor.successors if s.address == merged.target)
+
         a_block = next(s for s in block.successors if s.address == branch.target)
 
         block.terminator = merged
@@ -361,7 +493,7 @@ class ShortCircuitConditionCfgPass:
                 target.predecessors.remove(successor)
 
         block.successors = []
-        self._connect(block, end_block)
+        self._connect(block, edge if edge is not None else end_block)
         self._connect(block, a_block)
 
         if successor in self.cfg.blocks:

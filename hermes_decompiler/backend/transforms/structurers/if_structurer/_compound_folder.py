@@ -321,8 +321,9 @@ class _CompoundConditionFolder:
         if (
                 target_block is not None
                 and isinstance(target_block.terminator, TerminatorReturn)
-                # A `case` test's shared target is `SwitchStructurer`'s business.
-                and not is_constant_comparison(branch.condition)
+                # A `case` test's shared target is `SwitchStructurer`'s business -
+                # when it sits next to another `case` test. A lone comparison is an `if`.
+                and not (is_constant_comparison(branch.condition) and self._case_test_beside(region, index))
                 and self._sits_in_sibling_arm(region, target_block)
         ):
             return False
@@ -353,6 +354,30 @@ class _CompoundConditionFolder:
             insert_at += 1
         self.graph.insert_at(region, insert_at, if_region)
         return True
+
+    @staticmethod
+    def _case_test_beside(region, index: int) -> bool:
+        """Is the neighbouring item (before or after) another `case` test?"""
+        parent = getattr(region, "parent", None)
+
+        # The chain's earlier tests are the `if`s this region is the else of.
+        if isinstance(parent, IfRegion) and parent.condition is not None and is_constant_comparison(parent.condition):
+            return True
+
+        for neighbour in (index - 1, index + 1):
+            if not 0 <= neighbour < len(region.children):
+                continue
+
+            item = region.children[neighbour]
+            condition = (
+                getattr(item, "condition", None) if isinstance(item, IfRegion)
+                else getattr(getattr(item, "terminator", None), "condition", None)
+            )
+
+            if condition is not None and is_constant_comparison(condition):
+                return True
+
+        return False
 
     @staticmethod
     def _sits_in_sibling_arm(region, target_block) -> bool:

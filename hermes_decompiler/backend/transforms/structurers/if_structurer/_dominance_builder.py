@@ -519,6 +519,11 @@ class _DominanceIfBuilder(RegionStructurer):
         if isinstance(terminator, TerminatorConditionalBranch):
             if terminator.target != merge_block.address:
                 return
+            if any(succ is not merge_block for succ in last.successors):
+                # The false edge does not reach the merge either: it enters
+                # a block outside this arm (a tail shared with the sibling
+                # arm). Dropping the test would drop that path silently.
+                return
             # The false edge falls through; after stripping, the block
             # becomes a pure condition holder that higher-level folding
             # can turn into part of a compound expression.
