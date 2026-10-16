@@ -4,6 +4,7 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionGraph
 from hermes_decompiler.backend.transforms.cfg_passes import (
     ShortCircuitConditionCfgPass,
+    ValueConditionFoldCfgPass,
 )
 from hermes_decompiler.backend.transforms.region_passes import (
     BooleanChainRegionPass,
@@ -90,6 +91,8 @@ class StructuralAnalyzer:
         # has built an IfRegion around one of these blocks, the merge
         # this pass performs can no longer be expressed as a simple
         # CFG edit.
+        # A value diamond that is only tested becomes one test block first.
+        ValueConditionFoldCfgPass(self.cfg).run()
         ShortCircuitConditionCfgPass(self.cfg).run()
         flow = FlowSnapshot(self.cfg)
 

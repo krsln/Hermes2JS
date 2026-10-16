@@ -58,7 +58,7 @@ def test_second_test_with_a_read_keeps_both_values():
     out = _render("lazy_status_96_1003.hasm", 1003)
 
     assert "goto" not in out
-    assert "-1 !== r0[0]._status" in out
+    assert "0 === r2 || -1 === r0[0]._status" in out
 
 
 def test_one_call_in_the_second_test_folds_into_the_condition():
@@ -69,16 +69,16 @@ def test_one_call_in_the_second_test_folds_into_the_condition():
     assert out.count("r0[26]") == 1
 
 
-def test_tail_after_a_value_ternary_keeps_the_ternary_test():
+def test_value_ternary_that_is_only_tested_folds_into_the_condition():
     """96/12188: `!d || (k in d ? !m.__esModule : d.writable || d.configurable)`.
 
-    The tail (the 6-instruction default descriptor) is jumped to by `!d` and
-    fallen into by the test of the ternary's value; both keep their exit."""
+    The ternary's value goes through a register that only one test reads: the
+    diamond becomes the test, so the default descriptor is written once."""
     out = _render("shared_tail_after_ternary_96_12188.hasm", 12188)
 
     assert "goto" not in out
-    assert "if (r2) {" in out
-    assert out.count('"enumerable": true') == 2
+    assert "if (!r4 || ((\"get\" in r4) ? !param2.__esModule : r4.writable || r4.configurable)) {" in out
+    assert out.count('"enumerable": true') == 1
 
 
 def test_call_chain_in_the_second_test_folds_into_the_condition():
@@ -114,3 +114,36 @@ def test_function_with_handlers_does_not_get_an_edge_block():
     out = _render("sunk_copy_with_handlers_98_2917.hasm", 2917)
 
     assert out.strip().startswith("function")
+
+
+def test_value_chain_that_is_only_tested_folds_into_the_condition():
+    """98/2463: `Start || Move || End || Cancel`. The last two are a value (`r5 = End || Cancel`)
+    that one test reads; with it folded the chain is a single condition, and the
+    comparison with `topTouchMove` is not mistaken for a later definition's value
+    (`r6 = param1 === "topTouchMove"`), which an earlier condition cannot read."""
+    out = _render("touch_chain_value_tests_98_2463.hasm", 2463)
+
+    assert (
+        'if (param1 === "topTouchStart" || (param1 === "topTouchMove" || '
+        '(param1 === "topTouchEnd" || param1 === "topTouchCancel"))) {'
+    ) in out
+    assert "r6 ||" not in out
+
+
+def test_negated_logical_condition_prints_with_de_morgan_only_for_exact_operands():
+    """`!(a && !b)` reads `!a || b`; `!(a < b && c)` keeps its `!` (NaN)."""
+    from hermes_decompiler.backend.emit.printer.ExpressionPrinter import ExpressionPrinter
+    from hermes_decompiler.ir import LogicalOperator
+    from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
+    from hermes_decompiler.ir.expressions import BinaryExpression, Identifier, UnaryExpression
+
+    a, b, c = Identifier("a"), Identifier("b"), Identifier("c")
+    printer = ExpressionPrinter()
+
+    free = UnaryExpression(UnaryOperator.LOGICAL_NOT, BinaryExpression(
+        a, LogicalOperator.AND, UnaryExpression(UnaryOperator.LOGICAL_NOT, b)))
+    ordering = UnaryExpression(UnaryOperator.LOGICAL_NOT, BinaryExpression(
+        BinaryExpression(a, BinaryOperator.LESS_THAN, b), LogicalOperator.AND, c))
+
+    assert printer.visit(free) == "!a || b"
+    assert printer.visit(ordering) == "!(a < b && c)"

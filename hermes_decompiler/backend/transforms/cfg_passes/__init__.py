@@ -7,6 +7,7 @@ from .GeneratorStateDispatchCfgPass import GeneratorStateDispatchCfgPass
 from .SharedReturnDuplicationCfgPass import SharedReturnDuplicationCfgPass
 from .SharedTailDuplicationCfgPass import SharedTailDuplicationCfgPass
 from .ShortCircuitConditionCfgPass import ShortCircuitConditionCfgPass
+from .ValueConditionFoldCfgPass import ValueConditionFoldCfgPass
 
 __all__ = [
     "ArrayDestructuringCfgPass",
@@ -15,5 +16,6 @@ __all__ = [
     "SharedReturnDuplicationCfgPass",
     "SharedTailDuplicationCfgPass",
     "ShortCircuitConditionCfgPass",
+    "ValueConditionFoldCfgPass",
     "generator_dispatch",
 ]

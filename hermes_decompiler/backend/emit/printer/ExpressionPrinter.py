@@ -37,6 +37,8 @@ from hermes_decompiler.ir.expressions import (
     RawExpression,
     ThisPlaceholder,
 )
+from hermes_decompiler.ir.Operators import LogicalOperator, UnaryOperator
+from hermes_decompiler.backend.transforms.shared import negate_for_display
 from ._PrinterVisitor import PrinterVisitor
 
 __all__ = [
@@ -133,6 +135,17 @@ class ExpressionPrinter(PrinterVisitor):
     # ------------------------------------------------------------------
 
     def visit_UnaryExpression(self, node: UnaryExpression) -> str:
+        if (
+                node.operator == UnaryOperator.LOGICAL_NOT
+                and isinstance(node.operand, BinaryExpression)
+                and node.operand.operator in (LogicalOperator.AND, LogicalOperator.OR)
+        ):
+            # `!(a && !b)` reads `!a || b`. Only the TEXT changes: no pass sees this form.
+            flipped = negate_for_display(node.operand)
+
+            if isinstance(flipped, BinaryExpression) and flipped.operator != node.operand.operator:
+                return self.visit(flipped)
+
         operand = self._wrap_operand(node.operand, node)
         return f"{node.operator}{operand}"
 

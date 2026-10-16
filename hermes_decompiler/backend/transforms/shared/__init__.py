@@ -1,4 +1,4 @@
-from ._negation import negate_condition
+from ._negation import negate_condition, negate_for_display
 from ._predicates import has_bottom_tested_guard, is_loop_guard_shaped
 from ._absorb import absorb_arm_definitions, substitute_register
 from ._purity import is_pure, is_unfolded_literal_definition, prints_non_constant_statement, prints_definition, \
@@ -12,6 +12,7 @@ from ._memory import may_alias, read_members, stored_member
 __all__ = [
     "absorb_arm_definitions", "substitute_register",
     "negate_condition",
+    "negate_for_display",
     "is_loop_guard_shaped", "has_bottom_tested_guard",
     "is_pure", "is_unfolded_literal_definition", "prints_non_constant_statement", "prints_definition",
     "has_side_effects", "IMPURE_EXPRESSION_TYPES", "PURE_CALLEES", "TRIVIAL_NODE_TYPES",

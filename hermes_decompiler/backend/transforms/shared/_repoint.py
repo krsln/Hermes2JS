@@ -245,6 +245,13 @@ def repoint_references(
         if for_conditions is None:
             continue
 
+        # A region wholly before the fold cannot read what the fold defines (the same
+        # rule the blocks above follow): its test merely LOOKS like the old value.
+        covered = getattr(region, "covered_blocks", None)
+
+        if covered and all(b.id < min_block_id for b in covered):
+            continue
+
         # An `if`'s test runs BEFORE its arms: when the instructions the fold
         # owns sit inside the `if`, its condition cannot read what they write
         # (`if (c && arguments[1] !== undefined) { r5 = arguments[1] }` must not
