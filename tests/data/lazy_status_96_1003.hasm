@@ -1,0 +1,23 @@
+
+=> [Function #1003 "" of 65 bytes]: 2 params, frame size=3, strict=1, exc handler=0, debug info=0  @ offset 0x0010c65d
+
+Bytecode listing:
+
+==> 00000000: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 0>
+==> 00000007: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 15794>  # String: '_status' (Identifier)
+==> 0000000d: <LoadConstZero>: <Reg8: 1>
+==> 0000000f: <JStrictEqual>: <Addr8: 24, Reg8: 1, Reg8: 2>  # Address: 00000027
+==> 00000013: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 0>
+==> 00000017: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 15794>  # String: '_status' (Identifier)
+==> 0000001d: <LoadConstInt>: <Reg8: 1, Imm32: -1>
+==> 00000023: <JStrictNotEqual>: <Addr8: 26, Reg8: 1, Reg8: 2>  # Address: 0000003d
+==> 00000027: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 0>
+==> 0000002b: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 0000002e: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 15794>  # String: '_status' (Identifier)
+==> 00000034: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000037: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 7362>  # String: '_result' (Identifier)
+==> 0000003d: <LoadConstUndefined>: <Reg8: 0>
+==> 0000003f: <Ret>: <Reg8: 0>
+
+

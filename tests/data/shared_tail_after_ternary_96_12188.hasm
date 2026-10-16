@@ -1,0 +1,42 @@
+
+=> [Function #12188 "" of 130 bytes]: 5 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x00220e16
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 3>
+==> 00000002: <LoadParam>: <Reg8: 6, UInt8: 2>
+==> 00000005: <LoadParam>: <Reg8: 7, UInt8: 3>
+==> 00000008: <LoadParam>: <Reg8: 5, UInt8: 4>
+==> 0000000b: <StoreToEnvironment>: <Reg8: 3, UInt8: 0, Reg8: 6>
+==> 0000000f: <StoreToEnvironment>: <Reg8: 3, UInt8: 1, Reg8: 7>
+==> 00000013: <LoadConstUndefined>: <Reg8: 0>
+==> 00000015: <JStrictNotEqual>: <Addr8: 7, Reg8: 5, Reg8: 0>  # Address: 0000001c
+==> 00000019: <Mov>: <Reg8: 5, Reg8: 7>
+==> 0000001c: <GetGlobalObject>: <Reg8: 1>
+==> 0000001e: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000024: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 150>  # String: 'getOwnPropertyDescriptor' (Identifier)
+==> 00000029: <Call3>: <Reg8: 4, Reg8: 2, Reg8: 4, Reg8: 6, Reg8: 7>
+==> 0000002f: <JmpFalse>: <Addr8: 40, Reg8: 4>  # Address: 00000057
+==> 00000032: <LoadConstString>: <Reg8: 2, string_id: 50>  # String: 'get' (Identifier)
+==> 00000036: <IsIn>: <Reg8: 2, Reg8: 2, Reg8: 4>
+==> 0000003a: <JmpTrue>: <Addr8: 18, Reg8: 2>  # Address: 0000004c
+==> 0000003d: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 3, string_id: 254>  # String: 'writable' (Identifier)
+==> 00000042: <JmpTrue>: <Addr8: 8, Reg8: 2>  # Address: 0000004a
+==> 00000045: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 4, string_id: 98>  # String: 'configurable' (Identifier)
+==> 0000004a: <Jmp>: <Addr8: 10>  # Address: 00000054
+==> 0000004c: <GetByIdShort>: <Reg8: 6, Reg8: 6, UInt8: 5, string_id: 48>  # String: '__esModule' (Identifier)
+==> 00000051: <Not>: <Reg8: 2, Reg8: 6>
+==> 00000054: <JmpFalse>: <Addr8: 23, Reg8: 2>  # Address: 0000006b
+==> 00000057: <NewObject>: <Reg8: 2>
+==> 00000059: <LoadConstTrue>: <Reg8: 6>
+==> 0000005b: <PutNewOwnByIdShort>: <Reg8: 2, Reg8: 6, string_id: 133>  # String: 'enumerable' (Identifier)
+==> 0000005f: <CreateClosure>: <Reg8: 3, Reg8: 3, function_id: 12189>  # Function: [#12189 get of 17 bytes]: 1 params @ offset 0x00220e98
+==> 00000064: <PutNewOwnByIdShort>: <Reg8: 2, Reg8: 3, string_id: 50>  # String: 'get' (Identifier)
+==> 00000068: <Mov>: <Reg8: 4, Reg8: 2>
+==> 0000006b: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000071: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 6, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000076: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000079: <Call4>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 5, Reg8: 4>
+==> 00000080: <Ret>: <Reg8: 0>
+
+

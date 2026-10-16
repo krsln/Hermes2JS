@@ -28,7 +28,7 @@ from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, Termin
 
 
 class SharedTailDuplicationCfgPass:
-    _MAX_INSTRUCTIONS = 4
+    _MAX_INSTRUCTIONS = 12
 
     def __init__(self, cfg: CFG):
         self.cfg = cfg

@@ -1,0 +1,23 @@
+
+=> [Function #652 "" of 64 bytes]: 2 params, frame size=4, strict=0, exc handler=0, debug info=0  @ offset 0x001051c4
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <JmpFalse>: <Addr8: 56, Reg8: 1>  # Address: 0000003b
+==> 00000006: <GetGlobalObject>: <Reg8: 0>
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 37>  # String: 'Symbol' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 3, string_id: 8218>  # String: 'function' (Identifier)
+==> 00000011: <TypeOf>: <Reg8: 2, Reg8: 2>
+==> 00000014: <JStrictNotEqual>: <Addr8: 39, Reg8: 3, Reg8: 2>  # Address: 0000003b
+==> 00000018: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 9124>  # String: 'constructor' (Identifier)
+==> 0000001e: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 37>  # String: 'Symbol' (Identifier)
+==> 00000024: <JStrictNotEqual>: <Addr8: 23, Reg8: 3, Reg8: 2>  # Address: 0000003b
+==> 00000028: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 1, string_id: 37>  # String: 'Symbol' (Identifier)
+==> 0000002e: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000033: <LoadConstString>: <Reg8: 0, string_id: 2121>  # String: 'symbol' (String)
+==> 00000037: <JStrictNotEqual>: <Addr8: 7, Reg8: 1, Reg8: 2>  # Address: 0000003e
+==> 0000003b: <TypeOf>: <Reg8: 0, Reg8: 1>
+==> 0000003e: <Ret>: <Reg8: 0>
+
+

@@ -67,3 +67,15 @@ def test_one_call_in_the_second_test_folds_into_the_condition():
     assert "goto" not in out
     assert "r0[26].call(undefined)" in out
     assert out.count("r0[26]") == 1
+
+
+def test_tail_after_a_value_ternary_keeps_the_ternary_test():
+    """96/12188: `!d || (k in d ? !m.__esModule : d.writable || d.configurable)`.
+
+    The tail (the 6-instruction default descriptor) is jumped to by `!d` and
+    fallen into by the test of the ternary's value; both keep their exit."""
+    out = _render("shared_tail_after_ternary_96_12188.hasm", 12188)
+
+    assert "goto" not in out
+    assert "if (r2) {" in out
+    assert out.count('"enumerable": true') == 2
