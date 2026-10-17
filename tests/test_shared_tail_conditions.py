@@ -95,7 +95,7 @@ def test_call_chain_through_one_register_keeps_the_whole_condition():
     out = _render("compareProps_call_chain_96_11316.hasm", 11316)
 
     assert "goto" not in out
-    assert "Object.keys(param1.props.jestAnimatedProps.value.value).length === 0" in out
+    assert "Object.keys(param1.props.jestAnimatedProps.value).length === 0" in out
 
 
 def test_a_stale_inlined_callee_is_not_folded_into_a_wrong_value():
@@ -147,3 +147,35 @@ def test_negated_logical_condition_prints_with_de_morgan_only_for_exact_operands
 
     assert printer.visit(free) == "!a || b"
     assert printer.visit(ordering) == "!(a < b && c)"
+
+
+def test_any_of_several_parameters_is_one_condition():
+    """96/4456: `if (a || b || c || d || e || f) {...}` - every test but the first sits
+    behind a `LoadParam` the test already inlined; the chain used to stop after `a`
+    and the rest became `else { if (b || ...) goto }`."""
+    out = _render("any_of_params_96_4456.hasm", 4456)
+
+    assert "goto" not in out
+    assert "if (param1 || param2 || param3 || param4 || param5 || param6) {" in out
+
+
+def test_second_test_with_its_own_call_keeps_each_callee():
+    """98/11891: `len === 1 && (a(x) || b(x))`. The setup of the second call reads the
+    environment register that the first call's setup set; once `r2` is re-assigned
+    (`r2 = x`) the callee must still name the environment, not `x`."""
+    out = _render("parseTranslateX_two_calls_98_11891.hasm", 11891)
+
+    assert "goto" not in out
+    assert (
+        "r2 === 1 && (getParentEnvironment(0)[0].call(undefined, param1[0])"
+        " || getParentEnvironment(0)[1].call(undefined, param1[0]))"
+    ) in out
+
+
+def test_constant_comparison_in_a_plain_chain_is_not_a_case_test():
+    """96/150: `... || p < 0 || p === Infinity` - the last link compares with a constant
+    but not the value the previous link compared, so it is part of the one condition."""
+    out = _render("size_checks_throw_96_150.hasm", 150)
+
+    assert "goto" not in out
+    assert "!(r1 || param3 < 0) && param3 !== Infinity" in out

@@ -61,4 +61,4 @@ def test_the_swap_runs_after_both_checks_and_both_exits_stay():
     assert "goto" not in out, out
     assert out.count("return param1;") == 2, out
     # `r5 !== undefined && !(k in X)` returns the parameter; every other path swaps.
-    assert re.search(r"if \(r5 === undefined \|\| param1\[r2\] in r0\[1\]\[1\]\) \{.*?r0 = \[\];", out, re.S), out
+    assert re.search(r"if \(r5 === undefined \|\| param1\[r2\] in r0\[1\]\) \{.*?r0 = \[\];", out, re.S), out

@@ -1,0 +1,41 @@
+
+=> [Function #150 "ve" of 135 bytes]: 4 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x000fb53d
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 3, UInt8: 3>
+==> 00000006: <LoadConstString>: <Reg8: 1, string_id: 7552>  # String: 'number' (Identifier)
+==> 0000000a: <TypeOf>: <Reg8: 0, Reg8: 3>
+==> 0000000d: <JStrictNotEqual>: <Addr8: 88, Reg8: 1, Reg8: 0>  # Address: 00000065
+==> 00000011: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000014: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 20>
+==> 00000018: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001a: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 3>
+==> 0000001f: <JmpTrue>: <Addr8: 70, Reg8: 1>  # Address: 00000065
+==> 00000022: <LoadConstZero>: <Reg8: 1>
+==> 00000024: <JLess>: <Addr8: 65, Reg8: 3, Reg8: 1>  # Address: 00000065
+==> 00000028: <LoadConstDouble>: <Reg8: 1, Double: inf>
+==> 00000032: <JStrictEqual>: <Addr8: 51, Reg8: 3, Reg8: 1>  # Address: 00000065
+==> 00000036: <GetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 13338>  # String: '_queue' (Identifier)
+==> 0000003c: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 207>  # String: 'push' (Identifier)
+==> 00000041: <NewObject>: <Reg8: 1>
+==> 00000043: <LoadParam>: <Reg8: 6, UInt8: 2>
+==> 00000046: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 6, string_id: 205>  # String: 'value' (Identifier)
+==> 0000004a: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 3, string_id: 226>  # String: 'size' (Identifier)
+==> 0000004e: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1>
+==> 00000053: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 3, string_id: 10209>  # String: '_queueTotalSize' (Identifier)
+==> 00000059: <Add>: <Reg8: 1, Reg8: 1, Reg8: 3>
+==> 0000005d: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 10209>  # String: '_queueTotalSize' (Identifier)
+==> 00000063: <Ret>: <Reg8: 0>
+==> 00000065: <GetGlobalObject>: <Reg8: 0>
+==> 00000067: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 8275>  # String: 'RangeError' (Identifier)
+==> 0000006d: <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000072: <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 2>
+==> 00000076: <LoadConstString>: <Reg8: 7, string_id: 694>  # String: 'Size must be a finite, non-NaN, non-negative number.' (String)
+==> 0000007a: <Mov>: <Reg8: 8, Reg8: 1>
+==> 0000007d: <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
+==> 00000081: <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 00000085: <Throw>: <Reg8: 0>
+
+

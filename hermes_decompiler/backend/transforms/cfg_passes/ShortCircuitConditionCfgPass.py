@@ -7,6 +7,7 @@ import re
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir import LogicalOperator, Node
+from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, Identifier, Literal, UndefinedLiteral
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.backend.transforms.shared import (
@@ -157,7 +158,15 @@ class ShortCircuitConditionCfgPass:
             # coincide with branch.target.
             return False
 
-        if next_branch.target == branch.target and not pure and not self._is_inlined_setup_block(successor):
+        if (
+                next_branch.target == branch.target
+                and not pure
+                # A constant comparison behind inlined setup is a link of a `case` chain:
+                # SwitchStructurer wants those as separate tests. A plain value
+                # (`a || b || c` over parameters) is one condition.
+                and not (
+                self._is_inlined_setup_block(successor) and self._is_case_test(next_branch.condition, branch.condition))
+        ):
             # `a || (r2 = f; b)` with a pure `f`: the test takes the value.
             exits = [s for s in (self._arm_of(block, branch), self._fallthrough(successor)) if s is not None]
             folded = self._fold_pure_setup(successor, next_branch.condition, exits) if len(exits) == 2 else None
@@ -341,7 +350,7 @@ class ShortCircuitConditionCfgPass:
                 name = f"r{instruction.dest_reg}"
                 if (
                         effect_seen
-                        or has_side_effects(probe)
+                        or (has_side_effects(probe) and not self._read_before_any_effect(probe, name))
                         or sum(1 for n in probe.walk() if isinstance(n, Identifier) and n.name == name) != 1
                         or not self._feeds_only(instruction, setup[:position])
                 ):
@@ -376,6 +385,7 @@ class ShortCircuitConditionCfgPass:
         # was at that instruction, and a register the setup writes twice
         # (`r0 = env; r1 = r0[0]; r0 = undefined`) is not one name.
         current: dict = {}
+        resolved: dict = {}
         writes = [i.dest_reg for i in setup]
 
         for instruction in setup:
@@ -396,13 +406,58 @@ class ShortCircuitConditionCfgPass:
                     return None
 
             # A copy: the setup's own node stays the identity a later repair looks for.
-            current[f"r{instruction.dest_reg}"] = self._substitute_all(copy.deepcopy(instruction.value), current)
+            value = copy.deepcopy(self._substitute_all(instruction.value, current, resolved))
+            resolved[id(instruction.value)] = value
+            current[f"r{instruction.dest_reg}"] = value
 
-        return self._substitute_all(condition, current)
+        return self._substitute_all(condition, current, resolved)
 
     @classmethod
-    def _substitute_all(cls, node, mapping: dict):
-        """`node` with every `Identifier` named in `mapping` replaced, at once."""
+    def _read_before_any_effect(cls, node, name: str) -> bool:
+        """Is `name` evaluated before anything in `node` that can have an effect?
+        Then an effect substituted for it still runs first, as it did as setup."""
+        return cls._eval_order(node, name) == "read"
+
+    @classmethod
+    def _eval_order(cls, node, name: str):
+        """'read' if `name` is reached first, 'effect' if an effect is, else None
+        (operands left to right, an operation after its operands)."""
+        if isinstance(node, Identifier):
+            return "read" if node.name == name else None
+
+        if not isinstance(node, Node):
+            return None
+
+        for field in dataclasses.fields(node):
+            value = getattr(node, field.name)
+
+            for child in (value if isinstance(value, tuple) else (value,)):
+                if isinstance(child, Node):
+                    found = cls._eval_order(child, name)
+
+                    if found is not None:
+                        return found
+
+        children = [
+            c for f in dataclasses.fields(node)
+            for c in (getattr(node, f.name) if isinstance(getattr(node, f.name), tuple) else (getattr(node, f.name),))
+            if isinstance(c, Node)
+        ]
+
+        # The operation itself is the effect once its operands have run.
+        return "effect" if has_side_effects(node) and not any(has_side_effects(c) for c in children) else None
+
+    @classmethod
+    def _substitute_all(cls, node, mapping: dict, resolved: dict | None = None):
+        """`node` with every `Identifier` named in `mapping` replaced, at once.
+
+        A subtree that IS (by identity) an earlier instruction's value was inlined
+        from there: its names mean the registers as that instruction saw them, so
+        it takes that instruction's own resolution instead of being read again
+        with the registers as they are now (`r4 = r2[1]` ... `r2 = a[0]` ... `r4(r2)`)."""
+        if resolved and id(node) in resolved:
+            return resolved[id(node)]
+
         if isinstance(node, Identifier):
             return mapping.get(node.name, node)
 
@@ -415,12 +470,12 @@ class ShortCircuitConditionCfgPass:
             value = getattr(node, field.name)
 
             if isinstance(value, Node):
-                new_value = cls._substitute_all(value, mapping)
+                new_value = cls._substitute_all(value, mapping, resolved)
 
                 if new_value is not value:
                     updates[field.name] = new_value
             elif isinstance(value, tuple):
-                items = tuple(cls._substitute_all(i, mapping) if isinstance(i, Node) else i for i in value)
+                items = tuple(cls._substitute_all(i, mapping, resolved) if isinstance(i, Node) else i for i in value)
 
                 if any(new is not old for new, old in zip(items, value)):
                     updates[field.name] = items
@@ -450,7 +505,14 @@ class ShortCircuitConditionCfgPass:
 
             if name in needed:
                 needed |= {n.name for n in instruction.value.walk() if isinstance(n, Identifier)}
-            elif not (isinstance(instruction.value, TRIVIAL_NODE_TYPES) or instruction.definition_used):
+            elif not (
+                    isinstance(instruction.value, TRIVIAL_NODE_TYPES)
+                    or instruction.definition_used
+                    # A pure value nothing in the chain reads (`r0 = getEnvironment(0)` whose
+                    # member was resolved to a name): dropping it loses nothing, and the fold
+                    # has already checked its register is dead on both exits.
+                    or (instruction.value is not None and not has_side_effects(instruction.value))
+            ):
                 return False
 
         return True
@@ -595,6 +657,31 @@ class ShortCircuitConditionCfgPass:
             return None
 
         return candidates[0]
+
+    @staticmethod
+    def _compared_constant(condition):
+        """`x` of `x === <literal>` / `x !== <literal>` (either side), else None."""
+        if not (
+                isinstance(condition, BinaryExpression)
+                and condition.operator in (BinaryOperator.STRICT_EQUAL, BinaryOperator.STRICT_NOT_EQUAL)
+        ):
+            return None
+
+        if isinstance(condition.right, Literal | UndefinedLiteral):
+            return condition.left
+
+        if isinstance(condition.left, Literal | UndefinedLiteral):
+            return condition.right
+
+        return None
+
+    @classmethod
+    def _is_case_test(cls, condition, previous) -> bool:
+        """A link of a `case` chain: the same value compared with a constant again."""
+        subject = cls._compared_constant(condition)
+
+        return subject is not None and cls._compared_constant(previous) is not None \
+            and subject.structurally_equal(cls._compared_constant(previous))
 
     @staticmethod
     def _is_pure_test_block(block: BasicBlock) -> bool:
