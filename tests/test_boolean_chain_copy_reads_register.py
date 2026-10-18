@@ -77,3 +77,17 @@ def test_chain_with_a_call_is_not_repeated_in_the_copy_after_the_if():
     # object there: r3 was never written on that path).
     assert re.search(r"\br0 = r1;", js)
     assert not re.search(r"\br0 = r3;", js)
+
+
+def test_every_path_into_the_merge_reads_the_register_it_wrote():
+    """96/12935, the path where `splice instanceof Function` holds: `Mov r1, r2`
+    after `r2 = splice instanceof Function` (that path) / `r2 = r3` (the chain
+    path). The copy read `r3` (the global object there), and `r1 = len >= 0`,
+    which the `if`'s own test inlined, was not assigned for `length < 0`."""
+    js = _render(_IS_ARRAYISH, 12935)
+
+    assert re.search(r"\br2 = param1\.splice instanceof Function;", js)
+    assert re.search(r"\br2 = r3;", js)
+    assert re.search(r"\br1 = r2;", js)
+    assert re.search(r"\br1 = param1\.length >= 0;", js)
+    assert not re.search(r"\br1 = r3;", js)

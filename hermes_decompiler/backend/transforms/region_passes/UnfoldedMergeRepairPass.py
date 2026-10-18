@@ -215,6 +215,10 @@ class UnfoldedMergeRepairPass(RegionPass):
             write.definition_used = False
             self._index = None
             logger.debug("unfolded merge: r%s written in an arm is named after the if", write.dest_reg)
+            # The arm's write prints now, so the path that skips the arm needs
+            # the default it left (`r1 = len >= 0` that the `if`'s own test
+            # inlined): `r0 = r1` read an unassigned `r1` there (96/12935).
+            self._reprint_unprinted_default(if_region, write)
             return
 
         # The same node object defined by several instructions (constant loads
@@ -240,10 +244,14 @@ class UnfoldedMergeRepairPass(RegionPass):
                 # it: it is the write's source, not an unrelated owner (96/4846).
                 feeders = [i for i in holders if i is not write and self._is_source_mov_of(i, write)]
 
-                if len(holders) - len(readers) - len(feeders) > 1 or not readers:
+                # A `Mov` of a reader's register (`Mov r0, r1` after `Mov r1, r2`)
+                # holds the same node and reads the register one step on.
+                chained = self._chained_reader_movs(readers, holders)
+
+                if len(holders) - len(readers) - len(feeders) - len(chained) > 1 or not readers:
                     return
 
-                self._repoint_reader_movs(write, if_region, region_blocks, arm_blocks)
+                self._repoint_reader_movs(write, if_region, region_blocks, arm_blocks, chained)
                 return
 
         # Every path writes the same thing: no phi, the inlined copy is right.
@@ -326,12 +334,43 @@ class UnfoldedMergeRepairPass(RegionPass):
 
     _MOV_SOURCE_RE = re.compile(r"Reg(?:8|32):\s*\d+,\s*Reg(?:8|32):\s*(\d+)")
 
-    def _repoint_reader_movs(self, write, if_region, region_blocks, arm_blocks) -> None:
+    def _chained_reader_movs(self, readers, holders) -> list:
+        """`Mov`s among `holders` that copy (transitively) a reader's register."""
+        found: list = []
+        # register -> address of the copy that put the reader's value in it. Only a
+        # `Mov` that runs AFTER that copy reads it (in a loop, an earlier one
+        # reads the previous iteration's register: `Mov r13, r10` before
+        # `Mov r10, r14`, 96/4846).
+        sources = {i.dest_reg: i.address for i in readers}
+
+        grew = True
+        while grew:
+            grew = False
+
+            for i in holders:
+                if i in readers or i in found or i.entry.opcode not in ("Mov", "MovLong"):
+                    continue
+
+                source = self._MOV_SOURCE_RE.match(i.entry.args)
+
+                if source is not None and sources.get(int(source.group(1)), i.address) < i.address:
+                    found.append(i)
+                    sources[i.dest_reg] = i.address
+                    grew = True
+
+        return found
+
+    def _repoint_reader_movs(self, write, if_region, region_blocks, arm_blocks, chained=()) -> None:
         if (not isinstance(write.value, (*TRIVIAL_NODE_TYPES, ConditionalExpression)) or has_side_effects(write.value)
                 or not self._read_after_the_if(write, region_blocks)):
             return
 
         self._repoint_movs_of_printed_write(write, arm_blocks, region_blocks)
+
+        # A copy of a reader's register reads that register, not the arm's value.
+        for instruction in chained:
+            source = self._MOV_SOURCE_RE.match(instruction.entry.args)
+            instruction.value = Identifier(name=f"r{int(source.group(1))}")
 
         self._index = None
         write.definition_used = False

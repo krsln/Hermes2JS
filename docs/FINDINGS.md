@@ -19,6 +19,7 @@ Her turdan sonra bu satır güncellenir. Ölçüm: iki paketin tüm fonksiyonlar
 | 2026-10-18 (F-10 kısmi)| 383      | 392       | ölçülmedi     | ölçülmedi     | 987 geçti |
 | 2026-10-18 (F-114)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 988 geçti |
 | 2026-10-18 (F-115)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 989 geçti |
+| 2026-10-18 (F-116)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 990 geçti |
 
 `goto`: çıktısında `goto label_N` kalan fonksiyon sayısı. `pathdefs`: bir yolda tanımlanmadan okunan
 register'ı olan fonksiyon sayısı (yaklaşık denetim; survey aracı repoda yok, son satırda ölçülmedi).
@@ -130,4 +131,14 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   `is_join_value` koruması denendi, 10 test (ternary/varsayılan birleşim katlamaları) bozulduğu için bırakıldı.
   `isArrayish` testi `r0 = r3` (yolda hiç yazılmamış global nesne) yerine `r0 = r1` bekliyor. Çıktı değişen 20
   fonksiyonun hepsi aynı kalıp (eksik atama basılıyor, okuma register'a dönüyor). Test: `tests/test_shared_return_widened.py`.
-  Açık kalan: 96/12935'te `instanceof Function` doğru yolunda `r1`, `r2` (= true) yerine `r3` okuyor (eskiden de öyleydi).
+  96/12935'teki kalan yol F-116'da.
+- **F-116 Zincirli `Mov` okuyucuları ve kolun varsayılanı** (96/12935, 98/6200 `isArrayish`; ~50 fonksiyonun çıktısı
+  değişti). `r2 = a instanceof F` (test içinde satır içi) / kolda `r2 = r3`, ardından `Mov r1, r2`, `Mov r0, r1`:
+  `UnfoldedMergeRepairPass` okuyucunun ardındaki `Mov`'u (`Mov r0, r1`) da aynı düğümü tutan "başka sahip" sayıp
+  onarmıyordu; `instanceof` doğru yolunda `r1` global nesneyi okuyordu. Artık okuyucunun register'ını sonradan
+  kopyalayan `Mov`'lar (`_chained_reader_movs`; döngüde okuyucudan ÖNCEKİ `Mov` hariç) zincir sayılıyor. Ayrıca
+  "kolda yazılan register `if`'ten sonra adıyla okunuyor" dalı, `if`'in kendi testinin satır içi aldığı varsayılanı
+  (`r1 = len >= 0`) basmıyordu; `_reprint_unprinted_default` oraya da eklendi. Sonuç: `length < 0` yolunda
+  `r1` atanıyor. Etki: yaklaşık 50 fonksiyonda eksik atama basılıyor / ölü varsayılan (`r0 = param1`) kalkıyor /
+  `return param1` yerine `return r0` (96/1666, 98/2360 `diffProperties`). Örneklenen on kadarı bytecode ile
+  karşılaştırıldı; tümü tek tek doğrulanmadı. Test: `tests/test_boolean_chain_copy_reads_register.py`.
