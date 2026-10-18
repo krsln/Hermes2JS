@@ -1,0 +1,22 @@
+
+=> [Function #1871 "get" of 49 bytes]: 2 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x00159bdb
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000003: <LoadParam>: <Reg8: 4, UInt8: 1>
+==> 00000006: <LoadFromEnvironment>: <Reg8: 2, Reg8: 3, UInt8: 2>
+==> 0000000a: <LoadConstNull>: <Reg8: 0>
+==> 0000000c: <JEqual>: <Addr8: 15, Reg8: 2, Reg8: 0>  # Address: 0000001b
+==> 00000010: <LoadConstUndefined>: <Reg8: 1>
+==> 00000012: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 1, Reg8: 4>
+==> 00000017: <JNotEqual>: <Addr8: 24, Reg8: 2, Reg8: 0>  # Address: 0000002f
+==> 0000001b: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 1>
+==> 0000001f: <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 4>
+==> 00000023: <Neq>: <Reg8: 1, Reg8: 3, Reg8: 0>
+==> 00000027: <LoadConstNull>: <Reg8: 2>
+==> 00000029: <JmpFalse>: <Addr8: 6, Reg8: 1>  # Address: 0000002f
+==> 0000002c: <Mov>: <Reg8: 2, Reg8: 3>
+==> 0000002f: <Ret>: <Reg8: 2>
+
+

@@ -39,3 +39,14 @@ def test_a_return_whose_register_has_different_values_per_path_is_not_copied():
     # Either still a visible goto, or - if a later pass structures it exactly -
     # both constants must survive.
     assert "goto" in out or ("return true" in out and "return false" in out)
+
+
+def test_a_two_block_tail_with_an_inner_test_is_copied_for_the_test_that_skips_it():
+    """98/1871 `get`: `f != null ? f(p) : null` then `?? (m[p] != null ? m[p] : null)`.
+    The second operand is a tail of two blocks (it holds its own test) that one
+    test jumps onto and another falls into."""
+    out = _render("shared_tail_region_98_1871.hasm", 1871)
+
+    assert "goto" not in out
+    assert out.count("r3 = r3[1][param1];") == 2
+    assert out.count("r2 = null;") == 2

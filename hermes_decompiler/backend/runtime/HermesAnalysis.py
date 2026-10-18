@@ -392,10 +392,11 @@ class HermesAnalysis:
             # then are the shared returns copied per jumper - doing it
             # always would restyle every function that merely has one.
             # Level 1 copies lone returns; level 2 (only if level 1 still
-            # leaves a goto) also copies `throw`s and the closing return - kept
+            # leaves a goto) also copies `throw`s and the closing return; level 3
+            # also copies a tail of several blocks (98/1871) - kept
             # apart because widening it alone changed the shapes level 1
             # already fixed (96/652).
-            for level in (1, 2):
+            for level in (1, 2, 3):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if retry[3] and not self._has_goto(retry[0]):
                     chosen = retry
@@ -536,7 +537,7 @@ class HermesAnalysis:
         EnvArrayDestructuringCfgPass(cfg).run()
         if duplicate_returns:
             SharedReturnDuplicationCfgPass(cfg, widen=duplicate_returns >= 2).run()
-            SharedTailDuplicationCfgPass(cfg).run()
+            SharedTailDuplicationCfgPass(cfg, regions=duplicate_returns >= 3).run()
 
         cfg.verify()
         cfg.compute_dominators()
