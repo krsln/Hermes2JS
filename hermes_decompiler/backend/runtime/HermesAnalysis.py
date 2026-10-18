@@ -391,9 +391,15 @@ class HermesAnalysis:
             # arms can leave a test without its exit (a raw `goto`). Only
             # then are the shared returns copied per jumper - doing it
             # always would restyle every function that merely has one.
-            retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=True)
-            if retry[3] and not self._has_goto(retry[0]):
-                chosen = retry
+            # Level 1 copies lone returns; level 2 (only if level 1 still
+            # leaves a goto) also copies `throw`s and the closing return - kept
+            # apart because widening it alone changed the shapes level 1
+            # already fixed (96/652).
+            for level in (1, 2):
+                retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
+                if retry[3] and not self._has_goto(retry[0]):
+                    chosen = retry
+                    break
 
         lines, reason, _, _, records = chosen  # (lines, reason, failed, ok, records)
         # Only the attempt that is used speaks: the other one's warnings
@@ -442,7 +448,7 @@ class HermesAnalysis:
             verbose: bool,
             raw: bool,
             creator_facts: CreatorFacts | None,
-            duplicate_returns: bool,
+            duplicate_returns: int,
     ) -> tuple[list[str], tuple[str, bool] | None]:
         # Clone every result before handing it to the CFG/structuring
         # passes below: those passes routinely reassign an OpcodeResult's
@@ -529,7 +535,7 @@ class HermesAnalysis:
         ArrayDestructuringCfgPass(cfg).run()
         EnvArrayDestructuringCfgPass(cfg).run()
         if duplicate_returns:
-            SharedReturnDuplicationCfgPass(cfg).run()
+            SharedReturnDuplicationCfgPass(cfg, widen=duplicate_returns >= 2).run()
             SharedTailDuplicationCfgPass(cfg).run()
 
         cfg.verify()

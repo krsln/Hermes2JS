@@ -16,6 +16,7 @@ Her turdan sonra bu satır güncellenir. Ölçüm: iki paketin tüm fonksiyonlar
 | 2026-10-16 (tur başı) | 417       | 413       | 160           | 193           | 954 geçti |
 | 2026-10-17            | 396       | 402       | 160           | 193           | 957 geçti |
 | 2026-10-17 (F-01/F-02)| 396       | 400       | ölçülmedi     | ölçülmedi     | 985 geçti |
+| 2026-10-18 (F-10 kısmi)| 383      | 392       | ölçülmedi     | ölçülmedi     | 987 geçti |
 
 `goto`: çıktısında `goto label_N` kalan fonksiyon sayısı. `pathdefs`: bir yolda tanımlanmadan okunan
 register'ı olan fonksiyon sayısı (yaklaşık denetim; survey aracı repoda yok, son satırda ölçülmedi).
@@ -38,7 +39,12 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
 
 - **F-10 Çıkış bloğuna koşullu atlama.** `if (c) goto sonReturn`. Paylaşılan return bloğuna giden koşullu
   atlamalar (örnekler: 96/2019 `mountDeferredValueImpl`, 98/1871 `get`, 98/11891'in bir kısmı).
-  Bu turdan sonra en büyük küme.
+  KISMEN ÇÖZÜLDÜ (bkz. F-113): yalnız `return`/`throw` (+ sabit yükleme) kuyrukları. Kalanlar:
+  (a) ifade içeren kuyruklar (`return a === r0` gibi): kopyalamak 96/9349 `cmp`'de operand'ları karıştırdı,
+  bu yüzden kapalı; (b) 96/11046: dönüş register'ı yola göre farklı değer taşıyor (phi), goto olarak kalıyor;
+  (c) 98/1871: ikinci testte çağrı + atama olan `??` zinciri; (d) hedefi return olmayan (kardeş bölge,
+  `none` sonlandırıcı) atlamalar. 96/4846 ve 96/10300 `binarySubdivide`: döngüyle taşınan `r14`/`r10`
+  yanlış (`r10 = param3` her iki yolda; `r17 > 0` yolunda `r0` olmalı) - goto'dan bağımsız, eskiden de vardı.
 - **F-11 `try/finally` içinde goto.** 98/2007 `preprocessException`, 98/10013 `flush`, 96/840.
   Atlamanın `finally` sınırını geçmesi.
 - **F-12 `await`/`yield` dispatch ve 98 generator opcode'ları.** 96/12207 `_anon_0`. Batch tablosu olmadan
@@ -103,3 +109,9 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
 - **F-112 Çıplak register callee üyelikle değişince `this` değişiyordu.** `r4(x)` içindeki `r4`, katlamada
   `env[1]` ile değişince `env[1](x)` (this=env) oluyordu; artık `env[1].call(undefined, x)`
   (`keep_call_this_unbound`). 98/11891 ve 98/10829. Test: `tests/test_stale_inlined_read.py`.
+- **F-113 Paylaşılan çıkışın genişletilmiş kopyası** (F-10'un bir parçası; 96/10518, 98/4916, 96/2266, 98/2768,
+  96/169 ...). Goto kalırsa üçüncü bir deneme (`SharedReturnDuplicationCfgPass(widen=True)`) `throw` çıkışlarını ve
+  başka bir bloğun düştüğü kapanış `return`'ünü de kopyalar; yalnızca kuyruğun okuduğu her register'ın
+  her yoldan tek değere ulaştığı durumda (`_reads_the_same_on_every_path`) ve yalnız goto'suz sonuç
+  kabul edilir. 21 fonksiyon goto'dan çıktı (96: 396→383, 98: 400→392). İfade içeren kuyruk kopyası denendi,
+  58 fonksiyon düzeltiyordu ama 96/9349'da yanlış sonuç verdi; eklenmedi. Test: `tests/test_shared_return_widened.py`.

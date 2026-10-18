@@ -1,0 +1,33 @@
+
+=> [Function #10518 "" of 95 bytes]: 2 params, frame size=12, strict=1, exc handler=0, debug info=0  @ offset 0x001f6912
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadConstString>: <Reg8: 0, string_id: 243>  # String: 'transform' (Identifier)
+==> 00000007: <JStrictEqual>: <Addr8: 21, Reg8: 2, Reg8: 0>  # Address: 0000001c
+==> 0000000b: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 0000000e: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 1>
+==> 00000012: <NewArray>: <Reg8: 0, UInt16: 0>
+==> 00000016: <PutByVal>: <Reg8: 1, Reg8: 2, Reg8: 0>
+==> 0000001a: <Jmp>: <Addr8: 65>  # Address: 0000005b
+==> 0000001c: <GetGlobalObject>: <Reg8: 0>
+==> 0000001e: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 6>  # String: 'Array' (Identifier)
+==> 00000024: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 5>  # String: 'isArray' (Identifier)
+==> 00000029: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 0000002c: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 2>
+==> 00000030: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 243>  # String: 'transform' (Identifier)
+==> 00000035: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000003a: <JmpTrue>: <Addr8: 7, Reg8: 1>  # Address: 00000041
+==> 0000003d: <LoadConstUndefined>: <Reg8: 1>
+==> 0000003f: <Ret>: <Reg8: 1>
+==> 00000041: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 2>
+==> 00000045: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 243>  # String: 'transform' (Identifier)
+==> 0000004a: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 4, string_id: 144>  # String: 'forEach' (Identifier)
+==> 0000004f: <CreateEnvironment>: <Reg8: 0>
+==> 00000051: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 10519>  # Function: [#10519  of 49 bytes]: 3 params @ offset 0x001f6971
+==> 00000056: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 0000005b: <LoadConstUndefined>: <Reg8: 0>
+==> 0000005d: <Ret>: <Reg8: 0>
+
+
