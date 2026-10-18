@@ -24,11 +24,11 @@ from __future__ import annotations
 import dataclasses
 
 from hermes_decompiler.ir import Node
-from hermes_decompiler.ir.expressions import Identifier
+from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression, UndefinedLiteral
 from ._purity import has_side_effects, prints_definition
 from ._repoint import _reads_register_by_name
 
-__all__ = ["absorb_arm_definitions", "substitute_register"]
+__all__ = ["absorb_arm_definitions", "keep_call_this_unbound", "substitute_register"]
 
 #: A substituted value that would be copied more than once must stay small.
 _MAX_DUPLICATED_NODES = 12
@@ -88,6 +88,27 @@ def _registers_named(node) -> set[str]:
     return names
 
 
+def keep_call_this_unbound(node, updates: dict) -> dict:
+    """`updates` for rebuilding the call `node`, with `this` kept `undefined`.
+
+    The frontend prints a Hermes call whose `this` is `undefined` and whose
+    callee is a register as a bare `rN(args)`. Putting a member expression in
+    that callee (`r4` -> `env[1]`) would turn it into `env[1](args)` - a method
+    call that passes `env` as `this`. The explicit `env[1].call(undefined,
+    args)` keeps what the bytecode did."""
+    if (
+            isinstance(node, CallExpression)
+            and isinstance(node.callee, Identifier)
+            and isinstance(updates.get("callee"), MemberExpression)
+    ):
+        arguments = updates.get("arguments", node.arguments)
+        updates = dict(updates)
+        updates["callee"] = MemberExpression(obj=updates["callee"], prop=Identifier(name="call"), computed=False)
+        updates["arguments"] = (UndefinedLiteral(), *arguments)
+
+    return updates
+
+
 def substitute_register(node, name: str, replacement):
     """`node` with every `Identifier(name)` replaced by `replacement`."""
     if isinstance(node, Identifier):
@@ -116,7 +137,7 @@ def substitute_register(node, name: str, replacement):
             if any(new is not old for new, old in zip(new_items, value)):
                 updates[field.name] = new_items
 
-    return dataclasses.replace(node, **updates) if updates else node
+    return dataclasses.replace(node, **keep_call_this_unbound(node, updates)) if updates else node
 
 
 def absorb_arm_definitions(cfg, arm_instructions, result):

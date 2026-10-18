@@ -249,11 +249,11 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:419 | <Call2>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 8>
     console.log("__BC:Functions/AsyncTests/callAsyncTests/start");
     // CODE → addr:424 | <LoadFromEnvironment>: <Reg8: 8, Reg8: 7, UInt8: 1>
-    // USED → r8 = r7[1];
+    r8 = r7[1];
     // CODE → addr:428 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined;
+    // USED → r7 = undefined;
     // CODE → addr:430 | <Call1>: <Reg8: 7, Reg8: 8, Reg8: 7>
-    r7 = r7[1]();
+    r7 = r8();
     // CODE → addr:434 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 5>
     r1[1] = 1;
     // CODE → addr:438 | <Mov>: <Reg8: 2, Reg8: 5>

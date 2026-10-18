@@ -15,9 +15,10 @@ Her turdan sonra bu satır güncellenir. Ölçüm: iki paketin tüm fonksiyonlar
 |-----------------------|-----------|-----------|---------------|---------------|-----------|
 | 2026-10-16 (tur başı) | 417       | 413       | 160           | 193           | 954 geçti |
 | 2026-10-17            | 396       | 402       | 160           | 193           | 957 geçti |
+| 2026-10-17 (F-01/F-02)| 396       | 400       | ölçülmedi     | ölçülmedi     | 985 geçti |
 
 `goto`: çıktısında `goto label_N` kalan fonksiyon sayısı. `pathdefs`: bir yolda tanımlanmadan okunan
-register'ı olan fonksiyon sayısı (yaklaşık denetim).
+register'ı olan fonksiyon sayısı (yaklaşık denetim; survey aracı repoda yok, son satırda ölçülmedi).
 
 Son goto sınıflandırması (2026-10-16, bu turdan önce): 96 farklı bölge 236 / kardeş 110 / diğer 58 /
 döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek goto'lu fonksiyon sayısı: 435.
@@ -26,16 +27,12 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
 
 Çıktı yanlış ya da yanıltıcı. goto olmadığı için survey'in goto sayısında görünmezler.
 
-- **F-01 Eski register adı.** 96/4456: `r0[0]._responderRegion = r0`; doğrusu
-  `getEnvironment(0)[0]._responderRegion = r0`. `r0` sonradan yeni nesneye atanıyor ama inline edilen
-  `r0[0]` ortamı kastediyordu (frontend'in doğrusal inline'ı, `LoadFromEnvironment` + sonraki atama).
-  pathdefs bu sınıfı yakalamaz; başka fonksiyonlarda da olabilir. Önce yaygınlığı ölçmek gerekir.
-- **F-02 Çift negasyon.** 98/9594 `Pe`: `r2 = !r2; r1 = !!r2`. Değer iki kez uygulanıyor.
-  `<unresolved_typeof_mask_0x0102>` da çözülemiyor. Eskiden `|| r1 ||` diye başka yerde yanlıştı.
 - **F-03 `maybeSwapComponents` (A11).** 96/9150 benzeri kalıp. Ayrıntı için
-  `tests/test_shared_return_exit.py`.
-- **F-04 Kurulum register'ı END'de de okunuyor.** 96/9118 `parseScaleX`: `r1 = 0` kurulumu, birleşme
-  noktasında da okunuyor; katlama onu düşüremiyor ve goto kalıyor.
+  `tests/test_shared_return_exit.py`. 2026-10-17: 96/9150'nin kendisi doğru çıkıyor (goto yok, iki
+  `return param1`, takas yolu doğru); benzer bir örnek bulunursa buraya eklenir, yoksa kapatılabilir.
+- **F-04 `parseScaleX` goto'su.** 96/9118: yanlış callee düzeldi (F-111); kalan sorun
+  `if (r0) goto label_44` ("target IS a sibling in the same region"). Kurulum register'ı (`r1 = 0`)
+  birleşme noktasında da okunduğu için katlama onu düşüremiyor.
 
 ## Açık: goto kümeleri
 
@@ -87,3 +84,22 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   `KeyError` veriyordu; handler'lı fonksiyonda kenar bloğu eklenmiyor. d5c83ad.
 - **F-108 De Morgan yazdırması.** `!(a && !b)` → `!a || b`; yalnızca printer'da, yalnızca
   `&&`/`||` içinde ve yalnızca eşitlik çevrimleri için (NaN-güvenli). 8dda5b3.
+- **F-109 `TypeOfIs`/`JmpTypeOfIs` bit eşlemesi** (F-02'nin bir parçası; 98/9594). Eşleme tahmindi
+  (`TYPEOF_FLAGS`/`_TYPE_BITS`); `hermesc` ile ölçüldü: undefined=1, null=2, string=4, symbol=8,
+  boolean=16, number=32, bigint=64, function=128, object=256 (`typeof x === "object"` = 258, tersi 253).
+  Ortak çözücü `frontend/handlers/shared/_typeof_mask.py`; çoğunluk maskeleri tümleyen olarak
+  yazılıyor (`typeof x !== "object"`). 98'de 667 fonksiyonun çıktısı değişti (115'inde
+  `<unresolved_typeof_mask_…>` vardı); 96'da bu opcode'lar yok. Test: `tests/test_typeof_mask.py`.
+- **F-110 Printer: De Morgan çevrilen `!` yanlış gruplanıyordu** (F-02'nin diğer parçası). Üst düğüm
+  `!(a && b)`'yi hâlâ `!` sanıp parantez koymuyordu: `!!(…)` değeri değiştiriyor,
+  `!(a && b) && c` → `P || Q && c` oluyordu. 96'da 9, 98'de 6 fonksiyon.
+  Test: `tests/test_printer_negation_grouping.py`.
+- **F-111 Bayat inline okuma** (F-01; 96/4456, 96/9118, 98/12478, 98/13745, 98/9542...). `r1 = r0[0]`
+  okuyucusuna inline edilirken `r0`'ın sonraki tanımının basılıp basılmayacağı o an bilinmiyordu. Scratch
+  geçişi artık basılan tanımları (`printed_definitions`) toplayıp gerçek geçişe veriyor. Yaygınlık:
+  96'da 1571, 98'de 1079 fonksiyonun çıktısı değişti; değişenlerin ~%94'ünde eski çıktıda
+  okunan register'a hemen öncesinde basılmış bir atama var. Goto sayısı değişmedi. 13 golden fonksiyonu
+  (26 dosya) yenilendi; tek tek bakılanlarda eski çıktı bayat okuma içeriyordu. Test: `tests/test_stale_inlined_read.py`.
+- **F-112 Çıplak register callee üyelikle değişince `this` değişiyordu.** `r4(x)` içindeki `r4`, katlamada
+  `env[1]` ile değişince `env[1](x)` (this=env) oluyordu; artık `env[1].call(undefined, x)`
+  (`keep_call_this_unbound`). 98/11891 ve 98/10829. Test: `tests/test_stale_inlined_read.py`.

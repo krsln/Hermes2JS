@@ -118,11 +118,11 @@ async function _anon_0_() {
     // CODE → addr:249 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 10>
     r1 = r4[10];
     // CODE → addr:253 | <GetById>: <Reg8: 8, Reg8: 1, UInt8: 16, string_id: 9849>  # String: 'ternaryTest' (Identifier)
-    // USED → r8 = r1.ternaryTest;
+    r8 = r1.ternaryTest;
     // CODE → addr:259 | <LoadConstInt>: <Reg8: 1, Imm32: -3>
     r1 = -3;
     // CODE → addr:265 | <Call2>: <Reg8: 1, Reg8: 8, Reg8: 2, Reg8: 1>
-    r1 = r1.ternaryTest.call(undefined, r1);
+    r1 = r8(r1);
     // CODE → addr:270 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 10>
     r1 = r4[10];
     // CODE → addr:274 | <GetById>: <Reg8: 1, Reg8: 1, UInt8: 17, string_id: 10963>  # String: 'shortCircuitAssignTest' (Identifier)
@@ -168,7 +168,7 @@ async function _anon_0_() {
     // CODE → addr:370 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     r1 = r4[11];
     // CODE → addr:374 | <GetById>: <Reg8: 7, Reg8: 1, UInt8: 24, string_id: 10295>  # String: 'tryLoopMultiReturnTest' (Identifier)
-    // USED → r7 = r1.tryLoopMultiReturnTest;
+    r7 = r1.tryLoopMultiReturnTest;
     // CODE → addr:380 | <NewArrayWithBuffer>: <Reg8: 1, UInt16: 4, UInt16: 2, UInt16: 23560>  # Array: [1, 0]
     // USED → r1 = [1, 0];
     // CODE → addr:388 | <LoadConstInt>: <Reg8: 8, Imm32: -1>
@@ -180,7 +180,7 @@ async function _anon_0_() {
     // CODE → addr:401 | <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 3>
     r1 = [1, 0, -1, 2];
     // CODE → addr:405 | <Call2>: <Reg8: 1, Reg8: 7, Reg8: 2, Reg8: 1>
-    r1 = r1.tryLoopMultiReturnTest.call(undefined, r1);
+    r1 = r7(r1);
     // CODE → addr:410 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     r1 = r4[11];
     // CODE → addr:414 | <GetById>: <Reg8: 1, Reg8: 1, UInt8: 25, string_id: 11002>  # String: 'nestedTryCatchTest' (Identifier)
@@ -202,15 +202,15 @@ async function _anon_0_() {
     // CODE → addr:452 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     r1 = r4[11];
     // CODE → addr:456 | <GetById>: <Reg8: 7, Reg8: 1, UInt8: 28, string_id: 11112>  # String: 'tryFinallyLoopBreakTest' (Identifier)
-    // USED → r7 = r1.tryFinallyLoopBreakTest;
+    r7 = r1.tryFinallyLoopBreakTest;
     // CODE → addr:462 | <NewArrayWithBuffer>: <Reg8: 1, UInt16: 4, UInt16: 4, UInt16: 23569>  # Array: [1, 2, 0, 3]
     r1 = [1, 2, 0, 3];
     // CODE → addr:470 | <Call2>: <Reg8: 1, Reg8: 7, Reg8: 2, Reg8: 1>
-    r1 = r1.tryFinallyLoopBreakTest.call(undefined, r1);
+    r1 = r7(r1);
     // CODE → addr:475 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     r1 = r4[11];
     // CODE → addr:479 | <GetById>: <Reg8: 9, Reg8: 1, UInt8: 29, string_id: 8691>  # String: 'tryCatchInsideLoopTest' (Identifier)
-    // USED → r9 = r1.tryCatchInsideLoopTest;
+    r9 = r1.tryCatchInsideLoopTest;
     // CODE → addr:485 | <NewArrayWithBuffer>: <Reg8: 1, UInt16: 3, UInt16: 1, UInt16: 3>  # Array: [1]
     // USED → r1 = [1];
     // CODE → addr:493 | <LoadConstInt>: <Reg8: 7, Imm32: -2>
@@ -222,7 +222,7 @@ async function _anon_0_() {
     // CODE → addr:506 | <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 2>
     r1 = [1, -2, 3];
     // CODE → addr:510 | <Call2>: <Reg8: 1, Reg8: 9, Reg8: 2, Reg8: 1>
-    r1 = r1.tryCatchInsideLoopTest.call(undefined, r1);
+    r1 = r9(r1);
     // CODE → addr:515 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     r1 = r4[11];
     // CODE → addr:519 | <GetById>: <Reg8: 1, Reg8: 1, UInt8: 30, string_id: 8711>  # String: 'tryCatchFinallyBranchInFinallyTest' (Identifier)
@@ -240,7 +240,7 @@ async function _anon_0_() {
     // CODE → addr:548 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     r1 = r4[11];
     // CODE → addr:552 | <GetById>: <Reg8: 5, Reg8: 1, UInt8: 32, string_id: 10975>  # String: 'loopBreakCrossesTryBoundaryTest' (Identifier)
-    // USED → r5 = r1.loopBreakCrossesTryBoundaryTest;
+    r5 = r1.loopBreakCrossesTryBoundaryTest;
     // CODE → addr:558 | <NewArrayWithBuffer>: <Reg8: 1, UInt16: 5, UInt16: 3, UInt16: 23586>  # Array: [1, 0, 2]
     // USED → r1 = [1, 0, 2];
     // CODE → addr:566 | <PutOwnByIndex>: <Reg8: 1, Reg8: 8, UInt8: 3>
@@ -248,7 +248,7 @@ async function _anon_0_() {
     // CODE → addr:570 | <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 4>
     r1 = [1, 0, 2, -1, 3];
     // CODE → addr:574 | <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
-    r1 = r1.loopBreakCrossesTryBoundaryTest.call(undefined, r1);
+    r1 = r5(r1);
     // CODE → addr:579 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     r1 = r4[11];
     // CODE → addr:583 | <GetById>: <Reg8: 5, Reg8: 1, UInt8: 33, string_id: 8763>  # String: 'switchInsideTryTest' (Identifier)

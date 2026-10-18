@@ -71,6 +71,13 @@ class HermesAnalysis:
         # strictly inside one is skipped on the path that takes the jump, so
         # a write there is conditional (see `_is_phi_write`).
         self.skip_ranges: list[tuple[int, int]] = []
+        # `(register name, address)` of every definition that the scratch pass
+        # (see `OpcodeDispatcher.dispatch_all`) left PRINTED as a statement of
+        # its own (pinned by a bare read, or never folded away). Whether a
+        # later definition prints is only known after the code that reads it,
+        # which comes after the read of an older value that mentions the same
+        # register; this is what lets that earlier read know (`F-01`).
+        self.printed_definitions: frozenset[tuple[str, int]] = frozenset()
         # Every definition of each register, in order. `RegisterState.version`
         # is the index into this list, so `history[name][v + 1:]` is exactly
         # what redefined version `v` (see `stale_kind`).
@@ -268,7 +275,11 @@ class HermesAnalysis:
         branch_read = self._reading_for_a_branch()
 
         for later in self.history.get(name, ())[version + 1:]:
-            if self._redefinition_prints(later) or self._is_phi_write(later):
+            if (
+                    self._redefinition_prints(later)
+                    or self._is_phi_write(later)
+                    or (later.definition.name, later.definition.address) in self.printed_definitions
+            ):
                 return True
 
             # A constant written between a test's operands and its jump

@@ -3,15 +3,14 @@ from __future__ import annotations
 from hermes_decompiler.frontend.handlers import (
     OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, ADDR, UINT8, UINT16
 )
+from hermes_decompiler.frontend.handlers.shared import build_typeof_condition
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import (
     Expression,
     UnaryExpression,
     BinaryExpression,
     UndefinedLiteral,
-    StringLiteral,
     Identifier,
 )
 from hermes_decompiler.ir.terminators import TerminatorJump, TerminatorConditionalBranch
@@ -227,18 +226,6 @@ class JmpBuiltinIsNotLong(JmpBuiltinIsNot):
 class JmpTypeOfIs(OpcodeHandler):
     """Jump if the type matches the TypeOfIsTypes in Arg3."""
 
-    TYPEOF_FLAGS = {
-        1 << 0: "undefined",
-        1 << 1: "null",
-        1 << 2: "boolean",
-        1 << 3: "number",
-        1 << 4: "string",
-        1 << 5: "symbol",
-        1 << 6: "bigint",
-        1 << 7: "function",
-        1 << 8: "object",
-    }
-
     ARGUMENTS = ArgsPattern(sequence(ADDR, REG, UINT16), "Addr32, Reg8, UInt16")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
@@ -251,7 +238,7 @@ class JmpTypeOfIs(OpcodeHandler):
         target = ctx.entry.target_address if ctx.entry.target_address is not None else (ctx.entry.address + offset)
         ctx.analysis.goto_list.append(target)
 
-        condition = self.build_typeof_condition(
+        condition = build_typeof_condition(
             self.get_register_expression(ctx.analysis, reg), type_id
         )
 
@@ -260,23 +247,5 @@ class JmpTypeOfIs(OpcodeHandler):
         # pure control flow: no operand value of its own
         result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
         ctx.analysis.add_result(result)
-
-        return result
-
-    @classmethod
-    def build_typeof_condition(cls, value: Expression, mask: int) -> Expression:
-        typeof_expr = UnaryExpression(UnaryOperator.TYPEOF, value)
-        conditions = [
-            BinaryExpression(typeof_expr, BinaryOperator.STRICT_EQUAL, StringLiteral(name))
-            for bit, name in cls.TYPEOF_FLAGS.items()
-            if mask & bit
-        ]
-
-        if not conditions:
-            return BinaryExpression(typeof_expr, BinaryOperator.STRICT_EQUAL, StringLiteral(f"<mask:{mask}>"))
-
-        result = conditions[0]
-        for cond in conditions[1:]:
-            result = BinaryExpression(result, LogicalOperator.OR, cond)
 
         return result

@@ -67,11 +67,11 @@ function spreadArrayTest() {
     // CODE → addr:138 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 2>
     r0 = r0[2];
     // CODE → addr:142 | <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r2 = r0.default;
+    r2 = r0.default;
     // CODE → addr:147 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:149 | <Call2>: <Reg8: 3, Reg8: 2, Reg8: 0, Reg8: 3>
-    r3 = r0.default(r3);
+    r3 = r2(r3);
     // CODE → addr:154 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 227>  # String: 'slice' (Identifier)
     // USED → r2 = r3.slice;
     // CODE → addr:159 | <Call2>: <Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 4>

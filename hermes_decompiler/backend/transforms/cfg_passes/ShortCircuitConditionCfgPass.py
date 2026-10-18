@@ -11,7 +11,7 @@ from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, Identifier, Literal, UndefinedLiteral
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.backend.transforms.shared import (
-    negate_condition, TRIVIAL_NODE_TYPES, has_side_effects, substitute_register,
+    negate_condition, TRIVIAL_NODE_TYPES, has_side_effects, keep_call_this_unbound, substitute_register,
 )
 
 
@@ -480,7 +480,7 @@ class ShortCircuitConditionCfgPass:
                 if any(new is not old for new, old in zip(items, value)):
                     updates[field.name] = items
 
-        return dataclasses.replace(node, **updates) if updates else node
+        return dataclasses.replace(node, **keep_call_this_unbound(node, updates)) if updates else node
 
     @classmethod
     def _source_registers(cls, instruction) -> set:

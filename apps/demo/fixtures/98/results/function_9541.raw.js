@@ -13,11 +13,11 @@ function instanceCount() {
     // CODE → addr: 20 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Classes/PrivateStaticTests/Counter/static-get-instanceCount");
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 2>
-    // USED → r1 = r0[2];
+    r1 = r0[2];
     // CODE → addr: 29 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 4>
     r0 = r0[4];
     // CODE → addr: 33 | <GetOwnPrivateBySym>: <Reg8: 0, Reg8: 1, UInt8: 0, Reg8: 0>
-    r0 = r0[2].#__private_0__;
+    r0 = r1.#__private_0__;
     // CODE → addr: 38 | <Ret>: <Reg8: 0>
     return r0;
 }
