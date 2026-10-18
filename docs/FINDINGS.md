@@ -17,6 +17,8 @@ Her turdan sonra bu satır güncellenir. Ölçüm: iki paketin tüm fonksiyonlar
 | 2026-10-17            | 396       | 402       | 160           | 193           | 957 geçti |
 | 2026-10-17 (F-01/F-02)| 396       | 400       | ölçülmedi     | ölçülmedi     | 985 geçti |
 | 2026-10-18 (F-10 kısmi)| 383      | 392       | ölçülmedi     | ölçülmedi     | 987 geçti |
+| 2026-10-18 (F-114)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 988 geçti |
+| 2026-10-18 (F-115)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 989 geçti |
 
 `goto`: çıktısında `goto label_N` kalan fonksiyon sayısı. `pathdefs`: bir yolda tanımlanmadan okunan
 register'ı olan fonksiyon sayısı (yaklaşık denetim; survey aracı repoda yok, son satırda ölçülmedi).
@@ -42,9 +44,8 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   KISMEN ÇÖZÜLDÜ (bkz. F-113): yalnız `return`/`throw` (+ sabit yükleme) kuyrukları. Kalanlar:
   (a) ifade içeren kuyruklar (`return a === r0` gibi): kopyalamak 96/9349 `cmp`'de operand'ları karıştırdı,
   bu yüzden kapalı; (b) 96/11046: dönüş register'ı yola göre farklı değer taşıyor (phi), goto olarak kalıyor;
-  (c) 98/1871: ikinci testte çağrı + atama olan `??` zinciri; (d) hedefi return olmayan (kardeş bölge,
-  `none` sonlandırıcı) atlamalar. 96/4846 ve 96/10300 `binarySubdivide`: döngüyle taşınan `r14`/`r10`
-  yanlış (`r10 = param3` her iki yolda; `r17 > 0` yolunda `r0` olmalı) - goto'dan bağımsız, eskiden de vardı.
+  (c) 98/1871 çözüldü (F-114); (d) hedefi return olmayan (kardeş bölge,
+  `none` sonlandırıcı) atlamalar. 96/4846 ve 96/10300 `binarySubdivide` döngüyle taşınan `r10` hatası çözüldü (F-115).
 - **F-11 `try/finally` içinde goto.** 98/2007 `preprocessException`, 98/10013 `flush`, 96/840.
   Atlamanın `finally` sınırını geçmesi.
 - **F-12 `await`/`yield` dispatch ve 98 generator opcode'ları.** 96/12207 `_anon_0`. Batch tablosu olmadan
@@ -115,3 +116,18 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   her yoldan tek değere ulaştığı durumda (`_reads_the_same_on_every_path`) ve yalnız goto'suz sonuç
   kabul edilir. 21 fonksiyon goto'dan çıktı (96: 396→383, 98: 400→392). İfade içeren kuyruk kopyası denendi,
   58 fonksiyon düzeltiyordu ama 96/9349'da yanlış sonuç verdi; eklenmedi. Test: `tests/test_shared_return_widened.py`.
+- **F-114 Çok bloklu paylaşılan kuyruk** (F-10'un bir parçası; 98/1871 `get`, 98/1872 `getEnforcing`, 98/244, 98/249,
+  98/360, 98/408, 98/6251). `a != null ? a(p) : null` ardından `?? (m[p] ?? null)`: ikinci işlenen iç testi olan
+  iki bloklu bir kuyruk; bir test ona atlıyor, bir başkası düşüyor. `SharedTailDuplicationCfgPass(regions=True)` bu
+  küçük ileri bölgeyi (<=4 blok, <=12 komut, tek çıkış `END`) düşen teste kopyalar. Yalnız son çare olan üçüncü
+  denemede çalışır: her denemede açıkken goto'suz fonksiyonlarda `||`/`&&` zincirini bozdu (96/7424) ve 98/14169'da
+  `max/min` sıkıştırmasını goto'ya çevirdi. 98: 392→385. Test: `tests/test_shared_return_widened.py`.
+- **F-115 Kolda yazılan kopya, birleşimden sonra tek tanım sanılıyordu** (96/4846, 96/10300, 98/12079 `binarySubdivide`;
+  ayrıca 96/12935 `isArrayish`, 98/2503 `getNextLanes`, 98/8193 `compareIdentifiers` ... 20 fonksiyon). `r14 = r0; if (c) {
+  r14 = param3 }; r10 = r14`: koldaki `Mov r14, r13` değerini (`param3`) `Mov r13, r10` de aynı düğüm olarak tuttuğu
+  için `UnfoldedMergeRepairPass` "belirsiz" deyip onarmıyor, okuyucu `r10 = param3` basıyordu (`c` yanlışsa
+  `r0` olmalıydı). Değeri kolun kendi kaynağı olan `Mov` artık sayılmıyor (`_is_source_mov_of`). Genel bir
+  `is_join_value` koruması denendi, 10 test (ternary/varsayılan birleşim katlamaları) bozulduğu için bırakıldı.
+  `isArrayish` testi `r0 = r3` (yolda hiç yazılmamış global nesne) yerine `r0 = r1` bekliyor. Çıktı değişen 20
+  fonksiyonun hepsi aynı kalıp (eksik atama basılıyor, okuma register'a dönüyor). Test: `tests/test_shared_return_widened.py`.
+  Açık kalan: 96/12935'te `instanceof Function` doğru yolunda `r1`, `r2` (= true) yerine `r3` okuyor (eskiden de öyleydi).

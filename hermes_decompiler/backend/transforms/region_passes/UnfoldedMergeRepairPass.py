@@ -235,8 +235,12 @@ class UnfoldedMergeRepairPass(RegionPass):
                 # (a global repoint would also hit every other register the
                 # value was copied into). Anything else is ambiguous.
                 readers = [i for i in holders if i is not write and self._is_reader_mov_of(i, write)]
+                # The `Mov` that handed the write its value (`Mov r13, r10` ...
+                # `Mov r14, r13`) holds the same node because the write COPIED
+                # it: it is the write's source, not an unrelated owner (96/4846).
+                feeders = [i for i in holders if i is not write and self._is_source_mov_of(i, write)]
 
-                if len(holders) - len(readers) > 1 or not readers:
+                if len(holders) - len(readers) - len(feeders) > 1 or not readers:
                     return
 
                 self._repoint_reader_movs(write, if_region, region_blocks, arm_blocks)
@@ -345,6 +349,16 @@ class UnfoldedMergeRepairPass(RegionPass):
         source = self._MOV_SOURCE_RE.match(instruction.entry.args)
 
         return source is not None and int(source.group(1)) == write.dest_reg
+
+    def _is_source_mov_of(self, instruction, write) -> bool:
+        """`instruction` is a `Mov` that wrote the register `write` (a `Mov`)
+        copies from."""
+        if write.entry.opcode not in ("Mov", "MovLong") or instruction.entry.opcode not in ("Mov", "MovLong"):
+            return False
+
+        source = self._MOV_SOURCE_RE.match(write.entry.args)
+
+        return source is not None and instruction.dest_reg == int(source.group(1))
 
     def _repoint_movs_of_printed_write(self, write, arm_blocks, region_blocks) -> None:
         """A bare identifier/literal is shared by unrelated readers, so only a

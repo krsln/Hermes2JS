@@ -72,4 +72,8 @@ def test_chain_with_a_call_is_not_repeated_in_the_copy_after_the_if():
 
     assert js.count("Object.getOwnPropertyDescriptor(") == 1
     assert not re.search(r"\br5\(", js)
-    assert re.search(r"\br0 = r3;", js)
+    # The copy chain is `r0 = r1` (`Mov r0, r1`), r1 being the `length >= 0`
+    # result on the path that skips the chain (`r0 = r3` read the global
+    # object there: r3 was never written on that path).
+    assert re.search(r"\br0 = r1;", js)
+    assert not re.search(r"\br0 = r3;", js)

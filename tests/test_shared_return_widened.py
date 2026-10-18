@@ -50,3 +50,15 @@ def test_a_two_block_tail_with_an_inner_test_is_copied_for_the_test_that_skips_i
     assert "goto" not in out
     assert out.count("r3 = r3[1][param1];") == 2
     assert out.count("r2 = null;") == 2
+
+
+def test_a_copy_written_in_one_arm_is_not_taken_for_the_whole_merge():
+    """96/4846 `binarySubdivide`: `r14 = r0; if (c) { r15 = r0; r14 = param3 }`,
+    read after the `if` as `r10 = r14`. The arm's write (a copy of `param3`
+    that `Mov r13, r10` also holds) was folded into the reader, which printed
+    `r10 = param3` on the path that skips the arm too."""
+    out = _render("loop_carried_arm_copy_96_4846.hasm", 4846)
+
+    assert "r14 = param3;" in out
+    assert "r10 = r14;" in out
+    assert "r10 = param3;" not in out
