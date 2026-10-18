@@ -396,7 +396,7 @@ class HermesAnalysis:
             # also copies a tail of several blocks (98/1871) - kept
             # apart because widening it alone changed the shapes level 1
             # already fixed (96/652).
-            for level in (1, 2, 3):
+            for level in (1, 2, 3, 4):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if retry[3] and not self._has_goto(retry[0]):
                     chosen = retry
@@ -536,7 +536,7 @@ class HermesAnalysis:
         ArrayDestructuringCfgPass(cfg).run()
         EnvArrayDestructuringCfgPass(cfg).run()
         if duplicate_returns:
-            SharedReturnDuplicationCfgPass(cfg, widen=duplicate_returns >= 2).run()
+            SharedReturnDuplicationCfgPass(cfg, widen=duplicate_returns >= 2, statements=duplicate_returns >= 4).run()
             SharedTailDuplicationCfgPass(cfg, regions=duplicate_returns >= 3).run()
 
         cfg.verify()

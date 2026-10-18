@@ -20,6 +20,7 @@ Her turdan sonra bu satır güncellenir. Ölçüm: iki paketin tüm fonksiyonlar
 | 2026-10-18 (F-114)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 988 geçti |
 | 2026-10-18 (F-115)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 989 geçti |
 | 2026-10-18 (F-116)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 990 geçti |
+| 2026-10-18 (F-117)    | 358       | 372       | ölçülmedi     | ölçülmedi     | 992 geçti |
 
 `goto`: çıktısında `goto label_N` kalan fonksiyon sayısı. `pathdefs`: bir yolda tanımlanmadan okunan
 register'ı olan fonksiyon sayısı (yaklaşık denetim; survey aracı repoda yok, son satırda ölçülmedi).
@@ -43,8 +44,7 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
 - **F-10 Çıkış bloğuna koşullu atlama.** `if (c) goto sonReturn`. Paylaşılan return bloğuna giden koşullu
   atlamalar (örnekler: 96/2019 `mountDeferredValueImpl`, 98/1871 `get`, 98/11891'in bir kısmı).
   KISMEN ÇÖZÜLDÜ (bkz. F-113): yalnız `return`/`throw` (+ sabit yükleme) kuyrukları. Kalanlar:
-  (a) ifade içeren kuyruklar (`return a === r0` gibi): kopyalamak 96/9349 `cmp`'de operand'ları karıştırdı,
-  bu yüzden kapalı; (b) 96/11046: dönüş register'ı yola göre farklı değer taşıyor (phi), goto olarak kalıyor;
+  (a) ifade içeren kuyruklar çözüldü (F-117); (b) 96/11046: dönüş register'ı yola göre farklı değer taşıyor (phi), goto olarak kalıyor;
   (c) 98/1871 çözüldü (F-114); (d) hedefi return olmayan (kardeş bölge,
   `none` sonlandırıcı) atlamalar. 96/4846 ve 96/10300 `binarySubdivide` döngüyle taşınan `r10` hatası çözüldü (F-115).
 - **F-11 `try/finally` içinde goto.** 98/2007 `preprocessException`, 98/10013 `flush`, 96/840.
@@ -142,3 +142,15 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   `r1` atanıyor. Etki: yaklaşık 50 fonksiyonda eksik atama basılıyor / ölü varsayılan (`r0 = param1`) kalkıyor /
   `return param1` yerine `return r0` (96/1666, 98/2360 `diffProperties`). Örneklenen on kadarı bytecode ile
   karşılaştırıldı; tümü tek tek doğrulanmadı. Test: `tests/test_boolean_chain_copy_reads_register.py`.
+- **F-117 İfade içeren paylaşılan kuyruk** (F-10'un bir parçası; 96/2019, 96/12456, 96/13816, 98/8735 ... 38 fonksiyon).
+  `SharedReturnDuplicationCfgPass(statements=True)`: üç denemeden sonra hâlâ goto varsa dördüncü deneme, 6 komuta
+  kadar sıradan komut içeren `return`/`throw` kuyruğunu da (path-bağımsızlık korumasıyla) atlayana kopyalar.
+  96: 383→358, 98: 385→372, geriye giden fonksiyon yok. ÖNEMLİ: kopya komutların `value`/`statement` düğümleri derin
+  kopyalanmalı; paylaşılınca bir katlama atamayı kopyadan alıyordu (96/12456: `!param1` kolu atanmamış `r1` döndürdü).
+  Önceki turda bu yüzden "yanlış sonuç" gördüm, ama 96/9349 `cmp` kuyruktan bağımsız bozuk (F-118). Çıktılarda
+  "her yolda atanmamış register okuması" denetimi (kaba, yapısal if/else) yalnız önceden bozuk olanları işaretledi.
+  Testler: `tests/test_shared_return_widened.py`.
+- **F-118 Ardışık ikili ternary'ler birbirine karışıyor** (96/9349 `cmp`, `===`/`!==` kolları). `r1 = typeof a !== "object"
+  ? a : a.version; r0 = typeof c !== "object" ? c : c.version; return r1 === r0`: aynı `typeof` register'ı (`r3`) iki
+  kez kullanılınca ilk ifade ikincinin testini (`(r1 !== "object") ? param1 : ...`) ve okunmamış register'ları
+  taşıyor; `return` yanlış `r0` okuyor. goto'dan bağımsız (baseline'da da var). Henüz incelenmedi.

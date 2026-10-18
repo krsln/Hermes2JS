@@ -39,8 +39,11 @@ from hermes_decompiler.ir.terminators import (
 
 
 class SharedReturnDuplicationCfgPass:
-    def __init__(self, cfg: CFG, widen: bool = False):
+    def __init__(self, cfg: CFG, widen: bool = False, statements: bool = False):
         self.cfg = cfg
+        # `statements` (with `widen`): the tail may also hold ordinary
+        # instructions (`return a === r0` after `r0 = b.v`), not just loads.
+        self.statements = widen and statements
         # `widen`: also copy `throw` exits and the closing `return` even when
         # something falls into it (only when every path agrees on the value).
         self.widen = widen
@@ -82,12 +85,16 @@ class SharedReturnDuplicationCfgPass:
         if not isinstance(block.terminator, exits):
             return False
 
-        if len(block.instructions) > self._MAX_LEAD + 1 or len(block.predecessors) < 2:
+        limit = self._MAX_TAIL if self.statements else self._MAX_LEAD + 1
+        if len(block.instructions) > limit or len(block.predecessors) < 2:
             return False
 
         # `r0 = false; return r0` is as much a lone return as `return r0`:
         # only constant loads / copies may lead up to the terminator.
-        if not all(self._is_plain_load(i) for i in block.instructions[:-1]):
+        if not all(
+                self._is_plain_load(i) or (self.statements and self._is_copyable(i))
+                for i in block.instructions[:-1]
+        ):
             return False
 
         # A widened copy is only exact when the tail reads the same thing on
@@ -111,6 +118,7 @@ class SharedReturnDuplicationCfgPass:
         )
 
     _MAX_LEAD = 2
+    _MAX_TAIL = 6
 
     _REGISTER_NAME = re.compile(r"r(\d+)")
 
@@ -170,6 +178,11 @@ class SharedReturnDuplicationCfgPass:
         return len(keys) <= 1 and not (keys and unset)
 
     @staticmethod
+    def _is_copyable(instruction) -> bool:
+        """An ordinary instruction (no control transfer of its own)."""
+        return instruction.terminator is None and (instruction.value is not None or instruction.statement is not None)
+
+    @staticmethod
     def _is_plain_load(instruction) -> bool:
         return (
                 instruction.terminator is None
@@ -192,6 +205,11 @@ class SharedReturnDuplicationCfgPass:
         clone = BasicBlock(new_id, new_address)
         for instruction in block.instructions:
             duplicate = copy.copy(instruction)
+            # Passes tell writers apart by the identity of the value they
+            # hold: a copy sharing the node is folded together with the
+            # original (96/12456: `r1 = []` vanished from the copy).
+            duplicate.value = copy.deepcopy(instruction.value)
+            duplicate.statement = copy.deepcopy(instruction.statement)
             if instruction.terminator is not None:
                 duplicate.terminator = copy.copy(instruction.terminator)
             clone.instructions.append(duplicate)
