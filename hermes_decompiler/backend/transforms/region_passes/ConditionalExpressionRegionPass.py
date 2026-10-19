@@ -112,6 +112,21 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             if last.dest_reg in considered:
                 continue
             considered.add(last.dest_reg)
+            # Decided BEFORE the arm is absorbed (absorbing deletes its
+            # definitions, which an abandoned fold could not give back).
+            peeked = self._peek_arm_result(if_region.then_body, last.dest_reg)
+
+            if peeked is not None and not has_side_effects(last.value):
+                peek_test = negate_condition(condition)
+
+                if _mentions_register(peek_test, last.dest_reg):
+                    peek_test = substitute_register(peek_test, f"r{last.dest_reg}", last.value)
+
+                if self._has_stale_reader(
+                        peeked.value, peek_test, block.instructions[-1], peeked, last, block,
+                ):
+                    continue
+
             then_arm = self._single_result(if_region.then_body, last.dest_reg)
             if then_arm is None:
                 continue
@@ -174,10 +189,6 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             # is set on one path only).
             branch = block.instructions[-1]
 
-            if self._has_stale_reader(arm_expr, test, branch, arm_result, last, block):
-                last.value = default_expr
-                continue
-
             reclaim_definition(
                 self.cfg, self.graph.root, last, default_expr, arm_result,
                 ignore_blocks={arm_block}, ignore_regions={if_region},
@@ -190,8 +201,20 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
 
             stale_readers: list = []
 
-            def reader_value(reader, _last=last, _test=test, _branch=branch, _new=new_expr, _log=stale_readers):
+            def reader_value(reader, _last=last, _test=test, _branch=branch, _new=new_expr, _log=stale_readers,
+                             _block=block, _arm=arm_result):
+                # A PRINTED redefinition makes the copy test the wrong value.
                 if self._redefined_between(_test, _branch, reader, _last):
+                    _log.append(reader)
+                    return Identifier(name=f"r{_last.dest_reg}")
+
+                # A write folded into its readers prints nowhere, so the copy
+                # still reads right; the register is the tidier read wherever
+                # it provably holds the merge (98/9485: `console.log(200, r6, r5)`).
+                if (
+                        self._redefined_between(_test, _branch, reader, _last, folded=True)
+                        and self._register_holds_merge(_last, _arm, _branch, reader, _block)
+                ):
                     _log.append(reader)
                     return Identifier(name=f"r{_last.dest_reg}")
 
@@ -209,11 +232,23 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
 
         return False
 
-    def _has_stale_reader(self, arm_expr, test, branch, arm_result, last, block) -> bool:
-        from hermes_decompiler.backend.analysis.dominance.DominatorTree import DominatorTree
+    @staticmethod
+    def _peek_arm_result(body: SequenceRegion, dest_reg: int):
+        """The instruction `_single_result` would treat as the arm's value,
+        found without touching the arm."""
+        children = [c for c in body.children if not (isinstance(c, BasicBlock) and not c.instructions)]
 
-        owner = self.graph.owner(block)
-        dominators = None
+        if not children or not all(isinstance(c, BasicBlock) for c in children) or not children[-1].instructions:
+            return None
+
+        result = children[-1].instructions[-1]
+
+        if result.dest_reg != dest_reg or not isinstance(result.value, Expression) or not result.definition_used:
+            return None
+
+        return result
+
+    def _has_stale_reader(self, arm_expr, test, branch, arm_result, last, block) -> bool:
         marker = Identifier(name="__stale_probe__")
 
         for reader_block in self.cfg.blocks:
@@ -227,31 +262,42 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                 ) or not self._redefined_between(test, branch, i, last):
                     continue
 
-                # The register stands in for the ternary only where its value
-                # is the merge: the fold's own statement runs before the reader
-                # on every path (the reader stands in the sequence that holds
-                # the fold) or the register already held a value on every path
-                # (a default), and nothing assigned it in between.
-                if self._redefined_between(None, last, i, last, registers={last.dest_reg}, ignore=arm_result):
-                    return True
-
-                if owner is not None and reader_block in owner.covered_blocks:
-                    continue
-
-                if dominators is None:
-                    dominators = DominatorTree(self.cfg)
-                    dominators.compute()
-                if not any(
-                        w.dest_reg == last.dest_reg and w is not arm_result and w is not last
-                        and not w.definition_used
-                        and dominators.dominates(wb, reader_block) and w.address < branch.address
-                        for wb in self.cfg.blocks for w in wb.instructions
-                ):
+                if not self._register_holds_merge(last, arm_result, branch, i, block, reader_block):
                     return True
 
         return False
 
-    def _redefined_between(self, test, branch, reader, last, registers=None, ignore=None) -> bool:
+    def _register_holds_merge(self, last, arm_result, branch, reader, block, reader_block=None) -> bool:
+        """May `reader` read the register the ternary assigns instead of a copy?
+
+        The fold's own statement runs before the reader on every path (the
+        reader stands in the sequence that holds the fold) or the register
+        already held a printed value on every path (a default), and nothing
+        assigned it in between."""
+        from hermes_decompiler.backend.analysis.dominance.DominatorTree import DominatorTree
+
+        if reader_block is None:
+            reader_block = next(b for b in self.cfg.blocks if reader in b.instructions)
+
+        if self._redefined_between(None, last, reader, last, registers={last.dest_reg}, ignore=arm_result):
+            return False
+
+        owner = self.graph.owner(block)
+
+        if owner is not None and reader_block in owner.covered_blocks:
+            return True
+
+        dominators = DominatorTree(self.cfg)
+        dominators.compute()
+
+        return any(
+            w.dest_reg == last.dest_reg and w is not arm_result and w is not last
+            and not w.definition_used
+            and dominators.dominates(wb, reader_block) and w.address < branch.address
+            for wb in self.cfg.blocks for w in wb.instructions
+        )
+
+    def _redefined_between(self, test, branch, reader, last, registers=None, ignore=None, folded=False) -> bool:
         """Does an instruction between the branch (where `test` is read) and
         `reader` define a register `test` names (or one of `registers`)?"""
         if registers is None:
@@ -285,7 +331,15 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
 
         for blk in forward & backward:
             for i in blk.instructions:
-                if i is last or i is ignore or i.dest_reg not in registers:
+                # (the reader reads before it writes)
+                if i is last or i is ignore or i is reader or i.dest_reg not in registers:
+                    continue
+                # A write folded into its readers (never printed) leaves the
+                # register as it was, as far as the text is concerned.
+                if not folded and (
+                        i.definition_used and i.statement is None and not has_side_effects(i.value)
+                        and not is_unfolded_literal_definition(i)
+                ):
                     continue
                 if blk is start and blk is not end and i.address < branch.address:
                     continue

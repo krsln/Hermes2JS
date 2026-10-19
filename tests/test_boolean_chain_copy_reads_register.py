@@ -107,3 +107,20 @@ def test_a_ternary_copy_after_its_test_register_was_overwritten_reads_the_regist
     assert 'r1 = (r3 !== "object") ? param1 : param1.version;' in js
     assert 'return r1 === ((r3 !== "object") ? param3 : param3.version);' in js
     assert 'param1.version) ===' not in js
+
+
+def test_a_write_folded_into_its_readers_does_not_make_the_ternary_copy_stale():
+    """96/8499 `callGuardDEV`: `r3 = stack ?? ""` is merged by a `Mov r3, r1` that
+    is folded into its readers (never printed). It is not a redefinition of the
+    `r3` the second ternary's test names, so the readers keep the copy
+    (`r17 = (r3 != null) ? caughtException.stack : ""`) instead of the register
+    `r1`, which the NEXT merge overwrites."""
+    from pathlib import Path
+
+    hasm = (Path(__file__).parent / "data" / "merge_copy_after_absorbed_write_96_8499.hasm").read_text(
+        encoding="utf-8")
+    js = _render(hasm, 8499)
+
+    assert 'r17 = (r3 != null) ? caughtException.stack : "";' in js
+    assert 'r16 = (r2 != null) ? caughtException.name : "WorkletsError";' in js
+    assert "r17 = r1;" not in js

@@ -155,10 +155,17 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   kez kullanılınca ilk ifade ikincinin testini (`(r1 !== "object") ? param1 : ...`) ve okunmamış register'ları
   taşıyor; `return` yanlış `r0` okuyor. goto'dan bağımsız (baseline'da da var).
   **Kısmen çözüldü.** `ConditionalExpressionRegionPass`: ternary'nin testindeki register, dal ile okuyan arasında
-  (akış üzerinde) yeniden tanımlanmışsa okuyan ternary'nin kopyasını değil o register'ı okur (`repoint_references(...,
-  reader_value=)`); register'ın o noktada dolu olduğu kanıtlanamazsa (arm'ı kapsayan dizide değil ve yazdırılan bir
-  varsayılan yazım yok) birleştirme katlanmaz. Tam paket (96+98) karşılaştırması: ~300 fonksiyon değişti (örnekler:
-  96/10194 `r14 * (!r0 ? -1 : 1)` yanlış testi okuyordu → `r8`; 98/9485, 9486, 9490 golden'ları yanlış
-  `r3.page`/`r5.retries` okuyordu → yeniden üretildi); goto sayıları aynı (96: 358→359). **Açık:** 96/8499
-  `callGuardDEV` (`r17 = r1`, ikinci yazımdan sonra okunuyor), 96/9349 `cmp` `!==` kolu hâlâ bozuk, loop
-  koşullarındaki kopyalar (96/12561 örüntüsü) bu geçişten geçmiyor, 96/12624 yeni goto.
+  (akış üzerinde) yeniden *yazdırılan* bir tanımla değişiyorsa okuyan ternary'nin kopyasını değil o register'ı okur
+  (`repoint_references(..., reader_value=)`); register'ın o noktada dolu olduğu kanıtlanamazsa birleştirme, arm
+  emilmeden ÖNCE (`_peek_arm_result`) katlanmaz. Okuyanlarına katlanıp hiç yazdırılmayan bir yazım (96/8499'daki
+  `Mov r3, r1`, 98/9485'teki `r3 = console.log`) ve okuyanın kendisi YAZDIRILAN bir yeniden tanım sayılmaz: kopya
+  metinde hâlâ doğru okur. İki kademe: yazdırılan yeniden tanım → register okunur (güvenli değilse katlanmaz);
+  yalnız katlanmış yazım → register, ancak ikisi de sağlanıyorsa (arada ezilmemiş + katlanan ifade okuyandan önce
+  çalışıyor ya da önceden yazdırılan bir varsayılan var; `_register_holds_merge`) okunur, aksi halde kopya kalır
+  (96/8499'da `r1` ezildiği için kopya). Böylece 98/9485, 9486, 9490 hep `console.log(200, r6, r5)` biçiminde,
+  tutarlı. Tam paket (96+98): ~286 fonksiyon değişti (96: 126, 98: 160), goto 96: 358→359 (96/12624: eski
+  `r1 = (r2 !== "object") ? "object" : r4.params` bir `||` zincirini yutuyordu, yeni çıktı sadık ama goto'lu), 98:
+  372. Örnekler: 96/10194 yanlış `!r0` testi → `r8`; 98/9490 `r5.retries`/`r5.name` kopyaları yazdırılan
+  `r5 = getParentEnvironment(0)`'dan sonra okunuyordu (golden güncellendi). **Açık:** 96/9349 `cmp` tam fonksiyonu (switch içinde
+  boş `if {} else {}` kolları, `return r3 === r1`) kuyruk/ternary'den bağımsız bozuk, baseline'da da vardı; loop
+  koşullarındaki kopyalar (96/12561 örüntüsü) bu geçişten geçmiyor.
