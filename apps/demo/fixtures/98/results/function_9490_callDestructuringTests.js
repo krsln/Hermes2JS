@@ -36,7 +36,7 @@ function callDestructuringTests() {
     // CODE → addr: 85 | <LoadConstUInt8>: <Reg8: 0, UInt8: 200>
     // USED → r0 = 200;
     // CODE → addr: 88 | <Call4>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 0, Reg8: 8, Reg8: 7>
-    console.log(200, r8, (r5.page !== undefined) ? r5.page : 1);
+    console.log(200, r8, r7);
     // CODE → addr: 95 | <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = console;
     // CODE → addr:101 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -73,7 +73,7 @@ function callDestructuringTests() {
     // CODE → addr:179 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r6 = console.log;
     // CODE → addr:184 | <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 9, Reg8: 8>
-    console.log(r9, (r5.retries !== undefined) ? r5.retries : 3);
+    console.log(r9, r8);
     // CODE → addr:190 | <TryGetById>: <Reg8: 8, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r8 = console;
     // CODE → addr:196 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -119,7 +119,7 @@ function callDestructuringTests() {
     // CODE → addr:348 | <Mov>: <Reg8: 15, Reg8: 10>
     r15 = r10;
     // CODE → addr:351 | <Mov>: <Reg8: 14, Reg8: 9>
-    r14 = (r5.name !== undefined) ? r5.name : "anon";
+    r14 = r9;
     // CODE → addr:354 | <Mov>: <Reg8: 13, Reg8: 8>
     r13 = r8;
     // CODE → addr:357 | <Mov>: <Reg8: 12, Reg8: 7>

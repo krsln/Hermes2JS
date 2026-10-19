@@ -91,3 +91,19 @@ def test_every_path_into_the_merge_reads_the_register_it_wrote():
     assert re.search(r"\br1 = r2;", js)
     assert re.search(r"\br1 = param1\.length >= 0;", js)
     assert not re.search(r"\br1 = r3;", js)
+
+
+def test_a_ternary_copy_after_its_test_register_was_overwritten_reads_the_register():
+    """96/9349 `cmp`: two ternaries in a row test the same register
+    (`r3 = typeof a; r1 = r3 !== "object" ? a : a.version; r3 = typeof b; ...`),
+    and `return r1 === r0` read a COPY of the first one that now tested the
+    SECOND `typeof` (F-118). The reader reads the register the first ternary
+    assigns; a reader that stands where its test still holds keeps the copy."""
+    from pathlib import Path
+
+    hasm = (Path(__file__).parent / "data" / "sequential_ternaries_96_9349.hasm").read_text(encoding="utf-8")
+    js = _render(hasm, 9349)
+
+    assert 'r1 = (r3 !== "object") ? param1 : param1.version;' in js
+    assert 'return r1 === ((r3 !== "object") ? param3 : param3.version);' in js
+    assert 'param1.version) ===' not in js

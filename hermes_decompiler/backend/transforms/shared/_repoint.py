@@ -173,10 +173,15 @@ class _RegionCollector(RegionVisitor):
 
 def repoint_references(
         cfg, root, old_expr, new_expr, *, min_block_id: int, exclude: set, structural: bool = True,
+        reader_value=None,
 ) -> None:
     """Make every consumer of `old_expr` read `new_expr` instead.
 
     `structural=False` matches by identity only (see `repoint_node`).
+
+    `reader_value(instr)`, when given, picks what each INSTRUCTION reader
+    receives instead of `new_expr` (a copy of the merged expression is only
+    right while what it names still holds where the reader stands).
 
     `min_block_id` skips blocks that precede the fold (they cannot read a
     definition made after them); `exclude` are the instructions the fold
@@ -220,16 +225,18 @@ def repoint_references(
             if instr in exclude:
                 continue
 
+            replacement = new_expr if reader_value is None else reader_value(instr)
+
             if _computes_the_same_value(instr, old_expr, structural):
                 new_value, value_changed = instr.value, False
             else:
-                new_value, value_changed = repoint_node(instr.value, old_expr, new_expr, structural=structural)
+                new_value, value_changed = repoint_node(instr.value, old_expr, replacement, structural=structural)
 
             if value_changed:
                 instr.value = new_value
 
             if instr.statement is not None:
-                new_statement, statement_changed = repoint_node(instr.statement, old_expr, new_expr,
+                new_statement, statement_changed = repoint_node(instr.statement, old_expr, replacement,
                                                                 structural=structural)
 
                 if statement_changed:

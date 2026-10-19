@@ -6,7 +6,7 @@ from hermes_decompiler.backend.transforms.shared import (
     negate_condition, has_side_effects, repoint_references, reclaim_definition, is_unfolded_literal_definition,
     absorb_arm_definitions, substitute_register,
 )
-from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
+from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name, repoint_node
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import ConditionalExpression, Expression, Identifier
@@ -166,6 +166,18 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                 self.cfg, last.dest_reg, max(last.entry.address, arm_result.entry.address), root=self.graph.root,
             )
 
+            # A copy of the ternary handed to a reader that stands after its
+            # test's register was redefined would test the wrong value, and the
+            # register itself is only a safe stand-in where the ternary's own
+            # statement runs on every path to the reader, or the register already
+            # held a value on every path (a default). Otherwise leave the merge unfolded (98/6784: `r5`
+            # is set on one path only).
+            branch = block.instructions[-1]
+
+            if self._has_stale_reader(arm_expr, test, branch, arm_result, last, block):
+                last.value = default_expr
+                continue
+
             reclaim_definition(
                 self.cfg, self.graph.root, last, default_expr, arm_result,
                 ignore_blocks={arm_block}, ignore_regions={if_region},
@@ -176,19 +188,112 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                 last.definition_used = was_used
                 continue
 
+            stale_readers: list = []
+
+            def reader_value(reader, _last=last, _test=test, _branch=branch, _new=new_expr, _log=stale_readers):
+                if self._redefined_between(_test, _branch, reader, _last):
+                    _log.append(reader)
+                    return Identifier(name=f"r{_last.dest_reg}")
+
+                return _new
+
             repoint_references(
-                self.cfg,
-                self.graph.root,
-                arm_expr,
-                new_expr,
-                min_block_id=arm_block.id,
-                exclude={arm_result, last},
+                self.cfg, self.graph.root, arm_expr, new_expr,
+                min_block_id=arm_block.id, exclude={arm_result, last}, reader_value=reader_value,
             )
 
-            if named_later:
+            if named_later or stale_readers:
                 last.definition_used = False
 
             return True
+
+        return False
+
+    def _has_stale_reader(self, arm_expr, test, branch, arm_result, last, block) -> bool:
+        from hermes_decompiler.backend.analysis.dominance.DominatorTree import DominatorTree
+
+        owner = self.graph.owner(block)
+        dominators = None
+        marker = Identifier(name="__stale_probe__")
+
+        for reader_block in self.cfg.blocks:
+            for i in reader_block.instructions:
+                if i is arm_result or i is last or i.address <= arm_result.address:
+                    continue
+
+                if not any(
+                        repoint_node(tree, arm_expr, marker)[1]
+                        for tree in (i.value, i.statement) if tree is not None
+                ) or not self._redefined_between(test, branch, i, last):
+                    continue
+
+                # The register stands in for the ternary only where its value
+                # is the merge: the fold's own statement runs before the reader
+                # on every path (the reader stands in the sequence that holds
+                # the fold) or the register already held a value on every path
+                # (a default), and nothing assigned it in between.
+                if self._redefined_between(None, last, i, last, registers={last.dest_reg}, ignore=arm_result):
+                    return True
+
+                if owner is not None and reader_block in owner.covered_blocks:
+                    continue
+
+                if dominators is None:
+                    dominators = DominatorTree(self.cfg)
+                    dominators.compute()
+                if not any(
+                        w.dest_reg == last.dest_reg and w is not arm_result and w is not last
+                        and not w.definition_used
+                        and dominators.dominates(wb, reader_block) and w.address < branch.address
+                        for wb in self.cfg.blocks for w in wb.instructions
+                ):
+                    return True
+
+        return False
+
+    def _redefined_between(self, test, branch, reader, last, registers=None, ignore=None) -> bool:
+        """Does an instruction between the branch (where `test` is read) and
+        `reader` define a register `test` names (or one of `registers`)?"""
+        if registers is None:
+            registers = {
+                int(n.name[1:]) for n in test.walk()
+                if isinstance(n, Identifier) and n.name[0] == "r" and n.name[1:].isdigit()
+            }
+
+        if not registers:
+            return False
+
+        # Only a definition that can run between the two matters: its block is
+        # reachable from the branch and reaches the reader.
+        owner = {i: blk for blk in self.cfg.blocks for i in blk.instructions}
+        start, end = owner.get(branch), owner.get(reader)
+
+        if start is None or end is None:
+            return False
+
+        def closure(origin, step):
+            seen, todo = {origin}, [origin]
+            while todo:
+                for nxt in step(todo.pop()):
+                    if nxt not in seen:
+                        seen.add(nxt)
+                        todo.append(nxt)
+            return seen
+
+        forward = closure(start, lambda b: b.successors)
+        backward = closure(end, lambda b: b.predecessors)
+
+        for blk in forward & backward:
+            for i in blk.instructions:
+                if i is last or i is ignore or i.dest_reg not in registers:
+                    continue
+                if blk is start and blk is not end and i.address < branch.address:
+                    continue
+                if blk is end and blk is not start and i.address > reader.address:
+                    continue
+                if blk is start and blk is end and not branch.address < i.address < reader.address:
+                    continue
+                return True
 
         return False
 

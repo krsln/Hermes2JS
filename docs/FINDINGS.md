@@ -153,4 +153,12 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
 - **F-118 Ardışık ikili ternary'ler birbirine karışıyor** (96/9349 `cmp`, `===`/`!==` kolları). `r1 = typeof a !== "object"
   ? a : a.version; r0 = typeof c !== "object" ? c : c.version; return r1 === r0`: aynı `typeof` register'ı (`r3`) iki
   kez kullanılınca ilk ifade ikincinin testini (`(r1 !== "object") ? param1 : ...`) ve okunmamış register'ları
-  taşıyor; `return` yanlış `r0` okuyor. goto'dan bağımsız (baseline'da da var). Henüz incelenmedi.
+  taşıyor; `return` yanlış `r0` okuyor. goto'dan bağımsız (baseline'da da var).
+  **Kısmen çözüldü.** `ConditionalExpressionRegionPass`: ternary'nin testindeki register, dal ile okuyan arasında
+  (akış üzerinde) yeniden tanımlanmışsa okuyan ternary'nin kopyasını değil o register'ı okur (`repoint_references(...,
+  reader_value=)`); register'ın o noktada dolu olduğu kanıtlanamazsa (arm'ı kapsayan dizide değil ve yazdırılan bir
+  varsayılan yazım yok) birleştirme katlanmaz. Tam paket (96+98) karşılaştırması: ~300 fonksiyon değişti (örnekler:
+  96/10194 `r14 * (!r0 ? -1 : 1)` yanlış testi okuyordu → `r8`; 98/9485, 9486, 9490 golden'ları yanlış
+  `r3.page`/`r5.retries` okuyordu → yeniden üretildi); goto sayıları aynı (96: 358→359). **Açık:** 96/8499
+  `callGuardDEV` (`r17 = r1`, ikinci yazımdan sonra okunuyor), 96/9349 `cmp` `!==` kolu hâlâ bozuk, loop
+  koşullarındaki kopyalar (96/12561 örüntüsü) bu geçişten geçmiyor, 96/12624 yeni goto.
