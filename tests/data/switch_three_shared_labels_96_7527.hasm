@@ -1,0 +1,39 @@
+
+=> [Function #7527 "encoderForArrayFormat" of 124 bytes]: 2 params, frame size=4, strict=1, exc handler=0, debug info=0  @ offset 0x001b368c
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000005: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 1>
+==> 00000009: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 10631>  # String: 'arrayFormat' (Identifier)
+==> 0000000f: <LoadConstString>: <Reg8: 2, string_id: 161>  # String: 'index' (Identifier)
+==> 00000013: <JStrictEqual>: <Addr8: 98, Reg8: 2, Reg8: 3>  # Address: 00000075
+==> 00000017: <LoadConstString>: <Reg8: 2, string_id: 5221>  # String: 'bracket' (String)
+==> 0000001b: <JStrictEqual>: <Addr8: 83, Reg8: 2, Reg8: 3>  # Address: 0000006e
+==> 0000001f: <LoadConstString>: <Reg8: 2, string_id: 5365>  # String: 'colon-list-separator' (String)
+==> 00000023: <JStrictEqual>: <Addr8: 68, Reg8: 2, Reg8: 3>  # Address: 00000067
+==> 00000027: <LoadConstString>: <Reg8: 2, string_id: 4148>  # String: 'comma' (String)
+==> 0000002b: <JStrictEqual>: <Addr8: 27, Reg8: 2, Reg8: 3>  # Address: 00000046
+==> 0000002f: <LoadConstString>: <Reg8: 2, string_id: 5223>  # String: 'separator' (String)
+==> 00000033: <JStrictEqual>: <Addr8: 19, Reg8: 2, Reg8: 3>  # Address: 00000046
+==> 00000037: <LoadConstString>: <Reg8: 2, string_id: 5222>  # String: 'bracket-separator' (String)
+==> 0000003b: <JStrictEqual>: <Addr8: 11, Reg8: 2, Reg8: 3>  # Address: 00000046
+==> 0000003f: <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 7536>  # Function: [#7536  of 16 bytes]: 2 params @ offset 0x001b3b33
+==> 00000044: <Ret>: <Reg8: 2>
+==> 00000046: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 10631>  # String: 'arrayFormat' (Identifier)
+==> 0000004c: <LoadConstString>: <Reg8: 1, string_id: 7317>  # String: '=' (Identifier)
+==> 00000050: <LoadConstString>: <Reg8: 2, string_id: 5222>  # String: 'bracket-separator' (String)
+==> 00000054: <JStrictNotEqual>: <Addr8: 8, Reg8: 3, Reg8: 2>  # Address: 0000005c
+==> 00000058: <LoadConstString>: <Reg8: 1, string_id: 4369>  # String: '[]=' (String)
+==> 0000005c: <StoreToEnvironment>: <Reg8: 0, UInt8: 1, Reg8: 1>
+==> 00000060: <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 7534>  # Function: [#7534  of 16 bytes]: 2 params @ offset 0x001b3a49
+==> 00000065: <Ret>: <Reg8: 1>
+==> 00000067: <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 7532>  # Function: [#7532  of 16 bytes]: 2 params @ offset 0x001b393f
+==> 0000006c: <Ret>: <Reg8: 1>
+==> 0000006e: <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 7530>  # Function: [#7530  of 16 bytes]: 2 params @ offset 0x001b3835
+==> 00000073: <Ret>: <Reg8: 1>
+==> 00000075: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 7528>  # Function: [#7528  of 16 bytes]: 2 params @ offset 0x001b3708
+==> 0000007a: <Ret>: <Reg8: 0>
+
+

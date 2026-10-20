@@ -6,7 +6,9 @@ from hermes_decompiler.backend.regions import (
     SwitchCase,
     SwitchRegion,
 )
+from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.ir.Operators import BinaryOperator
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
 from hermes_decompiler.ir.expressions import BinaryExpression, Expression
 from hermes_decompiler.ir.expressions.Literals import Literal
 
@@ -59,6 +61,7 @@ class _ComparisonChainSwitchBuilder:
         self.graph = graph
 
     def try_build(self, region: SequenceRegion, root: IfRegion, min_cases: int) -> bool:
+        self._pending_peel = None
         chain = self._match_chain(root)
 
         if chain is None:
@@ -68,6 +71,11 @@ class _ComparisonChainSwitchBuilder:
 
         if len(cases) < min_cases:
             return False
+
+        if self._pending_peel is not None:
+            body, remaining = self._pending_peel
+            body.children[:] = remaining
+            body.invalidate_coverage()
 
         switch_region = SwitchRegion(discriminant)
         for tests, body in cases:
@@ -200,7 +208,9 @@ class _ComparisonChainSwitchBuilder:
         # the else-arm is empty / transparent.
         if is_empty_or_transparent_body(current.else_body):
             cases[-1][0].append(extra_value)
-            return discriminant, cases, current.then_body
+            return discriminant, cases, self._peel_shared_jumps(
+                current.then_body, discriminant, cases
+            )
 
         # Symmetric shape: then empty, else is the real default.
         if is_empty_or_transparent_body(current.then_body):
@@ -246,7 +256,66 @@ class _ComparisonChainSwitchBuilder:
 
         _, extra_value = inv
         cases[-1][0].append(extra_value)
-        return residual.then_body
+        return self._peel_shared_jumps(residual.then_body, discriminant, cases)
+
+    def _peel_shared_jumps(self, default_body, discriminant, cases: list):
+        """Fold leading `if (C === disc) goto <last case body>` tests.
+
+        When three or more labels share one body, the last labels'
+        tests stay behind as raw conditional branches at the head of
+        the default arm. Each one that jumps to the last case's entry
+        block is another label of that case: move `C` into its test
+        list and drop the branch block.
+        """
+        if not isinstance(default_body, SequenceRegion) or not cases:
+            return default_body
+
+        entry = self._entry_address(cases[-1][1])
+        if entry is None:
+            return default_body
+
+        children = list(default_body.children)
+        peeled = False
+        while children:
+            block = children[0]
+            if not isinstance(block, BasicBlock):
+                break
+            terminator = block.terminator
+            if not isinstance(terminator, TerminatorConditionalBranch):
+                break
+            if terminator.target != entry:
+                break
+            if any(
+                    i.statement is not None or i.terminator is not terminator
+                    and i.terminator is not None
+                    for i in block.instructions
+            ):
+                break
+            parsed = self._parse_test(terminator.condition, discriminant, _EQUALITY_OPERATORS)
+            if parsed is None:
+                break
+            cases[-1][0].append(parsed[1])
+            children.pop(0)
+            peeled = True
+
+        if not peeled:
+            return default_body
+
+        # Applied by `try_build` only once the switch is really built:
+        # a chain that turns out too short must leave the region intact.
+        self._pending_peel = (default_body, children)
+        return default_body
+
+    @staticmethod
+    def _entry_address(body):
+        probe = body
+        while isinstance(probe, SequenceRegion) and probe.children:
+            probe = probe.children[0]
+        if isinstance(probe, BasicBlock):
+            return probe.address
+        if hasattr(probe, "covered_blocks") and probe.covered_blocks:
+            return min(probe.covered_blocks, key=lambda blk: blk.id).address
+        return None
 
     # -------------------------------------------------------------
     # Condition parsing

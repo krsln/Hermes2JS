@@ -24,6 +24,7 @@ Her turdan sonra bu satır güncellenir. Ölçüm: iki paketin tüm fonksiyonlar
 | 2026-10-19 (F-118)    | 359       | 372       | ölçülmedi     | ölçülmedi     | 994 geçti |
 | 2026-10-20 (F-119)    | 349       | 366       | ölçülmedi     | ölçülmedi     | 996 geçti |
 | 2026-10-20 (F-120)    | 337       | 359       | ölçülmedi     | ölçülmedi     | 998 geçti |
+| 2026-10-20 (F-121)    | 331       | 356       | ölçülmedi     | ölçülmedi     | 999 geçti |
 
 `goto`: çıktısında `goto label_N` kalan fonksiyon sayısı. `pathdefs`: bir yolda tanımlanmadan okunan
 register'ı olan fonksiyon sayısı (yaklaşık denetim; survey aracı repoda yok, son satırda ölçülmedi).
@@ -194,3 +195,11 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   96/9150 `maybeSwapComponents` iki ayrı `return param1` yerine tek `&&`/`||` koşulu. İki eski test (9150, 9118) eski
   çıktının biçimini kodluyordu; anlamı koruyarak güncellendi. Tam paket: goto 96: 349→337, 98: 366→359; 23 çıktı
   değişti, yeni goto yok, kontrol aracı işaretlemedi.
+- **F-121 Üç ve daha fazla etiketin paylaştığı gövde** (F-10'un hedefi başka bölgede olan, düşmeyle de ulaşılan alt şekli;
+  96/7527 `encoderForArrayFormat`, ayrıca 96/748, 96/2095 ve benzerleri). `case "comma": case "separator":` gruplanıyor,
+  ama üçüncü etiketin testi `default` içinde `if ("bracket-separator" === r3) goto label_70;` olarak kalıyordu.
+  `_ComparisonChainSwitchBuilder._peel_shared_jumps`: varsayılan kolun başındaki, son case'in giriş bloğuna atlayan
+  eşitlik testlerini o case'in etiketlerine katar ve dal bloğunu atar; değişiklik yalnızca switch gerçekten kurulursa
+  uygulanır (zincir kısa kalırsa bölge bozulmaz; ilk denemede `isTransitionProp` bozulmuştu, testle yakalandı).
+  Test: tests/test_switch_shared_labels.py. Tam paket: goto 96: 337→331, 98: 359→356; 17 çıktı değişti.
+  Açık: 96/9349 `cmp` (önceden bozuktu) artık iç içe switch + `break` üretiyor; üçlü ifadeler hâlâ yanlış yazmaçları okuyor.
