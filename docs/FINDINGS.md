@@ -23,6 +23,7 @@ Her turdan sonra bu satır güncellenir. Ölçüm: iki paketin tüm fonksiyonlar
 | 2026-10-18 (F-117)    | 358       | 372       | ölçülmedi     | ölçülmedi     | 992 geçti |
 | 2026-10-19 (F-118)    | 359       | 372       | ölçülmedi     | ölçülmedi     | 994 geçti |
 | 2026-10-20 (F-119)    | 349       | 366       | ölçülmedi     | ölçülmedi     | 996 geçti |
+| 2026-10-20 (F-120)    | 337       | 359       | ölçülmedi     | ölçülmedi     | 998 geçti |
 
 `goto`: çıktısında `goto label_N` kalan fonksiyon sayısı. `pathdefs`: bir yolda tanımlanmadan okunan
 register'ı olan fonksiyon sayısı (yaklaşık denetim; survey aracı repoda yok, son satırda ölçülmedi).
@@ -181,3 +182,15 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   `r1 = null` / `r1 = displayName || ...` phi'sini `return null`'a çeviriyordu. Denediğim ve ATTIĞIM: "her
   atlayana kopya, orijinal ölür" (`every_jumper`, seviye 5) - 96/10211'de `if (A) {} else if (B) {} r0 = true`
   gibi yanlış çıktı üretti. Tam paket: goto 96: 359→349, 98: 372→366; başka çıktı değişmedi.
+- **F-120 Çapraz koşulda iki çıkışın okuduğu sabit** (F-10'un hedefi return olmayan alt şekli; 96/9112-9134
+  `parseTranslateX/Y`, `parseScaleX/Y`, `parseRotate`, `parseSkewX/Y`, `parsePerspective`, 96/12212, 96/19, 96/3433,
+  96/4491, 98/11215, 98/12081, 98/12630, 98/13801, 98/3236, 98/3974, 98/9557 - 19 fonksiyon goto'suz). Şekil:
+  `len !== 1` → `r0 = []`; `isLength(x) || isPercent(x)` → nesne kur. Mevcut "çapraz" birleştirme
+  (`ShortCircuitConditionCfgPass._try_merge_crossed`: `!a && b`) ikinci testin kurulumunu koşula katarken kurulumdaki
+  sabit yükü (`r1 = 0`) iki çıkıştan birinin (END) de okuduğu için reddediyordu. Artık sabit yük koşula girer ve END'in
+  önüne açılan kenar bloğuna kopyası konur (`_constants_for_the_end_edge`; yalnız END'e tek yoldan gidilen,
+  kolda ölü olan, exception handler'sız durumda). Yan kazanç: 96/4063 `handler` artık kaynağın kendisi
+  (`if (c === -1 && this.utf8BytesNeeded !== 0) ... else if (c === -1)`; eskisi atanmamış `r5` okuyordu),
+  96/9150 `maybeSwapComponents` iki ayrı `return param1` yerine tek `&&`/`||` koşulu. İki eski test (9150, 9118) eski
+  çıktının biçimini kodluyordu; anlamı koruyarak güncellendi. Tam paket: goto 96: 349→337, 98: 366→359; 23 çıktı
+  değişti, yeni goto yok, kontrol aracı işaretlemedi.

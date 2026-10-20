@@ -216,13 +216,22 @@ class ShortCircuitConditionCfgPass:
             # on the way to END: they move onto that edge (see `_sink_copies`).
             sunk = self._copies_for_the_end_edge(successor, arm, end_block)
 
+            # A constant the test reads AND END reads (`r1 = 0; ... a[r1]` in the
+            # test, `a[r1]` again in END): the test takes the value, END gets its
+            # own copy of the load on the edge into it (96/9112 `parseTranslateX`).
+            constants = self._constants_for_the_end_edge(successor, arm, end_block, sunk)
+
             # A pure value the second test reads through its register
             # (`r0 = arguments[1]; if (r0 !== undefined)`): the test takes the
             # value itself when nothing reads the register afterwards.
-            second = self._fold_pure_setup(successor, second, [arm, end_block], skip=sunk)
+            second = self._fold_pure_setup(
+                successor, second, [arm, end_block], skip=sunk, rematerialized=constants,
+            )
 
             if second is None:
                 return False
+
+            sunk = sorted([*sunk, *constants], key=lambda i: i.address)
 
         if self._setup_feeds_a_join(successor, arm, ignore={i.dest_reg for i in sunk}):
             return False
@@ -279,6 +288,33 @@ class ShortCircuitConditionCfgPass:
 
         return copies
 
+    def _constants_for_the_end_edge(self, successor: BasicBlock, arm: BasicBlock, end_block: BasicBlock, taken) -> list:
+        """Constant loads of the second test block that END also reads: the arm
+        overwrites the register first, and only this block leads to END, so a
+        copy of the load on the edge into END gives it the same value."""
+        if list(end_block.predecessors) != [successor] or self.cfg.exception_handlers:
+            return []
+
+        found = []
+
+        for instruction in successor.instructions:
+            if (
+                    instruction.terminator is not None
+                    or any(instruction is t for t in taken)
+                    or instruction.dest_reg is None
+                    or instruction.statement is not None
+                    or not instruction.entry.opcode.startswith("LoadConst")
+                    or not isinstance(instruction.value, (Literal, UndefinedLiteral))
+                    or sum(1 for i in successor.instructions if i.dest_reg == instruction.dest_reg) != 1
+                    or not self._dead_on_entry(arm, instruction.dest_reg, set())
+                    or self._dead_on_entry(end_block, instruction.dest_reg, set())
+            ):
+                continue
+
+            found.append(instruction)
+
+        return found
+
     def _sink_copies(self, copies: list, end_block: BasicBlock, successor: BasicBlock):
         """A block on the edge into `end_block` that runs the copies. It sits right
         before END; the block that used to fall into END jumps over it."""
@@ -330,7 +366,7 @@ class ShortCircuitConditionCfgPass:
                 and sum(1 for i in setup if has_side_effects(i.value)) <= 1
         )
 
-    def _fold_pure_setup(self, successor: BasicBlock, condition, exits: list, skip=()):
+    def _fold_pure_setup(self, successor: BasicBlock, condition, exits: list, skip=(), rematerialized=()):
         """The second test's condition with its pure setup instructions
         substituted in, or None when that is not exact.
 
@@ -369,7 +405,9 @@ class ShortCircuitConditionCfgPass:
                     # The global object is the same on every path and every reader
                     # already inlined it: nothing is left to read the register.
                     instruction.entry.opcode == "GetGlobalObject"
-                    or all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in exits)
+                    # A load END gets its own copy of is only dead on the first exit.
+                    or all(self._dead_on_entry(b, instruction.dest_reg, set())
+                           for b in (exits[:1] if any(instruction is r for r in rematerialized) else exits))
             )
                     # A handler is entered by an edge the CFG does not have: it
                     # may read the register the try body had set.

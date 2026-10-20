@@ -59,6 +59,12 @@ def test_the_swap_runs_after_both_checks_and_both_exits_stay():
     out = Decompiler.render(Decompiler.build_context(_HASM, 9150), verbose=False)
 
     assert "goto" not in out, out
-    assert out.count("return param1;") == 2, out
-    # `r5 !== undefined && !(k in X)` returns the parameter; every other path swaps.
-    assert re.search(r"if \(r5 === undefined \|\| param1\[r2\] in r0\[1\]\) \{.*?r0 = \[\];", out, re.S), out
+    # Both early exits return the parameter; every other path swaps. The two
+    # checks are one test (`a in X && (b === undefined || b in Y)`) with the swap
+    # under it and the single `return param1;` as its `else`.
+    assert out.count("return param1;") == 1, out
+    assert re.search(
+        r"if \(param1\[r4\] in r0\[0\] && \(param1\[1\] === undefined \|\| param1\[1\] in r0\[1\]\)\) \{.*?"
+        r"\} else \{\s*return param1;",
+        out, re.S,
+    ), out

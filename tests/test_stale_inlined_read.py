@@ -47,11 +47,13 @@ def test_environment_load_is_kept_when_the_register_is_overwritten_by_a_literal(
 
 
 def test_callee_load_is_kept_when_the_register_is_overwritten_before_the_call():
-    """96/9118: `r4 = r0[0]` ... `r0 = undefined` ... `r4(r0)`."""
+    """96/9118: `r4 = r0[0]` ... `r0 = undefined` ... `r4(r0)`. The call folds into
+    the test (`r1 === 1 && env[0].call(undefined, param1[0])`): its callee comes from
+    the environment load, not from `r0` as it is by then, and `this` is undefined."""
     out = _render("parseScaleX_stale_callee_96_9118.hasm", 9118)
 
-    assert "r4 = r0[0];" in out
-    assert "r0 = r4(r2);" in out
+    assert "goto" not in out
+    assert "getEnvironment(0)[0].call(undefined, param1[0])" in out
     assert "r0[0](" not in out
     assert "undefined[0]" not in out
 
