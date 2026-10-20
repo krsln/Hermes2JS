@@ -5,6 +5,7 @@ from hermes_decompiler.backend.regions import IfRegion, LoopRegion, RegionVisito
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.statements import ContinueStatement
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
+from hermes_decompiler.backend.transforms.shared._negation import negate_condition
 from ._base import RegionPass
 
 logger = get_logger(__name__)
@@ -41,12 +42,23 @@ class ConditionalContinueRegionPass(RegionPass, RegionVisitor):
         if target is None:
             return
 
+        # A second latch: an empty block that only falls into the continue
+        # target (`cloneObjectProperties`: `if (k !== K || o.k === undefined)
+        # {...} else continue;` jumps to its own copy of the back edge).
+        targets = {target.address} | {
+            b.address
+            for b in self.cfg.blocks
+            if not b.instructions
+               and b.terminator is None
+               and list(b.successors) == [target]
+        }
+
         for block in list(loop.body.covered_blocks):
             branch = block.terminator
 
             if (
                     not isinstance(branch, TerminatorConditionalBranch)
-                    or branch.target != target.address
+                    or branch.target not in targets
                     or block is loop.condition_block
                     or block is loop.update_block
                     or block is loop.header_block and loop.condition is not None
@@ -93,5 +105,59 @@ class ConditionalContinueRegionPass(RegionPass, RegionVisitor):
         if_region.else_body = None
 
         self.graph.insert_at(owner, owner.children.index(block) + 1, if_region)
+        self._rejoin_else_arm(owner, block)
 
         logger.debug("conditional continue: block %d", block.id)
+
+    def _rejoin_else_arm(self, owner: SequenceRegion, block: BasicBlock) -> None:
+        """`if (c) { T } else { F; if (d) continue; }` where F also falls into T.
+
+        `IfStructurer` gave T and F to the two arms because F's own branch was
+        still unresolved, losing F's fall-through edge into T. Once that branch
+        is a `continue` the shape is `if (!c) { F; if (d) continue; } T`.
+        """
+        parent = getattr(owner, "parent", None)
+
+        if (
+                not isinstance(parent, IfRegion)
+                or parent.else_body is not owner
+                or not isinstance(parent.then_body, SequenceRegion)
+                or not parent.then_body.children
+        ):
+            return
+
+        entry = parent.then_body.children[0]
+
+        if not isinstance(entry, BasicBlock) or entry not in block.successors:
+            return
+
+        inside = owner.covered_blocks
+        then_blocks = parent.then_body.covered_blocks
+
+        if any(
+                pred not in inside and pred in then_blocks
+                for pred in entry.predecessors
+        ):
+            return
+
+        # the continue is the last thing the arm does, so the fall-through
+        # edge is the only way out of it.
+        last = owner.children[-1]
+
+        if not isinstance(last, IfRegion) or last.else_body is not None:
+            return
+
+        sequence = getattr(parent, "parent", None)
+
+        if not isinstance(sequence, SequenceRegion) or parent not in sequence.children:
+            return
+
+        then_body = parent.then_body
+        parent.condition = negate_condition(parent.condition)
+        parent.then_body = owner
+        parent.else_body = None
+        owner.parent = parent
+        then_body.parent = sequence
+        sequence.children.insert(sequence.children.index(parent) + 1, then_body)
+        sequence.invalidate_coverage()
+        logger.debug("conditional continue: rejoined fall-through into block %d", entry.id)

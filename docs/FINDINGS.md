@@ -25,6 +25,7 @@ Her turdan sonra bu satır güncellenir. Ölçüm: iki paketin tüm fonksiyonlar
 | 2026-10-20 (F-119)    | 349       | 366       | ölçülmedi     | ölçülmedi     | 996 geçti |
 | 2026-10-20 (F-120)    | 337       | 359       | ölçülmedi     | ölçülmedi     | 998 geçti |
 | 2026-10-20 (F-121)    | 331       | 356       | ölçülmedi     | ölçülmedi     | 999 geçti |
+| 2026-10-20 (F-122)    | 330       | 355       | ölçülmedi     | ölçülmedi     | 1000 geçti |
 
 `goto`: çıktısında `goto label_N` kalan fonksiyon sayısı. `pathdefs`: bir yolda tanımlanmadan okunan
 register'ı olan fonksiyon sayısı (yaklaşık denetim; survey aracı repoda yok, son satırda ölçülmedi).
@@ -203,3 +204,12 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   uygulanır (zincir kısa kalırsa bölge bozulmaz; ilk denemede `isTransitionProp` bozulmuştu, testle yakalandı).
   Test: tests/test_switch_shared_labels.py. Tam paket: goto 96: 337→331, 98: 359→356; 17 çıktı değişti.
   Açık: 96/9349 `cmp` (önceden bozuktu) artık iç içe switch + `break` üretiyor; üçlü ifadeler hâlâ yanlış yazmaçları okuyor.
+- **F-122 Boş ikinci geri kenara dallanan `continue`** (F-10'un hedefi aynı bölgedeki kardeş bloktan oluşan alt şekli;
+  96/8548 `cloneObjectProperties`, 98/7120). `if (c) continue;` döngü başlığına değil, yalnızca başlığa düşen boş bir
+  kapı bloğuna dallanıyordu; ayrıca `IfStructurer` ilk testin else kolunu ve gövdeyi ayrı kollara verip o kolun gövdeye
+  düşen kenarını kaybediyordu (eski çıktıda gövde yalnız bir kolda kalıyordu: goto'lu çıktı geçerli JS değildi, ama
+  `goto` yerine `continue` yazmak onu sessizce yanlış yapardı). `ConditionalContinueRegionPass`: hedef boş kapı bloğu da
+  sayılır ve `_rejoin_else_arm` `if (c) { T } else { F; if (d) continue; }` şeklini F'nin T'ye düştüğü CFG kenarı
+  doğrulanınca `if (!c) { F; if (d) continue; } T` yapar. Test: tests/test_conditional_continue_latch.py. Tam paket:
+  goto 96: 331→330, 98: 356→355; 16 çıktı değişti (yalnız 2'sinde goto gitti, kalanı aynı kolu-yeniden-birleştirme
+  düzeltmesi; kontrol aracı işaretlemedi, 2284 ve 5130'da eski çıktı gövdeyi düşürüyordu).
