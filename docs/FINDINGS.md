@@ -21,6 +21,8 @@ Her turdan sonra bu satır güncellenir. Ölçüm: iki paketin tüm fonksiyonlar
 | 2026-10-18 (F-115)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 989 geçti |
 | 2026-10-18 (F-116)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 990 geçti |
 | 2026-10-18 (F-117)    | 358       | 372       | ölçülmedi     | ölçülmedi     | 992 geçti |
+| 2026-10-19 (F-118)    | 359       | 372       | ölçülmedi     | ölçülmedi     | 994 geçti |
+| 2026-10-20 (F-119)    | 349       | 366       | ölçülmedi     | ölçülmedi     | 996 geçti |
 
 `goto`: çıktısında `goto label_N` kalan fonksiyon sayısı. `pathdefs`: bir yolda tanımlanmadan okunan
 register'ı olan fonksiyon sayısı (yaklaşık denetim; survey aracı repoda yok, son satırda ölçülmedi).
@@ -45,7 +47,7 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   atlamalar (örnekler: 96/2019 `mountDeferredValueImpl`, 98/1871 `get`, 98/11891'in bir kısmı).
   KISMEN ÇÖZÜLDÜ (bkz. F-113): yalnız `return`/`throw` (+ sabit yükleme) kuyrukları. Kalanlar:
   (a) ifade içeren kuyruklar çözüldü (F-117); (b) 96/11046: dönüş register'ı yola göre farklı değer taşıyor (phi), goto olarak kalıyor;
-  (c) 98/1871 çözüldü (F-114); (d) hedefi return olmayan (kardeş bölge,
+  (c) 98/1871 çözüldü (F-114); (e) exception handler'lı fonksiyonlar çözüldü (F-119); (d) hedefi return olmayan (kardeş bölge,
   `none` sonlandırıcı) atlamalar. 96/4846 ve 96/10300 `binarySubdivide` döngüyle taşınan `r10` hatası çözüldü (F-115).
 - **F-11 `try/finally` içinde goto.** 98/2007 `preprocessException`, 98/10013 `flush`, 96/840.
   Atlamanın `finally` sınırını geçmesi.
@@ -169,3 +171,13 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   `r5 = getParentEnvironment(0)`'dan sonra okunuyordu (golden güncellendi). **Açık:** 96/9349 `cmp` tam fonksiyonu (switch içinde
   boş `if {} else {}` kolları, `return r3 === r1`) kuyruk/ternary'den bağımsız bozuk, baseline'da da vardı; loop
   koşullarındaki kopyalar (96/12561 örüntüsü) bu geçişten geçmiyor.
+- **F-119 Exception handler'lı fonksiyonlarda paylaşılan çıkış kopyası** (F-10'un bir parçası; 96/3900
+  `normalizeRootMargin`, 96/1363, 96/10844, 96/12298, 96/2813, 96/4231, 96/1907, 96/2413, 96/8034, 96/9338,
+  98/11643, 98/1635, 98/2811, 98/3382, 98/5884, 98/8176 - 16 fonksiyon). `SharedReturnDuplicationCfgPass`
+  fonksiyonda herhangi bir exception handler varsa hiç çalışmıyordu; bir `for-of` bile handler getirdiği için
+  baştaki `if (c) return X` çıkışları `goto` kalıyordu. Artık yalnız korunan aralıktaki bloklar ve handler girişleri
+  atlanır (kopya her zaman aralık dışına konur). Handler'lı fonksiyonlarda yol-bağımsızlık denetimi
+  (`_reads_the_same_on_every_path`) seviye 1'de de uygulanır: yoksa 98/2477 `getComponentNameFromType`
+  `r1 = null` / `r1 = displayName || ...` phi'sini `return null`'a çeviriyordu. Denediğim ve ATTIĞIM: "her
+  atlayana kopya, orijinal ölür" (`every_jumper`, seviye 5) - 96/10211'de `if (A) {} else if (B) {} r0 = true`
+  gibi yanlış çıktı üretti. Tam paket: goto 96: 359→349, 98: 372→366; başka çıktı değişmedi.

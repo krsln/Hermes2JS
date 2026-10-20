@@ -49,13 +49,20 @@ class SharedReturnDuplicationCfgPass:
         self.widen = widen
 
     def run(self) -> int:
-        if self.cfg.exception_handlers:
-            return 0
+        # A copy sits outside every try range. That is exact for an exit that
+        # already lies outside them (96/3900: a `for-of` guards its loop, the
+        # early `return`s at the top are nowhere near it); an exit inside a
+        # protected range, or a handler's own entry, must stay where it is.
+        protected = {
+            b for handler in self.cfg.exception_handlers
+            for b in (*handler.get("try_blocks", ()), handler.get("handler_block"))
+            if b is not None
+        }
 
         copied = 0
 
         for block in list(self.cfg.blocks):
-            if not self._eligible(block):
+            if block in protected or not self._eligible(block):
                 continue
 
             jumpers = [p for p in block.predecessors if self._jumps_to(p, block)]
@@ -102,7 +109,7 @@ class SharedReturnDuplicationCfgPass:
         # `r0 = false` on another is not one value, and once each jumper has its
         # own `return` the final one no longer says which it was (96/11046
         # returned `false` for an equal list).
-        if self.widen and not self._reads_the_same_on_every_path(block):
+        if (self.widen or self.cfg.exception_handlers) and not self._reads_the_same_on_every_path(block):
             return False
 
         if self.widen:

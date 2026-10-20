@@ -83,3 +83,24 @@ def test_a_shared_tail_of_several_statements_is_copied_for_every_jumper():
     assert "goto" not in out
     assert out.count("param1.memoizedState = param2;") == 2
     assert out.count("return param2;") == 2
+
+
+def test_a_function_with_exception_handlers_still_gets_its_shared_return_copied():
+    """96/3900 `normalizeRootMargin`: a `for-of` gives the function an exception
+    handler, which used to switch the copy off for the whole function. The
+    shared `return "0px 0px 0px 0px"` lies outside every protected range, so
+    each jumper may own a copy: no `goto label_505`."""
+    out = _render("shared_return_with_handler_96_3900.hasm", 3900)
+
+    assert "goto" not in out
+    assert out.count('return "0px 0px 0px 0px";') == 3
+
+
+def test_a_phi_return_is_not_copied_in_a_function_with_exception_handlers():
+    """98/2477 `getComponentNameFromType`: `return r1` follows `r1 = null` on one
+    path and `r1 = displayName || name || null` on another. One copy per jumper
+    left `return null` and lost the second value; the exit stays shared."""
+    out = _render("shared_return_phi_with_handler_98_2477.hasm", 2477)
+
+    assert "param1.displayName || param1.name || null" in out
+    assert "return null;\n            case" not in out
