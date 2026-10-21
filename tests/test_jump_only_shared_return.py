@@ -67,8 +67,12 @@ def test_jump_only_constant_return_has_no_goto():
     js = _js(_IS_TRANSITION_PROP, 8021)
 
     assert "goto" not in js
-    assert js.count("return true;") == 6
-    assert "return false;" in js
+    # six labels of one body are one condition (a `switch` needs two bodies);
+    # every label is tested and the false path is kept
+    assert js.count(" === param1") == 6
+    assert "r0 = true;" in js
+    assert "r0 = false;" in js
+    assert js.strip().endswith("return r0;\n}")
 
 
 def test_nested_merged_returns_keep_the_false_path():

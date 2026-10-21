@@ -124,8 +124,8 @@ def test_value_chain_that_is_only_tested_folds_into_the_condition():
     out = _render("touch_chain_value_tests_98_2463.hasm", 2463)
 
     assert (
-        'if (param1 === "topTouchStart" || (param1 === "topTouchMove" || '
-        '(param1 === "topTouchEnd" || param1 === "topTouchCancel"))) {'
+        'if (param1 === "topTouchStart" || param1 === "topTouchMove" || '
+        '(param1 === "topTouchEnd" || param1 === "topTouchCancel")) {'
     ) in out
     assert "r6 ||" not in out
 

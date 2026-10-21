@@ -240,9 +240,16 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   gerekir, `_MIN_CASES = 2`). `_compound_folder._case_chain_has_two_bodies`: zincirde en az iki ayrı gövde yoksa bu muafiyet
   uygulanmaz. Test: tests/test_shared_return_labels.py. Tam paket: goto sayısı aynı (96: 314, 98: 335); 20 çıktı değişti,
   hepsi eskiden `null` dönüşünü sessizce düşüren ya da zaten goto'lu işlevler (96/4157 ve 98/11208 artık `case undefined:
-  case null:` ile doğru). Açık kalan: 96/1139 `processColor` hâlâ goto'lu (ikinci test, değeri hâlâ okunan bir yükleme
-  yüzünden `||`'ye katlanamıyor: `ShortCircuitConditionCfgPass`'ın `_fold_pure_setup`'ı canlı sabiti taşıyamıyor; F-120'nin
-  `_constants_for_the_end_edge`'ine benzer bir yeniden yükleme gerekir). Denenip geri alınanlar:
+  case null:` ile doğru). İkinci aşama (aynı gün): 96/1139 `processColor` için `ShortCircuitConditionCfgPass`: aynı gövdeli iki etiket artık
+  `a === undefined || a === null` tek koşulu oluyor (`_case_chain_has_another_body`: zincirde başka gövde yoksa case muafiyeti
+  yok). İkinci testin yüklediği sabit (`r3 = null`) sonraki kodda da okunduğu için `_fold_pure_setup` katlayamıyordu; sabit yük
+  artık düşme yolunun başına kopyalanıyor (`_merge(..., rematerialize=)`, F-120'nin `_constants_for_the_end_edge`'ini yeniden
+  kullanır). Tam paket: goto 96: 314→310, 98: 335→333; 150 çıktı değişti (çoğu: aynı gövdeli etiket zincirleri `switch`/`else if`
+  yerine `||` koşulu oldu, `switch` içeren dosya 322→296); 24 dosyada fazladan bir `rN = sabit;` satırı (kopya yük) çıktı.
+  Güncellenen testler: test_jump_only_shared_return (isTransitionProp artık tek `||` koşulu + `r0 = true/false`),
+  test_shared_tail_conditions (parantez biçimi), test_shared_return_labels. Hâlâ açık: 96/1139'daki `if (r2 != null) goto
+  label_120` (korumanın çıkışı, `_arm_guard_falls_into` kısıtı) ve 96/8976 `processColorInitially` (eski sürümde de düşen
+  paylaşılan `return (r3 << 24 | r3 >>> 8) >>> 0`; switch içinde `break` sonrası hiçbir şey dönmüyor). Denenip geri alınanlar:
   (1) bölgenin devamı hedef olmalı kısıtı (`switchTest` altınlarını bozdu), (2) `_arm_guard_falls_into`'in 'hedef fonksiyonu
   bitirmeli' koşulunu kaldırmak (96: 314→295, 98: 335→322 ama 98/12276 `validateType`'ta else kolunun devamı düştü),
   (3) `ShortCircuitConditionCfgPass`'ta aynı gövdeli case zincirini `||`'ye katlamak (iki testi bozdu).

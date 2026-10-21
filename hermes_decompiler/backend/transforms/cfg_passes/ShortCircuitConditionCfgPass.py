@@ -165,16 +165,29 @@ class ShortCircuitConditionCfgPass:
                 # SwitchStructurer wants those as separate tests. A plain value
                 # (`a || b || c` over parameters) is one condition.
                 and not (
-                self._is_inlined_setup_block(successor) and self._is_case_test(next_branch.condition, branch.condition))
+                self._is_inlined_setup_block(successor)
+                and self._is_case_test(next_branch.condition, branch.condition)
+                and self._case_chain_has_another_body(block, successor, branch.target))
         ):
             # `a || (r2 = f; b)` with a pure `f`: the test takes the value.
             exits = [s for s in (self._arm_of(block, branch), self._fallthrough(successor)) if s is not None]
-            folded = self._fold_pure_setup(successor, next_branch.condition, exits) if len(exits) == 2 else None
+
+            # A constant the second test loads and the code after both tests reads
+            # (`r3 = null; if (a === r3) goto R;` ... `b === r3`): the test takes the
+            # value, the fall-through gets its own copy of the load (96/1139).
+            constants = (
+                self._constants_for_the_end_edge(successor, exits[0], exits[1], [])
+                if len(exits) == 2 else []
+            )
+            folded = (
+                self._fold_pure_setup(successor, next_branch.condition, exits, rematerialized=constants)
+                if len(exits) == 2 else None
+            )
 
             if folded is None:
                 return False
 
-            self._merge(block, successor, next_branch, folded)
+            self._merge(block, successor, next_branch, folded, rematerialize=constants)
             return True
 
         if next_branch.target != branch.target or not pure:
@@ -713,6 +726,61 @@ class ShortCircuitConditionCfgPass:
 
         return None
 
+    def _case_chain_has_another_body(self, block, successor, target: int) -> bool:
+        """Does the `case` chain these two tests belong to jump anywhere else?
+
+        `if (a === undefined) goto R; if (a === null) goto R;` is one body with two labels:
+        no `switch` comes out of it, so it is one condition (`a === undefined || a === null`).
+        With a third test going elsewhere it is a `switch` and the tests stay apart.
+        """
+        subject = self._compared_constant(block.terminator.condition)
+
+        def same_subject(candidate) -> bool:
+            branch = candidate.terminator
+
+            if not isinstance(branch, TerminatorConditionalBranch):
+                return False
+
+            other = self._compared_constant(branch.condition)
+
+            return other is not None and subject is not None and other.structurally_equal(subject)
+
+        current = successor
+        seen = {block, successor}
+
+        while True:
+            following = self._fallthrough(current)
+
+            if following is None or following in seen:
+                break
+
+            seen.add(following)
+
+            if not same_subject(following):
+                break
+
+            if following.terminator.target != target:
+                return True
+
+            current = following
+
+        current = block
+
+        while len(current.predecessors) == 1:
+            previous = next(iter(current.predecessors))
+
+            if previous in seen or not same_subject(previous) or self._fallthrough(previous) is not current:
+                break
+
+            seen.add(previous)
+
+            if previous.terminator.target != target:
+                return True
+
+            current = previous
+
+        return False
+
     @classmethod
     def _is_case_test(cls, condition, previous) -> bool:
         """A link of a `case` chain: the same value compared with a constant again."""
@@ -745,6 +813,7 @@ class ShortCircuitConditionCfgPass:
             successor: BasicBlock,
             next_branch: TerminatorConditionalBranch,
             second=None,
+            rematerialize=(),
     ) -> None:
 
         branch = block.terminator
@@ -783,9 +852,19 @@ class ShortCircuitConditionCfgPass:
         # successor had exactly one instruction (its own terminator
         # entry, per _is_pure_test_block) - drop it, it's now folded
         # into block.terminator.
+        copies = []
+
+        for instruction in rematerialize:
+            duplicate = copy.copy(instruction)
+            duplicate.value = copy.deepcopy(instruction.value)
+            copies.append(duplicate)
+
         successor.instructions.clear()
 
         new_fallthrough = self._fallthrough(successor)
+
+        if copies and new_fallthrough is not None:
+            new_fallthrough.instructions[0:0] = copies
 
         # -------------------------------------------------------------
         # Rewire edges: block -> {target_block, new_fallthrough},
