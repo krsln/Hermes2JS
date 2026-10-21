@@ -232,3 +232,12 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   98/2620 `appendAllChildren` (iki goto geri geldi; eski çıktı aynı hatadan yanlıştı) - bunlar okunabilirlik kaybı, doğruluk
   kazancı. Kontrol aracının işaretlediği 4 dosyadan 193, 12515 ve 8982 elle incelendi (gerçek bir atanmamış okuma yok); 98/2693 yalnızca
   gözle bakıldı, 178 değişikliğin çoğu tek tek okunmadı.
+- **F-124 (açık) İkinci `=== null` testi `return` düşüren else-if** (96/1139 `processColor`; yanlış çıktı). `if (a === undefined)
+  goto R; if (a === null) goto R; ...` (R: `return a`) çıktıda `if (a === undefined) { return a; } else if (a !== null) {...}`
+  oluyor: `a === null` için `return a` kayboluyor (fonksiyon `undefined` dönüyor). Neden: `_absorb_residual_conditional` ikinci
+  atlamayı `if (!C) { REST }` yapıyor, ama bölgeden sonra kontrol R'ye değil fonksiyon sonuna gidiyor. Kapsamlı bir kısıt
+  denendi (hedef fonksiyonu bitiriyorsa bölgenin devamı hedef olmalı): `switchTest`/`test_shared_tail_conditions` altın
+  çıktılarını bozdu, geri alındı. Ayrıca `_arm_guard_falls_into`'in 'hedef fonksiyonu bitirmeli' koşulunu kaldırmak goto'yu
+  96: 314→295, 98: 335→322 düşürdü ama 98/12276 `validateType` gibi dosyalarda else kolunun devamını düşürdü (yanlış çıktı),
+  o yüzden geri alındı. Çözüm yönü: birleşimin gerçekten dizide sonraki öğe olduğunu kanıtlayan, `case` zincirlerini
+  ayıran bir koşul.
