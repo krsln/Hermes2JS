@@ -1,0 +1,41 @@
+
+=> [Function #1333 "getValidLengthPercentageSizeOrNull" of 123 bytes]: 2 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x00115145
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <LoadConstNull>: <Reg8: 0>
+==> 00000005: <JEqual>: <Addr8: 116, Reg8: 1, Reg8: 0>  # Address: 00000079
+==> 00000009: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 130>  # String: 'endsWith' (Identifier)
+==> 0000000e: <LoadConstString>: <Reg8: 2, string_id: 1110>  # String: 'px' (String)
+==> 00000012: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 2>
+==> 00000017: <JmpFalse>: <Addr8: 46, Reg8: 2>  # Address: 00000045
+==> 0000001a: <GetGlobalObject>: <Reg8: 3>
+==> 0000001c: <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 191>  # String: 'parseFloat' (Identifier)
+==> 00000022: <LoadConstUndefined>: <Reg8: 2>
+==> 00000024: <Call2>: <Reg8: 2, Reg8: 4, Reg8: 2, Reg8: 1>
+==> 00000029: <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 3, string_id: 22>  # String: 'Number' (Identifier)
+==> 0000002f: <GetById>: <Reg8: 3, Reg8: 4, UInt8: 4, string_id: 8414>  # String: 'isNaN' (Identifier)
+==> 00000035: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000003a: <JmpTrue>: <Addr8: 11, Reg8: 3>  # Address: 00000045
+==> 0000003d: <LoadConstZero>: <Reg8: 3>
+==> 0000003f: <JNotGreaterEqual>: <Addr8: 6, Reg8: 2, Reg8: 3>  # Address: 00000045
+==> 00000043: <Ret>: <Reg8: 2>
+==> 00000045: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 130>  # String: 'endsWith' (Identifier)
+==> 0000004a: <LoadConstString>: <Reg8: 2, string_id: 844>  # String: '%' (String)
+==> 0000004e: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 2>
+==> 00000053: <JmpFalse>: <Addr8: 24, Reg8: 2>  # Address: 0000006b
+==> 00000056: <GetGlobalObject>: <Reg8: 2>
+==> 00000058: <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 191>  # String: 'parseFloat' (Identifier)
+==> 0000005e: <LoadConstUndefined>: <Reg8: 2>
+==> 00000060: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 2, Reg8: 1>
+==> 00000065: <LoadConstZero>: <Reg8: 2>
+==> 00000067: <JGreaterEqual>: <Addr8: 16, Reg8: 3, Reg8: 2>  # Address: 00000077
+==> 0000006b: <LoadConstString>: <Reg8: 2, string_id: 8147>  # String: 'auto' (Identifier)
+==> 0000006f: <JStrictEqual>: <Addr8: 6, Reg8: 1, Reg8: 2>  # Address: 00000075
+==> 00000073: <Ret>: <Reg8: 0>
+==> 00000075: <Ret>: <Reg8: 1>
+==> 00000077: <Ret>: <Reg8: 1>
+==> 00000079: <Ret>: <Reg8: 0>
+
+

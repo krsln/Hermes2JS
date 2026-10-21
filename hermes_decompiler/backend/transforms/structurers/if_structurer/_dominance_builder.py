@@ -292,6 +292,15 @@ class _DominanceIfBuilder(RegionStructurer):
                         and self._arm_tests_into(then_entry, goto_block)
                 )
                 or (
+                        # `if (a) { if (b) return x; else goto tail } tail`: the arm's
+                        # own test jumps to the code the outer branch skips to, and
+                        # that code goes on (no exit block): it is the join.
+                        merge_block is None
+                        and goto_block.successors
+                        and not self._reaches_itself(then_entry)
+                        and self._arm_tests_into(then_entry, goto_block)
+                )
+                or (
                         # `if (a) { if (b) return x; } tail`: the arm's guard
                         # falls through into the very code the outer branch
                         # jumps to, which only ends the function, so no

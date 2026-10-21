@@ -263,3 +263,14 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   Tam paket: goto 96: 310→309, 98: 333; 18 çıktı değişti (hepsi iç içe `switch`/`else if` yığınının düzleşmesi ya da düşen etiketin
   geri gelmesi: 96/1308 `getDirectionForKeyword`, 96/7538 ve 98/5395 `parserForArrayFormat`, 96/7193 `getStateForAction`; hepsi gözle bakıldı).
   Açık: kalan ~170 kayıp-kenar adayı henüz ayıklanmadı (96/1333, 96/1098, 98/5036, 98/2557 örnek).
+- **F-126 Kolun kendi testinin atladığı kuyruk tek kolda kalıyor** (çözüldü; 96/1333 `getValidLengthPercentageSizeOrNull`; yanlış çıktıydı).
+  `"px"` kolu geçersiz sayıda `"%"` testine düşmeli; çıktıda `"%"` testi öbür kolun içindeydi ve geçersiz `"px"` `return null` yerine
+  `undefined` dönüyordu (kayıp kenar 0x1a→0x45). Neden: `_DominanceIfBuilder._convert` ortak kuyruğu (`goto_block`) yalnızca
+  `duplicated_returns` sonrası ya da kuyruk fonksiyonu bitiriyorsa birleşim sayıyordu; kuyruk devam ediyorsa (post-dominator yok çünkü
+  her yol ayrı `return`e gidiyor) kolu `else` yapıp kuyruğu içine alıyordu. Yeni koşul: `merge_block` yok, `goto_block` devam ediyor,
+  kol döngüde değil ve kolun içindeki bir koşullu dal `goto_block`a atlıyor (`_arm_tests_into`). Test: tests/test_arm_join_tail.py.
+  Tam paket: goto 96: 309→308, 98: 333→332; 85 çıktı değişti (96: 37, 98: 48). Örnek: 96/9364 `inc` artık `if (r0) {...}` sonrası `switch`i her
+  durumda çalıştırıyor (eskiden `if (!r0) { switch }` içindeydi: `r0` doğruyken switch atlanıyordu). Kontrol aracı 9 dosyada işaret
+  etti (96: 841, 2590, 2286, 1793, 2088; 98: 2594, 2008, 11908, 2474), çoğu zaten goto'lu karışık işlevler; 98/2594'te kuyruğun
+  birleşim olduğu CFG'den doğrulandı. Not: 98/2619 `beginWork` ayrıca >2 dk sürüyor (ConditionalExpressionRegionPass her aday için
+  dominatör ağacını yeniden hesaplıyor); bu değişiklikten bağımsız, ayrı bir performans işi.
