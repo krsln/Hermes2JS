@@ -26,6 +26,7 @@ Her turdan sonra bu satır güncellenir. Ölçüm: iki paketin tüm fonksiyonlar
 | 2026-10-20 (F-120)    | 337       | 359       | ölçülmedi     | ölçülmedi     | 998 geçti |
 | 2026-10-20 (F-121)    | 331       | 356       | ölçülmedi     | ölçülmedi     | 999 geçti |
 | 2026-10-20 (F-122)    | 330       | 355       | ölçülmedi     | ölçülmedi     | 1000 geçti |
+| 2026-10-20 (F-123)    | 314       | 335       | ölçülmedi     | ölçülmedi     | 1002 geçti |
 
 `goto`: çıktısında `goto label_N` kalan fonksiyon sayısı. `pathdefs`: bir yolda tanımlanmadan okunan
 register'ı olan fonksiyon sayısı (yaklaşık denetim; survey aracı repoda yok, son satırda ölçülmedi).
@@ -213,3 +214,21 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   doğrulanınca `if (!c) { F; if (d) continue; } T` yapar. Test: tests/test_conditional_continue_latch.py. Tam paket:
   goto 96: 331→330, 98: 356→355; 16 çıktı değişti (yalnız 2'sinde goto gitti, kalanı aynı kolu-yeniden-birleştirme
   düzeltmesi; kontrol aracı işaretlemedi, 2284 ve 5130'da eski çıktı gövdeyi düşürüyordu).
+- **F-123 Fonksiyonu bitiren korumanın çıkış bloğu birleşimden sonra** (F-10'un hedefi kardeş bloktan oluşan alt şekli;
+  98/3552 `canParse`, 96/193 `Ie`, 98/12515 `Ie` ve benzerleri). `if (a) { ...; if (c) return x; } TAIL`: korumanın
+  çıkışı TAIL'den sonra dizildiği için `if (c) goto label` kalıyor ve TAIL ya kopyalanıyor ya da else kolu TAIL'e düşen
+  kenarı kaybediyordu. İki parça: (1) `_DominanceIfBuilder._arm_guard_falls_into` kolun korumasının düşerek vardığı,
+  fonksiyonu bitiren bloğu birleşim sayar (döngü içinde değil; birleşimden sonra kolun kodu dizilmemişse); (2) yeni
+  `GuardExitRegionPass` yalnızca bu dala giden, fonksiyonu bitiren çıkış bloğunu `if (c) { ... }` içine taşır, ancak
+  dalın düştüğü yer CFG'de gerçekten sıradaki ise (döngü içinde değil).
+  Bu iş sırasında eskiden saklı kalmış bir yanlış derleme çıktı: 98/8982 `checkEqual` ve 98/5330
+  `do { x = it.next(); if (x === undefined) goto RETURN_TRUE; ... } while (c)` döngülerinde `_absorb_residual_conditional`
+  atlamayı `if (x !== undefined) { gövde }` yapıp çıkışı (`return true`) döngü sonrasına atıyordu; ilk deneme yalnızca
+  başka bir goto yeniden denemeyi zorladığı için gizliydi. Artık döngü içindeki bir dalın döngüden çıkıp geri
+  dönemeyen bir `return` bloğuna atlaması emilmez (`_compound_folder._reaches`).
+  Testler: tests/test_guard_exit_region.py (canParse, checkEqual); tests/test_shared_return_widened.py'deki 96/12456
+  testi güncellendi (kuyruk artık kopyalanmıyor, tek `r1 = []; return r1;`). Tam paket: goto 96: 330→314, 98: 355→335;
+  178 çıktı değişti. Kötüleşenler: 98/5330 (goto'suz ama `||` zinciri yerine iç içe switch), 96/2408 (else-if yığını),
+  98/2620 `appendAllChildren` (iki goto geri geldi; eski çıktı aynı hatadan yanlıştı) - bunlar okunabilirlik kaybı, doğruluk
+  kazancı. Kontrol aracının işaretlediği 4 dosyadan 193, 12515 ve 8982 elle incelendi (gerçek bir atanmamış okuma yok); 98/2693 yalnızca
+  gözle bakıldı, 178 değişikliğin çoğu tek tek okunmadı.

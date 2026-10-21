@@ -7,6 +7,7 @@ from .DeadMovEliminationPass import DeadMovEliminationPass
 from .DeadThisPlaceholderPass import DeadThisPlaceholderPass
 from .DeadUndefinedStorePass import DeadUndefinedStorePass, FlowSnapshot
 from .ForEachRegionPass import ForEachRegionPass
+from .GuardExitRegionPass import GuardExitRegionPass
 from .GeneratorStateMachineRegionPass import GeneratorStateMachineRegionPass
 from .IfTailMergeRegionPass import IfTailMergeRegionPass
 from .InductionVariableNamingPass import InductionVariableNamingPass
@@ -30,6 +31,7 @@ __all__ = [
     "DeadThisPlaceholderPass",
     "DeadUndefinedStorePass", "FlowSnapshot",
     "ForEachRegionPass",
+    "GuardExitRegionPass",
     "GeneratorStateMachineRegionPass",
     "IfTailMergeRegionPass",
     "InductionVariableNamingPass",

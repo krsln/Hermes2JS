@@ -11,6 +11,7 @@ from hermes_decompiler.backend.transforms.region_passes import (
     ConditionalExpressionRegionPass,
     UnfoldedMergeRepairPass,
     ConditionalContinueRegionPass,
+    GuardExitRegionPass,
     LoopCarriedDefinitionPass,
     DeadThisPlaceholderPass,
     DeadMovEliminationPass,
@@ -197,6 +198,9 @@ class StructuralAnalyzer:
 
         # `if (c) continue;` compiled as a conditional branch back to the loop.
         ConditionalContinueRegionPass(graph, self.cfg).run()
+
+        # `if (c) return x;` whose exit block was laid out after the guarded code.
+        GuardExitRegionPass(graph, self.cfg).run()
 
         # Drops a bare unconditional-Jmp block whose target is simply
         # the very next sibling block that already executes right

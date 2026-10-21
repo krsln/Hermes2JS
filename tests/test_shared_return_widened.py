@@ -68,12 +68,17 @@ def test_a_shared_tail_with_a_statement_is_copied_with_its_own_nodes():
     """96/12456 `getSchemes`: `r1 = []; return r1` is jumped to by `!param1` and
     fallen into by the last `else`. The copy must be a real copy: when it
     shared the `[]` node with the original, a fold took the assignment out of
-    the copy and `!param1` returned an unassigned `r1`."""
+    the copy and `!param1` returned an unassigned `r1`.
+
+    Since the guard-exit rule (F-123) the tail is no longer copied: the last
+    `else` falls on to it and `!param1` jumps onto it, which is one `r1 = [];
+    return r1;` after the `if`. What must still hold is that the assignment
+    exists exactly where `r1` is read."""
     out = _render("shared_tail_with_statements_96_12456.hasm", 12456)
 
     assert "goto" not in out
-    assert out.count("r1 = [];") == 2
-    assert out.count("return r1;") == 2
+    assert out.count("r1 = [];") == 1
+    assert out.rstrip().endswith("r1 = [];\n    return r1;\n}")
 
 
 def test_a_shared_tail_of_several_statements_is_copied_for_every_jumper():

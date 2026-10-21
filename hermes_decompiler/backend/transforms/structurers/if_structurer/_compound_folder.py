@@ -314,6 +314,18 @@ class _CompoundConditionFolder:
                 # unconverted rather than guess.
                 return False
 
+        # A jump out of a loop to code that cannot come back (a `return` after
+        # it) is not "continue where the region continues": that is the next
+        # iteration. Dropping it loses the exit (`do { next(); if (done) goto
+        # RETURN_TRUE; ... } while (c)` became a body guarded by `!done`).
+        if (
+                target_block is not None
+                and isinstance(target_block.terminator, TerminatorReturn)
+                and self._reaches(block, block)
+                and not self._reaches(target_block, block)
+        ):
+            return False
+
         # Dropping the jump means "after the rest, continue where the region
         # continues". When T already sits in the SIBLING arm of an enclosing
         # `if`, that is not where the jump went (`if (c) { return null } else
@@ -354,6 +366,26 @@ class _CompoundConditionFolder:
             insert_at += 1
         self.graph.insert_at(region, insert_at, if_region)
         return True
+
+    @staticmethod
+    def _reaches(start: BasicBlock, goal: BasicBlock) -> bool:
+        """True if `goal` can be reached from `start` over one or more CFG edges."""
+        seen: set = set()
+        stack = list(start.successors)
+
+        while stack:
+            current = stack.pop()
+
+            if current is goal:
+                return True
+
+            if current in seen:
+                continue
+
+            seen.add(current)
+            stack.extend(current.successors)
+
+        return False
 
     @staticmethod
     def _case_test_beside(region, index: int) -> bool:

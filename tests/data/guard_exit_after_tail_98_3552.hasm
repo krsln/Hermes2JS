@@ -1,0 +1,41 @@
+
+=> [Function #3552 "canParse" of 111 bytes]: 3 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x0018f72c
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000003: <LoadParam>: <Reg8: 8, UInt8: 2>
+==> 00000006: <LoadConstNull>: <Reg8: 1>
+==> 00000008: <Neq>: <Reg8: 2, Reg8: 1, Reg8: 8>
+==> 0000000c: <LoadConstNull>: <Reg8: 5>
+==> 0000000e: <JmpFalse>: <Addr8: 45, Reg8: 2>  # Address: 0000003b
+==> 00000011: <LoadFromEnvironment>: <Reg8: 6, Reg8: 3, UInt8: 22>
+==> 00000015: <GetGlobalObject>: <Reg8: 4>
+==> 00000017: <TryGetById>: <Reg8: 4, Reg8: 4, UInt8: 0, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 0000001d: <GetByIdShort>: <Reg8: 7, Reg8: 4, UInt8: 1, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000022: <LoadConstString>: <Reg8: 4, string_id: 6457>  # String: '' (Identifier)
+==> 00000026: <Call2>: <Reg8: 12, Reg8: 7, Reg8: 4, Reg8: 8>
+==> 0000002b: <LoadConstZero>: <Reg8: 13>
+==> 0000002d: <LoadConstNull>: <Reg8: 11>
+==> 0000002f: <LoadConstNull>: <Reg8: 10>
+==> 00000031: <LoadConstZero>: <Reg8: 9>
+==> 00000033: <Call>: <Reg8: 5, Reg8: 6, UInt8: 5>
+==> 00000037: <JEqual>: <Addr8: 52, Reg8: 1, Reg8: 5>  # Address: 0000006b
+==> 0000003b: <LoadParam>: <Reg8: 7, UInt8: 1>
+==> 0000003e: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 22>
+==> 00000042: <GetGlobalObject>: <Reg8: 3>
+==> 00000044: <TryGetById>: <Reg8: 3, Reg8: 3, UInt8: 0, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 0000004a: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 1, string_id: 105>  # String: 'concat' (Identifier)
+==> 0000004f: <LoadConstString>: <Reg8: 3, string_id: 6457>  # String: '' (Identifier)
+==> 00000053: <Call2>: <Reg8: 12, Reg8: 6, Reg8: 3, Reg8: 7>
+==> 00000058: <LoadConstZero>: <Reg8: 13>
+==> 0000005a: <LoadConstNull>: <Reg8: 11>
+==> 0000005c: <Mov>: <Reg8: 10, Reg8: 5>
+==> 0000005f: <LoadConstZero>: <Reg8: 9>
+==> 00000061: <Call>: <Reg8: 3, Reg8: 4, UInt8: 5>
+==> 00000065: <Neq>: <Reg8: 1, Reg8: 1, Reg8: 3>
+==> 00000069: <Ret>: <Reg8: 1>
+==> 0000006b: <LoadConstFalse>: <Reg8: 1>
+==> 0000006d: <Ret>: <Reg8: 1>
+
+

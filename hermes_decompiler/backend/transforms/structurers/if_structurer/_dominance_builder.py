@@ -291,6 +291,14 @@ class _DominanceIfBuilder(RegionStructurer):
                         and merge_block is None
                         and self._arm_tests_into(then_entry, goto_block)
                 )
+                or (
+                        # `if (a) { if (b) return x; } tail`: the arm's guard
+                        # falls through into the very code the outer branch
+                        # jumps to, which only ends the function, so no
+                        # post-dominator exists to say it is a join.
+                        merge_block is None
+                        and self._arm_guard_falls_into(region, then_entry, goto_block)
+                )
         )
                 and any(
             pred is not block and self.cfg.dominator_tree.dominates(then_entry, pred)
@@ -443,6 +451,65 @@ class _DominanceIfBuilder(RegionStructurer):
             and not is_constant_comparison(pred.terminator.condition)
             for pred in goto_block.predecessors
         )
+
+    def _arm_guard_falls_into(self, region, then_entry: BasicBlock, goto_block: BasicBlock) -> bool:
+        """True if `goto_block` ends the function and a conditional branch
+        inside the fallthrough arm reaches it by falling through (its taken
+        edge goes elsewhere)."""
+        if goto_block.successors:
+            return False
+
+        # A loop's own exits and back edges are not guards (the exit would be
+        # taken for the loop's join): leave those to the loop structurers.
+        if self._reaches_itself(then_entry):
+            return False
+
+        dominators = self.cfg.dominator_tree
+
+        # No code of the arm may be laid out after the join: it would be left
+        # outside the `if` (the arm's own code resumes behind the exit block).
+        children = region.children
+
+        if goto_block in children:
+            for item in children[children.index(goto_block) + 1:]:
+                rep = representative_block(item)
+
+                if (
+                        rep is not None
+                        and rep.address >= 0
+                        and dominators.dominates(then_entry, rep)
+                        # a lone exit block is a guard's target, which
+                        # `GuardExitRegionPass` moves into its `if` afterwards
+                        and not (isinstance(item, BasicBlock) and not item.successors)
+                ):
+                    return False
+
+        return any(
+            isinstance(pred.terminator, TerminatorConditionalBranch)
+            and pred.terminator.target != goto_block.address
+            and dominators.dominates(then_entry, pred)
+            for pred in goto_block.predecessors
+        )
+
+    @staticmethod
+    def _reaches_itself(block: BasicBlock) -> bool:
+        """True if `block` lies on a CFG cycle (it is part of a loop)."""
+        seen: set = set()
+        stack = list(block.successors)
+
+        while stack:
+            current = stack.pop()
+
+            if current is block:
+                return True
+
+            if current in seen:
+                continue
+
+            seen.add(current)
+            stack.extend(current.successors)
+
+        return False
 
     @staticmethod
     def _arm_leaves_the_region(region, then_start: int, goto_block) -> bool:
