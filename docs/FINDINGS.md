@@ -232,12 +232,17 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   98/2620 `appendAllChildren` (iki goto geri geldi; eski çıktı aynı hatadan yanlıştı) - bunlar okunabilirlik kaybı, doğruluk
   kazancı. Kontrol aracının işaretlediği 4 dosyadan 193, 12515 ve 8982 elle incelendi (gerçek bir atanmamış okuma yok); 98/2693 yalnızca
   gözle bakıldı, 178 değişikliğin çoğu tek tek okunmadı.
-- **F-124 (açık) İkinci `=== null` testi `return` düşüren else-if** (96/1139 `processColor`; yanlış çıktı). `if (a === undefined)
-  goto R; if (a === null) goto R; ...` (R: `return a`) çıktıda `if (a === undefined) { return a; } else if (a !== null) {...}`
-  oluyor: `a === null` için `return a` kayboluyor (fonksiyon `undefined` dönüyor). Neden: `_absorb_residual_conditional` ikinci
-  atlamayı `if (!C) { REST }` yapıyor, ama bölgeden sonra kontrol R'ye değil fonksiyon sonuna gidiyor. Kapsamlı bir kısıt
-  denendi (hedef fonksiyonu bitiriyorsa bölgenin devamı hedef olmalı): `switchTest`/`test_shared_tail_conditions` altın
-  çıktılarını bozdu, geri alındı. Ayrıca `_arm_guard_falls_into`'in 'hedef fonksiyonu bitirmeli' koşulunu kaldırmak goto'yu
-  96: 314→295, 98: 335→322 düşürdü ama 98/12276 `validateType` gibi dosyalarda else kolunun devamını düşürdü (yanlış çıktı),
-  o yüzden geri alındı. Çözüm yönü: birleşimin gerçekten dizide sonraki öğe olduğunu kanıtlayan, `case` zincirlerini
-  ayıran bir koşul.
+- **F-124 İkinci `=== null` testi `return` düşüren else-if** (kısmen çözüldü; 98/11208 `wrappedFn`, 96/4157 `parseFileSlash`,
+  96/1139 `processColor`; yanlış çıktıydı). `if (a === undefined) goto R; if (a === null) goto R; ...` (R: `return a`) çıktıda
+  `if (a === undefined) { return a; } else if (a !== null) {...}` oluyordu: `a === null` için `return a` kayboluyor,
+  fonksiyon `undefined` dönüyordu. Neden: `_absorb_residual_conditional` sabit karşılaştırmayı `case` bağlantısı sayıp
+  (`SwitchStructurer` birleştirir) atlamayı düşürüyordu; ama aynı gövdeyi paylaşan iki etiket `switch` olmaz (iki ayrı gövde
+  gerekir, `_MIN_CASES = 2`). `_compound_folder._case_chain_has_two_bodies`: zincirde en az iki ayrı gövde yoksa bu muafiyet
+  uygulanmaz. Test: tests/test_shared_return_labels.py. Tam paket: goto sayısı aynı (96: 314, 98: 335); 20 çıktı değişti,
+  hepsi eskiden `null` dönüşünü sessizce düşüren ya da zaten goto'lu işlevler (96/4157 ve 98/11208 artık `case undefined:
+  case null:` ile doğru). Açık kalan: 96/1139 `processColor` hâlâ goto'lu (ikinci test, değeri hâlâ okunan bir yükleme
+  yüzünden `||`'ye katlanamıyor: `ShortCircuitConditionCfgPass`'ın `_fold_pure_setup`'ı canlı sabiti taşıyamıyor; F-120'nin
+  `_constants_for_the_end_edge`'ine benzer bir yeniden yükleme gerekir). Denenip geri alınanlar:
+  (1) bölgenin devamı hedef olmalı kısıtı (`switchTest` altınlarını bozdu), (2) `_arm_guard_falls_into`'in 'hedef fonksiyonu
+  bitirmeli' koşulunu kaldırmak (96: 314→295, 98: 335→322 ama 98/12276 `validateType`'ta else kolunun devamı düştü),
+  (3) `ShortCircuitConditionCfgPass`'ta aynı gövdeli case zincirini `||`'ye katlamak (iki testi bozdu).

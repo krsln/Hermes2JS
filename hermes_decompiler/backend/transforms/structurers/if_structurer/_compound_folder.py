@@ -335,7 +335,11 @@ class _CompoundConditionFolder:
                 and isinstance(target_block.terminator, TerminatorReturn)
                 # A `case` test's shared target is `SwitchStructurer`'s business -
                 # when it sits next to another `case` test. A lone comparison is an `if`.
-                and not (is_constant_comparison(branch.condition) and self._case_test_beside(region, index))
+                and not (
+                is_constant_comparison(branch.condition)
+                and self._case_test_beside(region, index)
+                and self._case_chain_has_two_bodies(region, index, branch)
+        )
                 and self._sits_in_sibling_arm(region, target_block)
         ):
             return False
@@ -410,6 +414,59 @@ class _CompoundConditionFolder:
                 return True
 
         return False
+
+    @staticmethod
+    def _case_chain_has_two_bodies(region, index: int, branch) -> bool:
+        """Would the chain around this test become a `switch`?
+
+        `SwitchStructurer` needs two distinct bodies: `if (a === undefined) goto R;
+        if (a === null) goto R;` is one body shared by two labels, so it stays `if`s
+        and folding the second test away drops `R` (`null` fell off the end).
+        """
+
+        def entry(body):
+            blocks = [b for b in getattr(body, "covered_blocks", ()) if b.address >= 0]
+            return min(b.address for b in blocks) if blocks else None
+
+        bodies = {branch.target}
+
+        node = region
+
+        while True:
+            parent = getattr(node, "parent", None)
+
+            if (
+                    isinstance(parent, IfRegion)
+                    and parent.condition is not None
+                    and is_constant_comparison(parent.condition)
+                    and node is parent.else_body
+            ):
+                address = entry(parent.then_body)
+
+                if address is not None:
+                    bodies.add(address)
+
+                node = getattr(parent, "parent", None)
+
+                if node is None:
+                    break
+
+                continue
+
+            break
+
+        for item in region.children[index + 1:]:
+            if isinstance(item, IfRegion):
+                condition, address = item.condition, entry(item.then_body)
+            else:
+                terminator = getattr(item, "terminator", None)
+                condition = getattr(terminator, "condition", None)
+                address = getattr(terminator, "target", None)
+
+            if condition is not None and is_constant_comparison(condition) and address is not None:
+                bodies.add(address)
+
+        return len(bodies) >= 2
 
     @staticmethod
     def _sits_in_sibling_arm(region, target_block) -> bool:
