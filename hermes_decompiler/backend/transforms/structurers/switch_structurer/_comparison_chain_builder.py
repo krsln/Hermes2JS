@@ -61,7 +61,7 @@ class _ComparisonChainSwitchBuilder:
         self.graph = graph
 
     def try_build(self, region: SequenceRegion, root: IfRegion, min_cases: int) -> bool:
-        self._pending_peel = None
+        self._pending_peels = []
         chain = self._match_chain(root)
 
         if chain is None:
@@ -72,8 +72,9 @@ class _ComparisonChainSwitchBuilder:
         if len(cases) < min_cases:
             return False
 
-        if self._pending_peel is not None:
-            body, remaining = self._pending_peel
+        default_body = self._absorb_nested_chain(discriminant, cases, default_body)
+
+        for body, remaining in self._pending_peels:
             body.children[:] = remaining
             body.invalidate_coverage()
 
@@ -303,8 +304,52 @@ class _ComparisonChainSwitchBuilder:
 
         # Applied by `try_build` only once the switch is really built:
         # a chain that turns out too short must leave the region intact.
-        self._pending_peel = (default_body, children)
+        self._pending_peels.append((default_body, children))
         return default_body
+
+    def _absorb_nested_chain(self, discriminant, cases: list, default_body):
+        """Continue the switch through a `default` that is another test chain.
+
+        A chain broken by an inverted label (`if (ws !== d) { ...rest }`) leaves
+        the remaining tests in `default`. On their own they may be too short to
+        become a `switch` (`https`/`wss` share one body), and the shared label's
+        jump is then lost. Joined to this chain they are just more cases.
+        """
+        if not isinstance(default_body, SequenceRegion):
+            return default_body
+
+        meaningful = [c for c in default_body.children if not is_transparent(c)]
+
+        if len(meaningful) != 1 or not isinstance(meaningful[0], IfRegion):
+            return default_body
+
+        outer_peels = self._pending_peels
+        self._pending_peels = []
+        inner = self._match_chain(meaningful[0])
+        inner_peels = self._pending_peels
+        self._pending_peels = outer_peels
+
+        if inner is None:
+            return default_body
+
+        inner_discriminant, inner_cases, inner_default = inner
+
+        if (
+                not inner_cases
+                or inner_discriminant is None
+                or not inner_discriminant.structurally_equal(discriminant)
+        ):
+            return default_body
+
+        self._pending_peels.extend(inner_peels)
+
+        for tests, body in inner_cases:
+            if same_body(cases[-1][1], body):
+                cases[-1][0].extend(tests)
+            else:
+                cases.append((tests, body))
+
+        return inner_default
 
     @staticmethod
     def _entry_address(body):

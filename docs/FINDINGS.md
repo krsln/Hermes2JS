@@ -252,4 +252,14 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   paylaşılan `return (r3 << 24 | r3 >>> 8) >>> 0`; switch içinde `break` sonrası hiçbir şey dönmüyor). Denenip geri alınanlar:
   (1) bölgenin devamı hedef olmalı kısıtı (`switchTest` altınlarını bozdu), (2) `_arm_guard_falls_into`'in 'hedef fonksiyonu
   bitirmeli' koşulunu kaldırmak (96: 314→295, 98: 335→322 ama 98/12276 `validateType`'ta else kolunun devamı düştü),
-  (3) `ShortCircuitConditionCfgPass`'ta aynı gövdeli case zincirini `||`'ye katlamak (iki testi bozdu).
+  (3) `ShortCircuitConditionCfgPass`'ta aynı gövdeli case zincirini `||`'ye katlamak (iki testi bozdu).- **F-125 Ters etiketten sonra `default`a düşen zincir paylaşılan `return`ü düşürüyor** (çözüldü; 96/4122 `defaultPort`; yanlış çıktıydı).
+  Yöntem: toplu tarama (betik depoda değil; her işlevin ağaç akış grafiği, özgün CFG kenarlarının hâlâ erişilebilir olup olmadığına bakıyor;
+  'kenar kayıp' = sessiz düşme adayı). goto'suz 172 işlevde kayıp kenar çıktı (96: 86, 98: 86); 'blok eksik' sınıfı gürültülü
+  (ReturnValueResolutionPass dönüş bloklarını tüketiyor), karar için kullanılmadı. `defaultPort`: `"ftp","http","ws","https","wss"` zincirinde
+  `"ws"` testi ters çevrilince kalan zincir `default`a düşüyor; orada `"https"`/`"wss"` tek gövde olduğu için `switch` olmuyor (`_MIN_CASES`),
+  ama `"wss"` testi önceden `_absorb_residual_conditional`da erimiş olduğundan `return 443` yolu kayboluyordu (`"wss"` hiçbir şey döndürmüyordu).
+  `_ComparisonChainSwitchBuilder._absorb_nested_chain`: `default` tek bir test zinciriyse ve aynı ayırt edici ifadeyi sınıyorsa zincir
+  dış `switch`e katılıyor (etiketler birleşiyor, bekleyen `_peel_shared_jumps` listeye alındı). Test: tests/test_switch_shared_labels.py.
+  Tam paket: goto 96: 310→309, 98: 333; 18 çıktı değişti (hepsi iç içe `switch`/`else if` yığınının düzleşmesi ya da düşen etiketin
+  geri gelmesi: 96/1308 `getDirectionForKeyword`, 96/7538 ve 98/5395 `parserForArrayFormat`, 96/7193 `getStateForAction`; hepsi gözle bakıldı).
+  Açık: kalan ~170 kayıp-kenar adayı henüz ayıklanmadı (96/1333, 96/1098, 98/5036, 98/2557 örnek).

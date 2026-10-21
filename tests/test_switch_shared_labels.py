@@ -24,3 +24,17 @@ def test_every_label_of_a_shared_body_joins_one_case_group():
     assert "goto" not in out
     assert 'case "comma":\n        case "separator":\n        case "bracket-separator":' in out
     assert "default:\n            return function_7536;" in out
+
+
+def test_labels_after_an_inverted_one_continue_the_same_switch():
+    """96/4122 `defaultPort`: `"https"`/`"wss"` share `return 443`.
+
+    The `"ws"` test is inverted, which pushed the rest of the chain into `default`;
+    on its own that tail has one body and stayed `if`s, and the `"wss"` jump to
+    `return 443` was dropped. It now continues the outer `switch`.
+    """
+    out = _render("switch_nested_chain_default_96_4122.hasm", 4122)
+
+    assert "goto" not in out
+    assert 'case "https":\n        case "wss":\n            return 443;' in out
+    assert "default:\n            return null;" in out
