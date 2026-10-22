@@ -13,7 +13,7 @@ from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral
 from hermes_decompiler.ir.Operators import BinaryOperator
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorReturn
 from ._predicates import is_backward_branch, is_constant_comparison, representative_block
 
 logger = get_logger(__name__)
@@ -306,7 +306,7 @@ class _DominanceIfBuilder(RegionStructurer):
                         # jumps to, which only ends the function, so no
                         # post-dominator exists to say it is a join.
                         merge_block is None
-                        and self._arm_guard_falls_into(region, then_entry, goto_block)
+                        and self._arm_guard_falls_into(region, then_entry, goto_block, block)
                 )
         )
                 and any(
@@ -461,7 +461,7 @@ class _DominanceIfBuilder(RegionStructurer):
             for pred in goto_block.predecessors
         )
 
-    def _arm_guard_falls_into(self, region, then_entry: BasicBlock, goto_block: BasicBlock) -> bool:
+    def _arm_guard_falls_into(self, region, then_entry: BasicBlock, goto_block: BasicBlock, region_block=None) -> bool:
         """True if `goto_block` ends the function and a conditional branch
         inside the fallthrough arm reaches it by falling through (its taken
         edge goes elsewhere)."""
@@ -494,8 +494,19 @@ class _DominanceIfBuilder(RegionStructurer):
                     return False
 
         return any(
-            isinstance(pred.terminator, TerminatorConditionalBranch)
-            and pred.terminator.target != goto_block.address
+            (
+                # a guard whose taken edge goes elsewhere, or a plain block that
+                # runs on into the exit (`if (r5) return a; set(); <exit>`)
+                (
+                        isinstance(pred.terminator, TerminatorConditionalBranch)
+                        and pred.terminator.target != goto_block.address
+                )
+                or (
+                        pred.terminator is None
+                        and pred is not region_block
+                        and isinstance(goto_block.terminator, TerminatorReturn)
+                )
+            )
             and dominators.dominates(then_entry, pred)
             for pred in goto_block.predecessors
         )

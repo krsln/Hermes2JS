@@ -22,3 +22,15 @@ def test_the_skipped_to_code_follows_the_if_instead_of_sitting_in_one_arm():
     # the "%" test is reached after the "px" arm, not only when "px" failed
     assert out.index('endsWith("%")') > out.index("return r2;")
     assert out.count("return null;") == 2
+
+
+def test_an_arm_that_runs_on_into_a_shared_return_does_not_lose_it():
+    """96/852 `_wrapNativeSuper`: `if (map.has(x)) return map.get(x); map.set(x, Wrapper);`
+    runs on into the same `return` the `undefined === r5` test jumps to. That `return` was
+    printed inside the other arm only, so after `map.set(...)` the function returned nothing."""
+    hasm = (_DATA / "arm_falls_into_shared_return_96_852.hasm").read_text(encoding="utf-8")
+    out = Decompiler.render(Decompiler.build_context(hasm, 852, strict=False), verbose=False, raw=False)
+
+    assert "goto" not in out
+    assert out.count("Wrapper.prototype = r5;") == 1
+    assert out.index("r5 = r2.set(param1, Wrapper);") < out.index("Wrapper.prototype = r5;")

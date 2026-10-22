@@ -292,3 +292,10 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   geçişler); gerekmedi, 96/273 kalan değişikliklerle de goto'suz. Açık: 96/4152 vb. döngü gövdesinde `goto` (ShortCircuit döngüde `a || b` birleştirmiyor),
   96/2811 `structuredCloneInternal` dört özdeş `case ...: return x;` (artık bir `||` değil), `dropscan`'in `return undefined` hedefine kayıp kenarı
   (96/1098) yanlış alarm.
+- **F-128 Kolun düz bloğu paylaşılan `return`e akıyor** (çözüldü; 96/852 `_wrapNativeSuper`; yanlış çıktıydı). `if (undefined === r5) goto T;` ve
+  kolun içinde `if (map.has(x)) return get; map.set(x, W);` sonra düz akışla `T` (ortak `return`): `T` yalnızca öbür kolun içinde
+  yazılıyor, `map.set(...)` sonrası fonksiyon bir şey dönmüyordu. `_DominanceIfBuilder._arm_guard_falls_into` (F-123) yalnızca koşullu dalı
+  (alınan kenarı başka yere giden) `T`ye "düşen" sayıyordu; kolun düz (terminatörsüz) bir bloğu `T`ye akıyorsa da birleşim sayılıyor, ama
+  yalnızca `T` bir `return` ise (98/9535'te hata atan blok golden'ı bozdu). Test: tests/test_arm_join_tail.py. Tam paket (f129→f130): goto'lu dosya
+  96: 302→297, 98: 334→332; 36 + 47 çıktı değişti, goto'suzken `goto`lu olan yok. Depoya eklendi: scripts/audit/ (drop_scan.py: kayıp kenar taraması
+  ve `--report`; compare_outputs.py: iki çıktı dizini karşılaştırması; definite_assignment.py: kaba atanmamış-okuma kontrolü).

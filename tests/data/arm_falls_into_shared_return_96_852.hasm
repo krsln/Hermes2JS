@@ -1,0 +1,57 @@
+
+=> [Function #852 "_wrapNativeSuper" of 210 bytes]: 2 params, frame size=20, strict=0, exc handler=0, debug info=0  @ offset 0x00108ac6
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 1>
+==> 00000002: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000005: <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
+==> 00000009: <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 853>  # Function: [#853 Wrapper of 46 bytes]: 1 params @ offset 0x00108b98
+==> 0000000e: <LoadConstNull>: <Reg8: 1>
+==> 00000010: <JStrictEqualLong>: <Addr32: 192, Reg8: 1, Reg8: 0>  # Address: 000000d0
+==> 00000017: <GetEnvironment>: <Reg8: 1, UInt8: 1>
+==> 0000001a: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 3>
+==> 0000001e: <LoadConstUndefined>: <Reg8: 3>
+==> 00000020: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000025: <JmpFalseLong>: <Addr32: 171, Reg8: 2>  # Address: 000000d0
+==> 0000002b: <LoadConstString>: <Reg8: 5, string_id: 8218>  # String: 'function' (Identifier)
+==> 0000002f: <TypeOf>: <Reg8: 2, Reg8: 0>
+==> 00000032: <JStrictNotEqual>: <Addr8: 124, Reg8: 5, Reg8: 2>  # Address: 000000ae
+==> 00000036: <GetEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000039: <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 0>
+==> 0000003d: <JStrictEqual>: <Addr8: 36, Reg8: 3, Reg8: 5>  # Address: 00000061
+==> 00000041: <LoadFromEnvironment>: <Reg8: 6, Reg8: 2, UInt8: 0>
+==> 00000045: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 153>  # String: 'has' (Identifier)
+==> 0000004a: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 0>
+==> 0000004f: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
+==> 00000053: <JmpTrue>: <Addr8: 79, Reg8: 5>  # Address: 000000a2
+==> 00000056: <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 2, string_id: 185>  # String: 'set' (Identifier)
+==> 0000005b: <Call3>: <Reg8: 5, Reg8: 5, Reg8: 2, Reg8: 0, Reg8: 4>
+==> 00000061: <GetGlobalObject>: <Reg8: 5>
+==> 00000063: <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 3, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000069: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 4, string_id: 103>  # String: 'create' (Identifier)
+==> 0000006e: <GetByIdShort>: <Reg8: 6, Reg8: 0, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000073: <NewObject>: <Reg8: 5>
+==> 00000075: <NewObjectWithBuffer>: <Reg8: 9, UInt16: 4, UInt16: 4, UInt16: 46, UInt16: 358>  # Object: {'value': null, 'enumerable': false, 'writable': true, 'configurable': true}
+==> 0000007f: <PutById>: <Reg8: 9, Reg8: 4, UInt8: 1, string_id: 205>  # String: 'value' (Identifier)
+==> 00000085: <PutNewOwnById>: <Reg8: 5, Reg8: 9, string_id: 9124>  # String: 'constructor' (Identifier)
+==> 0000008a: <Call3>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 5>
+==> 00000090: <PutById>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000096: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 2>
+==> 0000009a: <Call3>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 0>
+==> 000000a0: <Ret>: <Reg8: 1>
+==> 000000a2: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 6, string_id: 50>  # String: 'get' (Identifier)
+==> 000000a7: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 000000ac: <Ret>: <Reg8: 1>
+==> 000000ae: <GetGlobalObject>: <Reg8: 1>
+==> 000000b0: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 7, string_id: 42>  # String: 'TypeError' (Identifier)
+==> 000000b6: <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
+==> 000000bb: <CreateThis>: <Reg8: 2, Reg8: 1, Reg8: 3>
+==> 000000bf: <LoadConstString>: <Reg8: 12, string_id: 387>  # String: 'Super expression must either be null or a function' (String)
+==> 000000c3: <Mov>: <Reg8: 13, Reg8: 2>
+==> 000000c6: <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
+==> 000000ca: <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 000000ce: <Throw>: <Reg8: 1>
+==> 000000d0: <Ret>: <Reg8: 0>
+
+
