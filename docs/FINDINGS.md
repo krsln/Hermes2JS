@@ -299,3 +299,13 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   yalnızca `T` bir `return` ise (98/9535'te hata atan blok golden'ı bozdu). Test: tests/test_arm_join_tail.py. Tam paket (f129→f130): goto'lu dosya
   96: 302→297, 98: 334→332; 36 + 47 çıktı değişti, goto'suzken `goto`lu olan yok. Depoya eklendi: scripts/audit/ (drop_scan.py: kayıp kenar taraması
   ve `--report`; compare_outputs.py: iki çıktı dizini karşılaştırması; definite_assignment.py: kaba atanmamış-okuma kontrolü).
+- **F-129 Döngüden çıkan iki test, çıkış bölgesi ve döngü sayacı adı** (çözüldü; 96/2026 `refreshCache`; yanlış çıktıydı). `for (n = fiber.return; n !== null; n = n.return)
+  { if (tag === 24 || tag === 3) { ...bulundu...; return } }`: iki test aynı koda (`0x31`) atlıyor; çıktıda kod döngünün kendi `return undefined`ından sonra (ölü) duruyordu,
+  `tag === 24` hiçbir şey yapmıyordu. Üç ayrı nokta: (1) `ShortCircuitConditionCfgPass` döngü üyesi blokları hiç birleştirmiyordu; iki test de döngüden çıkıp aynı
+  bloğa atlıyorsa (`_both_tests_leave_the_loop`) artık tek `||` koşulu. (2) `GuardExitRegionPass._try_region_exit`: tek dalın girdiği, işlevi bitiren çok bloklu kuyruk
+  (yalnızca o dal giriyor, dışarı çıkış yok) dalın `if`ine taşınıyor; dalın öbür kenarı sıradaki iş ya da döngünün kendisi olmalı. (3) `InductionVariableNamingPass`: sayaç
+  yazmacı gövdede başka değerle yazılıp sonra okunuyorsa (`r3 = getEnvironment(0); r3[458](...)`) `i` adı verilmiyor; eskiden her okuma `i` oluyordu. Bu üçüncüsü başlı
+  başına gizli bir yanlıştı: 96/5408 `_ensureClosestStickyHeader` (`addCells(i)`, gerçekte `{first,last}` nesnesi), 98/2666 `workLoopSync` (`null === i`, gerçekte
+  çağrının sonucu) ve 98/13448 `cloneRecursive` yanlış okuma yazıyordu. Test: tests/test_guard_exit_region.py. Tam paket (f130→f131): goto'lu dosya 96: 297→291,
+  98: 332→330; 33 + 24 çıktı değişti; goto'suzken `goto`lu olan yok. Kontrol aracı 'daha çok atanmamış okuma' dediği dosyalar, sayaç adı `i` yerine `rN` kalan
+  döngüler (yanlışın düzelmiş hâli). Açık: 96/2026'da kalan boş `if (3 !== r4) {}` (çirkin, yanlış değil).

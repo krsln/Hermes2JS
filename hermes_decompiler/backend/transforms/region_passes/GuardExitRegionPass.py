@@ -57,6 +57,10 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
         exit_block = next((b for b in block.successors if b.address == branch.target), None)
         others = [b for b in block.successors if b is not exit_block]
 
+        if exit_block is not None and len(others) == 1 and exit_block.successors:
+            self._try_region_exit(owner, block, branch, exit_block, others[0])
+            return
+
         if (
                 exit_block is None
                 or len(others) != 1
@@ -102,6 +106,76 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
 
         self.graph.insert_at(owner, owner.children.index(block) + 1, if_region)
         logger.debug("guard exit: block %d takes %d", block.id, exit_block.id)
+
+    def _try_region_exit(self, owner, block: BasicBlock, branch, exit_block: BasicBlock, other: BasicBlock) -> None:
+        """`if (c) goto X` where X starts code that only this branch enters and that ends the function.
+
+        Several blocks (`found: { ...; return }`) laid out after the loop or `if`
+        that holds the test: the whole tail moves into the `if`.
+        """
+        if exit_block.address <= block.address or exit_block not in [b for b in block.successors]:
+            return
+
+        exit_owner = self._holder(self.graph.root, exit_block)
+
+        if exit_owner is None or exit_owner is owner or exit_block not in exit_owner.children:
+            return
+
+        tail = exit_owner.children[exit_owner.children.index(exit_block):]
+        covered = set()
+
+        for item in tail:
+            covered.update(
+                b for b in ([item] if isinstance(item, BasicBlock) else item.covered_blocks) if b.address >= 0)
+
+        # One way in (this branch), nothing leaves the tail except by ending the function.
+        for member in covered:
+            if any(pred is not block and pred not in covered for pred in member.predecessors):
+                return
+            if any(succ not in covered for succ in member.successors):
+                return
+
+        if not any(not member.successors for member in covered):
+            return
+
+        # The branch's other edge must be the next thing that runs (inside this loop
+        # body or `if` arm), as in the one-block case.
+        if not self._falls_on_in(owner, block, other):
+            return
+
+        if not block.instructions or block.instructions[-1].terminator is not branch:
+            return
+
+        block.instructions.pop()
+        block.terminator = None
+
+        for item in tail:
+            exit_owner.children.remove(item)
+        exit_owner.invalidate_coverage()
+
+        then_body = SequenceRegion()
+        self.graph.transfer(list(tail), then_body)
+
+        if_region = IfRegion()
+        if_region.condition = branch.condition
+        if_region.then_body = then_body
+        if_region.else_body = None
+
+        self.graph.insert_at(owner, owner.children.index(block) + 1, if_region)
+        logger.debug("guard exit region: block %d takes %d items", block.id, len(tail))
+
+    def _falls_on_in(self, owner, block: BasicBlock, follower: BasicBlock) -> bool:
+        """Like `_falls_on_to`, and a loop body's end continues into the loop itself."""
+        if self._falls_on_to(owner, block, follower):
+            return True
+
+        index = owner.children.index(block)
+
+        if index + 1 < len(owner.children):
+            return False
+
+        parent = owner.parent
+        return type(parent).__name__ == "LoopRegion" and follower in getattr(parent, "covered_blocks", ())
 
     def _try_jump_exit(self, owner: SequenceRegion, block: BasicBlock, jump) -> None:
         """`goto EXIT` as the last thing of an arm, EXIT only ending the function.

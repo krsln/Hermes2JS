@@ -36,3 +36,21 @@ def test_a_loops_exit_to_a_shared_return_is_not_absorbed_into_a_guarded_body():
     assert "goto" not in out
     assert "if (r9 === undefined) {\n                        return true;\n                    }" in out
     assert "if (r9 !== undefined)" not in out
+
+
+def test_a_loop_break_to_a_function_ending_region_runs_that_region_inside_the_if():
+    """96/2026 `refreshCache`: `for (n = fiber.return; n !== null; n = n.return) { if (tag === 24 || tag === 3) { ...; return } }`.
+
+    The two tests jump out of the loop to the same code, which was printed after the loop's own
+    `return undefined` (dead): a fiber with tag 24 never ran it, and tag 3 only by accident.
+    The tests are one `||` condition and the code that follows ends the function, so it sits in the `if`.
+    The loop counter register is reused for `getEnvironment(0)` inside it: it must keep its `rN` name.
+    """
+    hasm = (_DATA / "loop_two_exits_found_region_96_2026.hasm").read_text(encoding="utf-8")
+    out = Decompiler.render(Decompiler.build_context(hasm, 2026, strict=False), verbose=False, raw=False)
+
+    assert "goto" not in out
+    assert "if (24 === r4 || 3 === r4) {\n            r3 = getEnvironment(0);" in out
+    assert "r3[458].call(undefined, r6)" in out
+    assert "i[458]" not in out
+    assert out.index("r2.payload = r1;") < out.index("return undefined;")

@@ -79,6 +79,32 @@ class ShortCircuitConditionCfgPass:
 
         return frozenset(blocks)
 
+    def _both_tests_leave_the_loop(self, block, successor, branch) -> bool:
+        """`if (a) break-to-X; if (b) break-to-X;` inside a loop body.
+
+        Two tests that jump out of every loop they sit in, to the one block
+        outside (`if (tag === 24 || tag === 3) { found }`), are an ordinary `||`;
+        the loop's own latch/continue tests are never like that.
+        """
+        if successor is None or not isinstance(successor.terminator, TerminatorConditionalBranch):
+            return False
+
+        if successor.terminator.target != branch.target or branch.target <= successor.address:
+            return False
+
+        target = next((b for b in self.cfg.blocks if b.address == branch.target), None)
+
+        if target is None:
+            return False
+
+        for loop in self.cfg.loop_analysis.loops.values():
+            inside = loop.header is block or block in loop.members or loop.header is successor or successor in loop.members
+
+            if inside and (target is loop.header or target in loop.members):
+                return False
+
+        return True
+
     def run(self) -> None:
         self._created = False
 
@@ -113,17 +139,17 @@ class ShortCircuitConditionCfgPass:
         if not isinstance(branch, TerminatorConditionalBranch):
             return False
 
-        if block in self._loop_blocks:
+        successor = self._fallthrough(block)
+
+        if block in self._loop_blocks and not self._both_tests_leave_the_loop(block, successor, branch):
             # Loop header/latch/member - never fold its condition into
             # or out of another block. See _collect_loop_blocks.
             return False
 
-        successor = self._fallthrough(block)
-
         if successor is None:
             return False
 
-        if successor in self._loop_blocks:
+        if successor in self._loop_blocks and not self._both_tests_leave_the_loop(block, successor, branch):
             return False
 
         if branch.target <= block.address:
