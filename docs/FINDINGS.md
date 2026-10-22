@@ -274,3 +274,21 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   etti (96: 841, 2590, 2286, 1793, 2088; 98: 2594, 2008, 11908, 2474), çoğu zaten goto'lu karışık işlevler; 98/2594'te kuyruğun
   birleşim olduğu CFG'den doğrulandı. Not: 98/2619 `beginWork` ayrıca >2 dk sürüyor (ConditionalExpressionRegionPass her aday için
   dominatör ağacını yeniden hesaplıyor); bu değişiklikten bağımsız, ayrı bir performans işi.
+- **F-127 Kardeş kolun atladığı kod, `throw` kopyası, anahtar tablosu başlığı** (çözüldü; 96/273 `q`, 96/277 `E`, 96/150 `ve`, 98/2623 `unwindInterruptedWork`,
+  96/1333 sonrası kayıp-kenar taraması; hepsi yanlış çıktıydı). `dropscan` kenar-kayıp listesi (96: 86→69 işlev) üç ayrı nedene ayrıldı:
+  (1) `_absorb_residual_conditional` atlama hedefi kardeş kolda ise (`_sits_in_sibling_arm`) yalnızca `return` hedefler için atlamayı koruyordu;
+  `if (durum !== "writable" || f()) n(); else ...` gibi `return` olmayan hedefte ikinci testin atlaması siliniyordu. Kısıt kaldırıldı
+  (`case` muafiyeti aynen duruyor); `_try_fold_and_or_cascade` Case B'de atlama diğer kola gidiyorsa birleştirme yapmıyor (98/10102'de
+  bozuk koşul üretiyordu). (2) 96/150: üç test tek `throw new RangeError(...)`e atlıyordu; eski çıktı testleri `!(a||b) && c` yapıp `throw`u hiç
+  yazmıyordu (geçersiz boyut sessizce `undefined` dönüyordu; eski test bu yanlışı kilitliyordu). `SharedReturnDuplicationCfgPass`: 4. seviyede
+  `throw` kuyruğu 12 komuta kadar kopyalanıyor (`CreateThis`/`Construct`/`SelectObject` ile 10 komut ama tek ifade). (3) `GuardExitRegionPass`: kolun
+  sonundaki `goto EXIT` (EXIT yalnız o atlamayla girilen çıkış bloğu) çıkışı yerine alıyor; ağaçtan düşürülmüş (tüketilmiş) çıkış bloğunu da
+  geri koyuyor. (4) Ayrı bir gizli hata: `_JumpTableSwitchBuilder` başlık bloğunu tümüyle siliyordu; başlıkta başka ifade varsa
+  (`r5 = getParentEnvironment(0)`) kayboluyordu (98/2623: `switch`e geçince `r5` hiç atanmıyordu). Başlık artık switch'ten önce kalıyor.
+  Testler: tests/test_shared_tail_jumpers.py, test_shared_tail_conditions.py (96/150 beklentisi düzeltildi). Tam paket (f126→f129): goto'lu dosya
+  96: 308→302, 98: 332→334; 82 + 81 çıktı değişti; goto'suz iken `goto`lu olan (daha önce sessizce yanlış): 96: 11, 98: 18 (96/4152 `parseAuthority`,
+  96/6502, 98/2183 vb.: `else if (!x)` ile düşen yol artık görünür). Denenip geri alınan: `SharedTailDuplicationCfgPass`'ta yalnız atlayanların
+  ulaştığı kısa kuyruğa her atlayan için kopya (96/273'ü goto'suz yapıyordu ama 96/998 `mapIntoArray`'de `r11 = param1` ifadesini düşürüyordu: kopya + sonraki
+  geçişler); gerekmedi, 96/273 kalan değişikliklerle de goto'suz. Açık: 96/4152 vb. döngü gövdesinde `goto` (ShortCircuit döngüde `a || b` birleştirmiyor),
+  96/2811 `structuredCloneInternal` dört özdeş `case ...: return x;` (artık bir `||` değil), `dropscan`'in `return undefined` hedefine kayıp kenarı
+  (96/1098) yanlış alarm.

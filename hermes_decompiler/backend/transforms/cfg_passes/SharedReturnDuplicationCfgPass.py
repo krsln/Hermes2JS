@@ -93,6 +93,11 @@ class SharedReturnDuplicationCfgPass:
             return False
 
         limit = self._MAX_TAIL if self.statements else self._MAX_LEAD + 1
+
+        # `throw new RangeError("...")` is ten instructions (`CreateThis`, `Construct`,
+        # `SelectObject`, ...) but one statement once printed: a shared one is worth copying.
+        if self.statements and isinstance(block.terminator, TerminatorThrow):
+            limit = self._MAX_THROW
         if len(block.instructions) > limit or len(block.predecessors) < 2:
             return False
 
@@ -126,6 +131,7 @@ class SharedReturnDuplicationCfgPass:
 
     _MAX_LEAD = 2
     _MAX_TAIL = 6
+    _MAX_THROW = 12
 
     _REGISTER_NAME = re.compile(r"r(\d+)")
 

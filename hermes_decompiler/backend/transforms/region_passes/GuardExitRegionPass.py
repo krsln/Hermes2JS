@@ -3,7 +3,12 @@ from __future__ import annotations
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import IfRegion, RegionVisitor, SequenceRegion
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorReturn, TerminatorThrow
+from hermes_decompiler.ir.terminators import (
+    TerminatorConditionalBranch,
+    TerminatorJump,
+    TerminatorReturn,
+    TerminatorThrow,
+)
 from ._base import RegionPass
 
 logger = get_logger(__name__)
@@ -41,6 +46,10 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
 
     def _try_guard(self, owner: SequenceRegion, block: BasicBlock) -> None:
         branch = block.terminator
+
+        if isinstance(branch, TerminatorJump):
+            self._try_jump_exit(owner, block, branch)
+            return
 
         if not isinstance(branch, TerminatorConditionalBranch):
             return
@@ -93,6 +102,44 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
 
         self.graph.insert_at(owner, owner.children.index(block) + 1, if_region)
         logger.debug("guard exit: block %d takes %d", block.id, exit_block.id)
+
+    def _try_jump_exit(self, owner: SequenceRegion, block: BasicBlock, jump) -> None:
+        """`goto EXIT` as the last thing of an arm, EXIT only ending the function.
+
+        An exit block that nothing else enters can stand where its one jump is.
+        """
+        exit_block = next((b for b in block.successors if b.address == jump.target), None)
+
+        if (
+                exit_block is None
+                or len(block.successors) != 1
+                or exit_block.successors
+                or not (
+                exit_block.terminator is None or isinstance(exit_block.terminator, (TerminatorReturn, TerminatorThrow)))
+                or list(exit_block.predecessors) != [block]
+                or exit_block.address <= block.address
+                or owner.children[-1] is not block
+                or not block.instructions
+                or block.instructions[-1].terminator is not jump
+        ):
+            return
+
+        exit_owner = self._holder(self.graph.root, exit_block)
+
+        if exit_owner is owner:
+            return
+
+        block.instructions.pop()
+        block.terminator = None
+
+        # Not in the tree at all: an earlier pass took a lone `return` out of it
+        # (a trailing one), leaving this jump pointing at nothing.
+        if exit_owner is not None:
+            exit_owner.children.remove(exit_block)
+            exit_owner.invalidate_coverage()
+
+        self.graph.insert_at(owner, owner.children.index(block) + 1, exit_block)
+        logger.debug("jump exit: block %d takes %d", block.id, exit_block.id)
 
     @staticmethod
     def _on_a_cycle(block: BasicBlock) -> bool:

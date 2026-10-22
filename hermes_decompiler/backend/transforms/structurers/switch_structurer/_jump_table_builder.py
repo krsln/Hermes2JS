@@ -5,6 +5,7 @@ from hermes_decompiler.backend.regions import SequenceRegion, SwitchCase, Switch
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir.expressions import NumericLiteral
 from hermes_decompiler.ir.terminators import TerminatorSwitch
+from ._predicates import is_transparent
 
 
 class _JumpTableSwitchBuilder:
@@ -149,7 +150,19 @@ class _JumpTableSwitchBuilder:
             switch_region.default_body = bodies[id(default_item)]
 
         del region.children[header_index:end_boundary]
+
+        # The dispatch block may also set things up for the arms
+        # (`r5 = getParentEnvironment(0)` ahead of the selector): keep what prints.
+        if header.instructions and header.instructions[-1].terminator is switch_term:
+            header.instructions.pop()
+            header.terminator = None
+
+            if not is_transparent(header):
+                region.children.insert(header_index, header)
+                header_index += 1
+
         region.children.insert(header_index, switch_region)
         switch_region.parent = region
+        region.invalidate_coverage()
 
         return True

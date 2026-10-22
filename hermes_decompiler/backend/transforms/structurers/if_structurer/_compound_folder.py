@@ -332,7 +332,6 @@ class _CompoundConditionFolder:
         # { if (x < 0) goto <that return>; return x }`): the jump must stay.
         if (
                 target_block is not None
-                and isinstance(target_block.terminator, TerminatorReturn)
                 # A `case` test's shared target is `SwitchStructurer`'s business -
                 # when it sits next to another `case` test. A lone comparison is an `if`.
                 and not (
@@ -551,6 +550,13 @@ class _CompoundConditionFolder:
                     and isinstance(first.terminator, TerminatorConditionalBranch)):
                 branch = first.terminator
                 rest = else_body.children[1:]
+
+                # The jump is the cascade's `merge` only when it leaves the whole
+                # `if`; one into the other arm is a real branch the fold would lose.
+                target = self._resolve_target_block(branch.target)
+                if target is not None and target in outer.then_body.covered_blocks:
+                    return False
+
                 if rest:
                     new_seq = SequenceRegion()
                     self.graph.transfer(list(rest), new_seq)

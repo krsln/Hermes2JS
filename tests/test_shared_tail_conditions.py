@@ -173,9 +173,13 @@ def test_second_test_with_its_own_call_keeps_each_callee():
 
 
 def test_constant_comparison_in_a_plain_chain_is_not_a_case_test():
-    """96/150: `... || p < 0 || p === Infinity` - the last link compares with a constant
-    but not the value the previous link compared, so it is part of the one condition."""
+    """96/150: `... || p < 0 || p === Infinity` all jump to one `throw`.
+
+    The old output folded the three tests into `!(r1 || p < 0) && p !== Infinity` and put
+    the `throw` nowhere: an invalid size returned `undefined`. Every test keeps its own
+    `throw` now (the shared `throw` is copied to each jump)."""
     out = _render("size_checks_throw_96_150.hasm", 150)
 
     assert "goto" not in out
-    assert "!(r1 || param3 < 0) && param3 !== Infinity" in out
+    assert out.count('throw new RangeError("Size must be a finite, non-NaN, non-negative number.")') == 4
+    assert "param3 === Infinity" in out
