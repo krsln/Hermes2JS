@@ -217,6 +217,16 @@ class OpcodeHandler(ABC):
             state.materialize()
             return Identifier(name=f"r{reg}")
 
+        # Join guard: the register's latest definition ran on one path of a join of three
+        # or more (`r1 = p; if (c) { r1 = q; if (d) r1 = p }; r6 = r1`): the read sees a
+        # merge no single value stands for. Inlined `p` was wrong whenever `c && !d`
+        # (96/4775 `interpolate`: `r6 = param1` for `r6 = r1`).
+        if isinstance(value, Identifier) and analysis.is_nested_join_value(state):
+            # Like the branch test (`JmpTrue`): the arm's own write is left for a fold or
+            # for `UnfoldedMergeRepairPass`, which prints it when no fold took it.
+            state.mark_read()
+            return Identifier(name=f"r{reg}")
+
         # Stale-value guard: the value refers to a register that was
         # redefined after it was built (or to its own destination, as in
         # `r3 = r3.a`), so inlining it here would silently rebind that

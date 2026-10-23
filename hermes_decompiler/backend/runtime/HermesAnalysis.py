@@ -316,6 +316,20 @@ class HermesAnalysis:
         a merge of the two, so the arm's value alone is not what it holds."""
         return state.version > 0 and self._is_phi_write(state)
 
+    def is_nested_join_value(self, state: RegisterState) -> bool:
+        """The definition sits inside two or more forward jumps that all end at or
+        before the current read, and an earlier definition exists: three or more
+        paths meet here (`r1 = a; if (c) { r1 = b; if (d) r1 = a }; <read r1>`). No
+        single `?:` stands for that merge, unlike the two-path join a `?:` folds."""
+        current = self.current_address
+
+        if current is None or state.version == 0:
+            return False
+
+        address = state.definition.address
+
+        return sum(1 for start, end in self.skip_ranges if start < address < end <= current) >= 2
+
     @staticmethod
     def _redefinition_prints(state: RegisterState) -> bool:
         """The definition is kept as a statement of its own: a call/construct

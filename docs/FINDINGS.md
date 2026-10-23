@@ -334,3 +334,11 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   `try_blocks` listesinden de silinen bloklar çıkarılıyor (yoksa `KeyError`: 96/2139, 2146, 2156, 3448). Testler: tests/test_loop_condition_merge_analysis.py.
   `scripts/audit/compare_outputs.py` artık base'te olmayan dosyayı (başarısız bölüm) atlayıp bildiriyor. Hatırlatma: tam paket koşusunda `status.txt` çıkış kodu ve
   log'daki "sections failed" kontrol edilmeli.
+- **F-133 Üç yollu birleşimden okunan kopya yanlış değer basıyordu** (çözüldü; 96/4775 `interpolate`; ham çıktıda bile yanlıştı, `dropscan` bunu "kayıp kenar" diye işaretlemişti). `r1 = param1; if (r1 < min) { …; r1 = min; if (mode !== "clamp") r1 = param1 } r6 = r1;`:
+  frontend çözümlemesi doğrusal ve `r1`in adres sırasındaki son tanımı iç `r1 = param1`; `Mov r6, r1` bunu satır içi alıp `r6 = param1` yazıyordu, sonraki tüm `r6` okumaları
+  (`-param1`, `param1 - param2`, ...) da. Oysa kıstırılmış `r1 = min` yolu da o okumaya ulaşıyor (`param7 === "clamp"` iken sonuç `min` olmalı). İki yollu birleşim `?:` olarak
+  katlanabiliyor (altın çıktılar bu satır içi almaya dayanıyor); üç yollu birleşimi tek ifade temsil edemez. `HermesAnalysis.is_nested_join_value`: tanım, okumadan önce biten iki ya da daha
+  fazla ileri atlamanın içindeyse ve daha eski bir tanım varsa; `get_register_expression` düz bir `Identifier` değeri için `rN` adını veriyor (`JmpTrue` ile aynı: yazmayı bir katlama alır ya da
+  `UnfoldedMergeRepairPass` basar). Test: tests/test_nested_join_copy.py. Tam paket (f133→f135): 96: 51 çıktı değişti (96/8972 `HSVtoRGB`: `r5 = param3 * 255` yerine `r5 = r5 * 255`; 96/4787 `findRange`:
+  `return r0 - 1`), goto'lu dosya 296→296; 98: 119 çıktı değişti (çoğu tek yazmaç adı: 98/10760 `typeof r4` (`[, r4] = param1`), 98/12319 `__environment__[4] = r9`), goto'lu dosya 330→331 (yalnız 98/9611); çökme yok. Açık: 98/9611 `dt` artık `goto`lu ve `r3.size = r4` (gerçekte `undefined`): `LoadConstUndefined r4` bir teste katlanmış,
+  birleşimde basılmıyor (eskiden `function_12518` basıyordu, o da yanlıştı).
