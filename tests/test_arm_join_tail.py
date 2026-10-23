@@ -34,3 +34,16 @@ def test_an_arm_that_runs_on_into_a_shared_return_does_not_lose_it():
     assert "goto" not in out
     assert out.count("Wrapper.prototype = r5;") == 1
     assert out.index("r5 = r2.set(param1, Wrapper);") < out.index("Wrapper.prototype = r5;")
+
+
+def test_an_arm_that_runs_on_into_a_long_shared_body_does_not_lose_it():
+    """96/269: `if (signal !== undefined) { ...; if (aborted) return; signal.addEventListener(...) }`
+    runs on into the very code the `undefined === signal` test jumps to (the whole pipe setup).
+    That code was printed inside the other arm only, so with a signal the function stopped after
+    `addEventListener` and never piped anything."""
+    hasm = (_DATA / "arm_runs_into_shared_body_96_269.hasm").read_text(encoding="utf-8")
+    out = Decompiler.render(Decompiler.build_context(hasm, 269, strict=False), verbose=False, raw=False)
+
+    assert "goto" not in out
+    assert out.count("r7 = P(r5, r4._closedPromise, function_285);") == 1
+    assert out.index('addEventListener("abort", no)') < out.index("function_285")

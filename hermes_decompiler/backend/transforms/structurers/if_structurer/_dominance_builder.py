@@ -298,7 +298,10 @@ class _DominanceIfBuilder(RegionStructurer):
                         merge_block is None
                         and goto_block.successors
                         and not self._reaches_itself(then_entry)
-                        and self._arm_tests_into(then_entry, goto_block)
+                        and (
+                                self._arm_tests_into(then_entry, goto_block)
+                                or self._arm_runs_into(then_entry, goto_block, block)
+                        )
                 )
                 or (
                         # `if (a) { if (b) return x; } tail`: the arm's guard
@@ -461,6 +464,17 @@ class _DominanceIfBuilder(RegionStructurer):
             for pred in goto_block.predecessors
         )
 
+    def _arm_runs_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock) -> bool:
+        """True if a plain block of the fallthrough arm runs on into `goto_block`
+        (`if (a) { ...; if (b) return; ...<runs into T> } T` with `a` jumping to `T`)."""
+        dominators = self.cfg.dominator_tree
+        return any(
+            pred is not block
+            and pred.terminator is None
+            and dominators.dominates(then_entry, pred)
+            for pred in goto_block.predecessors
+        )
+
     def _arm_guard_falls_into(self, region, then_entry: BasicBlock, goto_block: BasicBlock, region_block=None) -> bool:
         """True if `goto_block` ends the function and a conditional branch
         inside the fallthrough arm reaches it by falling through (its taken
@@ -497,15 +511,15 @@ class _DominanceIfBuilder(RegionStructurer):
             (
                 # a guard whose taken edge goes elsewhere, or a plain block that
                 # runs on into the exit (`if (r5) return a; set(); <exit>`)
-                (
-                        isinstance(pred.terminator, TerminatorConditionalBranch)
-                        and pred.terminator.target != goto_block.address
-                )
-                or (
-                        pred.terminator is None
-                        and pred is not region_block
-                        and isinstance(goto_block.terminator, TerminatorReturn)
-                )
+                    (
+                            isinstance(pred.terminator, TerminatorConditionalBranch)
+                            and pred.terminator.target != goto_block.address
+                    )
+                    or (
+                            pred.terminator is None
+                            and pred is not region_block
+                            and isinstance(goto_block.terminator, TerminatorReturn)
+                    )
             )
             and dominators.dominates(then_entry, pred)
             for pred in goto_block.predecessors

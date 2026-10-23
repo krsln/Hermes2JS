@@ -309,3 +309,12 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   çağrının sonucu) ve 98/13448 `cloneRecursive` yanlış okuma yazıyordu. Test: tests/test_guard_exit_region.py. Tam paket (f130→f131): goto'lu dosya 96: 297→291,
   98: 332→330; 33 + 24 çıktı değişti; goto'suzken `goto`lu olan yok. Kontrol aracı 'daha çok atanmamış okuma' dediği dosyalar, sayaç adı `i` yerine `rN` kalan
   döngüler (yanlışın düzelmiş hâli). Açık: 96/2026'da kalan boş `if (3 !== r4) {}` (çirkin, yanlış değil).
+- **F-130 Kolun düz bloğu uzun paylaşılan gövdeye akıyor** (çözüldü; 96/269 `addAbortListener`-benzeri; yanlış çıktıydı). F-126/F-128 ile aynı aile: `if (undefined === r1) goto T;`
+  ve kolun içinde `if (r4) { ...; return } r7 = r3[5]; r4 = r7.addEventListener(...)` sonra düz akışla `T` (uzun ortak kurulum gövdesi, `return` değil). Kolun
+  düz (terminatörsüz) bloğu `T`ye akıyordu ama `T` bir `return` olmadığı için F-128 kuralı uymuyordu; `T` kolun içinde yazılıyor, kol çıkışından sonraki
+  kurulum kodu düşüyordu. `_DominanceIfBuilder._arm_runs_into`: `T`nin kolun girişince dominelenen terminatörsüz bir öncülü varsa (`then_entry` onu domine
+  ediyor) kol `T`ye akıyor sayılır; `_convert`teki F-126 koşuluna `_arm_tests_into or _arm_runs_into` olarak eklendi. Test: tests/test_arm_join_tail.py
+  (`test_an_arm_that_runs_on_into_a_long_shared_body_does_not_lose_it`, veri arm_runs_into_shared_body_96_269.hasm). Tam paket (f131→f132): 96: 25, 98: 32 çıktı
+  değişti; goto'lu dosya 96: 291→292, 98: 330→331. Yeni `goto`lu olanlar (96/13996 `_loop3`, 98/11441 `_loop3`, 98/12534 `anonymous`): eskiden
+  sessizce düşen erken çıkış (`has(...)` / `r4.aborted`, kapanış `return 0`) artık görünür bir `goto` olarak duruyor; gerileme değil, önceden gizli yanlışın ortaya çıkması.
+  Açık: bu üçü artık goto'lu (ShortCircuit/If ile çözülebilir), 98/2606 `throwException` kontrol aracı işaretli (96/2052 ailesi, iyileşme).
