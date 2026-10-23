@@ -318,3 +318,19 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   değişti; goto'lu dosya 96: 291→292, 98: 330→331. Yeni `goto`lu olanlar (96/13996 `_loop3`, 98/11441 `_loop3`, 98/12534 `anonymous`): eskiden
   sessizce düşen erken çıkış (`has(...)` / `r4.aborted`, kapanış `return 0`) artık görünür bir `goto` olarak duruyor; gerileme değil, önceden gizli yanlışın ortaya çıkması.
   Açık: bu üçü artık goto'lu (ShortCircuit/If ile çözülebilir), 98/2606 `throwException` kontrol aracı işaretli (96/2052 ailesi, iyileşme).
+- **F-131 Kısa `case` zinciri ve arkasındaki `return`** (çözüldü; 96/777 `_unsupportedIterableToArray`; yanlış çıktıydı: `Set` için `undefined` dönüyordu).
+  `if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /Int.../.test(n)) return f(o)`: `"Map"`/`"Set"` aynı bloğa (`Array.from`) atlıyor.
+  Seviye 0 `switch`i kuruyor ama `Arguments` gövdesi `default`taki regex testiyle paylaşıldığı için `goto` kalıyor; seviye 1 (`return` kopyası) goto'suz ama
+  `"Set"` testi tersine çevrilip (`"Set" !== r4`) geri kalan zincir + kopya `return` onun gövdesine düşüyor: zincir `switch` olamıyor (`min_cases`: tek durum) ve
+  `Set` kenarı kayboluyor (F-127'deki `case` muafiyeti: hedef kardeş kolda ama `switch` bekleniyor, kurulamayınca sessiz kayıp). `_ComparisonChainBuilder`:
+  (1) iç zincir (`_absorb_nested_chain`) `min_cases` kontrolünden önce katılıyor (`Map`+`Set` bir durum, `Arguments` ikincisi); (2) `default`ın zincirden sonraki
+  kuyruğu (her kolun akıp gittiği `return r0`; yalnızca root bölümün son çocuğuysa ve önceki tüm durumlar `return`/`throw` ile bitiyorsa) `switch`ten sonraya
+  taşınıyor. Test: tests/test_switch_shared_labels.py. Tam paket (f132→f133): 96'da 36 çıktı değişti (çoğu `if`→`switch`: 96/7102 `getStateForAction`, 96/2601), 98'de 24 değişti (98/5268, 10650, 11038 `getStateForAction`: `SET_PARAMS`/`REPLACE_PARAMS` ortak `case`), goto'lu dosya 331→330, yeni `goto`lu yok; her iki pakette çökme yok (F-132 sonrası).
+- **F-132 F-129 gerilemesi: döngüdeki iki testin birleşmesi bayat analiz bırakıyordu** (çözüldü; 96'da 5, 98'de 1 bölüm çöküyordu: 96/2075, 2264, 2581, 2590, 13786, 98/2617).
+  F-129'da `ShortCircuitConditionCfgPass` döngü üyesi iki testi birleştirmeye başladı (`_both_tests_leave_the_loop`). Birleşen blok CFG'den çıkıyor ama bundan önce
+  hesaplanan `loop_analysis` onu hâlâ döngü üyesi sayıyor, `If` yapılandırıcı boş bloğun `instructions[-1]`ine dokunup `IndexError` veriyordu. Daha önce döngüde
+  hiç birleşme olmadığı için görünmemişti; f130→f131 farkını yalnızca değişen dosyalara bakarak incelediğim için çökmeler gözümden kaçtı (log'un "N sections failed"
+  satırına bakılmalı). `StructuralAnalyzer.build`: blok sayısı değiştiyse dominatörler, post-dominatörler ve döngüler yeniden hesaplanıyor; işleyicilerin
+  `try_blocks` listesinden de silinen bloklar çıkarılıyor (yoksa `KeyError`: 96/2139, 2146, 2156, 3448). Testler: tests/test_loop_condition_merge_analysis.py.
+  `scripts/audit/compare_outputs.py` artık base'te olmayan dosyayı (başarısız bölüm) atlayıp bildiriyor. Hatırlatma: tam paket koşusunda `status.txt` çıkış kodu ve
+  log'daki "sections failed" kontrol edilmeli.

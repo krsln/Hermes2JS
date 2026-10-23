@@ -16,8 +16,11 @@ if len(sys.argv) != 3:
     sys.exit(__doc__)
 
 base, new = sys.argv[1:3]
-newg, fixed, worse, better, changed = [], [], [], 0, 0
+newg, fixed, worse, better, changed, only_new = [], [], [], 0, 0, []
 for f in sorted(os.listdir(new)):
+    if not Path(base, f).exists():
+        only_new.append(f)  # e.g. a section the base run failed on
+        continue
     a = Path(base, f).read_text()
     b = Path(new, f).read_text()
     if a == b:
@@ -45,3 +48,5 @@ print(f"changed {changed}; files with goto {goto_files(base)} -> {goto_files(new
       f"newly goto {len(newg)}; goto-free now {len(fixed)}; unassigned reads better {better} worse {len(worse)}")
 for w in worse:
     print("  WORSE", w)
+if only_new:
+    print(f"  only in {new}: {len(only_new)} files (not in the base run): {', '.join(only_new[:8])}")

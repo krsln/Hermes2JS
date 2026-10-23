@@ -8,7 +8,7 @@ from hermes_decompiler.backend.regions import (
 )
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.ir.Operators import BinaryOperator
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorReturn, TerminatorThrow
 from hermes_decompiler.ir.expressions import BinaryExpression, Expression
 from hermes_decompiler.ir.expressions.Literals import Literal
 
@@ -62,6 +62,8 @@ class _ComparisonChainSwitchBuilder:
 
     def try_build(self, region: SequenceRegion, root: IfRegion, min_cases: int) -> bool:
         self._pending_peels = []
+        self._tail = []
+        self._tail_may_follow = bool(region.children) and region.children[-1] is root
         chain = self._match_chain(root)
 
         if chain is None:
@@ -69,10 +71,13 @@ class _ComparisonChainSwitchBuilder:
 
         discriminant, cases, default_body = chain
 
+        # Before the length check: the tests behind an inverted label (`Set !== r4`) are
+        # more cases of this very chain, and `Map`/`Set` sharing one body count once
+        # (96/777: `Map`, `Set` -> `Array.from`, then `Arguments`).
+        default_body = self._absorb_nested_chain(discriminant, cases, default_body)
+
         if len(cases) < min_cases:
             return False
-
-        default_body = self._absorb_nested_chain(discriminant, cases, default_body)
 
         for body, remaining in self._pending_peels:
             body.children[:] = remaining
@@ -85,6 +90,12 @@ class _ComparisonChainSwitchBuilder:
             switch_region.default_body = default_body
 
         self.graph.replace(root, switch_region)
+
+        if self._tail:
+            at = region.children.index(switch_region) + 1
+            region.children[at:at] = self._tail
+            region.invalidate_coverage()
+
         return True
 
     # -------------------------------------------------------------
@@ -319,6 +330,20 @@ class _ComparisonChainSwitchBuilder:
             return default_body
 
         meaningful = [c for c in default_body.children if not is_transparent(c)]
+        tail = []
+
+        if (
+                len(meaningful) > 1
+                and isinstance(meaningful[0], IfRegion)
+                and all(isinstance(c, BasicBlock) for c in meaningful[1:])
+                and self._tail_may_follow
+                and all(self._leaves(body) for _, body in cases)
+        ):
+            # The code every arm of the inner chain runs on into (a return the
+            # duplication gave each path, 96/777): it follows the `switch` once the
+            # earlier cases all leave the function themselves.
+            tail = default_body.children[default_body.children.index(meaningful[0]) + 1:]
+            meaningful = meaningful[:1]
 
         if len(meaningful) != 1 or not isinstance(meaningful[0], IfRegion):
             return default_body
@@ -342,6 +367,7 @@ class _ComparisonChainSwitchBuilder:
             return default_body
 
         self._pending_peels.extend(inner_peels)
+        self._tail = tail
 
         for tests, body in inner_cases:
             if same_body(cases[-1][1], body):
@@ -350,6 +376,16 @@ class _ComparisonChainSwitchBuilder:
                 cases.append((tests, body))
 
         return inner_default
+
+    @staticmethod
+    def _leaves(body) -> bool:
+        """Does the body end in a `return` / `throw`?"""
+        probe = body
+
+        while isinstance(probe, SequenceRegion) and probe.children:
+            probe = probe.children[-1]
+
+        return isinstance(probe, BasicBlock) and isinstance(probe.terminator, (TerminatorReturn, TerminatorThrow))
 
     @staticmethod
     def _entry_address(body):

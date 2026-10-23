@@ -38,3 +38,18 @@ def test_labels_after_an_inverted_one_continue_the_same_switch():
     assert "goto" not in out
     assert 'case "https":\n        case "wss":\n            return 443;' in out
     assert "default:\n            return null;" in out
+
+
+def test_a_chain_with_a_return_behind_it_keeps_the_label_of_its_shared_body():
+    """96/777 `_unsupportedIterableToArray`: `"Map"` and `"Set"` share `Array.from`.
+
+    With the return copied into each path the `"Set"` test is inverted and the rest of
+    the chain (`"Arguments"`, then the default) is followed by the return. That tail
+    kept the chain from becoming a `switch`, and the `"Set"` jump was dropped (a
+    `Set` came out as `undefined`). The return now follows the `switch`.
+    """
+    out = _render("switch_labels_then_tail_96_777.hasm", 777)
+
+    assert "goto" not in out
+    assert 'case "Map":\n                case "Set":\n                    r0 = Array.from(param1);\n                    return r0;' in out
+    assert '"Set" !==' not in out

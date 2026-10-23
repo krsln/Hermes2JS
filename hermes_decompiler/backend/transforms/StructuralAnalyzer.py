@@ -94,7 +94,21 @@ class StructuralAnalyzer:
         # CFG edit.
         # A value diamond that is only tested becomes one test block first.
         ValueConditionFoldCfgPass(self.cfg).run()
+        blocks_before = len(self.cfg.blocks)
         ShortCircuitConditionCfgPass(self.cfg).run()
+
+        if len(self.cfg.blocks) != blocks_before:
+            # A merged-away test block that sat in a loop is still a member of the
+            # loop (and a node of the dominator trees) the analyses found earlier.
+            alive = set(self.cfg.blocks)
+
+            for handler in getattr(self.cfg, "exception_handlers", []):
+                handler["try_blocks"] = [b for b in handler["try_blocks"] if b in alive]
+
+            self.cfg.compute_dominators()
+            self.cfg.compute_post_dominators()
+            self.cfg.compute_loops()
+
         flow = FlowSnapshot(self.cfg)
 
         # ---- 2. structurers -------------------------------------------
