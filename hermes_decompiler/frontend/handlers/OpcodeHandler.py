@@ -9,7 +9,7 @@ from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import (
     Expression, Identifier, RawExpression, ObjectExpression,
-    ArrayExpression, Literal, CallExpression, MemberExpression, ThisPlaceholder,
+    ArrayExpression, Literal, CallExpression, MemberExpression, ThisPlaceholder, BinaryExpression,
 )
 from .OpcodeTypes import OpcodeContext, ArgsPattern, OperandMode
 
@@ -220,8 +220,14 @@ class OpcodeHandler(ABC):
         # Join guard: the register's latest definition ran on one path of a join of three
         # or more (`r1 = p; if (c) { r1 = q; if (d) r1 = p }; r6 = r1`): the read sees a
         # merge no single value stands for. Inlined `p` was wrong whenever `c && !d`
-        # (96/4775 `interpolate`: `r6 = param1` for `r6 = r1`).
-        if isinstance(value, Identifier) and analysis.is_nested_join_value(state):
+        # (96/4775 `interpolate`: `r6 = param1` for `r6 = r1`). A binary expression is no
+        # different (96/1801 `getComponentNameFromType`: the `ForwardRef(...)` string built
+        # on one arm was inlined into `r1 = r3` on every other arm). Other shapes keep
+        # inlining: a member read is left to the ternary fold, which names the register
+        # itself afterwards (`tests/test_default_parameter_merge.py`), and a constant or
+        # an environment value would leave a read of a register that prints nowhere
+        # (`reject.call(r0, ...)`, 96/2999).
+        if isinstance(value, (Identifier, BinaryExpression)) and analysis.is_nested_join_value(state):
             # Like the branch test (`JmpTrue`): the arm's own write is left for a fold or
             # for `UnfoldedMergeRepairPass`, which prints it when no fold took it.
             state.mark_read()
