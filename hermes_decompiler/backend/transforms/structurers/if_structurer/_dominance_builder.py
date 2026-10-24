@@ -312,6 +312,16 @@ class _DominanceIfBuilder(RegionStructurer):
                         )
                 )
                 or (
+                        # `if (a) { ...; x(); } return null` where the branch skips to a
+                        # shared `return` and the arm's last block runs on into it: the
+                        # `return` follows the `if`; as an `else` arm it would leave the
+                        # arm's end without it.
+                        merge_block is None
+                        and not goto_block.successors
+                        and isinstance(goto_block.terminator, TerminatorReturn)
+                        and self._arm_runs_into(then_entry, goto_block, block, outside_loops=True)
+                )
+                or (
                         # `if (n > 0) { for (...) { ... } } tail`: the loop the guard
                         # skips ends into the very code the guard jumps to (its exit
                         # edge is the one of `tail`), so `tail` follows the `if`.
@@ -482,14 +492,21 @@ class _DominanceIfBuilder(RegionStructurer):
             for pred in goto_block.predecessors
         )
 
-    def _arm_runs_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock) -> bool:
+    def _arm_runs_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock,
+                       outside_loops: bool = False) -> bool:
         """True if a plain block of the fallthrough arm runs on into `goto_block`
-        (`if (a) { ...; if (b) return; ...<runs into T> } T` with `a` jumping to `T`)."""
+        (`if (a) { ...; if (b) return; ...<runs into T> } T` with `a` jumping to `T`).
+
+        `outside_loops`: only blocks that are in no loop count (a loop's exits to a shared
+        `return` stay exits)."""
         dominators = self.cfg.dominator_tree
+        loop_analysis = self.cfg.loop_analysis if outside_loops else None
+        loops = list(loop_analysis.loops.values()) if loop_analysis is not None else []
         return any(
             pred is not block
             and pred.terminator is None
             and dominators.dominates(then_entry, pred)
+            and not any(pred in loop.members for loop in loops)
             for pred in goto_block.predecessors
         )
 
