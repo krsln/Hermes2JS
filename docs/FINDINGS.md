@@ -1,365 +1,92 @@
-# Bulgular
+# Findings
 
-Açık ve çözülmüş decompiler bulguları. Her kaydın bir kimliği (`F-n`), durumu, örnek fonksiyonu (`<paket>/<fonksiyon>`:
-96 ve 98 test paketleridir), tek cümlelik belirtisi ve ilgili test ya da
-fixture adı vardır. Commit mesajlarında ve testlerde `F-n` diye anılabilir.
+Open decompiler findings and the measurements that track them. Resolved findings are in
+[`FINDINGS-archive.md`](FINDINGS-archive.md).
 
-Güncelleme yöntemi: bir bulgu çözülünce "Açık"tan "Çözüldü"ye taşınır, silinmez. Aynı sınıf hata geri
-gelirse nereden bakılacağı görünsün diye test adı ve commit hash'i yazılır.
+Examples are written `<bundle>/<function id>`; 96 and 98 are the two test bundles. Every finding has
+an id (`F-n`), a status, an example function, a one-sentence symptom and, once fixed, the test that
+guards it. Commit messages and tests refer to findings by id.
 
-## Ölçümler
+How to update:
 
-Her turdan sonra bu satır güncellenir. Ölçüm: iki paketin tüm fonksiyonları üzerinde survey.
+1. Measure first (see [Measurements](#measurements)); add a row.
+2. A finding that is still open stays here; a fixed one moves to `FINDINGS-archive.md` as a full
+   entry (symptom, cause, fix, test, numbers) and is deleted from this file.
+3. New findings take the next free id (the highest id in the archive plus one).
 
-| Tarih                 | goto (96) | goto (98) | pathdefs (96) | pathdefs (98) | Test      |
-|-----------------------|-----------|-----------|---------------|---------------|-----------|
-| 2026-10-16 (tur başı) | 417       | 413       | 160           | 193           | 954 geçti |
-| 2026-10-17            | 396       | 402       | 160           | 193           | 957 geçti |
-| 2026-10-17 (F-01/F-02)| 396       | 400       | ölçülmedi     | ölçülmedi     | 985 geçti |
-| 2026-10-18 (F-10 kısmi)| 383      | 392       | ölçülmedi     | ölçülmedi     | 987 geçti |
-| 2026-10-18 (F-114)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 988 geçti |
-| 2026-10-18 (F-115)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 989 geçti |
-| 2026-10-18 (F-116)    | 383       | 385       | ölçülmedi     | ölçülmedi     | 990 geçti |
-| 2026-10-18 (F-117)    | 358       | 372       | ölçülmedi     | ölçülmedi     | 992 geçti |
-| 2026-10-19 (F-118)    | 359       | 372       | ölçülmedi     | ölçülmedi     | 994 geçti |
-| 2026-10-20 (F-119)    | 349       | 366       | ölçülmedi     | ölçülmedi     | 996 geçti |
-| 2026-10-20 (F-120)    | 337       | 359       | ölçülmedi     | ölçülmedi     | 998 geçti |
-| 2026-10-20 (F-121)    | 331       | 356       | ölçülmedi     | ölçülmedi     | 999 geçti |
-| 2026-10-20 (F-122)    | 330       | 355       | ölçülmedi     | ölçülmedi     | 1000 geçti |
-| 2026-10-20 (F-123)    | 314       | 335       | ölçülmedi     | ölçülmedi     | 1002 geçti |
+## Measurements
 
-`goto`: çıktısında `goto label_N` kalan fonksiyon sayısı. `pathdefs`: bir yolda tanımlanmadan okunan
-register'ı olan fonksiyon sayısı (yaklaşık denetim; survey aracı repoda yok, son satırda ölçülmedi).
+Tools are in `scripts/audit/` (see its `readme.md`). Both bundles are decompiled in full for every
+row; a row is only added when all of its columns were measured on the same tree.
 
-Son goto sınıflandırması (2026-10-16, bu turdan önce): 96 farklı bölge 236 / kardeş 110 / diğer 58 /
-döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek goto'lu fonksiyon sayısı: 435.
+| Date | Change | goto 96 | goto 98 | pathdefs 96 | pathdefs 98 | Tests |
+|------|--------|---------|---------|-------------|-------------|-------|
+| 2026-10-16 | start of the round (`29c4aff`) | 417 | 413 | 461 | 699 | 954 passed |
+| 2026-10-24 | after F-136 | 299 | 336 | 463 | 681 | 1019 passed |
 
-## Açık: doğruluk hataları
+- `goto`: number of functions whose output still contains `goto label_N`.
+- `pathdefs`: number of functions with at least one register read that is not assigned on every path
+  (`scripts/audit/definite_assignment.py`, piped through `cut -d: -f1 | sort -u | wc -l`). It is a
+  rough check (for-of/for-in heads and switch arms give false positives), so compare rows, not
+  absolute values.
+- Both rows were measured with the same scripts: the first by checking out `29c4aff` and decompiling
+  both bundles in full, the second on the current tree. Reading the `pathdefs` change: the
+  per-file comparison (`compare_outputs.py`) finds about as many files with more unassigned reads
+  (96: 39, 98: 71) as with fewer (96: 38, 98: 61), so the check is noise-dominated at this level (not triaged per file); the totals are flat for 96 (+2) and
+  better for 98 (-18).
+- Older notes recorded `pathdefs` of 160 (96) and 193 (98) from a survey tool that is not in the
+  repository; those numbers are not comparable with this column and were dropped. The per-change
+  history of the `goto` count up to F-123 is in the archive appendix.
 
-Çıktı yanlış ya da yanıltıcı. goto olmadığı için survey'in goto sayısında görünmezler.
+## Open: wrong or misleading output
 
-- **F-03 `maybeSwapComponents` (A11).** 96/9150 benzeri kalıp. Ayrıntı için
-  `tests/test_shared_return_exit.py`. 2026-10-17: 96/9150'nin kendisi doğru çıkıyor (goto yok, iki
-  `return param1`, takas yolu doğru); benzer bir örnek bulunursa buraya eklenir, yoksa kapatılabilir.
-- **F-04 `parseScaleX` goto'su.** 96/9118: yanlış callee düzeldi (F-111); kalan sorun
-  `if (r0) goto label_44` ("target IS a sibling in the same region"). Kurulum register'ı (`r1 = 0`)
-  birleşme noktasında da okunduğu için katlama onu düşüremiyor.
+The output is wrong or misleading. Because it contains no `goto` it does not show in the `goto` count.
 
-## Açık: goto kümeleri
+- **F-03 `maybeSwapComponents`.** A pattern like 96/9150. See `tests/test_shared_return_exit.py`.
+  96/9150 itself decompiles correctly now (no `goto`, both `return param1`, swap path right); close
+  this if no similar example turns up.
+- **F-04 `parseScaleX` goto.** 96/9118: the wrong callee was fixed (F-111); what remains is
+  `if (r0) goto label_44` ("target IS a sibling in the same region"). The set-up register
+  (`r1 = 0`) is also read at the join, so folding cannot drop it.
+- **F-137 `dt` writes a value that should be `undefined`.** 98/9611: `r3.size = r4` where `r4` must be
+  `undefined` on that path; a `goto` remains.
+- **F-138 `getComponentNameFromType`.** 96/1801, 96/2294, 98/2477: expressions like
+  `r2 + (r2.displayName || r1.name || "") + ")"` are garbage (wrong operand folded into a string
+  concatenation); the output now carries a `goto` warning but the folding bug is unresolved.
+- **F-139 Messy `for-in`.** 96/1339 `parseDropShadow`.
+- **F-140 `deepDiffer`.** 96/1595: several structural problems in one function.
+- **F-141 Empty arms.** An empty `if (3 !== r4) {}` in 96/2026 (output is correct but misleading).
+- **F-142 `drop_scan` candidates not triaged yet (96).** 96/1926 `updateFromMap`, 96/2103
+  `commitDeletionEffectsOnFiber`, 96/2602 `insertOrAppendPlacementNode`, 96/4152, 96/2811,
+  96/6029 `_anon_0_`, 96/7599 `getStateFromPath`, 96/9820, 96/9821 and 96/9831 (component lifecycle),
+  96/11086 `useHandler`. Run `drop_scan.py --report` for the current list. The 98 scan has not been
+  read yet.
 
-- **F-10 Çıkış bloğuna koşullu atlama.** `if (c) goto sonReturn`. Paylaşılan return bloğuna giden koşullu
-  atlamalar (örnekler: 96/2019 `mountDeferredValueImpl`, 98/1871 `get`, 98/11891'in bir kısmı).
-  KISMEN ÇÖZÜLDÜ (bkz. F-113): yalnız `return`/`throw` (+ sabit yükleme) kuyrukları. Kalanlar:
-  (a) ifade içeren kuyruklar çözüldü (F-117); (b) 96/11046: dönüş register'ı yola göre farklı değer taşıyor (phi), goto olarak kalıyor;
-  (c) 98/1871 çözüldü (F-114); (e) exception handler'lı fonksiyonlar çözüldü (F-119); (d) hedefi return olmayan (kardeş bölge,
-  `none` sonlandırıcı) atlamalar. 96/4846 ve 96/10300 `binarySubdivide` döngüyle taşınan `r10` hatası çözüldü (F-115).
-- **F-11 `try/finally` içinde goto.** 98/2007 `preprocessException`, 98/10013 `flush`, 96/840.
-  Atlamanın `finally` sınırını geçmesi.
-- **F-12 `await`/`yield` dispatch ve 98 generator opcode'ları.** 96/12207 `_anon_0`. Batch tablosu olmadan
-  dispatch çözülemiyor; 98'de bazı generator opcode'ları eksik.
-- **F-13 İki latch'li döngüler.** "expected exactly one latch" uyarısı; 96'da 13, 98'de 22 fonksiyon.
-- **F-14 `for-of` generator açılımı.** Döngü, generator açılımı olarak kalıyor.
-- **F-15 Paylaşılan kuyruk return'leri.** 96/10216.
-- **F-16 Sabit kurulumun `Ret` tarafından okunması.** 96/150 `ve`: kurulumdaki `r0 = undefined`,
-  `Ret r0` tarafından okunduğu için ilk `typeof` testi `||` zincirine katılamıyor (çıktı doğru ama iç içe).
-- **F-17 `getStateForAction`.** 96/7152: büyük ve zaten goto'lu; pathdefs işareti kabul edilmiş durumda.
-  Ayrı ele alınmadıkça atlanır.
-- **F-18 "Farklı bölge" uzun kuyruk.** Kalan ~230 fonksiyonda tek bir ortak neden yok; küçük örneklerden (tek goto, 26
-  satırdan kısa: 79 fonksiyon) başlamak en ucuzu.
+## Open: goto clusters
 
-## Açık: okunabilirlik
+- **F-10 Conditional jump to an exit block.** `if (c) goto finalReturn`: conditional jumps to a shared
+  `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
+  (F-113, F-114, F-115, F-117, F-119). Left: (a) 96/11046, where the return register carries a
+  different value per path (a phi) and stays a `goto`; (b) jumps whose target is not a `return`
+  (sibling region, `none` terminator).
+- **F-11 `goto` inside `try/finally`.** 98/2007 `preprocessException`, 98/10013 `flush`, 96/840. The
+  jump crosses the `finally` boundary.
+- **F-12 `await`/`yield` dispatch and 98 generator opcodes.** 96/12207 `_anon_0`. Without a batch
+  table the dispatch cannot be resolved; some generator opcodes are missing in 98.
+- **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.
+- **F-14 `for-of` generator unrolling.** The loop stays as an unrolled generator.
+- **F-15 Shared tail returns.** 96/10216.
+- **F-16 A constant set-up read by `Ret`.** 96/150 `ve`: `r0 = undefined` in the set-up is read by
+  `Ret r0`, so the first `typeof` test cannot join the `||` chain (the output is correct but nested).
+- **F-17 `getStateForAction`.** 96/7152: large and already `goto`-ful; its `pathdefs` flag is accepted.
+  Skip it unless it is handled on its own.
+- **F-18 Long tail of "different region" gotos.** About 230 functions with no single common cause;
+  the cheapest start is the small ones (one `goto`, under 26 lines: 79 functions).
+- **F-143 Slow function.** 98/2619 takes minutes to decompile (a full 98 run stalls there).
 
-- **F-30** Döngü koşulunda `i < r8; r8 = r8.length`.
-- **F-31** Gereksiz kopyalar (`r2 = r3`, `r1 = {...}; r0 = r1`).
-- **F-32** Üçlü koşulun testinde fazladan parantez: `(("get" in r4) ? …)`.
-- **F-33** Boş `else`/`try` gövdeleri (örnek: 98/13768 `try { } catch`).
+## Open: readability
 
-## Çözüldü
-
-- **F-100 Sessiz düşme** (96/652, `_interopDefault`; 96/15102, 98/167). Son test kalıbı kendi son
-  testini kaybediyordu; ShortCircuit crossed formu ve `SharedTailDuplicationCfgPass`. Test:
-  `tests/test_shared_tail_conditions.py`.
-- **F-101 Değer üreten üçlü ve `||`/`&&` değeri yalnızca test ediliyorsa** (96/12188). Yeni
-  `ValueConditionFoldCfgPass`: değer elması, ShortCircuit'ten önce tek bloğa iniyor. 8dda5b3.
-- **F-102 Aynı hedefli, kurulumlu `||` zincirleri** (96/4456, 96/150). `LoadParam` gibi kurulumlar zinciri
-  bölüyordu. Sabit karşılaştırma yalnızca aynı değerin tekrar karşılaştırılmasıysa `case` sayılıyor.
-  c533987.
-- **F-103 Koşulda çağrı varken crossed katlama** (98/11891). Kurulumdaki çağrı koşulda en solda ise
-  sıra korunduğu için kabul ediliyor. c533987.
-- **F-104 Artık okunmayan saf kurulum** (96/4543). Adı çözülmüş `getEnvironment(0)` katlamayı engelliyordu.
-  c533987.
-- **F-105 Kimlik-duyarlı ikame.** Başka komuttan inline edilmiş alt ağaçtaki register adları, katlamada
-  o komutun kendi durumuyla çözülüyor. Üç yanlış çıktı düzeldi: 96/11316 `.value.value`, 96/9150
-  `in r0[1][1]`, 96/9595 `undefined.deepEqual`. Ayrıca 96/3414'te `r1 === ""` kolu düşüyordu.
-  c533987.
-- **F-106 `repoint_references` bölge filtresi.** Katlamadan önceki bölgelerin koşulları, sonradan
-  tanımlanan register'ın değeri sanılıp yeniden yönlendiriliyordu (98/2463 `r6 ||`). 8dda5b3.
-- **F-107 98/2917 çökmesi.** Handler'lı fonksiyonda kenar bloğu ekleyince `compute_dominators`
-  `KeyError` veriyordu; handler'lı fonksiyonda kenar bloğu eklenmiyor. d5c83ad.
-- **F-108 De Morgan yazdırması.** `!(a && !b)` → `!a || b`; yalnızca printer'da, yalnızca
-  `&&`/`||` içinde ve yalnızca eşitlik çevrimleri için (NaN-güvenli). 8dda5b3.
-- **F-109 `TypeOfIs`/`JmpTypeOfIs` bit eşlemesi** (F-02'nin bir parçası; 98/9594). Eşleme tahmindi
-  (`TYPEOF_FLAGS`/`_TYPE_BITS`); `hermesc` ile ölçüldü: undefined=1, null=2, string=4, symbol=8,
-  boolean=16, number=32, bigint=64, function=128, object=256 (`typeof x === "object"` = 258, tersi 253).
-  Ortak çözücü `frontend/handlers/shared/_typeof_mask.py`; çoğunluk maskeleri tümleyen olarak
-  yazılıyor (`typeof x !== "object"`). 98'de 667 fonksiyonun çıktısı değişti (115'inde
-  `<unresolved_typeof_mask_…>` vardı); 96'da bu opcode'lar yok. Test: `tests/test_typeof_mask.py`.
-- **F-110 Printer: De Morgan çevrilen `!` yanlış gruplanıyordu** (F-02'nin diğer parçası). Üst düğüm
-  `!(a && b)`'yi hâlâ `!` sanıp parantez koymuyordu: `!!(…)` değeri değiştiriyor,
-  `!(a && b) && c` → `P || Q && c` oluyordu. 96'da 9, 98'de 6 fonksiyon.
-  Test: `tests/test_printer_negation_grouping.py`.
-- **F-111 Bayat inline okuma** (F-01; 96/4456, 96/9118, 98/12478, 98/13745, 98/9542...). `r1 = r0[0]`
-  okuyucusuna inline edilirken `r0`'ın sonraki tanımının basılıp basılmayacağı o an bilinmiyordu. Scratch
-  geçişi artık basılan tanımları (`printed_definitions`) toplayıp gerçek geçişe veriyor. Yaygınlık:
-  96'da 1571, 98'de 1079 fonksiyonun çıktısı değişti; değişenlerin ~%94'ünde eski çıktıda
-  okunan register'a hemen öncesinde basılmış bir atama var. Goto sayısı değişmedi. 13 golden fonksiyonu
-  (26 dosya) yenilendi; tek tek bakılanlarda eski çıktı bayat okuma içeriyordu. Test: `tests/test_stale_inlined_read.py`.
-- **F-112 Çıplak register callee üyelikle değişince `this` değişiyordu.** `r4(x)` içindeki `r4`, katlamada
-  `env[1]` ile değişince `env[1](x)` (this=env) oluyordu; artık `env[1].call(undefined, x)`
-  (`keep_call_this_unbound`). 98/11891 ve 98/10829. Test: `tests/test_stale_inlined_read.py`.
-- **F-113 Paylaşılan çıkışın genişletilmiş kopyası** (F-10'un bir parçası; 96/10518, 98/4916, 96/2266, 98/2768,
-  96/169 ...). Goto kalırsa üçüncü bir deneme (`SharedReturnDuplicationCfgPass(widen=True)`) `throw` çıkışlarını ve
-  başka bir bloğun düştüğü kapanış `return`'ünü de kopyalar; yalnızca kuyruğun okuduğu her register'ın
-  her yoldan tek değere ulaştığı durumda (`_reads_the_same_on_every_path`) ve yalnız goto'suz sonuç
-  kabul edilir. 21 fonksiyon goto'dan çıktı (96: 396→383, 98: 400→392). İfade içeren kuyruk kopyası denendi,
-  58 fonksiyon düzeltiyordu ama 96/9349'da yanlış sonuç verdi; eklenmedi. Test: `tests/test_shared_return_widened.py`.
-- **F-114 Çok bloklu paylaşılan kuyruk** (F-10'un bir parçası; 98/1871 `get`, 98/1872 `getEnforcing`, 98/244, 98/249,
-  98/360, 98/408, 98/6251). `a != null ? a(p) : null` ardından `?? (m[p] ?? null)`: ikinci işlenen iç testi olan
-  iki bloklu bir kuyruk; bir test ona atlıyor, bir başkası düşüyor. `SharedTailDuplicationCfgPass(regions=True)` bu
-  küçük ileri bölgeyi (<=4 blok, <=12 komut, tek çıkış `END`) düşen teste kopyalar. Yalnız son çare olan üçüncü
-  denemede çalışır: her denemede açıkken goto'suz fonksiyonlarda `||`/`&&` zincirini bozdu (96/7424) ve 98/14169'da
-  `max/min` sıkıştırmasını goto'ya çevirdi. 98: 392→385. Test: `tests/test_shared_return_widened.py`.
-- **F-115 Kolda yazılan kopya, birleşimden sonra tek tanım sanılıyordu** (96/4846, 96/10300, 98/12079 `binarySubdivide`;
-  ayrıca 96/12935 `isArrayish`, 98/2503 `getNextLanes`, 98/8193 `compareIdentifiers` ... 20 fonksiyon). `r14 = r0; if (c) {
-  r14 = param3 }; r10 = r14`: koldaki `Mov r14, r13` değerini (`param3`) `Mov r13, r10` de aynı düğüm olarak tuttuğu
-  için `UnfoldedMergeRepairPass` "belirsiz" deyip onarmıyor, okuyucu `r10 = param3` basıyordu (`c` yanlışsa
-  `r0` olmalıydı). Değeri kolun kendi kaynağı olan `Mov` artık sayılmıyor (`_is_source_mov_of`). Genel bir
-  `is_join_value` koruması denendi, 10 test (ternary/varsayılan birleşim katlamaları) bozulduğu için bırakıldı.
-  `isArrayish` testi `r0 = r3` (yolda hiç yazılmamış global nesne) yerine `r0 = r1` bekliyor. Çıktı değişen 20
-  fonksiyonun hepsi aynı kalıp (eksik atama basılıyor, okuma register'a dönüyor). Test: `tests/test_shared_return_widened.py`.
-  96/12935'teki kalan yol F-116'da.
-- **F-116 Zincirli `Mov` okuyucuları ve kolun varsayılanı** (96/12935, 98/6200 `isArrayish`; ~50 fonksiyonun çıktısı
-  değişti). `r2 = a instanceof F` (test içinde satır içi) / kolda `r2 = r3`, ardından `Mov r1, r2`, `Mov r0, r1`:
-  `UnfoldedMergeRepairPass` okuyucunun ardındaki `Mov`'u (`Mov r0, r1`) da aynı düğümü tutan "başka sahip" sayıp
-  onarmıyordu; `instanceof` doğru yolunda `r1` global nesneyi okuyordu. Artık okuyucunun register'ını sonradan
-  kopyalayan `Mov`'lar (`_chained_reader_movs`; döngüde okuyucudan ÖNCEKİ `Mov` hariç) zincir sayılıyor. Ayrıca
-  "kolda yazılan register `if`'ten sonra adıyla okunuyor" dalı, `if`'in kendi testinin satır içi aldığı varsayılanı
-  (`r1 = len >= 0`) basmıyordu; `_reprint_unprinted_default` oraya da eklendi. Sonuç: `length < 0` yolunda
-  `r1` atanıyor. Etki: yaklaşık 50 fonksiyonda eksik atama basılıyor / ölü varsayılan (`r0 = param1`) kalkıyor /
-  `return param1` yerine `return r0` (96/1666, 98/2360 `diffProperties`). Örneklenen on kadarı bytecode ile
-  karşılaştırıldı; tümü tek tek doğrulanmadı. Test: `tests/test_boolean_chain_copy_reads_register.py`.
-- **F-117 İfade içeren paylaşılan kuyruk** (F-10'un bir parçası; 96/2019, 96/12456, 96/13816, 98/8735 ... 38 fonksiyon).
-  `SharedReturnDuplicationCfgPass(statements=True)`: üç denemeden sonra hâlâ goto varsa dördüncü deneme, 6 komuta
-  kadar sıradan komut içeren `return`/`throw` kuyruğunu da (path-bağımsızlık korumasıyla) atlayana kopyalar.
-  96: 383→358, 98: 385→372, geriye giden fonksiyon yok. ÖNEMLİ: kopya komutların `value`/`statement` düğümleri derin
-  kopyalanmalı; paylaşılınca bir katlama atamayı kopyadan alıyordu (96/12456: `!param1` kolu atanmamış `r1` döndürdü).
-  Önceki turda bu yüzden "yanlış sonuç" gördüm, ama 96/9349 `cmp` kuyruktan bağımsız bozuk (F-118). Çıktılarda
-  "her yolda atanmamış register okuması" denetimi (kaba, yapısal if/else) yalnız önceden bozuk olanları işaretledi.
-  Testler: `tests/test_shared_return_widened.py`.
-- **F-118 Ardışık ikili ternary'ler birbirine karışıyor** (96/9349 `cmp`, `===`/`!==` kolları). `r1 = typeof a !== "object"
-  ? a : a.version; r0 = typeof c !== "object" ? c : c.version; return r1 === r0`: aynı `typeof` register'ı (`r3`) iki
-  kez kullanılınca ilk ifade ikincinin testini (`(r1 !== "object") ? param1 : ...`) ve okunmamış register'ları
-  taşıyor; `return` yanlış `r0` okuyor. goto'dan bağımsız (baseline'da da var).
-  **Kısmen çözüldü.** `ConditionalExpressionRegionPass`: ternary'nin testindeki register, dal ile okuyan arasında
-  (akış üzerinde) yeniden *yazdırılan* bir tanımla değişiyorsa okuyan ternary'nin kopyasını değil o register'ı okur
-  (`repoint_references(..., reader_value=)`); register'ın o noktada dolu olduğu kanıtlanamazsa birleştirme, arm
-  emilmeden ÖNCE (`_peek_arm_result`) katlanmaz. Okuyanlarına katlanıp hiç yazdırılmayan bir yazım (96/8499'daki
-  `Mov r3, r1`, 98/9485'teki `r3 = console.log`) ve okuyanın kendisi YAZDIRILAN bir yeniden tanım sayılmaz: kopya
-  metinde hâlâ doğru okur. İki kademe: yazdırılan yeniden tanım → register okunur (güvenli değilse katlanmaz);
-  yalnız katlanmış yazım → register, ancak ikisi de sağlanıyorsa (arada ezilmemiş + katlanan ifade okuyandan önce
-  çalışıyor ya da önceden yazdırılan bir varsayılan var; `_register_holds_merge`) okunur, aksi halde kopya kalır
-  (96/8499'da `r1` ezildiği için kopya). Böylece 98/9485, 9486, 9490 hep `console.log(200, r6, r5)` biçiminde,
-  tutarlı. Tam paket (96+98): ~286 fonksiyon değişti (96: 126, 98: 160), goto 96: 358→359 (96/12624: eski
-  `r1 = (r2 !== "object") ? "object" : r4.params` bir `||` zincirini yutuyordu, yeni çıktı sadık ama goto'lu), 98:
-  372. Örnekler: 96/10194 yanlış `!r0` testi → `r8`; 98/9490 `r5.retries`/`r5.name` kopyaları yazdırılan
-  `r5 = getParentEnvironment(0)`'dan sonra okunuyordu (golden güncellendi). **Açık:** 96/9349 `cmp` tam fonksiyonu (switch içinde
-  boş `if {} else {}` kolları, `return r3 === r1`) kuyruk/ternary'den bağımsız bozuk, baseline'da da vardı; loop
-  koşullarındaki kopyalar (96/12561 örüntüsü) bu geçişten geçmiyor.
-- **F-119 Exception handler'lı fonksiyonlarda paylaşılan çıkış kopyası** (F-10'un bir parçası; 96/3900
-  `normalizeRootMargin`, 96/1363, 96/10844, 96/12298, 96/2813, 96/4231, 96/1907, 96/2413, 96/8034, 96/9338,
-  98/11643, 98/1635, 98/2811, 98/3382, 98/5884, 98/8176 - 16 fonksiyon). `SharedReturnDuplicationCfgPass`
-  fonksiyonda herhangi bir exception handler varsa hiç çalışmıyordu; bir `for-of` bile handler getirdiği için
-  baştaki `if (c) return X` çıkışları `goto` kalıyordu. Artık yalnız korunan aralıktaki bloklar ve handler girişleri
-  atlanır (kopya her zaman aralık dışına konur). Handler'lı fonksiyonlarda yol-bağımsızlık denetimi
-  (`_reads_the_same_on_every_path`) seviye 1'de de uygulanır: yoksa 98/2477 `getComponentNameFromType`
-  `r1 = null` / `r1 = displayName || ...` phi'sini `return null`'a çeviriyordu. Denediğim ve ATTIĞIM: "her
-  atlayana kopya, orijinal ölür" (`every_jumper`, seviye 5) - 96/10211'de `if (A) {} else if (B) {} r0 = true`
-  gibi yanlış çıktı üretti. Tam paket: goto 96: 359→349, 98: 372→366; başka çıktı değişmedi.
-- **F-120 Çapraz koşulda iki çıkışın okuduğu sabit** (F-10'un hedefi return olmayan alt şekli; 96/9112-9134
-  `parseTranslateX/Y`, `parseScaleX/Y`, `parseRotate`, `parseSkewX/Y`, `parsePerspective`, 96/12212, 96/19, 96/3433,
-  96/4491, 98/11215, 98/12081, 98/12630, 98/13801, 98/3236, 98/3974, 98/9557 - 19 fonksiyon goto'suz). Şekil:
-  `len !== 1` → `r0 = []`; `isLength(x) || isPercent(x)` → nesne kur. Mevcut "çapraz" birleştirme
-  (`ShortCircuitConditionCfgPass._try_merge_crossed`: `!a && b`) ikinci testin kurulumunu koşula katarken kurulumdaki
-  sabit yükü (`r1 = 0`) iki çıkıştan birinin (END) de okuduğu için reddediyordu. Artık sabit yük koşula girer ve END'in
-  önüne açılan kenar bloğuna kopyası konur (`_constants_for_the_end_edge`; yalnız END'e tek yoldan gidilen,
-  kolda ölü olan, exception handler'sız durumda). Yan kazanç: 96/4063 `handler` artık kaynağın kendisi
-  (`if (c === -1 && this.utf8BytesNeeded !== 0) ... else if (c === -1)`; eskisi atanmamış `r5` okuyordu),
-  96/9150 `maybeSwapComponents` iki ayrı `return param1` yerine tek `&&`/`||` koşulu. İki eski test (9150, 9118) eski
-  çıktının biçimini kodluyordu; anlamı koruyarak güncellendi. Tam paket: goto 96: 349→337, 98: 366→359; 23 çıktı
-  değişti, yeni goto yok, kontrol aracı işaretlemedi.
-- **F-121 Üç ve daha fazla etiketin paylaştığı gövde** (F-10'un hedefi başka bölgede olan, düşmeyle de ulaşılan alt şekli;
-  96/7527 `encoderForArrayFormat`, ayrıca 96/748, 96/2095 ve benzerleri). `case "comma": case "separator":` gruplanıyor,
-  ama üçüncü etiketin testi `default` içinde `if ("bracket-separator" === r3) goto label_70;` olarak kalıyordu.
-  `_ComparisonChainSwitchBuilder._peel_shared_jumps`: varsayılan kolun başındaki, son case'in giriş bloğuna atlayan
-  eşitlik testlerini o case'in etiketlerine katar ve dal bloğunu atar; değişiklik yalnızca switch gerçekten kurulursa
-  uygulanır (zincir kısa kalırsa bölge bozulmaz; ilk denemede `isTransitionProp` bozulmuştu, testle yakalandı).
-  Test: tests/test_switch_shared_labels.py. Tam paket: goto 96: 337→331, 98: 359→356; 17 çıktı değişti.
-  Açık: 96/9349 `cmp` (önceden bozuktu) artık iç içe switch + `break` üretiyor; üçlü ifadeler hâlâ yanlış yazmaçları okuyor.
-- **F-122 Boş ikinci geri kenara dallanan `continue`** (F-10'un hedefi aynı bölgedeki kardeş bloktan oluşan alt şekli;
-  96/8548 `cloneObjectProperties`, 98/7120). `if (c) continue;` döngü başlığına değil, yalnızca başlığa düşen boş bir
-  kapı bloğuna dallanıyordu; ayrıca `IfStructurer` ilk testin else kolunu ve gövdeyi ayrı kollara verip o kolun gövdeye
-  düşen kenarını kaybediyordu (eski çıktıda gövde yalnız bir kolda kalıyordu: goto'lu çıktı geçerli JS değildi, ama
-  `goto` yerine `continue` yazmak onu sessizce yanlış yapardı). `ConditionalContinueRegionPass`: hedef boş kapı bloğu da
-  sayılır ve `_rejoin_else_arm` `if (c) { T } else { F; if (d) continue; }` şeklini F'nin T'ye düştüğü CFG kenarı
-  doğrulanınca `if (!c) { F; if (d) continue; } T` yapar. Test: tests/test_conditional_continue_latch.py. Tam paket:
-  goto 96: 331→330, 98: 356→355; 16 çıktı değişti (yalnız 2'sinde goto gitti, kalanı aynı kolu-yeniden-birleştirme
-  düzeltmesi; kontrol aracı işaretlemedi, 2284 ve 5130'da eski çıktı gövdeyi düşürüyordu).
-- **F-123 Fonksiyonu bitiren korumanın çıkış bloğu birleşimden sonra** (F-10'un hedefi kardeş bloktan oluşan alt şekli;
-  98/3552 `canParse`, 96/193 `Ie`, 98/12515 `Ie` ve benzerleri). `if (a) { ...; if (c) return x; } TAIL`: korumanın
-  çıkışı TAIL'den sonra dizildiği için `if (c) goto label` kalıyor ve TAIL ya kopyalanıyor ya da else kolu TAIL'e düşen
-  kenarı kaybediyordu. İki parça: (1) `_DominanceIfBuilder._arm_guard_falls_into` kolun korumasının düşerek vardığı,
-  fonksiyonu bitiren bloğu birleşim sayar (döngü içinde değil; birleşimden sonra kolun kodu dizilmemişse); (2) yeni
-  `GuardExitRegionPass` yalnızca bu dala giden, fonksiyonu bitiren çıkış bloğunu `if (c) { ... }` içine taşır, ancak
-  dalın düştüğü yer CFG'de gerçekten sıradaki ise (döngü içinde değil).
-  Bu iş sırasında eskiden saklı kalmış bir yanlış derleme çıktı: 98/8982 `checkEqual` ve 98/5330
-  `do { x = it.next(); if (x === undefined) goto RETURN_TRUE; ... } while (c)` döngülerinde `_absorb_residual_conditional`
-  atlamayı `if (x !== undefined) { gövde }` yapıp çıkışı (`return true`) döngü sonrasına atıyordu; ilk deneme yalnızca
-  başka bir goto yeniden denemeyi zorladığı için gizliydi. Artık döngü içindeki bir dalın döngüden çıkıp geri
-  dönemeyen bir `return` bloğuna atlaması emilmez (`_compound_folder._reaches`).
-  Testler: tests/test_guard_exit_region.py (canParse, checkEqual); tests/test_shared_return_widened.py'deki 96/12456
-  testi güncellendi (kuyruk artık kopyalanmıyor, tek `r1 = []; return r1;`). Tam paket: goto 96: 330→314, 98: 355→335;
-  178 çıktı değişti. Kötüleşenler: 98/5330 (goto'suz ama `||` zinciri yerine iç içe switch), 96/2408 (else-if yığını),
-  98/2620 `appendAllChildren` (iki goto geri geldi; eski çıktı aynı hatadan yanlıştı) - bunlar okunabilirlik kaybı, doğruluk
-  kazancı. Kontrol aracının işaretlediği 4 dosyadan 193, 12515 ve 8982 elle incelendi (gerçek bir atanmamış okuma yok); 98/2693 yalnızca
-  gözle bakıldı, 178 değişikliğin çoğu tek tek okunmadı.
-- **F-124 İkinci `=== null` testi `return` düşüren else-if** (kısmen çözüldü; 98/11208 `wrappedFn`, 96/4157 `parseFileSlash`,
-  96/1139 `processColor`; yanlış çıktıydı). `if (a === undefined) goto R; if (a === null) goto R; ...` (R: `return a`) çıktıda
-  `if (a === undefined) { return a; } else if (a !== null) {...}` oluyordu: `a === null` için `return a` kayboluyor,
-  fonksiyon `undefined` dönüyordu. Neden: `_absorb_residual_conditional` sabit karşılaştırmayı `case` bağlantısı sayıp
-  (`SwitchStructurer` birleştirir) atlamayı düşürüyordu; ama aynı gövdeyi paylaşan iki etiket `switch` olmaz (iki ayrı gövde
-  gerekir, `_MIN_CASES = 2`). `_compound_folder._case_chain_has_two_bodies`: zincirde en az iki ayrı gövde yoksa bu muafiyet
-  uygulanmaz. Test: tests/test_shared_return_labels.py. Tam paket: goto sayısı aynı (96: 314, 98: 335); 20 çıktı değişti,
-  hepsi eskiden `null` dönüşünü sessizce düşüren ya da zaten goto'lu işlevler (96/4157 ve 98/11208 artık `case undefined:
-  case null:` ile doğru). İkinci aşama (aynı gün): 96/1139 `processColor` için `ShortCircuitConditionCfgPass`: aynı gövdeli iki etiket artık
-  `a === undefined || a === null` tek koşulu oluyor (`_case_chain_has_another_body`: zincirde başka gövde yoksa case muafiyeti
-  yok). İkinci testin yüklediği sabit (`r3 = null`) sonraki kodda da okunduğu için `_fold_pure_setup` katlayamıyordu; sabit yük
-  artık düşme yolunun başına kopyalanıyor (`_merge(..., rematerialize=)`, F-120'nin `_constants_for_the_end_edge`'ini yeniden
-  kullanır). Tam paket: goto 96: 314→310, 98: 335→333; 150 çıktı değişti (çoğu: aynı gövdeli etiket zincirleri `switch`/`else if`
-  yerine `||` koşulu oldu, `switch` içeren dosya 322→296); 24 dosyada fazladan bir `rN = sabit;` satırı (kopya yük) çıktı.
-  Güncellenen testler: test_jump_only_shared_return (isTransitionProp artık tek `||` koşulu + `r0 = true/false`),
-  test_shared_tail_conditions (parantez biçimi), test_shared_return_labels. Hâlâ açık: 96/1139'daki `if (r2 != null) goto
-  label_120` (korumanın çıkışı, `_arm_guard_falls_into` kısıtı) ve 96/8976 `processColorInitially` (eski sürümde de düşen
-  paylaşılan `return (r3 << 24 | r3 >>> 8) >>> 0`; switch içinde `break` sonrası hiçbir şey dönmüyor). Denenip geri alınanlar:
-  (1) bölgenin devamı hedef olmalı kısıtı (`switchTest` altınlarını bozdu), (2) `_arm_guard_falls_into`'in 'hedef fonksiyonu
-  bitirmeli' koşulunu kaldırmak (96: 314→295, 98: 335→322 ama 98/12276 `validateType`'ta else kolunun devamı düştü),
-  (3) `ShortCircuitConditionCfgPass`'ta aynı gövdeli case zincirini `||`'ye katlamak (iki testi bozdu).- **F-125 Ters etiketten sonra `default`a düşen zincir paylaşılan `return`ü düşürüyor** (çözüldü; 96/4122 `defaultPort`; yanlış çıktıydı).
-  Yöntem: toplu tarama (betik depoda değil; her işlevin ağaç akış grafiği, özgün CFG kenarlarının hâlâ erişilebilir olup olmadığına bakıyor;
-  'kenar kayıp' = sessiz düşme adayı). goto'suz 172 işlevde kayıp kenar çıktı (96: 86, 98: 86); 'blok eksik' sınıfı gürültülü
-  (ReturnValueResolutionPass dönüş bloklarını tüketiyor), karar için kullanılmadı. `defaultPort`: `"ftp","http","ws","https","wss"` zincirinde
-  `"ws"` testi ters çevrilince kalan zincir `default`a düşüyor; orada `"https"`/`"wss"` tek gövde olduğu için `switch` olmuyor (`_MIN_CASES`),
-  ama `"wss"` testi önceden `_absorb_residual_conditional`da erimiş olduğundan `return 443` yolu kayboluyordu (`"wss"` hiçbir şey döndürmüyordu).
-  `_ComparisonChainSwitchBuilder._absorb_nested_chain`: `default` tek bir test zinciriyse ve aynı ayırt edici ifadeyi sınıyorsa zincir
-  dış `switch`e katılıyor (etiketler birleşiyor, bekleyen `_peel_shared_jumps` listeye alındı). Test: tests/test_switch_shared_labels.py.
-  Tam paket: goto 96: 310→309, 98: 333; 18 çıktı değişti (hepsi iç içe `switch`/`else if` yığınının düzleşmesi ya da düşen etiketin
-  geri gelmesi: 96/1308 `getDirectionForKeyword`, 96/7538 ve 98/5395 `parserForArrayFormat`, 96/7193 `getStateForAction`; hepsi gözle bakıldı).
-  Açık: kalan ~170 kayıp-kenar adayı henüz ayıklanmadı (96/1333, 96/1098, 98/5036, 98/2557 örnek).
-- **F-126 Kolun kendi testinin atladığı kuyruk tek kolda kalıyor** (çözüldü; 96/1333 `getValidLengthPercentageSizeOrNull`; yanlış çıktıydı).
-  `"px"` kolu geçersiz sayıda `"%"` testine düşmeli; çıktıda `"%"` testi öbür kolun içindeydi ve geçersiz `"px"` `return null` yerine
-  `undefined` dönüyordu (kayıp kenar 0x1a→0x45). Neden: `_DominanceIfBuilder._convert` ortak kuyruğu (`goto_block`) yalnızca
-  `duplicated_returns` sonrası ya da kuyruk fonksiyonu bitiriyorsa birleşim sayıyordu; kuyruk devam ediyorsa (post-dominator yok çünkü
-  her yol ayrı `return`e gidiyor) kolu `else` yapıp kuyruğu içine alıyordu. Yeni koşul: `merge_block` yok, `goto_block` devam ediyor,
-  kol döngüde değil ve kolun içindeki bir koşullu dal `goto_block`a atlıyor (`_arm_tests_into`). Test: tests/test_arm_join_tail.py.
-  Tam paket: goto 96: 309→308, 98: 333→332; 85 çıktı değişti (96: 37, 98: 48). Örnek: 96/9364 `inc` artık `if (r0) {...}` sonrası `switch`i her
-  durumda çalıştırıyor (eskiden `if (!r0) { switch }` içindeydi: `r0` doğruyken switch atlanıyordu). Kontrol aracı 9 dosyada işaret
-  etti (96: 841, 2590, 2286, 1793, 2088; 98: 2594, 2008, 11908, 2474), çoğu zaten goto'lu karışık işlevler; 98/2594'te kuyruğun
-  birleşim olduğu CFG'den doğrulandı. Not: 98/2619 `beginWork` ayrıca >2 dk sürüyor (ConditionalExpressionRegionPass her aday için
-  dominatör ağacını yeniden hesaplıyor); bu değişiklikten bağımsız, ayrı bir performans işi.
-- **F-127 Kardeş kolun atladığı kod, `throw` kopyası, anahtar tablosu başlığı** (çözüldü; 96/273 `q`, 96/277 `E`, 96/150 `ve`, 98/2623 `unwindInterruptedWork`,
-  96/1333 sonrası kayıp-kenar taraması; hepsi yanlış çıktıydı). `dropscan` kenar-kayıp listesi (96: 86→69 işlev) üç ayrı nedene ayrıldı:
-  (1) `_absorb_residual_conditional` atlama hedefi kardeş kolda ise (`_sits_in_sibling_arm`) yalnızca `return` hedefler için atlamayı koruyordu;
-  `if (durum !== "writable" || f()) n(); else ...` gibi `return` olmayan hedefte ikinci testin atlaması siliniyordu. Kısıt kaldırıldı
-  (`case` muafiyeti aynen duruyor); `_try_fold_and_or_cascade` Case B'de atlama diğer kola gidiyorsa birleştirme yapmıyor (98/10102'de
-  bozuk koşul üretiyordu). (2) 96/150: üç test tek `throw new RangeError(...)`e atlıyordu; eski çıktı testleri `!(a||b) && c` yapıp `throw`u hiç
-  yazmıyordu (geçersiz boyut sessizce `undefined` dönüyordu; eski test bu yanlışı kilitliyordu). `SharedReturnDuplicationCfgPass`: 4. seviyede
-  `throw` kuyruğu 12 komuta kadar kopyalanıyor (`CreateThis`/`Construct`/`SelectObject` ile 10 komut ama tek ifade). (3) `GuardExitRegionPass`: kolun
-  sonundaki `goto EXIT` (EXIT yalnız o atlamayla girilen çıkış bloğu) çıkışı yerine alıyor; ağaçtan düşürülmüş (tüketilmiş) çıkış bloğunu da
-  geri koyuyor. (4) Ayrı bir gizli hata: `_JumpTableSwitchBuilder` başlık bloğunu tümüyle siliyordu; başlıkta başka ifade varsa
-  (`r5 = getParentEnvironment(0)`) kayboluyordu (98/2623: `switch`e geçince `r5` hiç atanmıyordu). Başlık artık switch'ten önce kalıyor.
-  Testler: tests/test_shared_tail_jumpers.py, test_shared_tail_conditions.py (96/150 beklentisi düzeltildi). Tam paket (f126→f129): goto'lu dosya
-  96: 308→302, 98: 332→334; 82 + 81 çıktı değişti; goto'suz iken `goto`lu olan (daha önce sessizce yanlış): 96: 11, 98: 18 (96/4152 `parseAuthority`,
-  96/6502, 98/2183 vb.: `else if (!x)` ile düşen yol artık görünür). Denenip geri alınan: `SharedTailDuplicationCfgPass`'ta yalnız atlayanların
-  ulaştığı kısa kuyruğa her atlayan için kopya (96/273'ü goto'suz yapıyordu ama 96/998 `mapIntoArray`'de `r11 = param1` ifadesini düşürüyordu: kopya + sonraki
-  geçişler); gerekmedi, 96/273 kalan değişikliklerle de goto'suz. Açık: 96/4152 vb. döngü gövdesinde `goto` (ShortCircuit döngüde `a || b` birleştirmiyor),
-  96/2811 `structuredCloneInternal` dört özdeş `case ...: return x;` (artık bir `||` değil), `dropscan`'in `return undefined` hedefine kayıp kenarı
-  (96/1098) yanlış alarm.
-- **F-128 Kolun düz bloğu paylaşılan `return`e akıyor** (çözüldü; 96/852 `_wrapNativeSuper`; yanlış çıktıydı). `if (undefined === r5) goto T;` ve
-  kolun içinde `if (map.has(x)) return get; map.set(x, W);` sonra düz akışla `T` (ortak `return`): `T` yalnızca öbür kolun içinde
-  yazılıyor, `map.set(...)` sonrası fonksiyon bir şey dönmüyordu. `_DominanceIfBuilder._arm_guard_falls_into` (F-123) yalnızca koşullu dalı
-  (alınan kenarı başka yere giden) `T`ye "düşen" sayıyordu; kolun düz (terminatörsüz) bir bloğu `T`ye akıyorsa da birleşim sayılıyor, ama
-  yalnızca `T` bir `return` ise (98/9535'te hata atan blok golden'ı bozdu). Test: tests/test_arm_join_tail.py. Tam paket (f129→f130): goto'lu dosya
-  96: 302→297, 98: 334→332; 36 + 47 çıktı değişti, goto'suzken `goto`lu olan yok. Depoya eklendi: scripts/audit/ (drop_scan.py: kayıp kenar taraması
-  ve `--report`; compare_outputs.py: iki çıktı dizini karşılaştırması; definite_assignment.py: kaba atanmamış-okuma kontrolü).
-- **F-129 Döngüden çıkan iki test, çıkış bölgesi ve döngü sayacı adı** (çözüldü; 96/2026 `refreshCache`; yanlış çıktıydı). `for (n = fiber.return; n !== null; n = n.return)
-  { if (tag === 24 || tag === 3) { ...bulundu...; return } }`: iki test aynı koda (`0x31`) atlıyor; çıktıda kod döngünün kendi `return undefined`ından sonra (ölü) duruyordu,
-  `tag === 24` hiçbir şey yapmıyordu. Üç ayrı nokta: (1) `ShortCircuitConditionCfgPass` döngü üyesi blokları hiç birleştirmiyordu; iki test de döngüden çıkıp aynı
-  bloğa atlıyorsa (`_both_tests_leave_the_loop`) artık tek `||` koşulu. (2) `GuardExitRegionPass._try_region_exit`: tek dalın girdiği, işlevi bitiren çok bloklu kuyruk
-  (yalnızca o dal giriyor, dışarı çıkış yok) dalın `if`ine taşınıyor; dalın öbür kenarı sıradaki iş ya da döngünün kendisi olmalı. (3) `InductionVariableNamingPass`: sayaç
-  yazmacı gövdede başka değerle yazılıp sonra okunuyorsa (`r3 = getEnvironment(0); r3[458](...)`) `i` adı verilmiyor; eskiden her okuma `i` oluyordu. Bu üçüncüsü başlı
-  başına gizli bir yanlıştı: 96/5408 `_ensureClosestStickyHeader` (`addCells(i)`, gerçekte `{first,last}` nesnesi), 98/2666 `workLoopSync` (`null === i`, gerçekte
-  çağrının sonucu) ve 98/13448 `cloneRecursive` yanlış okuma yazıyordu. Test: tests/test_guard_exit_region.py. Tam paket (f130→f131): goto'lu dosya 96: 297→291,
-  98: 332→330; 33 + 24 çıktı değişti; goto'suzken `goto`lu olan yok. Kontrol aracı 'daha çok atanmamış okuma' dediği dosyalar, sayaç adı `i` yerine `rN` kalan
-  döngüler (yanlışın düzelmiş hâli). Açık: 96/2026'da kalan boş `if (3 !== r4) {}` (çirkin, yanlış değil).
-- **F-130 Kolun düz bloğu uzun paylaşılan gövdeye akıyor** (çözüldü; 96/269 `addAbortListener`-benzeri; yanlış çıktıydı). F-126/F-128 ile aynı aile: `if (undefined === r1) goto T;`
-  ve kolun içinde `if (r4) { ...; return } r7 = r3[5]; r4 = r7.addEventListener(...)` sonra düz akışla `T` (uzun ortak kurulum gövdesi, `return` değil). Kolun
-  düz (terminatörsüz) bloğu `T`ye akıyordu ama `T` bir `return` olmadığı için F-128 kuralı uymuyordu; `T` kolun içinde yazılıyor, kol çıkışından sonraki
-  kurulum kodu düşüyordu. `_DominanceIfBuilder._arm_runs_into`: `T`nin kolun girişince dominelenen terminatörsüz bir öncülü varsa (`then_entry` onu domine
-  ediyor) kol `T`ye akıyor sayılır; `_convert`teki F-126 koşuluna `_arm_tests_into or _arm_runs_into` olarak eklendi. Test: tests/test_arm_join_tail.py
-  (`test_an_arm_that_runs_on_into_a_long_shared_body_does_not_lose_it`, veri arm_runs_into_shared_body_96_269.hasm). Tam paket (f131→f132): 96: 25, 98: 32 çıktı
-  değişti; goto'lu dosya 96: 291→292, 98: 330→331. Yeni `goto`lu olanlar (96/13996 `_loop3`, 98/11441 `_loop3`, 98/12534 `anonymous`): eskiden
-  sessizce düşen erken çıkış (`has(...)` / `r4.aborted`, kapanış `return 0`) artık görünür bir `goto` olarak duruyor; gerileme değil, önceden gizli yanlışın ortaya çıkması.
-  Açık: bu üçü artık goto'lu (ShortCircuit/If ile çözülebilir), 98/2606 `throwException` kontrol aracı işaretli (96/2052 ailesi, iyileşme).
-- **F-131 Kısa `case` zinciri ve arkasındaki `return`** (çözüldü; 96/777 `_unsupportedIterableToArray`; yanlış çıktıydı: `Set` için `undefined` dönüyordu).
-  `if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /Int.../.test(n)) return f(o)`: `"Map"`/`"Set"` aynı bloğa (`Array.from`) atlıyor.
-  Seviye 0 `switch`i kuruyor ama `Arguments` gövdesi `default`taki regex testiyle paylaşıldığı için `goto` kalıyor; seviye 1 (`return` kopyası) goto'suz ama
-  `"Set"` testi tersine çevrilip (`"Set" !== r4`) geri kalan zincir + kopya `return` onun gövdesine düşüyor: zincir `switch` olamıyor (`min_cases`: tek durum) ve
-  `Set` kenarı kayboluyor (F-127'deki `case` muafiyeti: hedef kardeş kolda ama `switch` bekleniyor, kurulamayınca sessiz kayıp). `_ComparisonChainBuilder`:
-  (1) iç zincir (`_absorb_nested_chain`) `min_cases` kontrolünden önce katılıyor (`Map`+`Set` bir durum, `Arguments` ikincisi); (2) `default`ın zincirden sonraki
-  kuyruğu (her kolun akıp gittiği `return r0`; yalnızca root bölümün son çocuğuysa ve önceki tüm durumlar `return`/`throw` ile bitiyorsa) `switch`ten sonraya
-  taşınıyor. Test: tests/test_switch_shared_labels.py. Tam paket (f132→f133): 96'da 36 çıktı değişti (çoğu `if`→`switch`: 96/7102 `getStateForAction`, 96/2601), 98'de 24 değişti (98/5268, 10650, 11038 `getStateForAction`: `SET_PARAMS`/`REPLACE_PARAMS` ortak `case`), goto'lu dosya 331→330, yeni `goto`lu yok; her iki pakette çökme yok (F-132 sonrası).
-- **F-132 F-129 gerilemesi: döngüdeki iki testin birleşmesi bayat analiz bırakıyordu** (çözüldü; 96'da 5, 98'de 1 bölüm çöküyordu: 96/2075, 2264, 2581, 2590, 13786, 98/2617).
-  F-129'da `ShortCircuitConditionCfgPass` döngü üyesi iki testi birleştirmeye başladı (`_both_tests_leave_the_loop`). Birleşen blok CFG'den çıkıyor ama bundan önce
-  hesaplanan `loop_analysis` onu hâlâ döngü üyesi sayıyor, `If` yapılandırıcı boş bloğun `instructions[-1]`ine dokunup `IndexError` veriyordu. Daha önce döngüde
-  hiç birleşme olmadığı için görünmemişti; f130→f131 farkını yalnızca değişen dosyalara bakarak incelediğim için çökmeler gözümden kaçtı (log'un "N sections failed"
-  satırına bakılmalı). `StructuralAnalyzer.build`: blok sayısı değiştiyse dominatörler, post-dominatörler ve döngüler yeniden hesaplanıyor; işleyicilerin
-  `try_blocks` listesinden de silinen bloklar çıkarılıyor (yoksa `KeyError`: 96/2139, 2146, 2156, 3448). Testler: tests/test_loop_condition_merge_analysis.py.
-  `scripts/audit/compare_outputs.py` artık base'te olmayan dosyayı (başarısız bölüm) atlayıp bildiriyor. Hatırlatma: tam paket koşusunda `status.txt` çıkış kodu ve
-  log'daki "sections failed" kontrol edilmeli.
-- **F-133 Üç yollu birleşimden okunan kopya yanlış değer basıyordu** (çözüldü; 96/4775 `interpolate`; ham çıktıda bile yanlıştı, `dropscan` bunu "kayıp kenar" diye işaretlemişti). `r1 = param1; if (r1 < min) { …; r1 = min; if (mode !== "clamp") r1 = param1 } r6 = r1;`:
-  frontend çözümlemesi doğrusal ve `r1`in adres sırasındaki son tanımı iç `r1 = param1`; `Mov r6, r1` bunu satır içi alıp `r6 = param1` yazıyordu, sonraki tüm `r6` okumaları
-  (`-param1`, `param1 - param2`, ...) da. Oysa kıstırılmış `r1 = min` yolu da o okumaya ulaşıyor (`param7 === "clamp"` iken sonuç `min` olmalı). İki yollu birleşim `?:` olarak
-  katlanabiliyor (altın çıktılar bu satır içi almaya dayanıyor); üç yollu birleşimi tek ifade temsil edemez. `HermesAnalysis.is_nested_join_value`: tanım, okumadan önce biten iki ya da daha
-  fazla ileri atlamanın içindeyse ve daha eski bir tanım varsa; `get_register_expression` düz bir `Identifier` değeri için `rN` adını veriyor (`JmpTrue` ile aynı: yazmayı bir katlama alır ya da
-  `UnfoldedMergeRepairPass` basar). Test: tests/test_nested_join_copy.py. Tam paket (f133→f135): 96: 51 çıktı değişti (96/8972 `HSVtoRGB`: `r5 = param3 * 255` yerine `r5 = r5 * 255`; 96/4787 `findRange`:
-  `return r0 - 1`), goto'lu dosya 296→296; 98: 119 çıktı değişti (çoğu tek yazmaç adı: 98/10760 `typeof r4` (`[, r4] = param1`), 98/12319 `__environment__[4] = r9`), goto'lu dosya 330→331 (yalnız 98/9611); çökme yok. Açık: 98/9611 `dt` artık `goto`lu ve `r3.size = r4` (gerçekte `undefined`): `LoadConstUndefined r4` bir teste katlanmış,
-  birleşimde basılmıyor (eskiden `function_12518` basıyordu, o da yanlıştı).
-- **F-134 `case` muafiyeti farklı değerleri sınamıyordu** (çözüldü; 96/956 `replacer`; yanlış çıktıydı: `null` için `undefined` dönüyordu; 96/8976 `processColorInitially`'in sayı yolu da sessizce düşüyordu). `if (typeof v !== "object") goto R; if (v === null) goto R; REST`: ikisi aynı `return`e atlıyor.
-  `_absorb_residual_conditional`'ın kardeş kol koruması (F-127) `case` testlerini muaf tutuyordu (`SwitchStructurer` ortak hedefi kendisi çözecek diye), ama "yanındaki sabit karşılaştırma" yalnızca
-  bir sabitle kıyaslamayı arıyordu, aynı değeri değil: `typeof v` ve `v` iki ayrı değer, `switch` çıkmaz, `null` kolunun `return`ü düşüyordu. `same_case_subject` (`_predicates.py`): komşu/üst test aynı değer üzerinde olmalı.
-  Test: tests/test_case_exemption_subject.py. Tam paket (f135→f136): 96'da 6 çıktı değişti; 96/8976 artık `goto`lu (eskiden sayı yolunu sessizce düşürüyordu: `r2 === "number"` iken `(r3 << 24 | r3 >>> 8) >>> 0` hiç dönmüyordu),
-  96/1998, 2504, 11000, 3041 zaten `goto`luydu (kardeş koldaki hedefe atlayan test artık yerinde kalıyor). 98: 5 çıktı değişti, goto'lu dosya 331→332 (yalnız 98/11848 `processColorInitially`, 96/8976 ile aynı fonksiyon); çökme yok.
-- **F-135 Döngüden paylaşılan `return`e çıkış, sıfır-turlu döngünün ardındaki kod ve birleşen `return`ün ortak komutu** (çözüldü; 96/4123 `parseHost`; yanlış çıktıydı). IPv4 parçalarının döngüsü
-  (`for (i...) { if (n < 0 || n > 255) return null; ... }`) ve ardından `return a + b`: üç ayrı hata üst üste. (1) `if (n < 0) goto RET; rest` döngü gövdesinde `if (n >= 0) { rest }` oluyordu:
-  gövde bitiyor, döngü devam ediyor, `return null` yok. `LoopBreakStructurer` yalnızca tek öncüllü çıkış gövdesi alır (Shape B); çok öncüllü paylaşılan `return`ü alamayınca If kurucusu
-  birleşimi döngünün dışında olan dalı yine de `if (!C) {…}` yapıyordu. `_DominanceIfBuilder._leaves_its_loop`: birleşim döngünün dışındaysa dal ham kalıyor; dönüş kopyalı deneme (seviye 1) onu `return` yapıyor.
-  (2) `if (0 < n) { for … }` korumasının atladığı kod (`0x188`) aynı zamanda döngünün çıkış testinin düştüğü kod: son-dominatör başka bir `return`ü gösterince kod yalnızca öbür kolda kalıyor,
-  döngüden sonra hiç çalışmıyordu. `_arm_runs_into_after_loop`: döngü kolunun çıkış testi `goto_block`a düşüyorsa birleşim o. (3) Seviye 1'de `IfTailMergeRegionPass` iki kolun aynı `Ret r0`ını
-  birleştirirken kolun özgün komutunu paylaşılan nesne olarak tutuyordu; `ReturnValueResolutionPass` özgün (ayrılmış) bloğu çözünce (`return null`) birleşmiş olanı da yeniden yazıyor,
-  kollardaki `r0 = r3 + r2` atamaları yutulup tüm yollar `return null` dönüyordu. Birleşmiş blok artık komutun kopyasını taşıyor, çözücü akışta olmayan kopyayı değil özgünlerini yürüyor.
-  Kopya, tamamlayıcı olarak `DeadUndefinedStorePass`'a da öğretildi (kopya anlık görüntüde yok, okuması "her zaman canlı" sayılıp `r1 = undefined;` silinmiyordu).
-  Testler: tests/test_loop_exit_shared_return.py. Tam paket (f136→f138): 96: 39 çıktı değişti, goto'lu dosya 297→297, yeni `goto` yok, çökme yok; 98: 29 çıktı değişti, goto'lu dosya 332→335,
-  çökme yok. 98'de yeni `goto`lu 3 dosya (98/2599 `checkShouldComponentUpdate`, 2609 `updateSimpleMemoComponent`, 10142 `BezierEasing`) eskiden döngüde `if (!eşit) break` yerine
-  `if (eşit) { say }` basıyordu (eşit olmayan eleman döngüyü bitirmiyor, sonuç `true` kalıyordu: sessiz yanlış); artık `if (!eşit) goto label_N` görünür. 96/2590 `completeWork`: ortak kuyruk
-  (`sibling.return = return`) tek yerde ve iç `for` bir `if/else` olmadan (React'in `completeUnitOfWork` desenine daha yakın).
-
-- **F-136 Kolun sonu ortak `return`e düşüyorsa `return` `if`in ardında kalmalı** (çözüldü; 96/1925 `updateSlot`, 2431; yanlış çıktıydı). `if (typeof x !== "object") goto RET; ...; son else kolu RET'e düşer` biçiminde, `return null` bloğu dış testin *then* kolu oldu ve son `else` kolu ona hiç varmadan bitti (fonksiyon orada `undefined` döndürüyordu; `goto` da çıkmadığı için yeniden deneme tetiklenmedi). `_DominanceIfBuilder._convert` birleşme koşuluna bir madde eklendi: dallanma hedefi `Return` ile biten (ardılsız) bir blok ve fallthrough kolunun düz bir bloğu (terminatörsüz) ona düşüyorsa hedef `else` kolu değil birleşme noktasıdır. Test: `tests/test_arm_runs_into_shared_return.py` (+ `tests/data/arm_runs_into_shared_return_96_1925.hasm`).
-  Ölçüm (F-136): 96'da 9, 98'de 4 dosya değişti, çökme yok. Yeni `goto` yalnızca zaten bozuk `getComponentNameFromType` (96/1801, 2294; 98/2477): çıktı eskiden geçerli görünen ama anlamsız (`r2 + (…)`) idi, şimdi `goto` ile uyarılıyor. Kural önce döngü çıkışlarını da birleştirmişti (98/4137 `areCompositeKeyComponentsEqual`: `for` sonrası `r4 = true` erişilemez oluyordu); bu yüzden yalnızca hiçbir döngüde olmayan bloklar sayılıyor (`tests/data/loop_exit_return_after_if_98_4137.hasm`).
+- **F-30** Loop condition `i < r8; r8 = r8.length`.
+- **F-31** Redundant copies (`r2 = r3`, `r1 = {...}; r0 = r1`).
+- **F-32** Extra parentheses around a ternary test: `(("get" in r4) ? …)`.
+- **F-33** Empty `else`/`try` bodies (example: `try { } catch` in 98/13768).
