@@ -144,3 +144,21 @@ def is_constant_comparison(condition) -> bool:
             and (isinstance(condition.right, (Literal, UndefinedLiteral))
                  or isinstance(condition.left, (Literal, UndefinedLiteral)))
     )
+
+
+def same_case_subject(condition, other) -> bool:
+    """Do two constant comparisons test the same value (`x === 3`, `x === 4`)?
+
+    A `case` chain tests ONE discriminant; `typeof v === "object"` next to
+    `v === null` are two ordinary tests that merely both use a constant.
+    """
+
+    def subject(c):
+        if not is_constant_comparison(c):
+            return None
+
+        return c.left if isinstance(c.right, (Literal, UndefinedLiteral)) else c.right
+
+    a, b = subject(condition), subject(other)
+
+    return a is not None and b is not None and a.structurally_equal(b)

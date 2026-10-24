@@ -19,6 +19,7 @@ from ._predicates import (
     is_constant_comparison,
     is_empty_body,
     is_negation,
+    same_case_subject,
     make_logical_and,
     make_logical_or,
     single_if_child,
@@ -392,11 +393,12 @@ class _CompoundConditionFolder:
 
     @staticmethod
     def _case_test_beside(region, index: int) -> bool:
-        """Is the neighbouring item (before or after) another `case` test?"""
+        """Is the neighbouring item (before or after) another `case` test, on the same value?"""
         parent = getattr(region, "parent", None)
+        mine = getattr(getattr(region.children[index], "terminator", None), "condition", None)
 
         # The chain's earlier tests are the `if`s this region is the else of.
-        if isinstance(parent, IfRegion) and parent.condition is not None and is_constant_comparison(parent.condition):
+        if isinstance(parent, IfRegion) and parent.condition is not None and same_case_subject(parent.condition, mine):
             return True
 
         for neighbour in (index - 1, index + 1):
@@ -409,7 +411,7 @@ class _CompoundConditionFolder:
                 else getattr(getattr(item, "terminator", None), "condition", None)
             )
 
-            if condition is not None and is_constant_comparison(condition):
+            if condition is not None and same_case_subject(condition, mine):
                 return True
 
         return False
