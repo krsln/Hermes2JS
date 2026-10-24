@@ -87,6 +87,8 @@ class DeadUndefinedStorePass(RegionPass):
             for i in block.instructions
         }
         known = {id(i) for _, _, instrs in self.snapshot.blocks for i in instrs}
+        # A tail merge's shared `return rN` is a copy of the arms' own (which the flow has).
+        known |= set(getattr(self.cfg, "tail_origins", {}))
         always_live = self._region_reads()
 
         # Instructions created after the snapshot have no known position.

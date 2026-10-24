@@ -236,6 +236,14 @@ class _DominanceIfBuilder(RegionStructurer):
 
         goto_block = self._address_to_block.get(branch.target)
 
+        if goto_block is not None and merge_block is goto_block and self._leaves_its_loop(block, goto_block):
+            # `if (x < 0) goto RET; ...rest` in a loop body, RET behind the loop: as
+            # `if (!(x < 0)) { rest }` the body would simply end and the loop go on.
+            # `LoopBreakStructurer` takes such an exit when it owns the target; a shared
+            # `return` it does not own (96/4123: `if (n < 0 || n > 255) return null`)
+            # stays a branch, and the attempt with private return copies has it.
+            return False
+
         if merge_block is None and goto_block is not None and not isinstance(then_root, BasicBlock):
             # Post-dominance can legitimately come back empty when the
             # fallthrough side contains its own internal dead-end with
@@ -302,6 +310,16 @@ class _DominanceIfBuilder(RegionStructurer):
                                 self._arm_tests_into(then_entry, goto_block)
                                 or self._arm_runs_into(then_entry, goto_block, block)
                         )
+                )
+                or (
+                        # `if (n > 0) { for (...) { ... } } tail`: the loop the guard
+                        # skips ends into the very code the guard jumps to (its exit
+                        # edge is the one of `tail`), so `tail` follows the `if`.
+                        # Other exits of the loop (a `return`, a `break` elsewhere)
+                        # make the post-dominator a later block, which hides it.
+                        isinstance(then_root, LoopRegion)
+                        and goto_block.successors
+                        and self._arm_runs_into_after_loop(then_entry, goto_block, block)
                 )
                 or (
                         # `if (a) { if (b) return x; } tail`: the arm's guard
@@ -471,6 +489,33 @@ class _DominanceIfBuilder(RegionStructurer):
         return any(
             pred is not block
             and pred.terminator is None
+            and dominators.dominates(then_entry, pred)
+            for pred in goto_block.predecessors
+        )
+
+    def _leaves_its_loop(self, block: BasicBlock, target: BasicBlock) -> bool:
+        """Is `block` inside a loop (not its header test) and `target` outside it?"""
+        loop_analysis = self.cfg.loop_analysis
+
+        if loop_analysis is None:
+            return False
+
+        return any(
+            block in loop.members
+            and block is not loop.header
+            and target is not loop.header
+            and target not in loop.members
+            for loop in loop_analysis.loops.values()
+        )
+
+    def _arm_runs_into_after_loop(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock) -> bool:
+        """True if a block of the loop arm (its exit test) falls through into `goto_block`,
+        the code the guard `block` jumps over the loop to."""
+        dominators = self.cfg.dominator_tree
+        return any(
+            pred is not block
+            and isinstance(pred.terminator, TerminatorConditionalBranch)
+            and pred.terminator.target != goto_block.address
             and dominators.dominates(then_entry, pred)
             for pred in goto_block.predecessors
         )

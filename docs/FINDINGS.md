@@ -347,3 +347,16 @@ döngü 13; 98 farklı bölge 238 / kardeş 93 / diğer 60 / döngü 22. Tek got
   bir sabitle kıyaslamayı arıyordu, aynı değeri değil: `typeof v` ve `v` iki ayrı değer, `switch` çıkmaz, `null` kolunun `return`ü düşüyordu. `same_case_subject` (`_predicates.py`): komşu/üst test aynı değer üzerinde olmalı.
   Test: tests/test_case_exemption_subject.py. Tam paket (f135→f136): 96'da 6 çıktı değişti; 96/8976 artık `goto`lu (eskiden sayı yolunu sessizce düşürüyordu: `r2 === "number"` iken `(r3 << 24 | r3 >>> 8) >>> 0` hiç dönmüyordu),
   96/1998, 2504, 11000, 3041 zaten `goto`luydu (kardeş koldaki hedefe atlayan test artık yerinde kalıyor). 98: 5 çıktı değişti, goto'lu dosya 331→332 (yalnız 98/11848 `processColorInitially`, 96/8976 ile aynı fonksiyon); çökme yok.
+- **F-135 Döngüden paylaşılan `return`e çıkış, sıfır-turlu döngünün ardındaki kod ve birleşen `return`ün ortak komutu** (çözüldü; 96/4123 `parseHost`; yanlış çıktıydı). IPv4 parçalarının döngüsü
+  (`for (i...) { if (n < 0 || n > 255) return null; ... }`) ve ardından `return a + b`: üç ayrı hata üst üste. (1) `if (n < 0) goto RET; rest` döngü gövdesinde `if (n >= 0) { rest }` oluyordu:
+  gövde bitiyor, döngü devam ediyor, `return null` yok. `LoopBreakStructurer` yalnızca tek öncüllü çıkış gövdesi alır (Shape B); çok öncüllü paylaşılan `return`ü alamayınca If kurucusu
+  birleşimi döngünün dışında olan dalı yine de `if (!C) {…}` yapıyordu. `_DominanceIfBuilder._leaves_its_loop`: birleşim döngünün dışındaysa dal ham kalıyor; dönüş kopyalı deneme (seviye 1) onu `return` yapıyor.
+  (2) `if (0 < n) { for … }` korumasının atladığı kod (`0x188`) aynı zamanda döngünün çıkış testinin düştüğü kod: son-dominatör başka bir `return`ü gösterince kod yalnızca öbür kolda kalıyor,
+  döngüden sonra hiç çalışmıyordu. `_arm_runs_into_after_loop`: döngü kolunun çıkış testi `goto_block`a düşüyorsa birleşim o. (3) Seviye 1'de `IfTailMergeRegionPass` iki kolun aynı `Ret r0`ını
+  birleştirirken kolun özgün komutunu paylaşılan nesne olarak tutuyordu; `ReturnValueResolutionPass` özgün (ayrılmış) bloğu çözünce (`return null`) birleşmiş olanı da yeniden yazıyor,
+  kollardaki `r0 = r3 + r2` atamaları yutulup tüm yollar `return null` dönüyordu. Birleşmiş blok artık komutun kopyasını taşıyor, çözücü akışta olmayan kopyayı değil özgünlerini yürüyor.
+  Kopya, tamamlayıcı olarak `DeadUndefinedStorePass`'a da öğretildi (kopya anlık görüntüde yok, okuması "her zaman canlı" sayılıp `r1 = undefined;` silinmiyordu).
+  Testler: tests/test_loop_exit_shared_return.py. Tam paket (f136→f138): 96: 39 çıktı değişti, goto'lu dosya 297→297, yeni `goto` yok, çökme yok; 98: 29 çıktı değişti, goto'lu dosya 332→335,
+  çökme yok. 98'de yeni `goto`lu 3 dosya (98/2599 `checkShouldComponentUpdate`, 2609 `updateSimpleMemoComponent`, 10142 `BezierEasing`) eskiden döngüde `if (!eşit) break` yerine
+  `if (eşit) { say }` basıyordu (eşit olmayan eleman döngüyü bitirmiyor, sonuç `true` kalıyordu: sessiz yanlış); artık `if (!eşit) goto label_N` görünür. 96/2590 `completeWork`: ortak kuyruk
+  (`sibling.return = return`) tek yerde ve iç `for` bir `if/else` olmadan (React'in `completeUnitOfWork` desenine daha yakın).

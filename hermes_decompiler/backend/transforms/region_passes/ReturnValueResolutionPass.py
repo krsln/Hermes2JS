@@ -312,6 +312,10 @@ class ReturnValueResolutionPass(RegionPass):
             origins.append(instruction)
             pending.extend(table.get(id(instruction), ()))
 
+        # The merged return is a copy the flow never saw: its originals are the paths.
+        in_flow = {id(i) for _, _, instrs in self.flow.blocks for i in instrs}
+        origins = [o for o in origins if id(o) in in_flow] or origins
+
         results = [self._resolve_from_flow_at(reg, origin) for origin in origins]
 
         first = results[0]
