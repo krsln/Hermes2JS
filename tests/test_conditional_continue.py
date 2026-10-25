@@ -47,5 +47,5 @@ def test_conditional_branch_back_to_the_loop_is_a_continue():
     js = _render()
 
     assert "goto" not in js
-    assert "if (r8 == null) {\n                continue;\n            }" in js
+    assert "if (r8 == null) {\n            continue;\n        }" in js
     assert js.index("continue;") < js.index("param1[r9] = param2[r9];")
