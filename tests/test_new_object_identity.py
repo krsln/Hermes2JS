@@ -53,3 +53,14 @@ def test_a_new_object_stored_before_a_loop_fills_the_stored_object():
     assert code.count("new Array(") == 1
     assert "r0[0] = r4;" in code
     assert "r4[r9] = arguments[r2];" in code
+
+
+def test_a_new_object_read_three_times_is_one_object():
+    """96/4138 `createSearchParams` (F-147): the object is indexed twice and returned. The constructor is
+    read from the global object here, so that `SelectObject` sees a `NewExpression` as in a whole bundle."""
+    code = _render("new_object_read_three_times_96_4138.hasm", 4138)
+
+    assert code.count("new ") == 1
+    assert "r0 = new URLSearchParams();" in code
+    assert "r0[r2].url = param1;" in code
+    assert "return r0;" in code

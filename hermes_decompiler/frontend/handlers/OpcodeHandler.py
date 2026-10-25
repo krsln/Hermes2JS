@@ -307,6 +307,13 @@ class OpcodeHandler(ABC):
             if state.definition.definition_pinned and not isinstance(value, (Literal, Identifier)):
                 return Identifier(name=f"r{reg}")
 
+            # A second read of a `new` object: it is pinned now, and the scratch pass tells the
+            # first read of the real pass to keep the register too (96/4138 `createSearchParams`:
+            # three reads of one `URLSearchParams` printed as three `new`s).
+            if isinstance(value, NewExpression):
+                state.materialize()
+                return Identifier(name=f"r{reg}")
+
             return dataclasses.replace(value)
 
         state.mark_read()

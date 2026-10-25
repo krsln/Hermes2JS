@@ -26,6 +26,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-25 | after F-138 (join guard), F-144, F-141, F-33, F-32 | 299 | 335 | 462 | 681 | 1031 passed |
 | 2026-10-25 | after F-31 (dead copies, part) | 299 | 335 | 462 | 682 | 1034 passed |
 | 2026-10-25 | after F-146 (`new` identity) | 298 | 335 | 459 | 682 | 1037 passed |
+| 2026-10-25 | after F-147 (`new` read twice) | 298 | 335 | 459 | 682 | 1038 passed |
 
 - The 2026-10-25 row decompiles 98 without 98/2619 (F-143: it stalls), so its 98 columns are not
   exactly comparable with the row above. F-32 is printer-only: it changed 499 files in 96 and 650 in
@@ -66,11 +67,6 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   dropped); (b) the last `Mov r1, r3; Ret r1` is a join of two paths and prints `return r1`, which is
   wrong when `displayName` is truthy (widening the join guard to two paths broke 17 tests); (c) four
   `goto`s remain (F-10 cluster).
-- **F-147 A `new` object printed as several objects (`SelectObject` fallback).** 96/4138 `createSearchParams`:
-  `new URLSearchParams()[r2].url = param1`, `r2 = new URLSearchParams()[r2]` and `return new URLSearchParams()`
-  are three evaluations of one object (wrong output): the `SelectObject` pair of a `new` whose constructor
-  result is not a `NewExpression` falls into the computed-member fallback (`obj[selector]`) instead of
-  naming the object. Same family as F-146 (archive).
 - **F-139 Messy `for-in` (partly fixed).** 96/1339 `parseDropShadow`. The null-guard scaffold is gone
   (F-144); what is left are loop-carried `Mov`s in the for-in header that need copy propagation. About
   18 functions in 96 and 20 in 98 still print an unrecognized `HermesPropertyIterator`.
