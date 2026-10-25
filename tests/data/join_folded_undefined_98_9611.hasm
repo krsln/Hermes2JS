@@ -1,0 +1,66 @@
+
+=> [Function #9611 "dt" of 243 bytes]: 3 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x00204505
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 7, UInt8: 2>
+==> 00000006: <LoadConstUndefined>: <Reg8: 0>
+==> 00000008: <JStrictEqual>: <Addr8: 20, Reg8: 0, Reg8: 3>  # Address: 0000001c
+==> 0000000c: <JmpTypeOfIs>: <Addr32: 16, Reg8: 3, UInt16: 258>  # Address: 0000001c
+==> 00000014: <JmpTypeOfIs>: <Addr32: 173, Reg8: 3, UInt16: 383>  # Address: 000000c1
+==> 0000001c: <LoadConstNull>: <Reg8: 1>
+==> 0000001e: <Eq>: <Reg8: 2, Reg8: 1, Reg8: 3>
+==> 00000022: <LoadConstUndefined>: <Reg8: 5>
+==> 00000024: <JmpTrue>: <Addr8: 9, Reg8: 2>  # Address: 0000002d
+==> 00000027: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 0, string_id: 9695>  # String: 'highWaterMark' (Identifier)
+==> 0000002d: <Eq>: <Reg8: 1, Reg8: 1, Reg8: 3>
+==> 00000031: <LoadConstUndefined>: <Reg8: 8>
+==> 00000033: <JmpTrue>: <Addr8: 8, Reg8: 1>  # Address: 0000003b
+==> 00000036: <GetByIdShort>: <Reg8: 8, Reg8: 3, UInt8: 1, string_id: 69>  # String: 'size' (Identifier)
+==> 0000003b: <LoadConstUndefined>: <Reg8: 4>
+==> 0000003d: <JStrictEqual>: <Addr8: 17, Reg8: 0, Reg8: 5>  # Address: 0000004e
+==> 00000041: <GetGlobalObject>: <Reg8: 3>
+==> 00000043: <TryGetById>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 20>  # String: 'Number' (Identifier)
+==> 00000049: <Call2>: <Reg8: 4, Reg8: 3, Reg8: 0, Reg8: 5>
+==> 0000004e: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 16, UInt16: 17356>  # Object: {'highWaterMark': null, 'size': null}
+==> 00000054: <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 4, UInt8: 0>
+==> 00000058: <LoadConstUndefined>: <Reg8: 4>
+==> 0000005a: <JStrictEqual>: <Addr8: 97, Reg8: 4, Reg8: 8>  # Address: 000000bb
+==> 0000005e: <GetGlobalObject>: <Reg8: 5>
+==> 00000060: <TryGetById>: <Reg8: 6, Reg8: 5, UInt8: 3, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000066: <GetByIdShort>: <Reg8: 9, Reg8: 6, UInt8: 4, string_id: 105>  # String: 'concat' (Identifier)
+==> 0000006b: <LoadConstString>: <Reg8: 6, string_id: 1262>  # String: " has member 'size' that" (String)
+==> 0000006f: <LoadConstString>: <Reg8: 10, string_id: 6457>  # String: '' (Identifier)
+==> 00000073: <Call3>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 7, Reg8: 6>
+==> 00000079: <CreateFunctionEnvironment>: <Reg8: 6, UInt8: 1>
+==> 0000007c: <StoreToEnvironment>: <Reg8: 6, UInt8: 0, Reg8: 8>
+==> 00000080: <JmpTypeOfIs>: <Addr32: 15, Reg8: 8, UInt16: 383>  # Address: 0000008f
+==> 00000088: <CreateClosure>: <Reg8: 4, Reg8: 6, function_id: 12518>  # Function: [#12518  of 32 bytes]: 2 params @ offset 0x002449db
+==> 0000008d: <Jmp>: <Addr8: 46>  # Address: 000000bb
+==> 0000008f: <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 5, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 00000095: <TryGetById>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 0000009b: <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 4, string_id: 105>  # String: 'concat' (Identifier)
+==> 000000a0: <LoadConstString>: <Reg8: 5, string_id: 1319>  # String: ' is not a function.' (String)
+==> 000000a4: <Call3>: <Reg8: 12, Reg8: 6, Reg8: 10, Reg8: 9, Reg8: 5>
+==> 000000aa: <CreateThisForNew>: <Reg8: 6, Reg8: 8, UInt8: 6>
+==> 000000ae: <Mov>: <Reg8: 13, Reg8: 6>
+==> 000000b1: <Construct>: <Reg8: 5, Reg8: 8, UInt8: 2>
+==> 000000b5: <SelectObject>: <Reg8: 5, Reg8: 6, Reg8: 5>
+==> 000000b9: <Throw>: <Reg8: 5>
+==> 000000bb: <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 4, UInt8: 1>
+==> 000000bf: <Ret>: <Reg8: 3>
+==> 000000c1: <GetGlobalObject>: <Reg8: 3>
+==> 000000c3: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 5, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 000000c9: <TryGetById>: <Reg8: 3, Reg8: 3, UInt8: 3, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 000000cf: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 4, string_id: 105>  # String: 'concat' (Identifier)
+==> 000000d4: <LoadConstString>: <Reg8: 4, string_id: 591>  # String: ' is not an object.' (String)
+==> 000000d8: <LoadConstString>: <Reg8: 3, string_id: 6457>  # String: '' (Identifier)
+==> 000000dc: <Call3>: <Reg8: 12, Reg8: 6, Reg8: 3, Reg8: 7, Reg8: 4>
+==> 000000e2: <CreateThisForNew>: <Reg8: 4, Reg8: 5, UInt8: 6>
+==> 000000e6: <Mov>: <Reg8: 13, Reg8: 4>
+==> 000000e9: <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
+==> 000000ed: <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>
+==> 000000f1: <Throw>: <Reg8: 3>
+
+

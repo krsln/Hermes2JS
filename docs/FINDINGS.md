@@ -27,6 +27,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-25 | after F-31 (dead copies, part) | 299 | 335 | 462 | 682 | 1034 passed |
 | 2026-10-25 | after F-146 (`new` identity) | 298 | 335 | 459 | 682 | 1037 passed |
 | 2026-10-25 | after F-147 (`new` read twice) | 298 | 335 | 459 | 682 | 1038 passed |
+| 2026-10-25 | after F-137 (folded `undefined` at a join) | 298 | 335 | 459 | 682 | 1039 passed |
 
 - The 2026-10-25 row decompiles 98 without 98/2619 (F-143: it stalls), so its 98 columns are not
   exactly comparable with the row above. F-32 is printer-only: it changed 499 files in 96 and 650 in
@@ -57,8 +58,6 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 - **F-04 `parseScaleX` goto.** 96/9118: the wrong callee was fixed (F-111); what remains is
   `if (r0) goto label_44` ("target IS a sibling in the same region"). The set-up register
   (`r1 = 0`) is also read at the join, so folding cannot drop it.
-- **F-137 `dt` writes a value that should be `undefined`.** 98/9611: `r3.size = r4` where `r4` must be
-  `undefined` on that path; a `goto` remains.
 - **F-138 `getComponentNameFromType` (partly fixed).** 96/1801, 96/2294, 98/2477. The main cause (a
   computed value inlined into copies on other arms) is fixed, see the archive. Left: (a) inside the
   `ForwardRef` arm `BooleanChainRegionPass` copies `r2.displayName || r1.name || ""` into a test that

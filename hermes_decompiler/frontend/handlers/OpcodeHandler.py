@@ -10,6 +10,7 @@ from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import (
     Expression, Identifier, RawExpression, ObjectExpression,
     ArrayExpression, Literal, CallExpression, MemberExpression, ThisPlaceholder, BinaryExpression, NewExpression,
+    UndefinedLiteral,
 )
 from .OpcodeTypes import OpcodeContext, ArgsPattern, OperandMode
 
@@ -132,6 +133,17 @@ class OpcodeHandler(ABC):
 
         return cls.get_register_expression(analysis, reg)
 
+    @staticmethod
+    def _restore_folded_constants(analysis: HermesAnalysis, state) -> None:
+        """A join read names the register, so every write that can reach it must print. A
+        constant an earlier test consumed (`r4 = undefined` folded into `undefined === r8`) is
+        in no fold's way any more and nothing else prints it (98/9611 `dt`: `r3.size = r4` on
+        the path where `r4` is `undefined`). The write ran in the bytecode, so printing it is
+        faithful; `DeadUndefinedStorePass` removes an `undefined` store nothing reads."""
+        for earlier in analysis.history.get(state.definition.name, ())[:state.version]:
+            if isinstance(earlier.value, UndefinedLiteral) and earlier.definition.definition_used:
+                earlier.materialize()
+
     @classmethod
     def get_register_reference(cls, analysis: HermesAnalysis, reg: int, materialize: bool = True) -> Identifier:
         """Always symbolic - never inlines the defining expression.
@@ -244,6 +256,7 @@ class OpcodeHandler(ABC):
             # Like the branch test (`JmpTrue`): the arm's own write is left for a fold or
             # for `UnfoldedMergeRepairPass`, which prints it when no fold took it.
             state.mark_read()
+            cls._restore_folded_constants(analysis, state)
             return Identifier(name=f"r{reg}")
 
         # Try-boundary guard: a read that can throw stays where the `try` put it, so the
