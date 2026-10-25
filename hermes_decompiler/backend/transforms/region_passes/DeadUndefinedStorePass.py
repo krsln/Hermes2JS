@@ -36,8 +36,18 @@ class FlowSnapshot:
                 self.handlers.setdefault(block.id, []).append(handler["handler_block"].id)
 
 
+_COPY_SOURCE = re.compile(r"(?:r|param)\d+")
+
+
 class DeadUndefinedStorePass(RegionPass):
-    """Removes an `rN = undefined;` whose value nothing can read.
+    """Removes an `rN = undefined;` or a plain copy `rN = rM;` / `rN = paramM;` whose value
+    nothing can read.
+
+    The copy case is what Hermes' allocator leaves behind when it moves a value into an
+    argument or scratch register that no later instruction reads (`r2 = param2;` at the top
+    of 96/10053, `r7 = param1;` before a call in 96/10022). `DeadMovEliminationPass` only
+    sees a copy that is overwritten before the end of its own sequence; this pass answers
+    the question for every path.
 
     Hermes initialises every local to `undefined` at function entry
     (`LoadConstUndefined`) - the declarations of `const`/`let` bindings -
@@ -77,25 +87,38 @@ class DeadUndefinedStorePass(RegionPass):
         if self.snapshot is None:
             return
 
+        self._param_registers = self._parameter_registers()
         candidates = self._candidates()
 
         if not candidates:
             return
 
+        tree_blocks = self._tree_blocks()
         present = {
-            id(i) for block in list(self.cfg.blocks) + list(self.graph.blocks())
+            id(i) for block in list(self.cfg.blocks) + list(self.graph.blocks()) + tree_blocks
             for i in block.instructions
         }
         known = {id(i) for _, _, instrs in self.snapshot.blocks for i in instrs}
+        snapshot_ids = set(known)
         # A tail merge's shared `return rN` is a copy of the arms' own (which the flow has).
         known |= set(getattr(self.cfg, "tail_origins", {}))
         always_live = self._region_reads()
 
         # Instructions created after the snapshot have no known position.
-        for block in list(self.cfg.blocks) + list(self.graph.blocks()):
+        for block in list(self.cfg.blocks) + list(self.graph.blocks()) + tree_blocks:
             for i in block.instructions:
                 if id(i) not in known:
                     always_live |= self._effects(i)[1]
+
+        # A copy made after the snapshot (a tail merge's `Mov r16, r18`) stands in for an original
+        # the flow knew, and that original is gone: its reads are in no block the flow scans.
+        # `rN = ...` copies stay whenever one of those reads `rN` (96/4939).
+        copied_reads: set[int] = set()
+
+        for block in list(self.cfg.blocks) + list(self.graph.blocks()) + tree_blocks:
+            for i in block.instructions:
+                if id(i) not in snapshot_ids:
+                    copied_reads |= self._effects(i)[1]
 
         blocks = [
             (bid, succ, [i for i in instrs if id(i) in present])
@@ -131,7 +154,7 @@ class DeadUndefinedStorePass(RegionPass):
                     live_in[bid] = state
                     changed = True
 
-        current = {id(i): b for b in self.graph.blocks() for i in b.instructions}
+        current = {id(i): b for b in list(self.graph.blocks()) + tree_blocks for i in b.instructions}
         dead = []
 
         for bid, succ, instrs in blocks:
@@ -146,7 +169,11 @@ class DeadUndefinedStorePass(RegionPass):
                 if id(instruction) in candidates and id(instruction) in current:
                     reg = instruction.dest_reg
 
-                    if reg not in live_after[id(instruction)] and reg not in always_live:
+                    if (
+                            reg not in live_after[id(instruction)]
+                            and reg not in always_live
+                            and (isinstance(instruction.value, UndefinedLiteral) or reg not in copied_reads)
+                    ):
                         dead.append((current[id(instruction)], instruction))
 
         for block, instruction in dead:
@@ -161,7 +188,11 @@ class DeadUndefinedStorePass(RegionPass):
             for instruction in block.instructions:
                 if (
                         instruction.dest_reg is not None
-                        and isinstance(instruction.value, UndefinedLiteral)
+                        and self._is_removable_value(instruction)
+                        and (
+                        isinstance(instruction.value, UndefinedLiteral)
+                        or instruction.dest_reg not in self._param_registers
+                )
                         and instruction.statement is None
                         and instruction.terminator is None
                         and not instruction.definition_used
@@ -170,6 +201,32 @@ class DeadUndefinedStorePass(RegionPass):
                     found[id(instruction)] = (block, instruction)
 
         return found
+
+    def _parameter_registers(self) -> set[int]:
+        """Registers that hold a parameter: reads of them print as `paramN`, not `rN`, so the
+        liveness above cannot see them (`r10 = r14` in 96/4846 writes `param3` for the next
+        iteration)."""
+        return {
+            instruction.dest_reg
+            for block in list(self.cfg.blocks) + list(self.graph.blocks())
+            for instruction in block.instructions
+            if instruction.dest_reg is not None and instruction.entry.opcode in ("LoadParam", "LoadParamLong")
+        }
+
+    @staticmethod
+    def _is_removable_value(instruction) -> bool:
+        value = instruction.value
+
+        if isinstance(value, UndefinedLiteral):
+            return True
+
+        # A copy of a register or a parameter cannot have an effect. `rN = rN` is the silent
+        # definition the destructuring pass leaves (a write, see `_effects`): not a candidate.
+        return (
+                isinstance(value, Identifier)
+                and _COPY_SOURCE.fullmatch(value.name) is not None
+                and value.name != f"r{instruction.dest_reg}"
+        )
 
     def _scan(self, instructions, live_out: set[int], always: set[int]):
         """Backward scan of one block: (live-in, {id(instruction): live after it})."""
@@ -283,6 +340,35 @@ class DeadUndefinedStorePass(RegionPass):
         visit(self.graph.root)
 
         return reads
+
+    def _tree_blocks(self) -> list[BasicBlock]:
+        """Every block the region tree holds. `graph.blocks()` is an index the passes do not
+        always keep up to date: a block it misses still prints (96/4939 `Mov r16, r18`)."""
+        found: list[BasicBlock] = []
+        seen: set[int] = set()
+
+        def visit(value) -> None:
+            if value is None or isinstance(value, (str, int, float, bool, Node)) or id(value) in seen:
+                return
+
+            seen.add(id(value))
+
+            if isinstance(value, BasicBlock):
+                found.append(value)
+            elif isinstance(value, (list, tuple, set, frozenset)):
+                for item in value:
+                    visit(item)
+            elif isinstance(value, dict):
+                for item in value.values():
+                    visit(item)
+            elif isinstance(value, Region) or dataclasses.is_dataclass(value):
+                for name, item in vars(value).items() if hasattr(value, "__dict__") else ():
+                    if name != "parent":
+                        visit(item)
+
+        visit(self.graph.root)
+
+        return found
 
     @staticmethod
     def _registers_read(node) -> set[int]:

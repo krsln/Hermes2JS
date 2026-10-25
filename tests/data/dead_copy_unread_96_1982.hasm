@@ -1,0 +1,23 @@
+
+=> [Function #1982 "checkIfSnapshotChanged" of 49 bytes]: 2 params, frame size=14, strict=1, exc handler=1, debug info=0  @ offset 0x0012709f
+  [Exception handlers: [start=0x15, end=0x29, target=0x2b] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <Mov>: <Reg8: 0, Reg8: 2>
+==> 00000006: <LoadConstUndefined>: <Reg8: 3>
+==> 00000008: <LoadConstUndefined>: <Reg8: 1>
+==> 0000000a: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 13674>  # String: 'getSnapshot' (Identifier)
+==> 00000010: <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 2, string_id: 205>  # String: 'value' (Identifier)
+==> 00000015: <Call1>: <Reg8: 2, Reg8: 1, Reg8: 3>
+==> 00000019: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000001c: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 69>
+==> 00000020: <Call3>: <Reg8: 0, Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2>
+==> 00000026: <Not>: <Reg8: 0, Reg8: 0>
+==> 00000029: <Ret>: <Reg8: 0>
+==> 0000002b: <Catch>: <Reg8: 0>
+==> 0000002d: <LoadConstTrue>: <Reg8: 0>
+==> 0000002f: <Ret>: <Reg8: 0>
+
+

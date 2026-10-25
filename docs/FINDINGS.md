@@ -24,10 +24,13 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-16 | start of the round (`29c4aff`) | 417 | 413 | 461 | 699 | 954 passed |
 | 2026-10-24 | after F-136 | 299 | 336 | 463 | 681 | 1019 passed |
 | 2026-10-25 | after F-138 (join guard), F-144, F-141, F-33, F-32 | 299 | 335 | 462 | 681 | 1031 passed |
+| 2026-10-25 | after F-31 (dead copies, part) | 299 | 335 | 462 | 682 | 1034 passed |
 
 - The 2026-10-25 row decompiles 98 without 98/2619 (F-143: it stalls), so its 98 columns are not
   exactly comparable with the row above. F-32 is printer-only: it changed 499 files in 96 and 650 in
-  98 and moved neither `goto` nor `pathdefs`.
+  98 and moved neither `goto` nor `pathdefs`. The F-31 row changed 59 files in 96 and 34 in 98, only by
+  removing lines (plus the restructured 96/12298); its `pathdefs` +1 in 98 is 98/1753 `previousSibling`, where
+  the removed `r5 = r6` is overwritten by the destructuring on the next line (audit noise).
 - `goto`: number of functions whose output still contains `goto label_N`.
 - `pathdefs`: number of functions with at least one register read that is not assigned on every path
   (`scripts/audit/definite_assignment.py`, piped through `cut -d: -f1 | sort -u | wc -l`). It is a
@@ -97,6 +100,11 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 ## Open: readability
 
 - **F-30** Loop condition `i < r8; r8 = r8.length`.
-- **F-31** Redundant copies (`r2 = r3`, `r1 = {...}; r0 = r1`).
+- **F-31 Redundant copies (partly fixed).** `r2 = r3`, `r1 = {...}; r0 = r1`. Copies of a register or a
+  parameter that nothing reads are now removed on every path (see the archive). Left: about 620 (96) / 376
+  (98) lines `rN = <reg/param>` that no read names, almost all of them the `LoadParam` line itself
+  (`r2 = param2;`, about 4000 such lines in 96): reads print as `paramN`, so the liveness cannot tell the
+  line is dead and a write to the same register (`r10 = r14` in 96/4846) must stay. Also left: copies that
+  are read once (`r1 = {...}; r0 = r1`), which need copy propagation (with F-139).
 - **F-145** `if (A) { } else if (B) { X }` now prints as the nested `if (!A) { if (B) { X } }`; it could be
   merged into `if (!A && B)`.
