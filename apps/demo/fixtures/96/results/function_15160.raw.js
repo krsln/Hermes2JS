@@ -54,7 +54,7 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → addr: 88 | <GetArgumentsPropByVal>: <Reg8: 7, Reg8: 2, Reg8: 5>
     // USED → r7 = arguments[r2];
     // CODE → addr: 92 | <PutByVal>: <Reg8: 6, Reg8: 8, Reg8: 7>
-    new Array(r11)[r8] = arguments[r2];
+    r6[r8] = arguments[r2];
     // CODE → addr: 96 | <Inc>: <Reg8: 2, Reg8: 2>
     r2 = r2 + 1;
     // CODE → addr: 99 | <JLess>: <Addr8: -15, Reg8: 2, Reg8: 4>  # Address: 00000054

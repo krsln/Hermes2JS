@@ -9,7 +9,7 @@ from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import (
     Expression, Identifier, RawExpression, ObjectExpression,
-    ArrayExpression, Literal, CallExpression, MemberExpression, ThisPlaceholder, BinaryExpression,
+    ArrayExpression, Literal, CallExpression, MemberExpression, ThisPlaceholder, BinaryExpression, NewExpression,
 )
 from .OpcodeTypes import OpcodeContext, ArgsPattern, OperandMode
 
@@ -202,6 +202,19 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}")
 
         if isinstance(value, (ObjectExpression, ArrayExpression, CallExpression)):
+            state.mark_read()
+            state.materialize()
+            return Identifier(name=f"r{reg}")
+
+        # A `new` evaluated by a read inside a loop its definition is outside of would build a
+        # fresh object on every iteration (96/1163 `new Array(r5)[r0] = arguments[r0]`): the
+        # register keeps the one object, like the `ObjectExpression`/`CallExpression` above.
+        # An earlier read of the same object has to keep the register too, or the loop's read
+        # would print a second `new` (96/15130 `tag`): the scratch pass knows the definition prints.
+        if isinstance(value, NewExpression) and (
+                analysis.read_enters_loop(state)
+                or (state.definition.name, state.definition.address) in analysis.printed_definitions
+        ):
             state.mark_read()
             state.materialize()
             return Identifier(name=f"r{reg}")

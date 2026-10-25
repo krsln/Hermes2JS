@@ -40,7 +40,7 @@ function restOnlyTest() {
     // CODE → addr: 67 | <GetArgumentsPropByVal>: <Reg8: 6, Reg8: 2, Reg8: 4>
     // USED → r6 = arguments[r2];
     // CODE → addr: 71 | <PutByVal>: <Reg8: 5, Reg8: 2, Reg8: 6>
-    new Array(r8)[r2] = arguments[r2];
+    r5[r2] = arguments[r2];
     // CODE → addr: 75 | <Inc>: <Reg8: 2, Reg8: 2>
     r2 = r2 + 1;
     // CODE → addr: 78 | <JLess>: <Addr8: -11, Reg8: 2, Reg8: 3>  # Address: 00000043

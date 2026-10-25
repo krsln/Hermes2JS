@@ -375,6 +375,18 @@ class HermesAnalysis:
     def get_register_state(self, reg: int) -> RegisterState | None:
         return self.registers.get(f"r{reg}")
 
+    def read_enters_loop(self, state) -> bool:
+        """True if the instruction being handled sits in a loop range that the register's
+        definition is outside of: inlining the value there runs it once per iteration."""
+        current = self.current_address
+
+        if current is None:
+            return False
+
+        address = state.definition.address
+
+        return any(start <= current <= end and not start <= address <= end for start, end in self.loop_ranges)
+
     def is_unsafe_loop_register(self, reg: int, definition_address: int) -> bool:
         """
         True if a read of `reg` at the instruction currently being
