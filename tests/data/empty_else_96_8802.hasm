@@ -1,0 +1,32 @@
+
+=> [Function #8802 "timeoutCallback" of 86 bytes]: 1 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x001cf399
+
+Bytecode listing:
+
+==> 00000000: <GetEnvironment>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 0>
+==> 00000007: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 153>  # String: 'has' (Identifier)
+==> 0000000c: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000000f: <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 2>
+==> 00000013: <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
+==> 00000018: <JmpTrue>: <Addr8: 7, Reg8: 0>  # Address: 0000001f
+==> 0000001b: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001d: <Ret>: <Reg8: 0>
+==> 0000001f: <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 0>
+==> 00000023: <LoadFromEnvironment>: <Reg8: 7, Reg8: 1, UInt8: 1>
+==> 00000027: <NewArray>: <Reg8: 3, UInt16: 0>
+==> 0000002b: <LoadConstZero>: <Reg8: 6>
+==> 0000002d: <Mov>: <Reg8: 8, Reg8: 3>
+==> 00000030: <CallBuiltin>: <Reg8: 0, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
+==> 00000034: <LoadConstUndefined>: <Reg8: 0>
+==> 00000036: <Mov>: <Reg8: 8, Reg8: 4>
+==> 00000039: <Mov>: <Reg8: 7, Reg8: 3>
+==> 0000003c: <LoadConstUndefined>: <Reg8: 6>
+==> 0000003e: <CallBuiltin>: <Reg8: 3, UInt8: 47, UInt8: 4>  # Built-in function: [#47 apply]
+==> 00000042: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
+==> 00000046: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 114>  # String: 'delete' (Identifier)
+==> 0000004b: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 2>
+==> 0000004f: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000054: <Ret>: <Reg8: 0>
+
+

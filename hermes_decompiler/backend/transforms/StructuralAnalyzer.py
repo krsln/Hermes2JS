@@ -16,6 +16,7 @@ from hermes_decompiler.backend.transforms.region_passes import (
     DeadThisPlaceholderPass,
     DeadMovEliminationPass,
     DeadUndefinedStorePass,
+    EmptyIfArmRegionPass,
     FlowSnapshot,
     ForEachRegionPass,
     GeneratorStateMachineRegionPass,
@@ -296,6 +297,11 @@ class StructuralAnalyzer:
         # `return undefined;` first; placed after DeadMovEliminationPass so
         # that pass still sees the return as a read of its register.
         TrailingReturnRegionPass(graph, self.cfg).run()
+
+        # Drops `if` arms that print nothing, which the passes above leave
+        # behind once they have folded or removed what the arm held: it
+        # must see their final result, so it comes after all of them.
+        EmptyIfArmRegionPass(graph, self.cfg).run()
 
         # Purely cosmetic, purely presentational - must be the very LAST
         # transform pass. It rewrites a for-loop's induction register into
