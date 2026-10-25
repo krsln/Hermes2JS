@@ -90,6 +90,9 @@ class HermesAnalysis:
         # Calls so far: one may write anything a still-folded member read
         # loaded (`x = o.count; f(); use(x)`), see `_changed_by_a_call`.
         self.call_count = 0
+        # The function is a generator/async body (set by `DispatchStage`): its `try` ranges
+        # belong to the state machine, not to the source.
+        self.generator_body = False
 
     _MEMORY_STORE_RE = re.compile(r"(Put|Store|Del)")
     # A call runs arbitrary code, which may write any property.
@@ -329,6 +332,24 @@ class HermesAnalysis:
         address = state.definition.address
 
         return sum(1 for start, end in self.skip_ranges if start < address < end <= current) >= 2
+
+    def crosses_try_boundary(self, state: RegisterState) -> bool:
+        """The definition ran inside a `try` range and the instruction being handled is
+        outside it. A value that can throw (a member read: `p.aborted` on a getter or on
+        `undefined`) inlined into such a reader would run OUTSIDE the `try`, where its
+        `catch` no longer sees the throw (98/13768: `try { x = p.aborted } catch { return
+        false } return typeof x === "boolean"`)."""
+        current = self.current_address
+
+        if current is None or self.generator_body:
+            return False
+
+        address = state.definition.address
+
+        return any(
+            handler["start"] <= address < handler["end"] and not handler["start"] <= current < handler["end"]
+            for handler in self.metadata.get("exception_handlers", ())
+        )
 
     @staticmethod
     def _redefinition_prints(state: RegisterState) -> bool:

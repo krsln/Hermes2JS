@@ -1,0 +1,20 @@
+
+=> [Function #13768 "" of 40 bytes]: 2 params, frame size=2, strict=1, exc handler=1, debug info=0  @ offset 0x0026233a
+  [Exception handlers: [start=0x11, end=0x17, target=0x1e] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <JmpTypeOfIs>: <Addr32: 33, Reg8: 0, UInt16: 253>  # Address: 00000024
+==> 0000000b: <LoadConstNull>: <Reg8: 1>
+==> 0000000d: <JStrictEqual>: <Addr8: 23, Reg8: 1, Reg8: 0>  # Address: 00000024
+==> 00000011: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 0, string_id: 10638>  # String: 'aborted' (Identifier)
+==> 00000017: <TypeOfIs>: <Reg8: 0, Reg8: 0, UInt16: 16>
+==> 0000001c: <Ret>: <Reg8: 0>
+==> 0000001e: <Catch>: <Reg8: 0>
+==> 00000020: <LoadConstFalse>: <Reg8: 0>
+==> 00000022: <Ret>: <Reg8: 0>
+==> 00000024: <LoadConstFalse>: <Reg8: 0>
+==> 00000026: <Ret>: <Reg8: 0>
+
+

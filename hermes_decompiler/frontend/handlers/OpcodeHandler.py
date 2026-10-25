@@ -233,6 +233,13 @@ class OpcodeHandler(ABC):
             state.mark_read()
             return Identifier(name=f"r{reg}")
 
+        # Try-boundary guard: a read that can throw stays where the `try` put it, so the
+        # reader outside the range reads the register (98/13768 `typeof p.aborted`).
+        if analysis.crosses_try_boundary(state) and any(isinstance(node, MemberExpression) for node in value.walk()):
+            state.mark_read()
+            state.materialize()
+            return Identifier(name=f"r{reg}")
+
         # Stale-value guard: the value refers to a register that was
         # redefined after it was built (or to its own destination, as in
         # `r3 = r3.a`), so inlining it here would silently rebind that
