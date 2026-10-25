@@ -15,7 +15,7 @@ function tag(param1) {
     // CODE → addr: 21 | <Greater>: <Reg8: 4, Reg8: 6, Reg8: 5>
     // USED → r4 = arguments.length > 1;
     // CODE → addr: 25 | <LoadConstZero>: <Reg8: 2>
-    r2 = (arguments.length <= 1) ? 0 : arguments.length - 1;
+    r2 = arguments.length <= 1 ? 0 : arguments.length - 1;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 34 | <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 2, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r4 = Array.prototype;
@@ -24,7 +24,7 @@ function tag(param1) {
     // CODE → addr: 43 | <Mov>: <Reg8: 12, Reg8: 4>
     // USED → r12 = CreateThis(Array.prototype);
     // CODE → addr: 46 | <Mov>: <Reg8: 11, Reg8: 2>
-    r11 = (arguments.length <= 1) ? 0 : arguments.length - 1;
+    r11 = arguments.length <= 1 ? 0 : arguments.length - 1;
     // CODE → addr: 49 | <Construct>: <Reg8: 2, Reg8: 8, UInt8: 2>
     // USED → r2 = new Array(r11);
     // CODE → addr: 53 | <SelectObject>: <Reg8: 4, Reg8: 4, Reg8: 2>

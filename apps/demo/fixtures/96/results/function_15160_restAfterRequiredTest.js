@@ -21,7 +21,7 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → addr: 38 | <Greater>: <Reg8: 6, Reg8: 4, Reg8: 3>
     // USED → r6 = arguments.length > 2;
     // CODE → addr: 42 | <LoadConstZero>: <Reg8: 2>
-    r2 = (arguments.length <= 2) ? 0 : arguments.length - 2;
+    r2 = arguments.length <= 2 ? 0 : arguments.length - 2;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 51 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r6 = Array.prototype;
@@ -30,7 +30,7 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → addr: 60 | <Mov>: <Reg8: 12, Reg8: 6>
     // USED → r12 = CreateThis(Array.prototype);
     // CODE → addr: 63 | <Mov>: <Reg8: 11, Reg8: 2>
-    r11 = (arguments.length <= 2) ? 0 : arguments.length - 2;
+    r11 = arguments.length <= 2 ? 0 : arguments.length - 2;
     // CODE → addr: 66 | <Construct>: <Reg8: 2, Reg8: 7, UInt8: 2>
     // USED → r2 = new Array(r11);
     // CODE → addr: 70 | <SelectObject>: <Reg8: 6, Reg8: 6, Reg8: 2>

@@ -201,7 +201,7 @@ def test_default_value_ternary_does_not_read_its_own_target_before_it_is_set():
     # anything defined it.
     out = _render_98(9488, "parameterDestructureTest")
 
-    assert 'r8 = (param1.name !== undefined) ? param1.name : "anon"' in out
+    assert 'r8 = param1.name !== undefined ? param1.name : "anon"' in out
     assert "(r8 !== undefined)" not in out
 
 
@@ -209,8 +209,8 @@ def test_default_value_ternary_test_names_the_default_in_every_destructuring_for
     for index, name in ((9485, "nestedObjectDestructureTest"), (9486, "renamedDefaultDestructureTest")):
         out = _render_98(index, name)
 
-        assert "(r5 !== undefined) ?" not in out
-        assert ".page !== undefined) ?" in out or ".retries !== undefined) ?" in out
+        assert "r5 !== undefined ?" not in out
+        assert ".page !== undefined ?" in out or ".retries !== undefined ?" in out
 
 
 def test_for_of_does_not_leave_its_iterator_setup_behind():
@@ -520,8 +520,8 @@ def test_defaulted_parameter_is_still_named_by_a_later_return():
     out = Decompiler.render(Decompiler.build_context(_NORMALIZE_FILL_MODE_HASM, 8521), verbose=False)
     code = "\n".join(line for line in out.splitlines() if not line.strip().startswith("//"))
 
-    assert 'r1 = (param1 !== undefined) ? param1 : "none";' in code
-    assert code.index('r1 = (param1') < code.index("return r1;")
+    assert 'r1 = param1 !== undefined ? param1 : "none";' in code
+    assert code.index('r1 = param1') < code.index("return r1;")
 
 
 _OPTIONAL_CHAIN_ARGS_HASM = """

@@ -77,7 +77,7 @@ def test_value_ternary_that_is_only_tested_folds_into_the_condition():
     out = _render("shared_tail_after_ternary_96_12188.hasm", 12188)
 
     assert "goto" not in out
-    assert "if (!r4 || ((\"get\" in r4) ? !param2.__esModule : r4.writable || r4.configurable)) {" in out
+    assert "if (!r4 || (\"get\" in r4 ? !param2.__esModule : r4.writable || r4.configurable)) {" in out
     assert out.count('"enumerable": true') == 1
 
 

@@ -17,7 +17,7 @@ function defaultParameterTest(param1) {
         // CODE → addr: 23 | <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
         r3 = arguments[1];
         // CODE → addr: 27 | <Mov>: <Reg8: 5, Reg8: 4>
-        r5 = (r3 === undefined) ? 10 : arguments[1];
+        r5 = r3 === undefined ? 10 : arguments[1];
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 38 | <GetArgumentsLength>: <Reg8: 3, Reg8: 2>

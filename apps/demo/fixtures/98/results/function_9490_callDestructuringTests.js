@@ -25,7 +25,7 @@ function callDestructuringTests() {
     // CODE → addr: 53 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1918, UInt16: 93>  # Object: {'page': 1}
     r5 = { "page": 1 };
     // CODE → addr: 59 | <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 12200>  # String: 'page' (Identifier)
-    r7 = (r5.page !== undefined) ? r5.page : 1;
+    r7 = r5.page !== undefined ? r5.page : 1;
     // CODE → addr: 65 | <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // ──────────────── Block 2 ──────────────── 
@@ -64,7 +64,7 @@ function callDestructuringTests() {
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:157 | <GetById>: <Reg8: 8, Reg8: 5, UInt8: 5, string_id: 9071>  # String: 'retries' (Identifier)
-    r8 = (r5.retries !== undefined) ? r5.retries : 3;
+    r8 = r5.retries !== undefined ? r5.retries : 3;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:170 | <GetParentEnvironment>: <Reg8: 5, UInt8: 0>
     r5 = getParentEnvironment(0);
@@ -91,7 +91,7 @@ function callDestructuringTests() {
     // CODE → addr:224 | <GetByIdShort>: <Reg8: 10, Reg8: 5, UInt8: 6, string_id: 28>  # String: 'id' (Identifier)
     r10 = r5.id;
     // CODE → addr:229 | <GetByIdShort>: <Reg8: 9, Reg8: 5, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
-    r9 = (r5.name !== undefined) ? r5.name : "anon";
+    r9 = r5.name !== undefined ? r5.name : "anon";
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:242 | <NewArrayWithBuffer>: <Reg8: 7, UInt16: 2, UInt16: 2, UInt16: 48486>  # Array: [9, 10]
     r7 = [9, 10];

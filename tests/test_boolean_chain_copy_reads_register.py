@@ -104,8 +104,8 @@ def test_a_ternary_copy_after_its_test_register_was_overwritten_reads_the_regist
     hasm = (Path(__file__).parent / "data" / "sequential_ternaries_96_9349.hasm").read_text(encoding="utf-8")
     js = _render(hasm, 9349)
 
-    assert 'r1 = (r3 !== "object") ? param1 : param1.version;' in js
-    assert 'return r1 === ((r3 !== "object") ? param3 : param3.version);' in js
+    assert 'r1 = r3 !== "object" ? param1 : param1.version;' in js
+    assert 'return r1 === (r3 !== "object" ? param3 : param3.version);' in js
     assert 'param1.version) ===' not in js
 
 
@@ -121,6 +121,6 @@ def test_a_write_folded_into_its_readers_does_not_make_the_ternary_copy_stale():
         encoding="utf-8")
     js = _render(hasm, 8499)
 
-    assert 'r17 = (r3 != null) ? caughtException.stack : "";' in js
-    assert 'r16 = (r2 != null) ? caughtException.name : "WorkletsError";' in js
+    assert 'r17 = r3 != null ? caughtException.stack : "";' in js
+    assert 'r16 = r2 != null ? caughtException.name : "WorkletsError";' in js
     assert "r17 = r1;" not in js

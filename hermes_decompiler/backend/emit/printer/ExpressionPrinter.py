@@ -186,7 +186,7 @@ class ExpressionPrinter(PrinterVisitor):
         return f"{left} {node.operator} {right}"
 
     def visit_ConditionalExpression(self, node: ConditionalExpression) -> str:
-        test = self._wrap_operand(node.test, node)
+        test = self._visit_test(node.test)
         consequent = self.visit(node.consequent)
         alternate = self.visit(node.alternate)
 
@@ -351,6 +351,16 @@ class ExpressionPrinter(PrinterVisitor):
             SequenceExpression,
         )
         if isinstance(shown, tuple_expressions):
+            return f"({text})"
+
+        return text
+
+    def _visit_test(self, test: Any) -> str:
+        """The test of `? :`. Every binary operator (comparison, `in`, `&&`, `||`, `??`) binds
+        tighter than `?:`, so only a nested ternary, an assignment or a sequence needs grouping."""
+        text = self.visit(test)
+
+        if isinstance(self._display_node(test), (ConditionalExpression, AssignmentExpression, SequenceExpression)):
             return f"({text})"
 
         return text

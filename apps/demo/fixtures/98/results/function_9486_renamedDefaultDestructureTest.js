@@ -23,7 +23,7 @@ function renamedDefaultDestructureTest() {
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 46 | <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 9071>  # String: 'retries' (Identifier)
-    r5 = (r3.retries !== undefined) ? r3.retries : 3;
+    r5 = r3.retries !== undefined ? r3.retries : 3;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 59 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
