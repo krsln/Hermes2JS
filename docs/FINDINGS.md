@@ -23,7 +23,11 @@ row; a row is only added when all of its columns were measured on the same tree.
 |------|--------|---------|---------|-------------|-------------|-------|
 | 2026-10-16 | start of the round (`29c4aff`) | 417 | 413 | 461 | 699 | 954 passed |
 | 2026-10-24 | after F-136 | 299 | 336 | 463 | 681 | 1019 passed |
+| 2026-10-25 | after F-138 (join guard), F-144, F-141, F-33, F-32 | 299 | 335 | 462 | 681 | 1031 passed |
 
+- The 2026-10-25 row decompiles 98 without 98/2619 (F-143: it stalls), so its 98 columns are not
+  exactly comparable with the row above. F-32 is printer-only: it changed 499 files in 96 and 650 in
+  98 and moved neither `goto` nor `pathdefs`.
 - `goto`: number of functions whose output still contains `goto label_N`.
 - `pathdefs`: number of functions with at least one register read that is not assigned on every path
   (`scripts/audit/definite_assignment.py`, piped through `cut -d: -f1 | sort -u | wc -l`). It is a
@@ -50,12 +54,18 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   (`r1 = 0`) is also read at the join, so folding cannot drop it.
 - **F-137 `dt` writes a value that should be `undefined`.** 98/9611: `r3.size = r4` where `r4` must be
   `undefined` on that path; a `goto` remains.
-- **F-138 `getComponentNameFromType`.** 96/1801, 96/2294, 98/2477: expressions like
-  `r2 + (r2.displayName || r1.name || "") + ")"` are garbage (wrong operand folded into a string
-  concatenation); the output now carries a `goto` warning but the folding bug is unresolved.
-- **F-139 Messy `for-in`.** 96/1339 `parseDropShadow`.
+- **F-138 `getComponentNameFromType` (partly fixed).** 96/1801, 96/2294, 98/2477. The main cause (a
+  computed value inlined into copies on other arms) is fixed, see the archive. Left: (a) inside the
+  `ForwardRef` arm `BooleanChainRegionPass` copies `r2.displayName || r1.name || ""` into a test that
+  stands after `r1`/`r2` were redefined: two garbage lines in 96/1801 and 96/2294 (a fix that checked
+  the operands for redefinition produced unassigned reads in 96/2200, 98/2930 and 98/2614 and was
+  dropped); (b) the last `Mov r1, r3; Ret r1` is a join of two paths and prints `return r1`, which is
+  wrong when `displayName` is truthy (widening the join guard to two paths broke 17 tests); (c) four
+  `goto`s remain (F-10 cluster).
+- **F-139 Messy `for-in` (partly fixed).** 96/1339 `parseDropShadow`. The null-guard scaffold is gone
+  (F-144); what is left are loop-carried `Mov`s in the for-in header that need copy propagation. About
+  18 functions in 96 and 20 in 98 still print an unrecognized `HermesPropertyIterator`.
 - **F-140 `deepDiffer`.** 96/1595: several structural problems in one function.
-- **F-141 Empty arms.** An empty `if (3 !== r4) {}` in 96/2026 (output is correct but misleading).
 - **F-142 `drop_scan` candidates not triaged yet (96).** 96/1926 `updateFromMap`, 96/2103
   `commitDeletionEffectsOnFiber`, 96/2602 `insertOrAppendPlacementNode`, 96/4152, 96/2811,
   96/6029 `_anon_0_`, 96/7599 `getStateFromPath`, 96/9820, 96/9821 and 96/9831 (component lifecycle),
@@ -88,5 +98,5 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 
 - **F-30** Loop condition `i < r8; r8 = r8.length`.
 - **F-31** Redundant copies (`r2 = r3`, `r1 = {...}; r0 = r1`).
-- **F-32** Extra parentheses around a ternary test: `(("get" in r4) ? …)`.
-- **F-33** Empty `else`/`try` bodies (example: `try { } catch` in 98/13768).
+- **F-145** `if (A) { } else if (B) { X }` now prints as the nested `if (!A) { if (B) { X } }`; it could be
+  merged into `if (!A && B)`.
