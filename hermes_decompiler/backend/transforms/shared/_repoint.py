@@ -199,17 +199,32 @@ def repoint_references(
                                              MAX_INLINED_CONDITION_NODES + 1) <= MAX_INLINED_CONDITION_NODES else None
 
     replaced_terminators: dict[int, object] = {}
+    # The instruction whose branch each terminator expression belongs to: a test is read WHERE the
+    # branch stands, so a copy of the merged expression is only right while what it names still
+    # holds there (96/1595 `deepDiffer`: `typeof arguments[2]` became `typeof (r5 === undefined ? ...)`
+    # after `r5` was reassigned). The same `reader_value` that picks an instruction's copy decides.
+    readers: list = []
 
-    def swap(terminator):
+    def condition_value(reader):
+        if reader_value is None or reader is None:
+            return for_conditions
+
+        picked = reader_value(reader)
+
+        return for_conditions if picked is new_expr else picked
+
+    def swap(terminator, reader=None):
         if terminator is None:
             return None
 
         key = id(terminator)
 
         if key not in replaced_terminators:
+            replacement = condition_value(reader)
+            readers.append((terminator, reader))
             replaced_terminators[key] = (
-                terminator if for_conditions is None else _repoint_terminator(terminator, old_expr, for_conditions,
-                                                                              structural)
+                terminator if replacement is None else _repoint_terminator(terminator, old_expr, replacement,
+                                                                           structural)
             )
 
         return replaced_terminators[key]
@@ -220,7 +235,7 @@ def repoint_references(
 
         for instr in block.instructions:
             if instr.terminator is not None:
-                instr.terminator = swap(instr.terminator)
+                instr.terminator = swap(instr.terminator, instr)
 
             if instr in exclude:
                 continue
@@ -243,7 +258,7 @@ def repoint_references(
                     instr.statement = new_statement
 
         if block.terminator is not None:
-            block.terminator = swap(block.terminator)
+            block.terminator = swap(block.terminator, block.instructions[-1] if block.instructions else None)
 
     collector = _RegionCollector()
     collector.visit(root)
@@ -274,7 +289,12 @@ def repoint_references(
             value = getattr(region, attribute, None)
 
             if isinstance(value, Node):
-                new_value, changed = repoint_node(value, old_expr, for_conditions, structural=structural)
+                replacement = condition_value(_branch_reader(readers, value) or _preceding_reader(region))
+
+                if replacement is None:
+                    continue
+
+                new_value, changed = repoint_node(value, old_expr, replacement, structural=structural)
 
                 if changed:
                     setattr(region, attribute, new_value)
@@ -284,6 +304,40 @@ def repoint_references(
 
             if tests:
                 case.tests = [repoint_node(test, old_expr, for_conditions, structural=structural)[0] for test in tests]
+
+
+def _branch_reader(readers, condition):
+    """The instruction whose branch the region test `condition` was built from (a terminator
+    holding the same expression), or None when no branch can be matched."""
+    for terminator, reader in readers:
+        if reader is None or not dataclasses.is_dataclass(terminator):
+            continue
+
+        for field in dataclasses.fields(terminator):
+            held = getattr(terminator, field.name)
+
+            if held is condition or (isinstance(held, Node) and held.structurally_equal(condition)):
+                return reader
+
+    return None
+
+
+def _preceding_reader(region):
+    """The last instruction before `region` in its sequence: where its test is read."""
+    children = getattr(getattr(region, "parent", None), "children", None)
+
+    if not children:
+        return None
+
+    position = next((n for n, child in enumerate(children) if child is region), None)
+
+    for child in reversed(children[:position] if position is not None else ()):
+        instructions = getattr(child, "instructions", None)
+
+        if instructions:
+            return instructions[-1]
+
+    return None
 
 
 def _contains(node, target) -> bool:
