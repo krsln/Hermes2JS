@@ -37,3 +37,14 @@ def test_a_copy_in_a_loop_is_not_read_by_a_branch_the_write_cannot_reach():
 
     assert "r17 != null" not in code
     assert "if (r6 != null) {" in code
+
+
+def test_a_merge_repair_does_not_touch_an_identical_value_in_the_other_arm():
+    # F-150, 96/2065 `updateClassComponent`: the update path's chain contains the mount path's
+    # `A && B` as an inner part; repairing the mount path's merge turned it into `r19`, a register
+    # the update path never sets.
+    hasm = (_DATA / "merge_repair_other_arm_96_2065.hasm").read_text(encoding="utf-8")
+    code = Decompiler.render(Decompiler.build_context(hasm, 2065, strict=False), verbose=False, raw=False)
+
+    assert "UNSAFE_componentWillReceiveProps && r19;" not in code
+    assert 'typeof r10.componentWillReceiveProps);' in code
