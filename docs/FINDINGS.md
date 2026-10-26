@@ -30,6 +30,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-25 | after F-137 (folded `undefined` at a join) | 298 | 335 | 459 | 682 | 1039 passed |
 | 2026-10-26 | after F-149 (loop latch with a terminal exit) | 298 | 334 | 460 | 683 | 1042 passed |
 | 2026-10-26 | after F-140 (stale folded ternary in a test) | 298 | 334 | 459 | 683 | 1043 passed |
+| 2026-10-26 | after F-140 (copy read on a path the write cannot reach) | 298 | 334 | 459 | 683 | 1044 passed |
 
 - The 2026-10-25 row decompiles 98 without 98/2619 (F-143: it stalls), so its 98 columns are not
   exactly comparable with the row above. F-32 is printer-only: it changed 499 files in 96 and 650 in
@@ -65,10 +66,14 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 - **F-139 Messy `for-in` (partly fixed).** 96/1339 `parseDropShadow`. The null-guard scaffold is gone
   (F-144); what is left are loop-carried `Mov`s in the for-in header that need copy propagation. About
   18 functions in 96 and 20 in 98 still print an unrecognized `HermesPropertyIterator`.
-- **F-140 `deepDiffer` (partly fixed).** 96/1595. The loop shape (F-149) and the stale
-  `typeof (r5 === undefined ? -1 : arguments[2])` (F-140 fix, archive) are done. Left: the unassigned
-  `r17` (`if (r17 != null) { r0 = r6.unsafelyIgnoreFunctions; }`, the fifth argument is never read
-  into a register) and the `r5 = arguments[2]; r1 = r5 === undefined ? ...` pair.
+- **F-140 `deepDiffer` (partly fixed).** 96/1595. The loop shape (F-149), the stale
+  `typeof (r5 === undefined ? ...)` and the unassigned `r17` (both in the archive) are done. Left:
+  the pair `r5 = arguments[2]; r1 = r5 === undefined ? -1 : arguments[2]` (correct but noisy).
+- **F-150 `updateClassComponent` merge reads a register no path sets (96/2065, 96/2571, 98/2614).**
+  `r11 = "function" !== typeof r10.UNSAFE_componentWillReceiveProps && r19` reads `r19` before the
+  arm that writes it (it read `r11` itself before F-140: wrong either way). The code is printed twice
+  (a shared tail), and the first copy's merge read has no write that reaches it. Needs the merge
+  repair to see the duplicated tail. `pathdefs` rows of these files read as worse for that reason.
 
 - **F-148 `insertOrAppendPlacementNode` loses an edge (96/2602).** The `6 === tag` test's edge to the
   shared body is dropped silently (`drop_scan`). Cause: the case-chain exemption in the compound folder

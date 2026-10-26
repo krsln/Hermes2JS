@@ -178,7 +178,7 @@ class StructuralAnalyzer:
         NullishAssignmentRegionPass(graph, self.cfg).run()
 
         # After EVERY fold pass: it repairs only the merges they left as an `if`.
-        UnfoldedMergeRepairPass(graph, self.cfg).run()
+        UnfoldedMergeRepairPass(graph, self.cfg, flow).run()
 
         # A register a loop overwrites and the code after it reads by name.
         LoopCarriedDefinitionPass(graph, self.cfg).run()

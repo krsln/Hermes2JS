@@ -150,6 +150,11 @@ class UnfoldedMergeRepairPass(RegionPass):
     keeps its inlined value.
     """
 
+    def __init__(self, graph, cfg, snapshot=None):
+        super().__init__(graph, cfg)
+        # The flow as it was before the structurers rewrote the edges (`FlowSnapshot`).
+        self._snapshot = snapshot
+
     def run(self) -> None:
         self._index = None
         self._made: set[int] = set()  # ids of the replacement identifiers this pass created
@@ -322,15 +327,50 @@ class UnfoldedMergeRepairPass(RegionPass):
         # Only readers OUTSIDE the `if`: the sibling arm holds the very same value
         # object (`guard.call(.., r0.message)` next to `r18 = r0.message`) and runs
         # on a path where the register was never written.
+        #
+        # And only readers the write can reach: the register is never set on any other path
+        # (96/1595 `deepDiffer`: the loop's `r17 = r6` made `r6 != null` in another branch
+        # print `r17 != null`, a register nothing had set there).
+        register = Identifier(name=f"r{write.dest_reg}")
+        reaches = self._reader_reachability(write)
+
+        def reader_value(reader):
+            return register if reaches is None or reaches(reader) else write.value
+
         repoint_references(
-            self.cfg, self.graph.root, write.value, Identifier(name=f"r{write.dest_reg}"),
+            self.cfg, self.graph.root, write.value, register,
             min_block_id=min(b.id for b in arm_blocks),
             exclude={i for blk in region_blocks for i in blk.instructions},
-            structural=False,
+            structural=False, reader_value=reader_value,
         )
 
         self._index = None
         logger.debug("unfolded merge: copies of printed r%s after the if read the register", write.dest_reg)
+
+    def _reader_reachability(self, write):
+        """A predicate: can `write` run before this instruction? None when the flow is unknown."""
+        if self._snapshot is None:
+            return None
+
+        successors = {block_id: list(succ) + self._snapshot.handlers.get(block_id, []) for block_id, succ, _ in
+                      self._snapshot.blocks}
+        block_of = {i: block_id for block_id, _, instructions in self._snapshot.blocks for i in instructions}
+        origin = block_of.get(write)
+
+        if origin is None:
+            return None
+
+        reachable = {origin}
+        todo = [origin]
+
+        while todo:
+            for successor in successors.get(todo.pop(), ()):
+                if successor not in reachable:
+                    reachable.add(successor)
+                    todo.append(successor)
+
+        # An instruction the snapshot does not know (made after it) is read as reachable.
+        return lambda reader: block_of.get(reader) is None or block_of[reader] in reachable
 
     _MOV_SOURCE_RE = re.compile(r"Reg(?:8|32):\s*\d+,\s*Reg(?:8|32):\s*(\d+)")
 

@@ -28,3 +28,12 @@ def test_a_test_after_the_ternary_register_changed_reads_the_register():
 
     assert code.count('if (typeof r1 === "number") {') == 2
     assert "typeof (r5 === undefined" not in code
+
+
+def test_a_copy_in_a_loop_is_not_read_by_a_branch_the_write_cannot_reach():
+    # F-140: `r17 = r6` (the recursive call's argument, in the loops) made `r6 != null` in the
+    # `typeof function` branch print `r17 != null`; nothing sets `r17` on that path.
+    code = _code()
+
+    assert "r17 != null" not in code
+    assert "if (r6 != null) {" in code
