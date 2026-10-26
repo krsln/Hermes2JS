@@ -188,7 +188,7 @@ class LoopBreakStructurer(RegionStructurer):
         failed: set = set()
 
         while True:
-            block = self._find_candidate(loop, failed)
+            block = self._find_candidate(loop, failed, self)
 
             if block is None:
                 return
@@ -197,7 +197,7 @@ class LoopBreakStructurer(RegionStructurer):
                 failed.add(block)
 
     @staticmethod
-    def _find_candidate(loop: LoopRegion, exclude: set) -> BasicBlock | None:
+    def _find_candidate(loop: LoopRegion, exclude: set, structurer=None) -> BasicBlock | None:
 
         header_is_guard = is_loop_guard_shaped(loop.header_block, loop)
 
@@ -228,7 +228,11 @@ class LoopBreakStructurer(RegionStructurer):
                 # `has_bottom_tested_guard` covers that case directly.
                 continue
 
-            if item in loop.latches and has_bottom_tested_guard(loop):
+            if (
+                    item in loop.latches
+                    and has_bottom_tested_guard(loop)
+                    and not (structurer is not None and structurer._latch_exit_is_terminal(loop, item))
+            ):
                 continue
 
             if isinstance(item, BasicBlock) and isinstance(item.terminator, TerminatorConditionalBranch):
@@ -486,6 +490,20 @@ class LoopBreakStructurer(RegionStructurer):
 
         latches = set(loop.latches)
 
+        # The loop's own completion has to land on `exit_block` too: a latch whose way out of the
+        # loop ends elsewhere (`while (ok) {...}` followed by a `throw`) makes a bare `break` run
+        # that code instead (96/11086 `useHandler`: `break` on `done` fell into the `throw`).
+        for latch in latches:
+            for successor in latch.successors:
+                if (
+                        successor is not exit_block
+                        and successor not in loop.covered_blocks
+                        and successor is not loop.header_block
+                        and isinstance(successor.terminator, (TerminatorReturn, TerminatorThrow))
+                        and not self._reaches_forward(successor, exit_block)
+                ):
+                    return False
+
         if latches & others and exit_block.terminator is not None:
             if any(
                     target <= exit_block.address
@@ -508,6 +526,54 @@ class LoopBreakStructurer(RegionStructurer):
             return False
 
         return True
+
+    def _latch_exit_is_terminal(self, loop: LoopRegion, latch: BasicBlock) -> bool:
+        """`do { ...; if (done) break; ... } while (c); throw ...`: the latch's way out ends in a
+        `return`/`throw` of its own while another exit leaves the loop elsewhere. The `break` can
+        only land on its own target if the latch's exit moves INTO the loop (Shape B) instead of
+        following it (96/11086 `useHandler`, 96/1595 `deepDiffer`)."""
+        branch = latch.terminator
+
+        if not isinstance(branch, TerminatorConditionalBranch):
+            return False
+
+        covered = loop.body.covered_blocks
+        exits = [s for s in latch.successors if s not in covered]
+
+        if len(exits) != 1 or list(exits[0].predecessors) != [latch]:
+            return False
+
+        if not isinstance(exits[0].terminator, (TerminatorReturn, TerminatorThrow)):
+            return False
+
+        # Exactly one other exit: it becomes the loop's `break` once the latch's own exit moved
+        # inside. Several exits (`continue`s and breaks of a `for (...) { switch ... }`) stay
+        # structured as they are (96/2052 `throwException`).
+        return sum(
+            1
+            for block in covered if isinstance(block, BasicBlock) and block is not latch
+            for s in block.successors
+            if s not in covered and s is not exits[0]
+        ) == 1
+
+    @staticmethod
+    def _reaches_forward(start: BasicBlock, goal: BasicBlock) -> bool:
+        """Is `goal` reachable from `start` over successors?"""
+        seen = {start}
+        todo = [start]
+
+        while todo:
+            current = todo.pop()
+
+            if current is goal:
+                return True
+
+            for nxt in current.successors:
+                if nxt not in seen:
+                    seen.add(nxt)
+                    todo.append(nxt)
+
+        return False
 
     def _convert_bare_break(
             self,

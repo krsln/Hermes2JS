@@ -34,8 +34,12 @@ def test_a_loops_exit_to_a_shared_return_is_not_absorbed_into_a_guarded_body():
     out = Decompiler.render(Decompiler.build_context(hasm, 8982, strict=False), verbose=False, raw=False)
 
     assert "goto" not in out
-    assert "if (r9 === undefined) {\n                        return true;\n                    }" in out
     assert "if (r9 !== undefined)" not in out
+    # The loop's own exit is a `return false` inside it; the property list running out ends the
+    # loop (`for ... in`), and `return true` follows it. Before the latch's terminal exit moved into
+    # the loop (F-149), the `break` on `undefined` ran the code after the loop's own exit instead.
+    assert "for (const r9 in r10) {" in out
+    assert out.rstrip().endswith("return true;\n}")
 
 
 def test_a_loop_break_to_a_function_ending_region_runs_that_region_inside_the_if():

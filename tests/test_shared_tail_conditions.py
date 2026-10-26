@@ -107,6 +107,15 @@ def test_a_stale_inlined_callee_is_not_folded_into_a_wrong_value():
     assert "undefined[0]" not in out
 
 
+def test_the_guard_with_an_empty_else_is_one_if_without_a_goto():
+    """96/9118 (F-04): `if (len === 1 && callee(...)) { r0 = [..] } else { r0 = [] }`. The set-up
+    register is read at the join too, which once left `if (r0) goto label_44`."""
+    out = _render("parseScaleX_stale_callee_96_9118.hasm", 9118)
+
+    assert "goto" not in out
+    assert "} else {\n        r0 = [];" in out
+
+
 def test_function_with_handlers_does_not_get_an_edge_block():
     """98/2917 crashed the dominator pass (`KeyError`): the edge block for a sunk
     join copy was added in a function with exception handlers, whose try ranges

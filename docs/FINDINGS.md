@@ -28,6 +28,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-25 | after F-146 (`new` identity) | 298 | 335 | 459 | 682 | 1037 passed |
 | 2026-10-25 | after F-147 (`new` read twice) | 298 | 335 | 459 | 682 | 1038 passed |
 | 2026-10-25 | after F-137 (folded `undefined` at a join) | 298 | 335 | 459 | 682 | 1039 passed |
+| 2026-10-26 | after F-149 (loop latch with a terminal exit) | 298 | 334 | 460 | 683 | 1042 passed |
 
 - The 2026-10-25 row decompiles 98 without 98/2619 (F-143: it stalls), so its 98 columns are not
   exactly comparable with the row above. F-32 is printer-only: it changed 499 files in 96 and 650 in
@@ -52,12 +53,6 @@ row; a row is only added when all of its columns were measured on the same tree.
 
 The output is wrong or misleading. Because it contains no `goto` it does not show in the `goto` count.
 
-- **F-03 `maybeSwapComponents`.** A pattern like 96/9150. See `tests/test_shared_return_exit.py`.
-  96/9150 itself decompiles correctly now (no `goto`, both `return param1`, swap path right); close
-  this if no similar example turns up.
-- **F-04 `parseScaleX` goto.** 96/9118: the wrong callee was fixed (F-111); what remains is
-  `if (r0) goto label_44` ("target IS a sibling in the same region"). The set-up register
-  (`r1 = 0`) is also read at the join, so folding cannot drop it.
 - **F-138 `getComponentNameFromType` (partly fixed).** 96/1801, 96/2294, 98/2477. The main cause (a
   computed value inlined into copies on other arms) is fixed, see the archive. Left: (a) inside the
   `ForwardRef` arm `BooleanChainRegionPass` copies `r2.displayName || r1.name || ""` into a test that
@@ -69,7 +64,14 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 - **F-139 Messy `for-in` (partly fixed).** 96/1339 `parseDropShadow`. The null-guard scaffold is gone
   (F-144); what is left are loop-carried `Mov`s in the for-in header that need copy propagation. About
   18 functions in 96 and 20 in 98 still print an unrecognized `HermesPropertyIterator`.
-- **F-140 `deepDiffer`.** 96/1595: several structural problems in one function.
+- **F-140 `deepDiffer`.** 96/1595: the loop shape is fixed (F-149: the `for-in` and the `return` after it
+  are structured); left: a stale `typeof (r5 === undefined ? -1 : arguments[2])` and an unassigned `r17`.
+- **F-148 `insertOrAppendPlacementNode` loses an edge (96/2602).** The `6 === tag` test's edge to the
+  shared body is dropped silently (`drop_scan`). Cause: the case-chain exemption in the compound folder
+  (`if_structurer/_compound_folder.py`, `_case_chain_has_two_bodies`) treats the chain as a switch and
+  the shared body then has no printed path. Three attempts were reverted (removing the exemption broke 5
+  switch tests; excluding Return blocks broke `defaultPort`; excluding blocks with non-test predecessors
+  broke 5 switch tests). No safe fix yet.
 - **F-142 `drop_scan` candidates not triaged yet (96).** 96/1926 `updateFromMap`, 96/2103
   `commitDeletionEffectsOnFiber`, 96/2602 `insertOrAppendPlacementNode`, 96/4152, 96/2811,
   96/6029 `_anon_0_`, 96/7599 `getStateFromPath`, 96/9820, 96/9821 and 96/9831 (component lifecycle),
