@@ -72,13 +72,14 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   the shared body then has no printed path. Three attempts were reverted (removing the exemption broke 5
   switch tests; excluding Return blocks broke `defaultPort`; excluding blocks with non-test predecessors
   broke 5 switch tests). No safe fix yet.
-- **F-142 `drop_scan` candidates not triaged yet (96).** 96/1926 `updateFromMap`, 96/2103
-  `commitDeletionEffectsOnFiber`, 96/2602 `insertOrAppendPlacementNode`, 96/4152, 96/2811,
-  96/6029 `_anon_0_`, 96/7599 `getStateFromPath`, 96/9820, 96/9821 and 96/9831 (component lifecycle),
-  96/11086 `useHandler`. Run `drop_scan.py --report` for the current list. The 98 scan has not been
-  read yet.
-
-## Open: goto clusters
+- **F-142 `drop_scan` candidates (96 triaged, 98 not scanned yet).** The 2026-10-26 report of 96 lists
+  seven goto-free functions with a lost edge. Triage: 96/1339 `parseDropShadow`, 96/2103
+  `commitDeletionEffectsOnFiber` and 96/7599 `getStateFromPath` are false positives (the lost edge
+  goes to a bare `return undefined`/`return r0` where `r0` is `undefined`; the printed `if` without an
+  `else` falls off the end, same result). 96/6029 `_anon_0_` is an async state machine (the edge is a
+  `SaveGenerator`/`ResumeGenerator` resume; the printed `if/else` with `await` reads right).
+  96/1595 and 96/11086 were fixed by F-149 (that report predates it). 96/2602 is F-148 (real).
+  Open: run `drop_scan.py` on 98 and read it; re-run 96 to refresh the list.
 
 - **F-10 Conditional jump to an exit block.** `if (c) goto finalReturn`: conditional jumps to a shared
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
