@@ -287,8 +287,14 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
         if owner is not None and reader_block in owner.covered_blocks:
             return True
 
-        dominators = DominatorTree(self.cfg)
-        dominators.compute()
+        # The CFG's edges do not change while this pass runs, so one tree serves every call
+        # (98/2619 `beginWork`: a tree per call took minutes, F-143).
+        dominators = getattr(self, "_dominators", None)
+
+        if dominators is None:
+            dominators = DominatorTree(self.cfg)
+            dominators.compute()
+            self._dominators = dominators
 
         return any(
             w.dest_reg == last.dest_reg and w is not arm_result and w is not last

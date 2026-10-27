@@ -33,9 +33,11 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-26 | after F-140 (copy read on a path the write cannot reach) | 298 | 334 | 459 | 683 | 1044 passed |
 | 2026-10-26 | after F-150 (merge repair and the other arm) | 298 | 334 | 457 | 683 | 1045 passed |
 | 2026-10-26 | after F-151 (BooleanChain and the other arm) | 298 | 334 | 457 | 683 | 1045 passed |
+| 2026-10-27 | after F-143 (dominator tree cached), 98 now WITH 98/2619 | 298 | 335 | 457 | 684 | 1046 passed |
 
-- The 2026-10-25 row decompiles 98 without 98/2619 (F-143: it stalls), so its 98 columns are not
-  exactly comparable with the row above. F-32 is printer-only: it changed 499 files in 96 and 650 in
+- The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
+  columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
+  `pathdefs`). F-32 is printer-only: it changed 499 files in 96 and 650 in
   98 and moved neither `goto` nor `pathdefs`. The F-31 row changed 59 files in 96 and 34 in 98, only by
   removing lines (plus the restructured 96/12298); its `pathdefs` +1 in 98 is 98/1753 `previousSibling`, where
   the removed `r5 = r6` is overwritten by the destructuring on the next line (audit noise).
@@ -115,7 +117,6 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   Skip it unless it is handled on its own.
 - **F-18 Long tail of "different region" gotos.** About 230 functions with no single common cause;
   the cheapest start is the small ones (one `goto`, under 26 lines: 79 functions).
-- **F-143 Slow function.** 98/2619 takes minutes to decompile (a full 98 run stalls there).
 
 ## Open: readability
 

@@ -53,3 +53,42 @@ def test_a_merge_repair_does_not_touch_an_identical_value_in_the_other_arm():
         'r11 = "function" !== typeof r10.UNSAFE_componentWillReceiveProps'
         ' && "function" !== typeof r10.componentWillReceiveProps;'
     ) == 2
+
+
+def test_the_merge_check_builds_one_dominator_tree_per_pass():
+    # F-143, 98/2619 `beginWork`: `_register_holds_merge` built a tree on every call (170 times,
+    # minutes). The CFG's edges do not change while the pass runs, so one tree serves all calls.
+    from hermes_decompiler.backend.analysis.dominance.DominatorTree import DominatorTree
+    from hermes_decompiler.backend.transforms.region_passes.ConditionalExpressionRegionPass import (
+        ConditionalExpressionRegionPass,
+    )
+
+    trees = []
+    original_check = ConditionalExpressionRegionPass._register_holds_merge
+
+    def counting_check(self, *args, **kwargs):
+        before = DominatorTree.compute
+        calls = []
+
+        def compute(tree):
+            calls.append(1)
+            return before(tree)
+
+        DominatorTree.compute = compute
+
+        try:
+            return original_check(self, *args, **kwargs)
+        finally:
+            DominatorTree.compute = before
+            trees.append(len(calls))
+
+    ConditionalExpressionRegionPass._register_holds_merge = counting_check
+
+    try:
+        _code()
+    finally:
+        ConditionalExpressionRegionPass._register_holds_merge = original_check
+
+    # (the generator may run the pass again for a retry: one tree per pass, not per call)
+    assert len(trees) >= 6, "the function no longer exercises the check"
+    assert sum(trees) * 3 <= len(trees)
