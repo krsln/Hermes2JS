@@ -12,7 +12,7 @@ from hermes_decompiler.backend.transforms.shared import negate_condition, is_loo
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import LogicalOperator
-from hermes_decompiler.ir.expressions import BinaryExpression
+from hermes_decompiler.ir.expressions import BinaryExpression, Identifier, UndefinedLiteral
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorReturn
 from ._predicates import (
     is_backward_branch,
@@ -341,6 +341,11 @@ class _CompoundConditionFolder:
                 and self._case_chain_has_two_bodies(region, index, branch)
         )
                 and self._sits_in_sibling_arm(region, target_block)
+                # Falling off the end IS `return undefined`: a register nothing ever sets to
+                # anything else returns the same thing there (96/7599 `getStateFromPath`).
+                # A value set on the way (`r0 = null; if (...) goto <return r0>`) would be lost
+                # (98/7358 `collectSpans`).
+                and not self._returns_only_undefined(target_block)
         ):
             return False
 
@@ -440,6 +445,7 @@ class _CompoundConditionFolder:
                     isinstance(parent, IfRegion)
                     and parent.condition is not None
                     and is_constant_comparison(parent.condition)
+                    and same_case_subject(parent.condition, branch.condition)
                     and node is parent.else_body
             ):
                 address = entry(parent.then_body)
@@ -464,10 +470,39 @@ class _CompoundConditionFolder:
                 condition = getattr(terminator, "condition", None)
                 address = getattr(terminator, "target", None)
 
-            if condition is not None and is_constant_comparison(condition) and address is not None:
+            # A test on ANOTHER value is not a label of this chain (98/7358 `collectSpans`:
+            # `length === 0` after `a === undefined` / `a === null` made two "bodies").
+            if (
+                    condition is not None and is_constant_comparison(condition) and address is not None
+                    and same_case_subject(condition, branch.condition)
+            ):
                 bodies.add(address)
 
         return len(bodies) >= 2
+
+    def _returns_only_undefined(self, block) -> bool:
+        """Does this `return` give back a register that is never set to anything but `undefined`?"""
+        terminator = block.terminator
+        if not isinstance(terminator, TerminatorReturn):
+            return False
+
+        value = terminator.value
+        if isinstance(value, UndefinedLiteral):
+            return True
+        if not isinstance(value, Identifier):
+            return False
+
+        found_definition = False
+        for other in self._address_to_block.values():
+            for i in other.instructions:
+                if i.dest_reg is None or f"r{i.dest_reg}" != value.name:
+                    continue
+                if not isinstance(i.value, UndefinedLiteral):
+                    return False
+                found_definition = True
+
+        # no definition at all = a parameter or an unknown: not provably `undefined`
+        return found_definition
 
     @staticmethod
     def _sits_in_sibling_arm(region, target_block) -> bool:
