@@ -47,4 +47,9 @@ def test_a_merge_repair_does_not_touch_an_identical_value_in_the_other_arm():
     code = Decompiler.render(Decompiler.build_context(hasm, 2065, strict=False), verbose=False, raw=False)
 
     assert "UNSAFE_componentWillReceiveProps && r19;" not in code
-    assert 'typeof r10.componentWillReceiveProps);' in code
+    # F-151: the chain is `A && B`, not `A && (A && B)` (the other copy's fold had rewritten this
+    # copy's right operand before this one folded).
+    assert code.count(
+        'r11 = "function" !== typeof r10.UNSAFE_componentWillReceiveProps'
+        ' && "function" !== typeof r10.componentWillReceiveProps;'
+    ) == 2

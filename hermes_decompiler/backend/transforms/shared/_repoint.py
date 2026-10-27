@@ -25,12 +25,13 @@ from __future__ import annotations
 
 import dataclasses
 
-from hermes_decompiler.backend.regions import RegionVisitor
+from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import Identifier
 from ._purity import TRIVIAL_NODE_TYPES, has_side_effects
 
-__all__ = ["repoint_node", "repoint_references", "reclaim_definition", "reclaim_unfolded_definition"]
+__all__ = ["repoint_node", "repoint_references", "sibling_arm_instructions", "reclaim_definition",
+           "reclaim_unfolded_definition"]
 
 # A merged expression is copied into terminators / region conditions only up
 # to this many nodes. See `repoint_references`.
@@ -320,6 +321,42 @@ def _branch_reader(readers, condition):
                 return reader
 
     return None
+
+
+def sibling_arm_instructions(root, instruction) -> set:
+    """Instructions in the OTHER arm of every `if` (outside any loop) whose arm holds `instruction`.
+
+    Two arms cannot run one after the other, so what one arm writes is never read in the other.
+    A structural match there is a look-alike (96/2065 `updateClassComponent`: the mount path's
+    `A && B` is the inner part of the update path's chain)."""
+    collector = _RegionCollector()
+    collector.visit(root)
+    found: set = set()
+
+    for region in collector.regions:
+        if region.__class__.__name__ != "IfRegion":
+            continue
+
+        parent = region.parent
+
+        while parent is not None and not isinstance(parent, LoopRegion):
+            parent = parent.parent
+
+        if parent is not None:
+            continue
+
+        arms = [
+            {i for b in body.covered_blocks for i in b.instructions}
+            for body in (region.then_body, region.else_body) if body is not None
+        ]
+
+        if len(arms) == 2:
+            if instruction in arms[0]:
+                found |= arms[1]
+            elif instruction in arms[1]:
+                found |= arms[0]
+
+    return found
 
 
 def _preceding_reader(region):

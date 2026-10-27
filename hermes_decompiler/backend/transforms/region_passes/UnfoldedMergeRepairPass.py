@@ -8,7 +8,8 @@ from hermes_decompiler.backend.transforms.shared import (
     has_side_effects, repoint_references, reclaim_definition, TRIVIAL_NODE_TYPES, prints_definition,
     substitute_register,
 )
-from hermes_decompiler.backend.transforms.shared._repoint import _contains, _reads_register_by_name
+from hermes_decompiler.backend.transforms.shared._repoint import _contains, _reads_register_by_name, \
+    sibling_arm_instructions
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import ConditionalExpression, Identifier, ThisPlaceholder
@@ -286,7 +287,7 @@ class UnfoldedMergeRepairPass(RegionPass):
         # finds an identical value there (96/2065 `updateClassComponent`: the mount path's `A && B`
         # is the inner part of the update path's chain, which then read the mount path's `r19`).
         # Two arms cannot run one after the other (outside a loop).
-        other_arm = self._other_arm_instructions(write)
+        other_arm = sibling_arm_instructions(self.graph.root, write)
 
         repoint_references(
             self.cfg, self.graph.root, old_value, replacement,
@@ -353,31 +354,6 @@ class UnfoldedMergeRepairPass(RegionPass):
 
         self._index = None
         logger.debug("unfolded merge: copies of printed r%s after the if read the register", write.dest_reg)
-
-    def _other_arm_instructions(self, write) -> set:
-        """Instructions in the sibling arm of every `if` (not inside a loop) whose arm holds `write`."""
-        found: set = set()
-        collector = _IfCollector()
-        collector.visit(self.graph.root)
-
-        for if_region in collector.ifs:
-            parent = if_region.parent
-
-            while parent is not None and not isinstance(parent, LoopRegion):
-                parent = parent.parent
-
-            if parent is not None:
-                continue
-
-            then_instructions = {i for b in _blocks_of(if_region.then_body) for i in b.instructions}
-            else_instructions = {i for b in _blocks_of(if_region.else_body) for i in b.instructions}
-
-            if write in then_instructions:
-                found |= else_instructions
-            elif write in else_instructions:
-                found |= then_instructions
-
-        return found
 
     def _reader_reachability(self, write):
         """A predicate: can `write` run before this instruction? None when the flow is unknown."""

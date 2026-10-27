@@ -32,6 +32,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-26 | after F-140 (stale folded ternary in a test) | 298 | 334 | 459 | 683 | 1043 passed |
 | 2026-10-26 | after F-140 (copy read on a path the write cannot reach) | 298 | 334 | 459 | 683 | 1044 passed |
 | 2026-10-26 | after F-150 (merge repair and the other arm) | 298 | 334 | 457 | 683 | 1045 passed |
+| 2026-10-26 | after F-151 (BooleanChain and the other arm) | 298 | 334 | 457 | 683 | 1045 passed |
 
 - The 2026-10-25 row decompiles 98 without 98/2619 (F-143: it stalls), so its 98 columns are not
   exactly comparable with the row above. F-32 is printer-only: it changed 499 files in 96 and 650 in
@@ -70,12 +71,11 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 - **F-140 `deepDiffer` (partly fixed).** 96/1595. The loop shape (F-149), the stale
   `typeof (r5 === undefined ? ...)` and the unassigned `r17` (both in the archive) are done. Left:
   the pair `r5 = arguments[2]; r1 = r5 === undefined ? -1 : arguments[2]` (correct but noisy).
-- **F-151 Doubled left operand in a boolean chain (96/2065, 96/2571, 98/2614).**
-  `r11 = A && (A && B)` where the source is `A && B` (`typeof instance.UNSAFE_componentWillReceiveProps
-  !== "function" && typeof instance.componentWillReceiveProps !== "function"`); the update path of
-  `updateClassComponent` prints it twice, the mount path once. Also `r15 = r17 === r20 && (r17 === r20
-  && r1)`. Probably `BooleanChainRegionPass` folds a chain whose head was already folded in; found
-  while fixing F-150.
+- **F-151 Doubled left operand in a boolean chain (partly fixed).** `r3 = null !== r7 && (null !== r7 &&
+  null !== r7.memoizedState)`, `r15 = r17 === param1.memoizedProps && (r17 === param1.memoizedProps &&
+  r18 === ...)` (96/2065 line ~200, 96/2052 family; about 7 files in 96 and 8 in 98 still match a
+  `X && (X && Y)` scan). The cross-arm cause is fixed (archive); what is left has no sibling arm, so
+  another fold repeats the head (`ShortCircuitConditionCfgPass` followed by `BooleanChainRegionPass`?).
 
 - **F-148 `insertOrAppendPlacementNode` loses an edge (96/2602).** The `6 === tag` test's edge to the
   shared body is dropped silently (`drop_scan`). Cause: the case-chain exemption in the compound folder
