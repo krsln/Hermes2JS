@@ -72,10 +72,15 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   `typeof (r5 === undefined ? ...)` and the unassigned `r17` (both in the archive) are done. Left:
   the pair `r5 = arguments[2]; r1 = r5 === undefined ? -1 : arguments[2]` (correct but noisy).
 - **F-151 Doubled left operand in a boolean chain (partly fixed).** `r3 = null !== r7 && (null !== r7 &&
-  null !== r7.memoizedState)`, `r15 = r17 === param1.memoizedProps && (r17 === param1.memoizedProps &&
-  r18 === ...)` (96/2065 line ~200, 96/2052 family; about 7 files in 96 and 8 in 98 still match a
-  `X && (X && Y)` scan). The cross-arm cause is fixed (archive); what is left has no sibling arm, so
-  another fold repeats the head (`ShortCircuitConditionCfgPass` followed by `BooleanChainRegionPass`?).
+  null !== r7.memoizedState)` (96/2108, 96/2088, 96/4422 `accessible`, 98/2639 and others; about 7 files
+  in 96 and 8 in 98). Cause (traced on 96/2108): a source expression that occurs twice
+  (`r7 !== null && r7.memoizedState !== null` in two statements) folds twice, and the second fold's
+  structural repoint of its arm value finds the FIRST fold's right operand (`B` inside `A && B`) and
+  wraps it again. Tried and rejected: sealing a fold's result so that a look-alike is not matched as its
+  right operand: it removed the doubled heads in 14 files but dropped terms in `X || Y || Z` chains
+  (98/3783 `_performTransitionSideEffects` lost two alternatives), because those later repoints are the
+  intended structural copies. A real fix has to tell a copy of the arm value (a `Mov`) from an identical
+  second source expression, e.g. by the reader's address relative to the arm.
 
 - **F-148 `insertOrAppendPlacementNode` loses an edge (96/2602).** The `6 === tag` test's edge to the
   shared body is dropped silently (`drop_scan`). Cause: the case-chain exemption in the compound folder
