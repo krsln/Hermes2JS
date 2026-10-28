@@ -6,10 +6,10 @@ without changing what it returns.
               the other arm falls into it: the closing `return` is copied for
               the jumper instead of leaving `goto label_91`.
     96/11046  the closing `return r0` follows `r0 = true` on one path and
-              `r0 = false` on another. One copy per jumper would be exact, but
-              the final one then reads as a single value: the output returned
-              `false` for equal lists. It must stay as it was (a visible goto),
-              never silently wrong.
+              `r0 = false` on another. A register that holds a different CONSTANT
+              per path is copied per jumper (`return false`); the closing return
+              keeps the register's name. (One that held different non-constant
+              values stays a visible `goto`: the final return then read as one.)
 """
 
 from pathlib import Path
@@ -33,12 +33,16 @@ def test_closing_return_is_copied_for_a_jump_into_it():
     assert out.count("return undefined;") == 3
 
 
-def test_a_return_whose_register_has_different_values_per_path_is_not_copied():
+def test_a_return_whose_register_holds_a_different_constant_per_path_is_copied_per_jumper():
+    """96/11046: `r0 = false; if (!c) goto RET` in the loop, `r0 = true` on the way out. Each jumper
+    gets its own `return false`; the closing `return r0` keeps the register (set to `true` before the
+    loop and in it), so an equal list still returns `true`."""
     out = _render("shared_return_phi_96_11046.hasm", 11046)
 
-    # Either still a visible goto, or - if a later pass structures it exactly -
-    # both constants must survive.
-    assert "goto" in out or ("return true" in out and "return false" in out)
+    assert "goto" not in out
+    assert out.count("return false;") == 3
+    assert out.count("r0 = true;") >= 2
+    assert out.count("return r0;") == 1
 
 
 def test_a_two_block_tail_with_an_inner_test_is_copied_for_the_test_that_skips_it():

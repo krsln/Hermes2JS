@@ -37,6 +37,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-27 | after F-152 (case chain: same value only) | 298 | 335 | 456 | 684 | 1047 passed |
 | 2026-10-28 | after F-154 (retries for a tree that lost a path; closes F-148) | 298 | 335 | 457 | 684 | 1049 passed |
 | 2026-10-28 | after F-153 part (level 5: a copy of a shared tail per way in) | 298 | 335 | 457 | 684 | 1050 passed |
+| 2026-10-28 | after F-10(a) (shared return of different constants) | 297 | 335 | 457 | 684 | 1050 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -121,9 +122,15 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 
 - **F-10 Conditional jump to an exit block.** `if (c) goto finalReturn`: conditional jumps to a shared
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
-  (F-113, F-114, F-115, F-117, F-119). Left: (a) 96/11046, where the return register carries a
-  different value per path (a phi) and stays a `goto`; (b) jumps whose target is not a `return`
-  (sibling region, `none` terminator).
+  (F-113, F-114, F-115, F-117, F-119, and (a) below). Left: (b) jumps whose target is not a `return`
+  (sibling region, `none` terminator). (a) 96/11046 `areDependenciesEqual` is done: see the archive.
+- **F-155 A loop tail entered by a jump and by a fall-through is printed in one arm (96/11046).** The
+  increment/test block `0xb2` (`r10 = r1 + 1; r5 = r10; r0 = true; while (r10 < len)`) is jumped to by the
+  `is(a, b)` test and fallen into by the last `isWorkletFunction`/equality check. The printed `do { ... }` has the
+  increment only in the `if (r10)` arm: when all three checks pass the loop does not advance (`r5` keeps its value
+  and the test reads the call result in `r10`). Silent: `flow_audit` cannot see it (the latch is reachable from the
+  arm anyway). Same family as F-153; a copy of the latch tail per way in (two ways here, so level 5's "three or
+  more" does not match) would print it in both arms.
 - **F-11 `goto` inside `try/finally`.** 98/2007 `preprocessException`, 98/10013 `flush`, 96/840. The
   jump crosses the `finally` boundary.
 - **F-12 `await`/`yield` dispatch and 98 generator opcodes.** 96/12207 `_anon_0`. Without a batch

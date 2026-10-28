@@ -29,7 +29,7 @@ from collections import deque
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.shared._purity import TRIVIAL_NODE_TYPES
 from hermes_decompiler.backend.transforms.shared._structural_key import structural_key
-from hermes_decompiler.ir.expressions import Identifier
+from hermes_decompiler.ir.expressions import Identifier, Literal
 from hermes_decompiler.ir.terminators import (
     TerminatorConditionalBranch,
     TerminatorJump,
@@ -167,6 +167,7 @@ class SharedReturnDuplicationCfgPass:
         seen = {block}
         queue = deque(block.predecessors)
         keys: set = set()
+        constants = True
         unset = False
 
         while queue:
@@ -182,13 +183,17 @@ class SharedReturnDuplicationCfgPass:
 
             if definition is not None:
                 keys.add(structural_key(definition.value))
+                constants = constants and isinstance(definition.value, Literal)
                 continue
 
             if not pred.predecessors:
                 unset = True
             queue.extend(pred.predecessors)
 
-        return len(keys) <= 1 and not (keys and unset)
+        # Several DIFFERENT constants are fine: each jumper's copy returns its own (`r0 = false;
+        # if (!c) goto RET` is `return false`) and the closing `return r0` keeps the register's name,
+        # which every path that reaches it has set (96/11046 `areDependenciesEqual`).
+        return (len(keys) <= 1 or constants) and not (keys and unset)
 
     @staticmethod
     def _is_copyable(instruction) -> bool:
