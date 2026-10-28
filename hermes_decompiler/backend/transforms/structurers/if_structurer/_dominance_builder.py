@@ -332,6 +332,17 @@ class _DominanceIfBuilder(RegionStructurer):
                         and self._arm_runs_into_after_loop(then_entry, goto_block, block)
                 )
                 or (
+                        # Only once the shared returns were copied (a retry): the arm's other exits
+                        # are real `return`s then, so an arm that runs on into the branch target
+                        # leaves the target after the `if`, not in an `else` arm that would print it
+                        # on the branch's own path only (98/10128, 96/11046: the loop tail entered by
+                        # the `is()` test and fallen into by the last check).
+                        getattr(self.cfg, "duplicated_returns", False)
+                        and not is_constant_comparison(branch.condition)
+                        and goto_block.successors
+                        and self._arm_falls_into(then_entry, goto_block, block)
+                )
+                or (
                         # `if (a) { if (b) return x; } tail`: the arm's guard
                         # falls through into the very code the outer branch
                         # jumps to, which only ends the function, so no
@@ -489,6 +500,24 @@ class _DominanceIfBuilder(RegionStructurer):
             and pred.terminator.target == goto_block.address
             and dominators.dominates(then_entry, pred)
             and not is_constant_comparison(pred.terminator.condition)
+            for pred in goto_block.predecessors
+        )
+
+    def _arm_falls_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock) -> bool:
+        """True if a block of the fallthrough arm falls through into `goto_block` (a plain block, or a
+        test whose taken edge goes elsewhere)."""
+        dominators = self.cfg.dominator_tree
+        return any(
+            pred is not block
+            and (
+                    pred.terminator is None
+                    or (
+                            isinstance(pred.terminator, TerminatorConditionalBranch)
+                            and pred.terminator.target != goto_block.address
+                    )
+            )
+            and goto_block.address > pred.address
+            and dominators.dominates(then_entry, pred)
             for pred in goto_block.predecessors
         )
 

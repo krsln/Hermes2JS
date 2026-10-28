@@ -43,6 +43,9 @@ def test_a_return_whose_register_holds_a_different_constant_per_path_is_copied_p
     assert out.count("return false;") == 3
     assert out.count("r0 = true;") >= 2
     assert out.count("return r0;") == 1
+    # the loop's increment runs after the `if` (the `is()` test jumps onto it, the last check falls into it)
+    assert out.count("r5 = r10;") == 1
+    assert out.index("r5 = r10;") > out.index("r3[6].call(")
 
 
 def test_a_two_block_tail_with_an_inner_test_is_copied_for_the_test_that_skips_it():
