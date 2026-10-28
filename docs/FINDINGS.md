@@ -101,8 +101,14 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   reaches it with `r3 = null`.
   Direct guards for (a) and (b) moved 26 (96) / 20 (98) more `goto` lines into other functions (20 of them
   had no lost edge before) and were NOT kept. Done for 2216 (resolved in the archive entry F-153a): retry level 5
-  copies a small tail per way in. Open: 98/10128 (the tail `Mov r14, r17` has two ways in and no test skips
-  to its successor: the level-5 pattern does not match), 96/15065 and 98/9456 `labeledBreakTest` (b: the
+  copies a small tail per way in. Open: 98/10128 `interpolate` (the tail `Mov r14, r17; if (r17 <= r12) goto C` has three ways in: the
+  first test `x < r9`, the `!== "clamp"` test and the fall-through; the `else` arm of `x < r9` ends without running
+  on into it, so a clamped `x` never reaches the range test; the post-dominator is the final `return r7`, so
+  `_DominanceIfBuilder` takes the arm for a separate `else`). Tried: level 5 for a tail that ends in a test (split
+  the test off, one copy of the loads per way in, free addresses between the neighbours): the first two ranges then
+  structure right (`if (x < r9) {...} else {r14 = r17}` followed by `if (r17 > r12)`), but the later part gets `goto`s
+  and the `identity` jump to the final `return` no longer skips the code after the `if`, so it was not kept; the
+  lost-path check cannot see that second fault (it only asks whether the target is reachable at all), 96/15065 and 98/9456 `labeledBreakTest` (b: the
   fall-through test into a shared `log` block; their goldens are wrong).
 
 - **F-142 `drop_scan` candidates (refreshed 2026-10-28, both bundles).** `drop_scan.py --report` now lists
