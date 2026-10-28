@@ -103,14 +103,18 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   reaches it with `r3 = null`.
   Direct guards for (a) and (b) moved 26 (96) / 20 (98) more `goto` lines into other functions (20 of them
   had no lost edge before) and were NOT kept. Done for 2216 (resolved in the archive entry F-153a): retry level 5
-  copies a small tail per way in. Open: 98/10128 `interpolate` (the tail `Mov r14, r17; if (r17 <= r12) goto C` has three ways in: the
-  first test `x < r9`, the `!== "clamp"` test and the fall-through; the `else` arm of `x < r9` ends without running
-  on into it, so a clamped `x` never reaches the range test; the post-dominator is the final `return r7`, so
-  `_DominanceIfBuilder` takes the arm for a separate `else`). Tried: level 5 for a tail that ends in a test (split
-  the test off, one copy of the loads per way in, free addresses between the neighbours): the first two ranges then
-  structure right (`if (x < r9) {...} else {r14 = r17}` followed by `if (r17 > r12)`), but the later part gets `goto`s
-  and the `identity` jump to the final `return` no longer skips the code after the `if`, so it was not kept; the
-  lost-path check cannot see that second fault (it only asks whether the target is reachable at all), 96/15065 and 98/9456 `labeledBreakTest` (b: the
+  copies a small tail per way in. Open: 98/10128 `interpolate` (the tail `Mov r14, r17; if (r17 <= r12) goto C` has
+  three ways in; the `else` arm of `x < r9` ends without running on into it, so a clamped `x` never reaches the range
+  test; the `identity` tests jump to the final `return r7`, whose register holds a different non-constant value per path,
+  so `SharedReturnDuplicationCfgPass` refuses to copy it and `duplicated_returns` stays off). Tried: level 5 for a tail
+  that ends in a test (split the test off, one copy per way in): the first two ranges structure right, the later part gets
+  `goto`s. Tried (2026-10-28): the F-155 clause (`_arm_falls_into`) with the retry flag instead of `duplicated_returns`:
+  `flow_audit` then reports 0 lost paths and no `goto`, but the output is WRONG (the `identity` path falls into the code
+  after the `if` and `r7 = r8` overwrites it), so it was not kept: that clause is only exact when the arm's other exits are
+  real `return`s. Tried: letting a jumper that sets the register itself (`Mov r7, r10; if (...) goto RET`) be copied
+  whatever the other paths hold: 3 tests broke (98/1871, 98/2216 among them). Next idea: copy `Ret r7` for those jumpers
+  only (exact: each copy returns the value its own block set) and leave the closing return alone; the lost-path check
+  cannot see the second fault (it only asks whether the target is reachable at all), 96/15065 and 98/9456 `labeledBreakTest` (b: the
   fall-through test into a shared `log` block; their goldens are wrong).
 
 - **F-142 `drop_scan` candidates (refreshed 2026-10-28, both bundles).** `drop_scan.py --report` now lists
