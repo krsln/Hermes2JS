@@ -92,6 +92,26 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   switch tests; excluding Return blocks broke `defaultPort`; excluding blocks with non-test predecessors
   broke 5 switch tests). F-152 made `_case_chain_has_two_bodies` count tests on the same value only; 96/2602
   still needs a look to see whether its two tests share a subject.
+- **F-153 A join block printed in only one arm (98/2216 `getScriptURL`, 96/15065 `labeledBreakTest`).**
+  Bytecode of 2216: `if (r5 == null) goto J; ... r3 = null; if (startsWith) goto END; ...; if (includes)
+  goto J; r5 = "file://" + r7; J: r3 = r5; END: store r3`. `J` has three ways in (the test, the `includes`
+  jump, the fall-through from the `file://` block). Three separate faults:
+  (a) `_DominanceIfBuilder._convert` makes `J` the `else` arm of the first test (`has_else`, since the
+  post-dominator `END` is a later block) although the `then` arm falls and jumps into `J` as well; the
+  arm's flow into `J` is dropped (`drop_scan`: edges 0x56->0x96, 0x8e->0x96). Bailing there when a
+  fall-through predecessor sits in the `then` arm fixes it but moves 26 (96) / 20 (98) more `goto` lines
+  into other functions and made 20 functions worse with no lost edge before, so it was NOT kept.
+  (b) `_CompoundConditionFolder._absorb_residual_conditional` drops a jump that lands INSIDE the arm it
+  builds: 96/15065 (golden, `labeledBreakTest`) prints `if (r5 !== 1) log else if (j === 1) break` and loses
+  the `log` on `r5 === 1 && j !== 1` (bytecode: the `j === 1` test falls through into the `log` block). The
+  golden file records the wrong output. A guard on "target inside `rest`" gave +4 (96) / +7 (98) functions
+  with `goto` (several were a loop latch; exempting latches left `goto` lines up by 26 / 20): not kept.
+  (c) The frontend inlines `Mov r3, r5` into the read after the join (`r4[5] = r5`) although the other path
+  reaches it with `r3 = null`; `UnfoldedMergeRepairPass` only repairs it when the structure is an `if`.
+  A real fix needs all three; (a)+(b) alone replace a wrong result by `goto`s whose values are still wrong.
+  Candidate: give `J` a private copy per way in (extend `SharedTailDuplicationCfgPass` to a tail entered
+  by a fall-through and by jumpers while an EARLIER test skips it), which solves (a)-(c) together.
+
 - **F-142 `drop_scan` candidates (96 triaged, 98 partly).** The 2026-10-26 report of 96 lists
   seven goto-free functions with a lost edge. Triage: 96/1339 `parseDropShadow`, 96/2103
   `commitDeletionEffectsOnFiber` and 96/7599 `getStateFromPath` are false positives (the lost edge
@@ -100,8 +120,9 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   `SaveGenerator`/`ResumeGenerator` resume; the printed `if/else` with `await` reads right).
   96/1595 and 96/11086 were fixed by F-149 (that report predates it). 96/2602 is F-148 (real).
   98 (ran 2026-10-27): 98/7358 `collectSpans` was real (F-152, fixed); 98/9535 is a false positive;
-  98/2594 is a `Catch` edge, probably a false positive. Not read yet: 98/2216 `getScriptURL`, 98/4047
-  `__makeNative`, 98/10128, 98/12551. Open: read those four; re-run 96 to refresh its list.
+  98/2594 is a `Catch` edge, probably a false positive. 98/2216 `getScriptURL` is real (F-153), 98/10128
+  has the same shape of lost edge (not read). Not read yet: 98/4047 `__makeNative`, 98/12551. Open: read
+  those; re-run 96 to refresh its list.
 
 - **F-10 Conditional jump to an exit block.** `if (c) goto finalReturn`: conditional jumps to a shared
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
