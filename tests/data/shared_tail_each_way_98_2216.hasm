@@ -1,0 +1,48 @@
+
+=> [Function #2216 "getScriptURL" of 162 bytes]: 1 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x00163382
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 4, UInt8: 0>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 2, Reg8: 4, UInt8: 5>
+==> 00000007: <LoadConstUndefined>: <Reg8: 1>
+==> 00000009: <JStrictNotEqualLong>: <Addr32: 151, Reg8: 2, Reg8: 1>  # Address: 000000a0
+==> 00000010: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 6>
+==> 00000014: <LoadConstNull>: <Reg8: 3>
+==> 00000016: <JNotEqual>: <Addr8: 34, Reg8: 5, Reg8: 3>  # Address: 00000038
+==> 0000001a: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 0>
+==> 0000001e: <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 0, string_id: 115>  # String: 'default' (Identifier)
+==> 00000023: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 150>  # String: 'getConstants' (Identifier)
+==> 00000028: <Call1>: <Reg8: 5, Reg8: 5, Reg8: 6>
+==> 0000002c: <GetById>: <Reg8: 8, Reg8: 5, UInt8: 2, string_id: 13447>  # String: 'scriptURL' (Identifier)
+==> 00000032: <StoreToEnvironment>: <Reg8: 4, UInt8: 6, Reg8: 8>
+==> 00000036: <Jmp>: <Addr8: 6>  # Address: 0000003c
+==> 00000038: <LoadFromEnvironment>: <Reg8: 8, Reg8: 4, UInt8: 6>
+==> 0000003c: <Mov>: <Reg8: 5, Reg8: 8>
+==> 0000003f: <JEqual>: <Addr8: 87, Reg8: 5, Reg8: 3>  # Address: 00000096
+==> 00000043: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 3, string_id: 232>  # String: 'startsWith' (Identifier)
+==> 00000048: <LoadConstString>: <Reg8: 6, string_id: 2098>  # String: 'assets://' (String)
+==> 0000004c: <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
+==> 00000051: <LoadConstNull>: <Reg8: 3>
+==> 00000053: <JmpTrue>: <Addr8: 70, Reg8: 6>  # Address: 00000099
+==> 00000056: <GetById>: <Reg8: 7, Reg8: 8, UInt8: 4, string_id: 8985>  # String: 'substring' (Identifier)
+==> 0000005c: <GetById>: <Reg8: 9, Reg8: 8, UInt8: 5, string_id: 12197>  # String: 'lastIndexOf' (Identifier)
+==> 00000062: <LoadConstString>: <Reg8: 6, string_id: 503>  # String: '/' (String)
+==> 00000066: <Call2>: <Reg8: 6, Reg8: 9, Reg8: 8, Reg8: 6>
+==> 0000006b: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 0000006e: <Add>: <Reg8: 6, Reg8: 6, Reg8: 0>
+==> 00000072: <LoadConstZero>: <Reg8: 0>
+==> 00000074: <Call3>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 0, Reg8: 6>
+==> 0000007a: <GetByIdShort>: <Reg8: 8, Reg8: 7, UInt8: 6, string_id: 163>  # String: 'includes' (Identifier)
+==> 0000007f: <LoadConstString>: <Reg8: 6, string_id: 838>  # String: '://' (String)
+==> 00000083: <Call2>: <Reg8: 6, Reg8: 8, Reg8: 7, Reg8: 6>
+==> 00000088: <Mov>: <Reg8: 5, Reg8: 7>
+==> 0000008b: <JmpTrue>: <Addr8: 11, Reg8: 6>  # Address: 00000096
+==> 0000008e: <LoadConstString>: <Reg8: 6, string_id: 2104>  # String: 'file://' (String)
+==> 00000092: <Add>: <Reg8: 5, Reg8: 6, Reg8: 7>
+==> 00000096: <Mov>: <Reg8: 3, Reg8: 5>
+==> 00000099: <StoreToEnvironment>: <Reg8: 4, UInt8: 5, Reg8: 3>
+==> 0000009d: <Mov>: <Reg8: 2, Reg8: 3>
+==> 000000a0: <Ret>: <Reg8: 2>
+
+

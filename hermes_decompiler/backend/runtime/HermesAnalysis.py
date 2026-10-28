@@ -448,7 +448,7 @@ class HermesAnalysis:
             # A tree without a `goto` that LOST a path (`flow_audit`: the shared
             # `throw` the fall-through arm should run into, 98/12551) gets the same
             # retries; there a retry only wins when it is `goto`-free and loses fewer paths.
-            for level in (1, 2, 3, 4):
+            for level in (1, 2, 3, 4, 5):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if not retry[3] or self._has_goto(retry[0]):
                     continue
@@ -591,7 +591,9 @@ class HermesAnalysis:
         EnvArrayDestructuringCfgPass(cfg).run()
         if duplicate_returns:
             SharedReturnDuplicationCfgPass(cfg, widen=duplicate_returns >= 2, statements=duplicate_returns >= 4).run()
-            SharedTailDuplicationCfgPass(cfg, regions=duplicate_returns >= 3).run()
+            SharedTailDuplicationCfgPass(
+                cfg, regions=duplicate_returns >= 3, per_predecessor=duplicate_returns >= 5,
+            ).run()
 
         cfg.verify()
         cfg.compute_dominators()

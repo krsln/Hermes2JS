@@ -31,6 +31,8 @@ import copy
 import dataclasses
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
+from hermes_decompiler.backend.transforms.shared import repoint_node
+from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 
 
@@ -38,8 +40,13 @@ class SharedTailDuplicationCfgPass:
     _MAX_INSTRUCTIONS = 12
     _MAX_REGION_BLOCKS = 4
 
-    def __init__(self, cfg: CFG, regions: bool = False):
+    def __init__(self, cfg: CFG, regions: bool = False, per_predecessor: bool = False):
         self.cfg = cfg
+        # `per_predecessor`: a small tail entered by a fall-through AND by jumps, while an EARLIER
+        # test of the same chain skips it, gets one private copy per way in (98/2216 `getScriptURL`:
+        # `r3 = r5` after the `file://` test). The last resort, run only when nothing else
+        # structured the function.
+        self.per_predecessor = per_predecessor
         # `regions`: also copy a tail of several blocks. Kept to the last
         # resort: on functions that structure fine without it, the copy
         # only breaks `||`/`&&` chains apart (96/7424) or loses a clamp
@@ -64,6 +71,10 @@ class SharedTailDuplicationCfgPass:
 
             if found is not None:
                 self._give_private_region_copy(*found)
+                copied += 1
+                continue
+
+            if self.per_predecessor and self._split_per_predecessor(tail):
                 copied += 1
 
         return copied
@@ -263,3 +274,138 @@ class SharedTailDuplicationCfgPass:
 
         position = blocks.index(region[0])
         blocks[position:position] = [clones[b] for b in region]
+
+    # -- one copy per way in -------------------------------------------------------
+
+    def _split_per_predecessor(self, tail: BasicBlock) -> bool:
+        blocks = self.cfg.blocks
+
+        if tail not in blocks or len(tail.predecessors) < 3 or len(tail.instructions) > 3:
+            return False
+        if tail.terminator is not None and not isinstance(tail.terminator, TerminatorJump):
+            return False
+        if any(i.terminator is not None and i.terminator is not tail.terminator for i in tail.instructions):
+            return False
+        if len(tail.successors) != 1 or tail.successors[0].address <= tail.address:
+            return False
+
+        index = blocks.index(tail)
+        end = tail.successors[0]
+        faller = blocks[index - 1] if index else None
+
+        if faller is None or faller not in tail.predecessors or isinstance(faller.terminator,
+                                                                           TerminatorConditionalBranch):
+            return False
+
+        jumpers = [p for p in tail.predecessors if p is not faller]
+        for pred in jumpers:
+            terminator = pred.terminator
+            if not isinstance(terminator, (TerminatorJump, TerminatorConditionalBranch)):
+                return False
+            if terminator.target != tail.address or terminator.target <= pred.address:
+                return False
+
+        # An earlier test skips the tail altogether: otherwise it is an ordinary join.
+        if not any(
+                isinstance(b.terminator, (TerminatorJump, TerminatorConditionalBranch))
+                and b.terminator.target == end.address and b.address < tail.address and b is not tail
+                for b in blocks
+        ):
+            return False
+
+        ways = [faller, *jumpers]
+        if any(tail.address - len(ways) <= b.address < tail.address for b in blocks):
+            return False  # no free addresses in front of the tail
+
+        first_id = max(b.id for b in blocks) + 1
+        clones = []
+
+        for n, pred in enumerate(ways):
+            clone = BasicBlock(first_id + n, tail.address - len(ways) + n)
+
+            for instruction in tail.instructions:
+                duplicate = copy.copy(instruction)
+                duplicate.value = copy.deepcopy(instruction.value)
+                duplicate.statement = copy.deepcopy(instruction.statement)
+                duplicate.terminator = None
+                clone.instructions.append(duplicate)
+
+            clone.terminator = TerminatorJump(target=end.address)
+            clone.successors = [end]
+            end.predecessors.append(clone)
+            clone.predecessors.append(pred)
+            clones.append(clone)
+
+            if pred is faller:
+                pred.successors = [clone if s is tail else s for s in pred.successors]
+            else:
+                retargeted = dataclasses.replace(pred.terminator, target=clone.address)
+                for instruction in pred.instructions:
+                    if instruction.terminator is pred.terminator:
+                        instruction.terminator = retargeted
+                pred.terminator = retargeted
+                pred.successors = [clone if s is tail else s for s in pred.successors]
+
+        self._name_the_register_after_the_join(tail, clones, blocks)
+
+        position = blocks.index(tail)
+        blocks[position:position + 1] = clones
+        end.predecessors.remove(tail)
+        tail.predecessors.clear()
+        tail.successors.clear()
+
+        return True
+
+    @staticmethod
+    def _name_the_register_after_the_join(tail: BasicBlock, clones: list[BasicBlock], blocks) -> None:
+        """Every copy writes the register now, so a read after the join names it.
+
+        IR generation froze the tail's value straight into the readers after it (`r4[5] = <value>`):
+        that is one path's value. With a copy on every way in, the readers say `rN` and each copy
+        prints its own write (98/2216: `r3 = r5` on three paths, `r3 = null` on a fourth)."""
+        for instruction in tail.instructions:
+            if instruction.dest_reg is None or instruction.value is None:
+                continue
+
+            old = instruction.value
+            replacement = Identifier(name=f"r{instruction.dest_reg}")
+            readers = 0
+
+            for block in blocks:
+                if block is tail or block in clones:
+                    continue
+
+                for other in block.instructions:
+                    if other.value is not None and _holds(other.value, old):
+                        other.value = repoint_node(other.value, old, replacement, structural=False)[0]
+                        readers += 1
+                    if other.statement is not None and _holds(other.statement, old):
+                        other.statement = repoint_node(other.statement, old, replacement, structural=False)[0]
+                        readers += 1
+                    terminator = other.terminator
+                    if terminator is not None and terminator is block.terminator and _holds(terminator, old):
+                        updated = repoint_node(terminator, old, replacement, structural=False)[0]
+                        other.terminator = updated
+                        block.terminator = updated
+                        readers += 1
+
+            if readers:
+                for clone in clones:
+                    for duplicate in clone.instructions:
+                        if duplicate.dest_reg == instruction.dest_reg:
+                            duplicate.definition_used = False
+
+
+def _holds(node, target) -> bool:
+    if node is target:
+        return True
+    if not dataclasses.is_dataclass(node):
+        return False
+
+    for field in dataclasses.fields(node):
+        child = getattr(node, field.name)
+        children = child if isinstance(child, tuple) else (child,)
+        if any(c is not None and not isinstance(c, (str, int, float, bool)) and _holds(c, target) for c in children):
+            return True
+
+    return False

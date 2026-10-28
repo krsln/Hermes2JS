@@ -36,6 +36,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-27 | after F-143 (dominator tree cached), 98 now WITH 98/2619 | 298 | 335 | 457 | 684 | 1046 passed |
 | 2026-10-27 | after F-152 (case chain: same value only) | 298 | 335 | 456 | 684 | 1047 passed |
 | 2026-10-28 | after F-154 (retries for a tree that lost a path; closes F-148) | 298 | 335 | 457 | 684 | 1049 passed |
+| 2026-10-28 | after F-153 part (level 5: a copy of a shared tail per way in) | 298 | 335 | 457 | 684 | 1050 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -86,32 +87,30 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   intended structural copies. A real fix has to tell a copy of the arm value (a `Mov`) from an identical
   second source expression, e.g. by the reader's address relative to the arm.
 
-- **F-153 A join block printed in only one arm (98/2216 `getScriptURL`, 96/15065 `labeledBreakTest`).**
+- **F-153 A join block printed in only one arm (98/10128 open; 98/2216 fixed in part; 96/15065 open).**
   Bytecode of 2216: `if (r5 == null) goto J; ... r3 = null; if (startsWith) goto END; ...; if (includes)
-  goto J; r5 = "file://" + r7; J: r3 = r5; END: store r3`. `J` has three ways in (the test, the `includes`
-  jump, the fall-through from the `file://` block). Three separate faults:
+  goto J; r5 = "file://" + r7; J: r3 = r5; END: store r3`. `J` has three ways in. Faults:
   (a) `_DominanceIfBuilder._convert` makes `J` the `else` arm of the first test (`has_else`, since the
   post-dominator `END` is a later block) although the `then` arm falls and jumps into `J` as well; the
-  arm's flow into `J` is dropped (`drop_scan`: edges 0x56->0x96, 0x8e->0x96). Bailing there when a
-  fall-through predecessor sits in the `then` arm fixes it but moves 26 (96) / 20 (98) more `goto` lines
-  into other functions and made 20 functions worse with no lost edge before, so it was NOT kept.
+  arm's flow into `J` is dropped (`drop_scan`: edges 0x56->0x96, 0x8e->0x96).
   (b) `_CompoundConditionFolder._absorb_residual_conditional` drops a jump that lands INSIDE the arm it
   builds: 96/15065 (golden, `labeledBreakTest`) prints `if (r5 !== 1) log else if (j === 1) break` and loses
   the `log` on `r5 === 1 && j !== 1` (bytecode: the `j === 1` test falls through into the `log` block). The
-  golden file records the wrong output. A guard on "target inside `rest`" gave +4 (96) / +7 (98) functions
-  with `goto` (several were a loop latch; exempting latches left `goto` lines up by 26 / 20): not kept.
-  (c) The frontend inlines `Mov r3, r5` into the read after the join (`r4[5] = r5`) although the other path
-  reaches it with `r3 = null`; `UnfoldedMergeRepairPass` only repairs it when the structure is an `if`.
-  A real fix needs all three; (a)+(b) alone replace a wrong result by `goto`s whose values are still wrong.
-  Candidate: give `J` a private copy per way in (extend `SharedTailDuplicationCfgPass` to a tail entered
-  by a fall-through and by jumpers while an EARLIER test skips it), which solves (a)-(c) together.
+  golden file records the wrong output.
+  (c) The frontend inlines `Mov r3, r5` into the read after the join (`r4[5] = r5`) although another path
+  reaches it with `r3 = null`.
+  Direct guards for (a) and (b) moved 26 (96) / 20 (98) more `goto` lines into other functions (20 of them
+  had no lost edge before) and were NOT kept. Done for 2216 (resolved in the archive entry F-153a): retry level 5
+  copies a small tail per way in. Open: 98/10128 (the tail `Mov r14, r17` has two ways in and no test skips
+  to its successor: the level-5 pattern does not match), 96/15065 and 98/9456 `labeledBreakTest` (b: the
+  fall-through test into a shared `log` block; their goldens are wrong).
 
 - **F-142 `drop_scan` candidates (refreshed 2026-10-28, both bundles).** `drop_scan.py --report` now lists
   3 goto-free functions in 96 and 4 in 98. 96/1339 `parseDropShadow`, 96/2103 `commitDeletionEffectsOnFiber`
   are false positives (the lost edge goes to a bare `return undefined`/`return r0` where `r0` is `undefined`; falling
   off the end is the same). 96/6029 `_anon_0_` is an async state machine (the edge is a resume; the printed
   `if/else` with `await` reads right). 98/9535 is a false positive; 98/2594 is a `Catch` edge, probably one too.
-  98/2216 `getScriptURL` and 98/10128 are real: F-153. Fixed since the first report: 96/1595, 96/11086 (F-149),
+  98/2216 `getScriptURL` was real (F-153a, fixed); 98/10128 is real and open (F-153). Fixed since the first report: 96/1595, 96/11086 (F-149),
   96/2602 (F-148, closed by F-154), 98/7358 (F-152), 98/12551 and 98/4047 (F-154).
 
 - **F-10 Conditional jump to an exit block.** `if (c) goto finalReturn`: conditional jumps to a shared
