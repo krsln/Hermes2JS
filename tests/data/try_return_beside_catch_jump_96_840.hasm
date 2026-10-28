@@ -1,0 +1,32 @@
+
+=> [Function #840 "preprocessException" of 70 bytes]: 2 params, frame size=13, strict=1, exc handler=1, debug info=0  @ offset 0x00108407
+  [Exception handlers: [start=0x1a, end=0x28, target=0x30] [start=0x1a, end=0x28, target=0x3a] [start=0x30, end=0x32, target=0x3a] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <GetEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000006: <LoadFromEnvironment>: <Reg8: 1, Reg8: 3, UInt8: 8>
+==> 0000000a: <JmpFalse>: <Addr8: 58, Reg8: 1>  # Address: 00000044
+==> 0000000d: <LoadFromEnvironment>: <Reg8: 1, Reg8: 3, UInt8: 9>
+==> 00000011: <JmpTrue>: <Addr8: 51, Reg8: 1>  # Address: 00000044
+==> 00000014: <LoadConstTrue>: <Reg8: 1>
+==> 00000016: <StoreNPToEnvironment>: <Reg8: 3, UInt8: 9, Reg8: 1>
+==> 0000001a: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 8>
+==> 0000001e: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000021: <LoadConstUndefined>: <Reg8: 1>
+==> 00000023: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 2>
+==> 00000028: <LoadConstFalse>: <Reg8: 2>
+==> 0000002a: <StoreNPToEnvironment>: <Reg8: 3, UInt8: 9, Reg8: 2>
+==> 0000002e: <Ret>: <Reg8: 1>
+==> 00000030: <Catch>: <Reg8: 1>
+==> 00000032: <LoadConstFalse>: <Reg8: 1>
+==> 00000034: <StoreNPToEnvironment>: <Reg8: 3, UInt8: 9, Reg8: 1>
+==> 00000038: <Jmp>: <Addr8: 12>  # Address: 00000044
+==> 0000003a: <Catch>: <Reg8: 1>
+==> 0000003c: <LoadConstFalse>: <Reg8: 2>
+==> 0000003e: <StoreNPToEnvironment>: <Reg8: 3, UInt8: 9, Reg8: 2>
+==> 00000042: <Throw>: <Reg8: 1>
+==> 00000044: <Ret>: <Reg8: 0>
+
+

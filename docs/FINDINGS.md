@@ -39,6 +39,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-28 | after F-153 part (level 5: a copy of a shared tail per way in) | 298 | 335 | 457 | 684 | 1050 passed |
 | 2026-10-28 | after F-10(a) (shared return of different constants) | 297 | 335 | 457 | 684 | 1050 passed |
 | 2026-10-28 | after F-155 (an arm that runs into the branch target, in a retry) | 287 | 326 | 456 | 683 | 1052 passed |
+| 2026-10-28 | after F-156 (try `return` beside a catch jump) | 287 | 326 | 456 | 683 | 1053 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -130,7 +131,8 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   (F-113, F-114, F-115, F-117, F-119, and (a) below). Left: (b) jumps whose target is not a `return`
   (sibling region, `none` terminator). (a) 96/11046 `areDependenciesEqual` is done: see the archive.
 - **F-11 `goto` inside `try/finally`.** 98/2007 `preprocessException`, 98/10013 `flush`, 96/840. The
-  jump crosses the `finally` boundary.
+  jump crosses the `finally` boundary. The lost `return r1` of 96/840 is fixed (F-156); the catch's jump to the
+  closing return stays, because the return copy skips handler blocks.
 - **F-12 `await`/`yield` dispatch and 98 generator opcodes.** 96/12207 `_anon_0`. Without a batch
   table the dispatch cannot be resolved; some generator opcodes are missing in 98.
 - **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.

@@ -112,6 +112,21 @@ class _FinallyAttacher:
 
             tail = tail_from_catch or tail_from_try
 
+            # The two copies only stand for ONE shared continuation when
+            # they end the same way. When the try body ends in its own
+            # exit (`return r1`) and the catch falls through to a
+            # different one (`jmp` to the closing return), relocating
+            # only the catch's tail silently drops the try's: put it
+            # back where it was, at the end of the try body.
+            if tail_from_catch and tail_from_try:
+                if not self._same_tail(tail_from_catch, tail_from_try):
+                    for item in tail_from_try:
+                        self.graph.insert_at(
+                            try_region.try_body,
+                            len(try_region.try_body.children),
+                            item,
+                        )
+
             if tail:
                 self._insert_tail_after(try_region, tail)
 
@@ -363,6 +378,28 @@ class _FinallyAttacher:
             # scanning the REMAINING blocks - see docstring.
 
         return tail
+
+    @staticmethod
+    def _same_tail(a: list, b: list) -> bool:
+        """True when two relocated tails are the same continuation: same
+        number of items and, for blocks, the same terminator type and
+        successors and the same instructions."""
+        if len(a) != len(b):
+            return False
+        for x, y in zip(a, b):
+            if type(x) is not type(y):
+                return False
+            if isinstance(x, BasicBlock):
+                if [i.value for i in x.instructions] != [i.value for i in y.instructions]:
+                    return False
+                tx, ty = x.terminator, y.terminator
+                if type(tx) is not type(ty) or repr(tx) != repr(ty):
+                    return False
+                if [s.address for s in x.successors] != [s.address for s in y.successors]:
+                    return False
+            elif x is not y:
+                return False
+        return True
 
     def _split_off_tail(self, block: BasicBlock, region: SequenceRegion, cfg: CFG, after_match: list):
 

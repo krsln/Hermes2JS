@@ -30,6 +30,9 @@ function tryCatchFinallyImplicitThrowTest(param1) {
         // USED → r2 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/result";
         // CODE → addr: 54 | <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 0>
         console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/result", r0);
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → addr: 80 | <Ret>: <Reg8: 0>
+        return r0;
     } catch (caughtException) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 84 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
