@@ -1,0 +1,58 @@
+
+=> [Function #12551 "" of 232 bytes]: 2 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x0024538c
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <GetParentEnvironment>: <Reg8: 3, UInt8: 1>
+==> 00000006: <GetParentEnvironment>: <Reg8: 4, UInt8: 0>
+==> 00000009: <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 0>
+==> 0000000d: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 0, string_id: 10735>  # String: '_controlledTransformStream' (Identifier)
+==> 00000013: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 1, string_id: 6715>  # String: '_readable' (Identifier)
+==> 00000019: <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 2, string_id: 66>  # String: '_readableStreamController' (Identifier)
+==> 0000001e: <GetById>: <Reg8: 6, Reg8: 5, UInt8: 3, string_id: 10385>  # String: '_controlledReadableStream' (Identifier)
+==> 00000024: <GetByIdShort>: <Reg8: 8, Reg8: 6, UInt8: 4, string_id: 70>  # String: '_state' (Identifier)
+==> 00000029: <LoadConstString>: <Reg8: 7, string_id: 6717>  # String: 'readable' (Identifier)
+==> 0000002d: <JStrictNotEqualLong>: <Addr32: 173, Reg8: 7, Reg8: 8>  # Address: 000000da
+==> 00000034: <LoadFromEnvironment>: <Reg8: 8, Reg8: 3, UInt8: 15>
+==> 00000038: <CreateThisForNew>: <Reg8: 7, Reg8: 8, UInt8: 5>
+==> 0000003c: <JmpTypeOfIs>: <Addr32: 16, Reg8: 8, UInt16: 128>  # Address: 0000004c
+==> 00000044: <LoadConstString>: <Reg8: 12, string_id: 4299>  # String: 'Trying to call a non-function' (String)
+==> 00000048: <CallBuiltin>: <Reg8: 9, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+==> 0000004c: <GetClosureEnvironment>: <Reg8: 8, Reg8: 8>
+==> 0000004f: <LoadFromEnvironment>: <Reg8: 8, Reg8: 8, UInt8: 0>
+==> 00000053: <InstanceOf>: <Reg8: 1, Reg8: 7, Reg8: 8>
+==> 00000057: <JmpTrue>: <Addr8: 32, Reg8: 1>  # Address: 00000077
+==> 0000005a: <GetGlobalObject>: <Reg8: 8>
+==> 0000005c: <TryGetById>: <Reg8: 10, Reg8: 8, UInt8: 6, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 00000062: <CreateThisForNew>: <Reg8: 9, Reg8: 10, UInt8: 5>
+==> 00000066: <LoadConstString>: <Reg8: 12, string_id: 2828>  # String: 'Cannot call a class as a function' (String)
+==> 0000006a: <Mov>: <Reg8: 13, Reg8: 9>
+==> 0000006d: <Construct>: <Reg8: 8, Reg8: 10, UInt8: 2>
+==> 00000071: <SelectObject>: <Reg8: 8, Reg8: 9, Reg8: 8>
+==> 00000075: <Throw>: <Reg8: 8>
+==> 00000077: <LoadConstZero>: <Reg8: 0>
+==> 00000079: <PutByIdStrict>: <Reg8: 7, Reg8: 0, UInt8: 0, string_id: 58>  # String: '_cursor' (Identifier)
+==> 0000007f: <PutByIdStrict>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 68>  # String: '_size' (Identifier)
+==> 00000085: <NewObjectWithBuffer>: <Reg8: 8, UInt16: 1926, UInt16: 17451>  # Object: {'_elements': null, '_next': undefined}
+==> 0000008b: <NewArray>: <Reg8: 9, UInt16: 0>
+==> 0000008f: <PutOwnBySlotIdx>: <Reg8: 8, Reg8: 9, UInt8: 0>
+==> 00000093: <PutByIdStrict>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 60>  # String: '_front' (Identifier)
+==> 00000099: <GetByIdShort>: <Reg8: 8, Reg8: 7, UInt8: 7, string_id: 60>  # String: '_front' (Identifier)
+==> 0000009e: <PutByIdStrict>: <Reg8: 7, Reg8: 8, UInt8: 3, string_id: 13962>  # String: '_back' (Identifier)
+==> 000000a4: <PutByIdStrict>: <Reg8: 7, Reg8: 0, UInt8: 0, string_id: 58>  # String: '_cursor' (Identifier)
+==> 000000aa: <PutByIdStrict>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 68>  # String: '_size' (Identifier)
+==> 000000b0: <PutByIdStrict>: <Reg8: 5, Reg8: 7, UInt8: 4, string_id: 64>  # String: '_queue' (Identifier)
+==> 000000b6: <PutByIdStrict>: <Reg8: 5, Reg8: 0, UInt8: 5, string_id: 65>  # String: '_queueTotalSize' (Identifier)
+==> 000000bc: <LoadConstUndefined>: <Reg8: 1>
+==> 000000be: <PutByIdStrict>: <Reg8: 5, Reg8: 1, UInt8: 6, string_id: 15427>  # String: '_pullAlgorithm' (Identifier)
+==> 000000c4: <PutByIdStrict>: <Reg8: 5, Reg8: 1, UInt8: 7, string_id: 13689>  # String: '_cancelAlgorithm' (Identifier)
+==> 000000ca: <PutByIdStrict>: <Reg8: 5, Reg8: 1, UInt8: 8, string_id: 15532>  # String: '_strategySizeAlgorithm' (Identifier)
+==> 000000d0: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 98>
+==> 000000d4: <Call3>: <Reg8: 1, Reg8: 5, Reg8: 0, Reg8: 6, Reg8: 2>
+==> 000000da: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 105>
+==> 000000de: <LoadConstZero>: <Reg8: 0>
+==> 000000e0: <Call3>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2>
+==> 000000e6: <Throw>: <Reg8: 2>
+
+

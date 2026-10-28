@@ -431,9 +431,10 @@ class HermesAnalysis:
             creator_facts: CreatorFacts | None = None,
     ) -> list[str]:
         first = self._attempt(verbose, raw, creator_facts, duplicate_returns=False)
+        first_lost = self._lost_edges
         chosen = first
 
-        if not raw and self._has_goto(first[0]):
+        if not raw and (self._has_goto(first[0]) or first_lost):
             # A `return` block shared between early exits in different `if`
             # arms can leave a test without its exit (a raw `goto`). Only
             # then are the shared returns copied per jumper - doing it
@@ -443,9 +444,15 @@ class HermesAnalysis:
             # also copies a tail of several blocks (98/1871) - kept
             # apart because widening it alone changed the shapes level 1
             # already fixed (96/652).
+            #
+            # A tree without a `goto` that LOST a path (`flow_audit`: the shared
+            # `throw` the fall-through arm should run into, 98/12551) gets the same
+            # retries; there a retry only wins when it is `goto`-free and loses fewer paths.
             for level in (1, 2, 3, 4):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
-                if retry[3] and not self._has_goto(retry[0]):
+                if not retry[3] or self._has_goto(retry[0]):
+                    continue
+                if self._has_goto(first[0]) or self._lost_edges < first_lost:
                     chosen = retry
                     break
 
@@ -601,10 +608,13 @@ class HermesAnalysis:
         # Therefore, loop analysis must be computed before build() runs.
         cfg.compute_loops()
 
+        self._lost_edges = 0
+
         if raw:
             root = SequenceStructurer(cfg).run()
         else:
             root = StructuralAnalyzer(cfg).build()
+            self._lost_edges = getattr(cfg, "lost_edges", 0)
 
         lines = JSEmitter(verbose).emit(root)
 

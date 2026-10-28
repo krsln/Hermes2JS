@@ -35,6 +35,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-26 | after F-151 (BooleanChain and the other arm) | 298 | 334 | 457 | 683 | 1045 passed |
 | 2026-10-27 | after F-143 (dominator tree cached), 98 now WITH 98/2619 | 298 | 335 | 457 | 684 | 1046 passed |
 | 2026-10-27 | after F-152 (case chain: same value only) | 298 | 335 | 456 | 684 | 1047 passed |
+| 2026-10-28 | after F-154 (retries for a tree that lost a path; closes F-148) | 298 | 335 | 457 | 684 | 1049 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -85,13 +86,6 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   intended structural copies. A real fix has to tell a copy of the arm value (a `Mov`) from an identical
   second source expression, e.g. by the reader's address relative to the arm.
 
-- **F-148 `insertOrAppendPlacementNode` loses an edge (96/2602).** The `6 === tag` test's edge to the
-  shared body is dropped silently (`drop_scan`). Cause: the case-chain exemption in the compound folder
-  (`if_structurer/_compound_folder.py`, `_case_chain_has_two_bodies`) treats the chain as a switch and
-  the shared body then has no printed path. Three attempts were reverted (removing the exemption broke 5
-  switch tests; excluding Return blocks broke `defaultPort`; excluding blocks with non-test predecessors
-  broke 5 switch tests). F-152 made `_case_chain_has_two_bodies` count tests on the same value only; 96/2602
-  still needs a look to see whether its two tests share a subject.
 - **F-153 A join block printed in only one arm (98/2216 `getScriptURL`, 96/15065 `labeledBreakTest`).**
   Bytecode of 2216: `if (r5 == null) goto J; ... r3 = null; if (startsWith) goto END; ...; if (includes)
   goto J; r5 = "file://" + r7; J: r3 = r5; END: store r3`. `J` has three ways in (the test, the `includes`
@@ -112,17 +106,13 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   Candidate: give `J` a private copy per way in (extend `SharedTailDuplicationCfgPass` to a tail entered
   by a fall-through and by jumpers while an EARLIER test skips it), which solves (a)-(c) together.
 
-- **F-142 `drop_scan` candidates (96 triaged, 98 partly).** The 2026-10-26 report of 96 lists
-  seven goto-free functions with a lost edge. Triage: 96/1339 `parseDropShadow`, 96/2103
-  `commitDeletionEffectsOnFiber` and 96/7599 `getStateFromPath` are false positives (the lost edge
-  goes to a bare `return undefined`/`return r0` where `r0` is `undefined`; the printed `if` without an
-  `else` falls off the end, same result). 96/6029 `_anon_0_` is an async state machine (the edge is a
-  `SaveGenerator`/`ResumeGenerator` resume; the printed `if/else` with `await` reads right).
-  96/1595 and 96/11086 were fixed by F-149 (that report predates it). 96/2602 is F-148 (real).
-  98 (ran 2026-10-27): 98/7358 `collectSpans` was real (F-152, fixed); 98/9535 is a false positive;
-  98/2594 is a `Catch` edge, probably a false positive. 98/2216 `getScriptURL` is real (F-153), 98/10128
-  has the same shape of lost edge (not read). Not read yet: 98/4047 `__makeNative`, 98/12551. Open: read
-  those; re-run 96 to refresh its list.
+- **F-142 `drop_scan` candidates (refreshed 2026-10-28, both bundles).** `drop_scan.py --report` now lists
+  3 goto-free functions in 96 and 4 in 98. 96/1339 `parseDropShadow`, 96/2103 `commitDeletionEffectsOnFiber`
+  are false positives (the lost edge goes to a bare `return undefined`/`return r0` where `r0` is `undefined`; falling
+  off the end is the same). 96/6029 `_anon_0_` is an async state machine (the edge is a resume; the printed
+  `if/else` with `await` reads right). 98/9535 is a false positive; 98/2594 is a `Catch` edge, probably one too.
+  98/2216 `getScriptURL` and 98/10128 are real: F-153. Fixed since the first report: 96/1595, 96/11086 (F-149),
+  96/2602 (F-148, closed by F-154), 98/7358 (F-152), 98/12551 and 98/4047 (F-154).
 
 - **F-10 Conditional jump to an exit block.** `if (c) goto finalReturn`: conditional jumps to a shared
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved

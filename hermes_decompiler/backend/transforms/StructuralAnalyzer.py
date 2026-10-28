@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from hermes_decompiler.backend.analysis.flow_audit import count_lost_edges
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionGraph
 from hermes_decompiler.backend.transforms.cfg_passes import (
@@ -313,6 +314,10 @@ class StructuralAnalyzer:
         # ---- Diagnostics ------------------------------------------------
 
         self._audit_unstructured_blocks(root, graph, self.cfg)
+
+        # Read by `HermesAnalysis.generate_js`: a goto-free tree that lost a path gets the same
+        # retries (private copies of shared returns/tails) as one that printed a `goto`.
+        self.cfg.lost_edges = count_lost_edges(root, self.cfg)
 
         return root
 
