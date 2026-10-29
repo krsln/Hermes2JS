@@ -222,15 +222,17 @@ def test_for_of_does_not_leave_its_iterator_setup_behind():
     assert "GetIterator" not in out
 
 
-def test_iterator_setup_is_kept_when_the_register_is_still_read():
-    # hermes-96 `asyncLoopTest`: the for-of body still calls `r4.return()` (the
-    # generator-return path), so the iterator register must stay defined.
+def test_iterator_setup_goes_with_the_close_calls_a_for_of_implies():
+    # hermes-96 `asyncLoopTest`: the for-of body's `r4.return()` before the resume-return is the
+    # close `for (x of xs)` already does on `return` (F-167), so with it gone nothing reads the
+    # iterator register any more and the setup goes too.
     from tests.test_register_semantics import decompile
 
     out = decompile("96", 15185)
 
-    assert "r4 = GetIterator(param1)" in out
-    assert "r4.return()" in out
+    assert "for (const r9 of param1)" in out
+    assert "GetIterator" not in out
+    assert "r4.return()" not in out
 
 
 def test_nested_pattern_with_holes_is_one_statement():

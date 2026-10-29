@@ -1,0 +1,54 @@
+
+=> [Function #13887 "matchAgainstConfigs" of 155 bytes]: 3 params, frame size=20, strict=1, exc handler=1, debug info=0  @ offset 0x0024a2b8
+  [Exception handlers: [start=0x49, end=0x5f, target=0x68] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 2>
+==> 00000003: <CreateEnvironment>: <Reg8: 1>
+==> 00000005: <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
+==> 00000009: <LoadConstUndefined>: <Reg8: 6>
+==> 0000000b: <LoadConstUndefined>: <Reg8: 7>
+==> 0000000d: <LoadConstUndefined>: <Reg8: 8>
+==> 0000000f: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000012: <StoreToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 2>
+==> 00000016: <GetGlobalObject>: <Reg8: 2>
+==> 00000018: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000001e: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 103>  # String: 'create' (Identifier)
+==> 00000023: <LoadConstNull>: <Reg8: 2>
+==> 00000025: <Call2>: <Reg8: 4, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000002a: <StoreToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 4>
+==> 0000002e: <CreateClosure>: <Reg8: 7, Reg8: 1, function_id: 13888>  # Function: [#13888 _loop of 194 bytes]: 2 params @ offset 0x0024a353
+==> 00000033: <Mov>: <Reg8: 5, Reg8: 0>
+==> 00000036: <IteratorBegin>: <Reg8: 2, Reg8: 5>
+==> 00000039: <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
+==> 0000003c: <LoadConstZero>: <Reg8: 0>
+==> 0000003e: <IteratorNext>: <Reg8: 10, Reg8: 2, Reg8: 5>
+==> 00000042: <Mov>: <Reg8: 9, Reg8: 2>
+==> 00000045: <JStrictEqual>: <Addr8: 42, Reg8: 9, Reg8: 6>  # Address: 0000006f
+==> 00000049: <Mov>: <Reg8: 9, Reg8: 7>
+==> 0000004c: <Call2>: <Reg8: 9, Reg8: 9, Reg8: 6, Reg8: 10>
+==> 00000051: <Mov>: <Reg8: 8, Reg8: 9>
+==> 00000054: <JStrictEqual>: <Addr8: 18, Reg8: 9, Reg8: 0>  # Address: 00000066
+==> 00000058: <Mov>: <Reg8: 9, Reg8: 8>
+==> 0000005b: <JStrictEqual>: <Addr8: 6, Reg8: 9, Reg8: 3>  # Address: 00000061
+==> 0000005f: <Jmp>: <Addr8: -33>  # Address: 0000003e
+==> 00000061: <IteratorClose>: <Reg8: 2, UInt8: 0>
+==> 00000064: <Jmp>: <Addr8: 11>  # Address: 0000006f
+==> 00000066: <Jmp>: <Addr8: -40>  # Address: 0000003e
+==> 00000068: <Catch>: <Reg8: 0>
+==> 0000006a: <IteratorClose>: <Reg8: 2, UInt8: 1>
+==> 0000006d: <Throw>: <Reg8: 0>
+==> 0000006f: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000072: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 7>
+==> 00000076: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 18332>  # String: 'populateParams' (Identifier)
+==> 0000007c: <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 1>
+==> 00000080: <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 4>
+==> 00000086: <NewObject>: <Reg8: 0>
+==> 00000088: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 1>
+==> 0000008c: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 2, string_id: 219>  # String: 'routes' (Identifier)
+==> 00000090: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 2>
+==> 00000094: <PutNewOwnById>: <Reg8: 0, Reg8: 1, string_id: 15798>  # String: 'remainingPath' (Identifier)
+==> 00000099: <Ret>: <Reg8: 0>
+
+

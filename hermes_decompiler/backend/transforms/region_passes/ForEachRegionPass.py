@@ -23,7 +23,8 @@ from hermes_decompiler.ir.expressions import (
     UndefinedLiteral,
 )
 from hermes_decompiler.ir.expressions.Collections import SpreadElement
-from hermes_decompiler.ir.terminators import TerminatorThrow
+from hermes_decompiler.ir.statements import BreakStatement
+from hermes_decompiler.ir.terminators import TerminatorReturn, TerminatorThrow
 from ._base import RegionPass
 
 logger = get_logger(__name__)
@@ -164,6 +165,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
         if scaffold is not None:
             self._unwrap_try(try_region, loop)
+            self._strip_inline_closes(loop, raw_iterator_ref)
 
         self._drop_iterator_setup(iterator_expr)
         self._fold_binding_pattern(loop)
@@ -220,6 +222,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
                 child.parent = body
 
         body.invalidate_coverage()
+        self._strip_inline_closes(loop, raw_iterator_ref)
 
         self._drop_iterator_setup(iterator_expr)
         self._fold_binding_pattern(loop)
@@ -660,6 +663,43 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
     # -----------------------------------------------------------------
     # Mutation
     # -----------------------------------------------------------------
+
+    @staticmethod
+    def _is_close_call(instr, iterator_ref) -> bool:
+        value = instr.value
+
+        return (
+                isinstance(value, CallExpression)
+                and not value.arguments
+                and isinstance(value.callee, MemberExpression)
+                and isinstance(value.callee.prop, Identifier)
+                and value.callee.prop.name == "return"
+                and isinstance(value.callee.obj, Identifier)
+                and isinstance(iterator_ref, Identifier)
+                and value.callee.obj.name == iterator_ref.name
+        )
+
+    def _strip_inline_closes(self, loop: LoopRegion, iterator_ref) -> None:
+        """Drop `it.return();` right before a `break`/`return` inside a recognized for-of.
+
+        Hermes copies the iterator close onto every way out of the loop; `for (x of xs)` already closes
+        on `break` and `return`, so the copy is scaffolding too. A close is dropped when the block ends in a `return` (the value may be computed after it)
+        or when only the `break` follows it."""
+        for block in loop.body.covered_blocks:
+            instructions = block.instructions
+
+            for index in range(len(instructions) - 1, -1, -1):
+                instr = instructions[index]
+
+                if not self._is_close_call(instr, iterator_ref):
+                    continue
+
+                rest = instructions[index + 1:]
+                before_break = len(rest) == 1 and isinstance(rest[0].statement, BreakStatement)
+                before_return = isinstance(block.terminator, TerminatorReturn)
+
+                if before_break or before_return:
+                    del instructions[index]
 
     @staticmethod
     def _strip_instruction(block: BasicBlock, instr) -> None:
