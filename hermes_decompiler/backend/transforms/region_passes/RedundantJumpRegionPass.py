@@ -210,7 +210,8 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
             for block, owning_if in self._tail_blocks(branch):
                 terminator = block.terminator
 
-                if not isinstance(terminator, TerminatorJump) or terminator.target != exit_address:
+                if not isinstance(terminator, TerminatorJump) or not self._reaches_exit(terminator.target,
+                                                                                        exit_address):
                     continue
 
                 if self._clear_trailing_jump(block, terminator):
@@ -342,7 +343,7 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                 if not isinstance(terminator, TerminatorJump):
                     continue
 
-                if terminator.target != exit_address:
+                if not self._reaches_exit(terminator.target, exit_address):
                     # Some other jump this pass doesn't recognize (an
                     # early return/break out of an enclosing construct,
                     # for instance) - leave it as an explicit goto.
@@ -433,7 +434,7 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
             if not isinstance(terminator, TerminatorJump):
                 continue
 
-            if terminator.target != exit_address:
+            if not self._reaches_exit(terminator.target, exit_address):
                 # An early return/break out of an enclosing construct,
                 # or (fallthrough to the NEXT case, no `break` in the
                 # source) a jump this pass doesn't try to recognize -
@@ -448,6 +449,35 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                     "switch statement.",
                     block.id, block.address,
                 )
+
+    def _reaches_exit(self, target: int, exit_address: int) -> bool:
+        """Is `target` the exit address, or an emptied block that only runs on into it?
+
+        `_FinallyAttacher` strips the finally copy a `try` body jumps to; the block is left empty
+        (and pruned from the tree), so the jump names an address no sibling has any more
+        (96/4085: `jmp 0x42`, the copy, then `ret` at 0x46)."""
+        if target == exit_address:
+            return True
+
+        by_address = {b.address: b for b in self.cfg.blocks}
+        block = by_address.get(target)
+        seen = set()
+
+        while block is not None and block.address not in seen:
+            seen.add(block.address)
+
+            if any(i.value is not None or i.statement is not None for i in block.instructions):
+                return False
+
+            if block.terminator is not None or len(block.successors) != 1:
+                return False
+
+            block = block.successors[0]
+
+            if block.address == exit_address:
+                return True
+
+        return False
 
     @staticmethod
     def _next_fallthrough_address(region) -> int | None:

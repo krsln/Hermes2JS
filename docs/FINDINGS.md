@@ -46,6 +46,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-29 | after F-161 (merged test no longer a predecessor of a return copy) | 273 | 314 | n/a | n/a | 1057 passed |
 | 2026-10-29 | after F-162 (own-value return copies, level 5) | 268 | 303 | n/a | n/a | 1059 passed |
 | 2026-10-29 | after F-163 (an `if` arm's jump to the join is dropped) | 249 | 269 | n/a | n/a | 1060 passed |
+| 2026-10-29 | after F-164 (try exit jump to an emptied finally copy; closes F-11) | 248 | 268 | n/a | n/a | 1061 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -136,9 +137,6 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
   (F-113, F-114, F-115, F-117, F-119, and (a) below). Left: (b) jumps whose target is not a `return`
   (sibling region, `none` terminator). (a) 96/11046 `areDependenciesEqual` is done: see the archive.
-- **F-11 `goto` inside `try/finally`.** 98/2007 `preprocessException`, 98/10013 `flush`, 96/840. The
-  jump crosses the `finally` boundary. The lost `return r1` of 96/840 is fixed (F-156); the catch's jump to the
-  closing return stays, because the return copy skips handler blocks.
 - **F-160 An arm that falls into the branch target, test inside the arm (not its first block).** 96/5301
   `keyExtractor`: the `key` test (`JNotEqual` to a private `return param1.key`) falls into the code the first
   branch jumps to; the output is correct but keeps `if (r2 != null) goto label_87;` and a trailing
