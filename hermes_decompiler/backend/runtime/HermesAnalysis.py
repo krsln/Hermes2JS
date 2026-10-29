@@ -483,16 +483,26 @@ class HermesAnalysis:
         package_logger.handlers = [handler]
         package_logger.propagate = False
 
+        failure = None
+
         try:
             lines, reason = self._generate_js(verbose, raw, creator_facts, duplicate_returns)
             return lines, reason, False, True, handler.records
-        except Exception:
+        except Exception as error:
             if not duplicate_returns:
                 raise
+            failure = error
             return [], None, True, False, []
         finally:
             package_logger.handlers = saved_handlers
             package_logger.propagate = saved_propagate
+
+            if failure is not None:
+                # Not shown by default, but a retry that raises is otherwise invisible
+                # (96/7556: level 2 died in `compute_dominators` and nothing said so).
+                logging.getLogger(__name__).debug(
+                    "retry level %s failed: %r", duplicate_returns, failure, exc_info=failure
+                )
 
     @staticmethod
     def _has_goto(lines: list[str]) -> bool:

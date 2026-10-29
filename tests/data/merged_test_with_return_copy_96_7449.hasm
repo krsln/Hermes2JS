@@ -1,0 +1,54 @@
+
+=> [Function #7449 "" of 194 bytes]: 2 params, frame size=6, strict=1, exc handler=0, debug info=0  @ offset 0x001b1465
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <TypeOf>: <Reg8: 5, Reg8: 1>
+==> 00000006: <LoadConstString>: <Reg8: 0, string_id: 7961>  # String: 'string' (Identifier)
+==> 0000000a: <JStrictEqualLong>: <Addr32: 180, Reg8: 0, Reg8: 5>  # Address: 000000be
+==> 00000011: <LoadConstString>: <Reg8: 0, string_id: 8218>  # String: 'function' (Identifier)
+==> 00000015: <JStrictEqualLong>: <Addr32: 169, Reg8: 0, Reg8: 5>  # Address: 000000be
+==> 0000001c: <GetEnvironment>: <Reg8: 2, UInt8: 0>
+==> 0000001f: <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 2>
+==> 00000023: <JStrictEqualLong>: <Addr32: 155, Reg8: 1, Reg8: 0>  # Address: 000000be
+==> 0000002a: <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 4>
+==> 0000002e: <JStrictEqualLong>: <Addr32: 144, Reg8: 1, Reg8: 0>  # Address: 000000be
+==> 00000035: <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 3>
+==> 00000039: <JStrictEqualLong>: <Addr32: 133, Reg8: 1, Reg8: 0>  # Address: 000000be
+==> 00000040: <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 8>
+==> 00000044: <JStrictEqual>: <Addr8: 122, Reg8: 1, Reg8: 0>  # Address: 000000be
+==> 00000048: <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 9>
+==> 0000004c: <JStrictEqual>: <Addr8: 114, Reg8: 1, Reg8: 0>  # Address: 000000be
+==> 00000050: <LoadConstString>: <Reg8: 4, string_id: 7532>  # String: 'object' (Identifier)
+==> 00000054: <LoadConstFalse>: <Reg8: 0>
+==> 00000056: <JStrictNotEqual>: <Addr8: 106, Reg8: 4, Reg8: 5>  # Address: 000000c0
+==> 0000005a: <LoadConstNull>: <Reg8: 4>
+==> 0000005c: <LoadConstFalse>: <Reg8: 0>
+==> 0000005e: <JStrictEqual>: <Addr8: 98, Reg8: 4, Reg8: 1>  # Address: 000000c0
+==> 00000062: <GetByIdShort>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 0>  # String: '$$typeof' (Identifier)
+==> 00000067: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 11>
+==> 0000006b: <JStrictEqual>: <Addr8: 83, Reg8: 5, Reg8: 4>  # Address: 000000be
+==> 0000006f: <GetByIdShort>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 0>  # String: '$$typeof' (Identifier)
+==> 00000074: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 10>
+==> 00000078: <JStrictEqual>: <Addr8: 70, Reg8: 5, Reg8: 4>  # Address: 000000be
+==> 0000007c: <GetByIdShort>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 0>  # String: '$$typeof' (Identifier)
+==> 00000081: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 6>
+==> 00000085: <JStrictEqual>: <Addr8: 57, Reg8: 5, Reg8: 4>  # Address: 000000be
+==> 00000089: <GetByIdShort>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 0>  # String: '$$typeof' (Identifier)
+==> 0000008e: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 5>
+==> 00000092: <JStrictEqual>: <Addr8: 44, Reg8: 5, Reg8: 4>  # Address: 000000be
+==> 00000096: <GetByIdShort>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 0>  # String: '$$typeof' (Identifier)
+==> 0000009b: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 7>
+==> 0000009f: <JStrictEqual>: <Addr8: 31, Reg8: 5, Reg8: 4>  # Address: 000000be
+==> 000000a3: <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 0>  # String: '$$typeof' (Identifier)
+==> 000000a8: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 13>
+==> 000000ac: <JStrictEqual>: <Addr8: 18, Reg8: 4, Reg8: 2>  # Address: 000000be
+==> 000000b0: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 17627>  # String: 'getModuleId' (Identifier)
+==> 000000b6: <LoadConstUndefined>: <Reg8: 1>
+==> 000000b8: <LoadConstFalse>: <Reg8: 0>
+==> 000000ba: <JStrictEqual>: <Addr8: 6, Reg8: 1, Reg8: 2>  # Address: 000000c0
+==> 000000be: <LoadConstTrue>: <Reg8: 0>
+==> 000000c0: <Ret>: <Reg8: 0>
+
+

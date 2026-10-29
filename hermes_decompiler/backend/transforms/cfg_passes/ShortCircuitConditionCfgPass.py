@@ -713,8 +713,7 @@ class ShortCircuitConditionCfgPass:
         self._connect(block, edge if edge is not None else end_block)
         self._connect(block, a_block)
 
-        if successor in self.cfg.blocks:
-            self.cfg.blocks.remove(successor)
+        self._drop_block(successor)
 
     @staticmethod
     def _fallthrough(block: BasicBlock) -> BasicBlock | None:
@@ -915,8 +914,32 @@ class ShortCircuitConditionCfgPass:
             if successor in new_fallthrough.predecessors:
                 new_fallthrough.predecessors.remove(successor)
 
-        if successor in self.cfg.blocks:
-            self.cfg.blocks.remove(successor)
+        self._drop_block(successor)
+
+    def _drop_block(self, block: BasicBlock) -> None:
+        """Remove a merged-away block, and its mark as predecessor of anything it still names
+        (a private return copy kept it: 96/7449, a stale edge broke the dominators). Whatever
+        only it reached is dead then and goes with it."""
+        pending = [block]
+
+        while pending:
+            dead = pending.pop()
+
+            for target in dead.successors:
+                if dead in target.predecessors:
+                    target.predecessors.remove(dead)
+
+                # Without handlers an entry-less block is unreachable, and would print as a stray loop.
+                if (
+                        not target.predecessors
+                        and target is not self.cfg.entry
+                        and not self.cfg.exception_handlers
+                        and target in self.cfg.blocks
+                ):
+                    pending.append(target)
+
+            if dead in self.cfg.blocks:
+                self.cfg.blocks.remove(dead)
 
     @staticmethod
     def _connect(source: BasicBlock, target: BasicBlock) -> None:
