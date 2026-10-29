@@ -145,6 +145,10 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   A new discriminator is needed (what the return block's value is, or where the arm's other exit leads).
   Same family: 96/9896 `getReduceMotionFromConfig` (`!p || p === System` with loads in the middle block:
   the compound folder does not fold a test block that holds statements).
+  96/11027 (a `for-in` body) is the same shape and its first-attempt output is silently wrong: `if (!r9) { r9 = {}; store } else { stmts; if (typeof === "object") goto J }` drops the fall into `r9 = {}; store` when the
+  type is not `object`. The retries copy that tail for the test that falls into it (`SharedTailDuplicationCfgPass._faller_that_skips`)
+  but the copy comes out after the join in the loop body (`r9 = {}; r2[2][r1[0]] = r9;` printed after J), so the retry also keeps a `goto` and is not chosen.
+  Cause not found yet (the copy has no terminator when the tail falls through; giving it a `jmp` changed nothing in either bundle).
 - **F-12 `await`/`yield` dispatch and 98 generator opcodes.** 96/12207 `_anon_0`. Without a batch
   table the dispatch cannot be resolved; some generator opcodes are missing in 98.
 - **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.
