@@ -233,6 +233,18 @@ class SharedReturnDuplicationCfgPass:
             clone.instructions.append(duplicate)
         clone.terminator = clone.instructions[-1].terminator
 
+        if isinstance(pred.terminator, TerminatorJump):
+            # A plain `jmp` to the shared return IS the return: put the copy in the jumper
+            # itself (96/6731: the exit of a `try` body, which nothing places a separate
+            # block after).
+            pred.instructions = [i for i in pred.instructions if i.terminator is not pred.terminator]
+            pred.instructions.extend(clone.instructions)
+            pred.terminator = clone.terminator
+            pred.successors = [s for s in pred.successors if s is not block]
+            block.predecessors.remove(pred)
+
+            return
+
         retargeted = dataclasses.replace(pred.terminator, target=new_address)
         for instruction in pred.instructions:
             if instruction.terminator is pred.terminator:
