@@ -600,7 +600,9 @@ class HermesAnalysis:
         ArrayDestructuringCfgPass(cfg).run()
         EnvArrayDestructuringCfgPass(cfg).run()
         if duplicate_returns:
-            SharedReturnDuplicationCfgPass(cfg, widen=duplicate_returns >= 2, statements=duplicate_returns >= 4).run()
+            SharedReturnDuplicationCfgPass(
+                cfg, widen=duplicate_returns >= 2, statements=duplicate_returns >= 4, own_values=duplicate_returns >= 5
+            ).run()
             SharedTailDuplicationCfgPass(
                 cfg, regions=duplicate_returns >= 3, per_predecessor=duplicate_returns >= 5,
             ).run()

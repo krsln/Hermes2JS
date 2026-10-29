@@ -44,6 +44,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-29 | after F-158 (a `jmp` to a shared return takes the return along) | 278 | 317 | n/a | n/a | 1055 passed |
 | 2026-10-29 | after F-159 (arm's last test jumps onto the tail, falls into a return) | 274 | 315 | n/a | n/a | 1056 passed |
 | 2026-10-29 | after F-161 (merged test no longer a predecessor of a return copy) | 273 | 314 | n/a | n/a | 1057 passed |
+| 2026-10-29 | after F-162 (own-value return copies, level 5) | 268 | 303 | n/a | n/a | 1059 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -144,21 +145,11 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   to a test within three blocks fixed 5301 but turned `return 0` into `r0 = 0` and a fall-through in
   96/4144 `parseScheme`; requiring a single-predecessor return undid the F-157 fixes (379, 7449, 5492, 12557).
   A new discriminator is needed (what the return block's value is, or where the arm's other exit leads).
-  Same family: 96/9896 `getReduceMotionFromConfig` (`!p || p === System` with loads in the middle block:
-  the compound folder does not fold a test block that holds statements).
   96/11027 (a `for-in` body) is the same shape and its first-attempt output is silently wrong: `if (!r9) { r9 = {}; store } else { stmts; if (typeof === "object") goto J }` drops the fall into `r9 = {}; store` when the
   type is not `object`. The retries copy that tail for the test that falls into it (`SharedTailDuplicationCfgPass._faller_that_skips`)
   but the copy comes out after the join in the loop body (`r9 = {}; r2[2][r1[0]] = r9;` printed after J), so the retry also keeps a `goto` and is not chosen.
   Cause not found yet (the copy has no terminator when the tail falls through; giving it a `jmp` changed nothing in either bundle).
-  96/7556 `parseValue` is the same family with a shared closing `return r0`: three tests of the `parseNumbers`
-  arm jump onto the code the first test jumps to, and the arm's last block ends in `r0 = Number(v); jmp RET`.
-  The first attempt prints `if (r4 || ... ) goto label_91;` followed by the return, so a failed test returns an
-  unset `r0` path-wise. Idea tried: copy the closing `return r0` for jumpers that WRITE the register in their own
-  block, even when the paths disagree on its value (`SharedReturnDuplicationCfgPass._reads_the_same_on_every_path`).
-  It copies the right blocks but level 2 then died in `ShortCircuitConditionCfgPass` (`KeyError` in
-  `compute_dominators`: a predecessor list still holds a block that is no longer reachable) and three tests of
-  the shared-tail family changed, so it was reverted. A retry that raises is silently dropped (`_attempt`), which
-  hides such failures: worth logging them at debug level.
+  96/7556 `parseValue` and 96/9896 `getReduceMotionFromConfig` are done by F-162 (own-value return copies, last retry level; see the archive).
 - **F-12 `await`/`yield` dispatch and 98 generator opcodes.** 96/12207 `_anon_0`. Without a batch
   table the dispatch cannot be resolved; some generator opcodes are missing in 98.
 - **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.

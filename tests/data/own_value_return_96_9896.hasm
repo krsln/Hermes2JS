@@ -1,0 +1,21 @@
+
+=> [Function #9896 "getReduceMotionFromConfig" of 53 bytes]: 2 params, frame size=3, strict=1, exc handler=0, debug info=0  @ offset 0x001e8bf3
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <JmpFalse>: <Addr8: 36, Reg8: 1>  # Address: 00000027
+==> 00000006: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000009: <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
+==> 0000000d: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 1, string_id: 10389>  # String: 'System' (Identifier)
+==> 00000013: <JStrictEqual>: <Addr8: 20, Reg8: 1, Reg8: 2>  # Address: 00000027
+==> 00000017: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 0>
+==> 0000001b: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 2, string_id: 12915>  # String: 'Always' (Identifier)
+==> 00000021: <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 00000025: <Jmp>: <Addr8: 14>  # Address: 00000033
+==> 00000027: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000002a: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 1>
+==> 0000002e: <GetByIdShort>: <Reg8: 0, Reg8: 1, UInt8: 3, string_id: 205>  # String: 'value' (Identifier)
+==> 00000033: <Ret>: <Reg8: 0>
+
+

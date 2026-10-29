@@ -39,7 +39,7 @@ from hermes_decompiler.ir.terminators import (
 
 
 class SharedReturnDuplicationCfgPass:
-    def __init__(self, cfg: CFG, widen: bool = False, statements: bool = False):
+    def __init__(self, cfg: CFG, widen: bool = False, statements: bool = False, own_values: bool = False):
         self.cfg = cfg
         # `statements` (with `widen`): the tail may also hold ordinary
         # instructions (`return a === r0` after `r0 = b.v`), not just loads.
@@ -47,6 +47,10 @@ class SharedReturnDuplicationCfgPass:
         # `widen`: also copy `throw` exits and the closing `return` even when
         # something falls into it (only when every path agrees on the value).
         self.widen = widen
+        # `own_values`: a closing `return` the paths disagree on is still copied for the jumpers that set
+        # the value themselves. The last resort: earlier levels solve most of these without it.
+        self.own_values = own_values
+        self._own_value_only: set[BasicBlock] = set()
 
     def run(self) -> int:
         # A copy sits outside every try range. That is exact for an exit that
@@ -68,10 +72,17 @@ class SharedReturnDuplicationCfgPass:
             jumpers = [p for p in block.predecessors if self._jumps_to(p, block)]
             fallers = [p for p in block.predecessors if p not in jumpers]
 
+            if block in self._own_value_only:
+                # The paths disagree on the value: only the jumpers that set it themselves get a
+                # copy, the original stays for everything else.
+                jumpers = [p for p in jumpers if self._sets_what_the_tail_reads(p, block)]
+                if len(jumpers) == len(block.predecessors):
+                    jumpers = jumpers[:-1]
+
             if not jumpers:
                 continue
 
-            if not fallers:
+            if not fallers and block not in self._own_value_only:
                 # Only jumps reach it (`a === 1 || a === 2` chains ending in
                 # `return true`): the last jumper keeps the original.
                 if len(jumpers) < 2:
@@ -115,7 +126,11 @@ class SharedReturnDuplicationCfgPass:
         # own `return` the final one no longer says which it was (96/11046
         # returned `false` for an equal list).
         if (self.widen or self.cfg.exception_handlers) and not self._reads_the_same_on_every_path(block):
-            return False
+            # Only a jumper that sets the value itself can still get a copy (see `run`).
+            if not self.own_values:
+                return False
+
+            self._own_value_only.add(block)
 
         if self.widen:
             # Also the function's closing `return`, even with a fall-through
@@ -139,6 +154,10 @@ class SharedReturnDuplicationCfgPass:
         """Every register the tail reads before writing it has ONE reaching
         value: all paths into the block that define it agree structurally, and no
         path reaches the block with it unset while another sets it."""
+        return all(self._single_reaching_value(block, register) for register in self._exposed_registers(block))
+
+    def _exposed_registers(self, block: BasicBlock) -> set[int]:
+        """Registers the tail reads before it writes them."""
         written: set[int] = set()
         exposed: set[int] = set()
 
@@ -157,10 +176,19 @@ class SharedReturnDuplicationCfgPass:
             if instruction.dest_reg is not None:
                 written.add(instruction.dest_reg)
 
-        terminator = block.terminator
-        note(getattr(terminator, "value", None))
+        note(getattr(block.terminator, "value", None))
 
-        return all(self._single_reaching_value(block, register) for register in exposed)
+        return exposed
+
+    def _sets_what_the_tail_reads(self, pred: BasicBlock, block: BasicBlock) -> bool:
+        """The jumper writes every register the tail reads, in its own block: its copy returns ITS
+        value whatever the other paths hold (96/7556: `r0 = Number(v); jmp RET`)."""
+        exposed = self._exposed_registers(block)
+
+        return bool(exposed) and all(
+            any(i.dest_reg == register and i.value is not None for i in pred.instructions)
+            for register in exposed
+        )
 
     @staticmethod
     def _single_reaching_value(block: BasicBlock, register: int) -> bool:
