@@ -136,6 +136,15 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 - **F-11 `goto` inside `try/finally`.** 98/2007 `preprocessException`, 98/10013 `flush`, 96/840. The
   jump crosses the `finally` boundary. The lost `return r1` of 96/840 is fixed (F-156); the catch's jump to the
   closing return stays, because the return copy skips handler blocks.
+- **F-160 An arm that falls into the branch target, test inside the arm (not its first block).** 96/5301
+  `keyExtractor`: the `key` test (`JNotEqual` to a private `return param1.key`) falls into the code the first
+  branch jumps to; the output is correct but keeps `if (r2 != null) goto label_87;` and a trailing
+  `return param1.key;`. The F-157 clause only takes the arm's first block (`pred is then_entry`). Widening it
+  to a test within three blocks fixed 5301 but turned `return 0` into `r0 = 0` and a fall-through in
+  96/4144 `parseScheme`; requiring a single-predecessor return undid the F-157 fixes (379, 7449, 5492, 12557).
+  A new discriminator is needed (what the return block's value is, or where the arm's other exit leads).
+  Same family: 96/9896 `getReduceMotionFromConfig` (`!p || p === System` with loads in the middle block:
+  the compound folder does not fold a test block that holds statements).
 - **F-12 `await`/`yield` dispatch and 98 generator opcodes.** 96/12207 `_anon_0`. Without a batch
   table the dispatch cannot be resolved; some generator opcodes are missing in 98.
 - **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.
