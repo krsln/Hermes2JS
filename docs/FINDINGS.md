@@ -149,6 +149,15 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   type is not `object`. The retries copy that tail for the test that falls into it (`SharedTailDuplicationCfgPass._faller_that_skips`)
   but the copy comes out after the join in the loop body (`r9 = {}; r2[2][r1[0]] = r9;` printed after J), so the retry also keeps a `goto` and is not chosen.
   Cause not found yet (the copy has no terminator when the tail falls through; giving it a `jmp` changed nothing in either bundle).
+  96/7556 `parseValue` is the same family with a shared closing `return r0`: three tests of the `parseNumbers`
+  arm jump onto the code the first test jumps to, and the arm's last block ends in `r0 = Number(v); jmp RET`.
+  The first attempt prints `if (r4 || ... ) goto label_91;` followed by the return, so a failed test returns an
+  unset `r0` path-wise. Idea tried: copy the closing `return r0` for jumpers that WRITE the register in their own
+  block, even when the paths disagree on its value (`SharedReturnDuplicationCfgPass._reads_the_same_on_every_path`).
+  It copies the right blocks but level 2 then died in `ShortCircuitConditionCfgPass` (`KeyError` in
+  `compute_dominators`: a predecessor list still holds a block that is no longer reachable) and three tests of
+  the shared-tail family changed, so it was reverted. A retry that raises is silently dropped (`_attempt`), which
+  hides such failures: worth logging them at debug level.
 - **F-12 `await`/`yield` dispatch and 98 generator opcodes.** 96/12207 `_anon_0`. Without a batch
   table the dispatch cannot be resolved; some generator opcodes are missing in 98.
 - **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.
