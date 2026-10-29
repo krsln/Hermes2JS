@@ -479,8 +479,35 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
 
         return False
 
-    @staticmethod
-    def _next_fallthrough_address(region) -> int | None:
+    def _leading_address(self, sibling) -> int | None:
+        """Address of the first statement `sibling` runs.
+
+        A block has its own. An `if` swallowed its test block into `condition`: that block is the one
+        in the CFG no region holds, sits right before the `if`'s own blocks, has its terminator folded into the condition and branches into them
+        (96/331: the `try` exit jumps to the `if (r0)` test after the nested ifs)."""
+        if isinstance(sibling, BasicBlock):
+            return sibling.address
+
+        if not isinstance(sibling, IfRegion):
+            return None
+
+        inside = sibling.covered_blocks
+
+        if not inside:
+            return None
+
+        held = self.graph.root.covered_blocks
+        first = min(b.address for b in inside)
+        tests = [
+            b for b in self.cfg.blocks
+            if b not in held
+               and b.address < first
+               and any(x in inside for x in b.successors)
+        ]
+
+        return max(tests, key=lambda b: b.address).address if tests else None
+
+    def _next_fallthrough_address(self, region) -> int | None:
         """Address where control resumes once `region` (a TryRegion or
         SwitchRegion, currently the only callers) finishes running
         normally.
@@ -501,6 +528,11 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         while node is not None:
             parent = node.parent
 
+            if isinstance(parent, IfRegion) and node in (parent.then_body, parent.else_body):
+                # An arm that is the last thing it holds resumes where the `if` does.
+                node = parent
+                continue
+
             if not isinstance(parent, SequenceRegion):
                 return None
 
@@ -511,7 +543,7 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
 
             if index + 1 < len(parent.children):
                 next_sibling = parent.children[index + 1]
-                return next_sibling.address if isinstance(next_sibling, BasicBlock) else None
+                return self._leading_address(next_sibling)
 
             # `node` is the last child of its own SequenceRegion - that
             # SequenceRegion has no address of its own to fall into,

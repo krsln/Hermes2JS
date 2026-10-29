@@ -1,0 +1,43 @@
+
+=> [Function #331 "" of 121 bytes]: 3 params, frame size=14, strict=1, exc handler=1, debug info=0  @ offset 0x000fecc6
+  [Exception handlers: [start=0x1e, end=0x2f, target=0x34] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000006: <LoadConstString>: <Reg8: 4, string_id: 7532>  # String: 'object' (Identifier)
+==> 0000000a: <TypeOf>: <Reg8: 3, Reg8: 0>
+==> 0000000d: <LoadConstFalse>: <Reg8: 0>
+==> 0000000f: <JStrictNotEqual>: <Addr8: 41, Reg8: 4, Reg8: 3>  # Address: 00000038
+==> 00000013: <Mov>: <Reg8: 4, Reg8: 2>
+==> 00000016: <LoadConstNull>: <Reg8: 3>
+==> 00000018: <LoadConstFalse>: <Reg8: 0>
+==> 0000001a: <JStrictEqual>: <Addr8: 30, Reg8: 3, Reg8: 4>  # Address: 00000038
+==> 0000001e: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 1, string_id: 15336>  # String: 'aborted' (Identifier)
+==> 00000024: <LoadConstString>: <Reg8: 3, string_id: 3705>  # String: 'boolean' (String)
+==> 00000028: <TypeOf>: <Reg8: 2, Reg8: 2>
+==> 0000002b: <StrictEq>: <Reg8: 2, Reg8: 3, Reg8: 2>
+==> 0000002f: <Mov>: <Reg8: 0, Reg8: 2>
+==> 00000032: <Jmp>: <Addr8: 6>  # Address: 00000038
+==> 00000034: <Catch>: <Reg8: 2>
+==> 00000036: <LoadConstFalse>: <Reg8: 0>
+==> 00000038: <JmpTrue>: <Addr8: 61, Reg8: 0>  # Address: 00000075
+==> 0000003b: <GetGlobalObject>: <Reg8: 0>
+==> 0000003d: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 42>  # String: 'TypeError' (Identifier)
+==> 00000043: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 3, string_id: 14>  # String: 'HermesInternal' (Identifier)
+==> 00000049: <GetByIdShort>: <Reg8: 4, Reg8: 0, UInt8: 4, string_id: 96>  # String: 'concat' (Identifier)
+==> 0000004e: <LoadConstString>: <Reg8: 3, string_id: 7163>  # String: '' (Identifier)
+==> 00000052: <LoadParam>: <Reg8: 1, UInt8: 2>
+==> 00000055: <LoadConstString>: <Reg8: 0, string_id: 1361>  # String: ' is not an AbortSignal.' (String)
+==> 00000059: <Call3>: <Reg8: 6, Reg8: 4, Reg8: 3, Reg8: 1, Reg8: 0>
+==> 0000005f: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000064: <CreateThis>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000068: <Mov>: <Reg8: 7, Reg8: 1>
+==> 0000006b: <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
+==> 0000006f: <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 00000073: <Throw>: <Reg8: 0>
+==> 00000075: <LoadConstUndefined>: <Reg8: 0>
+==> 00000077: <Ret>: <Reg8: 0>
+
+
