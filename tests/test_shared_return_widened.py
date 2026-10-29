@@ -29,8 +29,10 @@ def _render(name: str, function_id: int) -> str:
 def test_closing_return_is_copied_for_a_jump_into_it():
     out = _render("shared_return_throw_exit_96_10518.hasm", 10518)
 
+    # Since F-163 the first attempt is `goto`-free (the transform arm's trailing jump to the code after the
+    # `if` is dropped), so the copies of the closing `return` are not made: one stays, in the inner `else`.
     assert "goto" not in out
-    assert out.count("return undefined;") == 3
+    assert out.count("return undefined;") == 1
 
 
 def test_a_return_whose_register_holds_a_different_constant_per_path_is_copied_per_jumper():

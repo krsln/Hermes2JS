@@ -220,8 +220,6 @@ async function _anon_0_asyncTryCatchTest() {
                                 // ──────────────── Block 8 ──────────────── 
                                 // CODE → addr:152 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 5>
                                 r1[3] = 1;
-                                // CODE → addr:156 | <Jmp>: <Addr8: 100>  # Address: 00000100
-                                goto label_256;
                             }
                             break;
                     }

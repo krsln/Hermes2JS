@@ -184,6 +184,48 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
 
         self._strip_try_exit_jumps(node)
 
+    def visit_IfRegion(self, node: IfRegion) -> None:
+        self.visit(node.then_body)
+
+        if node.else_body is not None:
+            self.visit(node.else_body)
+
+        self._strip_if_exit_jumps(node)
+
+    def _strip_if_exit_jumps(self, node: IfRegion) -> None:
+        """An arm's own trailing jump to the code that already follows the whole `if`.
+
+        `if (a) { ...; goto J } else if (b) { ... return } J: ...`: the inner `if` has no merge of its
+        own (its other arm returns), so the first arm kept the jump to the outer join; falling off
+        the end of the arm reaches the same place (96/3847)."""
+        exit_address = self._next_fallthrough_address(node)
+
+        if exit_address is None:
+            return
+
+        for branch in (node.then_body, node.else_body):
+            if branch is None:
+                continue
+
+            for block, owning_if in self._tail_blocks(branch):
+                terminator = block.terminator
+
+                if not isinstance(terminator, TerminatorJump) or terminator.target != exit_address:
+                    continue
+
+                if self._clear_trailing_jump(block, terminator):
+                    logger.debug(
+                        "RedundantJumpRegionPass: dropped an if arm's own trailing jump in block %d (0x%x) - "
+                        "implied by falling through to what already follows the whole if.",
+                        block.id, block.address,
+                    )
+
+                    if owning_if is not None:
+                        self._prune_empty_else(owning_if)
+
+            if branch is node.else_body:
+                self._prune_empty_else(node)
+
     def visit_SwitchRegion(self, node: SwitchRegion) -> None:
         for case in node.cases:
             self.visit(case.body)
