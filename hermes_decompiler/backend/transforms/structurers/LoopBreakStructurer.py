@@ -702,6 +702,17 @@ class LoopBreakStructurer(RegionStructurer):
             if successor not in covered
         }
 
+        if not merge_addresses and is_loop_guard_shaped(loop.header_block, loop):
+            # Top-tested loop: the latch only jumps back, the header's own test is the way out
+            # (96/10789: `for (x of xs) { if (c) break; }` with the close call in the break body).
+            merge_addresses = {
+                LoopBreakStructurer._chase_trampoline_address(
+                    successor.address, covered, address_to_block
+                )
+                for successor in loop.header_block.successors
+                if successor not in covered
+            }
+
         if len(merge_addresses) != 1:
             return None
 

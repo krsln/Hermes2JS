@@ -1,0 +1,49 @@
+
+=> [Function #10789 "checkIfScreenWasChanged" of 136 bytes]: 2 params, frame size=17, strict=1, exc handler=1, debug info=0  @ offset 0x001ff351
+  [Exception handlers: [start=0x31, end=0x41, target=0x4b] [start=0x43, end=0x46, target=0x4b] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 1>
+==> 00000005: <LoadConstUndefined>: <Reg8: 3>
+==> 00000007: <LoadConstString>: <Reg8: 6, string_id: 4884>  # String: '__reactFiber' (String)
+==> 0000000b: <Mov>: <Reg8: 0, Reg8: 6>
+==> 0000000e: <GetGlobalObject>: <Reg8: 4>
+==> 00000010: <TryGetById>: <Reg8: 5, Reg8: 4, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000016: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 118>  # String: 'keys' (Identifier)
+==> 0000001b: <Call2>: <Reg8: 7, Reg8: 4, Reg8: 5, Reg8: 2>
+==> 00000020: <Mov>: <Reg8: 5, Reg8: 7>
+==> 00000023: <IteratorBegin>: <Reg8: 4, Reg8: 5>
+==> 00000026: <IteratorNext>: <Reg8: 8, Reg8: 4, Reg8: 5>
+==> 0000002a: <Mov>: <Reg8: 7, Reg8: 4>
+==> 0000002d: <JStrictEqual>: <Addr8: 37, Reg8: 7, Reg8: 1>  # Address: 00000052
+==> 00000031: <Mov>: <Reg8: 3, Reg8: 8>
+==> 00000034: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 3, string_id: 233>  # String: 'startsWith' (Identifier)
+==> 00000039: <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 6>
+==> 0000003e: <JmpTrue>: <Addr8: 5, Reg8: 7>  # Address: 00000043
+==> 00000041: <Jmp>: <Addr8: -27>  # Address: 00000026
+==> 00000043: <Mov>: <Reg8: 0, Reg8: 3>
+==> 00000046: <IteratorClose>: <Reg8: 4, UInt8: 0>
+==> 00000049: <Jmp>: <Addr8: 9>  # Address: 00000052
+==> 0000004b: <Catch>: <Reg8: 3>
+==> 0000004d: <IteratorClose>: <Reg8: 4, UInt8: 1>
+==> 00000050: <Throw>: <Reg8: 3>
+==> 00000052: <GetByVal>: <Reg8: 2, Reg8: 2, Reg8: 0>
+==> 00000056: <LoadConstNull>: <Reg8: 3>
+==> 00000058: <Eq>: <Reg8: 4, Reg8: 2, Reg8: 3>
+==> 0000005c: <LoadConstUndefined>: <Reg8: 0>
+==> 0000005e: <JmpTrue>: <Addr8: 36, Reg8: 4>  # Address: 00000082
+==> 00000061: <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 4, string_id: 87>  # String: 'child' (Identifier)
+==> 00000066: <Eq>: <Reg8: 4, Reg8: 2, Reg8: 3>
+==> 0000006a: <LoadConstUndefined>: <Reg8: 0>
+==> 0000006c: <JmpTrue>: <Addr8: 22, Reg8: 4>  # Address: 00000082
+==> 0000006f: <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 5, string_id: 45>  # String: 'memoizedProps' (Identifier)
+==> 00000074: <Eq>: <Reg8: 3, Reg8: 2, Reg8: 3>
+==> 00000078: <LoadConstUndefined>: <Reg8: 0>
+==> 0000007a: <JmpTrue>: <Addr8: 8, Reg8: 3>  # Address: 00000082
+==> 0000007d: <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 6, string_id: 180>  # String: 'navigation' (Identifier)
+==> 00000082: <StrictNeq>: <Reg8: 0, Reg8: 0, Reg8: 1>
+==> 00000086: <Ret>: <Reg8: 0>
+
+

@@ -183,7 +183,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
         try_region = next((c for c in loop.body.children if isinstance(c, TryRegion)), None)
 
-        if try_region is None or try_region.finally_ is not None:
+        if try_region is None:
             return
 
         next_call, next_instr, header_block = self._match_header_call(loop, "next")
