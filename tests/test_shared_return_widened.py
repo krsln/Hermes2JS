@@ -89,12 +89,15 @@ def test_a_shared_tail_with_a_statement_is_copied_with_its_own_nodes():
 
 
 def test_a_shared_tail_of_several_statements_is_copied_for_every_jumper():
-    """96/2019 `mountDeferredValueImpl`: `memoizedState = x; return x`."""
+    """96/2019 `mountDeferredValueImpl`: `memoizedState = x; return x`.
+
+    Since F-159 the tail is not copied: the last test of the first arm jumps onto it and falls into a
+    lone `return`, so it follows the `if` once (`goto`-free, the same paths)."""
     out = _render("shared_tail_with_statements_96_2019.hasm", 2019)
 
     assert "goto" not in out
-    assert out.count("param1.memoizedState = param2;") == 2
-    assert out.count("return param2;") == 2
+    assert out.count("param1.memoizedState = param2;") == 1
+    assert out.rstrip().endswith("param1.memoizedState = param2;\n    return param2;\n}")
 
 
 def test_a_function_with_exception_handlers_still_gets_its_shared_return_copied():

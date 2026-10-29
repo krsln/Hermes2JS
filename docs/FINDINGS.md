@@ -42,6 +42,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-28 | after F-156 (try `return` beside a catch jump) | 287 | 326 | 456 | 683 | 1053 passed |
 | 2026-10-29 | after F-157 (arm runs into the target, first attempt) | 284 | 325 | n/a | n/a | 1054 passed |
 | 2026-10-29 | after F-158 (a `jmp` to a shared return takes the return along) | 278 | 317 | n/a | n/a | 1055 passed |
+| 2026-10-29 | after F-159 (arm's last test jumps onto the tail, falls into a return) | 274 | 315 | n/a | n/a | 1056 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1

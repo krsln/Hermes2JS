@@ -11,10 +11,8 @@ from hermes_decompiler.backend.transforms.shared import negate_condition, is_loo
 from hermes_decompiler.backend.transforms.structurers import RegionStructurer
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral
-from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorReturn
-from ._predicates import is_backward_branch, is_constant_comparison, representative_block
+from ._predicates import is_backward_branch, is_constant_comparison, representative_block, same_case_subject
 
 logger = get_logger(__name__)
 
@@ -332,6 +330,15 @@ class _DominanceIfBuilder(RegionStructurer):
                         and self._arm_runs_into_after_loop(then_entry, goto_block, block)
                 )
                 or (
+                        # `if (a) goto T; ...; if (b) goto T; return x; T: <body>; return y`: the arm's
+                        # last test jumps to the branch target and falls into a lone `return`; the
+                        # body follows the `if` (96/8976: the `typeof r === "number"` re-test).
+                        merge_block is None
+                        and isinstance(goto_block.terminator, TerminatorReturn)
+                        and goto_block.instructions
+                        and self._arm_tests_into_past_a_return(then_entry, goto_block, branch.condition)
+                )
+                or (
                         # Only once the shared returns were copied (a retry): the arm's other exits
                         # are real `return`s then, so an arm that runs on into the branch target
                         # leaves the target after the `if`, not in an `else` arm that would print it
@@ -340,9 +347,9 @@ class _DominanceIfBuilder(RegionStructurer):
                         not is_constant_comparison(branch.condition)
                         and goto_block.successors
                         and self._arm_falls_into(
-                    then_entry, goto_block, block,
-                    exits_must_return=not getattr(self.cfg, "duplicated_returns", False),
-                )
+                            then_entry, goto_block, block,
+                            exits_must_return=not getattr(self.cfg, "duplicated_returns", False),
+                        )
                 )
                 or (
                         # `if (a) { if (b) return x; } tail`: the arm's guard
@@ -505,6 +512,23 @@ class _DominanceIfBuilder(RegionStructurer):
             for pred in goto_block.predecessors
         )
 
+    def _arm_tests_into_past_a_return(self, then_entry: BasicBlock, goto_block: BasicBlock, condition) -> bool:
+        """True if a test inside the fallthrough arm jumps to `goto_block` and falls into a lone `return`."""
+        dominators = self.cfg.dominator_tree
+
+        return any(
+            isinstance(pred.terminator, TerminatorConditionalBranch)
+            and pred.terminator.target == goto_block.address
+            and dominators.dominates(then_entry, pred)
+            # Two tests of ONE subject against constants are the labels of a `switch`.
+            and not same_case_subject(condition, pred.terminator.condition)
+            and any(
+                s is not goto_block and self._is_lone_return(s.address)
+                for s in pred.successors
+            )
+            for pred in goto_block.predecessors
+        )
+
     def _arm_falls_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock,
                         exits_must_return: bool = False) -> bool:
         """True if a block of the fallthrough arm falls through into `goto_block` (a plain block, or a
@@ -539,9 +563,9 @@ class _DominanceIfBuilder(RegionStructurer):
         target = next((b for b in self.cfg.blocks if b.address == address), None)
 
         return (
-                target is not None
-                and not target.successors
-                and isinstance(target.terminator, TerminatorReturn)
+            target is not None
+            and not target.successors
+            and isinstance(target.terminator, TerminatorReturn)
         )
 
     def _arm_runs_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock,

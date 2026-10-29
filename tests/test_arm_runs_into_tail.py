@@ -52,3 +52,13 @@ def test_the_first_attempt_keeps_the_code_an_arm_falls_into():
     assert "goto" not in out
     assert out.index("r1[2].call(") < out.index("r1[1][param1]")
     assert out.count("return r0;") == 1
+
+
+def test_a_last_test_that_jumps_onto_the_tail_and_falls_into_a_return_leaves_the_tail_after_the_if():
+    """96/8976 `processColorInitially`: `if (typeof p === "number") goto T; r = f(p); if (typeof r === "number")
+    goto T; return r; T: <number code>; return`. The tail follows the `if` (it stayed a `goto`)."""
+    out = _render("arm_tests_into_tail_past_return_96_8976.hasm", 8976)
+
+    assert "goto" not in out
+    assert out.count(">>> 0") == 1
+    assert out.index("return r1;") < out.index(">>> 0")
