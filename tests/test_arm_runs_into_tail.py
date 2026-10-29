@@ -40,3 +40,15 @@ def test_a_clamped_branch_runs_on_into_the_energy_test():
     assert "goto" not in out
     assert out.count("return true;") == 2
     assert out.index("return true;") < out.index("r4[0](")
+
+
+def test_the_first_attempt_keeps_the_code_an_arm_falls_into():
+    """96/890 `requireModule`: `if (a == null) goto T; r0 = f(); if (r0 != null) return r0; T: ...`.
+
+    No return copies are needed: the arm's test leaves through a lone `return`, and its fall-through
+    is the branch target, which therefore follows the `if` (it was dropped before)."""
+    out = _render("arm_runs_into_tail_first_attempt_96_890.hasm", 890)
+
+    assert "goto" not in out
+    assert out.index("r1[2].call(") < out.index("r1[1][param1]")
+    assert out.count("return r0;") == 1

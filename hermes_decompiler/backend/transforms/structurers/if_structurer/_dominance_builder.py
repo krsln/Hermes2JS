@@ -337,10 +337,12 @@ class _DominanceIfBuilder(RegionStructurer):
                         # leaves the target after the `if`, not in an `else` arm that would print it
                         # on the branch's own path only (98/10128, 96/11046: the loop tail entered by
                         # the `is()` test and fallen into by the last check).
-                        getattr(self.cfg, "duplicated_returns", False)
-                        and not is_constant_comparison(branch.condition)
+                        not is_constant_comparison(branch.condition)
                         and goto_block.successors
-                        and self._arm_falls_into(then_entry, goto_block, block)
+                        and self._arm_falls_into(
+                    then_entry, goto_block, block,
+                    exits_must_return=not getattr(self.cfg, "duplicated_returns", False),
+                )
                 )
                 or (
                         # `if (a) { if (b) return x; } tail`: the arm's guard
@@ -503,22 +505,43 @@ class _DominanceIfBuilder(RegionStructurer):
             for pred in goto_block.predecessors
         )
 
-    def _arm_falls_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock) -> bool:
+    def _arm_falls_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock,
+                        exits_must_return: bool = False) -> bool:
         """True if a block of the fallthrough arm falls through into `goto_block` (a plain block, or a
-        test whose taken edge goes elsewhere)."""
+        test whose taken edge goes elsewhere).
+
+        `exits_must_return`: without copied returns, only a test whose taken edge is a lone `return`
+        counts, and only the arm's first block (96/890: `if (a) goto T; r0 = f(); if (r0 != null) return r0; T: ...`)."""
         dominators = self.cfg.dominator_tree
         return any(
             pred is not block
             and (
-                    pred.terminator is None
+                    (pred.terminator is None and not exits_must_return)
                     or (
                             isinstance(pred.terminator, TerminatorConditionalBranch)
                             and pred.terminator.target != goto_block.address
+                            and (
+                                    not exits_must_return
+                                    or (
+                                            pred is then_entry
+                                            and self._is_lone_return(pred.terminator.target)
+                                            and min(x.address for x in pred.successors) == goto_block.address
+                                    )
+                            )
                     )
             )
             and goto_block.address > pred.address
             and dominators.dominates(then_entry, pred)
             for pred in goto_block.predecessors
+        )
+
+    def _is_lone_return(self, address: int) -> bool:
+        target = next((b for b in self.cfg.blocks if b.address == address), None)
+
+        return (
+                target is not None
+                and not target.successors
+                and isinstance(target.terminator, TerminatorReturn)
         )
 
     def _arm_runs_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock,
