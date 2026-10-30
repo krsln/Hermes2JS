@@ -22,15 +22,7 @@ function labeledBreakTest() {
         r5 = i;
         // LOOP → START (for)
         for (j = 0; j < 3; j++) {
-            if (r5 !== 1) {
-                // ──────────────── Block 4 ──────────────── 
-                // CODE → addr: 46 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r9 = console;
-                // CODE → addr: 52 | <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r8 = console.log;
-                // CODE → addr: 57 | <Call3>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 5, Reg8: 7>
-                console.log(r5, j);
-            } else if (j === 1) {
+            if (r5 === 1 && j === 1) {
                 // ──────────────── Block 7 ──────────────── 
                 // CODE → addr: 79 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r3 = console;
@@ -44,6 +36,13 @@ function labeledBreakTest() {
                 // CODE → addr:  0 | BreakStatement
                 break loop_1;
             }
+            // ──────────────── Block 4 ──────────────── 
+            // CODE → addr: 46 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r9 = console;
+            // CODE → addr: 52 | <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r8 = console.log;
+            // CODE → addr: 57 | <Call3>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 5, Reg8: 7>
+            console.log(r5, j);
         }
         // LOOP → END
     }

@@ -54,6 +54,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-30 | after F-169 (short-circuit folds inside loop bodies) | 232 | 244 | n/a | n/a | 1071 passed |
 | 2026-10-30 | after F-170 (arm with one private `return`, test past its first block) | 228 | 240 | n/a | n/a | 1074 passed |
 | 2026-10-30 | after F-171 (a lossless retry with a `goto` beats a first attempt that loses a path) | 229 | 242 | n/a | n/a | 1076 passed |
+| 2026-10-30 | after F-172 (a bottom-tested loop's header branch is an ordinary in-body test) | 217 | 231 | n/a | n/a | 1078 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -104,16 +105,14 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   intended structural copies. A real fix has to tell a copy of the arm value (a `Mov`) from an identical
   second source expression, e.g. by the reader's address relative to the arm.
 
-- **F-153 A join block printed in only one arm (98/10128 open; 98/2216 fixed in part; 96/15065 open).**
+- **F-153 A join block printed in only one arm (98/10128 open; 98/2216 fixed in part; 96/15065 fixed as F-172).**
   Bytecode of 2216: `if (r5 == null) goto J; ... r3 = null; if (startsWith) goto END; ...; if (includes)
   goto J; r5 = "file://" + r7; J: r3 = r5; END: store r3`. `J` has three ways in. Faults:
   (a) `_DominanceIfBuilder._convert` makes `J` the `else` arm of the first test (`has_else`, since the
   post-dominator `END` is a later block) although the `then` arm falls and jumps into `J` as well; the
   arm's flow into `J` is dropped (`drop_scan`: edges 0x56->0x96, 0x8e->0x96).
-  (b) `_CompoundConditionFolder._absorb_residual_conditional` drops a jump that lands INSIDE the arm it
-  builds: 96/15065 (golden, `labeledBreakTest`) prints `if (r5 !== 1) log else if (j === 1) break` and loses
-  the `log` on `r5 === 1 && j !== 1` (bytecode: the `j === 1` test falls through into the `log` block). The
-  golden file records the wrong output.
+  (b) Fixed as F-172 (archive): the real cause was the loop header's test never being folded, not the
+  absorb pass; the committed goldens of 96/15065 and 98/9456 had recorded wrong output.
   (c) The frontend inlines `Mov r3, r5` into the read after the join (`r4[5] = r5`) although another path
   reaches it with `r3 = null`.
   Direct guards for (a) and (b) moved 26 (96) / 20 (98) more `goto` lines into other functions (20 of them

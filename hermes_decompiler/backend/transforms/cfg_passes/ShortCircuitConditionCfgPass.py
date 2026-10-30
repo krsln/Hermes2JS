@@ -58,6 +58,7 @@ class ShortCircuitConditionCfgPass:
     def __init__(self, cfg: CFG):
         self.cfg = cfg
         self._loop_blocks = self._collect_loop_blocks(cfg)
+        self._loop_headers = frozenset(loop.header for loop in cfg.loop_analysis.loops.values())
         self._loop_members = frozenset(
             b for loop in cfg.loop_analysis.loops.values() for b in loop.members
         )
@@ -79,7 +80,19 @@ class ShortCircuitConditionCfgPass:
         # The header's and the latches' tests are the loop's own; the tests inside its body fold like
         # any others (96/11027: `if (!a || typeof a !== "object") { init }` inside a `for-in`).
         for loop in loop_analysis.loops.values():
-            blocks.add(loop.header)
+            # A bottom-tested loop (its latch carries the test) whose header's branch stays inside the loop
+            # holds an ordinary in-body `if` there (96/15065: `if (i === 1 && j === 1) break outer;` at the
+            # top of the inner body): that one folds like any other.
+            ordinary_header = (
+                    isinstance(loop.header.terminator, TerminatorConditionalBranch)
+                    and all(s in loop.members for s in loop.header.successors)
+                    and any(isinstance(l.terminator, TerminatorConditionalBranch) for l in loop.latches)
+                    and loop.header not in loop.latches
+            )
+
+            if not ordinary_header:
+                blocks.add(loop.header)
+
             blocks.update(loop.latches)
 
         return frozenset(blocks)
@@ -268,7 +281,7 @@ class ShortCircuitConditionCfgPass:
         sunk: list = []
 
         if not self._is_inlined_setup_block(successor):
-            if end_block is None or arm in self._loop_blocks:
+            if end_block is None or arm in self._loop_headers:
                 return False
 
             # Join copies (`Mov r4, r3`) the arm overwrites anyway only matter
