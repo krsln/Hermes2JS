@@ -53,6 +53,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-30 | after F-168 (exits in the gaps of a merged try range) | 240 | 259 | n/a | n/a | 1068 passed |
 | 2026-10-30 | after F-169 (short-circuit folds inside loop bodies) | 232 | 244 | n/a | n/a | 1071 passed |
 | 2026-10-30 | after F-170 (arm with one private `return`, test past its first block) | 228 | 240 | n/a | n/a | 1074 passed |
+| 2026-10-30 | after F-171 (a lossless retry with a `goto` beats a first attempt that loses a path) | 229 | 242 | n/a | n/a | 1076 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -117,7 +118,7 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   reaches it with `r3 = null`.
   Direct guards for (a) and (b) moved 26 (96) / 20 (98) more `goto` lines into other functions (20 of them
   had no lost edge before) and were NOT kept. Done for 2216 (resolved in the archive entry F-153a): retry level 5
-  copies a small tail per way in. Open: 98/10128 `interpolate` (the tail `Mov r14, r17; if (r17 <= r12) goto C` has
+  copies a small tail per way in. 98/10128 `interpolate` is no longer silently wrong (F-171: level 5 wins, one `goto` left); the rest is why that `goto` stays. Open: 98/10128 `interpolate` (the tail `Mov r14, r17; if (r17 <= r12) goto C` has
   three ways in; the `else` arm of `x < r9` ends without running on into it, so a clamped `x` never reaches the range
   test; the `identity` tests jump to the final `return r7`, whose register holds a different non-constant value per path,
   so `SharedReturnDuplicationCfgPass` refuses to copy it and `duplicated_returns` stays off). Tried: level 5 for a tail

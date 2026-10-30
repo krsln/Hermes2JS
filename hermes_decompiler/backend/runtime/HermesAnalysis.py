@@ -448,13 +448,25 @@ class HermesAnalysis:
             # A tree without a `goto` that LOST a path (`flow_audit`: the shared
             # `throw` the fall-through arm should run into, 98/12551) gets the same
             # retries; there a retry only wins when it is `goto`-free and loses fewer paths.
+            whole = []
+
             for level in (1, 2, 3, 4, 5):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
-                if not retry[3] or self._has_goto(retry[0]):
+                if not retry[3]:
+                    continue
+                if self._has_goto(retry[0]):
+                    if not self._lost_edges:
+                        whole.append(retry)
                     continue
                 if self._has_goto(first[0]) or self._lost_edges < first_lost:
                     chosen = retry
                     break
+
+            if chosen is first and first_lost and not self._has_goto(first[0]) and whole:
+                # The first attempt silently loses a path (98/10128: a clamped `x` never reaches the range
+                # test) and no retry fixes it without a `goto`. A `goto` says the structure is missing;
+                # a wrong tree says nothing: keep the retry that loses no path.
+                chosen = min(whole, key=lambda r: sum("goto label_" in line for line in r[0]))
 
         lines, reason, _, _, records = chosen  # (lines, reason, failed, ok, records)
         # Only the attempt that is used speaks: the other one's warnings
