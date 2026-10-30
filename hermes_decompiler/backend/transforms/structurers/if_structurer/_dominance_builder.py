@@ -11,6 +11,8 @@ from hermes_decompiler.backend.transforms.shared import negate_condition, is_loo
 from hermes_decompiler.backend.transforms.structurers import RegionStructurer
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral
+from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorReturn
 from ._predicates import is_backward_branch, is_constant_comparison, representative_block, same_case_subject
 
@@ -347,9 +349,9 @@ class _DominanceIfBuilder(RegionStructurer):
                         not is_constant_comparison(branch.condition)
                         and goto_block.successors
                         and self._arm_falls_into(
-                            then_entry, goto_block, block,
-                            exits_must_return=not getattr(self.cfg, "duplicated_returns", False),
-                        )
+                    then_entry, goto_block, block,
+                    exits_must_return=not getattr(self.cfg, "duplicated_returns", False),
+                )
                 )
                 or (
                         # `if (a) { if (b) return x; } tail`: the arm's guard
@@ -547,7 +549,8 @@ class _DominanceIfBuilder(RegionStructurer):
                             and (
                                     not exits_must_return
                                     or (
-                                            pred is then_entry
+                                            (pred is then_entry or self._returns_privately(pred, then_entry,
+                                                                                           goto_block))
                                             and self._is_lone_return(pred.terminator.target)
                                             and min(x.address for x in pred.successors) == goto_block.address
                                     )
@@ -559,13 +562,42 @@ class _DominanceIfBuilder(RegionStructurer):
             for pred in goto_block.predecessors
         )
 
+    def _returns_privately(self, pred: BasicBlock, then_entry: BasicBlock, goto_block: BasicBlock) -> bool:
+        """The test's taken edge goes to a `return` nothing else reaches, and it is the ONLY way out of the
+        arm besides `goto_block` (96/5301: `x?.key != null` is three blocks into the arm, its `return x.key` is
+        its own).
+
+        An arm with more exits (96/4144: three returns, one at the arm's first block) is left to the retries
+        that copy the returns: the arm then took in the code after `goto_block` and the tail merge moved the
+        `return` of its first exit away, so the code ran on."""
+        dominators = self.cfg.dominator_tree
+        target = next((b for b in self.cfg.blocks if b.address == pred.terminator.target), None)
+
+        if target is None or list(target.predecessors) != [pred]:
+            return False
+
+        for block in self.cfg.blocks:
+            if block.address >= goto_block.address or not dominators.dominates(then_entry, block):
+                continue
+
+            for successor in block.successors:
+                if successor is goto_block or successor is target:
+                    continue
+
+                if dominators.dominates(then_entry, successor) and not self._is_lone_return(successor.address):
+                    continue
+
+                return False
+
+        return True
+
     def _is_lone_return(self, address: int) -> bool:
         target = next((b for b in self.cfg.blocks if b.address == address), None)
 
         return (
-            target is not None
-            and not target.successors
-            and isinstance(target.terminator, TerminatorReturn)
+                target is not None
+                and not target.successors
+                and isinstance(target.terminator, TerminatorReturn)
         )
 
     def _arm_runs_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock,

@@ -52,6 +52,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-29 | after F-167 (iterator close copies inside a recognized `for-of`) | 242 | 263 | n/a | n/a | 1066 passed |
 | 2026-10-30 | after F-168 (exits in the gaps of a merged try range) | 240 | 259 | n/a | n/a | 1068 passed |
 | 2026-10-30 | after F-169 (short-circuit folds inside loop bodies) | 232 | 244 | n/a | n/a | 1071 passed |
+| 2026-10-30 | after F-170 (arm with one private `return`, test past its first block) | 228 | 240 | n/a | n/a | 1074 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -142,15 +143,6 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
   (F-113, F-114, F-115, F-117, F-119, and (a) below). Left: (b) jumps whose target is not a `return`
   (sibling region, `none` terminator). (a) 96/11046 `areDependenciesEqual` is done: see the archive.
-- **F-160 An arm that falls into the branch target, test inside the arm (not its first block).** 96/5301
-  `keyExtractor`: the `key` test (`JNotEqual` to a private `return param1.key`) falls into the code the first
-  branch jumps to; the output is correct but keeps `if (r2 != null) goto label_87;` and a trailing
-  `return param1.key;`. The F-157 clause only takes the arm's first block (`pred is then_entry`). Widening it
-  to a test within three blocks fixed 5301 but turned `return 0` into `r0 = 0` and a fall-through in
-  96/4144 `parseScheme`; requiring a single-predecessor return undid the F-157 fixes (379, 7449, 5492, 12557).
-  A new discriminator is needed (what the return block's value is, or where the arm's other exit leads).
-  96/11027 (a `for-in` body) is done by F-169 (see the archive).
-  96/7556 `parseValue` and 96/9896 `getReduceMotionFromConfig` are done by F-162 (own-value return copies, last retry level; see the archive).
 - **F-12 `await`/`yield` dispatch and 98 generator opcodes.** 96/12207 `_anon_0`. Without a batch
   table the dispatch cannot be resolved; some generator opcodes are missing in 98.
 - **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.

@@ -38,7 +38,9 @@ def test_a_clamped_branch_runs_on_into_the_energy_test():
     out = _render("arm_runs_into_tail_96_10211.hasm", 10211)
 
     assert "goto" not in out
-    assert out.count("return true;") == 2
+    # both clamp tests leave for the same `return true`: one `||` (F-170), not two copies
+    assert out.count("return true;") == 1
+    assert "if (r0 < r5 || r0 > r4) {\n            return true;" in out
     assert out.index("return true;") < out.index("r4[0](")
 
 

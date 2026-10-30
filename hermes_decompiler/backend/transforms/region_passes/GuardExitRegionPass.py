@@ -277,8 +277,7 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
 
         return [p for p in parts if not isinstance(p, BasicBlock)]
 
-    @staticmethod
-    def _falls_on_to(owner: SequenceRegion, block: BasicBlock, follower: BasicBlock) -> bool:
+    def _falls_on_to(self, owner: SequenceRegion, block: BasicBlock, follower: BasicBlock) -> bool:
         """True if the next thing to run after `block` finishes is `follower`."""
         sequence: SequenceRegion = owner
         item = block
@@ -294,7 +293,18 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
 
                 covered = [b for b in nxt.covered_blocks if b.address >= 0]
 
-                return follower in covered and follower is min(covered, key=lambda b: b.address)
+                if follower in covered:
+                    return follower is min(covered, key=lambda b: b.address)
+
+                # An `if` swallowed its test block into the condition: that block is in no region, sits
+                # right before the `if`'s own blocks and branches into them (96/5301).
+                return (
+                        isinstance(nxt, IfRegion)
+                        and bool(covered)
+                        and follower not in self.graph.root.covered_blocks
+                        and follower.address < min(b.address for b in covered)
+                        and any(x in covered for x in follower.successors)
+                )
 
             parent = sequence.parent
 
