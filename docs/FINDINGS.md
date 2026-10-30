@@ -50,6 +50,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-29 | after F-165 (try exit jump to an `if` join / out of an `if` arm) | 244 | 265 | n/a | n/a | 1062 passed |
 | 2026-10-29 | after F-166 (`for-of` whose try covers only the body; break out of a top-tested loop) | 242 | 263 | n/a | n/a | 1064 passed |
 | 2026-10-29 | after F-167 (iterator close copies inside a recognized `for-of`) | 242 | 263 | n/a | n/a | 1066 passed |
+| 2026-10-30 | after F-168 (exits in the gaps of a merged try range) | 240 | 259 | n/a | n/a | 1068 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -140,12 +141,6 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
   (F-113, F-114, F-115, F-117, F-119, and (a) below). Left: (b) jumps whose target is not a `return`
   (sibling region, `none` terminator). (a) 96/11046 `areDependenciesEqual` is done: see the archive.
-- **F-168 Exit blocks of a `for-of` printed after the loop, where normal completion falls into them.** 96/1324
-  `parseBackgroundRepeatCSSString` (also has gotos): `for (const r24 of r13) { ... }` is followed by two copies
-  of `r2.return(); r24 = []; return r24;` and only then `return r0;`, so the normal exit would run a return
-  that belongs to a `break`-like path inside the loop. Present since before F-167 (same in the F-166 tree);
-  the loop's exits that are not the natural merge are not claimed by `LoopBreakStructurer` when the exit body
-  ends in a `return` after a shared tail. 96/3244 `dispatch` shows the same family.
 - **F-160 An arm that falls into the branch target, test inside the arm (not its first block).** 96/5301
   `keyExtractor`: the `key` test (`JNotEqual` to a private `return param1.key`) falls into the code the first
   branch jumps to; the output is correct but keeps `if (r2 != null) goto label_87;` and a trailing

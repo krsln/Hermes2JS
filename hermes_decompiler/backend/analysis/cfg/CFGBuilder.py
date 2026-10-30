@@ -122,6 +122,7 @@ class CFGBuilder:
                 "target": handler["target"],
                 "try_blocks": try_blocks,
                 "handler_block": handler_block,
+                "fragments": self._fragments_of(handler),
             })
 
         return resolved
@@ -197,6 +198,12 @@ class CFGBuilder:
             entries = merged
 
     @staticmethod
+    def _fragments_of(handler: dict) -> list[tuple[int, int]]:
+        """The table's own [start, end) ranges a merged entry is made of (the gaps between them are
+        NOT protected, even though the merged range spans them)."""
+        return list(handler.get("fragments") or [(handler["start"], handler["end"])])
+
+    @staticmethod
     def _merge_pass(entries: list[tuple[int, dict]]) -> list[tuple[int, dict]]:
         """One left-to-right merge pass. See `_merge_fragmented_handlers`."""
         ordered = sorted(entries, key=lambda t: (t[1]["start"], t[1]["end"], t[0]))
@@ -216,11 +223,13 @@ class CFGBuilder:
                     slot[1], handler, all_handlers, boundaries
             ):
                 slot[1]["end"] = max(slot[1]["end"], handler["end"])
+                slot[1]["fragments"] = [*slot[1]["fragments"], *CFGBuilder._fragments_of(handler)]
                 continue
 
             # A fresh copy: `handler["end"]` may still grow if a later
             # fragment is absorbed, and pass inputs must stay untouched.
             slot = (index, dict(handler))
+            slot[1]["fragments"] = CFGBuilder._fragments_of(handler)
             merged.append(slot)
             latest_by_target[handler["target"]] = slot
 

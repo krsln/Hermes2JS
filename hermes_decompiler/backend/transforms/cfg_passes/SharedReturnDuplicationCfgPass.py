@@ -57,9 +57,21 @@ class SharedReturnDuplicationCfgPass:
         # already lies outside them (96/3900: a `for-of` guards its loop, the
         # early `return`s at the top are nowhere near it); an exit inside a
         # protected range, or a handler's own entry, must stay where it is.
+        # Merged fragments leave gaps the table never protected (96/1324: the `close; return []` exits
+        # between the pieces of a for-of's range): a block there is not inside the range.
+        ordered = sorted(self.cfg.blocks, key=lambda b: b.address)
+        ends = {b: (ordered[i + 1].address if i + 1 < len(ordered) else float("inf")) for i, b in enumerate(ordered)}
+
+        def in_range(block, handler) -> bool:
+            fragments = handler.get("fragments")
+            return not fragments or any(block.address < e and ends[block] > s for s, e in fragments)
+
         protected = {
             b for handler in self.cfg.exception_handlers
-            for b in (*handler.get("try_blocks", ()), handler.get("handler_block"))
+            for b in (
+                *(t for t in handler.get("try_blocks", ()) if in_range(t, handler)),
+                handler.get("handler_block"),
+            )
             if b is not None
         }
 
