@@ -58,6 +58,9 @@ class ShortCircuitConditionCfgPass:
     def __init__(self, cfg: CFG):
         self.cfg = cfg
         self._loop_blocks = self._collect_loop_blocks(cfg)
+        self._loop_members = frozenset(
+            b for loop in cfg.loop_analysis.loops.values() for b in loop.members
+        )
 
     @staticmethod
     def _collect_loop_blocks(cfg: CFG) -> frozenset[BasicBlock]:
@@ -73,9 +76,11 @@ class ShortCircuitConditionCfgPass:
 
         blocks: set[BasicBlock] = set()
 
+        # The header's and the latches' tests are the loop's own; the tests inside its body fold like
+        # any others (96/11027: `if (!a || typeof a !== "object") { init }` inside a `for-in`).
         for loop in loop_analysis.loops.values():
             blocks.add(loop.header)
-            blocks.update(loop.members)
+            blocks.update(loop.latches)
 
         return frozenset(blocks)
 
@@ -158,6 +163,21 @@ class ShortCircuitConditionCfgPass:
             # forward toward a merge point). Must not touch these -
             # loop structuring / LoopConditionExtractor needs the
             # original per-iteration test blocks intact.
+            return False
+
+        # Inside a loop body the tests of a `case` chain stay separate when they jump to different
+        # places: SwitchStructurer wants them (98/2211 `processTransformOrigin` lost its `switch` to a
+        # crossed fold), and so do labels that share a body while another case follows. Two tests to the same
+        # place with nothing else after them are an ordinary `||` (96/2026: `24 === a || 3 === a`).
+        if (
+                block in self._loop_members
+                and isinstance(successor.terminator, TerminatorConditionalBranch)
+                and self._is_case_test(successor.terminator.condition, branch.condition)
+                and (
+                successor.terminator.target != branch.target
+                or self._case_chain_has_another_body(block, successor, branch.target)
+        )
+        ):
             return False
 
         pure = self._is_pure_test_block(successor)
@@ -248,7 +268,7 @@ class ShortCircuitConditionCfgPass:
         sunk: list = []
 
         if not self._is_inlined_setup_block(successor):
-            if end_block is None or end_block in self._loop_blocks or arm in self._loop_blocks:
+            if end_block is None or arm in self._loop_blocks:
                 return False
 
             # Join copies (`Mov r4, r3`) the arm overwrites anyway only matter
@@ -259,6 +279,11 @@ class ShortCircuitConditionCfgPass:
             # test, `a[r1]` again in END): the test takes the value, END gets its
             # own copy of the load on the edge into it (96/9112 `parseTranslateX`).
             constants = self._constants_for_the_end_edge(successor, arm, end_block, sunk)
+
+            # END is where the loop's own test or latch lives (96/11027: the body's closing store):
+            # a test that jumps straight onto it is fine, an edge block with copies in front of it is not.
+            if end_block in self._loop_blocks and (sunk or constants):
+                return False
 
             # A pure value the second test reads through its register
             # (`r0 = arguments[1]; if (r0 !== undefined)`): the test takes the

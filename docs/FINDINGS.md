@@ -51,6 +51,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-29 | after F-166 (`for-of` whose try covers only the body; break out of a top-tested loop) | 242 | 263 | n/a | n/a | 1064 passed |
 | 2026-10-29 | after F-167 (iterator close copies inside a recognized `for-of`) | 242 | 263 | n/a | n/a | 1066 passed |
 | 2026-10-30 | after F-168 (exits in the gaps of a merged try range) | 240 | 259 | n/a | n/a | 1068 passed |
+| 2026-10-30 | after F-169 (short-circuit folds inside loop bodies) | 232 | 244 | n/a | n/a | 1071 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -148,10 +149,7 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   to a test within three blocks fixed 5301 but turned `return 0` into `r0 = 0` and a fall-through in
   96/4144 `parseScheme`; requiring a single-predecessor return undid the F-157 fixes (379, 7449, 5492, 12557).
   A new discriminator is needed (what the return block's value is, or where the arm's other exit leads).
-  96/11027 (a `for-in` body) is the same shape and its first-attempt output is silently wrong: `if (!r9) { r9 = {}; store } else { stmts; if (typeof === "object") goto J }` drops the fall into `r9 = {}; store` when the
-  type is not `object`. The retries copy that tail for the test that falls into it (`SharedTailDuplicationCfgPass._faller_that_skips`)
-  but the copy comes out after the join in the loop body (`r9 = {}; r2[2][r1[0]] = r9;` printed after J), so the retry also keeps a `goto` and is not chosen.
-  Cause not found yet (the copy has no terminator when the tail falls through; giving it a `jmp` changed nothing in either bundle).
+  96/11027 (a `for-in` body) is done by F-169 (see the archive).
   96/7556 `parseValue` and 96/9896 `getReduceMotionFromConfig` are done by F-162 (own-value return copies, last retry level; see the archive).
 - **F-12 `await`/`yield` dispatch and 98 generator opcodes.** 96/12207 `_anon_0`. Without a batch
   table the dispatch cannot be resolved; some generator opcodes are missing in 98.
