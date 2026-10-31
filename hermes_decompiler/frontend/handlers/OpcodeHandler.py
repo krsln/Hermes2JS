@@ -304,11 +304,19 @@ class OpcodeHandler(ABC):
         # shapes while leaving the known-safe patterns alone.
         # A parameter's own name is exempt above only while nothing rewrites its register inside the loop
         # that holds the read (96/4846 `binarySubdivide`: `Mov r11, r15` ends the body, `Sub r0, r10, r11` starts it).
-        if not isinstance(value, MemberExpression) and \
+        if (
                 (
-                        not (isinstance(value, Identifier) and not cls._is_register_alias(value))
-                        or (state.handler in ("LoadParam", "LoadParamLong") and analysis.is_rewritten_in_loop(reg))
-                ) and \
+                        not isinstance(value, MemberExpression)
+                        and (
+                                not (isinstance(value, Identifier) and not cls._is_register_alias(value))
+                                or (state.handler in ("LoadParam", "LoadParamLong")
+                                    and analysis.is_rewritten_in_loop(reg))
+                        )
+                )
+                # A member read defined before the loop and rewritten inside it
+                or (isinstance(value, MemberExpression)
+                    and analysis.is_rewritten_in_loop(reg, state.definition.address))
+        ) and \
                 analysis.is_unsafe_loop_register(reg, state.definition.address):
             state.mark_read()
             state.materialize()

@@ -1,0 +1,56 @@
+
+=> [Function #2738 "useState" of 208 bytes]: 1 params, frame size=25, strict=1, exc handler=0, debug info=0  @ offset 0x0017e59a
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 8, UInt8: 0>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 3, Reg8: 8, UInt8: 195>
+==> 00000007: <LoadFromEnvironment>: <Reg8: 4, Reg8: 8, UInt8: 193>
+==> 0000000b: <LoadConstZero>: <Reg8: 0>
+==> 0000000d: <Call1>: <Reg8: 7, Reg8: 4, Reg8: 0>
+==> 00000011: <GetById>: <Reg8: 6, Reg8: 7, UInt8: 0, string_id: 6710>  # String: 'queue' (Identifier)
+==> 00000017: <LoadConstNull>: <Reg8: 2>
+==> 00000019: <JStrictEqualLong>: <Addr32: 162, Reg8: 2, Reg8: 6>  # Address: 000000bb
+==> 00000020: <PutByIdStrict>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 14395>  # String: 'lastRenderedReducer' (Identifier)
+==> 00000026: <GetById>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 7123>  # String: 'dispatch' (Identifier)
+==> 0000002c: <GetById>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 6700>  # String: 'pending' (Identifier)
+==> 00000032: <GetByIdShort>: <Reg8: 11, Reg8: 7, UInt8: 3, string_id: 182>  # String: 'memoizedState' (Identifier)
+==> 00000037: <Mov>: <Reg8: 5, Reg8: 11>
+==> 0000003a: <JStrictEqual>: <Addr8: 115, Reg8: 2, Reg8: 3>  # Address: 000000ad
+==> 0000003e: <PutByIdStrict>: <Reg8: 6, Reg8: 2, UInt8: 1, string_id: 6700>  # String: 'pending' (Identifier)
+==> 00000044: <GetByIdShort>: <Reg8: 10, Reg8: 3, UInt8: 4, string_id: 62>  # String: 'next' (Identifier)
+==> 00000049: <LoadConstUndefined>: <Reg8: 1>
+==> 0000004b: <Mov>: <Reg8: 9, Reg8: 10>
+==> 0000004e: <GetById>: <Reg8: 14, Reg8: 9, UInt8: 5, string_id: 7898>  # String: 'action' (Identifier)
+==> 00000054: <Mov>: <Reg8: 12, Reg8: 9>
+==> 00000057: <Mov>: <Reg8: 13, Reg8: 11>
+==> 0000005a: <Mov>: <Reg8: 3, Reg8: 14>
+==> 0000005d: <JmpTypeOfIs>: <Addr32: 13, Reg8: 3, UInt16: 383>  # Address: 0000006a
+==> 00000065: <Call2>: <Reg8: 3, Reg8: 14, Reg8: 1, Reg8: 13>
+==> 0000006a: <GetByIdShort>: <Reg8: 9, Reg8: 12, UInt8: 4, string_id: 62>  # String: 'next' (Identifier)
+==> 0000006f: <Mov>: <Reg8: 11, Reg8: 3>
+==> 00000072: <JStrictNotEqual>: <Addr8: -36, Reg8: 9, Reg8: 10>  # Address: 0000004e
+==> 00000076: <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 100>
+==> 0000007a: <GetByIdShort>: <Reg8: 9, Reg8: 7, UInt8: 3, string_id: 182>  # String: 'memoizedState' (Identifier)
+==> 0000007f: <Call3>: <Reg8: 9, Reg8: 10, Reg8: 1, Reg8: 3, Reg8: 9>
+==> 00000085: <JmpTrue>: <Addr8: 9, Reg8: 9>  # Address: 0000008e
+==> 00000088: <LoadConstTrue>: <Reg8: 1>
+==> 0000008a: <StoreNPToEnvironment>: <Reg8: 8, UInt8: 237, Reg8: 1>
+==> 0000008e: <PutByIdStrict>: <Reg8: 7, Reg8: 3, UInt8: 2, string_id: 182>  # String: 'memoizedState' (Identifier)
+==> 00000094: <GetById>: <Reg8: 8, Reg8: 7, UInt8: 6, string_id: 16052>  # String: 'baseQueue' (Identifier)
+==> 0000009a: <JStrictNotEqual>: <Addr8: 10, Reg8: 2, Reg8: 8>  # Address: 000000a4
+==> 0000009e: <PutByIdStrict>: <Reg8: 7, Reg8: 3, UInt8: 3, string_id: 16053>  # String: 'baseState' (Identifier)
+==> 000000a4: <PutByIdStrict>: <Reg8: 6, Reg8: 3, UInt8: 4, string_id: 15082>  # String: 'lastRenderedState' (Identifier)
+==> 000000aa: <Mov>: <Reg8: 5, Reg8: 3>
+==> 000000ad: <NewArray>: <Reg8: 3, UInt16: 2>
+==> 000000b1: <DefineOwnInDenseArray>: <Reg8: 3, Reg8: 5, UInt8: 0>
+==> 000000b5: <DefineOwnInDenseArray>: <Reg8: 3, Reg8: 4, UInt8: 1>
+==> 000000b9: <Ret>: <Reg8: 3>
+==> 000000bb: <GetGlobalObject>: <Reg8: 3>
+==> 000000bd: <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 9>  # String: 'Error' (Identifier)
+==> 000000c3: <LoadConstString>: <Reg8: 3, string_id: 3815>  # String: 'Should have a queue. You are likely calling Hooks conditionally, which is not allowed. (https://react.dev/link/invalid-hook-call)' (String)
+==> 000000c7: <LoadConstUndefined>: <Reg8: 2>
+==> 000000c9: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 3>
+==> 000000ce: <Throw>: <Reg8: 3>
+
+

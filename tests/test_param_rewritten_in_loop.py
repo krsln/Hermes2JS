@@ -30,3 +30,21 @@ def test_the_loop_reads_the_registers_it_rewrites():
     assert "r0 = r10 - r11;" in out
     assert "r11 = r15;" in out
     assert "param3 - param2" not in out
+
+
+def test_a_member_read_before_the_loop_and_rewritten_in_it_keeps_its_register():
+    """F-176: the same hazard for a property read. `r11 = q.memoizedState` before a loop whose body ends
+    `Mov r11, r3` is the reducer's running state, not `q.memoizedState` again (98/2738 `useState`)."""
+    out = _render("member_rewritten_in_loop_98_2738.hasm", 2738)
+
+    assert "r13 = r11;" in out
+    assert "r13 = r7.memoizedState;" not in out
+
+
+def test_a_chain_walk_reads_the_register_it_advances():
+    """96/12564 `getNavigateAction`: `r8.initial = ...; r8 = r8.params` walks a chain; the write went to
+    `r6.params.initial` on every turn."""
+    out = _render("member_rewritten_in_loop_96_12564.hasm", 12564)
+
+    assert "r8.initial = r10;" in out
+    assert "r6.params.initial = r10;" not in out
