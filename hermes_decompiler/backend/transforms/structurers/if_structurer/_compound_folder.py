@@ -60,6 +60,7 @@ class _CompoundConditionFolder:
 
     def __init__(self, graph, cfg):
         self.graph = graph
+        self.cfg = cfg
         self._address_to_block = {block.address: block for block in cfg.blocks}
         # _post_dominator_tree no longer needed here - see
         # _absorb_residual_conditional's updated safety check.
@@ -331,15 +332,18 @@ class _CompoundConditionFolder:
         # continues". When T already sits in the SIBLING arm of an enclosing
         # `if`, that is not where the jump went (`if (c) { return null } else
         # { if (x < 0) goto <that return>; return x }`): the jump must stay.
+        left_to_the_switch = (
+                target_block is not None
+                and is_constant_comparison(branch.condition)
+                and self._case_test_beside(region, index)
+                and self._case_chain_has_two_bodies(region, index, branch)
+        )
+
         if (
                 target_block is not None
                 # A `case` test's shared target is `SwitchStructurer`'s business -
                 # when it sits next to another `case` test. A lone comparison is an `if`.
-                and not (
-                is_constant_comparison(branch.condition)
-                and self._case_test_beside(region, index)
-                and self._case_chain_has_two_bodies(region, index, branch)
-        )
+                and not left_to_the_switch
                 and self._sits_in_sibling_arm(region, target_block)
                 # Falling off the end IS `return undefined`: a register nothing ever sets to
                 # anything else returns the same thing there (96/7599 `getStateFromPath`).
@@ -374,6 +378,17 @@ class _CompoundConditionFolder:
             self.graph.insert_at(region, insert_at, block)
             insert_at += 1
         self.graph.insert_at(region, insert_at, if_region)
+
+        if left_to_the_switch and self._sits_in_sibling_arm(region, target_block):
+            # The jump into the sibling arm was dropped on the promise that `SwitchStructurer` builds a
+            # `switch` out of the chain (F-179). When it does not, `restore_dropped_case_jumps` puts it back.
+            dropped = getattr(self.cfg, "dropped_case_jumps", None)
+
+            if dropped is None:
+                dropped = self.cfg.dropped_case_jumps = []
+
+            dropped.append((if_region, block if block.instructions else None, branch.condition, target_block))
+
         return True
 
     @staticmethod
@@ -684,3 +699,59 @@ class _CompoundConditionFolder:
             return
         if hasattr(region, "body"):
             self._prune_empty_blocks(region.body)
+
+
+def restore_dropped_case_jumps(graph, cfg) -> int:
+    """Put back the jump `_absorb_residual_conditional` dropped for a `case` test that became no `switch`.
+
+    `if (A) { X } else { if (!C) { rest } }` with `C` jumping to `X` loses the path `C -> X`: the fold left
+    it to `SwitchStructurer`, which needs two cases. A residual `if` that is still there after the switch
+    pass is the sign it did not come. It becomes `if (A || C) { X } else { rest }` (F-179, 98/2633:
+    `27 === t || 5 === t`). Only the plain shape, with nothing but unprinted set-up in front of the residual.
+    """
+    restored = 0
+
+    for residual, setup, test, target in getattr(cfg, "dropped_case_jumps", ()):
+        sequence = getattr(residual, "parent", None)
+
+        if not isinstance(sequence, SequenceRegion) or residual not in sequence.children:
+            continue
+
+        outer = getattr(sequence, "parent", None)
+
+        if (
+                not isinstance(outer, IfRegion)
+                or outer.else_body is not sequence
+                or outer.condition is None
+                or outer.then_body is None
+                or target not in outer.then_body.covered_blocks
+                or residual.else_body is not None
+        ):
+            continue
+
+        # The jump went to the arm's ENTRY: from the middle of the arm it is not "the same arm again".
+        entries = [b.address for b in outer.then_body.covered_blocks if b.address >= 0]
+
+        if not entries or min(entries) != target.address:
+            continue
+
+        before = sequence.children[:sequence.children.index(residual)]
+
+        if any(
+                not isinstance(item, BasicBlock)
+                or item is not setup
+                or any(i.statement is not None or i.terminator is not None for i in item.instructions)
+                for item in before
+        ):
+            continue
+
+        # The same test twice (`x !== undefined` guarding one arm from two places) is one test.
+        if not test.structurally_equal(outer.condition):
+            outer.condition = BinaryExpression(left=outer.condition, operator=LogicalOperator.OR, right=test)
+
+        rest = list(residual.then_body.children)
+        graph.splice_out(sequence, sequence.children.index(residual), sequence.children.index(residual) + 1)
+        graph.transfer(rest, sequence)
+        restored += 1
+
+    return restored

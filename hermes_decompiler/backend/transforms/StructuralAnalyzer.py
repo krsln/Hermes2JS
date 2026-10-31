@@ -41,6 +41,7 @@ from hermes_decompiler.backend.transforms.structurers import (
     TryStructurer,
     SwitchStructurer,
 )
+from hermes_decompiler.backend.transforms.structurers.if_structurer import restore_dropped_case_jumps
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorSwitch
 
@@ -151,6 +152,9 @@ class StructuralAnalyzer:
         # SwitchStructurer handles both raw switch terminators and
         # comparison chains already converted into IfRegions.
         SwitchStructurer(graph, self.cfg).run()
+
+        # A `case` test the if-fold left to the `switch` pass that did not get one keeps its jump (F-179).
+        restore_dropped_case_jumps(graph, self.cfg)
 
         # ---- 3. region_passes -------------------------------------------
 
