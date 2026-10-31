@@ -1,0 +1,37 @@
+
+=> [Function #4987 "checkBodyUsedError" of 115 bytes]: 2 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x001ac082
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 1>
+==> 00000007: <LoadParam>: <Reg8: 2, UInt8: 0>
+==> 0000000a: <GetByVal>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 0000000e: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 0, string_id: 8013>  # String: 'body' (Identifier)
+==> 00000014: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 7493>  # String: 'used' (Identifier)
+==> 0000001a: <JmpTrue>: <Addr8: 36, Reg8: 3>  # Address: 0000003e
+==> 0000001d: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 7478>  # String: 'stream' (Identifier)
+==> 00000023: <LoadConstNull>: <Reg8: 0>
+==> 00000025: <Eq>: <Reg8: 1, Reg8: 3, Reg8: 0>
+==> 00000029: <LoadConstUndefined>: <Reg8: 0>
+==> 0000002b: <LoadConstUndefined>: <Reg8: 2>
+==> 0000002d: <JmpTrue>: <Addr8: 9, Reg8: 1>  # Address: 00000036
+==> 00000030: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 7610>  # String: 'locked' (Identifier)
+==> 00000036: <LoadConstTrue>: <Reg8: 1>
+==> 00000038: <JStrictEqual>: <Addr8: 6, Reg8: 2, Reg8: 1>  # Address: 0000003e
+==> 0000003c: <Ret>: <Reg8: 0>
+==> 0000003e: <LoadParam>: <Reg8: 6, UInt8: 1>
+==> 00000041: <GetGlobalObject>: <Reg8: 2>
+==> 00000043: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 4, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 00000049: <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 5, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 0000004f: <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 6, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000054: <LoadConstString>: <Reg8: 3, string_id: 1818>  # String: "' on 'Response': Response body is already used." (String)
+==> 00000058: <LoadConstString>: <Reg8: 2, string_id: 671>  # String: "Failed to execute '" (String)
+==> 0000005c: <Call3>: <Reg8: 8, Reg8: 5, Reg8: 2, Reg8: 6, Reg8: 3>
+==> 00000062: <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 7>
+==> 00000066: <Mov>: <Reg8: 9, Reg8: 3>
+==> 00000069: <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
+==> 0000006d: <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
+==> 00000071: <Throw>: <Reg8: 2>
+
+

@@ -158,7 +158,7 @@ class SharedReturnDuplicationCfgPass:
 
     _MAX_LEAD = 2
     _MAX_TAIL = 6
-    _MAX_THROW = 12
+    _MAX_THROW = 16
 
     _REGISTER_NAME = re.compile(r"r(\d+)")
 

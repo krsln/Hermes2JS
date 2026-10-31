@@ -1,0 +1,52 @@
+
+=> [Function #7669 "" of 174 bytes]: 4 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x001b8361
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 3>
+==> 00000002: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000005: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 00000008: <LoadParam>: <Reg8: 0, UInt8: 3>
+==> 0000000b: <StoreToEnvironment>: <Reg8: 3, UInt8: 0, Reg8: 4>
+==> 0000000f: <JmpFalse>: <Addr8: 62, Reg8: 0>  # Address: 0000004d
+==> 00000012: <GetEnvironment>: <Reg8: 5, UInt8: 0>
+==> 00000015: <LoadFromEnvironment>: <Reg8: 6, Reg8: 5, UInt8: 4>
+==> 00000019: <LoadConstNull>: <Reg8: 1>
+==> 0000001b: <JEqual>: <Addr8: 92, Reg8: 6, Reg8: 1>  # Address: 00000077
+==> 0000001f: <LoadFromEnvironment>: <Reg8: 6, Reg8: 5, UInt8: 4>
+==> 00000023: <Eq>: <Reg8: 5, Reg8: 6, Reg8: 1>
+==> 00000027: <LoadConstUndefined>: <Reg8: 1>
+==> 00000029: <JmpTrue>: <Addr8: 33, Reg8: 5>  # Address: 0000004a
+==> 0000002c: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 152>  # String: 'getState' (Identifier)
+==> 00000031: <Call1>: <Reg8: 5, Reg8: 5, Reg8: 6>
+==> 00000035: <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 2, string_id: 219>  # String: 'routes' (Identifier)
+==> 0000003a: <GetById>: <Reg8: 5, Reg8: 6, UInt8: 3, string_id: 8413>  # String: 'every' (Identifier)
+==> 00000040: <CreateClosure>: <Reg8: 3, Reg8: 3, function_id: 7670>  # Function: [#7670  of 21 bytes]: 2 params @ offset 0x001b840f
+==> 00000045: <Call2>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 3>
+==> 0000004a: <JmpTrue>: <Addr8: 45, Reg8: 1>  # Address: 00000077
+==> 0000004d: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000050: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 3>
+==> 00000054: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 4, string_id: 93>  # String: 'current' (Identifier)
+==> 00000059: <JmpTrue>: <Addr8: 15, Reg8: 0>  # Address: 00000068
+==> 0000005c: <GetByIdShort>: <Reg8: 0, Reg8: 1, UInt8: 5, string_id: 114>  # String: 'delete' (Identifier)
+==> 00000061: <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>
+==> 00000066: <Jmp>: <Addr8: 13>  # Address: 00000073
+==> 00000068: <GetByIdShort>: <Reg8: 0, Reg8: 1, UInt8: 6, string_id: 185>  # String: 'set' (Identifier)
+==> 0000006d: <Call3>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 4>
+==> 00000073: <LoadConstUndefined>: <Reg8: 0>
+==> 00000075: <Ret>: <Reg8: 0>
+==> 00000077: <GetGlobalObject>: <Reg8: 0>
+==> 00000079: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 7, string_id: 12>  # String: 'Error' (Identifier)
+==> 0000007f: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 8, string_id: 14>  # String: 'HermesInternal' (Identifier)
+==> 00000085: <GetByIdShort>: <Reg8: 3, Reg8: 0, UInt8: 9, string_id: 96>  # String: 'concat' (Identifier)
+==> 0000008a: <LoadConstString>: <Reg8: 1, string_id: 1046>  # String: "Couldn't find a route with the key " (String)
+==> 0000008e: <LoadConstString>: <Reg8: 0, string_id: 2086>  # String: '. Is your component inside NavigationContent?' (String)
+==> 00000092: <Call3>: <Reg8: 8, Reg8: 3, Reg8: 1, Reg8: 4, Reg8: 0>
+==> 00000098: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 10, string_id: 206>  # String: 'prototype' (Identifier)
+==> 0000009d: <CreateThis>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000000a1: <Mov>: <Reg8: 9, Reg8: 1>
+==> 000000a4: <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
+==> 000000a8: <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 000000ac: <Throw>: <Reg8: 0>
+
+
