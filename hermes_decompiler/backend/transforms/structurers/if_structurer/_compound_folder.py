@@ -739,7 +739,6 @@ def restore_dropped_case_jumps(graph, cfg) -> int:
 
         if any(
                 not isinstance(item, BasicBlock)
-                or item is not setup
                 or any(i.statement is not None or i.terminator is not None for i in item.instructions)
                 for item in before
         ):
@@ -753,5 +752,55 @@ def restore_dropped_case_jumps(graph, cfg) -> int:
         graph.splice_out(sequence, sequence.children.index(residual), sequence.children.index(residual) + 1)
         graph.transfer(rest, sequence)
         restored += 1
+        restored += _absorb_following_tests(graph, outer, sequence, target)
 
     return restored
+
+
+def _absorb_following_tests(graph, outer, sequence, target) -> int:
+    """`26 === t`, `27 === t`, `5 === t` into one body: the tests after the one just restored are still raw
+    conditional jumps to the same arm entry in the else arm; each one joins the condition."""
+    taken = 0
+
+    while True:
+        for index, item in enumerate(sequence.children):
+            if not isinstance(item, BasicBlock):
+                return taken
+
+            branch = item.terminator
+
+            if isinstance(branch, TerminatorConditionalBranch):
+                break
+
+            if branch is not None or any(
+                    i.statement is not None or i.terminator is not None for i in item.instructions):
+                return taken
+        else:
+            return taken
+
+        if (
+                branch.target != target.address
+                or not is_constant_comparison(branch.condition)
+                or any(i.statement is not None for i in item.instructions[:-1])
+                or any(
+            not isinstance(earlier, BasicBlock)
+            or any(i.statement is not None or i.terminator is not None for i in earlier.instructions)
+            for earlier in sequence.children[:index]
+        )
+        ):
+            return taken
+
+        if not branch.condition.structurally_equal(outer.condition):
+            outer.condition = BinaryExpression(left=outer.condition, operator=LogicalOperator.OR,
+                                               right=branch.condition)
+
+        if item.instructions and item.instructions[-1].terminator is branch:
+            item.instructions.pop()
+
+        item.terminator = None
+
+        if not item.instructions:
+            graph.splice_out(sequence, index, index + 1)
+            graph.block_owner.pop(item, None)
+
+        taken += 1

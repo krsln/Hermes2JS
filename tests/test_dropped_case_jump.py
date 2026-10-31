@@ -34,5 +34,7 @@ def test_both_tests_reach_the_shared_body():
 def test_the_second_label_is_not_an_else_if():
     out = _render("dropped_case_jump_98_2628.hasm", 2628)
 
-    assert "if (26 === r6 || 27 === r6) {" in out
+    # the third label (`5`) joins the same condition: it was a `goto label_73` behind the first two (F-180)
+    assert "if (26 === r6 || 27 === r6 || 5 === r6) {" in out
+    assert "goto" not in out
     assert "27 !== r6" not in out
