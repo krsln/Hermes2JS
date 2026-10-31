@@ -68,9 +68,11 @@ def test_a_copy_written_in_one_arm_is_not_taken_for_the_whole_merge():
     `r10 = param3` on the path that skips the arm too."""
     out = _render("loop_carried_arm_copy_96_4846.hasm", 4846)
 
-    assert "r14 = param3;" in out
+    # `Mov r13, r10` holds the parameter's register, which the loop rewrites (F-175): it is `r10`, not `param3`
+    assert "r14 = r13;" in out
     assert "r10 = r14;" in out
-    assert "r10 = param3;" not in out
+    # only the `LoadParam` line at the top says `r10 = param3`, never the reader after the `if`
+    assert out.count("r10 = param3;") == 1
 
 
 def test_a_shared_tail_with_a_statement_is_copied_with_its_own_nodes():

@@ -168,7 +168,11 @@ class OpcodeHandler(ABC):
         state.mark_read()
 
         value = state.value
-        if state.handler in ("LoadParam", "LoadParamLong") and isinstance(value, Identifier):
+        if (
+                state.handler in ("LoadParam", "LoadParamLong")
+                and isinstance(value, Identifier)
+                and not analysis.is_rewritten_in_loop(reg)
+        ):
             return value
 
         # `materialize=False` is for callers that only *compare* against the
@@ -298,8 +302,13 @@ class OpcodeHandler(ABC):
         # (a MemberExpression with a loop-dependent computed key could
         # in principle be unsafe too), but matches the confirmed bug
         # shapes while leaving the known-safe patterns alone.
+        # A parameter's own name is exempt above only while nothing rewrites its register inside the loop
+        # that holds the read (96/4846 `binarySubdivide`: `Mov r11, r15` ends the body, `Sub r0, r10, r11` starts it).
         if not isinstance(value, MemberExpression) and \
-                not (isinstance(value, Identifier) and not cls._is_register_alias(value)) and \
+                (
+                        not (isinstance(value, Identifier) and not cls._is_register_alias(value))
+                        or (state.handler in ("LoadParam", "LoadParamLong") and analysis.is_rewritten_in_loop(reg))
+                ) and \
                 analysis.is_unsafe_loop_register(reg, state.definition.address):
             state.mark_read()
             state.materialize()

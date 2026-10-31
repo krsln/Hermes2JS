@@ -57,6 +57,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-30 | after F-172 (a bottom-tested loop's header branch is an ordinary in-body test) | 217 | 231 | n/a | n/a | 1078 passed |
 | 2026-10-31 | after F-173 (a repoint that doubles a pure chain head keeps one) | 217 | 231 | n/a | n/a | 1080 passed |
 | 2026-10-31 | after F-174 (a shared `throw` of up to 16 instructions is copied per jumper) | 215 | 230 | n/a | n/a | 1082 passed |
+| 2026-10-31 | after F-175 (a parameter's register rewritten in a loop keeps its name) | 215 | 230 | n/a | n/a | 1083 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -118,7 +119,7 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 
 - **F-30** Loop condition `i < r8; r8 = r8.length`.
 - **F-31 Redundant copies (partly fixed).** `r2 = r3`, `r1 = {...}; r0 = r1`. Copies of a register or a
-  parameter that nothing reads are now removed on every path (see the archive). Left: about 620 (96) / 376
+  parameter that nothing reads are now removed on every path (see the archive). The loop-carried parameter copies that were really wrong output are F-175 (archive). Left: about 620 (96) / 376
   (98) lines `rN = <reg/param>` that no read names, almost all of them the `LoadParam` line itself
   (`r2 = param2;`, about 4000 such lines in 96): reads print as `paramN`, so the liveness cannot tell the
   line is dead and a write to the same register (`r10 = r14` in 96/4846) must stay. Also left: copies that

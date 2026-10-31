@@ -387,6 +387,20 @@ class HermesAnalysis:
 
         return any(start <= current <= end and not start <= address <= end for start, end in self.loop_ranges)
 
+    def is_rewritten_in_loop(self, reg: int) -> bool:
+        """True if `reg` is written again inside a loop range that holds the read being handled, even by a
+        write LATER in address order (`Mov r11, r15` at the bottom of the body, read at its top). A register
+        that still holds a parameter's value on entry then holds something else on the next iteration, so its
+        reads must not be printed as the parameter (F-175)."""
+        if self.current_address is None:
+            return False
+
+        return any(
+            start <= self.current_address <= end
+            and any(start <= write <= end for write in self.loop_carried_writes.get(f"r{reg}", ()))
+            for start, end in self.loop_ranges
+        )
+
     def is_unsafe_loop_register(self, reg: int, definition_address: int) -> bool:
         """
         True if a read of `reg` at the instruction currently being
