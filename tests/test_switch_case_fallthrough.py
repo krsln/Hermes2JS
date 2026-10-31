@@ -7,7 +7,7 @@ first body falls into the second. The printer ended every case body with an `bre
 marked `falls_through` (only when that case is printed right after it) and the safety `break` is left out.
 
     96/2103   cases 5, 26, 27 -> case 6
-    98/2633   `commitLayoutEffectOnFiber`: case 13 -> case 31
+    96/2607   the same function in the other bundle layout: cases 5, 26 -> case 6
 """
 
 from pathlib import Path
@@ -34,9 +34,9 @@ def test_the_shared_labels_run_on_into_case_6():
     assert "r1[429].call(undefined, param3, param2);" in out[start:end]
 
 
-def test_case_13_runs_on_into_case_31():
-    out = _render("switch_case_fallthrough_98_2633.hasm", 2633)
+def test_the_same_shape_in_another_function():
+    out = _render("switch_case_fallthrough_96_2607.hasm", 2607)
 
-    start = out.index("        case 13:")
-    end = out.index("        case 31:")
+    start = out.index("        case 5:")
+    end = out.index("        case 6:")
     assert "break;" not in out[start:end]

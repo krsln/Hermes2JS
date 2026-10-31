@@ -138,7 +138,8 @@ def scan(root, cfg):
                 continue
             if v not in nodes:
                 # An uncovered block: only a problem when it holds a statement or an exit.
-                if v.instructions and (v.terminator is not None or any(i.statement is not None for i in v.instructions)):
+                if v.instructions and (
+                        v.terminator is not None or any(i.statement is not None for i in v.instructions)):
                     lost.append((u.address, v.address, "block missing"))
                 continue
             if r is None:
@@ -152,8 +153,10 @@ def _bare_undefined_return(block):
     """`return undefined`: what falling off the end of the function does anyway."""
     if not isinstance(block.terminator, TerminatorReturn) or block.successors:
         return False
+    # The `Ret` instruction carries its own `ReturnStatement`; only the others must print nothing.
     return all(
-        i.statement is None and (i.value is None or type(i.value).__name__ in ("UndefinedLiteral", "Undefined"))
+        (i.statement is None or i.terminator is not None)
+        and (i.value is None or type(i.value).__name__ in ("UndefinedLiteral", "Undefined"))
         for i in block.instructions
     ) and len(block.instructions) <= 2
 
