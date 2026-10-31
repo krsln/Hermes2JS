@@ -14,7 +14,9 @@ from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral
 from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorReturn
-from ._predicates import is_backward_branch, is_constant_comparison, representative_block, same_case_subject
+from ._predicates import (
+    is_backward_branch, is_constant_comparison, representative_block, same_case_subject, same_constant_test,
+)
 
 logger = get_logger(__name__)
 
@@ -346,7 +348,10 @@ class _DominanceIfBuilder(RegionStructurer):
                         # leaves the target after the `if`, not in an `else` arm that would print it
                         # on the branch's own path only (98/10128, 96/11046: the loop tail entered by
                         # the `is()` test and fallen into by the last check).
-                        not is_constant_comparison(branch.condition)
+                        (
+                                not is_constant_comparison(branch.condition)
+                                or self._arm_retests_constant(then_entry, goto_block, branch.condition)
+                        )
                         and goto_block.successors
                         and self._arm_falls_into(
                     then_entry, goto_block, block,
@@ -511,6 +516,19 @@ class _DominanceIfBuilder(RegionStructurer):
             and pred.terminator.target == goto_block.address
             and dominators.dominates(then_entry, pred)
             and not is_constant_comparison(pred.terminator.condition)
+            for pred in goto_block.predecessors
+        )
+
+    def _arm_retests_constant(self, then_entry: BasicBlock, goto_block: BasicBlock, condition) -> bool:
+        """True if a test inside the fallthrough arm compares the same value with the SAME constant as
+        `condition` and falls into `goto_block` (`if (0 !== r6) goto T; ...; r6 = f(); if (0 === r6) ...; T:`)."""
+        dominators = self.cfg.dominator_tree
+
+        return any(
+            isinstance(pred.terminator, TerminatorConditionalBranch)
+            and pred.terminator.target != goto_block.address
+            and dominators.dominates(then_entry, pred)
+            and same_constant_test(condition, pred.terminator.condition)
             for pred in goto_block.predecessors
         )
 

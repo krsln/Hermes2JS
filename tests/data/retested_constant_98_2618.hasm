@@ -1,0 +1,73 @@
+
+=> [Function #2618 "bailoutOnAlreadyFinishedWork" of 271 bytes]: 4 params, frame size=24, strict=1, exc handler=0, debug info=0  @ offset 0x00172751
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 00000006: <LoadConstNull>: <Reg8: 3>
+==> 00000008: <StrictNeq>: <Reg8: 2, Reg8: 3, Reg8: 5>
+==> 0000000c: <JmpFalse>: <Addr8: 14, Reg8: 2>  # Address: 0000001a
+==> 0000000f: <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 0, string_id: 121>  # String: 'dependencies' (Identifier)
+==> 00000014: <PutByIdStrict>: <Reg8: 4, Reg8: 6, UInt8: 0, string_id: 121>  # String: 'dependencies' (Identifier)
+==> 0000001a: <GetParentEnvironment>: <Reg8: 9, UInt8: 0>
+==> 0000001d: <LoadParam>: <Reg8: 7, UInt8: 3>
+==> 00000020: <LoadFromEnvironmentL>: <Reg8: 1, Reg8: 9, UInt16: 304>
+==> 00000025: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 174>  # String: 'lanes' (Identifier)
+==> 0000002a: <BitOr>: <Reg8: 0, Reg8: 1, Reg8: 6>
+==> 0000002e: <StoreNPToEnvironmentL>: <Reg8: 9, UInt16: 304, Reg8: 0>
+==> 00000033: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 100>  # String: 'childLanes' (Identifier)
+==> 00000038: <BitAnd>: <Reg8: 6, Reg8: 7, Reg8: 6>
+==> 0000003c: <LoadConstZero>: <Reg8: 0>
+==> 0000003e: <JStrictNotEqual>: <Addr8: 45, Reg8: 0, Reg8: 6>  # Address: 0000006b
+==> 00000042: <JmpTrue>: <Addr8: 5, Reg8: 2>  # Address: 00000047
+==> 00000045: <Ret>: <Reg8: 3>
+==> 00000047: <LoadFromEnvironment>: <Reg8: 6, Reg8: 9, UInt8: 117>
+==> 0000004b: <LoadConstFalse>: <Reg8: 12>
+==> 0000004d: <LoadConstZero>: <Reg8: 16>
+==> 0000004f: <LoadConstZero>: <Reg8: 15>
+==> 00000051: <Mov>: <Reg8: 14, Reg8: 4>
+==> 00000054: <Mov>: <Reg8: 13, Reg8: 7>
+==> 00000057: <Call>: <Reg8: 1, Reg8: 6, UInt8: 5>
+==> 0000005b: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 100>  # String: 'childLanes' (Identifier)
+==> 00000060: <BitAnd>: <Reg8: 6, Reg8: 7, Reg8: 6>
+==> 00000064: <JStrictEqualLong>: <Addr32: 169, Reg8: 0, Reg8: 6>  # Address: 0000010d
+==> 0000006b: <JmpFalse>: <Addr8: 20, Reg8: 2>  # Address: 0000007f
+==> 0000006e: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 3, string_id: 99>  # String: 'child' (Identifier)
+==> 00000073: <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 99>  # String: 'child' (Identifier)
+==> 00000078: <JStrictNotEqualLong>: <Addr32: 128, Reg8: 6, Reg8: 5>  # Address: 000000f8
+==> 0000007f: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 99>  # String: 'child' (Identifier)
+==> 00000084: <JStrictEqual>: <Addr8: 109, Reg8: 3, Reg8: 5>  # Address: 000000f1
+==> 00000088: <GetByIdShort>: <Reg8: 7, Reg8: 4, UInt8: 3, string_id: 99>  # String: 'child' (Identifier)
+==> 0000008d: <LoadFromEnvironmentL>: <Reg8: 6, Reg8: 9, UInt16: 361>
+==> 00000092: <GetByIdShort>: <Reg8: 5, Reg8: 7, UInt8: 4, string_id: 202>  # String: 'pendingProps' (Identifier)
+==> 00000097: <Call3>: <Reg8: 5, Reg8: 6, Reg8: 0, Reg8: 7, Reg8: 5>
+==> 0000009d: <PutByIdStrict>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 99>  # String: 'child' (Identifier)
+==> 000000a3: <PutByIdStrict>: <Reg8: 5, Reg8: 4, UInt8: 2, string_id: 136>  # String: 'return' (Identifier)
+==> 000000a9: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 5, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000000ae: <Mov>: <Reg8: 8, Reg8: 5>
+==> 000000b1: <Mov>: <Reg8: 5, Reg8: 8>
+==> 000000b4: <JStrictEqual>: <Addr8: 55, Reg8: 3, Reg8: 6>  # Address: 000000eb
+==> 000000b8: <GetByIdShort>: <Reg8: 11, Reg8: 7, UInt8: 5, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000000bd: <LoadFromEnvironmentL>: <Reg8: 10, Reg8: 9, UInt16: 361>
+==> 000000c2: <GetByIdShort>: <Reg8: 6, Reg8: 11, UInt8: 4, string_id: 202>  # String: 'pendingProps' (Identifier)
+==> 000000c7: <Call3>: <Reg8: 10, Reg8: 10, Reg8: 0, Reg8: 11, Reg8: 6>
+==> 000000cd: <PutByIdStrict>: <Reg8: 8, Reg8: 10, UInt8: 3, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000000d3: <PutByIdStrict>: <Reg8: 10, Reg8: 4, UInt8: 2, string_id: 136>  # String: 'return' (Identifier)
+==> 000000d9: <GetByIdShort>: <Reg8: 6, Reg8: 11, UInt8: 5, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000000de: <Mov>: <Reg8: 8, Reg8: 10>
+==> 000000e1: <Mov>: <Reg8: 7, Reg8: 11>
+==> 000000e4: <Mov>: <Reg8: 5, Reg8: 8>
+==> 000000e7: <JStrictNotEqual>: <Addr8: -47, Reg8: 3, Reg8: 6>  # Address: 000000b8
+==> 000000eb: <PutByIdStrict>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000000f1: <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 99>  # String: 'child' (Identifier)
+==> 000000f6: <Ret>: <Reg8: 4>
+==> 000000f8: <GetGlobalObject>: <Reg8: 4>
+==> 000000fa: <TryGetById>: <Reg8: 5, Reg8: 4, UInt8: 6, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000100: <LoadConstString>: <Reg8: 4, string_id: 4024>  # String: 'Resuming work not yet implemented.' (String)
+==> 00000104: <LoadConstUndefined>: <Reg8: 2>
+==> 00000106: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 2, Reg8: 4>
+==> 0000010b: <Throw>: <Reg8: 4>
+==> 0000010d: <Ret>: <Reg8: 3>
+
+

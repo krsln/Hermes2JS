@@ -63,6 +63,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-31 | after F-178 (the lost-edge scan knows a `return undefined` that carries its `Ret` statement) | 215 | 230 | n/a | n/a | 1088 passed |
 | 2026-10-31 | after F-179 (a `case` jump left to a `switch` that did not come is restored as `\|\|`) | 215 | 230 | n/a | n/a | 1090 passed |
 | 2026-10-31 | after F-180 (the tests after a restored `case` jump join the same `\|\|`) | 198 | 218 | n/a | n/a | 1090 passed |
+| 2026-10-31 | after F-181 (an arm that re-tests the same constant makes the branch target the join) | 193 | 217 | n/a | n/a | 1092 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -105,8 +106,6 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 - **F-151 Doubled left operand in a boolean chain (resolved as F-173, see the archive).**
 
 - **F-179 A `case`-chain test that does not become a `switch` lost its jump (resolved, see the archive).**
-- **F-181 A join reached by a jump AND by the fall of a second test is printed in one arm only (98/2618, 96/2077, 96/2583 `bailoutOnAlreadyFinishedWork`; wrong output behind a `goto`).** Bytecode: `if (0 !== r6) goto X` (0x3e); else `if (r2) {...; r6 = param3 & childLanes; if (0 === r6) goto RET}` and then FALL into `X` (0x6b: the `child` clone test / `Resuming work` throw); `RET` (0x10d) is a lone `return r3`. The output is `if (0 !== r6) { X } else { if (null !== param1) { ...; if (0 === r6) goto label_269; } return null; }`: when the second `r6` is non-zero the code returns `null` where the bytecode runs `X`, and `label_269` (the lone `return`) is never placed. `X` has two ways in (a jump from the first test, the fall of the second), is several blocks long, and `SharedTailDuplicationCfgPass` (level 3 copies a tail of blocks) does not copy it; the `goto` in the tree makes `flow_audit` answer 0, so no attempt notices the lost path. Same family as F-153 (98/10128) and F-10(b). A fix has to give the second test's fall its own copy of `X` (a bigger tail than the pass allows) or put `X` after the whole `if` and let the first test jump over the else; and `flow_audit.count_lost_edges` should count on a tree that still has a `goto` (it models the `goto` as an edge to its target).
-
 - **F-10 Conditional jump to an exit block.** `if (c) goto finalReturn`: conditional jumps to a shared
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
   (F-113, F-114, F-115, F-117, F-119, and (a) below). Left: (b) jumps whose target is not a `return`

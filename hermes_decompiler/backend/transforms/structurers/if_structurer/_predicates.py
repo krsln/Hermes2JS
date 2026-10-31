@@ -162,3 +162,18 @@ def same_case_subject(condition, other) -> bool:
     a, b = subject(condition), subject(other)
 
     return a is not None and b is not None and a.structurally_equal(b)
+
+
+def same_constant_test(condition, other) -> bool:
+    """Do two constant comparisons test the same value against the SAME constant (`0 !== r6`, `0 === r6`)?
+
+    A `case` chain tests one discriminant against DIFFERENT constants; the same constant twice is a
+    re-test of a value the code recomputed in between (98/2618: `r6 = lanes & childLanes` again)."""
+
+    if not (is_constant_comparison(condition) and is_constant_comparison(other)):
+        return False
+
+    def constant(c):
+        return c.right if isinstance(c.right, (Literal, UndefinedLiteral)) else c.left
+
+    return same_case_subject(condition, other) and constant(condition).structurally_equal(constant(other))
