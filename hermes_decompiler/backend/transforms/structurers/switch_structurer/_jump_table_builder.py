@@ -65,6 +65,7 @@ class _JumpTableSwitchBuilder:
             groups.setdefault(target, []).append(value)
 
         resolved: list[tuple[list[int], object]] = []
+        target_of: dict[int, BasicBlock] = {}
 
         for target, values in groups.items():
 
@@ -79,6 +80,7 @@ class _JumpTableSwitchBuilder:
                 return False
 
             resolved.append((sorted(values), item))
+            target_of[id(item)] = target_block
 
         default_item = None
 
@@ -142,9 +144,23 @@ class _JumpTableSwitchBuilder:
 
         switch_region = SwitchRegion(switch_term.selector)
 
+        # A body whose code flows into the NEXT case's entry (`case 5: if (!a) f(); case 6: g()`) must
+        # not print a `break`; only when that next case is printed right after it (the default goes last).
+        next_item = {id(i): ordered_items[n + 1] for n, i in enumerate(ordered_items[:-1])}
+        case_ids = {id(i) for _, i in resolved}
+
         for values, item in sorted(resolved, key=lambda r: item_index[id(r[1])]):
             tests = [NumericLiteral(value=v) for v in values]
-            switch_region.add_case(SwitchCase(tests, bodies[id(item)]))
+            following = next_item.get(id(item))
+            falls = (
+                    following is not None
+                    and id(following) in case_ids
+                    and any(
+                target_of[id(following)] in block.successors
+                for block in bodies[id(item)].covered_blocks
+            )
+            )
+            switch_region.add_case(SwitchCase(tests, bodies[id(item)], falls_through=falls))
 
         if default_item is not None:
             switch_region.default_body = bodies[id(default_item)]

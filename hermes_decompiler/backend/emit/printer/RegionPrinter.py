@@ -575,7 +575,9 @@ class RegionPrinter:
 
                 with self.ctx.indented():
                     self._emit_region(case.body, lines)
-                    self._ensure_case_terminated(lines)
+
+                    if not case.falls_through:
+                        self._ensure_case_terminated(lines)
 
             default_body = region.default_body
             if default_body is not None:

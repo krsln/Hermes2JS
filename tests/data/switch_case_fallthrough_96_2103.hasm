@@ -1,0 +1,123 @@
+
+=> [Function #2103 "commitDeletionEffectsOnFiber" of 471 bytes]: 4 params, frame size=19, strict=1, exc handler=1, debug info=0  @ offset 0x0012dc49
+  [Exception handlers: [start=0x28, end=0x3f, target=0x41] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 4, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 3, UInt8: 2>
+==> 00000006: <LoadParam>: <Reg8: 0, UInt8: 3>
+==> 00000009: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000000c: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 59>
+==> 00000010: <JmpFalse>: <Addr8: 51, Reg8: 2>  # Address: 00000043
+==> 00000013: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 59>
+==> 00000017: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 1, string_id: 7751>  # String: 'onCommitFiberUnmount' (Identifier)
+==> 0000001d: <LoadConstString>: <Reg8: 5, string_id: 8218>  # String: 'function' (Identifier)
+==> 00000021: <TypeOf>: <Reg8: 2, Reg8: 2>
+==> 00000024: <JStrictNotEqual>: <Addr8: 31, Reg8: 5, Reg8: 2>  # Address: 00000043
+==> 00000028: <LoadFromEnvironment>: <Reg8: 7, Reg8: 1, UInt8: 59>
+==> 0000002c: <GetById>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 7751>  # String: 'onCommitFiberUnmount' (Identifier)
+==> 00000032: <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 58>
+==> 00000036: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000039: <Call3>: <Reg8: 2, Reg8: 6, Reg8: 7, Reg8: 5, Reg8: 2>
+==> 0000003f: <Jmp>: <Addr8: 4>  # Address: 00000043
+==> 00000041: <Catch>: <Reg8: 2>
+==> 00000043: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000046: <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 2, string_id: 187>  # String: 'tag' (Identifier)
+==> 0000004b: <SwitchImm>: <Reg8: 2, UInt32: 396, Addr32: 375, UInt32: 0, UInt32: 27>  # Address: 000001c2  # Jump table: [00000123, 000000d1, 000001c2, 000001c2, 0000016c, 00000198, 000001af, 000001c2, 000001c2, 000001c2, 000001c2, 00000123, 000001c2, 000001c2, 00000123, 00000123, 000001c2, 000001c2, 000001d3, 000001c2, 000001c2, 000000bb, 0000005d, 000001c2, 000001c2, 000001c2, 00000198, 00000198]
+==> 0000005d: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000060: <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 3, string_id: 175>  # String: 'mode' (Identifier)
+==> 00000065: <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
+==> 00000068: <BitAnd>: <Reg8: 2, Reg8: 5, Reg8: 2>
+==> 0000006c: <JmpTrue>: <Addr8: 25, Reg8: 2>  # Address: 00000085
+==> 0000006f: <LoadFromEnvironmentL>: <Reg8: 6, Reg8: 1, UInt16: 435>
+==> 00000074: <Mov>: <Reg8: 5, Reg8: 0>
+==> 00000077: <LoadConstUndefined>: <Reg8: 2>
+==> 00000079: <Call4>: <Reg8: 2, Reg8: 6, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 5>
+==> 00000080: <JmpLong>: <Addr32: 339>  # Address: 000001d3
+==> 00000085: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 135>
+==> 00000089: <Mov>: <Reg8: 5, Reg8: 2>
+==> 0000008c: <JmpTrue>: <Addr8: 17, Reg8: 5>  # Address: 0000009d
+==> 0000008f: <Mov>: <Reg8: 6, Reg8: 0>
+==> 00000092: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 4, string_id: 173>  # String: 'memoizedState' (Identifier)
+==> 00000097: <LoadConstNull>: <Reg8: 6>
+==> 00000099: <StrictNeq>: <Reg8: 5, Reg8: 6, Reg8: 7>
+==> 0000009d: <StoreToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 5>
+==> 000000a1: <LoadFromEnvironmentL>: <Reg8: 7, Reg8: 1, UInt16: 435>
+==> 000000a6: <Mov>: <Reg8: 6, Reg8: 0>
+==> 000000a9: <LoadConstUndefined>: <Reg8: 5>
+==> 000000ab: <Call4>: <Reg8: 5, Reg8: 7, Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 6>
+==> 000000b2: <StoreToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 2>
+==> 000000b6: <JmpLong>: <Addr32: 285>  # Address: 000001d3
+==> 000000bb: <LoadFromEnvironmentL>: <Reg8: 6, Reg8: 1, UInt16: 435>
+==> 000000c0: <Mov>: <Reg8: 5, Reg8: 0>
+==> 000000c3: <LoadConstUndefined>: <Reg8: 2>
+==> 000000c5: <Call4>: <Reg8: 2, Reg8: 6, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 5>
+==> 000000cc: <JmpLong>: <Addr32: 263>  # Address: 000001d3
+==> 000000d1: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 135>
+==> 000000d5: <JmpTrue>: <Addr8: 56, Reg8: 2>  # Address: 0000010d
+==> 000000d8: <LoadFromEnvironmentL>: <Reg8: 5, Reg8: 1, UInt16: 429>
+==> 000000dd: <Mov>: <Reg8: 2, Reg8: 0>
+==> 000000e0: <LoadConstUndefined>: <Reg8: 7>
+==> 000000e2: <Call3>: <Reg8: 5, Reg8: 5, Reg8: 7, Reg8: 2, Reg8: 3>
+==> 000000e8: <GetByIdShort>: <Reg8: 6, Reg8: 2, UInt8: 5, string_id: 234>  # String: 'stateNode' (Identifier)
+==> 000000ed: <GetById>: <Reg8: 2, Reg8: 6, UInt8: 6, string_id: 13716>  # String: 'componentWillUnmount' (Identifier)
+==> 000000f3: <LoadConstString>: <Reg8: 5, string_id: 8218>  # String: 'function' (Identifier)
+==> 000000f7: <TypeOf>: <Reg8: 2, Reg8: 2>
+==> 000000fa: <JStrictNotEqual>: <Addr8: 19, Reg8: 5, Reg8: 2>  # Address: 0000010d
+==> 000000fe: <LoadFromEnvironmentL>: <Reg8: 5, Reg8: 1, UInt16: 427>
+==> 00000103: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000106: <Call4>: <Reg8: 2, Reg8: 5, Reg8: 7, Reg8: 2, Reg8: 3, Reg8: 6>
+==> 0000010d: <LoadFromEnvironmentL>: <Reg8: 6, Reg8: 1, UInt16: 435>
+==> 00000112: <Mov>: <Reg8: 5, Reg8: 0>
+==> 00000115: <LoadConstUndefined>: <Reg8: 2>
+==> 00000117: <Call4>: <Reg8: 2, Reg8: 6, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 5>
+==> 0000011e: <JmpLong>: <Addr32: 181>  # Address: 000001d3
+==> 00000123: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 135>
+==> 00000127: <JmpTrue>: <Addr8: 23, Reg8: 2>  # Address: 0000013e
+==> 0000012a: <LoadFromEnvironmentL>: <Reg8: 7, Reg8: 1, UInt16: 425>
+==> 0000012f: <Mov>: <Reg8: 6, Reg8: 0>
+==> 00000132: <LoadConstUndefined>: <Reg8: 5>
+==> 00000134: <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
+==> 00000137: <Call4>: <Reg8: 2, Reg8: 7, Reg8: 5, Reg8: 2, Reg8: 6, Reg8: 3>
+==> 0000013e: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 135>
+==> 00000142: <JmpTrue>: <Addr8: 23, Reg8: 2>  # Address: 00000159
+==> 00000145: <LoadFromEnvironmentL>: <Reg8: 7, Reg8: 1, UInt16: 425>
+==> 0000014a: <Mov>: <Reg8: 6, Reg8: 0>
+==> 0000014d: <LoadConstUndefined>: <Reg8: 5>
+==> 0000014f: <LoadConstUInt8>: <Reg8: 2, UInt8: 4>
+==> 00000152: <Call4>: <Reg8: 2, Reg8: 7, Reg8: 5, Reg8: 2, Reg8: 6, Reg8: 3>
+==> 00000159: <LoadFromEnvironmentL>: <Reg8: 6, Reg8: 1, UInt16: 435>
+==> 0000015e: <Mov>: <Reg8: 5, Reg8: 0>
+==> 00000161: <LoadConstUndefined>: <Reg8: 2>
+==> 00000163: <Call4>: <Reg8: 2, Reg8: 6, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 5>
+==> 0000016a: <Jmp>: <Addr8: 105>  # Address: 000001d3
+==> 0000016c: <LoadFromEnvironmentL>: <Reg8: 8, Reg8: 1, UInt16: 431>
+==> 00000171: <Mov>: <Reg8: 6, Reg8: 0>
+==> 00000174: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 5, string_id: 234>  # String: 'stateNode' (Identifier)
+==> 00000179: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 178>
+==> 0000017d: <LoadConstUndefined>: <Reg8: 5>
+==> 0000017f: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 00000183: <Call4>: <Reg8: 2, Reg8: 8, Reg8: 5, Reg8: 7, Reg8: 6, Reg8: 2>
+==> 0000018a: <LoadFromEnvironmentL>: <Reg8: 2, Reg8: 1, UInt16: 435>
+==> 0000018f: <Call4>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 6>
+==> 00000196: <Jmp>: <Addr8: 61>  # Address: 000001d3
+==> 00000198: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 135>
+==> 0000019c: <JmpTrue>: <Addr8: 19, Reg8: 2>  # Address: 000001af
+==> 0000019f: <LoadFromEnvironmentL>: <Reg8: 6, Reg8: 1, UInt16: 429>
+==> 000001a4: <Mov>: <Reg8: 5, Reg8: 0>
+==> 000001a7: <LoadConstUndefined>: <Reg8: 2>
+==> 000001a9: <Call3>: <Reg8: 2, Reg8: 6, Reg8: 2, Reg8: 5, Reg8: 3>
+==> 000001af: <LoadFromEnvironmentL>: <Reg8: 6, Reg8: 1, UInt16: 435>
+==> 000001b4: <Mov>: <Reg8: 5, Reg8: 0>
+==> 000001b7: <LoadConstUndefined>: <Reg8: 2>
+==> 000001b9: <Call4>: <Reg8: 2, Reg8: 6, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 5>
+==> 000001c0: <Jmp>: <Addr8: 19>  # Address: 000001d3
+==> 000001c2: <LoadFromEnvironmentL>: <Reg8: 2, Reg8: 1, UInt16: 435>
+==> 000001c7: <Mov>: <Reg8: 1, Reg8: 0>
+==> 000001ca: <LoadConstUndefined>: <Reg8: 0>
+==> 000001cc: <Call4>: <Reg8: 0, Reg8: 2, Reg8: 0, Reg8: 4, Reg8: 3, Reg8: 1>
+==> 000001d3: <LoadConstUndefined>: <Reg8: 0>
+==> 000001d5: <Ret>: <Reg8: 0>
+
+

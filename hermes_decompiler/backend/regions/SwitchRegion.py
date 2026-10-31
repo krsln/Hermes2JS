@@ -12,9 +12,11 @@ class SwitchCase:
     rather than being duplicated.
     """
 
-    def __init__(self, tests: list, body: "SequenceRegion"):
+    def __init__(self, tests: list, body: "SequenceRegion", falls_through: bool = False):
         self.tests = tests
         self.body = body
+        # The body's code runs on into the next `case` (no `break`): `case 5: if (!a) f(); case 6: g()`.
+        self.falls_through = falls_through
 
 
 class SwitchRegion(Region):
