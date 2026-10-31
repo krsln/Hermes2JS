@@ -27,7 +27,8 @@ import dataclasses
 
 from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion
 from hermes_decompiler.ir import Node
-from hermes_decompiler.ir.expressions import Identifier
+from hermes_decompiler.ir.Operators import LogicalOperator
+from hermes_decompiler.ir.expressions import BinaryExpression, Identifier
 from ._purity import TRIVIAL_NODE_TYPES, has_side_effects
 
 __all__ = ["repoint_node", "repoint_references", "sibling_arm_instructions", "reclaim_definition",
@@ -103,7 +104,28 @@ def repoint_node(node, old_expr, new_expr, *, structural: bool = True):
     if not updates:
         return node, False
 
-    return dataclasses.replace(node, **updates), True
+    return _drop_repeated_operand(dataclasses.replace(node, **updates)), True
+
+
+def _drop_repeated_operand(node):
+    """`A && (A && B)` -> `A && B` (and the same for `||`) once a repoint has built it (F-151).
+
+    A source expression that occurs twice folds twice, and the second fold's structural match finds the first
+    fold's right operand and wraps it again, doubling the head. For an operand without effects the repeat adds
+    nothing: it is evaluated twice to the same value."""
+    right = getattr(node, "right", None)
+
+    if (
+            isinstance(node, BinaryExpression)
+            and isinstance(node.operator, LogicalOperator)
+            and isinstance(right, BinaryExpression)
+            and right.operator is node.operator
+            and not has_side_effects(node.left)
+            and node.left.structurally_equal(right.left)
+    ):
+        return dataclasses.replace(node, right=right.right)
+
+    return node
 
 
 def _computes_the_same_value(instr, old_expr, structural: bool) -> bool:

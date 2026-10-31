@@ -55,6 +55,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-30 | after F-170 (arm with one private `return`, test past its first block) | 228 | 240 | n/a | n/a | 1074 passed |
 | 2026-10-30 | after F-171 (a lossless retry with a `goto` beats a first attempt that loses a path) | 229 | 242 | n/a | n/a | 1076 passed |
 | 2026-10-30 | after F-172 (a bottom-tested loop's header branch is an ordinary in-body test) | 217 | 231 | n/a | n/a | 1078 passed |
+| 2026-10-31 | after F-173 (a repoint that doubles a pure chain head keeps one) | 217 | 231 | n/a | n/a | 1080 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -94,50 +95,7 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 - **F-140 `deepDiffer` (partly fixed).** 96/1595. The loop shape (F-149), the stale
   `typeof (r5 === undefined ? ...)` and the unassigned `r17` (both in the archive) are done. Left:
   the pair `r5 = arguments[2]; r1 = r5 === undefined ? -1 : arguments[2]` (correct but noisy).
-- **F-151 Doubled left operand in a boolean chain (partly fixed).** `r3 = null !== r7 && (null !== r7 &&
-  null !== r7.memoizedState)` (96/2108, 96/2088, 96/4422 `accessible`, 98/2639 and others; about 7 files
-  in 96 and 8 in 98). Cause (traced on 96/2108): a source expression that occurs twice
-  (`r7 !== null && r7.memoizedState !== null` in two statements) folds twice, and the second fold's
-  structural repoint of its arm value finds the FIRST fold's right operand (`B` inside `A && B`) and
-  wraps it again. Tried and rejected: sealing a fold's result so that a look-alike is not matched as its
-  right operand: it removed the doubled heads in 14 files but dropped terms in `X || Y || Z` chains
-  (98/3783 `_performTransitionSideEffects` lost two alternatives), because those later repoints are the
-  intended structural copies. A real fix has to tell a copy of the arm value (a `Mov`) from an identical
-  second source expression, e.g. by the reader's address relative to the arm.
-
-- **F-153 A join block printed in only one arm (98/10128 open; 98/2216 fixed in part; 96/15065 fixed as F-172).**
-  Bytecode of 2216: `if (r5 == null) goto J; ... r3 = null; if (startsWith) goto END; ...; if (includes)
-  goto J; r5 = "file://" + r7; J: r3 = r5; END: store r3`. `J` has three ways in. Faults:
-  (a) `_DominanceIfBuilder._convert` makes `J` the `else` arm of the first test (`has_else`, since the
-  post-dominator `END` is a later block) although the `then` arm falls and jumps into `J` as well; the
-  arm's flow into `J` is dropped (`drop_scan`: edges 0x56->0x96, 0x8e->0x96).
-  (b) Fixed as F-172 (archive): the real cause was the loop header's test never being folded, not the
-  absorb pass; the committed goldens of 96/15065 and 98/9456 had recorded wrong output.
-  (c) The frontend inlines `Mov r3, r5` into the read after the join (`r4[5] = r5`) although another path
-  reaches it with `r3 = null`.
-  Direct guards for (a) and (b) moved 26 (96) / 20 (98) more `goto` lines into other functions (20 of them
-  had no lost edge before) and were NOT kept. Done for 2216 (resolved in the archive entry F-153a): retry level 5
-  copies a small tail per way in. 98/10128 `interpolate` is no longer silently wrong (F-171: level 5 wins, one `goto` left); the rest is why that `goto` stays. Open: 98/10128 `interpolate` (the tail `Mov r14, r17; if (r17 <= r12) goto C` has
-  three ways in; the `else` arm of `x < r9` ends without running on into it, so a clamped `x` never reaches the range
-  test; the `identity` tests jump to the final `return r7`, whose register holds a different non-constant value per path,
-  so `SharedReturnDuplicationCfgPass` refuses to copy it and `duplicated_returns` stays off). Tried: level 5 for a tail
-  that ends in a test (split the test off, one copy per way in): the first two ranges structure right, the later part gets
-  `goto`s. Tried (2026-10-28): the F-155 clause (`_arm_falls_into`) with the retry flag instead of `duplicated_returns`:
-  `flow_audit` then reports 0 lost paths and no `goto`, but the output is WRONG (the `identity` path falls into the code
-  after the `if` and `r7 = r8` overwrites it), so it was not kept: that clause is only exact when the arm's other exits are
-  real `return`s. Tried: letting a jumper that sets the register itself (`Mov r7, r10; if (...) goto RET`) be copied
-  whatever the other paths hold: 3 tests broke (98/1871, 98/2216 among them). Next idea: copy `Ret r7` for those jumpers
-  only (exact: each copy returns the value its own block set) and leave the closing return alone; the lost-path check
-  cannot see the second fault (it only asks whether the target is reachable at all), 96/15065 and 98/9456 `labeledBreakTest` (b: the
-  fall-through test into a shared `log` block; their goldens are wrong).
-
-- **F-142 `drop_scan` candidates (refreshed 2026-10-28, both bundles).** `drop_scan.py --report` now lists
-  3 goto-free functions in 96 and 4 in 98. 96/1339 `parseDropShadow`, 96/2103 `commitDeletionEffectsOnFiber`
-  are false positives (the lost edge goes to a bare `return undefined`/`return r0` where `r0` is `undefined`; falling
-  off the end is the same). 96/6029 `_anon_0_` is an async state machine (the edge is a resume; the printed
-  `if/else` with `await` reads right). 98/9535 is a false positive; 98/2594 is a `Catch` edge, probably one too.
-  98/2216 `getScriptURL` was real (F-153a, fixed); 98/10128 is real and open (F-153). Fixed since the first report: 96/1595, 96/11086 (F-149),
-  96/2602 (F-148, closed by F-154), 98/7358 (F-152), 98/12551 and 98/4047 (F-154).
+- **F-151 Doubled left operand in a boolean chain (resolved as F-173, see the archive).**
 
 - **F-10 Conditional jump to an exit block.** `if (c) goto finalReturn`: conditional jumps to a shared
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
