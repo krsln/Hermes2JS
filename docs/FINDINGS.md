@@ -60,6 +60,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-31 | after F-175 (a parameter's register rewritten in a loop keeps its name) | 215 | 230 | n/a | n/a | 1083 passed |
 | 2026-10-31 | after F-176 (a property read before a loop and rewritten in it keeps its register) | 215 | 230 | n/a | n/a | 1085 passed |
 | 2026-10-31 | after F-177 (a `case` that runs into the next one prints no `break`) | 215 | 230 | n/a | n/a | 1087 passed |
+| 2026-10-31 | after F-178 (the lost-edge scan knows a `return undefined` that carries its `Ret` statement) | 215 | 230 | n/a | n/a | 1088 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -100,6 +101,8 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   `typeof (r5 === undefined ? ...)` and the unassigned `r17` (both in the archive) are done. Left:
   the pair `r5 = arguments[2]; r1 = r5 === undefined ? -1 : arguments[2]` (correct but noisy).
 - **F-151 Doubled left operand in a boolean chain (resolved as F-173, see the archive).**
+
+- **F-179 A `case`-chain test that does not become a `switch` loses its jump (98/2633 `commitLayoutEffectOnFiber`, wrong output).** `tag === 27` and `tag === 5` jump to ONE body, then `tag !== 1` goes elsewhere (bytecode 0x1f9-0x222). The output is `if (27 === r9) { X } else if (5 !== r9) { ... }`: on `5` nothing runs, `X` should. Cause: `ShortCircuitConditionCfgPass` leaves the two tests apart (a `case` chain with another body, inlined setup between them) and `_CompoundConditionFolder._absorb_residual_conditional` drops the second jump into the sibling arm because `_case_chain_has_two_bodies` says a `switch` will take it; but `_ComparisonChainSwitchBuilder._match_chain` returns one case for the chain (the `5 !== r9` residual holds `r6 = null` before the `1` test, so the inner chain is not pure) and `_MIN_CASES = 2` fails: no `switch`, the jump is gone. Disabling the guard in the CFG pass gives the right `27 === r9 || 5 === r9` but breaks `switchTest` and four shared-label tests, which want it. Tried and dropped: (1) a retry-only flag that turns the guard off when the first attempt lost a path: the first attempt of the isolated function only kept a `goto` (lost count 0), and a flag on every retry cost 98/2211 its `switch`; (2) adopting a goto-free retry over a `goto` first attempt only when it loses no path: it turns 96/2103, 96/2601, 96/2602 into `goto` output for nothing and does not fix 2633 (the first attempt has the same loss). A real fix: have the absorb step ask the builder, or record the dropped jump and restore it as `||` when no `switch` came out of the chain.
 
 - **F-10 Conditional jump to an exit block.** `if (c) goto finalReturn`: conditional jumps to a shared
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
