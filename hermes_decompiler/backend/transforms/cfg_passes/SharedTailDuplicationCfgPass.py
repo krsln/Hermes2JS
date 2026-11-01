@@ -100,7 +100,12 @@ class SharedTailDuplicationCfgPass:
 
         if not isinstance(branch, TerminatorConditionalBranch) or faller not in tail.predecessors:
             return None
-        if branch.target != tail.successors[0].address or branch.target <= faller.address:
+        if branch.target <= faller.address:
+            return None
+        if branch.target != tail.successors[0].address and not (
+                # A later rung only: at the first ones it changed shapes the plain skip already solved (96/2264).
+                self.regions and self._skips_to_the_other_way(tail, blocks, index, branch)
+        ):
             return None
         if faller.address >= tail.address - 1:
             return None
@@ -116,6 +121,25 @@ class SharedTailDuplicationCfgPass:
                 return None
 
         return faller
+
+    @staticmethod
+    def _skips_to_the_other_way(tail: BasicBlock, blocks, index: int, branch) -> bool:
+        """The test jumps over the tail to the block right behind it, and that block runs on into the very
+        place the tail jumps to (`if (c) goto B; T: x; jmp END; B: y; END:`, 98/8059 `processPercentage`):
+        both ways meet at `END`, the tail's copy is the test's own `else`."""
+        if index + 1 >= len(blocks):
+            return False
+
+        other = blocks[index + 1]
+        end = tail.successors[0]
+
+        return (
+                other.address == branch.target
+                and list(other.successors) == [end]
+                and list(other.predecessors) == [blocks[index - 1]]
+                and (other.terminator is None or isinstance(other.terminator, TerminatorJump))
+                and other.address > tail.address
+        )
 
     def _give_private_copy(self, faller: BasicBlock, tail: BasicBlock) -> None:
         blocks = self.cfg.blocks
