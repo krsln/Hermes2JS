@@ -29,5 +29,6 @@ def test_the_undefined_a_test_folded_is_printed_before_the_join_reads_it():
     code = _code()
 
     assert code.index('r3 = { "highWaterMark": r4, "size": null };\n        r4 = undefined;') >= 0
-    assert code.index("r4 = undefined;\n        if (undefined === r8) {") >= 0
+    # the tail both arms share (`r3.size = r4`) follows the `if`, so the test reads `!==` (F-187)
+    assert code.index("r4 = undefined;\n        if (undefined !== r8) {") >= 0
     assert "r3.size = r4;" in code

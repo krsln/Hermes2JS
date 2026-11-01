@@ -1,0 +1,43 @@
+
+=> [Function #8188 "compare" of 140 bytes]: 2 params, frame size=22, strict=1, exc handler=0, debug info=0  @ offset 0x001eae9f
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 6, UInt8: 0>
+==> 00000003: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000006: <LoadParam>: <Reg8: 7, UInt8: 1>
+==> 00000009: <LoadFromEnvironment>: <Reg8: 9, Reg8: 3, UInt8: 0>
+==> 0000000d: <GetById>: <Reg8: 12, Reg8: 6, UInt8: 0, string_id: 7466>  # String: 'version' (Identifier)
+==> 00000013: <GetByIdShort>: <Reg8: 11, Reg8: 6, UInt8: 1, string_id: 130>  # String: 'options' (Identifier)
+==> 00000018: <LoadConstString>: <Reg8: 13, string_id: 4000>  # String: 'SemVer.compare' (String)
+==> 0000001c: <LoadConstUndefined>: <Reg8: 14>
+==> 0000001e: <Mov>: <Reg8: 10, Reg8: 7>
+==> 00000021: <Call>: <Reg8: 4, Reg8: 9, UInt8: 5>
+==> 00000025: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 8>
+==> 00000029: <InstanceOf>: <Reg8: 2, Reg8: 7, Reg8: 4>
+==> 0000002d: <Mov>: <Reg8: 5, Reg8: 7>
+==> 00000030: <JmpTrue>: <Addr8: 45, Reg8: 2>  # Address: 0000005d
+==> 00000033: <JmpTypeOfIs>: <Addr32: 18, Reg8: 7, UInt16: 507>  # Address: 00000045
+==> 0000003b: <GetById>: <Reg8: 3, Reg8: 6, UInt8: 0, string_id: 7466>  # String: 'version' (Identifier)
+==> 00000041: <JStrictEqual>: <Addr8: 24, Reg8: 7, Reg8: 3>  # Address: 00000059
+==> 00000045: <GetByIdShort>: <Reg8: 12, Reg8: 6, UInt8: 1, string_id: 130>  # String: 'options' (Identifier)
+==> 0000004a: <CreateThisForNew>: <Reg8: 8, Reg8: 4, UInt8: 2>
+==> 0000004e: <LoadConstUndefined>: <Reg8: 14>
+==> 00000050: <Mov>: <Reg8: 13, Reg8: 7>
+==> 00000053: <Construct>: <Reg8: 5, Reg8: 4, UInt8: 3>
+==> 00000057: <Jmp>: <Addr8: 6>  # Address: 0000005d
+==> 00000059: <LoadConstZero>: <Reg8: 0>
+==> 0000005b: <Ret>: <Reg8: 0>
+==> 0000005d: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 0, string_id: 7466>  # String: 'version' (Identifier)
+==> 00000063: <GetById>: <Reg8: 3, Reg8: 6, UInt8: 0, string_id: 7466>  # String: 'version' (Identifier)
+==> 00000069: <JStrictEqual>: <Addr8: 31, Reg8: 4, Reg8: 3>  # Address: 00000088
+==> 0000006d: <GetById>: <Reg8: 3, Reg8: 6, UInt8: 3, string_id: 13490>  # String: 'compareMain' (Identifier)
+==> 00000073: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 6, Reg8: 5>
+==> 00000078: <JmpTrue>: <Addr8: 14, Reg8: 3>  # Address: 00000086
+==> 0000007b: <GetById>: <Reg8: 4, Reg8: 6, UInt8: 4, string_id: 13907>  # String: 'comparePre' (Identifier)
+==> 00000081: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 6, Reg8: 5>
+==> 00000086: <Ret>: <Reg8: 3>
+==> 00000088: <LoadConstZero>: <Reg8: 0>
+==> 0000008a: <Ret>: <Reg8: 0>
+
+

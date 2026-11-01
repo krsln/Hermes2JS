@@ -11,6 +11,8 @@ from hermes_decompiler.backend.transforms.shared import negate_condition, is_loo
 from hermes_decompiler.backend.transforms.structurers import RegionStructurer
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral
+from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorReturn
 from ._predicates import (
     is_backward_branch, is_constant_comparison, is_typeof_test, representative_block, same_case_subject,
@@ -635,7 +637,11 @@ class _DominanceIfBuilder(RegionStructurer):
         loops = list(loop_analysis.loops.values()) if loop_analysis is not None else []
         return any(
             pred is not block
-            and pred.terminator is None
+            and (
+                    pred.terminator is None
+                    # the arm's last block jumps over what follows it (`new SemVer(x); jmp T`, 98/8188)
+                    or (isinstance(pred.terminator, TerminatorJump) and pred.terminator.target == goto_block.address)
+            )
             and dominators.dominates(then_entry, pred)
             and not any(pred in loop.members for loop in loops)
             for pred in goto_block.predecessors

@@ -68,6 +68,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-01 | after F-183 (a `typeof` test whose arm's own test falls into its target) | 193 | 211 | n/a | n/a | 1098 passed |
 | 2026-11-01 | after F-185 (a test jumping to the then arm's entry joins its condition as `\|\|`) | 193 | 210 | n/a | n/a | 1101 passed |
 | 2026-11-01 | after F-186 (a shared tail the test skips by jumping to the block behind it) | 192 | 207 | n/a | n/a | 1104 passed |
+| 2026-11-01 | after F-187 (an arm that ends in a `Jmp` to the join runs into it) | 190 | 202 | n/a | n/a | 1105 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
