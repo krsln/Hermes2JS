@@ -1,0 +1,98 @@
+
+=> [Function #2202 "_getFilterAmount" of 339 bytes]: 3 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x0016297b
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 7, UInt8: 2>
+==> 00000003: <JmpTypeOfIs>: <Addr32: 25, Reg8: 7, UInt16: 4>  # Address: 0000001c
+==> 0000000b: <LoadConstUndefined>: <Reg8: 2>
+==> 0000000d: <LoadConstUndefined>: <Reg8: 6>
+==> 0000000f: <Mov>: <Reg8: 4, Reg8: 7>
+==> 00000012: <JmpTypeOfIs>: <Addr32: 97, Reg8: 4, UInt16: 32>  # Address: 00000073
+==> 0000001a: <Ret>: <Reg8: 2>
+==> 0000001c: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 0000001f: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 3>
+==> 00000023: <LoadConstZero>: <Reg8: 0>
+==> 00000025: <PutByIdStrict>: <Reg8: 5, Reg8: 0, UInt8: 0, string_id: 12196>  # String: 'lastIndex' (Identifier)
+==> 0000002b: <GetById>: <Reg8: 3, Reg8: 5, UInt8: 0, string_id: 7853>  # String: 'exec' (Identifier)
+==> 00000031: <Call2>: <Reg8: 5, Reg8: 3, Reg8: 5, Reg8: 7>
+==> 00000036: <JmpFalseLong>: <Addr32: 281, Reg8: 5>  # Address: 0000014f
+==> 0000003c: <GetGlobalObject>: <Reg8: 3>
+==> 0000003e: <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 1, string_id: 12809>  # String: 'isNaN' (Identifier)
+==> 00000044: <TryGetById>: <Reg8: 9, Reg8: 3, UInt8: 2, string_id: 20>  # String: 'Number' (Identifier)
+==> 0000004a: <GetByIndex>: <Reg8: 7, Reg8: 5, UInt8: 1>
+==> 0000004e: <LoadConstUndefined>: <Reg8: 2>
+==> 00000050: <Call2>: <Reg8: 7, Reg8: 9, Reg8: 2, Reg8: 7>
+==> 00000055: <Call2>: <Reg8: 7, Reg8: 8, Reg8: 2, Reg8: 7>
+==> 0000005a: <JmpTrueLong>: <Addr32: 245, Reg8: 7>  # Address: 0000014f
+==> 00000060: <TryGetById>: <Reg8: 7, Reg8: 3, UInt8: 2, string_id: 20>  # String: 'Number' (Identifier)
+==> 00000066: <GetByIndex>: <Reg8: 3, Reg8: 5, UInt8: 1>
+==> 0000006a: <Call2>: <Reg8: 4, Reg8: 7, Reg8: 2, Reg8: 3>
+==> 0000006f: <GetByIndex>: <Reg8: 6, Reg8: 5, UInt8: 3>
+==> 00000073: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000076: <LoadConstString>: <Reg8: 3, string_id: 11977>  # String: 'hueRotate' (Identifier)
+==> 0000007a: <JStrictEqualLong>: <Addr32: 147, Reg8: 3, Reg8: 5>  # Address: 0000010d
+==> 00000081: <LoadConstString>: <Reg8: 3, string_id: 10542>  # String: 'blur' (Identifier)
+==> 00000085: <JStrictEqual>: <Addr8: 113, Reg8: 3, Reg8: 5>  # Address: 000000f6
+==> 00000089: <LoadConstString>: <Reg8: 3, string_id: 5208>  # String: 'brightness' (String)
+==> 0000008d: <JStrictEqual>: <Addr8: 56, Reg8: 3, Reg8: 5>  # Address: 000000c5
+==> 00000091: <LoadConstString>: <Reg8: 3, string_id: 11978>  # String: 'contrast' (Identifier)
+==> 00000095: <JStrictEqual>: <Addr8: 48, Reg8: 3, Reg8: 5>  # Address: 000000c5
+==> 00000099: <LoadConstString>: <Reg8: 3, string_id: 11979>  # String: 'grayscale' (Identifier)
+==> 0000009d: <JStrictEqual>: <Addr8: 40, Reg8: 3, Reg8: 5>  # Address: 000000c5
+==> 000000a1: <LoadConstString>: <Reg8: 3, string_id: 5209>  # String: 'invert' (String)
+==> 000000a5: <JStrictEqual>: <Addr8: 32, Reg8: 3, Reg8: 5>  # Address: 000000c5
+==> 000000a9: <LoadConstString>: <Reg8: 3, string_id: 195>  # String: 'opacity' (Identifier)
+==> 000000ad: <JStrictEqual>: <Addr8: 24, Reg8: 3, Reg8: 5>  # Address: 000000c5
+==> 000000b1: <LoadConstString>: <Reg8: 3, string_id: 11980>  # String: 'saturate' (Identifier)
+==> 000000b5: <JStrictEqual>: <Addr8: 16, Reg8: 3, Reg8: 5>  # Address: 000000c5
+==> 000000b9: <LoadConstString>: <Reg8: 3, string_id: 5210>  # String: 'sepia' (String)
+==> 000000bd: <JStrictEqual>: <Addr8: 8, Reg8: 3, Reg8: 5>  # Address: 000000c5
+==> 000000c1: <LoadConstUndefined>: <Reg8: 2>
+==> 000000c3: <Ret>: <Reg8: 2>
+==> 000000c5: <JmpFalse>: <Addr8: 19, Reg8: 6>  # Address: 000000d8
+==> 000000c8: <LoadConstString>: <Reg8: 3, string_id: 856>  # String: '%' (String)
+==> 000000cc: <JStrictEqual>: <Addr8: 12, Reg8: 6, Reg8: 3>  # Address: 000000d8
+==> 000000d0: <LoadConstString>: <Reg8: 3, string_id: 307>  # String: 'px' (String)
+==> 000000d4: <JStrictNotEqual>: <Addr8: 30, Reg8: 6, Reg8: 3>  # Address: 000000f2
+==> 000000d8: <LoadConstZero>: <Reg8: 0>
+==> 000000da: <JLess>: <Addr8: 24, Reg8: 4, Reg8: 0>  # Address: 000000f2
+==> 000000de: <LoadConstString>: <Reg8: 5, string_id: 856>  # String: '%' (String)
+==> 000000e2: <Mov>: <Reg8: 3, Reg8: 4>
+==> 000000e5: <JStrictNotEqual>: <Addr8: 11, Reg8: 6, Reg8: 5>  # Address: 000000f0
+==> 000000e9: <LoadConstUInt8>: <Reg8: 0, UInt8: 100>
+==> 000000ec: <Div>: <Reg8: 3, Reg8: 4, Reg8: 0>
+==> 000000f0: <Ret>: <Reg8: 3>
+==> 000000f2: <LoadConstUndefined>: <Reg8: 2>
+==> 000000f4: <Ret>: <Reg8: 2>
+==> 000000f6: <JmpFalse>: <Addr8: 11, Reg8: 6>  # Address: 00000101
+==> 000000f9: <LoadConstString>: <Reg8: 3, string_id: 307>  # String: 'px' (String)
+==> 000000fd: <JStrictNotEqual>: <Addr8: 12, Reg8: 6, Reg8: 3>  # Address: 00000109
+==> 00000101: <LoadConstZero>: <Reg8: 0>
+==> 00000103: <JLess>: <Addr8: 6, Reg8: 4, Reg8: 0>  # Address: 00000109
+==> 00000107: <Ret>: <Reg8: 4>
+==> 00000109: <LoadConstUndefined>: <Reg8: 2>
+==> 0000010b: <Ret>: <Reg8: 2>
+==> 0000010d: <LoadConstZero>: <Reg8: 0>
+==> 0000010f: <JStrictEqual>: <Addr8: 62, Reg8: 4, Reg8: 0>  # Address: 0000014d
+==> 00000113: <LoadConstString>: <Reg8: 3, string_id: 2037>  # String: 'deg' (String)
+==> 00000117: <JStrictEqual>: <Addr8: 12, Reg8: 6, Reg8: 3>  # Address: 00000123
+==> 0000011b: <LoadConstString>: <Reg8: 3, string_id: 441>  # String: 'rad' (String)
+==> 0000011f: <JStrictNotEqual>: <Addr8: 42, Reg8: 6, Reg8: 3>  # Address: 00000149
+==> 00000123: <LoadConstString>: <Reg8: 5, string_id: 441>  # String: 'rad' (String)
+==> 00000127: <Mov>: <Reg8: 3, Reg8: 4>
+==> 0000012a: <JStrictNotEqual>: <Addr8: 29, Reg8: 6, Reg8: 5>  # Address: 00000147
+==> 0000012e: <LoadConstUInt8>: <Reg8: 1, UInt8: 180>
+==> 00000131: <Mul>: <Reg8: 1, Reg8: 1, Reg8: 4>
+==> 00000135: <GetGlobalObject>: <Reg8: 4>
+==> 00000137: <TryGetById>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 19>  # String: 'Math' (Identifier)
+==> 0000013d: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 4, string_id: 8575>  # String: 'PI' (Identifier)
+==> 00000143: <Div>: <Reg8: 3, Reg8: 1, Reg8: 4>
+==> 00000147: <Ret>: <Reg8: 3>
+==> 00000149: <LoadConstUndefined>: <Reg8: 2>
+==> 0000014b: <Ret>: <Reg8: 2>
+==> 0000014d: <Ret>: <Reg8: 0>
+==> 0000014f: <LoadConstUndefined>: <Reg8: 2>
+==> 00000151: <Ret>: <Reg8: 2>
+
+

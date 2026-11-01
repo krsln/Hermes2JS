@@ -13,7 +13,7 @@ from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, Identifier, UndefinedLiteral
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorReturn
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorReturn, TerminatorThrow
 from ._predicates import (
     is_backward_branch,
     is_constant_comparison,
@@ -61,6 +61,7 @@ class _CompoundConditionFolder:
     def __init__(self, graph, cfg):
         self.graph = graph
         self.cfg = cfg
+        self._in_built_arm = False
         self._address_to_block = {block.address: block for block in cfg.blocks}
         # _post_dominator_tree no longer needed here - see
         # _absorb_residual_conditional's updated safety check.
@@ -353,7 +354,39 @@ class _CompoundConditionFolder:
         ):
             return False
 
-        rest = self.graph.splice_out(region, index + 1, len(region.children))
+        if self._in_built_arm and target_block is not None and not self._target_follows_the_region(region,
+                                                                                                   target_block):
+            # An arm built just now: dropping its jump means "continue after the arm", which is only the
+            # jump's target when that is the code behind the enclosing `if`s (98/2202: `if (isNaN(x)) goto
+            # RETURN_UNDEFINED` inside an arm that goes on into a `switch`).
+            return False
+
+        case_like = is_constant_comparison(branch.condition) and self._case_test_beside(region, index)
+
+        # `if (C) goto T; A; T: B`: the arm is `A` only. Taking `T` and `B` in as well would skip them when
+        # `C` holds (98/2693: `if (x !== y) { throw ...; <T> }` printed code after a `throw`).
+        stop = len(region.children)
+
+        if target_block is not None:
+            for position in range(index + 1, len(region.children)):
+                item = region.children[position]
+                blocks = {item} if isinstance(item, BasicBlock) else item.covered_blocks
+                addresses = [b.address for b in blocks if b.address >= 0]
+
+                if target_block in blocks and addresses and min(addresses) == target_block.address:
+                    stop = position
+                    break
+
+            if stop == index + 1:
+                return False
+
+        if self._in_built_arm and not (
+                self._arm_has_one_entry(region, index, stop)
+                and self._arm_ends_in_an_exit(region, stop)
+        ):
+            return False
+
+        rest = self.graph.splice_out(region, index + 1, stop)
         if not rest:
             return False
 
@@ -388,6 +421,17 @@ class _CompoundConditionFolder:
                 dropped = self.cfg.dropped_case_jumps = []
 
             dropped.append((if_region, block if block.instructions else None, branch.condition, target_block))
+
+        # The arm just built holds residual tests of its own (`if (r2) { r9 = r2; if (typeof r9 === "function")
+        # goto T; throw }`): the post-order walk has passed it already.
+        # A `case` test's arm is left alone: folding its tests now would break the chain `SwitchStructurer`
+        # still has to read (98/2211: `if ("left" !== x && "right" !== x) { switch ... }`).
+        if not case_like:
+            saved, self._in_built_arm = self._in_built_arm, True
+            try:
+                self._fold_all(then_body, frozenset())
+            finally:
+                self._in_built_arm = saved
 
         return True
 
@@ -518,6 +562,69 @@ class _CompoundConditionFolder:
 
         # no definition at all = a parameter or an unknown: not provably `undefined`
         return found_definition
+
+    @staticmethod
+    def _arm_ends_in_an_exit(region, stop: int) -> bool:
+        """Does the code an arm is about to take in end in a `throw`/`return`?
+
+        Then nothing of it falls out, and dropping the jump (`if (C) goto T; ...; throw` -> `if (!C) { ...;
+        throw }`) is exact whatever else the region does. Arms that fall out are left to the first fold: moving
+        their tail around changed the shape of loops (98/2515, 98/9878) without a way to check it."""
+        last = region.children[stop - 1]
+
+        return isinstance(last, BasicBlock) and isinstance(last.terminator, (TerminatorThrow, TerminatorReturn))
+
+    @staticmethod
+    def _arm_has_one_entry(region, index: int, stop: int) -> bool:
+        """Does nothing outside `children[index:stop]` jump into the code an arm is about to take in?
+
+        A block the later code of the region reaches by its own jump (98/2693: the code after a `throw`) would
+        be printed inside an arm its jumper does not run."""
+        inside = set()
+
+        for item in region.children[index:stop]:
+            inside.update({item} if isinstance(item, BasicBlock) else item.covered_blocks)
+
+        for item in region.children[index + 1:stop]:
+            for block in ({item} if isinstance(item, BasicBlock) else item.covered_blocks):
+                if any(p not in inside for p in block.predecessors):
+                    return False
+
+        return True
+
+    def _target_follows_the_region(self, region, target_block) -> bool:
+        """Does the code behind `region` (past every enclosing `if` that ends with it) start at `target_block`?
+
+        True for a block that goes on (its own test became an `if`) and lies between the enclosing arm and the
+        code after it; an exit block (a `return`) is printed where it is, not "behind" anything."""
+        if not target_block.successors:
+            # an exit (`return`, `throw`) is printed where it is, not "behind" anything
+            return False
+
+        node = region
+
+        while getattr(node, "parent", None) is not None:
+            parent = node.parent
+
+            if isinstance(parent, SequenceRegion):
+                index = parent.children.index(node)
+
+                if index + 1 < len(parent.children):
+                    def addresses(item):
+                        blocks = {item} if isinstance(item, BasicBlock) else item.covered_blocks
+                        return [b.address for b in blocks if b.address >= 0]
+
+                    following = addresses(parent.children[index + 1])
+                    own = addresses(node)
+
+                    return bool(following and own) and max(own) < target_block.address <= min(following)
+
+            elif not isinstance(parent, IfRegion):
+                return False
+
+            node = parent
+
+        return False
 
     @staticmethod
     def _sits_in_sibling_arm(region, target_block) -> bool:
