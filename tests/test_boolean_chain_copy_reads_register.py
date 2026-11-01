@@ -72,4 +72,55 @@ def test_chain_with_a_call_is_not_repeated_in_the_copy_after_the_if():
 
     assert js.count("Object.getOwnPropertyDescriptor(") == 1
     assert not re.search(r"\br5\(", js)
-    assert re.search(r"\br0 = r3;", js)
+    # The copy chain is `r0 = r1` (`Mov r0, r1`), r1 being the `length >= 0`
+    # result on the path that skips the chain (`r0 = r3` read the global
+    # object there: r3 was never written on that path).
+    assert re.search(r"\br0 = r1;", js)
+    assert not re.search(r"\br0 = r3;", js)
+
+
+def test_every_path_into_the_merge_reads_the_register_it_wrote():
+    """96/12935, the path where `splice instanceof Function` holds: `Mov r1, r2`
+    after `r2 = splice instanceof Function` (that path) / `r2 = r3` (the chain
+    path). The copy read `r3` (the global object there), and `r1 = len >= 0`,
+    which the `if`'s own test inlined, was not assigned for `length < 0`."""
+    js = _render(_IS_ARRAYISH, 12935)
+
+    assert re.search(r"\br2 = param1\.splice instanceof Function;", js)
+    assert re.search(r"\br2 = r3;", js)
+    assert re.search(r"\br1 = r2;", js)
+    assert re.search(r"\br1 = param1\.length >= 0;", js)
+    assert not re.search(r"\br1 = r3;", js)
+
+
+def test_a_ternary_copy_after_its_test_register_was_overwritten_reads_the_register():
+    """96/9349 `cmp`: two ternaries in a row test the same register
+    (`r3 = typeof a; r1 = r3 !== "object" ? a : a.version; r3 = typeof b; ...`),
+    and `return r1 === r0` read a COPY of the first one that now tested the
+    SECOND `typeof` (F-118). The reader reads the register the first ternary
+    assigns; a reader that stands where its test still holds keeps the copy."""
+    from pathlib import Path
+
+    hasm = (Path(__file__).parent / "data" / "sequential_ternaries_96_9349.hasm").read_text(encoding="utf-8")
+    js = _render(hasm, 9349)
+
+    assert 'r1 = r3 !== "object" ? param1 : param1.version;' in js
+    assert 'return r1 === (r3 !== "object" ? param3 : param3.version);' in js
+    assert 'param1.version) ===' not in js
+
+
+def test_a_write_folded_into_its_readers_does_not_make_the_ternary_copy_stale():
+    """96/8499 `callGuardDEV`: `r3 = stack ?? ""` is merged by a `Mov r3, r1` that
+    is folded into its readers (never printed). It is not a redefinition of the
+    `r3` the second ternary's test names, so the readers keep the copy
+    (`r17 = (r3 != null) ? caughtException.stack : ""`) instead of the register
+    `r1`, which the NEXT merge overwrites."""
+    from pathlib import Path
+
+    hasm = (Path(__file__).parent / "data" / "merge_copy_after_absorbed_write_96_8499.hasm").read_text(
+        encoding="utf-8")
+    js = _render(hasm, 8499)
+
+    assert 'r17 = r3 != null ? caughtException.stack : "";' in js
+    assert 'r16 = r2 != null ? caughtException.name : "WorkletsError";' in js
+    assert "r17 = r1;" not in js

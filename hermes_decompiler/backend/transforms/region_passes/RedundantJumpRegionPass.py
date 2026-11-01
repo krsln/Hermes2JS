@@ -184,6 +184,49 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
 
         self._strip_try_exit_jumps(node)
 
+    def visit_IfRegion(self, node: IfRegion) -> None:
+        self.visit(node.then_body)
+
+        if node.else_body is not None:
+            self.visit(node.else_body)
+
+        self._strip_if_exit_jumps(node)
+
+    def _strip_if_exit_jumps(self, node: IfRegion) -> None:
+        """An arm's own trailing jump to the code that already follows the whole `if`.
+
+        `if (a) { ...; goto J } else if (b) { ... return } J: ...`: the inner `if` has no merge of its
+        own (its other arm returns), so the first arm kept the jump to the outer join; falling off
+        the end of the arm reaches the same place (96/3847)."""
+        exit_address = self._next_fallthrough_address(node)
+
+        if exit_address is None:
+            return
+
+        for branch in (node.then_body, node.else_body):
+            if branch is None:
+                continue
+
+            for block, owning_if in self._tail_blocks(branch):
+                terminator = block.terminator
+
+                if not isinstance(terminator, TerminatorJump) or not self._reaches_exit(terminator.target,
+                                                                                        exit_address):
+                    continue
+
+                if self._clear_trailing_jump(block, terminator):
+                    logger.debug(
+                        "RedundantJumpRegionPass: dropped an if arm's own trailing jump in block %d (0x%x) - "
+                        "implied by falling through to what already follows the whole if.",
+                        block.id, block.address,
+                    )
+
+                    if owning_if is not None:
+                        self._prune_empty_else(owning_if)
+
+            if branch is node.else_body:
+                self._prune_empty_else(node)
+
     def visit_SwitchRegion(self, node: SwitchRegion) -> None:
         for case in node.cases:
             self.visit(case.body)
@@ -300,7 +343,7 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                 if not isinstance(terminator, TerminatorJump):
                     continue
 
-                if terminator.target != exit_address:
+                if not self._reaches_exit(terminator.target, exit_address):
                     # Some other jump this pass doesn't recognize (an
                     # early return/break out of an enclosing construct,
                     # for instance) - leave it as an explicit goto.
@@ -391,7 +434,7 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
             if not isinstance(terminator, TerminatorJump):
                 continue
 
-            if terminator.target != exit_address:
+            if not self._reaches_exit(terminator.target, exit_address):
                 # An early return/break out of an enclosing construct,
                 # or (fallthrough to the NEXT case, no `break` in the
                 # source) a jump this pass doesn't try to recognize -
@@ -407,8 +450,64 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                     block.id, block.address,
                 )
 
-    @staticmethod
-    def _next_fallthrough_address(region) -> int | None:
+    def _reaches_exit(self, target: int, exit_address: int) -> bool:
+        """Is `target` the exit address, or an emptied block that only runs on into it?
+
+        `_FinallyAttacher` strips the finally copy a `try` body jumps to; the block is left empty
+        (and pruned from the tree), so the jump names an address no sibling has any more
+        (96/4085: `jmp 0x42`, the copy, then `ret` at 0x46)."""
+        if target == exit_address:
+            return True
+
+        by_address = {b.address: b for b in self.cfg.blocks}
+        block = by_address.get(target)
+        seen = set()
+
+        while block is not None and block.address not in seen:
+            seen.add(block.address)
+
+            if any(i.value is not None or i.statement is not None for i in block.instructions):
+                return False
+
+            if block.terminator is not None or len(block.successors) != 1:
+                return False
+
+            block = block.successors[0]
+
+            if block.address == exit_address:
+                return True
+
+        return False
+
+    def _leading_address(self, sibling) -> int | None:
+        """Address of the first statement `sibling` runs.
+
+        A block has its own. An `if` swallowed its test block into `condition`: that block is the one
+        in the CFG no region holds, sits right before the `if`'s own blocks, has its terminator folded into the condition and branches into them
+        (96/331: the `try` exit jumps to the `if (r0)` test after the nested ifs)."""
+        if isinstance(sibling, BasicBlock):
+            return sibling.address
+
+        if not isinstance(sibling, IfRegion):
+            return None
+
+        inside = sibling.covered_blocks
+
+        if not inside:
+            return None
+
+        held = self.graph.root.covered_blocks
+        first = min(b.address for b in inside)
+        tests = [
+            b for b in self.cfg.blocks
+            if b not in held
+               and b.address < first
+               and any(x in inside for x in b.successors)
+        ]
+
+        return max(tests, key=lambda b: b.address).address if tests else None
+
+    def _next_fallthrough_address(self, region) -> int | None:
         """Address where control resumes once `region` (a TryRegion or
         SwitchRegion, currently the only callers) finishes running
         normally.
@@ -429,6 +528,11 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         while node is not None:
             parent = node.parent
 
+            if isinstance(parent, IfRegion) and node in (parent.then_body, parent.else_body):
+                # An arm that is the last thing it holds resumes where the `if` does.
+                node = parent
+                continue
+
             if not isinstance(parent, SequenceRegion):
                 return None
 
@@ -439,7 +543,7 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
 
             if index + 1 < len(parent.children):
                 next_sibling = parent.children[index + 1]
-                return next_sibling.address if isinstance(next_sibling, BasicBlock) else None
+                return self._leading_address(next_sibling)
 
             # `node` is the last child of its own SequenceRegion - that
             # SequenceRegion has no address of its own to fall into,

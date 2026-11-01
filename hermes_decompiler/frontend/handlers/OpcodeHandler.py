@@ -9,7 +9,8 @@ from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import (
     Expression, Identifier, RawExpression, ObjectExpression,
-    ArrayExpression, Literal, CallExpression, MemberExpression, ThisPlaceholder,
+    ArrayExpression, Literal, CallExpression, MemberExpression, ThisPlaceholder, BinaryExpression, NewExpression,
+    UndefinedLiteral,
 )
 from .OpcodeTypes import OpcodeContext, ArgsPattern, OperandMode
 
@@ -132,6 +133,17 @@ class OpcodeHandler(ABC):
 
         return cls.get_register_expression(analysis, reg)
 
+    @staticmethod
+    def _restore_folded_constants(analysis: HermesAnalysis, state) -> None:
+        """A join read names the register, so every write that can reach it must print. A
+        constant an earlier test consumed (`r4 = undefined` folded into `undefined === r8`) is
+        in no fold's way any more and nothing else prints it (98/9611 `dt`: `r3.size = r4` on
+        the path where `r4` is `undefined`). The write ran in the bytecode, so printing it is
+        faithful; `DeadUndefinedStorePass` removes an `undefined` store nothing reads."""
+        for earlier in analysis.history.get(state.definition.name, ())[:state.version]:
+            if isinstance(earlier.value, UndefinedLiteral) and earlier.definition.definition_used:
+                earlier.materialize()
+
     @classmethod
     def get_register_reference(cls, analysis: HermesAnalysis, reg: int, materialize: bool = True) -> Identifier:
         """Always symbolic - never inlines the defining expression.
@@ -156,7 +168,11 @@ class OpcodeHandler(ABC):
         state.mark_read()
 
         value = state.value
-        if state.handler in ("LoadParam", "LoadParamLong") and isinstance(value, Identifier):
+        if (
+                state.handler in ("LoadParam", "LoadParamLong")
+                and isinstance(value, Identifier)
+                and not analysis.is_rewritten_in_loop(reg)
+        ):
             return value
 
         # `materialize=False` is for callers that only *compare* against the
@@ -206,6 +222,19 @@ class OpcodeHandler(ABC):
             state.materialize()
             return Identifier(name=f"r{reg}")
 
+        # A `new` evaluated by a read inside a loop its definition is outside of would build a
+        # fresh object on every iteration (96/1163 `new Array(r5)[r0] = arguments[r0]`): the
+        # register keeps the one object, like the `ObjectExpression`/`CallExpression` above.
+        # An earlier read of the same object has to keep the register too, or the loop's read
+        # would print a second `new` (96/15130 `tag`): the scratch pass knows the definition prints.
+        if isinstance(value, NewExpression) and (
+                analysis.read_enters_loop(state)
+                or (state.definition.name, state.definition.address) in analysis.printed_definitions
+        ):
+            state.mark_read()
+            state.materialize()
+            return Identifier(name=f"r{reg}")
+
         # The `this` object a `new`/`super` allocates is ONE object with an
         # identity, not an expression: inlined into every reader it printed as
         # `CreateThisForNew(r8)._cursor = 0; CreateThisForNew(r8)._size = 0`,
@@ -213,6 +242,30 @@ class OpcodeHandler(ABC):
         # (the `new`/`super` call, `Mov` carrying it to its window slot) take
         # the placeholder itself; everything else reads the register.
         if isinstance(value, ThisPlaceholder) and not keep_placeholder:
+            state.mark_read()
+            state.materialize()
+            return Identifier(name=f"r{reg}")
+
+        # Join guard: the register's latest definition ran on one path of a join of three
+        # or more (`r1 = p; if (c) { r1 = q; if (d) r1 = p }; r6 = r1`): the read sees a
+        # merge no single value stands for. Inlined `p` was wrong whenever `c && !d`
+        # (96/4775 `interpolate`: `r6 = param1` for `r6 = r1`). A binary expression is no
+        # different (96/1801 `getComponentNameFromType`: the `ForwardRef(...)` string built
+        # on one arm was inlined into `r1 = r3` on every other arm). Other shapes keep
+        # inlining: a member read is left to the ternary fold, which names the register
+        # itself afterwards (`tests/test_default_parameter_merge.py`), and a constant or
+        # an environment value would leave a read of a register that prints nowhere
+        # (`reject.call(r0, ...)`, 96/2999).
+        if isinstance(value, (Identifier, BinaryExpression)) and analysis.is_nested_join_value(state):
+            # Like the branch test (`JmpTrue`): the arm's own write is left for a fold or
+            # for `UnfoldedMergeRepairPass`, which prints it when no fold took it.
+            state.mark_read()
+            cls._restore_folded_constants(analysis, state)
+            return Identifier(name=f"r{reg}")
+
+        # Try-boundary guard: a read that can throw stays where the `try` put it, so the
+        # reader outside the range reads the register (98/13768 `typeof p.aborted`).
+        if analysis.crosses_try_boundary(state) and any(isinstance(node, MemberExpression) for node in value.walk()):
             state.mark_read()
             state.materialize()
             return Identifier(name=f"r{reg}")
@@ -249,8 +302,21 @@ class OpcodeHandler(ABC):
         # (a MemberExpression with a loop-dependent computed key could
         # in principle be unsafe too), but matches the confirmed bug
         # shapes while leaving the known-safe patterns alone.
-        if not isinstance(value, MemberExpression) and \
-                not (isinstance(value, Identifier) and not cls._is_register_alias(value)) and \
+        # A parameter's own name is exempt above only while nothing rewrites its register inside the loop
+        # that holds the read (96/4846 `binarySubdivide`: `Mov r11, r15` ends the body, `Sub r0, r10, r11` starts it).
+        if (
+                (
+                        not isinstance(value, MemberExpression)
+                        and (
+                                not (isinstance(value, Identifier) and not cls._is_register_alias(value))
+                                or (state.handler in ("LoadParam", "LoadParamLong")
+                                    and analysis.is_rewritten_in_loop(reg))
+                        )
+                )
+                # A member read defined before the loop and rewritten inside it
+                or (isinstance(value, MemberExpression)
+                    and analysis.is_rewritten_in_loop(reg, state.definition.address))
+        ) and \
                 analysis.is_unsafe_loop_register(reg, state.definition.address):
             state.mark_read()
             state.materialize()
@@ -269,6 +335,13 @@ class OpcodeHandler(ABC):
             # `Mov r5, r3`). Only literals / plain identifiers stay
             # duplicated: free and safe.
             if state.definition.definition_pinned and not isinstance(value, (Literal, Identifier)):
+                return Identifier(name=f"r{reg}")
+
+            # A second read of a `new` object: it is pinned now, and the scratch pass tells the
+            # first read of the real pass to keep the register too (96/4138 `createSearchParams`:
+            # three reads of one `URLSearchParams` printed as three `new`s).
+            if isinstance(value, NewExpression):
+                state.materialize()
                 return Identifier(name=f"r{reg}")
 
             return dataclasses.replace(value)

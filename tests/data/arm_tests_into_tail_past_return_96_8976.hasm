@@ -1,0 +1,32 @@
+
+=> [Function #8976 "processColorInitially" of 81 bytes]: 2 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x001d2fdf
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000003: <LoadConstNull>: <Reg8: 0>
+==> 00000005: <JStrictEqual>: <Addr8: 74, Reg8: 5, Reg8: 0>  # Address: 0000004f
+==> 00000009: <LoadConstUndefined>: <Reg8: 2>
+==> 0000000b: <JStrictEqual>: <Addr8: 68, Reg8: 5, Reg8: 2>  # Address: 0000004f
+==> 0000000f: <TypeOf>: <Reg8: 1, Reg8: 5>
+==> 00000012: <LoadConstString>: <Reg8: 4, string_id: 7552>  # String: 'number' (Identifier)
+==> 00000016: <Mov>: <Reg8: 3, Reg8: 5>
+==> 00000019: <JStrictEqual>: <Addr8: 28, Reg8: 1, Reg8: 4>  # Address: 00000035
+==> 0000001d: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000020: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
+==> 00000024: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 5>
+==> 00000029: <TypeOf>: <Reg8: 2, Reg8: 1>
+==> 0000002c: <Mov>: <Reg8: 3, Reg8: 1>
+==> 0000002f: <JStrictEqual>: <Addr8: 6, Reg8: 2, Reg8: 4>  # Address: 00000035
+==> 00000033: <Ret>: <Reg8: 1>
+==> 00000035: <LoadConstUInt8>: <Reg8: 1, UInt8: 24>
+==> 00000038: <LShift>: <Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000003c: <LoadConstUInt8>: <Reg8: 1, UInt8: 8>
+==> 0000003f: <URshift>: <Reg8: 1, Reg8: 3, Reg8: 1>
+==> 00000043: <BitOr>: <Reg8: 2, Reg8: 2, Reg8: 1>
+==> 00000047: <LoadConstZero>: <Reg8: 1>
+==> 00000049: <URshift>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 0000004d: <Ret>: <Reg8: 1>
+==> 0000004f: <Ret>: <Reg8: 0>
+
+

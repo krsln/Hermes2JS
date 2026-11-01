@@ -120,8 +120,8 @@ def test_default_folded_into_a_ternary_keeps_its_register_for_the_branch():
     # hermes-98 `stripBaseUrl`: `r5 = param2 ?? ""` is tested by name right after.
     code = _code(_STRIP_BASE_URL_HASM, 5896)
 
-    assert 'r5 = (param2 !== undefined) ? param2 : "";' in code
-    assert code.index('r5 = (param2 !== undefined) ? param2 : "";') < code.index("if (r5) {")
+    assert 'r5 = param2 !== undefined ? param2 : "";' in code
+    assert code.index('r5 = param2 !== undefined ? param2 : "";') < code.index("if (r5) {")
 
 
 def test_register_tested_fold_does_not_repoint_an_unrelated_identical_literal():

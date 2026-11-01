@@ -1,0 +1,30 @@
+
+=> [Function #4138 "createSearchParams" of 86 bytes]: 3 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x00167024
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 5, UInt8: 2>
+==> 00000003: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000006: <GetGlobalObject>: <Reg8: 0>
+==> 00000006: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 1, string_id: 6>  # String: 'URLSearchParams' (Identifier)
+==> 0000000a: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 206>  # String: 'prototype' (Identifier)
+==> 0000000f: <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 0>
+==> 00000013: <Mov>: <Reg8: 7, Reg8: 2>
+==> 00000016: <Construct>: <Reg8: 0, Reg8: 0, UInt8: 1>
+==> 0000001a: <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
+==> 0000001e: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 33>
+==> 00000022: <GetByVal>: <Reg8: 3, Reg8: 0, Reg8: 2>
+==> 00000026: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000029: <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 247>  # String: 'url' (Identifier)
+==> 0000002f: <JmpFalse>: <Addr8: 37, Reg8: 5>  # Address: 00000054
+==> 00000032: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 33>
+==> 00000036: <GetByVal>: <Reg8: 2, Reg8: 0, Reg8: 2>
+==> 0000003a: <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 56>
+==> 0000003e: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 41>
+==> 00000042: <LoadConstUndefined>: <Reg8: 3>
+==> 00000044: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 5>
+==> 00000049: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 3, Reg8: 1>
+==> 0000004e: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 7329>  # String: 'list' (Identifier)
+==> 00000054: <Ret>: <Reg8: 0>
+
+

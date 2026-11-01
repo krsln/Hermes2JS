@@ -17,7 +17,7 @@ function Dog(param1, param2) {
     // CODE → addr: 30 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 0>
     r0 = r0[0];
     // CODE → addr: 34 | <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r1 = r0.default;
+    r1 = r0.default;
     // CODE → addr: 39 | <NewArray>: <Reg8: 0, UInt16: 2>
     // USED → r0 = [];
     // CODE → addr: 43 | <LoadParam>: <Reg8: 5, UInt8: 1>
@@ -29,7 +29,7 @@ function Dog(param1, param2) {
     // CODE → addr: 54 | <PutOwnByIndex>: <Reg8: 0, Reg8: 5, UInt8: 1>
     r0 = [param1, "Woof"];
     // CODE → addr: 58 | <Call4>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 0>
-    r0 = r0.default.call(undefined, this, r3, r0);
+    r0 = r1(this, r3, r0);
     // CODE → addr: 65 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → addr: 67 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 99>  # String: 'console' (Identifier)

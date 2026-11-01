@@ -112,6 +112,22 @@ class OpcodeDispatcher:
             if any(start <= address <= end for start, end in loop_ranges):
                 loop_carried_writes.setdefault(result.name, []).append(address)
 
+        # Which definitions the scratch pass left PRINTED as a statement of
+        # their own: pinned by a bare `rN` read, or never folded into a reader
+        # (`r0 = undefined` kept as `this` of a call that prints no `this`). A
+        # later definition that prints makes an EARLIER value built from that
+        # register stale - the read of the older value comes before the code
+        # that pins/leaves the newer one, so pass 2 must be told. An unfolded
+        # `Put*` pseudo-definition is not counted: it republishes the same
+        # object (`o.k = v`), it is not a new value (a PINNED one is: it is
+        # where an object/array literal under construction gets printed).
+        analysis.printed_definitions = frozenset(
+            (result.name, result.address)
+            for result in scratch.results
+            if result.dest_reg is not None
+            and (result.definition_pinned or (not result.definition_used and not result.handler.startswith("Put")))
+        )
+
         # --- Pass 2 (real) ------------------------------------------------
         # Same walk again, on the caller's actual `analysis`, now armed
         # with both the loop ranges and the loop-carried write addresses

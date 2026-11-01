@@ -25,12 +25,14 @@ from __future__ import annotations
 
 import dataclasses
 
-from hermes_decompiler.backend.regions import RegionVisitor
+from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion
 from hermes_decompiler.ir import Node
-from hermes_decompiler.ir.expressions import Identifier
+from hermes_decompiler.ir.Operators import LogicalOperator
+from hermes_decompiler.ir.expressions import BinaryExpression, Identifier
 from ._purity import TRIVIAL_NODE_TYPES, has_side_effects
 
-__all__ = ["repoint_node", "repoint_references", "reclaim_definition", "reclaim_unfolded_definition"]
+__all__ = ["repoint_node", "repoint_references", "sibling_arm_instructions", "reclaim_definition",
+           "reclaim_unfolded_definition"]
 
 # A merged expression is copied into terminators / region conditions only up
 # to this many nodes. See `repoint_references`.
@@ -102,7 +104,28 @@ def repoint_node(node, old_expr, new_expr, *, structural: bool = True):
     if not updates:
         return node, False
 
-    return dataclasses.replace(node, **updates), True
+    return _drop_repeated_operand(dataclasses.replace(node, **updates)), True
+
+
+def _drop_repeated_operand(node):
+    """`A && (A && B)` -> `A && B` (and the same for `||`) once a repoint has built it (F-151).
+
+    A source expression that occurs twice folds twice, and the second fold's structural match finds the first
+    fold's right operand and wraps it again, doubling the head. For an operand without effects the repeat adds
+    nothing: it is evaluated twice to the same value."""
+    right = getattr(node, "right", None)
+
+    if (
+            isinstance(node, BinaryExpression)
+            and isinstance(node.operator, LogicalOperator)
+            and isinstance(right, BinaryExpression)
+            and right.operator is node.operator
+            and not has_side_effects(node.left)
+            and node.left.structurally_equal(right.left)
+    ):
+        return dataclasses.replace(node, right=right.right)
+
+    return node
 
 
 def _computes_the_same_value(instr, old_expr, structural: bool) -> bool:
@@ -173,10 +196,15 @@ class _RegionCollector(RegionVisitor):
 
 def repoint_references(
         cfg, root, old_expr, new_expr, *, min_block_id: int, exclude: set, structural: bool = True,
+        reader_value=None,
 ) -> None:
     """Make every consumer of `old_expr` read `new_expr` instead.
 
     `structural=False` matches by identity only (see `repoint_node`).
+
+    `reader_value(instr)`, when given, picks what each INSTRUCTION reader
+    receives instead of `new_expr` (a copy of the merged expression is only
+    right while what it names still holds where the reader stands).
 
     `min_block_id` skips blocks that precede the fold (they cannot read a
     definition made after them); `exclude` are the instructions the fold
@@ -194,17 +222,32 @@ def repoint_references(
                                              MAX_INLINED_CONDITION_NODES + 1) <= MAX_INLINED_CONDITION_NODES else None
 
     replaced_terminators: dict[int, object] = {}
+    # The instruction whose branch each terminator expression belongs to: a test is read WHERE the
+    # branch stands, so a copy of the merged expression is only right while what it names still
+    # holds there (96/1595 `deepDiffer`: `typeof arguments[2]` became `typeof (r5 === undefined ? ...)`
+    # after `r5` was reassigned). The same `reader_value` that picks an instruction's copy decides.
+    readers: list = []
 
-    def swap(terminator):
+    def condition_value(reader):
+        if reader_value is None or reader is None:
+            return for_conditions
+
+        picked = reader_value(reader)
+
+        return for_conditions if picked is new_expr else picked
+
+    def swap(terminator, reader=None):
         if terminator is None:
             return None
 
         key = id(terminator)
 
         if key not in replaced_terminators:
+            replacement = condition_value(reader)
+            readers.append((terminator, reader))
             replaced_terminators[key] = (
-                terminator if for_conditions is None else _repoint_terminator(terminator, old_expr, for_conditions,
-                                                                              structural)
+                terminator if replacement is None else _repoint_terminator(terminator, old_expr, replacement,
+                                                                           structural)
             )
 
         return replaced_terminators[key]
@@ -215,34 +258,43 @@ def repoint_references(
 
         for instr in block.instructions:
             if instr.terminator is not None:
-                instr.terminator = swap(instr.terminator)
+                instr.terminator = swap(instr.terminator, instr)
 
             if instr in exclude:
                 continue
 
+            replacement = new_expr if reader_value is None else reader_value(instr)
+
             if _computes_the_same_value(instr, old_expr, structural):
                 new_value, value_changed = instr.value, False
             else:
-                new_value, value_changed = repoint_node(instr.value, old_expr, new_expr, structural=structural)
+                new_value, value_changed = repoint_node(instr.value, old_expr, replacement, structural=structural)
 
             if value_changed:
                 instr.value = new_value
 
             if instr.statement is not None:
-                new_statement, statement_changed = repoint_node(instr.statement, old_expr, new_expr,
+                new_statement, statement_changed = repoint_node(instr.statement, old_expr, replacement,
                                                                 structural=structural)
 
                 if statement_changed:
                     instr.statement = new_statement
 
         if block.terminator is not None:
-            block.terminator = swap(block.terminator)
+            block.terminator = swap(block.terminator, block.instructions[-1] if block.instructions else None)
 
     collector = _RegionCollector()
     collector.visit(root)
 
     for region in collector.regions:
         if for_conditions is None:
+            continue
+
+        # A region wholly before the fold cannot read what the fold defines (the same
+        # rule the blocks above follow): its test merely LOOKS like the old value.
+        covered = getattr(region, "covered_blocks", None)
+
+        if covered and all(b.id < min_block_id for b in covered):
             continue
 
         # An `if`'s test runs BEFORE its arms: when the instructions the fold
@@ -260,7 +312,12 @@ def repoint_references(
             value = getattr(region, attribute, None)
 
             if isinstance(value, Node):
-                new_value, changed = repoint_node(value, old_expr, for_conditions, structural=structural)
+                replacement = condition_value(_branch_reader(readers, value) or _preceding_reader(region))
+
+                if replacement is None:
+                    continue
+
+                new_value, changed = repoint_node(value, old_expr, replacement, structural=structural)
 
                 if changed:
                     setattr(region, attribute, new_value)
@@ -270,6 +327,76 @@ def repoint_references(
 
             if tests:
                 case.tests = [repoint_node(test, old_expr, for_conditions, structural=structural)[0] for test in tests]
+
+
+def _branch_reader(readers, condition):
+    """The instruction whose branch the region test `condition` was built from (a terminator
+    holding the same expression), or None when no branch can be matched."""
+    for terminator, reader in readers:
+        if reader is None or not dataclasses.is_dataclass(terminator):
+            continue
+
+        for field in dataclasses.fields(terminator):
+            held = getattr(terminator, field.name)
+
+            if held is condition or (isinstance(held, Node) and held.structurally_equal(condition)):
+                return reader
+
+    return None
+
+
+def sibling_arm_instructions(root, instruction) -> set:
+    """Instructions in the OTHER arm of every `if` (outside any loop) whose arm holds `instruction`.
+
+    Two arms cannot run one after the other, so what one arm writes is never read in the other.
+    A structural match there is a look-alike (96/2065 `updateClassComponent`: the mount path's
+    `A && B` is the inner part of the update path's chain)."""
+    collector = _RegionCollector()
+    collector.visit(root)
+    found: set = set()
+
+    for region in collector.regions:
+        if region.__class__.__name__ != "IfRegion":
+            continue
+
+        parent = region.parent
+
+        while parent is not None and not isinstance(parent, LoopRegion):
+            parent = parent.parent
+
+        if parent is not None:
+            continue
+
+        arms = [
+            {i for b in body.covered_blocks for i in b.instructions}
+            for body in (region.then_body, region.else_body) if body is not None
+        ]
+
+        if len(arms) == 2:
+            if instruction in arms[0]:
+                found |= arms[1]
+            elif instruction in arms[1]:
+                found |= arms[0]
+
+    return found
+
+
+def _preceding_reader(region):
+    """The last instruction before `region` in its sequence: where its test is read."""
+    children = getattr(getattr(region, "parent", None), "children", None)
+
+    if not children:
+        return None
+
+    position = next((n for n, child in enumerate(children) if child is region), None)
+
+    for child in reversed(children[:position] if position is not None else ()):
+        instructions = getattr(child, "instructions", None)
+
+        if instructions:
+            return instructions[-1]
+
+    return None
 
 
 def _contains(node, target) -> bool:

@@ -1,0 +1,30 @@
+
+=> [Function #12456 "getSchemes" of 88 bytes]: 2 params, frame size=12, strict=1, exc handler=0, debug info=0  @ offset 0x002264b8
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <JmpFalse>: <Addr8: 45, Reg8: 0>  # Address: 00000030
+==> 00000006: <GetGlobalObject>: <Reg8: 1>
+==> 00000008: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 6>  # String: 'Array' (Identifier)
+==> 0000000e: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 5>  # String: 'isArray' (Identifier)
+==> 00000013: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 94>  # String: 'scheme' (Identifier)
+==> 00000018: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000001d: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 94>  # String: 'scheme' (Identifier)
+==> 00000022: <JmpTrue>: <Addr8: 35, Reg8: 1>  # Address: 00000045
+==> 00000025: <TypeOf>: <Reg8: 3, Reg8: 2>
+==> 00000028: <LoadConstString>: <Reg8: 1, string_id: 7961>  # String: 'string' (Identifier)
+==> 0000002c: <JStrictEqual>: <Addr8: 10, Reg8: 3, Reg8: 1>  # Address: 00000036
+==> 00000030: <NewArray>: <Reg8: 1, UInt16: 0>
+==> 00000034: <Ret>: <Reg8: 1>
+==> 00000036: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 94>  # String: 'scheme' (Identifier)
+==> 0000003b: <NewArray>: <Reg8: 0, UInt16: 1>
+==> 0000003f: <PutOwnByIndex>: <Reg8: 0, Reg8: 1, UInt8: 0>
+==> 00000043: <Ret>: <Reg8: 0>
+==> 00000045: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 4, string_id: 137>  # String: 'filter' (Identifier)
+==> 0000004a: <CreateEnvironment>: <Reg8: 0>
+==> 0000004c: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 12457>  # Function: [#12457 validate of 16 bytes]: 2 params @ offset 0x000f8be6
+==> 00000051: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000056: <Ret>: <Reg8: 0>
+
+

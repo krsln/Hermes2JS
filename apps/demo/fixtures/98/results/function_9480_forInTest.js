@@ -14,25 +14,21 @@ function forInTest() {
     r7 = { "a": 1, "b": 2, "c": 3 };
     // CODE → addr: 28 | <Mov>: <Reg8: 5, Reg8: 7>
     r5 = r7;
-    // CODE → addr: 31 | <GetPNameList>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
-    r6 = HermesPropertyIterator(r5);
-    if (r6 !== undefined) {
-        // LOOP → START (for_in)
-        for (const r4 in r5) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 48 | <Mov>: <Reg8: 11, Reg8: 4>
-            r11 = r4;
-            // CODE → addr: 51 | <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r10 = console;
-            // CODE → addr: 57 | <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r9 = console.log;
-            // CODE → addr: 62 | <GetByVal>: <Reg8: 8, Reg8: 7, Reg8: 11>
-            r8 = r7[r11];
-            // CODE → addr: 66 | <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
-            console.log(r11, r8);
-        }
-        // LOOP → END
+    // LOOP → START (for_in)
+    for (const r4 in r5) {
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → addr: 48 | <Mov>: <Reg8: 11, Reg8: 4>
+        r11 = r4;
+        // CODE → addr: 51 | <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+        // USED → r10 = console;
+        // CODE → addr: 57 | <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+        // USED → r9 = console.log;
+        // CODE → addr: 62 | <GetByVal>: <Reg8: 8, Reg8: 7, Reg8: 11>
+        r8 = r7[r11];
+        // CODE → addr: 66 | <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
+        console.log(r11, r8);
     }
+    // LOOP → END
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 74 | <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = console;

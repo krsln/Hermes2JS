@@ -1,0 +1,32 @@
+
+=> [Function #4239 "keyExtractor" of 93 bytes]: 3 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x0019d115
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <JmpTypeOfIs>: <Addr32: 28, Reg8: 2, UInt16: 253>  # Address: 0000001f
+==> 0000000b: <LoadConstNull>: <Reg8: 0>
+==> 0000000d: <Eq>: <Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000011: <LoadConstUndefined>: <Reg8: 3>
+==> 00000013: <JmpTrue>: <Addr8: 8, Reg8: 1>  # Address: 0000001b
+==> 00000016: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 0, string_id: 172>  # String: 'key' (Identifier)
+==> 0000001b: <JNotEqual>: <Addr8: 59, Reg8: 3, Reg8: 0>  # Address: 00000056
+==> 0000001f: <JmpTypeOfIs>: <Addr32: 28, Reg8: 2, UInt16: 253>  # Address: 0000003b
+==> 00000027: <LoadConstNull>: <Reg8: 0>
+==> 00000029: <Eq>: <Reg8: 1, Reg8: 2, Reg8: 0>
+==> 0000002d: <LoadConstUndefined>: <Reg8: 3>
+==> 0000002f: <JmpTrue>: <Addr8: 8, Reg8: 1>  # Address: 00000037
+==> 00000032: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 28>  # String: 'id' (Identifier)
+==> 00000037: <JNotEqual>: <Addr8: 24, Reg8: 3, Reg8: 0>  # Address: 0000004f
+==> 0000003b: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 0000003e: <GetGlobalObject>: <Reg8: 3>
+==> 00000040: <TryGetById>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 33>  # String: 'String' (Identifier)
+==> 00000046: <LoadConstUndefined>: <Reg8: 0>
+==> 00000048: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 0, Reg8: 4>
+==> 0000004d: <Ret>: <Reg8: 3>
+==> 0000004f: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 28>  # String: 'id' (Identifier)
+==> 00000054: <Ret>: <Reg8: 3>
+==> 00000056: <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 0, string_id: 172>  # String: 'key' (Identifier)
+==> 0000005b: <Ret>: <Reg8: 2>
+
+

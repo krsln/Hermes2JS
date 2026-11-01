@@ -9,7 +9,8 @@ from hermes_decompiler.backend.transforms.shared import (
     negate_condition, is_pure, has_side_effects, repoint_references, reclaim_definition,
     reclaim_unfolded_definition, absorb_arm_definitions, TRIVIAL_NODE_TYPES
 )
-from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name, _is_referenced
+from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name, _is_referenced, \
+    sibling_arm_instructions
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
@@ -244,6 +245,8 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
         if not last.definition_used and self._copy_would_reevaluate(old_last_value, last.dest_reg):
             replacement = Identifier(name=f"r{last.dest_reg}")
 
+        sibling = sibling_arm_instructions(self.graph.root, then_result)
+
         repoint_references(
             self.cfg,
             self.graph.root,
@@ -258,6 +261,9 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             # anywhere then, and a structural match would hit an unrelated
             # identical literal (`[]`).
             structural=tail_value is old_tail_expr and not tested_by_register,
+            # A look-alike of the arm's value in the sibling arm is another path's value
+            # (96/2065: the second copy of a chain read `A && (A && B)`).
+            reader_value=lambda reader: old_tail_expr if reader in sibling else replacement,
         )
 
         # A later reader that names the register (`r9 = r4`, kept as a read

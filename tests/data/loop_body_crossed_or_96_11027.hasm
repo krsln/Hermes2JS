@@ -1,0 +1,38 @@
+
+=> [Function #11027 "" of 110 bytes]: 2 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x00204c3c
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 8, UInt8: 1>
+==> 00000003: <Mov>: <Reg8: 6, Reg8: 8>
+==> 00000006: <GetEnvironment>: <Reg8: 2, UInt8: 1>
+==> 00000009: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000000c: <LoadConstString>: <Reg8: 0, string_id: 7532>  # String: 'object' (Identifier)
+==> 00000010: <GetPNameList>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 4>
+==> 00000015: <JmpUndefined>: <Addr8: 85, Reg8: 7>  # Address: 0000006a
+==> 00000018: <GetNextPName>: <Reg8: 3, Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 4>
+==> 0000001e: <JmpUndefined>: <Addr8: 76, Reg8: 3>  # Address: 0000006a
+==> 00000021: <Mov>: <Reg8: 11, Reg8: 3>
+==> 00000024: <LoadFromEnvironment>: <Reg8: 10, Reg8: 2, UInt8: 2>
+==> 00000028: <LoadFromEnvironment>: <Reg8: 9, Reg8: 1, UInt8: 0>
+==> 0000002c: <GetByVal>: <Reg8: 9, Reg8: 10, Reg8: 9>
+==> 00000030: <JmpFalse>: <Addr8: 22, Reg8: 9>  # Address: 00000046
+==> 00000033: <LoadFromEnvironment>: <Reg8: 10, Reg8: 2, UInt8: 2>
+==> 00000037: <LoadFromEnvironment>: <Reg8: 9, Reg8: 1, UInt8: 0>
+==> 0000003b: <GetByVal>: <Reg8: 9, Reg8: 10, Reg8: 9>
+==> 0000003f: <TypeOf>: <Reg8: 9, Reg8: 9>
+==> 00000042: <JStrictEqual>: <Addr8: 18, Reg8: 9, Reg8: 0>  # Address: 00000054
+==> 00000046: <LoadFromEnvironment>: <Reg8: 12, Reg8: 2, UInt8: 2>
+==> 0000004a: <LoadFromEnvironment>: <Reg8: 10, Reg8: 1, UInt8: 0>
+==> 0000004e: <NewObject>: <Reg8: 9>
+==> 00000050: <PutByVal>: <Reg8: 12, Reg8: 10, Reg8: 9>
+==> 00000054: <LoadFromEnvironment>: <Reg8: 10, Reg8: 2, UInt8: 2>
+==> 00000058: <LoadFromEnvironment>: <Reg8: 9, Reg8: 1, UInt8: 0>
+==> 0000005c: <GetByVal>: <Reg8: 10, Reg8: 10, Reg8: 9>
+==> 00000060: <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 11>
+==> 00000064: <PutByVal>: <Reg8: 10, Reg8: 11, Reg8: 9>
+==> 00000068: <Jmp>: <Addr8: -80>  # Address: 00000018
+==> 0000006a: <LoadConstUndefined>: <Reg8: 0>
+==> 0000006c: <Ret>: <Reg8: 0>
+
+

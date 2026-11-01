@@ -1,0 +1,33 @@
+
+=> [Function #4456 "" of 83 bytes]: 7 params, frame size=6, strict=1, exc handler=0, debug info=0  @ offset 0x0016f065
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 4, UInt8: 3>
+==> 00000003: <LoadParam>: <Reg8: 5, UInt8: 4>
+==> 00000006: <LoadParam>: <Reg8: 3, UInt8: 5>
+==> 00000009: <LoadParam>: <Reg8: 2, UInt8: 6>
+==> 0000000c: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 0000000f: <JmpTrue>: <Addr8: 25, Reg8: 0>  # Address: 00000028
+==> 00000012: <LoadParam>: <Reg8: 0, UInt8: 2>
+==> 00000015: <JmpTrue>: <Addr8: 19, Reg8: 0>  # Address: 00000028
+==> 00000018: <JmpTrue>: <Addr8: 16, Reg8: 4>  # Address: 00000028
+==> 0000001b: <JmpTrue>: <Addr8: 13, Reg8: 5>  # Address: 00000028
+==> 0000001e: <JmpTrue>: <Addr8: 10, Reg8: 3>  # Address: 00000028
+==> 00000021: <JmpTrue>: <Addr8: 7, Reg8: 2>  # Address: 00000028
+==> 00000024: <LoadConstUndefined>: <Reg8: 0>
+==> 00000026: <Ret>: <Reg8: 0>
+==> 00000028: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 0000002b: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 0>
+==> 0000002f: <NewObject>: <Reg8: 0>
+==> 00000031: <Add>: <Reg8: 5, Reg8: 2, Reg8: 5>
+==> 00000035: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 5, string_id: 76>  # String: 'bottom' (Identifier)
+==> 00000039: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 3, string_id: 74>  # String: 'left' (Identifier)
+==> 0000003d: <Add>: <Reg8: 3, Reg8: 3, Reg8: 4>
+==> 00000041: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 3, string_id: 75>  # String: 'right' (Identifier)
+==> 00000045: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 2, string_id: 73>  # String: 'top' (Identifier)
+==> 00000049: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 15757>  # String: '_responderRegion' (Identifier)
+==> 0000004f: <LoadConstUndefined>: <Reg8: 0>
+==> 00000051: <Ret>: <Reg8: 0>
+
+

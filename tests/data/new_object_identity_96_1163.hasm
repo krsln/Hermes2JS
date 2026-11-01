@@ -1,0 +1,27 @@
+
+=> [Function #1163 "PlatformColor" of 69 bytes]: 1 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x00110baa
+
+Bytecode listing:
+
+==> 00000000: <LoadConstUndefined>: <Reg8: 3>
+==> 00000002: <GetArgumentsLength>: <Reg8: 2, Reg8: 3>
+==> 00000005: <GetGlobalObject>: <Reg8: 0>
+==> 00000007: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 1, string_id: 6>  # String: 'Array' (Identifier)
+==> 0000000d: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000012: <CreateThis>: <Reg8: 1, Reg8: 1, Reg8: 0>
+==> 00000016: <Mov>: <Reg8: 6, Reg8: 1>
+==> 00000019: <Mov>: <Reg8: 5, Reg8: 2>
+==> 0000001c: <Construct>: <Reg8: 0, Reg8: 0, UInt8: 2>
+==> 00000020: <SelectObject>: <Reg8: 1, Reg8: 1, Reg8: 0>
+==> 00000024: <LoadConstZero>: <Reg8: 0>
+==> 00000026: <Less>: <Reg8: 4, Reg8: 0, Reg8: 2>
+==> 0000002a: <JmpFalse>: <Addr8: 18, Reg8: 4>  # Address: 0000003c
+==> 0000002d: <GetArgumentsPropByVal>: <Reg8: 4, Reg8: 0, Reg8: 3>
+==> 00000031: <PutByVal>: <Reg8: 1, Reg8: 0, Reg8: 4>
+==> 00000035: <Inc>: <Reg8: 0, Reg8: 0>
+==> 00000038: <JLess>: <Addr8: -11, Reg8: 0, Reg8: 2>  # Address: 0000002d
+==> 0000003c: <NewObject>: <Reg8: 0>
+==> 0000003e: <PutNewOwnById>: <Reg8: 0, Reg8: 1, string_id: 12756>  # String: 'resource_paths' (Identifier)
+==> 00000043: <Ret>: <Reg8: 0>
+
+

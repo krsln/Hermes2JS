@@ -12,13 +12,14 @@ from hermes_decompiler.backend.transforms.shared import negate_condition, is_loo
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import LogicalOperator
-from hermes_decompiler.ir.expressions import BinaryExpression
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorReturn
+from hermes_decompiler.ir.expressions import BinaryExpression, Identifier, UndefinedLiteral
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorReturn, TerminatorThrow
 from ._predicates import (
     is_backward_branch,
     is_constant_comparison,
     is_empty_body,
     is_negation,
+    same_case_subject,
     make_logical_and,
     make_logical_or,
     single_if_child,
@@ -59,6 +60,8 @@ class _CompoundConditionFolder:
 
     def __init__(self, graph, cfg):
         self.graph = graph
+        self.cfg = cfg
+        self._in_built_arm = False
         self._address_to_block = {block.address: block for block in cfg.blocks}
         # _post_dominator_tree no longer needed here - see
         # _absorb_residual_conditional's updated safety check.
@@ -314,20 +317,76 @@ class _CompoundConditionFolder:
                 # unconverted rather than guess.
                 return False
 
+        # A jump out of a loop to code that cannot come back (a `return` after
+        # it) is not "continue where the region continues": that is the next
+        # iteration. Dropping it loses the exit (`do { next(); if (done) goto
+        # RETURN_TRUE; ... } while (c)` became a body guarded by `!done`).
+        if (
+                target_block is not None
+                and isinstance(target_block.terminator, TerminatorReturn)
+                and self._reaches(block, block)
+                and not self._reaches(target_block, block)
+        ):
+            return False
+
         # Dropping the jump means "after the rest, continue where the region
         # continues". When T already sits in the SIBLING arm of an enclosing
         # `if`, that is not where the jump went (`if (c) { return null } else
         # { if (x < 0) goto <that return>; return x }`): the jump must stay.
+        left_to_the_switch = (
+                target_block is not None
+                and is_constant_comparison(branch.condition)
+                and self._case_test_beside(region, index)
+                and self._case_chain_has_two_bodies(region, index, branch)
+        )
+
         if (
                 target_block is not None
-                and isinstance(target_block.terminator, TerminatorReturn)
-                # A `case` test's shared target is `SwitchStructurer`'s business.
-                and not is_constant_comparison(branch.condition)
+                # A `case` test's shared target is `SwitchStructurer`'s business -
+                # when it sits next to another `case` test. A lone comparison is an `if`.
+                and not left_to_the_switch
                 and self._sits_in_sibling_arm(region, target_block)
+                # Falling off the end IS `return undefined`: a register nothing ever sets to
+                # anything else returns the same thing there (96/7599 `getStateFromPath`).
+                # A value set on the way (`r0 = null; if (...) goto <return r0>`) would be lost
+                # (98/7358 `collectSpans`).
+                and not self._returns_only_undefined(target_block)
         ):
             return False
 
-        rest = self.graph.splice_out(region, index + 1, len(region.children))
+        if self._in_built_arm and target_block is not None and not self._target_follows_the_region(region,
+                                                                                                   target_block):
+            # An arm built just now: dropping its jump means "continue after the arm", which is only the
+            # jump's target when that is the code behind the enclosing `if`s (98/2202: `if (isNaN(x)) goto
+            # RETURN_UNDEFINED` inside an arm that goes on into a `switch`).
+            return False
+
+        case_like = is_constant_comparison(branch.condition) and self._case_test_beside(region, index)
+
+        # `if (C) goto T; A; T: B`: the arm is `A` only. Taking `T` and `B` in as well would skip them when
+        # `C` holds (98/2693: `if (x !== y) { throw ...; <T> }` printed code after a `throw`).
+        stop = len(region.children)
+
+        if target_block is not None:
+            for position in range(index + 1, len(region.children)):
+                item = region.children[position]
+                blocks = {item} if isinstance(item, BasicBlock) else item.covered_blocks
+                addresses = [b.address for b in blocks if b.address >= 0]
+
+                if target_block in blocks and addresses and min(addresses) == target_block.address:
+                    stop = position
+                    break
+
+            if stop == index + 1:
+                return False
+
+        if self._in_built_arm and not (
+                self._arm_has_one_entry(region, index, stop)
+                and self._arm_ends_in_an_exit(region, stop)
+        ):
+            return False
+
+        rest = self.graph.splice_out(region, index + 1, stop)
         if not rest:
             return False
 
@@ -352,7 +411,220 @@ class _CompoundConditionFolder:
             self.graph.insert_at(region, insert_at, block)
             insert_at += 1
         self.graph.insert_at(region, insert_at, if_region)
+
+        if left_to_the_switch and self._sits_in_sibling_arm(region, target_block):
+            # The jump into the sibling arm was dropped on the promise that `SwitchStructurer` builds a
+            # `switch` out of the chain (F-179). When it does not, `restore_dropped_case_jumps` puts it back.
+            dropped = getattr(self.cfg, "dropped_case_jumps", None)
+
+            if dropped is None:
+                dropped = self.cfg.dropped_case_jumps = []
+
+            dropped.append((if_region, block if block.instructions else None, branch.condition, target_block))
+
+        # The arm just built holds residual tests of its own (`if (r2) { r9 = r2; if (typeof r9 === "function")
+        # goto T; throw }`): the post-order walk has passed it already.
+        # A `case` test's arm is left alone: folding its tests now would break the chain `SwitchStructurer`
+        # still has to read (98/2211: `if ("left" !== x && "right" !== x) { switch ... }`).
+        if not case_like:
+            saved, self._in_built_arm = self._in_built_arm, True
+            try:
+                self._fold_all(then_body, frozenset())
+            finally:
+                self._in_built_arm = saved
+
         return True
+
+    @staticmethod
+    def _reaches(start: BasicBlock, goal: BasicBlock) -> bool:
+        """True if `goal` can be reached from `start` over one or more CFG edges."""
+        seen: set = set()
+        stack = list(start.successors)
+
+        while stack:
+            current = stack.pop()
+
+            if current is goal:
+                return True
+
+            if current in seen:
+                continue
+
+            seen.add(current)
+            stack.extend(current.successors)
+
+        return False
+
+    @staticmethod
+    def _case_test_beside(region, index: int) -> bool:
+        """Is the neighbouring item (before or after) another `case` test, on the same value?"""
+        parent = getattr(region, "parent", None)
+        mine = getattr(getattr(region.children[index], "terminator", None), "condition", None)
+
+        # The chain's earlier tests are the `if`s this region is the else of.
+        if isinstance(parent, IfRegion) and parent.condition is not None and same_case_subject(parent.condition, mine):
+            return True
+
+        for neighbour in (index - 1, index + 1):
+            if not 0 <= neighbour < len(region.children):
+                continue
+
+            item = region.children[neighbour]
+            condition = (
+                getattr(item, "condition", None) if isinstance(item, IfRegion)
+                else getattr(getattr(item, "terminator", None), "condition", None)
+            )
+
+            if condition is not None and same_case_subject(condition, mine):
+                return True
+
+        return False
+
+    @staticmethod
+    def _case_chain_has_two_bodies(region, index: int, branch) -> bool:
+        """Would the chain around this test become a `switch`?
+
+        `SwitchStructurer` needs two distinct bodies: `if (a === undefined) goto R;
+        if (a === null) goto R;` is one body shared by two labels, so it stays `if`s
+        and folding the second test away drops `R` (`null` fell off the end).
+        """
+
+        def entry(body):
+            blocks = [b for b in getattr(body, "covered_blocks", ()) if b.address >= 0]
+            return min(b.address for b in blocks) if blocks else None
+
+        bodies = {branch.target}
+
+        node = region
+
+        while True:
+            parent = getattr(node, "parent", None)
+
+            if (
+                    isinstance(parent, IfRegion)
+                    and parent.condition is not None
+                    and is_constant_comparison(parent.condition)
+                    and same_case_subject(parent.condition, branch.condition)
+                    and node is parent.else_body
+            ):
+                address = entry(parent.then_body)
+
+                if address is not None:
+                    bodies.add(address)
+
+                node = getattr(parent, "parent", None)
+
+                if node is None:
+                    break
+
+                continue
+
+            break
+
+        for item in region.children[index + 1:]:
+            if isinstance(item, IfRegion):
+                condition, address = item.condition, entry(item.then_body)
+            else:
+                terminator = getattr(item, "terminator", None)
+                condition = getattr(terminator, "condition", None)
+                address = getattr(terminator, "target", None)
+
+            # A test on ANOTHER value is not a label of this chain (98/7358 `collectSpans`:
+            # `length === 0` after `a === undefined` / `a === null` made two "bodies").
+            if (
+                    condition is not None and is_constant_comparison(condition) and address is not None
+                    and same_case_subject(condition, branch.condition)
+            ):
+                bodies.add(address)
+
+        return len(bodies) >= 2
+
+    def _returns_only_undefined(self, block) -> bool:
+        """Does this `return` give back a register that is never set to anything but `undefined`?"""
+        terminator = block.terminator
+        if not isinstance(terminator, TerminatorReturn):
+            return False
+
+        value = terminator.value
+        if isinstance(value, UndefinedLiteral):
+            return True
+        if not isinstance(value, Identifier):
+            return False
+
+        found_definition = False
+        for other in self._address_to_block.values():
+            for i in other.instructions:
+                if i.dest_reg is None or f"r{i.dest_reg}" != value.name:
+                    continue
+                if not isinstance(i.value, UndefinedLiteral):
+                    return False
+                found_definition = True
+
+        # no definition at all = a parameter or an unknown: not provably `undefined`
+        return found_definition
+
+    @staticmethod
+    def _arm_ends_in_an_exit(region, stop: int) -> bool:
+        """Does the code an arm is about to take in end in a `throw`/`return`?
+
+        Then nothing of it falls out, and dropping the jump (`if (C) goto T; ...; throw` -> `if (!C) { ...;
+        throw }`) is exact whatever else the region does. Arms that fall out are left to the first fold: moving
+        their tail around changed the shape of loops (98/2515, 98/9878) without a way to check it."""
+        last = region.children[stop - 1]
+
+        return isinstance(last, BasicBlock) and isinstance(last.terminator, (TerminatorThrow, TerminatorReturn))
+
+    @staticmethod
+    def _arm_has_one_entry(region, index: int, stop: int) -> bool:
+        """Does nothing outside `children[index:stop]` jump into the code an arm is about to take in?
+
+        A block the later code of the region reaches by its own jump (98/2693: the code after a `throw`) would
+        be printed inside an arm its jumper does not run."""
+        inside = set()
+
+        for item in region.children[index:stop]:
+            inside.update({item} if isinstance(item, BasicBlock) else item.covered_blocks)
+
+        for item in region.children[index + 1:stop]:
+            for block in ({item} if isinstance(item, BasicBlock) else item.covered_blocks):
+                if any(p not in inside for p in block.predecessors):
+                    return False
+
+        return True
+
+    def _target_follows_the_region(self, region, target_block) -> bool:
+        """Does the code behind `region` (past every enclosing `if` that ends with it) start at `target_block`?
+
+        True for a block that goes on (its own test became an `if`) and lies between the enclosing arm and the
+        code after it; an exit block (a `return`) is printed where it is, not "behind" anything."""
+        if not target_block.successors:
+            # an exit (`return`, `throw`) is printed where it is, not "behind" anything
+            return False
+
+        node = region
+
+        while getattr(node, "parent", None) is not None:
+            parent = node.parent
+
+            if isinstance(parent, SequenceRegion):
+                index = parent.children.index(node)
+
+                if index + 1 < len(parent.children):
+                    def addresses(item):
+                        blocks = {item} if isinstance(item, BasicBlock) else item.covered_blocks
+                        return [b.address for b in blocks if b.address >= 0]
+
+                    following = addresses(parent.children[index + 1])
+                    own = addresses(node)
+
+                    return bool(following and own) and max(own) < target_block.address <= min(following)
+
+            elif not isinstance(parent, IfRegion):
+                return False
+
+            node = parent
+
+        return False
 
     @staticmethod
     def _sits_in_sibling_arm(region, target_block) -> bool:
@@ -437,6 +709,13 @@ class _CompoundConditionFolder:
                     and isinstance(first.terminator, TerminatorConditionalBranch)):
                 branch = first.terminator
                 rest = else_body.children[1:]
+
+                # The jump is the cascade's `merge` only when it leaves the whole
+                # `if`; one into the other arm is a real branch the fold would lose.
+                target = self._resolve_target_block(branch.target)
+                if target is not None and target in outer.then_body.covered_blocks:
+                    return False
+
                 if rest:
                     new_seq = SequenceRegion()
                     self.graph.transfer(list(rest), new_seq)
@@ -527,3 +806,108 @@ class _CompoundConditionFolder:
             return
         if hasattr(region, "body"):
             self._prune_empty_blocks(region.body)
+
+
+def restore_dropped_case_jumps(graph, cfg) -> int:
+    """Put back the jump `_absorb_residual_conditional` dropped for a `case` test that became no `switch`.
+
+    `if (A) { X } else { if (!C) { rest } }` with `C` jumping to `X` loses the path `C -> X`: the fold left
+    it to `SwitchStructurer`, which needs two cases. A residual `if` that is still there after the switch
+    pass is the sign it did not come. It becomes `if (A || C) { X } else { rest }` (F-179, 98/2633:
+    `27 === t || 5 === t`). Only the plain shape, with nothing but unprinted set-up in front of the residual.
+    """
+    restored = 0
+
+    for residual, setup, test, target in getattr(cfg, "dropped_case_jumps", ()):
+        sequence = getattr(residual, "parent", None)
+
+        if not isinstance(sequence, SequenceRegion) or residual not in sequence.children:
+            continue
+
+        outer = getattr(sequence, "parent", None)
+
+        if (
+                not isinstance(outer, IfRegion)
+                or outer.else_body is not sequence
+                or outer.condition is None
+                or outer.then_body is None
+                or target not in outer.then_body.covered_blocks
+                or residual.else_body is not None
+        ):
+            continue
+
+        # The jump went to the arm's ENTRY: from the middle of the arm it is not "the same arm again".
+        entries = [b.address for b in outer.then_body.covered_blocks if b.address >= 0]
+
+        if not entries or min(entries) != target.address:
+            continue
+
+        before = sequence.children[:sequence.children.index(residual)]
+
+        if any(
+                not isinstance(item, BasicBlock)
+                or any(i.statement is not None or i.terminator is not None for i in item.instructions)
+                for item in before
+        ):
+            continue
+
+        # The same test twice (`x !== undefined` guarding one arm from two places) is one test.
+        if not test.structurally_equal(outer.condition):
+            outer.condition = BinaryExpression(left=outer.condition, operator=LogicalOperator.OR, right=test)
+
+        rest = list(residual.then_body.children)
+        graph.splice_out(sequence, sequence.children.index(residual), sequence.children.index(residual) + 1)
+        graph.transfer(rest, sequence)
+        restored += 1
+        restored += _absorb_following_tests(graph, outer, sequence, target)
+
+    return restored
+
+
+def _absorb_following_tests(graph, outer, sequence, target) -> int:
+    """`26 === t`, `27 === t`, `5 === t` into one body: the tests after the one just restored are still raw
+    conditional jumps to the same arm entry in the else arm; each one joins the condition."""
+    taken = 0
+
+    while True:
+        for index, item in enumerate(sequence.children):
+            if not isinstance(item, BasicBlock):
+                return taken
+
+            branch = item.terminator
+
+            if isinstance(branch, TerminatorConditionalBranch):
+                break
+
+            if branch is not None or any(
+                    i.statement is not None or i.terminator is not None for i in item.instructions):
+                return taken
+        else:
+            return taken
+
+        if (
+                branch.target != target.address
+                or not is_constant_comparison(branch.condition)
+                or any(i.statement is not None for i in item.instructions[:-1])
+                or any(
+            not isinstance(earlier, BasicBlock)
+            or any(i.statement is not None or i.terminator is not None for i in earlier.instructions)
+            for earlier in sequence.children[:index]
+        )
+        ):
+            return taken
+
+        if not branch.condition.structurally_equal(outer.condition):
+            outer.condition = BinaryExpression(left=outer.condition, operator=LogicalOperator.OR,
+                                               right=branch.condition)
+
+        if item.instructions and item.instructions[-1].terminator is branch:
+            item.instructions.pop()
+
+        item.terminator = None
+
+        if not item.instructions:
+            graph.splice_out(sequence, index, index + 1)
+            graph.block_owner.pop(item, None)
+
+        taken += 1

@@ -1,0 +1,42 @@
+
+=> [Function #15130 "tag" of 132 bytes]: 2 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x0026a3aa
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000005: <LoadConstUndefined>: <Reg8: 7>
+==> 00000007: <GetArgumentsLength>: <Reg8: 6, Reg8: 7>
+==> 0000000a: <GetGlobalObject>: <Reg8: 1>
+==> 0000000c: <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 6>  # String: 'Array' (Identifier)
+==> 00000012: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 00000015: <Greater>: <Reg8: 4, Reg8: 6, Reg8: 5>
+==> 00000019: <LoadConstZero>: <Reg8: 2>
+==> 0000001b: <JmpFalse>: <Addr8: 7, Reg8: 4>  # Address: 00000022
+==> 0000001e: <Sub>: <Reg8: 2, Reg8: 6, Reg8: 5>
+==> 00000022: <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 2, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000027: <CreateThis>: <Reg8: 4, Reg8: 4, Reg8: 8>
+==> 0000002b: <Mov>: <Reg8: 12, Reg8: 4>
+==> 0000002e: <Mov>: <Reg8: 11, Reg8: 2>
+==> 00000031: <Construct>: <Reg8: 2, Reg8: 8, UInt8: 2>
+==> 00000035: <SelectObject>: <Reg8: 4, Reg8: 4, Reg8: 2>
+==> 00000039: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
+==> 0000003d: <Less>: <Reg8: 8, Reg8: 5, Reg8: 6>
+==> 00000041: <Mov>: <Reg8: 2, Reg8: 5>
+==> 00000044: <JmpFalse>: <Addr8: 22, Reg8: 8>  # Address: 0000005a
+==> 00000047: <Sub>: <Reg8: 9, Reg8: 2, Reg8: 5>
+==> 0000004b: <GetArgumentsPropByVal>: <Reg8: 8, Reg8: 2, Reg8: 7>
+==> 0000004f: <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
+==> 00000053: <Inc>: <Reg8: 2, Reg8: 2>
+==> 00000056: <JLess>: <Addr8: -15, Reg8: 2, Reg8: 6>  # Address: 00000047
+==> 0000005a: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 99>  # String: 'console' (Identifier)
+==> 00000060: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 4, string_id: 90>  # String: 'log' (Identifier)
+==> 00000065: <LoadConstString>: <Reg8: 1, string_id: 4861>  # String: '__BC:Strings/TemplateLiteralTests/tag/invoked' (String)
+==> 00000069: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
+==> 0000006e: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)
+==> 00000073: <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 15131>  # Function: [#15131  of 61 bytes]: 4 params @ offset 0x0026a42e
+==> 00000078: <LoadConstString>: <Reg8: 0, string_id: 7163>  # String: '' (Identifier)
+==> 0000007c: <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 0>
+==> 00000082: <Ret>: <Reg8: 0>
+
+

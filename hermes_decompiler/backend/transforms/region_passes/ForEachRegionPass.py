@@ -4,6 +4,7 @@ from types import SimpleNamespace
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import (
+    IfRegion,
     RegionVisitor,
     LoopKind,
     LoopRegion,
@@ -16,11 +17,14 @@ from hermes_decompiler.backend.transforms.shared import resolve_identifier as _s
 from hermes_decompiler.backend.transforms.shared import is_bare_register
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Expression
+from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.expressions import (
-    ArrayExpression, AssignmentExpression, CallExpression, Identifier, MemberExpression,
+    ArrayExpression, AssignmentExpression, BinaryExpression, CallExpression, Identifier, MemberExpression,
+    UndefinedLiteral,
 )
 from hermes_decompiler.ir.expressions.Collections import SpreadElement
-from hermes_decompiler.ir.terminators import TerminatorThrow
+from hermes_decompiler.ir.statements import BreakStatement
+from hermes_decompiler.ir.terminators import TerminatorReturn, TerminatorThrow
 from ._base import RegionPass
 
 logger = get_logger(__name__)
@@ -77,7 +81,12 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
     """
 
     def run(self) -> None:
+        self._for_in_loops: list[LoopRegion] = []
         self.visit(self.graph.root)
+
+        # After the walk: unwrapping replaces a region in its parent's child list.
+        for loop in self._for_in_loops:
+            self._unwrap_property_list_guard(loop)
 
     # -----------------------------------------------------------------
     # Tree walk - only TryRegion and LoopRegion need pass-specific
@@ -156,6 +165,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
         if scaffold is not None:
             self._unwrap_try(try_region, loop)
+            self._strip_inline_closes(loop, raw_iterator_ref)
 
         self._drop_iterator_setup(iterator_expr)
         self._fold_binding_pattern(loop)
@@ -175,7 +185,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
         try_region = next((c for c in loop.body.children if isinstance(c, TryRegion)), None)
 
-        if try_region is None or try_region.finally_ is not None:
+        if try_region is None:
             return
 
         next_call, next_instr, header_block = self._match_header_call(loop, "next")
@@ -212,6 +222,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
                 child.parent = body
 
         body.invalidate_coverage()
+        self._strip_inline_closes(loop, raw_iterator_ref)
 
         self._drop_iterator_setup(iterator_expr)
         self._fold_binding_pattern(loop)
@@ -343,6 +354,84 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         loop.loop_binding = next_instr.dest_reg
 
         self._strip_next_call_scaffold(header_block, next_instr)
+        self._for_in_loops.append(loop)
+
+    def _unwrap_property_list_guard(self, loop: LoopRegion) -> None:
+        """Drop `rN = HermesPropertyIterator(obj); if (rN !== undefined) { for ... }`.
+
+        `GetPNameList` yields `undefined` for a null/undefined object and Hermes
+        guards the loop with a `JmpUndefined` on it. `for (const k in obj)` over
+        such an object runs zero times anyway, so once the loop is a for-in the
+        guard and the list's own definition say nothing the loop does not.
+        Only when the loop is the guard's whole `then` arm, the guard has no
+        `else`, and no later code names the list register.
+        """
+        arm = loop.parent
+        guard = getattr(arm, "parent", None)
+
+        if not isinstance(arm, SequenceRegion) or not isinstance(guard, IfRegion):
+            return
+
+        if guard.then_body is not arm or guard.else_body is not None:
+            return
+
+        if [c for c in arm.children if not (isinstance(c, BasicBlock) and not c.instructions)] != [loop]:
+            return
+
+        condition = guard.condition
+
+        if not (
+                isinstance(condition, BinaryExpression)
+                and condition.operator == BinaryOperator.STRICT_NOT_EQUAL
+                and isinstance(condition.left, Identifier)
+                and isinstance(condition.right, UndefinedLiteral)
+                and condition.left.name[0] == "r"
+                and condition.left.name[1:].isdigit()
+        ):
+            return
+
+        register = int(condition.left.name[1:])
+        outer = guard.parent
+
+        if not isinstance(outer, SequenceRegion) or guard not in outer.children:
+            return
+
+        definition = None
+
+        for block in self.cfg.blocks:
+            for instr in block.instructions:
+                if (
+                        instr.dest_reg == register
+                        and instr.handler == "GetPNameList"
+                        and self._match_call(instr.value, "HermesPropertyIterator") is loop.iterable
+                        and (definition is None or instr.address > definition[1].address)
+                ):
+                    definition = (block, instr)
+
+        if definition is None:
+            return
+
+        block, instr = definition
+
+        # Only blocks the region tree still covers can read the register; the
+        # guard's own test is the one read this removes.
+        live = SimpleNamespace(blocks=[b for b in self.cfg.blocks if b in self.graph.root.covered_blocks])
+
+        guard.condition = None
+
+        try:
+            read_later = _reads_register_by_name(live, register, instr.address, root=self.graph.root)
+        finally:
+            guard.condition = condition
+
+        if read_later:
+            return
+
+        index = outer.children.index(guard)
+        outer.children[index] = loop
+        loop.parent = outer
+        outer.invalidate_coverage()
+        block.instructions.remove(instr)
 
     def _resolve_identifier(self, expr: Expression, before_instr, before_block: BasicBlock):
         """Resolve a possibly-still-bare register reference to its defining expression.
@@ -574,6 +663,43 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
     # -----------------------------------------------------------------
     # Mutation
     # -----------------------------------------------------------------
+
+    @staticmethod
+    def _is_close_call(instr, iterator_ref) -> bool:
+        value = instr.value
+
+        return (
+                isinstance(value, CallExpression)
+                and not value.arguments
+                and isinstance(value.callee, MemberExpression)
+                and isinstance(value.callee.prop, Identifier)
+                and value.callee.prop.name == "return"
+                and isinstance(value.callee.obj, Identifier)
+                and isinstance(iterator_ref, Identifier)
+                and value.callee.obj.name == iterator_ref.name
+        )
+
+    def _strip_inline_closes(self, loop: LoopRegion, iterator_ref) -> None:
+        """Drop `it.return();` right before a `break`/`return` inside a recognized for-of.
+
+        Hermes copies the iterator close onto every way out of the loop; `for (x of xs)` already closes
+        on `break` and `return`, so the copy is scaffolding too. A close is dropped when the block ends in a `return` (the value may be computed after it)
+        or when only the `break` follows it."""
+        for block in loop.body.covered_blocks:
+            instructions = block.instructions
+
+            for index in range(len(instructions) - 1, -1, -1):
+                instr = instructions[index]
+
+                if not self._is_close_call(instr, iterator_ref):
+                    continue
+
+                rest = instructions[index + 1:]
+                before_break = len(rest) == 1 and isinstance(rest[0].statement, BreakStatement)
+                before_return = isinstance(block.terminator, TerminatorReturn)
+
+                if before_break or before_return:
+                    del instructions[index]
 
     @staticmethod
     def _strip_instruction(block: BasicBlock, instr) -> None:

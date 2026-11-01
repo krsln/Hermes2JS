@@ -37,6 +37,8 @@ from hermes_decompiler.ir.expressions import (
     RawExpression,
     ThisPlaceholder,
 )
+from hermes_decompiler.ir.Operators import LogicalOperator, UnaryOperator
+from hermes_decompiler.backend.transforms.shared import negate_for_display
 from ._PrinterVisitor import PrinterVisitor
 
 __all__ = [
@@ -133,8 +135,35 @@ class ExpressionPrinter(PrinterVisitor):
     # ------------------------------------------------------------------
 
     def visit_UnaryExpression(self, node: UnaryExpression) -> str:
+        shown = self._display_node(node)
+
+        if shown is not node:
+            return self.visit(shown)
+
         operand = self._wrap_operand(node.operand, node)
         return f"{node.operator}{operand}"
+
+    @staticmethod
+    def _display_node(node: Any) -> Any:
+        """The node whose syntax `visit(node)` actually prints.
+
+        `!(a && !b)` reads `!a || b`: only the TEXT changes (no pass sees this
+        form), so a `!` over `&&`/`||` is printed as the flipped binary
+        expression. Its parent must group it by THAT form's precedence, not
+        by the `!` it was built as: `!(a && b) && c` printed `!a || !b && c`,
+        and `!!(...)` lost its grouping (98/9594, F-02)."""
+        if (
+                isinstance(node, UnaryExpression)
+                and node.operator == UnaryOperator.LOGICAL_NOT
+                and isinstance(node.operand, BinaryExpression)
+                and node.operand.operator in (LogicalOperator.AND, LogicalOperator.OR)
+        ):
+            flipped = negate_for_display(node.operand)
+
+            if isinstance(flipped, BinaryExpression) and flipped.operator != node.operand.operator:
+                return flipped
+
+        return node
 
     def visit_UpdateExpression(self, node: UpdateExpression) -> str:
         argument = self.visit(node.argument)
@@ -157,7 +186,7 @@ class ExpressionPrinter(PrinterVisitor):
         return f"{left} {node.operator} {right}"
 
     def visit_ConditionalExpression(self, node: ConditionalExpression) -> str:
-        test = self._wrap_operand(node.test, node)
+        test = self._visit_test(node.test)
         consequent = self.visit(node.consequent)
         alternate = self.visit(node.alternate)
 
@@ -313,6 +342,7 @@ class ExpressionPrinter(PrinterVisitor):
         without grouping.
         """
         text = self.visit(operand)
+        shown = self._display_node(operand)
 
         tuple_expressions = (
             BinaryExpression,
@@ -320,13 +350,24 @@ class ExpressionPrinter(PrinterVisitor):
             AssignmentExpression,
             SequenceExpression,
         )
-        if isinstance(operand, tuple_expressions):
+        if isinstance(shown, tuple_expressions):
+            return f"({text})"
+
+        return text
+
+    def _visit_test(self, test: Any) -> str:
+        """The test of `? :`. Every binary operator (comparison, `in`, `&&`, `||`, `??`) binds
+        tighter than `?:`, so only a nested ternary, an assignment or a sequence needs grouping."""
+        text = self.visit(test)
+
+        if isinstance(self._display_node(test), (ConditionalExpression, AssignmentExpression, SequenceExpression)):
             return f"({text})"
 
         return text
 
     def _wrap_side(self, side, parent: BinaryExpression, is_right: bool) -> str:
         text = self.visit(side)
+        side = self._display_node(side)
 
         if isinstance(side, BinaryExpression):
             parent_precedence = precedence(parent.operator)

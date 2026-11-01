@@ -1,0 +1,40 @@
+
+=> [Function #273 "q" of 115 bytes]: 4 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x000fdea5
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000005: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 1>
+==> 00000009: <LoadParam>: <Reg8: 1, UInt8: 2>
+==> 0000000c: <StoreToEnvironment>: <Reg8: 0, UInt8: 1, Reg8: 1>
+==> 00000010: <LoadParam>: <Reg8: 1, UInt8: 3>
+==> 00000013: <StoreToEnvironment>: <Reg8: 0, UInt8: 2, Reg8: 1>
+==> 00000017: <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 274>  # Function: [#274 n of 43 bytes]: 1 params @ offset 0x000fdf18
+==> 0000001c: <GetEnvironment>: <Reg8: 2, UInt8: 1>
+==> 0000001f: <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 8>
+==> 00000023: <JmpTrue>: <Addr8: 76, Reg8: 0>  # Address: 0000006f
+==> 00000026: <LoadConstTrue>: <Reg8: 0>
+==> 00000028: <StoreNPToEnvironment>: <Reg8: 2, UInt8: 8, Reg8: 0>
+==> 0000002c: <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 1>
+==> 00000030: <GetByIdShort>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 2>  # String: '_state' (Identifier)
+==> 00000035: <LoadConstString>: <Reg8: 0, string_id: 254>  # String: 'writable' (Identifier)
+==> 00000039: <JStrictNotEqual>: <Addr8: 48, Reg8: 0, Reg8: 3>  # Address: 00000069
+==> 0000003d: <GetEnvironment>: <Reg8: 0, UInt8: 2>
+==> 00000040: <LoadFromEnvironment>: <Reg8: 4, Reg8: 0, UInt8: 148>
+==> 00000044: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 1>
+==> 00000048: <LoadConstUndefined>: <Reg8: 3>
+==> 0000004a: <Call2>: <Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 2>
+==> 0000004f: <JmpTrue>: <Addr8: 26, Reg8: 2>  # Address: 00000069
+==> 00000052: <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 46>
+==> 00000056: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000059: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 4>
+==> 0000005d: <Call1>: <Reg8: 0, Reg8: 0, Reg8: 3>
+==> 00000061: <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 00000067: <Jmp>: <Addr8: 8>  # Address: 0000006f
+==> 00000069: <LoadConstUndefined>: <Reg8: 0>
+==> 0000006b: <Call1>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 0000006f: <LoadConstUndefined>: <Reg8: 0>
+==> 00000071: <Ret>: <Reg8: 0>
+
+

@@ -16,8 +16,6 @@ async function _anon_0_(param1) {
     r1 = 0;
     // CODE → addr: 38 | <LoadParam>: <Reg8: 6, UInt8: 1>
     r6 = param1;
-    // CODE → addr: 41 | <IteratorBegin>: <Reg8: 4, Reg8: 6>
-    r4 = GetIterator(param1);
     // CODE → addr: 44 | <GetEnvironment>: <Reg8: 5, UInt8: 2>
     r5 = getEnvironment(2);
     // LOOP → START (for_of)
@@ -36,8 +34,6 @@ async function _anon_0_(param1) {
         // USED → r9 = __resumeIsReturn;
         if (__resumeIsReturn) {
             // ──────────────── Block 7 ──────────────── 
-            // CODE → addr: 86 | <IteratorClose>: <Reg8: 4, UInt8: 0>
-            r4.return();
             // CODE → addr: 90 | <Ret>: <Reg8: 3>
             return r3;
         }

@@ -3,12 +3,13 @@ from __future__ import annotations
 import re
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
-from hermes_decompiler.backend.regions import RegionVisitor, IfRegion
+from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, LoopRegion
 from hermes_decompiler.backend.transforms.shared import (
     has_side_effects, repoint_references, reclaim_definition, TRIVIAL_NODE_TYPES, prints_definition,
     substitute_register,
 )
-from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
+from hermes_decompiler.backend.transforms.shared._repoint import _contains, _reads_register_by_name, \
+    sibling_arm_instructions
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import ConditionalExpression, Identifier, ThisPlaceholder
@@ -150,6 +151,11 @@ class UnfoldedMergeRepairPass(RegionPass):
     keeps its inlined value.
     """
 
+    def __init__(self, graph, cfg, snapshot=None):
+        super().__init__(graph, cfg)
+        # The flow as it was before the structurers rewrote the edges (`FlowSnapshot`).
+        self._snapshot = snapshot
+
     def run(self) -> None:
         self._index = None
         self._made: set[int] = set()  # ids of the replacement identifiers this pass created
@@ -215,6 +221,10 @@ class UnfoldedMergeRepairPass(RegionPass):
             write.definition_used = False
             self._index = None
             logger.debug("unfolded merge: r%s written in an arm is named after the if", write.dest_reg)
+            # The arm's write prints now, so the path that skips the arm needs
+            # the default it left (`r1 = len >= 0` that the `if`'s own test
+            # inlined): `r0 = r1` read an unassigned `r1` there (96/12935).
+            self._reprint_unprinted_default(if_region, write)
             return
 
         # The same node object defined by several instructions (constant loads
@@ -235,11 +245,19 @@ class UnfoldedMergeRepairPass(RegionPass):
                 # (a global repoint would also hit every other register the
                 # value was copied into). Anything else is ambiguous.
                 readers = [i for i in holders if i is not write and self._is_reader_mov_of(i, write)]
+                # The `Mov` that handed the write its value (`Mov r13, r10` ...
+                # `Mov r14, r13`) holds the same node because the write COPIED
+                # it: it is the write's source, not an unrelated owner (96/4846).
+                feeders = [i for i in holders if i is not write and self._is_source_mov_of(i, write)]
 
-                if len(holders) - len(readers) > 1 or not readers:
+                # A `Mov` of a reader's register (`Mov r0, r1` after `Mov r1, r2`)
+                # holds the same node and reads the register one step on.
+                chained = self._chained_reader_movs(readers, holders)
+
+                if len(holders) - len(readers) - len(feeders) - len(chained) > 1 or not readers:
                     return
 
-                self._repoint_reader_movs(write, if_region, region_blocks, arm_blocks)
+                self._repoint_reader_movs(write, if_region, region_blocks, arm_blocks, chained)
                 return
 
         # Every path writes the same thing: no phi, the inlined copy is right.
@@ -265,10 +283,17 @@ class UnfoldedMergeRepairPass(RegionPass):
         old_value = write.value
         self._made.add(id(replacement))
 
+        # Not a reader in the OTHER arm of an `if` the write sits in: the structural match also
+        # finds an identical value there (96/2065 `updateClassComponent`: the mount path's `A && B`
+        # is the inner part of the update path's chain, which then read the mount path's `r19`).
+        # Two arms cannot run one after the other (outside a loop).
+        other_arm = sibling_arm_instructions(self.graph.root, write)
+
         repoint_references(
             self.cfg, self.graph.root, old_value, replacement,
             min_block_id=min(b.id for b in arm_blocks),
             exclude=arm_set,
+            reader_value=None if not other_arm else (lambda reader: old_value if reader in other_arm else replacement),
         )
 
         self._index = None
@@ -310,24 +335,90 @@ class UnfoldedMergeRepairPass(RegionPass):
         # Only readers OUTSIDE the `if`: the sibling arm holds the very same value
         # object (`guard.call(.., r0.message)` next to `r18 = r0.message`) and runs
         # on a path where the register was never written.
+        #
+        # And only readers the write can reach: the register is never set on any other path
+        # (96/1595 `deepDiffer`: the loop's `r17 = r6` made `r6 != null` in another branch
+        # print `r17 != null`, a register nothing had set there).
+        register = Identifier(name=f"r{write.dest_reg}")
+        reaches = self._reader_reachability(write)
+
+        def reader_value(reader):
+            return register if reaches is None or reaches(reader) else write.value
+
         repoint_references(
-            self.cfg, self.graph.root, write.value, Identifier(name=f"r{write.dest_reg}"),
+            self.cfg, self.graph.root, write.value, register,
             min_block_id=min(b.id for b in arm_blocks),
             exclude={i for blk in region_blocks for i in blk.instructions},
-            structural=False,
+            structural=False, reader_value=reader_value,
         )
 
         self._index = None
         logger.debug("unfolded merge: copies of printed r%s after the if read the register", write.dest_reg)
 
+    def _reader_reachability(self, write):
+        """A predicate: can `write` run before this instruction? None when the flow is unknown."""
+        if self._snapshot is None:
+            return None
+
+        successors = {block_id: list(succ) + self._snapshot.handlers.get(block_id, []) for block_id, succ, _ in
+                      self._snapshot.blocks}
+        block_of = {i: block_id for block_id, _, instructions in self._snapshot.blocks for i in instructions}
+        origin = block_of.get(write)
+
+        if origin is None:
+            return None
+
+        reachable = {origin}
+        todo = [origin]
+
+        while todo:
+            for successor in successors.get(todo.pop(), ()):
+                if successor not in reachable:
+                    reachable.add(successor)
+                    todo.append(successor)
+
+        # An instruction the snapshot does not know (made after it) is read as reachable.
+        return lambda reader: block_of.get(reader) is None or block_of[reader] in reachable
+
     _MOV_SOURCE_RE = re.compile(r"Reg(?:8|32):\s*\d+,\s*Reg(?:8|32):\s*(\d+)")
 
-    def _repoint_reader_movs(self, write, if_region, region_blocks, arm_blocks) -> None:
+    def _chained_reader_movs(self, readers, holders) -> list:
+        """`Mov`s among `holders` that copy (transitively) a reader's register."""
+        found: list = []
+        # register -> address of the copy that put the reader's value in it. Only a
+        # `Mov` that runs AFTER that copy reads it (in a loop, an earlier one
+        # reads the previous iteration's register: `Mov r13, r10` before
+        # `Mov r10, r14`, 96/4846).
+        sources = {i.dest_reg: i.address for i in readers}
+
+        grew = True
+        while grew:
+            grew = False
+
+            for i in holders:
+                if i in readers or i in found or i.entry.opcode not in ("Mov", "MovLong"):
+                    continue
+
+                source = self._MOV_SOURCE_RE.match(i.entry.args)
+
+                if source is not None and sources.get(int(source.group(1)), i.address) < i.address:
+                    found.append(i)
+                    sources[i.dest_reg] = i.address
+                    grew = True
+
+        return found
+
+    def _repoint_reader_movs(self, write, if_region, region_blocks, arm_blocks, chained=()) -> None:
         if (not isinstance(write.value, (*TRIVIAL_NODE_TYPES, ConditionalExpression)) or has_side_effects(write.value)
                 or not self._read_after_the_if(write, region_blocks)):
             return
 
         self._repoint_movs_of_printed_write(write, arm_blocks, region_blocks)
+
+        # A copy of a reader's register reads that register, not the arm's value.
+        for instruction in chained:
+            source = self._MOV_SOURCE_RE.match(instruction.entry.args)
+            instruction.value = Identifier(name=f"r{int(source.group(1))}")
 
         self._index = None
         write.definition_used = False
@@ -345,6 +436,16 @@ class UnfoldedMergeRepairPass(RegionPass):
         source = self._MOV_SOURCE_RE.match(instruction.entry.args)
 
         return source is not None and int(source.group(1)) == write.dest_reg
+
+    def _is_source_mov_of(self, instruction, write) -> bool:
+        """`instruction` is a `Mov` that wrote the register `write` (a `Mov`)
+        copies from."""
+        if write.entry.opcode not in ("Mov", "MovLong") or instruction.entry.opcode not in ("Mov", "MovLong"):
+            return False
+
+        source = self._MOV_SOURCE_RE.match(write.entry.args)
+
+        return source is not None and instruction.dest_reg == int(source.group(1))
 
     def _repoint_movs_of_printed_write(self, write, arm_blocks, region_blocks) -> None:
         """A bare identifier/literal is shared by unrelated readers, so only a

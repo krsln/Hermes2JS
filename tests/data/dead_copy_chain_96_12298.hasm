@@ -1,0 +1,40 @@
+
+=> [Function #12298 "populateParams" of 107 bytes]: 3 params, frame size=20, strict=1, exc handler=1, debug info=0  @ offset 0x00222f1e
+  [Exception handlers: [start=0x42, end=0x5c, target=0x5e] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 5, UInt8: 2>
+==> 00000006: <JmpFalse>: <Addr8: 97, Reg8: 0>  # Address: 00000067
+==> 00000009: <Mov>: <Reg8: 1, Reg8: 5>
+==> 0000000c: <JmpFalse>: <Addr8: 91, Reg8: 1>  # Address: 00000067
+==> 0000000f: <GetGlobalObject>: <Reg8: 4>
+==> 00000011: <TryGetById>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000017: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 118>  # String: 'keys' (Identifier)
+==> 0000001c: <Mov>: <Reg8: 1, Reg8: 5>
+==> 0000001f: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000024: <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+==> 00000029: <LoadConstZero>: <Reg8: 1>
+==> 0000002b: <JStrictEqual>: <Addr8: 60, Reg8: 2, Reg8: 1>  # Address: 00000067
+==> 0000002f: <Mov>: <Reg8: 3, Reg8: 0>
+==> 00000032: <IteratorBegin>: <Reg8: 2, Reg8: 3>
+==> 00000035: <LoadConstUndefined>: <Reg8: 1>
+==> 00000037: <IteratorNext>: <Reg8: 9, Reg8: 2, Reg8: 3>
+==> 0000003b: <Mov>: <Reg8: 6, Reg8: 2>
+==> 0000003e: <JStrictEqual>: <Addr8: 39, Reg8: 6, Reg8: 1>  # Address: 00000065
+==> 00000042: <TryGetById>: <Reg8: 8, Reg8: 4, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000048: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 4, string_id: 66>  # String: 'assign' (Identifier)
+==> 0000004d: <NewObject>: <Reg8: 6>
+==> 0000004f: <Mov>: <Reg8: 10, Reg8: 5>
+==> 00000052: <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 10, string_id: 190>  # String: 'params' (Identifier)
+==> 00000056: <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 6>
+==> 0000005c: <Jmp>: <Addr8: -37>  # Address: 00000037
+==> 0000005e: <Catch>: <Reg8: 1>
+==> 00000060: <IteratorClose>: <Reg8: 2, UInt8: 1>
+==> 00000063: <Throw>: <Reg8: 1>
+==> 00000065: <Ret>: <Reg8: 0>
+==> 00000067: <LoadConstUndefined>: <Reg8: 0>
+==> 00000069: <Ret>: <Reg8: 0>
+
+

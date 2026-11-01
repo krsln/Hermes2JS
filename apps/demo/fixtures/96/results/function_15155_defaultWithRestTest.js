@@ -42,7 +42,7 @@ function defaultWithRestTest() {
     // CODE → addr: 68 | <Greater>: <Reg8: 4, Reg8: 3, Reg8: 6>
     // USED → r4 = arguments.length > 1;
     // CODE → addr: 72 | <LoadConstZero>: <Reg8: 8>
-    r8 = (arguments.length <= 1) ? 0 : arguments.length - 1;
+    r8 = arguments.length <= 1 ? 0 : arguments.length - 1;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 81 | <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r4 = Array.prototype;
@@ -51,7 +51,7 @@ function defaultWithRestTest() {
     // CODE → addr: 90 | <Mov>: <Reg8: 12, Reg8: 4>
     // USED → r12 = CreateThis(Array.prototype);
     // CODE → addr: 93 | <Mov>: <Reg8: 11, Reg8: 8>
-    r11 = (arguments.length <= 1) ? 0 : arguments.length - 1;
+    r11 = arguments.length <= 1 ? 0 : arguments.length - 1;
     // CODE → addr: 96 | <Construct>: <Reg8: 2, Reg8: 2, UInt8: 2>
     // USED → r2 = new Array(r11);
     // CODE → addr:100 | <SelectObject>: <Reg8: 4, Reg8: 4, Reg8: 2>
@@ -69,7 +69,7 @@ function defaultWithRestTest() {
             // CODE → addr:118 | <GetArgumentsPropByVal>: <Reg8: 8, Reg8: 2, Reg8: 7>
             // USED → r8 = arguments[r2];
             // CODE → addr:122 | <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
-            new Array(r11)[r9] = arguments[r2];
+            r4[r9] = arguments[r2];
             // CODE → addr:126 | <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1;
         } while (r2 < r3);

@@ -19,11 +19,11 @@ async function _anon_0_runAllTests() {
     // CODE → addr:212 | <LoadFromEnvironment>: <Reg8: 8, Reg8: 7, UInt8: 0>
     r8 = r7[0];
     // CODE → addr:216 | <GetById>: <Reg8: 10, Reg8: 8, UInt8: 4, string_id: 11270>  # String: 'whileTest' (Identifier)
-    // USED → r10 = r8.whileTest;
+    r10 = r8.whileTest;
     // CODE → addr:222 | <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined;
+    // USED → r8 = undefined;
     // CODE → addr:224 | <Call1>: <Reg8: 10, Reg8: 10, Reg8: 8>
-    r10 = r8.whileTest();
+    r10 = r10();
     // CODE → addr:228 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 7, UInt8: 1>
     r10 = r7[1];
     // CODE → addr:232 | <GetById>: <Reg8: 10, Reg8: 10, UInt8: 5, string_id: 10741>  # String: 'doWhileTest' (Identifier)
@@ -326,11 +326,11 @@ async function _anon_0_runAllTests() {
     // CODE → addr: 71 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 26>
     r7 = r1[0][26];
     // CODE → addr: 75 | <GetById>: <Reg8: 8, Reg8: 7, UInt8: 0, string_id: 10699>  # String: 'classTest' (Identifier)
-    // USED → r8 = r7.classTest;
+    r8 = r7.classTest;
     // CODE → addr: 81 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined;
+    // USED → r7 = undefined;
     // CODE → addr: 83 | <Call1>: <Reg8: 8, Reg8: 8, Reg8: 7>
-    r8 = r7.classTest();
+    r8 = r8();
     // CODE → addr: 87 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 27>
     r5 = r5[27];
     // CODE → addr: 91 | <GetById>: <Reg8: 5, Reg8: 5, UInt8: 1, string_id: 11131>  # String: 'privateStaticTest' (Identifier)

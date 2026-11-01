@@ -1,0 +1,35 @@
+
+=> [Function #2019 "mountDeferredValueImpl" of 112 bytes]: 4 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x00127cf2
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 0, UInt8: 2>
+==> 00000006: <LoadParam>: <Reg8: 2, UInt8: 3>
+==> 00000009: <LoadConstUndefined>: <Reg8: 5>
+==> 0000000b: <JStrictEqual>: <Addr8: 93, Reg8: 5, Reg8: 2>  # Address: 00000068
+==> 0000000f: <GetEnvironment>: <Reg8: 4, UInt8: 0>
+==> 00000012: <LoadFromEnvironment>: <Reg8: 6, Reg8: 4, UInt8: 116>
+==> 00000016: <LoadConstInt>: <Reg8: 3, Imm32: 1073741824>
+==> 0000001c: <BitAnd>: <Reg8: 3, Reg8: 6, Reg8: 3>
+==> 00000020: <LoadConstZero>: <Reg8: 6>
+==> 00000022: <JStrictEqual>: <Addr8: 22, Reg8: 6, Reg8: 3>  # Address: 00000038
+==> 00000026: <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 144>
+==> 0000002a: <LoadConstInt>: <Reg8: 3, Imm32: 261930>
+==> 00000030: <BitAnd>: <Reg8: 3, Reg8: 7, Reg8: 3>
+==> 00000034: <JStrictEqual>: <Addr8: 52, Reg8: 6, Reg8: 3>  # Address: 00000068
+==> 00000038: <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 173>  # String: 'memoizedState' (Identifier)
+==> 0000003e: <LoadFromEnvironmentL>: <Reg8: 3, Reg8: 4, UInt16: 459>
+==> 00000043: <Call1>: <Reg8: 5, Reg8: 3, Reg8: 5>
+==> 00000047: <LoadFromEnvironment>: <Reg8: 6, Reg8: 4, UInt8: 117>
+==> 0000004b: <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 1, string_id: 167>  # String: 'lanes' (Identifier)
+==> 00000050: <BitOr>: <Reg8: 3, Reg8: 3, Reg8: 5>
+==> 00000054: <PutById>: <Reg8: 6, Reg8: 3, UInt8: 2, string_id: 167>  # String: 'lanes' (Identifier)
+==> 0000005a: <LoadFromEnvironment>: <Reg8: 3, Reg8: 4, UInt8: 152>
+==> 0000005e: <BitOr>: <Reg8: 3, Reg8: 3, Reg8: 5>
+==> 00000062: <StoreToEnvironment>: <Reg8: 4, UInt8: 152, Reg8: 3>
+==> 00000066: <Ret>: <Reg8: 2>
+==> 00000068: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 173>  # String: 'memoizedState' (Identifier)
+==> 0000006e: <Ret>: <Reg8: 0>
+
+

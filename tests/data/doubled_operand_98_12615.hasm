@@ -1,0 +1,87 @@
+
+=> [Function #12615 "close" of 324 bytes]: 1 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x00248f73
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 5, UInt8: 0>
+==> 00000003: <TypeOfIs>: <Reg8: 1, Reg8: 5, UInt16: 258>
+==> 00000008: <JmpTypeOfIs>: <Addr32: 14, Reg8: 5, UInt16: 253>  # Address: 00000016
+==> 00000010: <LoadConstNull>: <Reg8: 2>
+==> 00000012: <StrictNeq>: <Reg8: 1, Reg8: 2, Reg8: 5>
+==> 00000016: <JmpTrue>: <Addr8: 8, Reg8: 1>  # Address: 0000001e
+==> 00000019: <TypeOfIs>: <Reg8: 1, Reg8: 5, UInt16: 128>
+==> 0000001e: <Not>: <Reg8: 1, Reg8: 1>
+==> 00000021: <Not>: <Reg8: 1, Reg8: 1>
+==> 00000024: <JmpFalse>: <Addr8: 57, Reg8: 1>  # Address: 0000005d
+==> 00000027: <GetGlobalObject>: <Reg8: 3>
+==> 00000029: <TryGetById>: <Reg8: 3, Reg8: 3, UInt8: 0, string_id: 23>  # String: 'Object' (Identifier)
+==> 0000002f: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 1, string_id: 212>  # String: 'prototype' (Identifier)
+==> 00000034: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 2, string_id: 12>  # String: 'hasOwnProperty' (Identifier)
+==> 00000039: <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 3, string_id: 95>  # String: 'call' (Identifier)
+==> 0000003e: <JmpBuiltinIs>: <Addr8: 16, UInt8: 56, Reg8: 4>  # Address: 0000004e
+==> 00000042: <LoadConstString>: <Reg8: 3, string_id: 10385>  # String: '_controlledReadableStream' (Identifier)
+==> 00000046: <Call3>: <Reg8: 3, Reg8: 4, Reg8: 6, Reg8: 5, Reg8: 3>
+==> 0000004c: <Jmp>: <Addr8: 11>  # Address: 00000057
+==> 0000004e: <LoadConstString>: <Reg8: 4, string_id: 10385>  # String: '_controlledReadableStream' (Identifier)
+==> 00000052: <Call2>: <Reg8: 3, Reg8: 6, Reg8: 5, Reg8: 4>
+==> 00000057: <Not>: <Reg8: 2, Reg8: 3>
+==> 0000005a: <Not>: <Reg8: 1, Reg8: 2>
+==> 0000005d: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000060: <JmpFalse>: <Addr8: 11, Reg8: 1>  # Address: 0000006b
+==> 00000063: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 85>
+==> 00000067: <InstanceOf>: <Reg8: 1, Reg8: 5, Reg8: 4>
+==> 0000006b: <JmpTrue>: <Addr8: 57, Reg8: 1>  # Address: 000000a4
+==> 0000006e: <GetGlobalObject>: <Reg8: 4>
+==> 00000070: <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 4, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 00000076: <TryGetById>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 0000007c: <GetByIdShort>: <Reg8: 9, Reg8: 4, UInt8: 6, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000081: <LoadConstString>: <Reg8: 8, string_id: 1162>  # String: ' can only be used on a ReadableStreamDefaultController' (String)
+==> 00000085: <LoadConstString>: <Reg8: 6, string_id: 7557>  # String: 'close' (Identifier)
+==> 00000089: <LoadConstString>: <Reg8: 4, string_id: 1163>  # String: 'ReadableStreamDefaultController.prototype.' (String)
+==> 0000008d: <Call3>: <Reg8: 11, Reg8: 9, Reg8: 4, Reg8: 6, Reg8: 8>
+==> 00000093: <CreateThisForNew>: <Reg8: 6, Reg8: 7, UInt8: 1>
+==> 00000097: <Mov>: <Reg8: 12, Reg8: 6>
+==> 0000009a: <Construct>: <Reg8: 4, Reg8: 7, UInt8: 2>
+==> 0000009e: <SelectObject>: <Reg8: 4, Reg8: 6, Reg8: 4>
+==> 000000a2: <Throw>: <Reg8: 4>
+==> 000000a4: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 7, string_id: 10385>  # String: '_controlledReadableStream' (Identifier)
+==> 000000aa: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 8, string_id: 70>  # String: '_state' (Identifier)
+==> 000000af: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 9, string_id: 15126>  # String: '_closeRequested' (Identifier)
+==> 000000b5: <Not>: <Reg8: 1, Reg8: 4>
+==> 000000b8: <JmpTrue>: <Addr8: 11, Reg8: 4>  # Address: 000000c3
+==> 000000bb: <LoadConstString>: <Reg8: 4, string_id: 6717>  # String: 'readable' (Identifier)
+==> 000000bf: <StrictEq>: <Reg8: 1, Reg8: 4, Reg8: 6>
+==> 000000c3: <JmpTrue>: <Addr8: 32, Reg8: 1>  # Address: 000000e3
+==> 000000c6: <GetGlobalObject>: <Reg8: 4>
+==> 000000c8: <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 4, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 000000ce: <CreateThisForNew>: <Reg8: 6, Reg8: 7, UInt8: 1>
+==> 000000d2: <LoadConstString>: <Reg8: 11, string_id: 4209>  # String: 'The stream is not in a state that permits close' (String)
+==> 000000d6: <Mov>: <Reg8: 12, Reg8: 6>
+==> 000000d9: <Construct>: <Reg8: 4, Reg8: 7, UInt8: 2>
+==> 000000dd: <SelectObject>: <Reg8: 4, Reg8: 6, Reg8: 4>
+==> 000000e1: <Throw>: <Reg8: 4>
+==> 000000e3: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 7, string_id: 10385>  # String: '_controlledReadableStream' (Identifier)
+==> 000000e9: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 8, string_id: 70>  # String: '_state' (Identifier)
+==> 000000ee: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 9, string_id: 15126>  # String: '_closeRequested' (Identifier)
+==> 000000f4: <Not>: <Reg8: 1, Reg8: 4>
+==> 000000f7: <JmpTrue>: <Addr8: 11, Reg8: 4>  # Address: 00000102
+==> 000000fa: <LoadConstString>: <Reg8: 4, string_id: 6717>  # String: 'readable' (Identifier)
+==> 000000fe: <StrictEq>: <Reg8: 1, Reg8: 4, Reg8: 6>
+==> 00000102: <JmpFalse>: <Addr8: 62, Reg8: 1>  # Address: 00000140
+==> 00000105: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 7, string_id: 10385>  # String: '_controlledReadableStream' (Identifier)
+==> 0000010b: <LoadConstTrue>: <Reg8: 1>
+==> 0000010d: <PutByIdStrict>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 15126>  # String: '_closeRequested' (Identifier)
+==> 00000113: <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 10, string_id: 64>  # String: '_queue' (Identifier)
+==> 00000118: <GetByIdShort>: <Reg8: 6, Reg8: 6, UInt8: 11, string_id: 177>  # String: 'length' (Identifier)
+==> 0000011d: <LoadConstZero>: <Reg8: 0>
+==> 0000011f: <JStrictNotEqual>: <Addr8: 33, Reg8: 0, Reg8: 6>  # Address: 00000140
+==> 00000123: <LoadConstUndefined>: <Reg8: 1>
+==> 00000125: <PutByIdStrict>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 15427>  # String: '_pullAlgorithm' (Identifier)
+==> 0000012b: <PutByIdStrict>: <Reg8: 5, Reg8: 1, UInt8: 2, string_id: 13689>  # String: '_cancelAlgorithm' (Identifier)
+==> 00000131: <PutByIdStrict>: <Reg8: 5, Reg8: 1, UInt8: 3, string_id: 15532>  # String: '_strategySizeAlgorithm' (Identifier)
+==> 00000137: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 97>
+==> 0000013b: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 4>
+==> 00000140: <LoadConstUndefined>: <Reg8: 1>
+==> 00000142: <Ret>: <Reg8: 1>
+
+

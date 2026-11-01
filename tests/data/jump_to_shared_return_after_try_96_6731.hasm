@@ -1,0 +1,39 @@
+
+=> [Function #6731 "ensureNativeModulesAreInstalled" of 124 bytes]: 1 params, frame size=13, strict=1, exc handler=1, debug info=0  @ offset 0x001a26b1
+  [Exception handlers: [start=0x21, end=0x4c, target=0x4e] ]
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 30>  # String: 'globalThis' (Identifier)
+==> 00000008: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 7587>  # String: 'expo' (Identifier)
+==> 0000000e: <JmpTrue>: <Addr8: 106, Reg8: 1>  # Address: 00000078
+==> 00000011: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 18>  # String: 'window' (Identifier)
+==> 00000016: <TypeOf>: <Reg8: 2, Reg8: 1>
+==> 00000019: <LoadConstString>: <Reg8: 1, string_id: 1433>  # String: 'undefined' (String)
+==> 0000001d: <JStrictEqual>: <Addr8: 91, Reg8: 2, Reg8: 1>  # Address: 00000078
+==> 00000021: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000024: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
+==> 00000028: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 10385>  # String: 'TurboModuleRegistry' (Identifier)
+==> 0000002e: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 5, string_id: 50>  # String: 'get' (Identifier)
+==> 00000033: <LoadConstString>: <Reg8: 1, string_id: 3057>  # String: 'ExpoModulesCore' (String)
+==> 00000037: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000003c: <LoadConstNull>: <Reg8: 1>
+==> 0000003e: <JEqual>: <Addr8: 14, Reg8: 2, Reg8: 1>  # Address: 0000004c
+==> 00000042: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 6, string_id: 17915>  # String: 'installModules' (Identifier)
+==> 00000048: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000004c: <Jmp>: <Addr8: 40>  # Address: 00000074
+==> 0000004e: <Catch>: <Reg8: 4>
+==> 00000050: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 7, string_id: 99>  # String: 'console' (Identifier)
+==> 00000056: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 8, string_id: 134>  # String: 'error' (Identifier)
+==> 0000005b: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 9, string_id: 14>  # String: 'HermesInternal' (Identifier)
+==> 00000061: <GetByIdShort>: <Reg8: 3, Reg8: 0, UInt8: 10, string_id: 96>  # String: 'concat' (Identifier)
+==> 00000066: <LoadConstString>: <Reg8: 0, string_id: 4216>  # String: 'Unable to install Expo modules: ' (String)
+==> 0000006a: <Call2>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 4>
+==> 0000006f: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000074: <LoadConstUndefined>: <Reg8: 0>
+==> 00000076: <Ret>: <Reg8: 0>
+==> 00000078: <LoadConstUndefined>: <Reg8: 0>
+==> 0000007a: <Ret>: <Reg8: 0>
+
+

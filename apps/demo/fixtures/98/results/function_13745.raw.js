@@ -29,7 +29,7 @@ async function _anon_0_parallelAwaitTest() {
     // CODE → addr:353 | <GetParentEnvironment>: <Reg8: 7, UInt8: 1>
     r7 = getParentEnvironment(1);
     // CODE → addr:356 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 7, UInt8: 0>
-    // USED → r10 = r7[0];
+    r10 = r7[0];
     // CODE → addr:360 | <Call2>: <Reg8: 12, Reg8: 10, Reg8: 11, Reg8: 5>
     r12 = r7[0].call(0, 1);
     // CODE → addr:365 | <NewArray>: <Reg8: 7, UInt16: 2>
@@ -37,7 +37,7 @@ async function _anon_0_parallelAwaitTest() {
     // CODE → addr:369 | <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 12, UInt8: 0>
     r7 = [r12];
     // CODE → addr:373 | <Call2>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 4>
-    r10 = r7[0].call(0, 2);
+    r10 = r10.call(0, 2);
     // CODE → addr:378 | <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 10, UInt8: 1>
     r7[1] = r10;
     // CODE → addr:382 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>

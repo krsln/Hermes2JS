@@ -1,0 +1,26 @@
+
+=> [Function #4122 "defaultPort" of 65 bytes]: 2 params, frame size=2, strict=1, exc handler=0, debug info=0  @ offset 0x00166215
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <LoadConstString>: <Reg8: 0, string_id: 4454>  # String: 'ftp' (String)
+==> 00000007: <JStrictEqual>: <Addr8: 53, Reg8: 0, Reg8: 1>  # Address: 0000003c
+==> 0000000b: <LoadConstString>: <Reg8: 0, string_id: 7764>  # String: 'http' (Identifier)
+==> 0000000f: <JStrictEqual>: <Addr8: 40, Reg8: 0, Reg8: 1>  # Address: 00000037
+==> 00000013: <LoadConstString>: <Reg8: 0, string_id: 3663>  # String: 'ws' (String)
+==> 00000017: <JStrictEqual>: <Addr8: 32, Reg8: 0, Reg8: 1>  # Address: 00000037
+==> 0000001b: <LoadConstString>: <Reg8: 0, string_id: 7765>  # String: 'https' (Identifier)
+==> 0000001f: <JStrictEqual>: <Addr8: 16, Reg8: 0, Reg8: 1>  # Address: 0000002f
+==> 00000023: <LoadConstString>: <Reg8: 0, string_id: 2595>  # String: 'wss' (String)
+==> 00000027: <JStrictEqual>: <Addr8: 8, Reg8: 0, Reg8: 1>  # Address: 0000002f
+==> 0000002b: <LoadConstNull>: <Reg8: 0>
+==> 0000002d: <Ret>: <Reg8: 0>
+==> 0000002f: <LoadConstInt>: <Reg8: 0, Imm32: 443>
+==> 00000035: <Ret>: <Reg8: 0>
+==> 00000037: <LoadConstUInt8>: <Reg8: 0, UInt8: 80>
+==> 0000003a: <Ret>: <Reg8: 0>
+==> 0000003c: <LoadConstUInt8>: <Reg8: 0, UInt8: 21>
+==> 0000003f: <Ret>: <Reg8: 0>
+
+

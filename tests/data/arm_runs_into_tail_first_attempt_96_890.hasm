@@ -1,0 +1,22 @@
+
+=> [Function #890 "requireModule" of 49 bytes]: 2 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x00109b1a
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000003: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000006: <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 2>
+==> 0000000a: <LoadConstNull>: <Reg8: 2>
+==> 0000000c: <JEqual>: <Addr8: 19, Reg8: 0, Reg8: 2>  # Address: 0000001f
+==> 00000010: <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>
+==> 00000014: <LoadConstUndefined>: <Reg8: 0>
+==> 00000016: <Call2>: <Reg8: 0, Reg8: 4, Reg8: 0, Reg8: 3>
+==> 0000001b: <JNotEqual>: <Addr8: 20, Reg8: 0, Reg8: 2>  # Address: 0000002f
+==> 0000001f: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 1>
+==> 00000023: <GetByVal>: <Reg8: 1, Reg8: 1, Reg8: 3>
+==> 00000027: <JNotEqual>: <Addr8: 6, Reg8: 1, Reg8: 2>  # Address: 0000002d
+==> 0000002b: <Ret>: <Reg8: 2>
+==> 0000002d: <Ret>: <Reg8: 1>
+==> 0000002f: <Ret>: <Reg8: 0>
+
+

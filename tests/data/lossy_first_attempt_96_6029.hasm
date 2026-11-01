@@ -1,0 +1,53 @@
+
+=> [Function #6029 "?anon_0_" of 180 bytes]: 2 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x00193a05
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <LoadParam>: <Reg8: 4, UInt8: 1>
+==> 00000004: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000007: <JmpTrueLong>: <Addr32: 170, Reg8: 1>  # Address: 000000b1
+==> 0000000d: <GetById>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 14132>  # String: 'persist' (Identifier)
+==> 00000013: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 4>
+==> 00000017: <GetEnvironment>: <Reg8: 2, UInt8: 2>
+==> 0000001a: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
+==> 0000001e: <GetById>: <Reg8: 1, Reg8: 3, UInt8: 2, string_id: 11618>  # String: '_frame' (Identifier)
+==> 00000024: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 177>  # String: 'nativeEvent' (Identifier)
+==> 00000029: <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 4, string_id: 64>  # String: 'layout' (Identifier)
+==> 0000002e: <PutById>: <Reg8: 3, Reg8: 5, UInt8: 1, string_id: 11618>  # String: '_frame' (Identifier)
+==> 00000034: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 15561>  # String: '_initialFrameHeight' (Identifier)
+==> 0000003a: <JmpTrue>: <Addr8: 24, Reg8: 3>  # Address: 00000052
+==> 0000003d: <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 0>
+==> 00000041: <GetById>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 11618>  # String: '_frame' (Identifier)
+==> 00000047: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 6, string_id: 17>  # String: 'height' (Identifier)
+==> 0000004c: <PutById>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 15561>  # String: '_initialFrameHeight' (Identifier)
+==> 00000052: <JmpFalse>: <Addr8: 27, Reg8: 1>  # Address: 0000006d
+==> 00000055: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 17>  # String: 'height' (Identifier)
+==> 0000005a: <LoadFromEnvironment>: <Reg8: 1, Reg8: 2, UInt8: 0>
+==> 0000005e: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 11618>  # String: '_frame' (Identifier)
+==> 00000064: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 17>  # String: 'height' (Identifier)
+==> 00000069: <JStrictEqual>: <Addr8: 28, Reg8: 3, Reg8: 1>  # Address: 00000085
+==> 0000006d: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
+==> 00000071: <GetById>: <Reg8: 1, Reg8: 3, UInt8: 7, string_id: 15845>  # String: '_updateBottomIfNecessary' (Identifier)
+==> 00000077: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 3>
+==> 0000007b: <SaveGenerator>: <Addr8: 4>  # Address: 0000007f
+==> 0000007d: <Ret>: <Reg8: 1>
+==> 0000007f: <ResumeGenerator>: <Reg8: 1, Reg8: 3>
+==> 00000082: <JmpTrue>: <Addr8: 44, Reg8: 3>  # Address: 000000ae
+==> 00000085: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
+==> 00000089: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 8, string_id: 204>  # String: 'props' (Identifier)
+==> 0000008e: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 9, string_id: 186>  # String: 'onLayout' (Identifier)
+==> 00000093: <JmpFalse>: <Addr8: 22, Reg8: 3>  # Address: 000000a9
+==> 00000096: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
+==> 0000009a: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 8, string_id: 204>  # String: 'props' (Identifier)
+==> 0000009f: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 9, string_id: 186>  # String: 'onLayout' (Identifier)
+==> 000000a4: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
+==> 000000a9: <LoadConstUndefined>: <Reg8: 2>
+==> 000000ab: <CompleteGenerator>: <>
+==> 000000ac: <Ret>: <Reg8: 2>
+==> 000000ae: <CompleteGenerator>: <>
+==> 000000af: <Ret>: <Reg8: 1>
+==> 000000b1: <CompleteGenerator>: <>
+==> 000000b2: <Ret>: <Reg8: 0>
+
+

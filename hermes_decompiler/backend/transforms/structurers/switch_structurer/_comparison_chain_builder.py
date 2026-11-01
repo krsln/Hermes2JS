@@ -6,7 +6,9 @@ from hermes_decompiler.backend.regions import (
     SwitchCase,
     SwitchRegion,
 )
+from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.ir.Operators import BinaryOperator
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorReturn, TerminatorThrow
 from hermes_decompiler.ir.expressions import BinaryExpression, Expression
 from hermes_decompiler.ir.expressions.Literals import Literal
 
@@ -59,6 +61,9 @@ class _ComparisonChainSwitchBuilder:
         self.graph = graph
 
     def try_build(self, region: SequenceRegion, root: IfRegion, min_cases: int) -> bool:
+        self._pending_peels = []
+        self._tail = []
+        self._tail_may_follow = bool(region.children) and region.children[-1] is root
         chain = self._match_chain(root)
 
         if chain is None:
@@ -66,8 +71,17 @@ class _ComparisonChainSwitchBuilder:
 
         discriminant, cases, default_body = chain
 
+        # Before the length check: the tests behind an inverted label (`Set !== r4`) are
+        # more cases of this very chain, and `Map`/`Set` sharing one body count once
+        # (96/777: `Map`, `Set` -> `Array.from`, then `Arguments`).
+        default_body = self._absorb_nested_chain(discriminant, cases, default_body)
+
         if len(cases) < min_cases:
             return False
+
+        for body, remaining in self._pending_peels:
+            body.children[:] = remaining
+            body.invalidate_coverage()
 
         switch_region = SwitchRegion(discriminant)
         for tests, body in cases:
@@ -76,6 +90,12 @@ class _ComparisonChainSwitchBuilder:
             switch_region.default_body = default_body
 
         self.graph.replace(root, switch_region)
+
+        if self._tail:
+            at = region.children.index(switch_region) + 1
+            region.children[at:at] = self._tail
+            region.invalidate_coverage()
+
         return True
 
     # -------------------------------------------------------------
@@ -200,7 +220,9 @@ class _ComparisonChainSwitchBuilder:
         # the else-arm is empty / transparent.
         if is_empty_or_transparent_body(current.else_body):
             cases[-1][0].append(extra_value)
-            return discriminant, cases, current.then_body
+            return discriminant, cases, self._peel_shared_jumps(
+                current.then_body, discriminant, cases
+            )
 
         # Symmetric shape: then empty, else is the real default.
         if is_empty_or_transparent_body(current.then_body):
@@ -246,7 +268,135 @@ class _ComparisonChainSwitchBuilder:
 
         _, extra_value = inv
         cases[-1][0].append(extra_value)
-        return residual.then_body
+        return self._peel_shared_jumps(residual.then_body, discriminant, cases)
+
+    def _peel_shared_jumps(self, default_body, discriminant, cases: list):
+        """Fold leading `if (C === disc) goto <last case body>` tests.
+
+        When three or more labels share one body, the last labels'
+        tests stay behind as raw conditional branches at the head of
+        the default arm. Each one that jumps to the last case's entry
+        block is another label of that case: move `C` into its test
+        list and drop the branch block.
+        """
+        if not isinstance(default_body, SequenceRegion) or not cases:
+            return default_body
+
+        entry = self._entry_address(cases[-1][1])
+        if entry is None:
+            return default_body
+
+        children = list(default_body.children)
+        peeled = False
+        while children:
+            block = children[0]
+            if not isinstance(block, BasicBlock):
+                break
+            terminator = block.terminator
+            if not isinstance(terminator, TerminatorConditionalBranch):
+                break
+            if terminator.target != entry:
+                break
+            if any(
+                    i.statement is not None or i.terminator is not terminator
+                    and i.terminator is not None
+                    for i in block.instructions
+            ):
+                break
+            parsed = self._parse_test(terminator.condition, discriminant, _EQUALITY_OPERATORS)
+            if parsed is None:
+                break
+            cases[-1][0].append(parsed[1])
+            children.pop(0)
+            peeled = True
+
+        if not peeled:
+            return default_body
+
+        # Applied by `try_build` only once the switch is really built:
+        # a chain that turns out too short must leave the region intact.
+        self._pending_peels.append((default_body, children))
+        return default_body
+
+    def _absorb_nested_chain(self, discriminant, cases: list, default_body):
+        """Continue the switch through a `default` that is another test chain.
+
+        A chain broken by an inverted label (`if (ws !== d) { ...rest }`) leaves
+        the remaining tests in `default`. On their own they may be too short to
+        become a `switch` (`https`/`wss` share one body), and the shared label's
+        jump is then lost. Joined to this chain they are just more cases.
+        """
+        if not isinstance(default_body, SequenceRegion):
+            return default_body
+
+        meaningful = [c for c in default_body.children if not is_transparent(c)]
+        tail = []
+
+        if (
+                len(meaningful) > 1
+                and isinstance(meaningful[0], IfRegion)
+                and all(isinstance(c, BasicBlock) for c in meaningful[1:])
+                and self._tail_may_follow
+                and all(self._leaves(body) for _, body in cases)
+        ):
+            # The code every arm of the inner chain runs on into (a return the
+            # duplication gave each path, 96/777): it follows the `switch` once the
+            # earlier cases all leave the function themselves.
+            tail = default_body.children[default_body.children.index(meaningful[0]) + 1:]
+            meaningful = meaningful[:1]
+
+        if len(meaningful) != 1 or not isinstance(meaningful[0], IfRegion):
+            return default_body
+
+        outer_peels = self._pending_peels
+        self._pending_peels = []
+        inner = self._match_chain(meaningful[0])
+        inner_peels = self._pending_peels
+        self._pending_peels = outer_peels
+
+        if inner is None:
+            return default_body
+
+        inner_discriminant, inner_cases, inner_default = inner
+
+        if (
+                not inner_cases
+                or inner_discriminant is None
+                or not inner_discriminant.structurally_equal(discriminant)
+        ):
+            return default_body
+
+        self._pending_peels.extend(inner_peels)
+        self._tail = tail
+
+        for tests, body in inner_cases:
+            if same_body(cases[-1][1], body):
+                cases[-1][0].extend(tests)
+            else:
+                cases.append((tests, body))
+
+        return inner_default
+
+    @staticmethod
+    def _leaves(body) -> bool:
+        """Does the body end in a `return` / `throw`?"""
+        probe = body
+
+        while isinstance(probe, SequenceRegion) and probe.children:
+            probe = probe.children[-1]
+
+        return isinstance(probe, BasicBlock) and isinstance(probe.terminator, (TerminatorReturn, TerminatorThrow))
+
+    @staticmethod
+    def _entry_address(body):
+        probe = body
+        while isinstance(probe, SequenceRegion) and probe.children:
+            probe = probe.children[0]
+        if isinstance(probe, BasicBlock):
+            return probe.address
+        if hasattr(probe, "covered_blocks") and probe.covered_blocks:
+            return min(probe.covered_blocks, key=lambda blk: blk.id).address
+        return None
 
     # -------------------------------------------------------------
     # Condition parsing

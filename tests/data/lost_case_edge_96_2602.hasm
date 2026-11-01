@@ -1,0 +1,146 @@
+
+=> [Function #2602 "insertOrAppendPlacementNode" of 596 bytes]: 4 params, frame size=27, strict=1, exc handler=0, debug info=0  @ offset 0x001424b4
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 3, UInt8: 2>
+==> 00000006: <LoadParam>: <Reg8: 2, UInt8: 3>
+==> 00000009: <GetByIdShort>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 187>  # String: 'tag' (Identifier)
+==> 0000000e: <LoadConstUInt8>: <Reg8: 1, UInt8: 5>
+==> 00000011: <JStrictEqual>: <Addr8: 90, Reg8: 1, Reg8: 4>  # Address: 0000006b
+==> 00000015: <LoadConstUInt8>: <Reg8: 1, UInt8: 6>
+==> 00000018: <JStrictEqual>: <Addr8: 83, Reg8: 1, Reg8: 4>  # Address: 0000006b
+==> 0000001c: <LoadConstUInt8>: <Reg8: 1, UInt8: 4>
+==> 0000001f: <JStrictEqualLong>: <Addr32: 561, Reg8: 1, Reg8: 4>  # Address: 00000250
+==> 00000026: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 87>  # String: 'child' (Identifier)
+==> 0000002b: <LoadConstNull>: <Reg8: 6>
+==> 0000002d: <JStrictEqualLong>: <Addr32: 547, Reg8: 6, Reg8: 1>  # Address: 00000250
+==> 00000034: <GetEnvironment>: <Reg8: 5, UInt8: 0>
+==> 00000037: <LoadFromEnvironmentL>: <Reg8: 7, Reg8: 5, UInt16: 437>
+==> 0000003c: <LoadConstUndefined>: <Reg8: 4>
+==> 0000003e: <Call4>: <Reg8: 7, Reg8: 7, Reg8: 4, Reg8: 1, Reg8: 3, Reg8: 2>
+==> 00000045: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 225>  # String: 'sibling' (Identifier)
+==> 0000004a: <JStrictEqualLong>: <Addr32: 518, Reg8: 6, Reg8: 1>  # Address: 00000250
+==> 00000051: <LoadFromEnvironmentL>: <Reg8: 7, Reg8: 5, UInt16: 437>
+==> 00000056: <Call4>: <Reg8: 7, Reg8: 7, Reg8: 4, Reg8: 1, Reg8: 3, Reg8: 2>
+==> 0000005d: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 225>  # String: 'sibling' (Identifier)
+==> 00000062: <JStrictNotEqual>: <Addr8: -17, Reg8: 6, Reg8: 1>  # Address: 00000051
+==> 00000066: <JmpLong>: <Addr32: 490>  # Address: 00000250
+==> 0000006b: <GetByIdShort>: <Reg8: 6, Reg8: 0, UInt8: 4, string_id: 234>  # String: 'stateNode' (Identifier)
+==> 00000070: <JmpTrueLong>: <Addr32: 243, Reg8: 3>  # Address: 00000163
+==> 00000076: <LoadConstString>: <Reg8: 4, string_id: 7552>  # String: 'number' (Identifier)
+==> 0000007a: <TypeOf>: <Reg8: 0, Reg8: 6>
+==> 0000007d: <Mov>: <Reg8: 1, Reg8: 6>
+==> 00000080: <JStrictEqual>: <Addr8: 9, Reg8: 4, Reg8: 0>  # Address: 00000089
+==> 00000084: <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 5, string_id: 54>  # String: '_nativeTag' (Identifier)
+==> 00000089: <GetById>: <Reg8: 0, Reg8: 2, UInt8: 6, string_id: 8987>  # String: '_children' (Identifier)
+==> 0000008f: <GetByIdShort>: <Reg8: 4, Reg8: 0, UInt8: 7, string_id: 162>  # String: 'indexOf' (Identifier)
+==> 00000094: <Call2>: <Reg8: 4, Reg8: 4, Reg8: 0, Reg8: 6>
+==> 00000099: <LoadConstZero>: <Reg8: 5>
+==> 0000009b: <JLessEqual>: <Addr8: 96, Reg8: 5, Reg8: 4>  # Address: 000000fb
+==> 0000009f: <GetByIdShort>: <Reg8: 5, Reg8: 0, UInt8: 8, string_id: 207>  # String: 'push' (Identifier)
+==> 000000a4: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 0, Reg8: 6>
+==> 000000a9: <GetEnvironment>: <Reg8: 5, UInt8: 0>
+==> 000000ac: <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 0>
+==> 000000b0: <GetById>: <Reg8: 12, Reg8: 5, UInt8: 9, string_id: 8880>  # String: 'UIManager' (Identifier)
+==> 000000b6: <GetById>: <Reg8: 11, Reg8: 12, UInt8: 10, string_id: 18109>  # String: 'manageChildren' (Identifier)
+==> 000000bc: <GetByIdShort>: <Reg8: 19, Reg8: 2, UInt8: 5, string_id: 54>  # String: '_nativeTag' (Identifier)
+==> 000000c1: <NewArray>: <Reg8: 9, UInt16: 1>
+==> 000000c5: <PutOwnByIndex>: <Reg8: 9, Reg8: 1, UInt8: 0>
+==> 000000c9: <GetByIdShort>: <Reg8: 5, Reg8: 0, UInt8: 11, string_id: 169>  # String: 'length' (Identifier)
+==> 000000ce: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 000000d1: <Sub>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 000000d5: <NewArray>: <Reg8: 8, UInt16: 1>
+==> 000000d9: <PutOwnByIndex>: <Reg8: 8, Reg8: 1, UInt8: 0>
+==> 000000dd: <NewArray>: <Reg8: 18, UInt16: 0>
+==> 000000e1: <NewArray>: <Reg8: 17, UInt16: 0>
+==> 000000e5: <NewArray>: <Reg8: 14, UInt16: 0>
+==> 000000e9: <Mov>: <Reg8: 20, Reg8: 12>
+==> 000000ec: <Mov>: <Reg8: 16, Reg8: 9>
+==> 000000ef: <Mov>: <Reg8: 15, Reg8: 8>
+==> 000000f2: <Call>: <Reg8: 1, Reg8: 11, UInt8: 7>
+==> 000000f6: <JmpLong>: <Addr32: 346>  # Address: 00000250
+==> 000000fb: <GetById>: <Reg8: 5, Reg8: 0, UInt8: 12, string_id: 13199>  # String: 'splice' (Identifier)
+==> 00000101: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 00000104: <Call3>: <Reg8: 5, Reg8: 5, Reg8: 0, Reg8: 4, Reg8: 1>
+==> 0000010a: <GetByIdShort>: <Reg8: 5, Reg8: 0, UInt8: 8, string_id: 207>  # String: 'push' (Identifier)
+==> 0000010f: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 0, Reg8: 6>
+==> 00000114: <GetEnvironment>: <Reg8: 5, UInt8: 0>
+==> 00000117: <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 0>
+==> 0000011b: <GetById>: <Reg8: 10, Reg8: 5, UInt8: 9, string_id: 8880>  # String: 'UIManager' (Identifier)
+==> 00000121: <GetById>: <Reg8: 9, Reg8: 10, UInt8: 10, string_id: 18109>  # String: 'manageChildren' (Identifier)
+==> 00000127: <GetByIdShort>: <Reg8: 19, Reg8: 2, UInt8: 5, string_id: 54>  # String: '_nativeTag' (Identifier)
+==> 0000012c: <NewArray>: <Reg8: 7, UInt16: 1>
+==> 00000130: <PutOwnByIndex>: <Reg8: 7, Reg8: 4, UInt8: 0>
+==> 00000134: <GetByIdShort>: <Reg8: 0, Reg8: 0, UInt8: 11, string_id: 169>  # String: 'length' (Identifier)
+==> 00000139: <Sub>: <Reg8: 0, Reg8: 0, Reg8: 1>
+==> 0000013d: <NewArray>: <Reg8: 5, UInt16: 1>
+==> 00000141: <PutOwnByIndex>: <Reg8: 5, Reg8: 0, UInt8: 0>
+==> 00000145: <NewArray>: <Reg8: 16, UInt16: 0>
+==> 00000149: <NewArray>: <Reg8: 15, UInt16: 0>
+==> 0000014d: <NewArray>: <Reg8: 14, UInt16: 0>
+==> 00000151: <Mov>: <Reg8: 20, Reg8: 10>
+==> 00000154: <Mov>: <Reg8: 18, Reg8: 7>
+==> 00000157: <Mov>: <Reg8: 17, Reg8: 5>
+==> 0000015a: <Call>: <Reg8: 0, Reg8: 9, UInt8: 7>
+==> 0000015e: <JmpLong>: <Addr32: 242>  # Address: 00000250
+==> 00000163: <GetById>: <Reg8: 5, Reg8: 2, UInt8: 6, string_id: 8987>  # String: '_children' (Identifier)
+==> 00000169: <GetByIdShort>: <Reg8: 0, Reg8: 5, UInt8: 7, string_id: 162>  # String: 'indexOf' (Identifier)
+==> 0000016e: <Call2>: <Reg8: 1, Reg8: 0, Reg8: 5, Reg8: 6>
+==> 00000173: <LoadConstZero>: <Reg8: 4>
+==> 00000175: <JLessEqual>: <Addr8: 116, Reg8: 4, Reg8: 1>  # Address: 000001e9
+==> 00000179: <GetByIdShort>: <Reg8: 0, Reg8: 5, UInt8: 7, string_id: 162>  # String: 'indexOf' (Identifier)
+==> 0000017e: <Call2>: <Reg8: 0, Reg8: 0, Reg8: 5, Reg8: 3>
+==> 00000183: <GetById>: <Reg8: 7, Reg8: 5, UInt8: 12, string_id: 13199>  # String: 'splice' (Identifier)
+==> 00000189: <Call4>: <Reg8: 7, Reg8: 7, Reg8: 5, Reg8: 0, Reg8: 4, Reg8: 6>
+==> 00000190: <GetEnvironment>: <Reg8: 7, UInt8: 0>
+==> 00000193: <LoadFromEnvironment>: <Reg8: 7, Reg8: 7, UInt8: 0>
+==> 00000197: <GetById>: <Reg8: 13, Reg8: 7, UInt8: 9, string_id: 8880>  # String: 'UIManager' (Identifier)
+==> 0000019d: <GetById>: <Reg8: 12, Reg8: 13, UInt8: 10, string_id: 18109>  # String: 'manageChildren' (Identifier)
+==> 000001a3: <GetByIdShort>: <Reg8: 11, Reg8: 2, UInt8: 5, string_id: 54>  # String: '_nativeTag' (Identifier)
+==> 000001a8: <LoadConstString>: <Reg8: 9, string_id: 7552>  # String: 'number' (Identifier)
+==> 000001ac: <TypeOf>: <Reg8: 8, Reg8: 6>
+==> 000001af: <Mov>: <Reg8: 7, Reg8: 6>
+==> 000001b2: <JStrictEqual>: <Addr8: 9, Reg8: 9, Reg8: 8>  # Address: 000001bb
+==> 000001b6: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 5, string_id: 54>  # String: '_nativeTag' (Identifier)
+==> 000001bb: <NewArray>: <Reg8: 10, UInt16: 1>
+==> 000001bf: <PutOwnByIndex>: <Reg8: 10, Reg8: 7, UInt8: 0>
+==> 000001c3: <NewArray>: <Reg8: 9, UInt16: 1>
+==> 000001c7: <PutOwnByIndex>: <Reg8: 9, Reg8: 0, UInt8: 0>
+==> 000001cb: <NewArray>: <Reg8: 18, UInt16: 0>
+==> 000001cf: <NewArray>: <Reg8: 17, UInt16: 0>
+==> 000001d3: <NewArray>: <Reg8: 14, UInt16: 0>
+==> 000001d7: <Mov>: <Reg8: 20, Reg8: 13>
+==> 000001da: <Mov>: <Reg8: 19, Reg8: 11>
+==> 000001dd: <Mov>: <Reg8: 16, Reg8: 10>
+==> 000001e0: <Mov>: <Reg8: 15, Reg8: 9>
+==> 000001e3: <Call>: <Reg8: 0, Reg8: 12, UInt8: 7>
+==> 000001e7: <Jmp>: <Addr8: 105>  # Address: 00000250
+==> 000001e9: <GetById>: <Reg8: 7, Reg8: 5, UInt8: 12, string_id: 13199>  # String: 'splice' (Identifier)
+==> 000001ef: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 000001f2: <Call3>: <Reg8: 0, Reg8: 7, Reg8: 5, Reg8: 1, Reg8: 0>
+==> 000001f8: <GetByIdShort>: <Reg8: 0, Reg8: 5, UInt8: 7, string_id: 162>  # String: 'indexOf' (Identifier)
+==> 000001fd: <Call2>: <Reg8: 0, Reg8: 0, Reg8: 5, Reg8: 3>
+==> 00000202: <GetById>: <Reg8: 3, Reg8: 5, UInt8: 12, string_id: 13199>  # String: 'splice' (Identifier)
+==> 00000208: <Call4>: <Reg8: 3, Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 4, Reg8: 6>
+==> 0000020f: <GetEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000212: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 0>
+==> 00000216: <GetById>: <Reg8: 7, Reg8: 3, UInt8: 9, string_id: 8880>  # String: 'UIManager' (Identifier)
+==> 0000021c: <GetById>: <Reg8: 6, Reg8: 7, UInt8: 10, string_id: 18109>  # String: 'manageChildren' (Identifier)
+==> 00000222: <GetByIdShort>: <Reg8: 19, Reg8: 2, UInt8: 5, string_id: 54>  # String: '_nativeTag' (Identifier)
+==> 00000227: <NewArray>: <Reg8: 4, UInt16: 1>
+==> 0000022b: <PutOwnByIndex>: <Reg8: 4, Reg8: 1, UInt8: 0>
+==> 0000022f: <NewArray>: <Reg8: 3, UInt16: 1>
+==> 00000233: <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 0>
+==> 00000237: <NewArray>: <Reg8: 16, UInt16: 0>
+==> 0000023b: <NewArray>: <Reg8: 15, UInt16: 0>
+==> 0000023f: <NewArray>: <Reg8: 14, UInt16: 0>
+==> 00000243: <Mov>: <Reg8: 20, Reg8: 7>
+==> 00000246: <Mov>: <Reg8: 18, Reg8: 4>
+==> 00000249: <Mov>: <Reg8: 17, Reg8: 3>
+==> 0000024c: <Call>: <Reg8: 0, Reg8: 6, UInt8: 7>
+==> 00000250: <LoadConstUndefined>: <Reg8: 0>
+==> 00000252: <Ret>: <Reg8: 0>
+
+

@@ -11,10 +11,11 @@ from hermes_decompiler.backend.transforms.shared import negate_condition, is_loo
 from hermes_decompiler.backend.transforms.structurers import RegionStructurer
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral
-from hermes_decompiler.ir.Operators import BinaryOperator
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
-from ._predicates import is_backward_branch, is_constant_comparison, representative_block
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorReturn
+from ._predicates import (
+    is_backward_branch, is_constant_comparison, is_typeof_test, representative_block, same_case_subject,
+    same_constant_test,
+)
 
 logger = get_logger(__name__)
 
@@ -236,6 +237,14 @@ class _DominanceIfBuilder(RegionStructurer):
 
         goto_block = self._address_to_block.get(branch.target)
 
+        if goto_block is not None and merge_block is goto_block and self._leaves_its_loop(block, goto_block):
+            # `if (x < 0) goto RET; ...rest` in a loop body, RET behind the loop: as
+            # `if (!(x < 0)) { rest }` the body would simply end and the loop go on.
+            # `LoopBreakStructurer` takes such an exit when it owns the target; a shared
+            # `return` it does not own (96/4123: `if (n < 0 || n > 255) return null`)
+            # stays a branch, and the attempt with private return copies has it.
+            return False
+
         if merge_block is None and goto_block is not None and not isinstance(then_root, BasicBlock):
             # Post-dominance can legitimately come back empty when the
             # fallthrough side contains its own internal dead-end with
@@ -290,6 +299,71 @@ class _DominanceIfBuilder(RegionStructurer):
                         getattr(self.cfg, "duplicated_returns", False)
                         and merge_block is None
                         and self._arm_tests_into(then_entry, goto_block)
+                )
+                or (
+                        # `if (a) { if (b) return x; else goto tail } tail`: the arm's
+                        # own test jumps to the code the outer branch skips to, and
+                        # that code goes on (no exit block): it is the join.
+                        merge_block is None
+                        and goto_block.successors
+                        and not self._reaches_itself(then_entry)
+                        and (
+                                self._arm_tests_into(then_entry, goto_block)
+                                or self._arm_runs_into(then_entry, goto_block, block)
+                        )
+                )
+                or (
+                        # `if (a) { ...; x(); } return null` where the branch skips to a
+                        # shared `return` and the arm's last block runs on into it: the
+                        # `return` follows the `if`; as an `else` arm it would leave the
+                        # arm's end without it.
+                        merge_block is None
+                        and not goto_block.successors
+                        and isinstance(goto_block.terminator, TerminatorReturn)
+                        and self._arm_runs_into(then_entry, goto_block, block, outside_loops=True)
+                )
+                or (
+                        # `if (n > 0) { for (...) { ... } } tail`: the loop the guard
+                        # skips ends into the very code the guard jumps to (its exit
+                        # edge is the one of `tail`), so `tail` follows the `if`.
+                        # Other exits of the loop (a `return`, a `break` elsewhere)
+                        # make the post-dominator a later block, which hides it.
+                        isinstance(then_root, LoopRegion)
+                        and goto_block.successors
+                        and self._arm_runs_into_after_loop(then_entry, goto_block, block)
+                )
+                or (
+                        # `if (a) goto T; ...; if (b) goto T; return x; T: <body>; return y`: the arm's
+                        # last test jumps to the branch target and falls into a lone `return`; the
+                        # body follows the `if` (96/8976: the `typeof r === "number"` re-test).
+                        merge_block is None
+                        and isinstance(goto_block.terminator, TerminatorReturn)
+                        and goto_block.instructions
+                        and self._arm_tests_into_past_a_return(then_entry, goto_block, branch.condition)
+                )
+                or (
+                        # Only once the shared returns were copied (a retry): the arm's other exits
+                        # are real `return`s then, so an arm that runs on into the branch target
+                        # leaves the target after the `if`, not in an `else` arm that would print it
+                        # on the branch's own path only (98/10128, 96/11046: the loop tail entered by
+                        # the `is()` test and fallen into by the last check).
+                        (
+                                not is_constant_comparison(branch.condition)
+                                or self._arm_retests_constant(then_entry, goto_block, branch.condition)
+                        )
+                        and goto_block.successors
+                        and self._arm_falls_into(
+                    then_entry, goto_block, block,
+                    exits_must_return=not getattr(self.cfg, "duplicated_returns", False),
+                )
+                )
+                or (
+                        # `if (a) { if (b) return x; } tail`: the arm's guard
+                        # falls through into the very code the outer branch
+                        # jumps to, which only ends the function, so no
+                        # post-dominator exists to say it is a join.
+                        merge_block is None
+                        and self._arm_guard_falls_into(region, then_entry, goto_block, block)
                 )
         )
                 and any(
@@ -444,6 +518,226 @@ class _DominanceIfBuilder(RegionStructurer):
             for pred in goto_block.predecessors
         )
 
+    def _arm_retests_constant(self, then_entry: BasicBlock, goto_block: BasicBlock, condition) -> bool:
+        """True if a test inside the fallthrough arm compares the same value with the SAME constant as
+        `condition` and falls into `goto_block` (`if (0 !== r6) goto T; ...; r6 = f(); if (0 === r6) ...; T:`), or
+        if `condition` is a `typeof` test and the arm's test is of anything else."""
+        dominators = self.cfg.dominator_tree
+
+        return any(
+            isinstance(pred.terminator, TerminatorConditionalBranch)
+            and pred.terminator.target != goto_block.address
+            and dominators.dominates(then_entry, pred)
+            and (
+                    same_constant_test(condition, pred.terminator.condition)
+                    # `typeof x !== "object"` is a kind test, never a `case` label: any other test of the arm
+                    # that falls into the target makes the target the join (98/4239 `keyExtractor`).
+                    or (is_typeof_test(condition) and not same_case_subject(condition, pred.terminator.condition))
+            )
+            for pred in goto_block.predecessors
+        )
+
+    def _arm_tests_into_past_a_return(self, then_entry: BasicBlock, goto_block: BasicBlock, condition) -> bool:
+        """True if a test inside the fallthrough arm jumps to `goto_block` and falls into a lone `return`."""
+        dominators = self.cfg.dominator_tree
+
+        return any(
+            isinstance(pred.terminator, TerminatorConditionalBranch)
+            and pred.terminator.target == goto_block.address
+            and dominators.dominates(then_entry, pred)
+            # Two tests of ONE subject against constants are the labels of a `switch`.
+            and not same_case_subject(condition, pred.terminator.condition)
+            and any(
+                s is not goto_block and self._is_lone_return(s.address)
+                for s in pred.successors
+            )
+            for pred in goto_block.predecessors
+        )
+
+    def _arm_falls_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock,
+                        exits_must_return: bool = False) -> bool:
+        """True if a block of the fallthrough arm falls through into `goto_block` (a plain block, or a
+        test whose taken edge goes elsewhere).
+
+        `exits_must_return`: without copied returns, only a test whose taken edge is a lone `return`
+        counts, and only the arm's first block (96/890: `if (a) goto T; r0 = f(); if (r0 != null) return r0; T: ...`)."""
+        dominators = self.cfg.dominator_tree
+        return any(
+            pred is not block
+            and (
+                    (pred.terminator is None and not exits_must_return)
+                    or (
+                            isinstance(pred.terminator, TerminatorConditionalBranch)
+                            and pred.terminator.target != goto_block.address
+                            and (
+                                    not exits_must_return
+                                    or (
+                                            (pred is then_entry or self._returns_privately(pred, then_entry,
+                                                                                           goto_block))
+                                            and self._is_lone_return(pred.terminator.target)
+                                            and min(x.address for x in pred.successors) == goto_block.address
+                                    )
+                            )
+                    )
+            )
+            and goto_block.address > pred.address
+            and dominators.dominates(then_entry, pred)
+            for pred in goto_block.predecessors
+        )
+
+    def _returns_privately(self, pred: BasicBlock, then_entry: BasicBlock, goto_block: BasicBlock) -> bool:
+        """The test's taken edge goes to a `return` nothing else reaches, and it is the ONLY way out of the
+        arm besides `goto_block` (96/5301: `x?.key != null` is three blocks into the arm, its `return x.key` is
+        its own).
+
+        An arm with more exits (96/4144: three returns, one at the arm's first block) is left to the retries
+        that copy the returns: the arm then took in the code after `goto_block` and the tail merge moved the
+        `return` of its first exit away, so the code ran on."""
+        dominators = self.cfg.dominator_tree
+        target = next((b for b in self.cfg.blocks if b.address == pred.terminator.target), None)
+
+        if target is None or list(target.predecessors) != [pred]:
+            return False
+
+        for block in self.cfg.blocks:
+            if block.address >= goto_block.address or not dominators.dominates(then_entry, block):
+                continue
+
+            for successor in block.successors:
+                if successor is goto_block or successor is target:
+                    continue
+
+                if dominators.dominates(then_entry, successor) and not self._is_lone_return(successor.address):
+                    continue
+
+                return False
+
+        return True
+
+    def _is_lone_return(self, address: int) -> bool:
+        target = next((b for b in self.cfg.blocks if b.address == address), None)
+
+        return (
+                target is not None
+                and not target.successors
+                and isinstance(target.terminator, TerminatorReturn)
+        )
+
+    def _arm_runs_into(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock,
+                       outside_loops: bool = False) -> bool:
+        """True if a plain block of the fallthrough arm runs on into `goto_block`
+        (`if (a) { ...; if (b) return; ...<runs into T> } T` with `a` jumping to `T`).
+
+        `outside_loops`: only blocks that are in no loop count (a loop's exits to a shared
+        `return` stay exits)."""
+        dominators = self.cfg.dominator_tree
+        loop_analysis = self.cfg.loop_analysis if outside_loops else None
+        loops = list(loop_analysis.loops.values()) if loop_analysis is not None else []
+        return any(
+            pred is not block
+            and pred.terminator is None
+            and dominators.dominates(then_entry, pred)
+            and not any(pred in loop.members for loop in loops)
+            for pred in goto_block.predecessors
+        )
+
+    def _leaves_its_loop(self, block: BasicBlock, target: BasicBlock) -> bool:
+        """Is `block` inside a loop (not its header test) and `target` outside it?"""
+        loop_analysis = self.cfg.loop_analysis
+
+        if loop_analysis is None:
+            return False
+
+        return any(
+            block in loop.members
+            and block is not loop.header
+            and target is not loop.header
+            and target not in loop.members
+            for loop in loop_analysis.loops.values()
+        )
+
+    def _arm_runs_into_after_loop(self, then_entry: BasicBlock, goto_block: BasicBlock, block: BasicBlock) -> bool:
+        """True if a block of the loop arm (its exit test) falls through into `goto_block`,
+        the code the guard `block` jumps over the loop to."""
+        dominators = self.cfg.dominator_tree
+        return any(
+            pred is not block
+            and isinstance(pred.terminator, TerminatorConditionalBranch)
+            and pred.terminator.target != goto_block.address
+            and dominators.dominates(then_entry, pred)
+            for pred in goto_block.predecessors
+        )
+
+    def _arm_guard_falls_into(self, region, then_entry: BasicBlock, goto_block: BasicBlock, region_block=None) -> bool:
+        """True if `goto_block` ends the function and a conditional branch
+        inside the fallthrough arm reaches it by falling through (its taken
+        edge goes elsewhere)."""
+        if goto_block.successors:
+            return False
+
+        # A loop's own exits and back edges are not guards (the exit would be
+        # taken for the loop's join): leave those to the loop structurers.
+        if self._reaches_itself(then_entry):
+            return False
+
+        dominators = self.cfg.dominator_tree
+
+        # No code of the arm may be laid out after the join: it would be left
+        # outside the `if` (the arm's own code resumes behind the exit block).
+        children = region.children
+
+        if goto_block in children:
+            for item in children[children.index(goto_block) + 1:]:
+                rep = representative_block(item)
+
+                if (
+                        rep is not None
+                        and rep.address >= 0
+                        and dominators.dominates(then_entry, rep)
+                        # a lone exit block is a guard's target, which
+                        # `GuardExitRegionPass` moves into its `if` afterwards
+                        and not (isinstance(item, BasicBlock) and not item.successors)
+                ):
+                    return False
+
+        return any(
+            (
+                # a guard whose taken edge goes elsewhere, or a plain block that
+                # runs on into the exit (`if (r5) return a; set(); <exit>`)
+                    (
+                            isinstance(pred.terminator, TerminatorConditionalBranch)
+                            and pred.terminator.target != goto_block.address
+                    )
+                    or (
+                            pred.terminator is None
+                            and pred is not region_block
+                            and isinstance(goto_block.terminator, TerminatorReturn)
+                    )
+            )
+            and dominators.dominates(then_entry, pred)
+            for pred in goto_block.predecessors
+        )
+
+    @staticmethod
+    def _reaches_itself(block: BasicBlock) -> bool:
+        """True if `block` lies on a CFG cycle (it is part of a loop)."""
+        seen: set = set()
+        stack = list(block.successors)
+
+        while stack:
+            current = stack.pop()
+
+            if current is block:
+                return True
+
+            if current in seen:
+                continue
+
+            seen.add(current)
+            stack.extend(current.successors)
+
+        return False
+
     @staticmethod
     def _arm_leaves_the_region(region, then_start: int, goto_block) -> bool:
         """True if a loop-exit marker (a synthetic `break`/`continue`
@@ -518,6 +812,11 @@ class _DominanceIfBuilder(RegionStructurer):
         # Conditional whose true edge is the merge (empty then).
         if isinstance(terminator, TerminatorConditionalBranch):
             if terminator.target != merge_block.address:
+                return
+            if any(succ is not merge_block for succ in last.successors):
+                # The false edge does not reach the merge either: it enters
+                # a block outside this arm (a tail shared with the sibling
+                # arm). Dropping the test would drop that path silently.
                 return
             # The false edge falls through; after stripping, the block
             # becomes a pure condition holder that higher-level folding

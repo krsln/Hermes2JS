@@ -96,7 +96,7 @@ def test_reader_after_the_if_names_the_register_not_a_copy_of_the_folded_arm():
     code = _code(_DEFAULT_PARAMETER_HASM, 15154)
 
     assert "r1 = param1 + r5;" in code
-    assert "r5 = (r3 === undefined) ? 10 : arguments[1];" in code
+    assert "r5 = r3 === undefined ? 10 : arguments[1];" in code
     assert "param1 + ((r3" not in code
 
 

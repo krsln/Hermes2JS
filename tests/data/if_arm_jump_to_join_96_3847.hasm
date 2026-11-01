@@ -1,0 +1,45 @@
+
+=> [Function #3847 "setStyleAttributePreprocessor" of 138 bytes]: 3 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x00160313
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 00000006: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000009: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 0>
+==> 0000000d: <GetByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
+==> 00000011: <LoadConstTrue>: <Reg8: 1>
+==> 00000013: <JStrictEqual>: <Addr8: 98, Reg8: 3, Reg8: 1>  # Address: 00000075
+==> 00000017: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 0>
+==> 0000001b: <GetByVal>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000001f: <TypeOf>: <Reg8: 3, Reg8: 1>
+==> 00000022: <LoadConstString>: <Reg8: 1, string_id: 7532>  # String: 'object' (Identifier)
+==> 00000026: <JStrictEqual>: <Addr8: 51, Reg8: 3, Reg8: 1>  # Address: 00000059
+==> 0000002a: <GetGlobalObject>: <Reg8: 1>
+==> 0000002c: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000032: <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 134>  # String: 'error' (Identifier)
+==> 00000037: <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 14>  # String: 'HermesInternal' (Identifier)
+==> 0000003d: <GetByIdShort>: <Reg8: 7, Reg8: 1, UInt8: 4, string_id: 96>  # String: 'concat' (Identifier)
+==> 00000042: <LoadConstString>: <Reg8: 6, string_id: 7163>  # String: '' (Identifier)
+==> 00000046: <LoadConstString>: <Reg8: 1, string_id: 793>  # String: ' is not a valid style attribute' (String)
+==> 0000004a: <Call3>: <Reg8: 1, Reg8: 7, Reg8: 6, Reg8: 2, Reg8: 1>
+==> 00000050: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 5, Reg8: 1>
+==> 00000055: <LoadConstUndefined>: <Reg8: 1>
+==> 00000057: <Ret>: <Reg8: 1>
+==> 00000059: <NewObject>: <Reg8: 1>
+==> 0000005b: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 0>
+==> 0000005f: <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 2>
+==> 00000063: <Mov>: <Reg8: 9, Reg8: 1>
+==> 00000066: <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 3>  # Built-in function: [#44 copyDataProperties]
+==> 0000006a: <LoadConstString>: <Reg8: 3, string_id: 202>  # String: 'process' (Identifier)
+==> 0000006e: <PutOwnByVal>: <Reg8: 1, Reg8: 4, Reg8: 3, UInt8: 1>
+==> 00000073: <Jmp>: <Addr8: 11>  # Address: 0000007e
+==> 00000075: <NewObject>: <Reg8: 3>
+==> 00000077: <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 4, string_id: 202>  # String: 'process' (Identifier)
+==> 0000007b: <Mov>: <Reg8: 1, Reg8: 3>
+==> 0000007e: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 0>
+==> 00000082: <PutByVal>: <Reg8: 0, Reg8: 2, Reg8: 1>
+==> 00000086: <LoadConstUndefined>: <Reg8: 0>
+==> 00000088: <Ret>: <Reg8: 0>
+
+

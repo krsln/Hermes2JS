@@ -1,0 +1,85 @@
+
+=> [Function #141 "fe" of 302 bytes]: 2 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x000fb176
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 4, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 2>
+==> 00000005: <LoadConstUndefined>: <Reg8: 5>
+==> 00000007: <GetArgumentsLength>: <Reg8: 1, Reg8: 5>
+==> 0000000a: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 0000000d: <Greater>: <Reg8: 6, Reg8: 1, Reg8: 0>
+==> 00000011: <LoadConstString>: <Reg8: 3, string_id: 8092>  # String: 'sync' (Identifier)
+==> 00000015: <Mov>: <Reg8: 1, Reg8: 3>
+==> 00000018: <JmpFalse>: <Addr8: 18, Reg8: 6>  # Address: 0000002a
+==> 0000001b: <GetArgumentsPropByVal>: <Reg8: 6, Reg8: 0, Reg8: 5>
+==> 0000001f: <Mov>: <Reg8: 1, Reg8: 3>
+==> 00000022: <JStrictEqual>: <Addr8: 8, Reg8: 6, Reg8: 2>  # Address: 0000002a
+==> 00000026: <GetArgumentsPropByVal>: <Reg8: 1, Reg8: 0, Reg8: 5>
+==> 0000002a: <GetArgumentsLength>: <Reg8: 6, Reg8: 5>
+==> 0000002d: <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
+==> 00000030: <Greater>: <Reg8: 6, Reg8: 6, Reg8: 0>
+==> 00000034: <LoadConstUndefined>: <Reg8: 7>
+==> 00000036: <JmpFalse>: <Addr8: 7, Reg8: 6>  # Address: 0000003d
+==> 00000039: <GetArgumentsPropByVal>: <Reg8: 7, Reg8: 0, Reg8: 5>
+==> 0000003d: <JStrictNotEqual>: <Addr8: 65, Reg8: 2, Reg8: 7>  # Address: 0000007e
+==> 00000041: <LoadConstString>: <Reg8: 0, string_id: 7467>  # String: 'async' (Identifier)
+==> 00000045: <JStrictEqual>: <Addr8: 33, Reg8: 0, Reg8: 1>  # Address: 00000066
+==> 00000049: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 0000004c: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 81>
+==> 00000050: <GetGlobalObject>: <Reg8: 0>
+==> 00000052: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 1, string_id: 37>  # String: 'Symbol' (Identifier)
+==> 00000058: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 2, string_id: 8913>  # String: 'iterator' (Identifier)
+==> 0000005e: <Call3>: <Reg8: 7, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 0>
+==> 00000064: <Jmp>: <Addr8: 26>  # Address: 0000007e
+==> 00000066: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000069: <LoadFromEnvironment>: <Reg8: 5, Reg8: 0, UInt8: 81>
+==> 0000006d: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 17>
+==> 00000071: <Call3>: <Reg8: 7, Reg8: 5, Reg8: 2, Reg8: 4, Reg8: 1>
+==> 00000077: <JStrictEqualLong>: <Addr32: 134, Reg8: 2, Reg8: 7>  # Address: 000000fd
+==> 0000007e: <JStrictEqual>: <Addr8: 93, Reg8: 2, Reg8: 7>  # Address: 000000db
+==> 00000082: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000085: <LoadFromEnvironment>: <Reg8: 6, Reg8: 1, UInt8: 50>
+==> 00000089: <NewArray>: <Reg8: 5, UInt16: 0>
+==> 0000008d: <Call4>: <Reg8: 5, Reg8: 6, Reg8: 2, Reg8: 7, Reg8: 4, Reg8: 5>
+==> 00000094: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 39>
+==> 00000098: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 5>
+==> 0000009d: <JmpTrue>: <Addr8: 37, Reg8: 1>  # Address: 000000c2
+==> 000000a0: <GetGlobalObject>: <Reg8: 1>
+==> 000000a2: <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 3, string_id: 42>  # String: 'TypeError' (Identifier)
+==> 000000a8: <GetByIdShort>: <Reg8: 1, Reg8: 7, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
+==> 000000ad: <CreateThis>: <Reg8: 6, Reg8: 1, Reg8: 7>
+==> 000000b1: <LoadConstString>: <Reg8: 10, string_id: 4050>  # String: 'The iterator method must return an object' (String)
+==> 000000b5: <Mov>: <Reg8: 11, Reg8: 6>
+==> 000000b8: <Construct>: <Reg8: 1, Reg8: 7, UInt8: 2>
+==> 000000bc: <SelectObject>: <Reg8: 1, Reg8: 6, Reg8: 1>
+==> 000000c0: <Throw>: <Reg8: 1>
+==> 000000c2: <NewObject>: <Reg8: 1>
+==> 000000c4: <PutNewOwnById>: <Reg8: 1, Reg8: 5, string_id: 8913>  # String: 'iterator' (Identifier)
+==> 000000c9: <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 5, string_id: 182>  # String: 'next' (Identifier)
+==> 000000ce: <PutNewOwnById>: <Reg8: 1, Reg8: 5, string_id: 17787>  # String: 'nextMethod' (Identifier)
+==> 000000d3: <LoadConstFalse>: <Reg8: 5>
+==> 000000d5: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 5, string_id: 121>  # String: 'done' (Identifier)
+==> 000000d9: <Ret>: <Reg8: 1>
+==> 000000db: <GetGlobalObject>: <Reg8: 1>
+==> 000000dd: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 3, string_id: 42>  # String: 'TypeError' (Identifier)
+==> 000000e3: <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
+==> 000000e8: <CreateThis>: <Reg8: 5, Reg8: 1, Reg8: 6>
+==> 000000ec: <LoadConstString>: <Reg8: 10, string_id: 4057>  # String: 'The object is not iterable' (String)
+==> 000000f0: <Mov>: <Reg8: 11, Reg8: 5>
+==> 000000f3: <Construct>: <Reg8: 1, Reg8: 6, UInt8: 2>
+==> 000000f7: <SelectObject>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 000000fb: <Throw>: <Reg8: 1>
+==> 000000fd: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 83>
+==> 00000101: <LoadFromEnvironment>: <Reg8: 5, Reg8: 0, UInt8: 81>
+==> 00000105: <GetGlobalObject>: <Reg8: 0>
+==> 00000107: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 1, string_id: 37>  # String: 'Symbol' (Identifier)
+==> 0000010d: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 2, string_id: 8913>  # String: 'iterator' (Identifier)
+==> 00000113: <Call3>: <Reg8: 0, Reg8: 5, Reg8: 2, Reg8: 4, Reg8: 0>
+==> 00000119: <Call4>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 0>
+==> 00000120: <CreateEnvironment>: <Reg8: 0>
+==> 00000122: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 142>  # Function: [#142  of 54 bytes]: 2 params @ offset 0x000fb2a4
+==> 00000127: <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 1>
+==> 0000012c: <Ret>: <Reg8: 0>
+
+

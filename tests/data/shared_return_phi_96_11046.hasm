@@ -1,0 +1,60 @@
+
+=> [Function #11046 "areDependenciesEqual" of 200 bytes]: 3 params, frame size=22, strict=1, exc handler=0, debug info=0  @ offset 0x002053a0
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 9, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 8, UInt8: 2>
+==> 00000006: <CreateEnvironment>: <Reg8: 0>
+==> 00000008: <CreateClosure>: <Reg8: 7, Reg8: 0, function_id: 11047>  # Function: [#11047 is of 87 bytes]: 3 params @ offset 0x00205468
+==> 0000000d: <GetGlobalObject>: <Reg8: 0>
+==> 0000000f: <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000015: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 7263>  # String: 'is' (Identifier)
+==> 0000001b: <TypeOf>: <Reg8: 2, Reg8: 1>
+==> 0000001e: <LoadConstString>: <Reg8: 1, string_id: 8218>  # String: 'function' (Identifier)
+==> 00000022: <JStrictNotEqual>: <Addr8: 16, Reg8: 2, Reg8: 1>  # Address: 00000032
+==> 00000026: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000002c: <GetById>: <Reg8: 7, Reg8: 0, UInt8: 2, string_id: 7263>  # String: 'is' (Identifier)
+==> 00000032: <LoadConstFalse>: <Reg8: 0>
+==> 00000034: <JmpFalseLong>: <Addr32: 146, Reg8: 9>  # Address: 000000c6
+==> 0000003a: <LoadConstFalse>: <Reg8: 0>
+==> 0000003c: <JmpFalseLong>: <Addr32: 138, Reg8: 8>  # Address: 000000c6
+==> 00000042: <GetByIdShort>: <Reg8: 2, Reg8: 8, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+==> 00000047: <GetByIdShort>: <Reg8: 1, Reg8: 9, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+==> 0000004c: <LoadConstFalse>: <Reg8: 0>
+==> 0000004e: <JStrictNotEqual>: <Addr8: 120, Reg8: 2, Reg8: 1>  # Address: 000000c6
+==> 00000052: <GetByIdShort>: <Reg8: 1, Reg8: 8, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+==> 00000057: <LoadConstZero>: <Reg8: 5>
+==> 00000059: <Less>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 0000005d: <GetEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000060: <LoadConstUndefined>: <Reg8: 2>
+==> 00000062: <LoadConstTrue>: <Reg8: 0>
+==> 00000064: <JmpFalse>: <Addr8: 98, Reg8: 1>  # Address: 000000c6
+==> 00000067: <GetByVal>: <Reg8: 12, Reg8: 9, Reg8: 5>
+==> 0000006b: <GetByVal>: <Reg8: 11, Reg8: 8, Reg8: 5>
+==> 0000006f: <Call3>: <Reg8: 10, Reg8: 7, Reg8: 2, Reg8: 12, Reg8: 11>
+==> 00000075: <Mov>: <Reg8: 1, Reg8: 5>
+==> 00000078: <JmpTrue>: <Addr8: 58, Reg8: 10>  # Address: 000000b2
+==> 0000007b: <LoadFromEnvironment>: <Reg8: 10, Reg8: 3, UInt8: 0>
+==> 0000007f: <GetById>: <Reg8: 10, Reg8: 10, UInt8: 4, string_id: 7261>  # String: 'isWorkletFunction' (Identifier)
+==> 00000085: <Call2>: <Reg8: 10, Reg8: 10, Reg8: 2, Reg8: 12>
+==> 0000008a: <LoadConstFalse>: <Reg8: 0>
+==> 0000008c: <JmpFalse>: <Addr8: 58, Reg8: 10>  # Address: 000000c6
+==> 0000008f: <LoadFromEnvironment>: <Reg8: 10, Reg8: 3, UInt8: 0>
+==> 00000093: <GetById>: <Reg8: 10, Reg8: 10, UInt8: 4, string_id: 7261>  # String: 'isWorkletFunction' (Identifier)
+==> 00000099: <Call2>: <Reg8: 10, Reg8: 10, Reg8: 2, Reg8: 11>
+==> 0000009e: <LoadConstFalse>: <Reg8: 0>
+==> 000000a0: <JmpFalse>: <Addr8: 38, Reg8: 10>  # Address: 000000c6
+==> 000000a3: <LoadFromEnvironment>: <Reg8: 10, Reg8: 3, UInt8: 6>
+==> 000000a7: <Call3>: <Reg8: 10, Reg8: 10, Reg8: 2, Reg8: 12, Reg8: 11>
+==> 000000ad: <LoadConstFalse>: <Reg8: 0>
+==> 000000af: <JmpFalse>: <Addr8: 23, Reg8: 10>  # Address: 000000c6
+==> 000000b2: <Inc>: <Reg8: 10, Reg8: 1>
+==> 000000b5: <GetByIdShort>: <Reg8: 1, Reg8: 8, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+==> 000000ba: <Less>: <Reg8: 1, Reg8: 10, Reg8: 1>
+==> 000000be: <Mov>: <Reg8: 5, Reg8: 10>
+==> 000000c1: <LoadConstTrue>: <Reg8: 0>
+==> 000000c3: <JmpTrue>: <Addr8: -92, Reg8: 1>  # Address: 00000067
+==> 000000c6: <Ret>: <Reg8: 0>
+
+

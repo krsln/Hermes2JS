@@ -5,6 +5,7 @@ from hermes_decompiler.backend.regions import SequenceRegion, SwitchCase, Switch
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir.expressions import NumericLiteral
 from hermes_decompiler.ir.terminators import TerminatorSwitch
+from ._predicates import is_transparent
 
 
 class _JumpTableSwitchBuilder:
@@ -64,6 +65,7 @@ class _JumpTableSwitchBuilder:
             groups.setdefault(target, []).append(value)
 
         resolved: list[tuple[list[int], object]] = []
+        target_of: dict[int, BasicBlock] = {}
 
         for target, values in groups.items():
 
@@ -78,6 +80,7 @@ class _JumpTableSwitchBuilder:
                 return False
 
             resolved.append((sorted(values), item))
+            target_of[id(item)] = target_block
 
         default_item = None
 
@@ -141,15 +144,41 @@ class _JumpTableSwitchBuilder:
 
         switch_region = SwitchRegion(switch_term.selector)
 
+        # A body whose code flows into the NEXT case's entry (`case 5: if (!a) f(); case 6: g()`) must
+        # not print a `break`; only when that next case is printed right after it (the default goes last).
+        next_item = {id(i): ordered_items[n + 1] for n, i in enumerate(ordered_items[:-1])}
+        case_ids = {id(i) for _, i in resolved}
+
         for values, item in sorted(resolved, key=lambda r: item_index[id(r[1])]):
             tests = [NumericLiteral(value=v) for v in values]
-            switch_region.add_case(SwitchCase(tests, bodies[id(item)]))
+            following = next_item.get(id(item))
+            falls = (
+                    following is not None
+                    and id(following) in case_ids
+                    and any(
+                target_of[id(following)] in block.successors
+                for block in bodies[id(item)].covered_blocks
+            )
+            )
+            switch_region.add_case(SwitchCase(tests, bodies[id(item)], falls_through=falls))
 
         if default_item is not None:
             switch_region.default_body = bodies[id(default_item)]
 
         del region.children[header_index:end_boundary]
+
+        # The dispatch block may also set things up for the arms
+        # (`r5 = getParentEnvironment(0)` ahead of the selector): keep what prints.
+        if header.instructions and header.instructions[-1].terminator is switch_term:
+            header.instructions.pop()
+            header.terminator = None
+
+            if not is_transparent(header):
+                region.children.insert(header_index, header)
+                header_index += 1
+
         region.children.insert(header_index, switch_region)
         switch_region.parent = region
+        region.invalidate_coverage()
 
         return True

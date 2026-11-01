@@ -1,0 +1,54 @@
+
+=> [Function #8548 "cloneObjectProperties" of 156 bytes]: 4 params, frame size=29, strict=1, exc handler=1, debug info=0  @ offset 0x001ca3af
+  [Exception handlers: [start=0x43, end=0x8f, target=0x93] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 9, UInt8: 2>
+==> 00000003: <LoadParam>: <Reg8: 10, UInt8: 3>
+==> 00000006: <LoadConstUndefined>: <Reg8: 8>
+==> 00000008: <LoadConstUndefined>: <Reg8: 11>
+==> 0000000a: <LoadConstUndefined>: <Reg8: 12>
+==> 0000000c: <NewObject>: <Reg8: 0>
+==> 0000000e: <GetGlobalObject>: <Reg8: 1>
+==> 00000010: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000016: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 132>  # String: 'entries' (Identifier)
+==> 0000001b: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 0000001e: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000023: <Mov>: <Reg8: 7, Reg8: 1>
+==> 00000026: <IteratorBegin>: <Reg8: 2, Reg8: 7>
+==> 00000029: <GetEnvironment>: <Reg8: 6, UInt8: 0>
+==> 0000002c: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 0000002f: <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
+==> 00000032: <LoadConstZero>: <Reg8: 3>
+==> 00000034: <LoadConstString>: <Reg8: 1, string_id: 52>  # String: '__initData' (Identifier)
+==> 00000038: <IteratorNext>: <Reg8: 14, Reg8: 2, Reg8: 7>
+==> 0000003c: <Mov>: <Reg8: 13, Reg8: 2>
+==> 0000003f: <JStrictEqual>: <Addr8: 91, Reg8: 13, Reg8: 8>  # Address: 0000009a
+==> 00000043: <LoadFromEnvironment>: <Reg8: 13, Reg8: 6, UInt8: 1>
+==> 00000047: <GetByIdShort>: <Reg8: 13, Reg8: 13, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 0000004c: <Call3>: <Reg8: 14, Reg8: 13, Reg8: 8, Reg8: 14, Reg8: 4>
+==> 00000052: <GetByVal>: <Reg8: 13, Reg8: 14, Reg8: 3>
+==> 00000056: <Mov>: <Reg8: 11, Reg8: 13>
+==> 00000059: <GetByVal>: <Reg8: 12, Reg8: 14, Reg8: 5>
+==> 0000005d: <JStrictNotEqual>: <Addr8: 16, Reg8: 13, Reg8: 1>  # Address: 0000006d
+==> 00000061: <Mov>: <Reg8: 13, Reg8: 0>
+==> 00000064: <GetByIdShort>: <Reg8: 13, Reg8: 13, UInt8: 4, string_id: 52>  # String: '__initData' (Identifier)
+==> 00000069: <JStrictNotEqual>: <Addr8: 40, Reg8: 13, Reg8: 8>  # Address: 00000091
+==> 0000006d: <Mov>: <Reg8: 15, Reg8: 0>
+==> 00000070: <Mov>: <Reg8: 14, Reg8: 11>
+==> 00000073: <LoadFromEnvironment>: <Reg8: 18, Reg8: 6, UInt8: 23>
+==> 00000077: <Mov>: <Reg8: 17, Reg8: 12>
+==> 0000007a: <Mov>: <Reg8: 16, Reg8: 9>
+==> 0000007d: <Mov>: <Reg8: 13, Reg8: 10>
+==> 00000080: <Add>: <Reg8: 13, Reg8: 13, Reg8: 5>
+==> 00000084: <Call4>: <Reg8: 13, Reg8: 18, Reg8: 8, Reg8: 17, Reg8: 16, Reg8: 13>
+==> 0000008b: <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
+==> 0000008f: <Jmp>: <Addr8: -87>  # Address: 00000038
+==> 00000091: <Jmp>: <Addr8: -89>  # Address: 00000038
+==> 00000093: <Catch>: <Reg8: 1>
+==> 00000095: <IteratorClose>: <Reg8: 2, UInt8: 1>
+==> 00000098: <Throw>: <Reg8: 1>
+==> 0000009a: <Ret>: <Reg8: 0>
+
+

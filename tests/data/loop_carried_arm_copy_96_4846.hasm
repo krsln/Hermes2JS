@@ -1,0 +1,42 @@
+
+=> [Function #4846 "binarySubdivide" of 122 bytes]: 6 params, frame size=28, strict=1, exc handler=0, debug info=0  @ offset 0x00176ded
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 12, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 11, UInt8: 2>
+==> 00000006: <LoadParam>: <Reg8: 10, UInt8: 3>
+==> 00000009: <LoadParam>: <Reg8: 9, UInt8: 4>
+==> 0000000c: <LoadParam>: <Reg8: 8, UInt8: 5>
+==> 0000000f: <LoadConstZero>: <Reg8: 7>
+==> 00000011: <GetEnvironment>: <Reg8: 6, UInt8: 0>
+==> 00000014: <GetGlobalObject>: <Reg8: 5>
+==> 00000016: <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
+==> 00000019: <LoadConstUndefined>: <Reg8: 3>
+==> 0000001b: <LoadConstZero>: <Reg8: 2>
+==> 0000001d: <Sub>: <Reg8: 0, Reg8: 10, Reg8: 11>
+==> 00000021: <Div>: <Reg8: 0, Reg8: 0, Reg8: 4>
+==> 00000025: <Add>: <Reg8: 0, Reg8: 11, Reg8: 0>
+==> 00000029: <LoadFromEnvironment>: <Reg8: 1, Reg8: 6, UInt8: 10>
+==> 0000002d: <Call4>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 9, Reg8: 8>
+==> 00000034: <Sub>: <Reg8: 17, Reg8: 1, Reg8: 12>
+==> 00000038: <Mov>: <Reg8: 1, Reg8: 2>
+==> 0000003b: <Mov>: <Reg8: 15, Reg8: 11>
+==> 0000003e: <Mov>: <Reg8: 13, Reg8: 10>
+==> 00000041: <Mov>: <Reg8: 14, Reg8: 0>
+==> 00000044: <JGreaterN>: <Addr8: 10, Reg8: 17, Reg8: 7>  # Address: 0000004e
+==> 00000048: <Mov>: <Reg8: 15, Reg8: 0>
+==> 0000004b: <Mov>: <Reg8: 14, Reg8: 13>
+==> 0000004e: <TryGetById>: <Reg8: 16, Reg8: 5, UInt8: 1, string_id: 21>  # String: 'Math' (Identifier)
+==> 00000054: <GetById>: <Reg8: 13, Reg8: 16, UInt8: 2, string_id: 7416>  # String: 'abs' (Identifier)
+==> 0000005a: <Call2>: <Reg8: 16, Reg8: 13, Reg8: 16, Reg8: 17>
+==> 0000005f: <LoadFromEnvironment>: <Reg8: 13, Reg8: 6, UInt8: 2>
+==> 00000063: <JNotGreater>: <Addr8: 21, Reg8: 16, Reg8: 13>  # Address: 00000078
+==> 00000067: <Inc>: <Reg8: 2, Reg8: 1>
+==> 0000006a: <LoadFromEnvironment>: <Reg8: 1, Reg8: 6, UInt8: 3>
+==> 0000006e: <Mov>: <Reg8: 11, Reg8: 15>
+==> 00000071: <Mov>: <Reg8: 10, Reg8: 14>
+==> 00000074: <JLess>: <Addr8: -87, Reg8: 2, Reg8: 1>  # Address: 0000001d
+==> 00000078: <Ret>: <Reg8: 0>
+
+

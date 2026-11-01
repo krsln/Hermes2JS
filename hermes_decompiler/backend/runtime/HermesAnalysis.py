@@ -8,7 +8,7 @@ from hermes_decompiler.backend.transforms import StructuralAnalyzer
 from hermes_decompiler.backend.transforms.shared import may_alias, read_members, stored_member
 from hermes_decompiler.backend.transforms.cfg_passes import (
     ArrayDestructuringCfgPass, EnvArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass,
-    SharedReturnDuplicationCfgPass, generator_dispatch,
+    SharedReturnDuplicationCfgPass, SharedTailDuplicationCfgPass, generator_dispatch,
 )
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
 from hermes_decompiler.core.logging import get_logger
@@ -71,6 +71,13 @@ class HermesAnalysis:
         # strictly inside one is skipped on the path that takes the jump, so
         # a write there is conditional (see `_is_phi_write`).
         self.skip_ranges: list[tuple[int, int]] = []
+        # `(register name, address)` of every definition that the scratch pass
+        # (see `OpcodeDispatcher.dispatch_all`) left PRINTED as a statement of
+        # its own (pinned by a bare read, or never folded away). Whether a
+        # later definition prints is only known after the code that reads it,
+        # which comes after the read of an older value that mentions the same
+        # register; this is what lets that earlier read know (`F-01`).
+        self.printed_definitions: frozenset[tuple[str, int]] = frozenset()
         # Every definition of each register, in order. `RegisterState.version`
         # is the index into this list, so `history[name][v + 1:]` is exactly
         # what redefined version `v` (see `stale_kind`).
@@ -83,6 +90,9 @@ class HermesAnalysis:
         # Calls so far: one may write anything a still-folded member read
         # loaded (`x = o.count; f(); use(x)`), see `_changed_by_a_call`.
         self.call_count = 0
+        # The function is a generator/async body (set by `DispatchStage`): its `try` ranges
+        # belong to the state machine, not to the source.
+        self.generator_body = False
 
     _MEMORY_STORE_RE = re.compile(r"(Put|Store|Del)")
     # A call runs arbitrary code, which may write any property.
@@ -268,7 +278,11 @@ class HermesAnalysis:
         branch_read = self._reading_for_a_branch()
 
         for later in self.history.get(name, ())[version + 1:]:
-            if self._redefinition_prints(later) or self._is_phi_write(later):
+            if (
+                    self._redefinition_prints(later)
+                    or self._is_phi_write(later)
+                    or (later.definition.name, later.definition.address) in self.printed_definitions
+            ):
                 return True
 
             # A constant written between a test's operands and its jump
@@ -305,6 +319,38 @@ class HermesAnalysis:
         a merge of the two, so the arm's value alone is not what it holds."""
         return state.version > 0 and self._is_phi_write(state)
 
+    def is_nested_join_value(self, state: RegisterState) -> bool:
+        """The definition sits inside two or more forward jumps that all end at or
+        before the current read, and an earlier definition exists: three or more
+        paths meet here (`r1 = a; if (c) { r1 = b; if (d) r1 = a }; <read r1>`). No
+        single `?:` stands for that merge, unlike the two-path join a `?:` folds."""
+        current = self.current_address
+
+        if current is None or state.version == 0:
+            return False
+
+        address = state.definition.address
+
+        return sum(1 for start, end in self.skip_ranges if start < address < end <= current) >= 2
+
+    def crosses_try_boundary(self, state: RegisterState) -> bool:
+        """The definition ran inside a `try` range and the instruction being handled is
+        outside it. A value that can throw (a member read: `p.aborted` on a getter or on
+        `undefined`) inlined into such a reader would run OUTSIDE the `try`, where its
+        `catch` no longer sees the throw (98/13768: `try { x = p.aborted } catch { return
+        false } return typeof x === "boolean"`)."""
+        current = self.current_address
+
+        if current is None or self.generator_body:
+            return False
+
+        address = state.definition.address
+
+        return any(
+            handler["start"] <= address < handler["end"] and not handler["start"] <= current < handler["end"]
+            for handler in self.metadata.get("exception_handlers", ())
+        )
+
     @staticmethod
     def _redefinition_prints(state: RegisterState) -> bool:
         """The definition is kept as a statement of its own: a call/construct
@@ -328,6 +374,33 @@ class HermesAnalysis:
 
     def get_register_state(self, reg: int) -> RegisterState | None:
         return self.registers.get(f"r{reg}")
+
+    def read_enters_loop(self, state) -> bool:
+        """True if the instruction being handled sits in a loop range that the register's
+        definition is outside of: inlining the value there runs it once per iteration."""
+        current = self.current_address
+
+        if current is None:
+            return False
+
+        address = state.definition.address
+
+        return any(start <= current <= end and not start <= address <= end for start, end in self.loop_ranges)
+
+    def is_rewritten_in_loop(self, reg: int, definition_address: int | None = None) -> bool:
+        """True if `reg` is written again inside a loop range that holds the read being handled, even by a
+        write LATER in address order (`Mov r11, r15` at the bottom of the body, read at its top). A register
+        that still holds a parameter's value on entry then holds something else on the next iteration, so its
+        reads must not be printed as the parameter (F-175)."""
+        if self.current_address is None:
+            return False
+
+        return any(
+            start <= self.current_address <= end
+            and (definition_address is None or not start <= definition_address <= end)
+            and any(start <= write <= end for write in self.loop_carried_writes.get(f"r{reg}", ()))
+            for start, end in self.loop_ranges
+        )
 
     def is_unsafe_loop_register(self, reg: int, definition_address: int) -> bool:
         """
@@ -373,16 +446,42 @@ class HermesAnalysis:
             creator_facts: CreatorFacts | None = None,
     ) -> list[str]:
         first = self._attempt(verbose, raw, creator_facts, duplicate_returns=False)
+        first_lost = self._lost_edges
         chosen = first
 
-        if not raw and self._has_goto(first[0]):
+        if not raw and (self._has_goto(first[0]) or first_lost):
             # A `return` block shared between early exits in different `if`
             # arms can leave a test without its exit (a raw `goto`). Only
             # then are the shared returns copied per jumper - doing it
             # always would restyle every function that merely has one.
-            retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=True)
-            if retry[3] and not self._has_goto(retry[0]):
-                chosen = retry
+            # Level 1 copies lone returns; level 2 (only if level 1 still
+            # leaves a goto) also copies `throw`s and the closing return; level 3
+            # also copies a tail of several blocks (98/1871) - kept
+            # apart because widening it alone changed the shapes level 1
+            # already fixed (96/652).
+            #
+            # A tree without a `goto` that LOST a path (`flow_audit`: the shared
+            # `throw` the fall-through arm should run into, 98/12551) gets the same
+            # retries; there a retry only wins when it is `goto`-free and loses fewer paths.
+            whole = []
+
+            for level in (1, 2, 3, 4, 5):
+                retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
+                if not retry[3]:
+                    continue
+                if self._has_goto(retry[0]):
+                    if not self._lost_edges:
+                        whole.append(retry)
+                    continue
+                if self._has_goto(first[0]) or self._lost_edges < first_lost:
+                    chosen = retry
+                    break
+
+            if chosen is first and first_lost and not self._has_goto(first[0]) and whole:
+                # The first attempt silently loses a path (98/10128: a clamped `x` never reaches the range
+                # test) and no retry fixes it without a `goto`. A `goto` says the structure is missing;
+                # a wrong tree says nothing: keep the retry that loses no path.
+                chosen = min(whole, key=lambda r: sum("goto label_" in line for line in r[0]))
 
         lines, reason, _, _, records = chosen  # (lines, reason, failed, ok, records)
         # Only the attempt that is used speaks: the other one's warnings
@@ -411,16 +510,26 @@ class HermesAnalysis:
         package_logger.handlers = [handler]
         package_logger.propagate = False
 
+        failure = None
+
         try:
             lines, reason = self._generate_js(verbose, raw, creator_facts, duplicate_returns)
             return lines, reason, False, True, handler.records
-        except Exception:
+        except Exception as error:
             if not duplicate_returns:
                 raise
+            failure = error
             return [], None, True, False, []
         finally:
             package_logger.handlers = saved_handlers
             package_logger.propagate = saved_propagate
+
+            if failure is not None:
+                # Not shown by default, but a retry that raises is otherwise invisible
+                # (96/7556: level 2 died in `compute_dominators` and nothing said so).
+                logging.getLogger(__name__).debug(
+                    "retry level %s failed: %r", duplicate_returns, failure, exc_info=failure
+                )
 
     @staticmethod
     def _has_goto(lines: list[str]) -> bool:
@@ -431,7 +540,7 @@ class HermesAnalysis:
             verbose: bool,
             raw: bool,
             creator_facts: CreatorFacts | None,
-            duplicate_returns: bool,
+            duplicate_returns: int,
     ) -> tuple[list[str], tuple[str, bool] | None]:
         # Clone every result before handing it to the CFG/structuring
         # passes below: those passes routinely reassign an OpcodeResult's
@@ -518,7 +627,12 @@ class HermesAnalysis:
         ArrayDestructuringCfgPass(cfg).run()
         EnvArrayDestructuringCfgPass(cfg).run()
         if duplicate_returns:
-            SharedReturnDuplicationCfgPass(cfg).run()
+            SharedReturnDuplicationCfgPass(
+                cfg, widen=duplicate_returns >= 2, statements=duplicate_returns >= 4, own_values=duplicate_returns >= 5
+            ).run()
+            SharedTailDuplicationCfgPass(
+                cfg, regions=duplicate_returns >= 3, per_predecessor=duplicate_returns >= 5,
+            ).run()
 
         cfg.verify()
         cfg.compute_dominators()
@@ -535,10 +649,13 @@ class HermesAnalysis:
         # Therefore, loop analysis must be computed before build() runs.
         cfg.compute_loops()
 
+        self._lost_edges = 0
+
         if raw:
             root = SequenceStructurer(cfg).run()
         else:
             root = StructuralAnalyzer(cfg).build()
+            self._lost_edges = getattr(cfg, "lost_edges", 0)
 
         lines = JSEmitter(verbose).emit(root)
 

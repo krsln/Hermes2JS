@@ -2,6 +2,66 @@
 
 ## [Unreleased]
 
+## [2026-11-01]
+
+### Added
+
+* Added CFG-level value-condition folding to recognize value-producing ternary, `&&`, and `||` expressions that are
+  subsequently used as branch conditions.
+* Added shared-tail duplication strategies to preserve control-flow paths when multiple branches converge on common
+  code.
+* Added CFG flow auditing to detect control-flow edges that are lost during region structuring.
+* Added audit tools to compare decompiler output directories, track `goto` changes, inspect definite-assignment
+  regressions, and report potentially lost CFG edges.
+* Added a shared `typeof` mask decoder for `TypeOfIs` and `JmpTypeOfIs`, based on experimentally verified Hermes opcode
+  behavior.
+
+### Changed
+
+* Improved switch reconstruction, including case fall-through, shared case labels, nested comparison chains, and
+  preservation of setup instructions before switch dispatch.
+* Improved shared return and shared tail handling, including safer duplication across branches and exception-handler
+  boundaries.
+* Improved short-circuit condition folding inside loops while preserving loop control-flow and switch-case boundaries.
+* Improved ternary reconstruction to avoid stale register reads and incorrect expression substitution after register
+  redefinitions.
+* Improved `if` reconstruction by handling empty branches, guard exits, redundant jumps, and branches that converge on
+  shared tails.
+* Improved `for...in` and `for...of` reconstruction, including iterator guards, inline iterator closing, and guarded
+  loop exits.
+* Improved loop break structuring to avoid incorrect fall-through into return or throw paths.
+* Improved register and expression tracking across nested control-flow joins, loop boundaries, and try/catch boundaries.
+* Improved handling of `new` expressions and register copies to preserve object identity.
+* Improved return-value resolution when conditional branches share merged return instructions.
+* Updated Hermes 96 and Hermes 98 fixture outputs and expanded the findings documentation.
+
+### Fixed
+
+* Fixed lost control-flow paths when branches share a tail or return block.
+* Fixed incorrect switch reconstruction when case labels share bodies or fall through into subsequent cases.
+* Fixed cases where short-circuit folding could interfere with switch reconstruction inside loops.
+* Fixed incorrect ternary folding when a register is redefined between the condition and a later reader.
+* Fixed stale or incorrect register values being inlined across nested joins and exception-handler boundaries.
+* Fixed cases where a copied `new` expression could incorrectly produce a second object instead of preserving the
+  original object reference.
+* Fixed loop break reconstruction that could skip or incorrectly execute terminal return and throw paths.
+* Fixed empty `if` branches and redundant jumps left behind by earlier transformation passes.
+* Fixed incorrect handling of shared return values when merged instructions no longer correspond directly to the
+  original flow instructions.
+* Fixed `typeof` condition reconstruction by replacing inconsistent bitmask assumptions with a shared, experimentally
+  verified decoder.
+
+### Testing
+
+* Added regression tests for shared returns, shared tails, branch joins, and control-flow edge preservation.
+* Added regression tests for switch fall-through, shared labels, nested case chains, and dropped case jumps.
+* Added regression tests for loop conditions, conditional continues, loop exits, and guarded `for...of` behavior.
+* Added regression tests for ternary expressions, short-circuit conditions, stale register reads, and nested register
+  joins.
+* Added regression tests for `typeof` masks, try/catch boundaries, and return-value resolution.
+* Added 113 Hermes assembly fixtures and 64 test modules covering the new control-flow and expression-handling cases.
+* Updated Hermes 96 and Hermes 98 expected decompilation outputs.
+
 ## [2026-10-15]
 
 ### Added

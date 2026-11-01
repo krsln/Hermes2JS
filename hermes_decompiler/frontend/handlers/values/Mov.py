@@ -1,5 +1,6 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.ir.expressions import NewExpression
 
 
 # Reg8, Reg8 (total size 2)
@@ -17,7 +18,14 @@ class Mov(OpcodeHandler):
 
         dest_reg, src_reg = map(int, match.groups())
 
-        expression = self.get_register_expression(ctx.analysis, src_reg, keep_placeholder=True)
+        src = ctx.analysis.get_register_state(src_reg)
+
+        if src is not None and isinstance(src.value, NewExpression):
+            # A copy of a `new` object is the same object, not a second `new` (96/15130 `tag`:
+            # `r0[0] = new Array(n)` stored one array, the loop filled another).
+            expression = self.get_register_reference(ctx.analysis, src_reg)
+        else:
+            expression = self.get_register_expression(ctx.analysis, src_reg, keep_placeholder=True)
 
         # Carry env_source forward (see OpcodeResult's own docstring) -
         # a private-field/class-reference opcode several Movs downstream

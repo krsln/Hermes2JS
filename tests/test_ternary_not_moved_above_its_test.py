@@ -130,4 +130,4 @@ def test_ternary_that_would_print_above_its_test_stays_an_if():
 def test_ternary_read_where_its_reader_stands_still_folds():
     js = _render(_TO_STRING, 3602)
 
-    assert '((r4 <= -1) ? "?" : "&")' in js
+    assert '(r4 <= -1 ? "?" : "&")' in js

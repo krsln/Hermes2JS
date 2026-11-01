@@ -1,0 +1,17 @@
+
+=> [Function #1957 "setEventInitTimeStamp" of 33 bytes]: 3 params, frame size=4, strict=1, exc handler=0, debug info=0  @ offset 0x0015b6e8
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 2>
+==> 00000003: <JmpTypeOfIs>: <Addr32: 26, Reg8: 3, UInt16: 479>  # Address: 0000001d
+==> 0000000b: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000000e: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000011: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 8>
+==> 00000015: <PutByValStrict>: <Reg8: 2, Reg8: 1, Reg8: 3>
+==> 00000019: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001b: <Ret>: <Reg8: 0>
+==> 0000001d: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001f: <Ret>: <Reg8: 0>
+
+

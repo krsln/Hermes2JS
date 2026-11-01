@@ -1,0 +1,30 @@
+
+=> [Function #4085 "flush" of 80 bytes]: 2 params, frame size=16, strict=1, exc handler=1, debug info=0  @ offset 0x00165114
+  [Exception handlers: [start=0x10, end=0x31, target=0x33] [start=0x10, end=0x42, target=0x48] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <GetEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000006: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 1>
+==> 0000000a: <LoadConstUndefined>: <Reg8: 1>
+==> 0000000c: <JStrictEqual>: <Addr8: 58, Reg8: 3, Reg8: 1>  # Address: 00000046
+==> 00000010: <Mov>: <Reg8: 5, Reg8: 0>
+==> 00000013: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 7853>  # String: 'enqueue' (Identifier)
+==> 00000019: <LoadFromEnvironment>: <Reg8: 7, Reg8: 2, UInt8: 0>
+==> 0000001d: <GetById>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 9477>  # String: 'encode' (Identifier)
+==> 00000023: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 1>
+==> 00000027: <Call2>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3>
+==> 0000002c: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000031: <Jmp>: <Addr8: 17>  # Address: 00000042
+==> 00000033: <Catch>: <Reg8: 4>
+==> 00000035: <Mov>: <Reg8: 3, Reg8: 0>
+==> 00000038: <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 3, string_id: 134>  # String: 'error' (Identifier)
+==> 0000003d: <Call2>: <Reg8: 0, Reg8: 0, Reg8: 3, Reg8: 4>
+==> 00000042: <StoreNPToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
+==> 00000046: <Ret>: <Reg8: 1>
+==> 00000048: <Catch>: <Reg8: 0>
+==> 0000004a: <StoreNPToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
+==> 0000004e: <Throw>: <Reg8: 0>
+
+

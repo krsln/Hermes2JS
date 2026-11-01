@@ -1,19 +1,23 @@
 from __future__ import annotations
 
+from hermes_decompiler.backend.analysis.flow_audit import count_lost_edges
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionGraph
 from hermes_decompiler.backend.transforms.cfg_passes import (
     ShortCircuitConditionCfgPass,
+    ValueConditionFoldCfgPass,
 )
 from hermes_decompiler.backend.transforms.region_passes import (
     BooleanChainRegionPass,
     ConditionalExpressionRegionPass,
     UnfoldedMergeRepairPass,
     ConditionalContinueRegionPass,
+    GuardExitRegionPass,
     LoopCarriedDefinitionPass,
     DeadThisPlaceholderPass,
     DeadMovEliminationPass,
     DeadUndefinedStorePass,
+    EmptyIfArmRegionPass,
     FlowSnapshot,
     ForEachRegionPass,
     GeneratorStateMachineRegionPass,
@@ -37,6 +41,7 @@ from hermes_decompiler.backend.transforms.structurers import (
     TryStructurer,
     SwitchStructurer,
 )
+from hermes_decompiler.backend.transforms.structurers.if_structurer import restore_dropped_case_jumps
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorSwitch
 
@@ -90,7 +95,23 @@ class StructuralAnalyzer:
         # has built an IfRegion around one of these blocks, the merge
         # this pass performs can no longer be expressed as a simple
         # CFG edit.
+        # A value diamond that is only tested becomes one test block first.
+        ValueConditionFoldCfgPass(self.cfg).run()
+        blocks_before = len(self.cfg.blocks)
         ShortCircuitConditionCfgPass(self.cfg).run()
+
+        if len(self.cfg.blocks) != blocks_before:
+            # A merged-away test block that sat in a loop is still a member of the
+            # loop (and a node of the dominator trees) the analyses found earlier.
+            alive = set(self.cfg.blocks)
+
+            for handler in getattr(self.cfg, "exception_handlers", []):
+                handler["try_blocks"] = [b for b in handler["try_blocks"] if b in alive]
+
+            self.cfg.compute_dominators()
+            self.cfg.compute_post_dominators()
+            self.cfg.compute_loops()
+
         flow = FlowSnapshot(self.cfg)
 
         # ---- 2. structurers -------------------------------------------
@@ -132,6 +153,9 @@ class StructuralAnalyzer:
         # comparison chains already converted into IfRegions.
         SwitchStructurer(graph, self.cfg).run()
 
+        # A `case` test the if-fold left to the `switch` pass that did not get one keeps its jump (F-179).
+        restore_dropped_case_jumps(graph, self.cfg)
+
         # ---- 3. region_passes -------------------------------------------
 
         # Must run before BooleanChainRegionPass/ConditionalExpressionRegionPass/
@@ -159,7 +183,7 @@ class StructuralAnalyzer:
         NullishAssignmentRegionPass(graph, self.cfg).run()
 
         # After EVERY fold pass: it repairs only the merges they left as an `if`.
-        UnfoldedMergeRepairPass(graph, self.cfg).run()
+        UnfoldedMergeRepairPass(graph, self.cfg, flow).run()
 
         # A register a loop overwrites and the code after it reads by name.
         LoopCarriedDefinitionPass(graph, self.cfg).run()
@@ -194,6 +218,9 @@ class StructuralAnalyzer:
 
         # `if (c) continue;` compiled as a conditional branch back to the loop.
         ConditionalContinueRegionPass(graph, self.cfg).run()
+
+        # `if (c) return x;` whose exit block was laid out after the guarded code.
+        GuardExitRegionPass(graph, self.cfg).run()
 
         # Drops a bare unconditional-Jmp block whose target is simply
         # the very next sibling block that already executes right
@@ -276,6 +303,11 @@ class StructuralAnalyzer:
         # that pass still sees the return as a read of its register.
         TrailingReturnRegionPass(graph, self.cfg).run()
 
+        # Drops `if` arms that print nothing, which the passes above leave
+        # behind once they have folded or removed what the arm held: it
+        # must see their final result, so it comes after all of them.
+        EmptyIfArmRegionPass(graph, self.cfg).run()
+
         # Purely cosmetic, purely presentational - must be the very LAST
         # transform pass. It rewrites a for-loop's induction register into
         # an explicit `i`/`j`/`k` AssignmentExpression with dest_reg cleared
@@ -286,6 +318,10 @@ class StructuralAnalyzer:
         # ---- Diagnostics ------------------------------------------------
 
         self._audit_unstructured_blocks(root, graph, self.cfg)
+
+        # Read by `HermesAnalysis.generate_js`: a goto-free tree that lost a path gets the same
+        # retries (private copies of shared returns/tails) as one that printed a `goto`.
+        self.cfg.lost_edges = count_lost_edges(root, self.cfg)
 
         return root
 

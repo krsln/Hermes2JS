@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import copy
+
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import (
     RegionVisitor,
@@ -207,15 +209,24 @@ class IfTailMergeRegionPass(RegionPass, RegionVisitor):
 
         matched_instructions = then_block.instructions[len(then_block.instructions) - match_count:]
 
-        # Both arms' own `Ret` end up as ONE instruction after the merge; the
-        # other arm's copy is remembered so the register it returns can still
-        # be resolved along BOTH paths (`ReturnValueResolutionPass`).
+        # Both arms' own `Ret` end up as ONE instruction after the merge. It is a copy:
+        # the arms' originals stay in their (detached) blocks, and
+        # `ReturnValueResolutionPass` resolving one of them in place (`return null` for the
+        # path through that arm) must not rewrite the merged return of all of them.
+        # Both arms' originals are remembered so the register it returns is resolved along
+        # BOTH paths.
+        origins = self.cfg.__dict__.setdefault("tail_origins", {})
+        merged_instructions = []
+
         for kept, other in zip(
                 matched_instructions,
                 else_block.instructions[len(else_block.instructions) - match_count:],
         ):
-            origins = self.cfg.__dict__.setdefault("tail_origins", {})
-            origins[id(kept)] = (*origins.get(id(kept), ()), other)
+            duplicate = copy.copy(kept)
+            origins[id(duplicate)] = (*origins.get(id(kept), ()), kept, other)
+            merged_instructions.append(duplicate)
+
+        matched_instructions = merged_instructions
 
         self._trim_trailing(then_body, then_block, match_count)
         self._trim_trailing(else_body, else_block, match_count)

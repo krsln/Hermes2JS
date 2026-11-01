@@ -89,6 +89,55 @@ class InductionVariableNamingPass(RegionPass, RegionVisitor):
         if renamed:
             self._depth -= 1
 
+    @classmethod
+    def _body_writes(cls, node: LoopRegion, name: str) -> bool:
+        """True if the body sets the register to something other than the counter and
+        reads it afterwards (`r3 = getEnvironment(0); r3[458](...)` after the counter's
+        last use): renaming every `r3` to `i` would read the wrong value there."""
+        own = [node.update.right] if isinstance(node.update, AssignmentExpression) else []
+
+        if isinstance(node.initializer, AssignmentExpression):
+            own.append(node.initializer.right)
+
+        overwritten = False
+
+        for block in sorted(node.body.covered_blocks, key=lambda b: b.address):
+            for instruction in block.instructions:
+                parts = [instruction.value, instruction.statement, instruction.terminator]
+
+                if overwritten and any(cls._reads(part, name) for part in parts if part is not None):
+                    return True
+
+                if getattr(instruction, "name", None) != name or instruction.value is None:
+                    continue
+
+                # the loop's own update / initializer instruction stays in its block
+                if any(instruction.value is expr or instruction.value.structurally_equal(expr) for expr in own):
+                    # the update gives the counter its next value again
+                    overwritten = False
+                    continue
+
+                overwritten = True
+
+        return False
+
+    @classmethod
+    def _reads(cls, node, name: str) -> bool:
+        if isinstance(node, Identifier):
+            return node.name == name
+
+        if not dataclasses.is_dataclass(node):
+            return False
+
+        for field in dataclasses.fields(node):
+            value = getattr(node, field.name)
+
+            for child in (value if isinstance(value, tuple) else (value,)):
+                if child is not None and not isinstance(child, (str, int, float, bool)) and cls._reads(child, name):
+                    return True
+
+        return False
+
     def _maybe_rename(self, node: LoopRegion) -> bool:
         if node.loop_kind != LoopKind.FOR:
             return False
@@ -110,6 +159,12 @@ class InductionVariableNamingPass(RegionPass, RegionVisitor):
         # a statement OUTSIDE the loop that keeps its `rN` name; renaming only
         # the loop would leave `i` read before anything assigns it.
         if node.initializer is None:
+            return False
+
+        # The body sets the register to something else (a scratch use of the
+        # same register after the counter's last read): `i = ...; i[458](...)`
+        # would call the wrong thing.
+        if self._body_writes(node, old_name):
             return False
 
         new_name = self._NAMES[self._depth]

@@ -1,0 +1,23 @@
+
+=> [Function #7811 "getParent" of 59 bytes]: 2 params, frame size=11, strict=1, exc handler=0, debug info=0  @ offset 0x001bc3c1
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 0>
+==> 00000005: <JStrictEqual>: <Addr8: 25, Reg8: 2, Reg8: 0>  # Address: 0000001e
+==> 00000009: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 0000000c: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 0>
+==> 00000010: <GetById>: <Reg8: 0, Reg8: 1, UInt8: 1, string_id: 7684>  # String: 'getId' (Identifier)
+==> 00000016: <Call1>: <Reg8: 0, Reg8: 0, Reg8: 1>
+==> 0000001a: <JStrictEqual>: <Addr8: 24, Reg8: 2, Reg8: 0>  # Address: 00000032
+==> 0000001e: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000021: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 0>
+==> 00000025: <GetById>: <Reg8: 0, Reg8: 1, UInt8: 2, string_id: 11973>  # String: 'getParent' (Identifier)
+==> 0000002b: <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>
+==> 00000030: <Ret>: <Reg8: 0>
+==> 00000032: <GetEnvironment>: <Reg8: 0, UInt8: 1>
+==> 00000035: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 5>
+==> 00000039: <Ret>: <Reg8: 0>
+
+

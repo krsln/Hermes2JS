@@ -1,0 +1,354 @@
+
+=> [Function #2693 "findHostInstance" of 1346 bytes]: 2 params, frame size=41, strict=1, exc handler=0, debug info=0  @ offset 0x0017c417
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 14, UInt8: 1>
+==> 00000003: <GetById>: <Reg8: 12, Reg8: 14, UInt8: 0, string_id: 15435>  # String: '_reactInternals' (Identifier)
+==> 00000009: <LoadConstUndefined>: <Reg8: 10>
+==> 0000000b: <JStrictEqualLong>: <Addr32: 1249, Reg8: 10, Reg8: 12>  # Address: 000004ec
+==> 00000012: <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 81>  # String: 'alternate' (Identifier)
+==> 00000017: <LoadConstNull>: <Reg8: 8>
+==> 00000019: <Mov>: <Reg8: 17, Reg8: 11>
+==> 0000001c: <Mov>: <Reg8: 15, Reg8: 12>
+==> 0000001f: <JmpTrueLong>: <Addr32: 161, Reg8: 11>  # Address: 000000c0
+==> 00000025: <GetByIdShort>: <Reg8: 13, Reg8: 12, UInt8: 1, string_id: 81>  # String: 'alternate' (Identifier)
+==> 0000002a: <LoadConstInt>: <Reg8: 1, Imm32: 4098>
+==> 00000030: <LoadConstZero>: <Reg8: 0>
+==> 00000032: <Mov>: <Reg8: 19, Reg8: 12>
+==> 00000035: <Mov>: <Reg8: 18, Reg8: 19>
+==> 00000038: <JmpTrue>: <Addr8: 43, Reg8: 13>  # Address: 00000063
+==> 0000003b: <GetByIdShort>: <Reg8: 13, Reg8: 18, UInt8: 2, string_id: 144>  # String: 'flags' (Identifier)
+==> 00000040: <BitAnd>: <Reg8: 2, Reg8: 13, Reg8: 1>
+==> 00000044: <Mov>: <Reg8: 13, Reg8: 19>
+==> 00000047: <Mov>: <Reg8: 16, Reg8: 18>
+==> 0000004a: <JStrictEqual>: <Addr8: 9, Reg8: 0, Reg8: 2>  # Address: 00000053
+==> 0000004e: <GetByIdShort>: <Reg8: 13, Reg8: 16, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 00000053: <GetByIdShort>: <Reg8: 18, Reg8: 16, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 00000058: <Mov>: <Reg8: 19, Reg8: 13>
+==> 0000005b: <Mov>: <Reg8: 13, Reg8: 19>
+==> 0000005e: <JmpTrue>: <Addr8: -35, Reg8: 18>  # Address: 0000003b
+==> 00000061: <Jmp>: <Addr8: 41>  # Address: 0000008a
+==> 00000063: <GetByIdShort>: <Reg8: 18, Reg8: 12, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 00000068: <Mov>: <Reg8: 19, Reg8: 12>
+==> 0000006b: <Mov>: <Reg8: 13, Reg8: 19>
+==> 0000006e: <Mov>: <Reg8: 16, Reg8: 13>
+==> 00000071: <JmpFalse>: <Addr8: 25, Reg8: 18>  # Address: 0000008a
+==> 00000074: <GetByIdShort>: <Reg8: 20, Reg8: 19, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 00000079: <GetByIdShort>: <Reg8: 18, Reg8: 20, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 0000007e: <Mov>: <Reg8: 19, Reg8: 20>
+==> 00000081: <Mov>: <Reg8: 13, Reg8: 12>
+==> 00000084: <Mov>: <Reg8: 16, Reg8: 19>
+==> 00000087: <JmpTrue>: <Addr8: -19, Reg8: 18>  # Address: 00000074
+==> 0000008a: <GetByIdShort>: <Reg8: 18, Reg8: 16, UInt8: 4, string_id: 194>  # String: 'tag' (Identifier)
+==> 0000008f: <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
+==> 00000092: <LoadConstNull>: <Reg8: 16>
+==> 00000094: <JStrictNotEqual>: <Addr8: 7, Reg8: 0, Reg8: 18>  # Address: 0000009b
+==> 00000098: <Mov>: <Reg8: 16, Reg8: 13>
+==> 0000009b: <JStrictEqual>: <Addr8: 18, Reg8: 8, Reg8: 16>  # Address: 000000ad
+==> 0000009f: <LoadConstNull>: <Reg8: 13>
+==> 000000a1: <JStrictNotEqual>: <Addr8: 7, Reg8: 16, Reg8: 12>  # Address: 000000a8
+==> 000000a5: <Mov>: <Reg8: 13, Reg8: 12>
+==> 000000a8: <JmpLong>: <Addr32: 678>  # Address: 0000034e
+==> 000000ad: <GetGlobalObject>: <Reg8: 16>
+==> 000000af: <TryGetById>: <Reg8: 18, Reg8: 16, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 000000b5: <LoadConstString>: <Reg8: 16, string_id: 4336>  # String: 'Unable to find node on an unmounted component.' (String)
+==> 000000b9: <Call2>: <Reg8: 16, Reg8: 18, Reg8: 10, Reg8: 16>
+==> 000000be: <Throw>: <Reg8: 16>
+==> 000000c0: <GetByIdShort>: <Reg8: 18, Reg8: 15, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 000000c5: <Mov>: <Reg8: 20, Reg8: 17>
+==> 000000c8: <Mov>: <Reg8: 16, Reg8: 15>
+==> 000000cb: <JStrictEqualLong>: <Addr32: 608, Reg8: 8, Reg8: 18>  # Address: 0000032b
+==> 000000d2: <GetByIdShort>: <Reg8: 27, Reg8: 18, UInt8: 1, string_id: 81>  # String: 'alternate' (Identifier)
+==> 000000d7: <JStrictEqualLong>: <Addr32: 581, Reg8: 8, Reg8: 27>  # Address: 0000031c
+==> 000000de: <GetByIdShort>: <Reg8: 21, Reg8: 18, UInt8: 6, string_id: 99>  # String: 'child' (Identifier)
+==> 000000e3: <GetByIdShort>: <Reg8: 19, Reg8: 27, UInt8: 6, string_id: 99>  # String: 'child' (Identifier)
+==> 000000e8: <JStrictEqualLong>: <Addr32: 224, Reg8: 21, Reg8: 19>  # Address: 000001c8
+==> 000000ef: <GetByIdShort>: <Reg8: 23, Reg8: 16, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 000000f4: <GetByIdShort>: <Reg8: 19, Reg8: 20, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 000000f9: <Mov>: <Reg8: 21, Reg8: 27>
+==> 000000fc: <Mov>: <Reg8: 22, Reg8: 18>
+==> 000000ff: <JStrictNotEqualLong>: <Addr32: 164, Reg8: 23, Reg8: 19>  # Address: 000001a3
+==> 00000106: <GetByIdShort>: <Reg8: 19, Reg8: 18, UInt8: 6, string_id: 99>  # String: 'child' (Identifier)
+==> 0000010b: <LoadConstFalse>: <Reg8: 5>
+==> 0000010d: <Mov>: <Reg8: 26, Reg8: 20>
+==> 00000110: <Mov>: <Reg8: 25, Reg8: 16>
+==> 00000113: <JmpFalse>: <Addr8: 46, Reg8: 19>  # Address: 00000141
+==> 00000116: <Mov>: <Reg8: 23, Reg8: 19>
+==> 00000119: <LoadConstTrue>: <Reg8: 5>
+==> 0000011b: <Mov>: <Reg8: 26, Reg8: 27>
+==> 0000011e: <Mov>: <Reg8: 25, Reg8: 18>
+==> 00000121: <JStrictEqual>: <Addr8: 32, Reg8: 23, Reg8: 16>  # Address: 00000141
+==> 00000125: <LoadConstTrue>: <Reg8: 5>
+==> 00000127: <Mov>: <Reg8: 26, Reg8: 18>
+==> 0000012a: <Mov>: <Reg8: 25, Reg8: 27>
+==> 0000012d: <JStrictEqual>: <Addr8: 20, Reg8: 23, Reg8: 20>  # Address: 00000141
+==> 00000131: <GetByIdShort>: <Reg8: 19, Reg8: 23, UInt8: 7, string_id: 229>  # String: 'sibling' (Identifier)
+==> 00000136: <LoadConstFalse>: <Reg8: 5>
+==> 00000138: <Mov>: <Reg8: 26, Reg8: 20>
+==> 0000013b: <Mov>: <Reg8: 25, Reg8: 16>
+==> 0000013e: <JmpTrue>: <Addr8: -40, Reg8: 19>  # Address: 00000116
+==> 00000141: <Mov>: <Reg8: 21, Reg8: 26>
+==> 00000144: <Mov>: <Reg8: 22, Reg8: 25>
+==> 00000147: <JmpTrue>: <Addr8: 92, Reg8: 5>  # Address: 000001a3
+==> 0000014a: <GetByIdShort>: <Reg8: 24, Reg8: 27, UInt8: 6, string_id: 99>  # String: 'child' (Identifier)
+==> 0000014f: <Mov>: <Reg8: 7, Reg8: 5>
+==> 00000152: <Mov>: <Reg8: 23, Reg8: 26>
+==> 00000155: <Mov>: <Reg8: 19, Reg8: 25>
+==> 00000158: <JmpFalse>: <Addr8: 47, Reg8: 24>  # Address: 00000187
+==> 0000015b: <Mov>: <Reg8: 28, Reg8: 24>
+==> 0000015e: <LoadConstTrue>: <Reg8: 7>
+==> 00000160: <Mov>: <Reg8: 23, Reg8: 18>
+==> 00000163: <Mov>: <Reg8: 19, Reg8: 27>
+==> 00000166: <JStrictEqual>: <Addr8: 33, Reg8: 28, Reg8: 25>  # Address: 00000187
+==> 0000016a: <LoadConstTrue>: <Reg8: 7>
+==> 0000016c: <Mov>: <Reg8: 23, Reg8: 27>
+==> 0000016f: <Mov>: <Reg8: 19, Reg8: 18>
+==> 00000172: <JStrictEqual>: <Addr8: 21, Reg8: 28, Reg8: 26>  # Address: 00000187
+==> 00000176: <GetByIdShort>: <Reg8: 24, Reg8: 28, UInt8: 7, string_id: 229>  # String: 'sibling' (Identifier)
+==> 0000017b: <Mov>: <Reg8: 7, Reg8: 5>
+==> 0000017e: <Mov>: <Reg8: 23, Reg8: 26>
+==> 00000181: <Mov>: <Reg8: 19, Reg8: 25>
+==> 00000184: <JmpTrue>: <Addr8: -41, Reg8: 24>  # Address: 0000015b
+==> 00000187: <Mov>: <Reg8: 21, Reg8: 23>
+==> 0000018a: <Mov>: <Reg8: 22, Reg8: 19>
+==> 0000018d: <JmpTrue>: <Addr8: 22, Reg8: 7>  # Address: 000001a3
+==> 00000190: <GetGlobalObject>: <Reg8: 19>
+==> 00000192: <TryGetById>: <Reg8: 23, Reg8: 19, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000198: <LoadConstString>: <Reg8: 19, string_id: 2904>  # String: 'Child was not found in either parent set. This indicates a bug in React related to the return pointer. Please file an issue.' (String)
+==> 0000019c: <Call2>: <Reg8: 19, Reg8: 23, Reg8: 10, Reg8: 19>
+==> 000001a1: <Throw>: <Reg8: 19>
+==> 000001a3: <GetByIdShort>: <Reg8: 19, Reg8: 22, UInt8: 1, string_id: 81>  # String: 'alternate' (Identifier)
+==> 000001a8: <Mov>: <Reg8: 17, Reg8: 21>
+==> 000001ab: <Mov>: <Reg8: 15, Reg8: 22>
+==> 000001ae: <JStrictEqualLong>: <Addr32: -238, Reg8: 19, Reg8: 17>  # Address: 000000c0
+==> 000001b5: <GetGlobalObject>: <Reg8: 19>
+==> 000001b7: <TryGetById>: <Reg8: 21, Reg8: 19, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 000001bd: <LoadConstString>: <Reg8: 19, string_id: 449>  # String: "Return fibers should always be each others' alternates. This error is likely caused by a bug in React. Please file an issue." (String)
+==> 000001c1: <Call2>: <Reg8: 19, Reg8: 21, Reg8: 10, Reg8: 19>
+==> 000001c6: <Throw>: <Reg8: 19>
+==> 000001c8: <GetByIdShort>: <Reg8: 19, Reg8: 18, UInt8: 6, string_id: 99>  # String: 'child' (Identifier)
+==> 000001cd: <JmpFalse>: <Addr8: 25, Reg8: 19>  # Address: 000001e6
+==> 000001d0: <Mov>: <Reg8: 21, Reg8: 19>
+==> 000001d3: <JStrictEqualLong>: <Addr32: 185, Reg8: 21, Reg8: 16>  # Address: 0000028c
+==> 000001da: <JStrictEqual>: <Addr8: 31, Reg8: 21, Reg8: 20>  # Address: 000001f9
+==> 000001de: <GetByIdShort>: <Reg8: 19, Reg8: 21, UInt8: 7, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000001e3: <JmpTrue>: <Addr8: -19, Reg8: 19>  # Address: 000001d0
+==> 000001e6: <GetGlobalObject>: <Reg8: 19>
+==> 000001e8: <TryGetById>: <Reg8: 20, Reg8: 19, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 000001ee: <LoadConstString>: <Reg8: 19, string_id: 4336>  # String: 'Unable to find node on an unmounted component.' (String)
+==> 000001f2: <Call2>: <Reg8: 19, Reg8: 20, Reg8: 10, Reg8: 19>
+==> 000001f7: <Throw>: <Reg8: 19>
+==> 000001f9: <GetByIdShort>: <Reg8: 19, Reg8: 18, UInt8: 1, string_id: 81>  # String: 'alternate' (Identifier)
+==> 000001fe: <LoadConstInt>: <Reg8: 1, Imm32: 4098>
+==> 00000204: <LoadConstZero>: <Reg8: 0>
+==> 00000206: <Mov>: <Reg8: 22, Reg8: 18>
+==> 00000209: <Mov>: <Reg8: 21, Reg8: 22>
+==> 0000020c: <JmpTrue>: <Addr8: 43, Reg8: 19>  # Address: 00000237
+==> 0000020f: <GetByIdShort>: <Reg8: 19, Reg8: 21, UInt8: 2, string_id: 144>  # String: 'flags' (Identifier)
+==> 00000214: <BitAnd>: <Reg8: 2, Reg8: 19, Reg8: 1>
+==> 00000218: <Mov>: <Reg8: 20, Reg8: 22>
+==> 0000021b: <Mov>: <Reg8: 19, Reg8: 21>
+==> 0000021e: <JStrictEqual>: <Addr8: 9, Reg8: 0, Reg8: 2>  # Address: 00000227
+==> 00000222: <GetByIdShort>: <Reg8: 20, Reg8: 19, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 00000227: <GetByIdShort>: <Reg8: 21, Reg8: 19, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 0000022c: <Mov>: <Reg8: 22, Reg8: 20>
+==> 0000022f: <Mov>: <Reg8: 20, Reg8: 22>
+==> 00000232: <JmpTrue>: <Addr8: -35, Reg8: 21>  # Address: 0000020f
+==> 00000235: <Jmp>: <Addr8: 41>  # Address: 0000025e
+==> 00000237: <GetByIdShort>: <Reg8: 21, Reg8: 18, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 0000023c: <Mov>: <Reg8: 22, Reg8: 18>
+==> 0000023f: <Mov>: <Reg8: 20, Reg8: 22>
+==> 00000242: <Mov>: <Reg8: 19, Reg8: 20>
+==> 00000245: <JmpFalse>: <Addr8: 25, Reg8: 21>  # Address: 0000025e
+==> 00000248: <GetByIdShort>: <Reg8: 23, Reg8: 22, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 0000024d: <GetByIdShort>: <Reg8: 21, Reg8: 23, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 00000252: <Mov>: <Reg8: 22, Reg8: 23>
+==> 00000255: <Mov>: <Reg8: 20, Reg8: 18>
+==> 00000258: <Mov>: <Reg8: 19, Reg8: 22>
+==> 0000025b: <JmpTrue>: <Addr8: -19, Reg8: 21>  # Address: 00000248
+==> 0000025e: <GetByIdShort>: <Reg8: 21, Reg8: 19, UInt8: 4, string_id: 194>  # String: 'tag' (Identifier)
+==> 00000263: <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
+==> 00000266: <LoadConstNull>: <Reg8: 19>
+==> 00000268: <JStrictNotEqual>: <Addr8: 7, Reg8: 0, Reg8: 21>  # Address: 0000026f
+==> 0000026c: <Mov>: <Reg8: 19, Reg8: 20>
+==> 0000026f: <Mov>: <Reg8: 13, Reg8: 11>
+==> 00000272: <JStrictEqualLong>: <Addr32: 220, Reg8: 19, Reg8: 18>  # Address: 0000034e
+==> 00000279: <GetGlobalObject>: <Reg8: 19>
+==> 0000027b: <TryGetById>: <Reg8: 20, Reg8: 19, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000281: <LoadConstString>: <Reg8: 19, string_id: 4336>  # String: 'Unable to find node on an unmounted component.' (String)
+==> 00000285: <Call2>: <Reg8: 19, Reg8: 20, Reg8: 10, Reg8: 19>
+==> 0000028a: <Throw>: <Reg8: 19>
+==> 0000028c: <GetByIdShort>: <Reg8: 19, Reg8: 18, UInt8: 1, string_id: 81>  # String: 'alternate' (Identifier)
+==> 00000291: <LoadConstInt>: <Reg8: 1, Imm32: 4098>
+==> 00000297: <LoadConstZero>: <Reg8: 0>
+==> 00000299: <Mov>: <Reg8: 22, Reg8: 18>
+==> 0000029c: <Mov>: <Reg8: 21, Reg8: 22>
+==> 0000029f: <JmpTrue>: <Addr8: 43, Reg8: 19>  # Address: 000002ca
+==> 000002a2: <GetByIdShort>: <Reg8: 19, Reg8: 21, UInt8: 2, string_id: 144>  # String: 'flags' (Identifier)
+==> 000002a7: <BitAnd>: <Reg8: 2, Reg8: 19, Reg8: 1>
+==> 000002ab: <Mov>: <Reg8: 20, Reg8: 22>
+==> 000002ae: <Mov>: <Reg8: 19, Reg8: 21>
+==> 000002b1: <JStrictEqual>: <Addr8: 9, Reg8: 0, Reg8: 2>  # Address: 000002ba
+==> 000002b5: <GetByIdShort>: <Reg8: 20, Reg8: 19, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 000002ba: <GetByIdShort>: <Reg8: 21, Reg8: 19, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 000002bf: <Mov>: <Reg8: 22, Reg8: 20>
+==> 000002c2: <Mov>: <Reg8: 20, Reg8: 22>
+==> 000002c5: <JmpTrue>: <Addr8: -35, Reg8: 21>  # Address: 000002a2
+==> 000002c8: <Jmp>: <Addr8: 41>  # Address: 000002f1
+==> 000002ca: <GetByIdShort>: <Reg8: 21, Reg8: 18, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 000002cf: <Mov>: <Reg8: 22, Reg8: 18>
+==> 000002d2: <Mov>: <Reg8: 20, Reg8: 22>
+==> 000002d5: <Mov>: <Reg8: 19, Reg8: 20>
+==> 000002d8: <JmpFalse>: <Addr8: 25, Reg8: 21>  # Address: 000002f1
+==> 000002db: <GetByIdShort>: <Reg8: 23, Reg8: 22, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 000002e0: <GetByIdShort>: <Reg8: 21, Reg8: 23, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 000002e5: <Mov>: <Reg8: 22, Reg8: 23>
+==> 000002e8: <Mov>: <Reg8: 20, Reg8: 18>
+==> 000002eb: <Mov>: <Reg8: 19, Reg8: 22>
+==> 000002ee: <JmpTrue>: <Addr8: -19, Reg8: 21>  # Address: 000002db
+==> 000002f1: <GetByIdShort>: <Reg8: 21, Reg8: 19, UInt8: 4, string_id: 194>  # String: 'tag' (Identifier)
+==> 000002f6: <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
+==> 000002f9: <LoadConstNull>: <Reg8: 19>
+==> 000002fb: <JStrictNotEqual>: <Addr8: 7, Reg8: 0, Reg8: 21>  # Address: 00000302
+==> 000002ff: <Mov>: <Reg8: 19, Reg8: 20>
+==> 00000302: <Mov>: <Reg8: 13, Reg8: 12>
+==> 00000305: <JStrictEqual>: <Addr8: 73, Reg8: 19, Reg8: 18>  # Address: 0000034e
+==> 00000309: <GetGlobalObject>: <Reg8: 19>
+==> 0000030b: <TryGetById>: <Reg8: 20, Reg8: 19, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000311: <LoadConstString>: <Reg8: 19, string_id: 4336>  # String: 'Unable to find node on an unmounted component.' (String)
+==> 00000315: <Call2>: <Reg8: 19, Reg8: 20, Reg8: 10, Reg8: 19>
+==> 0000031a: <Throw>: <Reg8: 19>
+==> 0000031c: <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
+==> 00000321: <Mov>: <Reg8: 15, Reg8: 17>
+==> 00000324: <JStrictNotEqualLong>: <Addr32: -612, Reg8: 8, Reg8: 15>  # Address: 000000c0
+==> 0000032b: <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 4, string_id: 194>  # String: 'tag' (Identifier)
+==> 00000330: <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
+==> 00000333: <JStrictNotEqualLong>: <Addr32: 422, Reg8: 0, Reg8: 15>  # Address: 000004d9
+==> 0000033a: <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 8, string_id: 233>  # String: 'stateNode' (Identifier)
+==> 0000033f: <GetByIdShort>: <Reg8: 15, Reg8: 15, UInt8: 9, string_id: 57>  # String: 'current' (Identifier)
+==> 00000344: <JStrictNotEqual>: <Addr8: 7, Reg8: 15, Reg8: 16>  # Address: 0000034b
+==> 00000348: <Mov>: <Reg8: 11, Reg8: 12>
+==> 0000034b: <Mov>: <Reg8: 13, Reg8: 11>
+==> 0000034e: <GetParentEnvironment>: <Reg8: 15, UInt8: 0>
+==> 00000351: <LoadConstNull>: <Reg8: 12>
+==> 00000353: <JStrictEqualLong>: <Addr32: 166, Reg8: 8, Reg8: 13>  # Address: 000003f9
+==> 0000035a: <GetByIdShort>: <Reg8: 16, Reg8: 13, UInt8: 4, string_id: 194>  # String: 'tag' (Identifier)
+==> 0000035f: <LoadConstUInt8>: <Reg8: 3, UInt8: 5>
+==> 00000362: <Mov>: <Reg8: 11, Reg8: 13>
+==> 00000365: <JStrictEqualLong>: <Addr32: 145, Reg8: 3, Reg8: 16>  # Address: 000003f6
+==> 0000036c: <LoadConstUInt8>: <Reg8: 4, UInt8: 26>
+==> 0000036f: <Mov>: <Reg8: 11, Reg8: 13>
+==> 00000372: <JStrictEqualLong>: <Addr32: 132, Reg8: 4, Reg8: 16>  # Address: 000003f6
+==> 00000379: <LoadConstUInt8>: <Reg8: 2, UInt8: 27>
+==> 0000037c: <Mov>: <Reg8: 11, Reg8: 13>
+==> 0000037f: <JStrictEqual>: <Addr8: 119, Reg8: 2, Reg8: 16>  # Address: 000003f6
+==> 00000383: <LoadConstUInt8>: <Reg8: 1, UInt8: 6>
+==> 00000386: <Mov>: <Reg8: 11, Reg8: 13>
+==> 00000389: <JStrictEqual>: <Addr8: 109, Reg8: 1, Reg8: 16>  # Address: 000003f6
+==> 0000038d: <GetByIdShort>: <Reg8: 13, Reg8: 13, UInt8: 6, string_id: 99>  # String: 'child' (Identifier)
+==> 00000392: <LoadConstZero>: <Reg8: 0>
+==> 00000394: <LoadConstNull>: <Reg8: 11>
+==> 00000396: <JStrictEqual>: <Addr8: 96, Reg8: 8, Reg8: 13>  # Address: 000003f6
+==> 0000039a: <GetByIdShort>: <Reg8: 18, Reg8: 13, UInt8: 4, string_id: 194>  # String: 'tag' (Identifier)
+==> 0000039f: <Mov>: <Reg8: 16, Reg8: 13>
+==> 000003a2: <Mov>: <Reg8: 17, Reg8: 16>
+==> 000003a5: <JStrictEqual>: <Addr8: 63, Reg8: 3, Reg8: 18>  # Address: 000003e4
+==> 000003a9: <Mov>: <Reg8: 17, Reg8: 16>
+==> 000003ac: <JStrictEqual>: <Addr8: 56, Reg8: 4, Reg8: 18>  # Address: 000003e4
+==> 000003b0: <Mov>: <Reg8: 17, Reg8: 16>
+==> 000003b3: <JStrictEqual>: <Addr8: 49, Reg8: 2, Reg8: 18>  # Address: 000003e4
+==> 000003b7: <Mov>: <Reg8: 17, Reg8: 16>
+==> 000003ba: <JStrictEqual>: <Addr8: 42, Reg8: 1, Reg8: 18>  # Address: 000003e4
+==> 000003be: <GetByIdShort>: <Reg8: 18, Reg8: 16, UInt8: 6, string_id: 99>  # String: 'child' (Identifier)
+==> 000003c3: <LoadConstNull>: <Reg8: 17>
+==> 000003c5: <JStrictEqual>: <Addr8: 31, Reg8: 8, Reg8: 18>  # Address: 000003e4
+==> 000003c9: <LoadFromEnvironment>: <Reg8: 19, Reg8: 15, UInt8: 96>
+==> 000003cd: <Call2>: <Reg8: 17, Reg8: 19, Reg8: 0, Reg8: 18>
+==> 000003d2: <Mov>: <Reg8: 19, Reg8: 18>
+==> 000003d5: <JStrictNotEqual>: <Addr8: 15, Reg8: 8, Reg8: 17>  # Address: 000003e4
+==> 000003d9: <GetByIdShort>: <Reg8: 18, Reg8: 19, UInt8: 7, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000003de: <LoadConstNull>: <Reg8: 17>
+==> 000003e0: <JStrictNotEqual>: <Addr8: -23, Reg8: 8, Reg8: 18>  # Address: 000003c9
+==> 000003e4: <Mov>: <Reg8: 11, Reg8: 17>
+==> 000003e7: <JStrictNotEqual>: <Addr8: 15, Reg8: 8, Reg8: 11>  # Address: 000003f6
+==> 000003eb: <GetByIdShort>: <Reg8: 13, Reg8: 16, UInt8: 7, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000003f0: <LoadConstNull>: <Reg8: 11>
+==> 000003f2: <JStrictNotEqual>: <Addr8: -88, Reg8: 8, Reg8: 13>  # Address: 0000039a
+==> 000003f6: <Mov>: <Reg8: 12, Reg8: 11>
+==> 000003f9: <LoadConstNull>: <Reg8: 11>
+==> 000003fb: <JStrictEqualLong>: <Addr32: 220, Reg8: 11, Reg8: 12>  # Address: 000004d7
+==> 00000402: <GetByIdShort>: <Reg8: 13, Reg8: 12, UInt8: 8, string_id: 233>  # String: 'stateNode' (Identifier)
+==> 00000407: <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 10, string_id: 98>  # String: 'canonical' (Identifier)
+==> 0000040c: <JNotEqual>: <Addr8: 67, Reg8: 8, Reg8: 12>  # Address: 0000044f
+==> 00000410: <GetById>: <Reg8: 12, Reg8: 13, UInt8: 11, string_id: 16560>  # String: 'containerInfo' (Identifier)
+==> 00000416: <JEqual>: <Addr8: 20, Reg8: 8, Reg8: 12>  # Address: 0000042a
+==> 0000041a: <GetById>: <Reg8: 12, Reg8: 13, UInt8: 11, string_id: 16560>  # String: 'containerInfo' (Identifier)
+==> 00000420: <GetById>: <Reg8: 12, Reg8: 12, UInt8: 12, string_id: 14459>  # String: 'publicInstance' (Identifier)
+==> 00000426: <JNotEqual>: <Addr8: 24, Reg8: 8, Reg8: 12>  # Address: 0000043e
+==> 0000042a: <GetById>: <Reg8: 12, Reg8: 13, UInt8: 13, string_id: 10144>  # String: '_nativeTag' (Identifier)
+==> 00000430: <Neq>: <Reg8: 9, Reg8: 8, Reg8: 12>
+==> 00000434: <LoadConstNull>: <Reg8: 12>
+==> 00000436: <JmpFalse>: <Addr8: 6, Reg8: 9>  # Address: 0000043c
+==> 00000439: <Mov>: <Reg8: 12, Reg8: 13>
+==> 0000043c: <Jmp>: <Addr8: 14>  # Address: 0000044a
+==> 0000043e: <GetById>: <Reg8: 16, Reg8: 13, UInt8: 11, string_id: 16560>  # String: 'containerInfo' (Identifier)
+==> 00000444: <GetById>: <Reg8: 12, Reg8: 16, UInt8: 12, string_id: 14459>  # String: 'publicInstance' (Identifier)
+==> 0000044a: <JmpLong>: <Addr32: 138>  # Address: 000004d4
+==> 0000044f: <GetByIdShort>: <Reg8: 16, Reg8: 13, UInt8: 10, string_id: 98>  # String: 'canonical' (Identifier)
+==> 00000454: <GetById>: <Reg8: 16, Reg8: 16, UInt8: 12, string_id: 14459>  # String: 'publicInstance' (Identifier)
+==> 0000045a: <JNotEqual>: <Addr8: 111, Reg8: 8, Reg8: 16>  # Address: 000004c9
+==> 0000045e: <GetByIdShort>: <Reg8: 16, Reg8: 13, UInt8: 10, string_id: 98>  # String: 'canonical' (Identifier)
+==> 00000463: <LoadFromEnvironment>: <Reg8: 21, Reg8: 15, UInt8: 0>
+==> 00000467: <GetById>: <Reg8: 20, Reg8: 21, UInt8: 14, string_id: 11536>  # String: 'createPublicInstance' (Identifier)
+==> 0000046d: <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 98>  # String: 'canonical' (Identifier)
+==> 00000472: <GetById>: <Reg8: 19, Reg8: 15, UInt8: 15, string_id: 10145>  # String: 'nativeTag' (Identifier)
+==> 00000478: <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 98>  # String: 'canonical' (Identifier)
+==> 0000047d: <GetById>: <Reg8: 18, Reg8: 15, UInt8: 16, string_id: 13288>  # String: 'viewConfig' (Identifier)
+==> 00000483: <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 98>  # String: 'canonical' (Identifier)
+==> 00000488: <GetById>: <Reg8: 17, Reg8: 15, UInt8: 17, string_id: 14992>  # String: 'internalInstanceHandle' (Identifier)
+==> 0000048e: <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 98>  # String: 'canonical' (Identifier)
+==> 00000493: <GetById>: <Reg8: 22, Reg8: 15, UInt8: 18, string_id: 14687>  # String: 'publicRootInstance' (Identifier)
+==> 00000499: <Neq>: <Reg8: 9, Reg8: 8, Reg8: 22>
+==> 0000049d: <LoadConstNull>: <Reg8: 15>
+==> 0000049f: <JmpFalse>: <Addr8: 6, Reg8: 9>  # Address: 000004a5
+==> 000004a2: <Mov>: <Reg8: 15, Reg8: 22>
+==> 000004a5: <Mov>: <Reg8: 33, Reg8: 21>
+==> 000004a8: <Mov>: <Reg8: 32, Reg8: 19>
+==> 000004ab: <Mov>: <Reg8: 31, Reg8: 18>
+==> 000004ae: <Mov>: <Reg8: 30, Reg8: 17>
+==> 000004b1: <Mov>: <Reg8: 29, Reg8: 15>
+==> 000004b4: <Call>: <Reg8: 15, Reg8: 20, UInt8: 5>
+==> 000004b8: <PutByIdStrict>: <Reg8: 16, Reg8: 15, UInt8: 0, string_id: 14459>  # String: 'publicInstance' (Identifier)
+==> 000004be: <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 98>  # String: 'canonical' (Identifier)
+==> 000004c3: <PutByIdStrict>: <Reg8: 15, Reg8: 8, UInt8: 1, string_id: 14687>  # String: 'publicRootInstance' (Identifier)
+==> 000004c9: <GetByIdShort>: <Reg8: 13, Reg8: 13, UInt8: 10, string_id: 98>  # String: 'canonical' (Identifier)
+==> 000004ce: <GetById>: <Reg8: 12, Reg8: 13, UInt8: 12, string_id: 14459>  # String: 'publicInstance' (Identifier)
+==> 000004d4: <Mov>: <Reg8: 11, Reg8: 12>
+==> 000004d7: <Ret>: <Reg8: 11>
+==> 000004d9: <GetGlobalObject>: <Reg8: 11>
+==> 000004db: <TryGetById>: <Reg8: 12, Reg8: 11, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 000004e1: <LoadConstString>: <Reg8: 11, string_id: 4336>  # String: 'Unable to find node on an unmounted component.' (String)
+==> 000004e5: <Call2>: <Reg8: 11, Reg8: 12, Reg8: 10, Reg8: 11>
+==> 000004ea: <Throw>: <Reg8: 11>
+==> 000004ec: <GetById>: <Reg8: 11, Reg8: 14, UInt8: 19, string_id: 7633>  # String: 'render' (Identifier)
+==> 000004f2: <JmpTypeOfIs>: <Addr32: 61, Reg8: 11, UInt16: 128>  # Address: 0000052f
+==> 000004fa: <GetGlobalObject>: <Reg8: 11>
+==> 000004fc: <TryGetById>: <Reg8: 13, Reg8: 11, UInt8: 20, string_id: 23>  # String: 'Object' (Identifier)
+==> 00000502: <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 21, string_id: 173>  # String: 'keys' (Identifier)
+==> 00000507: <Call2>: <Reg8: 14, Reg8: 12, Reg8: 13, Reg8: 14>
+==> 0000050c: <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 22, string_id: 167>  # String: 'join' (Identifier)
+==> 00000511: <LoadConstString>: <Reg8: 12, string_id: 575>  # String: ',' (String)
+==> 00000515: <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 12>
+==> 0000051a: <TryGetById>: <Reg8: 12, Reg8: 11, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000520: <LoadConstString>: <Reg8: 11, string_id: 1242>  # String: 'Argument appears to not be a ReactComponent. Keys: ' (String)
+==> 00000524: <Add>: <Reg8: 11, Reg8: 11, Reg8: 13>
+==> 00000528: <Call2>: <Reg8: 11, Reg8: 12, Reg8: 10, Reg8: 11>
+==> 0000052d: <Throw>: <Reg8: 11>
+==> 0000052f: <GetGlobalObject>: <Reg8: 11>
+==> 00000531: <TryGetById>: <Reg8: 12, Reg8: 11, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000537: <LoadConstString>: <Reg8: 11, string_id: 4336>  # String: 'Unable to find node on an unmounted component.' (String)
+==> 0000053b: <Call2>: <Reg8: 11, Reg8: 12, Reg8: 10, Reg8: 11>
+==> 00000540: <Throw>: <Reg8: 11>
+
+

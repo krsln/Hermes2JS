@@ -1,0 +1,39 @@
+
+=> [Function #9880 "finish" of 134 bytes]: 2 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x0020ccc6
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 9, UInt8: 0>
+==> 00000003: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000006: <GetById>: <Reg8: 6, Reg8: 9, UInt8: 0, string_id: 11325>  # String: 'tryEntries' (Identifier)
+==> 0000000c: <GetByIdShort>: <Reg8: 6, Reg8: 6, UInt8: 1, string_id: 177>  # String: 'length' (Identifier)
+==> 00000011: <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
+==> 00000014: <Sub>: <Reg8: 0, Reg8: 6, Reg8: 2>
+==> 00000018: <LoadConstZero>: <Reg8: 3>
+==> 0000001a: <JNotLessEqualN>: <Addr8: 35, Reg8: 3, Reg8: 0>  # Address: 0000003d
+==> 0000001e: <GetById>: <Reg8: 6, Reg8: 9, UInt8: 0, string_id: 11325>  # String: 'tryEntries' (Identifier)
+==> 00000024: <GetByVal>: <Reg8: 7, Reg8: 6, Reg8: 0>
+==> 00000028: <GetById>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 11291>  # String: 'finallyLoc' (Identifier)
+==> 0000002e: <Mov>: <Reg8: 1, Reg8: 0>
+==> 00000031: <JStrictEqual>: <Addr8: 16, Reg8: 6, Reg8: 5>  # Address: 00000041
+==> 00000035: <SubN>: <Reg8: 0, Reg8: 1, Reg8: 2>
+==> 00000039: <JLessEqualN>: <Addr8: -27, Reg8: 3, Reg8: 0>  # Address: 0000001e
+==> 0000003d: <LoadConstUndefined>: <Reg8: 4>
+==> 0000003f: <Ret>: <Reg8: 4>
+==> 00000041: <GetById>: <Reg8: 8, Reg8: 9, UInt8: 3, string_id: 8566>  # String: 'complete' (Identifier)
+==> 00000047: <GetById>: <Reg8: 6, Reg8: 7, UInt8: 4, string_id: 16536>  # String: 'completion' (Identifier)
+==> 0000004d: <GetById>: <Reg8: 5, Reg8: 7, UInt8: 5, string_id: 14399>  # String: 'afterLoc' (Identifier)
+==> 00000053: <Call3>: <Reg8: 5, Reg8: 8, Reg8: 9, Reg8: 6, Reg8: 5>
+==> 00000059: <GetById>: <Reg8: 6, Reg8: 7, UInt8: 4, string_id: 16536>  # String: 'completion' (Identifier)
+==> 0000005f: <JmpTrue>: <Addr8: 5, Reg8: 6>  # Address: 00000064
+==> 00000062: <NewObject>: <Reg8: 6>
+==> 00000064: <GetParentEnvironment>: <Reg8: 5, UInt8: 0>
+==> 00000067: <LoadConstString>: <Reg8: 8, string_id: 7467>  # String: 'normal' (Identifier)
+==> 0000006b: <PutByIdStrict>: <Reg8: 6, Reg8: 8, UInt8: 0, string_id: 1>  # String: 'type' (Identifier)
+==> 00000071: <LoadConstString>: <Reg8: 8, string_id: 7355>  # String: 'arg' (Identifier)
+==> 00000075: <DelByVal>: <Reg8: 4, Reg8: 6, Reg8: 8, UInt8: 1>
+==> 0000007a: <PutByIdStrict>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 16536>  # String: 'completion' (Identifier)
+==> 00000080: <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 11>
+==> 00000084: <Ret>: <Reg8: 5>
+
+

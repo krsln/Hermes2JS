@@ -144,3 +144,46 @@ def is_constant_comparison(condition) -> bool:
             and (isinstance(condition.right, (Literal, UndefinedLiteral))
                  or isinstance(condition.left, (Literal, UndefinedLiteral)))
     )
+
+
+def same_case_subject(condition, other) -> bool:
+    """Do two constant comparisons test the same value (`x === 3`, `x === 4`)?
+
+    A `case` chain tests ONE discriminant; `typeof v === "object"` next to
+    `v === null` are two ordinary tests that merely both use a constant.
+    """
+
+    def subject(c):
+        if not is_constant_comparison(c):
+            return None
+
+        return c.left if isinstance(c.right, (Literal, UndefinedLiteral)) else c.right
+
+    a, b = subject(condition), subject(other)
+
+    return a is not None and b is not None and a.structurally_equal(b)
+
+
+def same_constant_test(condition, other) -> bool:
+    """Do two constant comparisons test the same value against the SAME constant (`0 !== r6`, `0 === r6`)?
+
+    A `case` chain tests one discriminant against DIFFERENT constants; the same constant twice is a
+    re-test of a value the code recomputed in between (98/2618: `r6 = lanes & childLanes` again)."""
+
+    if not (is_constant_comparison(condition) and is_constant_comparison(other)):
+        return False
+
+    def constant(c):
+        return c.right if isinstance(c.right, (Literal, UndefinedLiteral)) else c.left
+
+    return same_case_subject(condition, other) and constant(condition).structurally_equal(constant(other))
+
+
+def is_typeof_test(condition) -> bool:
+    """Is `condition` a comparison of `typeof x` with a constant (`typeof x === "object"`)?"""
+    if not is_constant_comparison(condition):
+        return False
+
+    subject = condition.left if isinstance(condition.right, (Literal, UndefinedLiteral)) else condition.right
+
+    return isinstance(subject, UnaryExpression) and subject.operator == UnaryOperator.TYPEOF

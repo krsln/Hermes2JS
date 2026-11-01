@@ -1,0 +1,44 @@
+
+=> [Function #10211 "isAnimationTerminatingCalculation" of 148 bytes]: 3 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x001f0264
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 1, UInt8: 2>
+==> 00000006: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 242>  # String: 'toValue' (Identifier)
+==> 0000000b: <GetById>: <Reg8: 7, Reg8: 3, UInt8: 2, string_id: 10703>  # String: 'velocity' (Identifier)
+==> 00000011: <GetById>: <Reg8: 8, Reg8: 3, UInt8: 3, string_id: 7872>  # String: 'startValue' (Identifier)
+==> 00000017: <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 93>  # String: 'current' (Identifier)
+==> 0000001c: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 10956>  # String: 'initialEnergy' (Identifier)
+==> 00000022: <GetById>: <Reg8: 4, Reg8: 1, UInt8: 6, string_id: 10957>  # String: 'overshootClamping' (Identifier)
+==> 00000028: <JmpFalse>: <Addr8: 47, Reg8: 4>  # Address: 00000057
+==> 0000002b: <LoadConstZero>: <Reg8: 4>
+==> 0000002d: <Mov>: <Reg8: 5, Reg8: 2>
+==> 00000030: <JGreaterEqual>: <Addr8: 8, Reg8: 8, Reg8: 4>  # Address: 00000038
+==> 00000034: <Add>: <Reg8: 5, Reg8: 2, Reg8: 8>
+==> 00000038: <GetGlobalObject>: <Reg8: 4>
+==> 0000003a: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 7, string_id: 21>  # String: 'Math' (Identifier)
+==> 00000040: <GetById>: <Reg8: 4, Reg8: 6, UInt8: 8, string_id: 7416>  # String: 'abs' (Identifier)
+==> 00000046: <Call2>: <Reg8: 4, Reg8: 4, Reg8: 6, Reg8: 8>
+==> 0000004b: <Add>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 0000004f: <JLess>: <Addr8: 65, Reg8: 0, Reg8: 5>  # Address: 00000090
+==> 00000053: <JGreater>: <Addr8: 61, Reg8: 0, Reg8: 4>  # Address: 00000090
+==> 00000057: <GetEnvironment>: <Reg8: 4, UInt8: 0>
+==> 0000005a: <LoadFromEnvironment>: <Reg8: 6, Reg8: 4, UInt8: 0>
+==> 0000005e: <Sub>: <Reg8: 12, Reg8: 2, Reg8: 0>
+==> 00000062: <GetById>: <Reg8: 10, Reg8: 1, UInt8: 9, string_id: 10184>  # String: 'stiffness' (Identifier)
+==> 00000068: <GetById>: <Reg8: 9, Reg8: 1, UInt8: 10, string_id: 10186>  # String: 'mass' (Identifier)
+==> 0000006e: <LoadConstUndefined>: <Reg8: 13>
+==> 00000070: <Mov>: <Reg8: 11, Reg8: 7>
+==> 00000073: <Call>: <Reg8: 2, Reg8: 6, UInt8: 5>
+==> 00000077: <LoadConstZero>: <Reg8: 0>
+==> 00000079: <StrictEq>: <Reg8: 0, Reg8: 3, Reg8: 0>
+==> 0000007d: <JmpTrue>: <Addr8: 17, Reg8: 0>  # Address: 0000008e
+==> 00000080: <Div>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 00000084: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 11, string_id: 12625>  # String: 'energyThreshold' (Identifier)
+==> 0000008a: <LessEq>: <Reg8: 0, Reg8: 2, Reg8: 1>
+==> 0000008e: <Ret>: <Reg8: 0>
+==> 00000090: <LoadConstTrue>: <Reg8: 0>
+==> 00000092: <Ret>: <Reg8: 0>
+
+

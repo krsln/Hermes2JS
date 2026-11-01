@@ -1,0 +1,18 @@
+
+=> [Function #9349 "cmp" of 100 bytes]: 5 params, frame size=7, strict=1, exc handler=0, debug info=0  @ offset 0x00000000
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 2, UInt8: 3>
+==> 00000139: <TypeOf>: <Reg8: 3, Reg8: 0>
+==> 0000013c: <LoadConstString>: <Reg8: 4, string_id: 7532>  # String: 'object' (Identifier)
+==> 00000140: <Mov>: <Reg8: 1, Reg8: 0>
+==> 00000143: <JStrictNotEqual>: <Addr8: 10, Reg8: 3, Reg8: 4>  # Address: 0000014d
+==> 00000147: <GetById>: <Reg8: 1, Reg8: 0, UInt8: 5, string_id: 8051>  # String: 'version' (Identifier)
+==> 0000014d: <TypeOf>: <Reg8: 3, Reg8: 2>
+==> 00000150: <Mov>: <Reg8: 0, Reg8: 2>
+==> 00000153: <JStrictNotEqual>: <Addr8: 10, Reg8: 3, Reg8: 4>  # Address: 0000015d
+==> 00000157: <GetById>: <Reg8: 0, Reg8: 2, UInt8: 5, string_id: 8051>  # String: 'version' (Identifier)
+==> 0000015d: <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 00000161: <Ret>: <Reg8: 0>
