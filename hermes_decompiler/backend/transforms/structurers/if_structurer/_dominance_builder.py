@@ -11,11 +11,10 @@ from hermes_decompiler.backend.transforms.shared import negate_condition, is_loo
 from hermes_decompiler.backend.transforms.structurers import RegionStructurer
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral
-from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorReturn
 from ._predicates import (
-    is_backward_branch, is_constant_comparison, representative_block, same_case_subject, same_constant_test,
+    is_backward_branch, is_constant_comparison, is_typeof_test, representative_block, same_case_subject,
+    same_constant_test,
 )
 
 logger = get_logger(__name__)
@@ -521,14 +520,20 @@ class _DominanceIfBuilder(RegionStructurer):
 
     def _arm_retests_constant(self, then_entry: BasicBlock, goto_block: BasicBlock, condition) -> bool:
         """True if a test inside the fallthrough arm compares the same value with the SAME constant as
-        `condition` and falls into `goto_block` (`if (0 !== r6) goto T; ...; r6 = f(); if (0 === r6) ...; T:`)."""
+        `condition` and falls into `goto_block` (`if (0 !== r6) goto T; ...; r6 = f(); if (0 === r6) ...; T:`), or
+        if `condition` is a `typeof` test and the arm's test is of anything else."""
         dominators = self.cfg.dominator_tree
 
         return any(
             isinstance(pred.terminator, TerminatorConditionalBranch)
             and pred.terminator.target != goto_block.address
             and dominators.dominates(then_entry, pred)
-            and same_constant_test(condition, pred.terminator.condition)
+            and (
+                    same_constant_test(condition, pred.terminator.condition)
+                    # `typeof x !== "object"` is a kind test, never a `case` label: any other test of the arm
+                    # that falls into the target makes the target the join (98/4239 `keyExtractor`).
+                    or (is_typeof_test(condition) and not same_case_subject(condition, pred.terminator.condition))
+            )
             for pred in goto_block.predecessors
         )
 

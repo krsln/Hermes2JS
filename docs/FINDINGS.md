@@ -65,6 +65,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-10-31 | after F-180 (the tests after a restored `case` jump join the same `\|\|`) | 198 | 218 | n/a | n/a | 1090 passed |
 | 2026-10-31 | after F-181 (an arm that re-tests the same constant makes the branch target the join) | 193 | 217 | n/a | n/a | 1092 passed |
 | 2026-11-01 | after F-182 (a guard that jumps past a `throw` inside a freshly built arm folds) | 193 | 213 | n/a | n/a | 1096 passed |
+| 2026-11-01 | after F-183 (a `typeof` test whose arm's own test falls into its target) | 193 | 211 | n/a | n/a | 1098 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -107,6 +108,7 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 - **F-151 Doubled left operand in a boolean chain (resolved as F-173, see the archive).**
 
 - **F-179 A `case`-chain test that does not become a `switch` lost its jump (resolved, see the archive).**
+- **F-184 `IfTailMergeRegionPass` hoists the `return` of a block a raw guard still jumps to (latent; 98/6630 and 96/13834 `getInitialURL` once a guard made the arms share a join).** The two arms of an `if` end in `r1 = X; return r1`; the pass moves the common `return r1` behind the `if`. When the else arm's last block is also the target of a raw `if (c) goto RET` (one predecessor), `GuardExitRegionPass` later moves that block into the guard's `if` WITHOUT its `return`, so the guard falls on into the code after it (`if (r3) { r1 = window.location.href }` followed by the native path; the bytecode returns there). Seen only after widening F-183's rule to every constant comparison (not merged). Skipping the hoist for such a block (`predecessors == [one raw jumper]`) is right but restyled 48 files in 96 / 58 in 98 (half of them without any `goto`: shared tails became repeated `r3 = ...; return r3`, 96/437 and 98/12590 `read` count one more unassigned read); running `GuardExitRegionPass` before the pass broke `test_arm_runs_into_shared_return`. A fix has to let the moved block keep (or get back) its `return`: `tail_origins` already records the original instruction of the hoisted copy.
 - **F-10 Conditional jump to an exit block.** `if (c) goto finalReturn`: conditional jumps to a shared
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
   (F-113, F-114, F-115, F-117, F-119, and (a) below). Left: (b) jumps whose target is not a `return`

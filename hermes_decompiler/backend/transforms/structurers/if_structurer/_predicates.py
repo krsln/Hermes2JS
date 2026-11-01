@@ -177,3 +177,13 @@ def same_constant_test(condition, other) -> bool:
         return c.right if isinstance(c.right, (Literal, UndefinedLiteral)) else c.left
 
     return same_case_subject(condition, other) and constant(condition).structurally_equal(constant(other))
+
+
+def is_typeof_test(condition) -> bool:
+    """Is `condition` a comparison of `typeof x` with a constant (`typeof x === "object"`)?"""
+    if not is_constant_comparison(condition):
+        return False
+
+    subject = condition.left if isinstance(condition.right, (Literal, UndefinedLiteral)) else condition.right
+
+    return isinstance(subject, UnaryExpression) and subject.operator == UnaryOperator.TYPEOF

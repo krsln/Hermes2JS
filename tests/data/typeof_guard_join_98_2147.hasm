@@ -1,0 +1,39 @@
+
+=> [Function #2147 "processColor" of 120 bytes]: 2 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x0015e8eb
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 3>
+==> 00000005: <JStrictEqual>: <Addr8: 113, Reg8: 5, Reg8: 3>  # Address: 00000076
+==> 00000009: <LoadConstNull>: <Reg8: 4>
+==> 0000000b: <JStrictEqual>: <Addr8: 107, Reg8: 5, Reg8: 4>  # Address: 00000076
+==> 0000000f: <GetParentEnvironment>: <Reg8: 6, UInt8: 0>
+==> 00000012: <LoadFromEnvironment>: <Reg8: 7, Reg8: 6, UInt8: 2>
+==> 00000016: <Call2>: <Reg8: 7, Reg8: 7, Reg8: 3, Reg8: 5>
+==> 0000001b: <JStrictEqual>: <Addr8: 89, Reg8: 7, Reg8: 4>  # Address: 00000074
+==> 0000001f: <JStrictEqual>: <Addr8: 85, Reg8: 7, Reg8: 3>  # Address: 00000074
+==> 00000023: <JmpTypeOfIs>: <Addr32: 40, Reg8: 7, UInt16: 253>  # Address: 0000004b
+==> 0000002b: <LoadFromEnvironment>: <Reg8: 8, Reg8: 6, UInt8: 0>
+==> 0000002f: <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 1>
+==> 00000033: <GetByIndex>: <Reg8: 6, Reg8: 6, UInt8: 2>
+==> 00000037: <Call2>: <Reg8: 6, Reg8: 8, Reg8: 3, Reg8: 6>
+==> 0000003c: <GetById>: <Reg8: 6, Reg8: 6, UInt8: 0, string_id: 17859>  # String: 'processColorObject' (Identifier)
+==> 00000042: <Call2>: <Reg8: 6, Reg8: 6, Reg8: 3, Reg8: 7>
+==> 00000047: <JNotEqual>: <Addr8: 43, Reg8: 6, Reg8: 4>  # Address: 00000072
+==> 0000004b: <JmpTypeOfIs>: <Addr32: 37, Reg8: 7, UInt16: 479>  # Address: 00000070
+==> 00000053: <LoadConstUInt8>: <Reg8: 0, UInt8: 24>
+==> 00000056: <LShift>: <Reg8: 1, Reg8: 7, Reg8: 0>
+==> 0000005a: <LoadConstUInt8>: <Reg8: 0, UInt8: 8>
+==> 0000005d: <URshift>: <Reg8: 0, Reg8: 7, Reg8: 0>
+==> 00000061: <LoadConstZero>: <Reg8: 2>
+==> 00000063: <BitOr>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 00000067: <URshift>: <Reg8: 0, Reg8: 0, Reg8: 2>
+==> 0000006b: <ToInt32>: <Reg8: 0, Reg8: 0>
+==> 0000006e: <Ret>: <Reg8: 0>
+==> 00000070: <Ret>: <Reg8: 4>
+==> 00000072: <Ret>: <Reg8: 6>
+==> 00000074: <Ret>: <Reg8: 3>
+==> 00000076: <Ret>: <Reg8: 5>
+
+
