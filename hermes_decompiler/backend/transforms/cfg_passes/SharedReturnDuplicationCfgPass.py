@@ -117,6 +117,16 @@ class SharedReturnDuplicationCfgPass:
 
         limit = self._MAX_TAIL if self.statements else self._MAX_LEAD + 1
 
+        # The last rung only runs for functions every earlier one left with a `goto`: a longer tail
+        # (`Object.assign(a, { [k]: v }); return` is seven instructions, 98/10767) is worth its copy there,
+        # when only jumps reach it. With a fall-through into it the paths may hold different values for what
+        # it reads (98/2844: `r4.decodedBodySize = r5` after `r5 = 0` / `r5 = v`).
+        if (
+                self.statements and self.own_values
+                and all(self._jumps_to(p, block) for p in block.predecessors)
+        ):
+            limit = self._MAX_TAIL_LAST_RUNG
+
         # `throw new RangeError("...")` is ten instructions (`CreateThis`, `Construct`,
         # `SelectObject`, ...) but one statement once printed: a shared one is worth copying.
         if self.statements and isinstance(block.terminator, TerminatorThrow):
@@ -158,6 +168,7 @@ class SharedReturnDuplicationCfgPass:
 
     _MAX_LEAD = 2
     _MAX_TAIL = 6
+    _MAX_TAIL_LAST_RUNG = 9
     _MAX_THROW = 16
 
     _REGISTER_NAME = re.compile(r"r(\d+)")
