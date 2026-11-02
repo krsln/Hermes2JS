@@ -81,6 +81,10 @@ class SharedTailDuplicationCfgPass:
 
             if self.per_predecessor and self._split_per_predecessor(tail):
                 copied += 1
+                continue
+
+            if self.per_predecessor and self._copy_for_the_second_jumper(tail):
+                copied += 1
 
         return copied
 
@@ -315,6 +319,65 @@ class SharedTailDuplicationCfgPass:
         blocks[position:position] = [clones[b] for b in region]
 
     # -- one copy per way in -------------------------------------------------------
+
+    def _copy_for_the_second_jumper(self, tail: BasicBlock) -> bool:
+        """`if (A) goto T; ...; if (B) goto T; ...; T: x; END:` - two tests jump to the same short tail, which
+        runs on into `END`. `A || B` cannot be one condition when statements of the else arm stand in front of
+        `B` (98/13588 `get`: `r4 = env[1]` is read by the test), so the later test gets its own copy of the tail
+        and the earlier one keeps the original. The last rung only: on a function that structures without it,
+        the copy breaks an `||` chain apart."""
+        blocks = self.cfg.blocks
+
+        if tail not in blocks or len(tail.predecessors) != 2 or not 1 <= len(tail.instructions) <= 6:
+            return False
+        if tail.terminator is not None and not isinstance(tail.terminator, TerminatorJump):
+            return False
+        if any(i.terminator is not None and i.terminator is not tail.terminator for i in tail.instructions):
+            return False
+        if len(tail.successors) != 1 or tail.successors[0].address <= tail.address:
+            return False
+
+        first, second = sorted(tail.predecessors, key=lambda b: b.address)
+
+        for pred in (first, second):
+            terminator = pred.terminator
+            if not isinstance(terminator, TerminatorConditionalBranch):
+                return False
+            if terminator.target != tail.address or terminator.target <= pred.address:
+                return False
+
+        # Nothing falls into the tail: the two jumps are its only ways in, and `second` is a different test.
+        if first is second or any(b.address == tail.address - 1 for b in blocks):
+            return False
+
+        end = tail.successors[0]
+        clone = BasicBlock(max(b.id for b in blocks) + 1, tail.address - 1)
+
+        for instruction in tail.instructions:
+            duplicate = copy.copy(instruction)
+            duplicate.value = copy.deepcopy(instruction.value)
+            duplicate.statement = copy.deepcopy(instruction.statement)
+            duplicate.terminator = None
+            clone.instructions.append(duplicate)
+
+        clone.terminator = TerminatorJump(target=end.address)
+        clone.successors = [end]
+        clone.predecessors = [second]
+        end.predecessors.append(clone)
+
+        retargeted = dataclasses.replace(second.terminator, target=clone.address)
+        for instruction in second.instructions:
+            if instruction.terminator is second.terminator:
+                instruction.terminator = retargeted
+        second.terminator = retargeted
+        second.successors = [clone if s is tail else s for s in second.successors]
+        tail.predecessors.remove(second)
+
+        self._name_the_register_after_the_join(tail, [clone], blocks)
+
+        blocks.insert(blocks.index(tail), clone)
+
+        return True
 
     def _split_per_predecessor(self, tail: BasicBlock) -> bool:
         blocks = self.cfg.blocks
