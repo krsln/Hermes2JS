@@ -43,7 +43,8 @@ def test_a_parameter_iterable_is_a_for_of():
 def test_the_back_edge_copy_and_the_close_on_break_are_scaffolding():
     out = _render("for_of_param_iterable_98_5425.hasm", 5425)
 
-    assert "for (const r8 of r4) {" in out
+    # the body reuses r8 for the call result (`r8 = _loop.call(0, r8)`): a `let`, a `const` cannot be assigned (F-192)
+    assert "for (let r8 of r4) {" in out
     assert "goto" not in out
     assert ".return()" not in out
     assert "break;" in out

@@ -40,5 +40,5 @@ def test_a_break_out_of_a_guarded_body_stays_in_the_for_of():
 def test_a_return_in_a_guarded_body_leaves_no_finally_close():
     out = _render("for_of_return_in_guarded_try_96_13412.hasm", 13412)
 
-    assert "for (const r9 of r6) {" in out
+    assert "for (let r9 of r6) {" in out
     assert "finally" not in out and "GetIterator" not in out and ".return()" not in out

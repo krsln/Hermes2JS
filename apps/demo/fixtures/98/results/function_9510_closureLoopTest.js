@@ -41,7 +41,7 @@ function closureLoopTest() {
     // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (for_of)
-    for (const r4 of r2) {
+    for (let r4 of r2) {
         // ──────────────── Block 4 ──────────────── 
         // CODE → addr: 83 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = console;
