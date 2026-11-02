@@ -487,6 +487,7 @@ class _DominanceIfBuilder(RegionStructurer):
 
         if_region = IfRegion()
         if_region.condition = condition
+        if_region.source_block = block
         if_region.then_body = then_body
         if_region.else_body = else_body
 

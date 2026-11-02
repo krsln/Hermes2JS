@@ -1,0 +1,34 @@
+
+=> [Function #171 "" of 99 bytes]: 8 params, frame size=17, strict=1, exc handler=1, debug info=0  @ offset 0x000ff145
+  [Exception handlers: [start=0x3a, end=0x4b, target=0x4b] ]
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 3>
+==> 00000003: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000006: <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
+==> 0000000a: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 0000000d: <StoreToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 4>
+==> 00000011: <LoadParam>: <Reg8: 3, UInt8: 7>
+==> 00000014: <StoreToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 3>
+==> 00000018: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001a: <LoadConstUndefined>: <Reg8: 2>
+==> 0000001c: <GetByIndex>: <Reg8: 5, Reg8: 3, UInt8: 0>
+==> 00000020: <Call2>: <Reg8: 5, Reg8: 4, Reg8: 0, Reg8: 5>
+==> 00000025: <GetById>: <Reg8: 6, Reg8: 5, UInt8: 0, string_id: 7329>  # String: 'hasNativeConstructor' (Identifier)
+==> 0000002b: <GetByIndex>: <Reg8: 3, Reg8: 3, UInt8: 1>
+==> 0000002f: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
+==> 00000034: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 1, string_id: 9761>  # String: 'polyfillGlobal' (Identifier)
+==> 0000003a: <LoadConstString>: <Reg8: 5, string_id: 3347>  # String: 'GeneratorFunction' (String)
+==> 0000003e: <CreateClosure>: <Reg8: 4, Reg8: 0, function_id: 2972>  # Function: [#2972  of 16 bytes]: 1 params @ offset 0x00183942
+==> 00000043: <Call3>: <Reg8: 2, Reg8: 6, Reg8: 0, Reg8: 4, Reg8: 5>
+==> 00000049: <Jmp>: <Addr8: 6>  # Address: 0000004f
+==> 0000004b: <Catch>: <Reg8: 4>
+==> 0000004d: <LoadConstFalse>: <Reg8: 2>
+==> 0000004f: <JmpTrue>: <Addr8: 18, Reg8: 2>  # Address: 00000061
+==> 00000052: <LoadConstString>: <Reg8: 2, string_id: 13888>  # String: 'regeneratorRuntime' (Identifier)
+==> 00000056: <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 2973>  # Function: [#2973  of 37 bytes]: 1 params @ offset 0x00183952
+==> 0000005b: <Call3>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
+==> 00000061: <Ret>: <Reg8: 0>
+
+

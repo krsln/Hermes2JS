@@ -234,6 +234,7 @@ class _HandlerBuilder:
             lca_seq,
             handler_idx,
             stop_at,
+            self._shared_stop_blocks(handler_block, stop_at),
         )
 
         # Splice out the catch content FIRST (it sits at a position
@@ -325,6 +326,32 @@ class _HandlerBuilder:
             return set()
 
         return {merge_block}
+
+    # -------------------------------------------------------------
+
+    def _shared_stop_blocks(self, handler_block: BasicBlock, stop_at: set) -> set:
+        """The stop blocks the normal flow reaches too (the handler does not dominate them) and that go on to
+        something other than the catch's own `throw` (`catch (e) { if (it) it.return(); throw e }` ends in one)."""
+        dominators = self.cfg.dominator_tree
+        post_dominators = self.cfg.post_dominator_tree
+
+        if dominators is None or post_dominators is None:
+            return set()
+
+        shared = set()
+
+        for block in stop_at:
+            if dominators.dominates(handler_block, block):
+                continue
+
+            after = post_dominators.immediate_post_dominator(block)
+
+            if after is not None and isinstance(after.terminator, TerminatorThrow):
+                continue
+
+            shared.add(block)
+
+        return shared
 
     # -------------------------------------------------------------
 
@@ -740,7 +767,8 @@ class _HandlerBuilder:
     # -------------------------------------------------------------
 
     @staticmethod
-    def _find_catch_boundary(region: SequenceRegion, start: int, stop_at: set) -> int:
+    def _find_catch_boundary(region: SequenceRegion, start: int, stop_at: set,
+                             shared_stop_at: set = frozenset()) -> int:
 
         index = start
 
@@ -749,6 +777,13 @@ class _HandlerBuilder:
             item = region.children[index]
 
             if item in stop_at:
+                return index
+
+            # The merge block may be a test that became an `IfRegion` (`try { r = f() } catch { r = false }
+            # if (!r) ...`): its emptied block left the tree, the region that replaced it is the boundary. Only
+            # when the normal flow reaches it as well: a test only the handler reaches is the catch's own
+            # (`catch (e) { if (it) it.return(); throw e }`).
+            if getattr(item, "source_block", None) in shared_stop_at:
                 return index
 
             if (
