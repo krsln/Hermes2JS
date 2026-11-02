@@ -318,6 +318,19 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                     header.id, latch.id, latch.address,
                 )
 
+        # The last block of the body may be a COPY of a latch (a pass that gave a branch its own `continue`
+        # block clones it; `loop.latches` still holds the original, 98/5425): a jump to the header that ends
+        # the body is the back edge as well.
+        last = loop.body.children[-1] if loop.body.children else None
+
+        if (
+                isinstance(last, BasicBlock)
+                and isinstance(last.terminator, TerminatorJump)
+                and last.terminator.target == header.address
+                and last not in loop.latches
+        ):
+            self._clear_trailing_jump(last, last.terminator)
+
     def _strip_try_exit_jumps(self, node: TryRegion) -> None:
         exit_address = self._next_fallthrough_address(node)
 

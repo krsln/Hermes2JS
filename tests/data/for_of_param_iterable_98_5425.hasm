@@ -1,0 +1,43 @@
+
+=> [Function #5425 "matchAgainstConfigs" of 113 bytes]: 3 params, frame size=19, strict=1, exc handler=1, debug info=0  @ offset 0x001b3dba
+  [Exception handlers: [start=0x33, end=0x48, target=0x52] [start=0x50, end=0x52, target=0x52] ]
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 3>
+==> 00000003: <LoadParam>: <Reg8: 0, UInt8: 2>
+==> 00000006: <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
+==> 0000000a: <LoadConstUndefined>: <Reg8: 6>
+==> 0000000c: <LoadConstUndefined>: <Reg8: 7>
+==> 0000000e: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000011: <StoreToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 2>
+==> 00000015: <CreateClosure>: <Reg8: 5, Reg8: 1, function_id: 10772>  # Function: [#10772 _loop of 113 bytes]: 2 params @ offset 0x0021e51c
+==> 0000001a: <Mov>: <Reg8: 4, Reg8: 0>
+==> 0000001d: <IteratorBegin>: <Reg8: 2, Reg8: 4>
+==> 00000020: <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
+==> 00000023: <LoadConstZero>: <Reg8: 0>
+==> 00000025: <Mov>: <Reg8: 8, Reg8: 4>
+==> 00000028: <IteratorNext>: <Reg8: 8, Reg8: 2, Reg8: 8>
+==> 0000002c: <Mov>: <Reg8: 9, Reg8: 2>
+==> 0000002f: <JStrictEqual>: <Addr8: 42, Reg8: 9, Reg8: 6>  # Address: 00000059
+==> 00000033: <Call2>: <Reg8: 8, Reg8: 5, Reg8: 0, Reg8: 8>
+==> 00000038: <Mov>: <Reg8: 7, Reg8: 8>
+==> 0000003b: <JStrictEqual>: <Addr8: 21, Reg8: 8, Reg8: 0>  # Address: 00000050
+==> 0000003f: <Mov>: <Reg8: 8, Reg8: 7>
+==> 00000042: <JStrictEqual>: <Addr8: 6, Reg8: 8, Reg8: 3>  # Address: 00000048
+==> 00000046: <Jmp>: <Addr8: -33>  # Address: 00000025
+==> 00000048: <Mov>: <Reg8: 8, Reg8: 2>
+==> 0000004b: <IteratorClose>: <Reg8: 8, UInt8: 0>
+==> 0000004e: <Jmp>: <Addr8: 11>  # Address: 00000059
+==> 00000050: <Jmp>: <Addr8: -43>  # Address: 00000025
+==> 00000052: <Catch>: <Reg8: 0>
+==> 00000054: <IteratorClose>: <Reg8: 2, UInt8: 1>
+==> 00000057: <Throw>: <Reg8: 0>
+==> 00000059: <NewObjectWithBuffer>: <Reg8: 0, UInt16: 1287, UInt16: 17356>  # Object: {'routes': null, 'remainingPath': null}
+==> 0000005f: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 1>
+==> 00000063: <PutOwnBySlotIdx>: <Reg8: 0, Reg8: 2, UInt8: 0>
+==> 00000067: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 2>
+==> 0000006b: <PutOwnBySlotIdx>: <Reg8: 0, Reg8: 1, UInt8: 1>
+==> 0000006f: <Ret>: <Reg8: 0>
+
+

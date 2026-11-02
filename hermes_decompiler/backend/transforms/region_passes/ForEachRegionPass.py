@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from types import SimpleNamespace
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
@@ -39,7 +40,14 @@ def _is_plain_register_copy(instr) -> bool:
     anywhere else, where it could easily carry real meaning (e.g.
     aliasing a parameter for later use).
     """
-    return instr.value is not None and is_bare_register(instr.value)
+    value = instr.value
+
+    # The iterable may already be named when the priming copy is read (`r4 = param2; ... r8 = r4`, 98/5425
+    # `matchAgainstConfigs`: the copy folded into `r8 = param2`).
+    return value is not None and (
+            is_bare_register(value)
+            or (isinstance(value, Identifier) and re.fullmatch(r"param\d+", value.name) is not None)
+    )
 
 
 class ForEachRegionPass(RegionPass, RegionVisitor):
@@ -700,6 +708,24 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
                 if before_break or before_return:
                     del instructions[index]
+
+                    continue
+
+            # `r8 = r2; r8.return(); break;`: the close reads the iterator through a scratch copy (98/5425).
+            for index in range(len(instructions) - 2, 0, -1):
+                copy, close, rest = instructions[index - 1], instructions[index], instructions[index + 1:]
+
+                if (
+                        _is_plain_register_copy(copy)
+                        and isinstance(copy.value, Identifier)
+                        and isinstance(iterator_ref, Identifier)
+                        and copy.value.name == iterator_ref.name
+                        and copy.dest_reg is not None
+                        and self._is_close_call(close, Identifier(name=f"r{copy.dest_reg}"))
+                        and len(rest) == 1
+                        and isinstance(rest[0].statement, BreakStatement)
+                ):
+                    del instructions[index - 1:index + 1]
 
     @staticmethod
     def _strip_instruction(block: BasicBlock, instr) -> None:
