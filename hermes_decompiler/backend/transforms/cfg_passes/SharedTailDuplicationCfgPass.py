@@ -54,12 +54,17 @@ class SharedTailDuplicationCfgPass:
         self.regions = regions
 
     def run(self) -> int:
-        if self.cfg.exception_handlers:
-            return 0
+        # A copy sits outside every try range: fine for a tail whose test and ways in all lie outside
+        # them (98/13397 `loadRoute`: the `try` is the first thing of the function, the tail is far behind
+        # it), wrong for anything a handler protects or starts at.
+        protected = self._protected_blocks()
 
         copied = 0
 
         for tail in list(self.cfg.blocks):
+            if protected and (tail in protected or any(p in protected for p in tail.predecessors)):
+                continue
+
             faller = self._faller_that_skips(tail)
 
             if faller is not None:
@@ -78,6 +83,16 @@ class SharedTailDuplicationCfgPass:
                 copied += 1
 
         return copied
+
+    def _protected_blocks(self) -> set[BasicBlock]:
+        """Every block a handler protects or starts at (the fragments of a merged range are not looked at:
+        the set is only ever too big)."""
+        return {
+            block
+            for handler in self.cfg.exception_handlers
+            for block in (*handler.get("try_blocks", ()), handler.get("handler_block"))
+            if block is not None
+        }
 
     def _faller_that_skips(self, tail: BasicBlock) -> BasicBlock | None:
         if len(tail.instructions) > self._MAX_INSTRUCTIONS or len(tail.predecessors) < 2:
