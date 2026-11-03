@@ -39,6 +39,11 @@ class ConditionalContinueRegionPass(RegionPass, RegionVisitor):
     def _convert_loop(self, loop: LoopRegion) -> None:
         target = loop.continue_target
 
+        # A loop with no test of its own and no update (`while (true) { ... }` over a `for-in`'s
+        # `GetNextPName`): the next iteration starts at the header (98/2493 `recomputePluginOrdering`).
+        if target is None and loop.condition is None and loop.update_block is None:
+            target = loop.header_block
+
         if target is None:
             return
 
