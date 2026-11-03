@@ -288,7 +288,8 @@ class LoopBreakStructurer(RegionStructurer):
             # relocating at all. See Shape D below.
             if self._is_loops_own_merge_block(loop, block, exit_block):
                 return self._convert_bare_break(
-                    loop, block, branch, condition, forwarded=self._exit_is_forwarded(loop, exit_block),
+                    loop, block, branch, condition,
+                    forwarded=len(block.instructions) > 1 and self._exit_is_forwarded(loop, exit_block),
                 )
 
             logger.debug(
@@ -529,7 +530,9 @@ class LoopBreakStructurer(RegionStructurer):
             ):
                 return False
 
-        if self._exit_is_forwarded(loop, exit_block):
+        # Not for a block that holds nothing but the branch: once stripped it is no block in the tree, and the
+        # arms that jump to it lose their join (98/2620 `appendAllChildren`).
+        if len(block.instructions) > 1 and self._exit_is_forwarded(loop, exit_block):
             return True
 
         dominator_tree = self.cfg.dominator_tree
