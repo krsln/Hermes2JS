@@ -1,0 +1,48 @@
+
+=> [Function #11278 "" of 172 bytes]: 2 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x00226b12
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 6, UInt8: 0>
+==> 00000003: <GetParentEnvironment>: <Reg8: 3, UInt8: 1>
+==> 00000006: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 17>
+==> 0000000a: <LoadFromEnvironment>: <Reg8: 5, Reg8: 6, UInt8: 0>
+==> 0000000e: <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 2>
+==> 00000012: <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000022
+==> 0000001a: <LoadConstString>: <Reg8: 9, string_id: 4299>  # String: 'Trying to call a non-function' (String)
+==> 0000001e: <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+==> 00000022: <CreateEnvironment>: <Reg8: 4, Reg8: 3, UInt32: 1>
+==> 00000029: <StoreToEnvironment>: <Reg8: 4, UInt8: 0, Reg8: 6>
+==> 0000002d: <GetByIdShort>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 223>  # String: 'routes' (Identifier)
+==> 00000032: <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 1, string_id: 164>  # String: 'index' (Identifier)
+==> 00000037: <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 3>
+==> 0000003b: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 172>  # String: 'key' (Identifier)
+==> 00000040: <GetByVal>: <Reg8: 3, Reg8: 6, Reg8: 3>
+==> 00000044: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 3, string_id: 130>  # String: 'options' (Identifier)
+==> 00000049: <GetById>: <Reg8: 6, Reg8: 3, UInt8: 4, string_id: 10254>  # String: 'tabBarLabelPosition' (Identifier)
+==> 0000004f: <JmpFalse>: <Addr8: 21, Reg8: 6>  # Address: 00000064
+==> 00000052: <LoadConstString>: <Reg8: 3, string_id: 5166>  # String: 'beside-icon' (String)
+==> 00000056: <JStrictEqual>: <Addr8: 82, Reg8: 3, Reg8: 6>  # Address: 000000a8
+==> 0000005a: <LoadConstString>: <Reg8: 3, string_id: 730>  # String: 'below-icon' (String)
+==> 0000005e: <LoadConstFalse>: <Reg8: 1>
+==> 00000060: <JStrictEqual>: <Addr8: 74, Reg8: 3, Reg8: 6>  # Address: 000000aa
+==> 00000064: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000067: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 5, string_id: 14>  # String: 'width' (Identifier)
+==> 0000006c: <LoadConstInt>: <Reg8: 0, Imm32: 768>
+==> 00000072: <JGreaterEqual>: <Addr8: 20, Reg8: 6, Reg8: 0>  # Address: 00000086
+==> 00000076: <GetByIdShort>: <Reg8: 7, Reg8: 3, UInt8: 5, string_id: 14>  # String: 'width' (Identifier)
+==> 0000007b: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 6, string_id: 15>  # String: 'height' (Identifier)
+==> 00000080: <Greater>: <Reg8: 1, Reg8: 7, Reg8: 6>
+==> 00000084: <Jmp>: <Addr8: 38>  # Address: 000000aa
+==> 00000086: <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 0, string_id: 223>  # String: 'routes' (Identifier)
+==> 0000008b: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 7, string_id: 213>  # String: 'reduce' (Identifier)
+==> 00000090: <LoadConstZero>: <Reg8: 0>
+==> 00000092: <CreateClosure>: <Reg8: 4, Reg8: 4, function_id: 11285>  # Function: [#11285  of 119 bytes]: 3 params @ offset 0x00226e71
+==> 00000097: <Call3>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 0>
+==> 0000009d: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 14>  # String: 'width' (Identifier)
+==> 000000a2: <LessEq>: <Reg8: 1, Reg8: 4, Reg8: 3>
+==> 000000a6: <Jmp>: <Addr8: 4>  # Address: 000000aa
+==> 000000a8: <LoadConstTrue>: <Reg8: 1>
+==> 000000aa: <Ret>: <Reg8: 1>
+
+
