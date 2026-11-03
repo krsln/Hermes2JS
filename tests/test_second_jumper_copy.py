@@ -30,8 +30,9 @@ def test_the_second_test_that_jumps_to_the_tail_has_its_own_copy():
     out = _render("second_jumper_copy_98_13588.hasm", 13588)
 
     assert "goto" not in out
-    assert out.count("r3 = r4.getSync();") == 2
-    assert "if (r4 === undefined) {" in out
+    # F-203 folds the load into the test, so the tail is no longer copied: one `||` condition
+    assert out.count("r3 = r4.getSync();") == 1
+    assert "if (r3 !== 1 || r2[1] === undefined) {" in out
 
 
 def test_a_navigation_config_with_two_tests_to_one_tail_has_no_goto():

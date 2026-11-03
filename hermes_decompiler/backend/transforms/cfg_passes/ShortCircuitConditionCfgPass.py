@@ -380,8 +380,14 @@ class ShortCircuitConditionCfgPass:
                     or any(instruction is t for t in taken)
                     or instruction.dest_reg is None
                     or instruction.statement is not None
-                    or not instruction.entry.opcode.startswith("LoadConst")
-                    or not isinstance(instruction.value, (Literal, UndefinedLiteral))
+                    or not (
+                    (instruction.entry.opcode.startswith("LoadConst")
+                     and isinstance(instruction.value, (Literal, UndefinedLiteral)))
+                    # A read of an environment slot: nothing between the test and END writes it, so END's own
+                    # copy of the load sees the same value (98/2654 `requestUpdateLane`: `r10 = env[296]`
+                    # tested, then `r10 & -r10` in END).
+                    or self._is_plain_environment_load(instruction, successor)
+            )
                     or sum(1 for i in successor.instructions if i.dest_reg == instruction.dest_reg) != 1
                     or not self._dead_on_entry(arm, instruction.dest_reg, set())
                     or self._dead_on_entry(end_block, instruction.dest_reg, set())
@@ -391,6 +397,18 @@ class ShortCircuitConditionCfgPass:
             found.append(instruction)
 
         return found
+
+    def _is_plain_environment_load(self, instruction, block: BasicBlock) -> bool:
+        if not instruction.entry.opcode.startswith("LoadFromEnvironment") or instruction.value is None:
+            return False
+
+        if has_side_effects(instruction.value):
+            return False
+
+        written = {i.dest_reg for i in block.instructions if i.dest_reg is not None}
+
+        # The environment register it reads must not be one this block writes.
+        return not (self._source_registers(instruction) & written)
 
     def _sink_copies(self, copies: list, end_block: BasicBlock, successor: BasicBlock):
         """A block on the edge into `end_block` that runs the copies. It sits right

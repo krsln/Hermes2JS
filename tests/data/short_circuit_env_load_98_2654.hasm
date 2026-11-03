@@ -1,0 +1,69 @@
+
+=> [Function #2654 "requestUpdateLane" of 238 bytes]: 2 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x00177631
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 7, UInt8: 1>
+==> 00000003: <GetByIdShort>: <Reg8: 7, Reg8: 7, UInt8: 0, string_id: 185>  # String: 'mode' (Identifier)
+==> 00000008: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 0000000b: <BitAnd>: <Reg8: 0, Reg8: 7, Reg8: 1>
+==> 0000000f: <LoadConstZero>: <Reg8: 3>
+==> 00000011: <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
+==> 00000014: <Mov>: <Reg8: 7, Reg8: 2>
+==> 00000017: <JStrictEqualLong>: <Addr32: 213, Reg8: 3, Reg8: 0>  # Address: 000000ec
+==> 0000001e: <GetParentEnvironment>: <Reg8: 9, UInt8: 0>
+==> 00000021: <LoadFromEnvironmentL>: <Reg8: 4, Reg8: 9, UInt16: 293>
+==> 00000026: <BitAnd>: <Reg8: 0, Reg8: 4, Reg8: 2>
+==> 0000002a: <JStrictEqual>: <Addr8: 16, Reg8: 3, Reg8: 0>  # Address: 0000003a
+==> 0000002e: <LoadFromEnvironmentL>: <Reg8: 10, Reg8: 9, UInt16: 296>
+==> 00000033: <JStrictNotEqualLong>: <Addr32: 175, Reg8: 3, Reg8: 10>  # Address: 000000e2
+==> 0000003a: <LoadFromEnvironment>: <Reg8: 8, Reg8: 9, UInt8: 2>
+==> 0000003e: <GetById>: <Reg8: 8, Reg8: 8, UInt8: 1, string_id: 6597>  # String: 'T' (Identifier)
+==> 00000044: <LoadConstNull>: <Reg8: 4>
+==> 00000046: <JStrictNotEqual>: <Addr8: 86, Reg8: 4, Reg8: 8>  # Address: 0000009c
+==> 0000004a: <LoadFromEnvironmentL>: <Reg8: 8, Reg8: 9, UInt16: 385>
+==> 0000004f: <JStrictNotEqual>: <Addr8: 75, Reg8: 3, Reg8: 8>  # Address: 0000009a
+==> 00000053: <LoadFromEnvironmentL>: <Reg8: 11, Reg8: 9, UInt16: 380>
+==> 00000058: <LoadConstNull>: <Reg8: 12>
+==> 0000005a: <JmpFalse>: <Addr8: 9, Reg8: 11>  # Address: 00000063
+==> 0000005d: <LoadConstUndefined>: <Reg8: 5>
+==> 0000005f: <Call1>: <Reg8: 12, Reg8: 11, Reg8: 5>
+==> 00000063: <Neq>: <Reg8: 4, Reg8: 4, Reg8: 12>
+==> 00000067: <LoadConstUInt8>: <Reg8: 0, UInt8: 32>
+==> 0000006a: <Mov>: <Reg8: 8, Reg8: 0>
+==> 0000006d: <JmpFalse>: <Addr8: 45, Reg8: 4>  # Address: 0000009a
+==> 00000070: <LoadFromEnvironmentL>: <Reg8: 11, Reg8: 9, UInt16: 377>
+==> 00000075: <Mov>: <Reg8: 8, Reg8: 2>
+==> 00000078: <JStrictEqual>: <Addr8: 34, Reg8: 11, Reg8: 12>  # Address: 0000009a
+==> 0000007c: <LoadFromEnvironmentL>: <Reg8: 11, Reg8: 9, UInt16: 378>
+==> 00000081: <LoadConstUInt8>: <Reg8: 8, UInt8: 8>
+==> 00000084: <JStrictEqual>: <Addr8: 22, Reg8: 11, Reg8: 12>  # Address: 0000009a
+==> 00000088: <LoadFromEnvironmentL>: <Reg8: 11, Reg8: 9, UInt16: 379>
+==> 0000008d: <Mov>: <Reg8: 8, Reg8: 0>
+==> 00000090: <JStrictNotEqual>: <Addr8: 10, Reg8: 11, Reg8: 12>  # Address: 0000009a
+==> 00000094: <LoadConstInt>: <Reg8: 8, Imm32: 268435456>
+==> 0000009a: <Jmp>: <Addr8: 70>  # Address: 000000e0
+==> 0000009c: <LoadFromEnvironment>: <Reg8: 4, Reg8: 9, UInt8: 129>
+==> 000000a0: <JStrictNotEqual>: <Addr8: 61, Reg8: 3, Reg8: 4>  # Address: 000000dd
+==> 000000a4: <LoadFromEnvironment>: <Reg8: 5, Reg8: 9, UInt8: 137>
+==> 000000a8: <JStrictNotEqual>: <Addr8: 46, Reg8: 3, Reg8: 5>  # Address: 000000d6
+==> 000000ac: <LoadFromEnvironment>: <Reg8: 6, Reg8: 9, UInt8: 89>
+==> 000000b0: <LShift>: <Reg8: 0, Reg8: 6, Reg8: 1>
+==> 000000b4: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 89, Reg8: 0>
+==> 000000b8: <LoadConstInt>: <Reg8: 1, Imm32: 261888>
+==> 000000be: <BitAnd>: <Reg8: 1, Reg8: 0, Reg8: 1>
+==> 000000c2: <Mov>: <Reg8: 5, Reg8: 6>
+==> 000000c5: <JStrictNotEqual>: <Addr8: 17, Reg8: 3, Reg8: 1>  # Address: 000000d6
+==> 000000c9: <LoadConstInt>: <Reg8: 1, Imm32: 256>
+==> 000000cf: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 89, Reg8: 1>
+==> 000000d3: <Mov>: <Reg8: 5, Reg8: 6>
+==> 000000d6: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 129, Reg8: 5>
+==> 000000da: <Mov>: <Reg8: 4, Reg8: 5>
+==> 000000dd: <Mov>: <Reg8: 8, Reg8: 4>
+==> 000000e0: <Jmp>: <Addr8: 9>  # Address: 000000e9
+==> 000000e2: <Negate>: <Reg8: 9, Reg8: 10>
+==> 000000e5: <BitAnd>: <Reg8: 8, Reg8: 10, Reg8: 9>
+==> 000000e9: <Mov>: <Reg8: 7, Reg8: 8>
+==> 000000ec: <Ret>: <Reg8: 7>
+
+
