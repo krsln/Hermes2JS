@@ -75,7 +75,11 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
         # The graph's owner map can lag behind earlier splices; trust the tree.
         exit_owner = self._holder(self.graph.root, exit_block)
 
-        if exit_owner is None or exit_owner is owner:
+        # A block no sequence holds (a bare `return undefined` an earlier pass took out of the tree, 98/8283
+        # `_handleAnimatedStylesUpdate`) is still the guard's exit: it is the one way in, nothing prints it.
+        orphan = exit_owner is None and exit_block not in self.graph.root.covered_blocks
+
+        if (exit_owner is None and not orphan) or exit_owner is owner:
             return
 
         # Inside a loop the branch may be one of the loop's own exits. Walk the
@@ -93,11 +97,14 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
         block.instructions.pop()
         block.terminator = None
 
-        exit_owner.children.remove(exit_block)
-        exit_owner.invalidate_coverage()
-
         then_body = SequenceRegion()
-        self.graph.transfer([exit_block], then_body)
+
+        if orphan:
+            self.graph.append(then_body, exit_block)
+        else:
+            exit_owner.children.remove(exit_block)
+            exit_owner.invalidate_coverage()
+            self.graph.transfer([exit_block], then_body)
 
         if_region = IfRegion()
         if_region.condition = branch.condition
