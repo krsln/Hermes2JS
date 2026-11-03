@@ -125,9 +125,24 @@ class LoopStructurer(RegionStructurer):
         # One merged, id-ordered worklist covering both loose blocks
         # and child loops - see class docstring for why this single
         # order matters.
+        #
+        # A block a CFG pass copied in to be FALLEN INTO (`SharedTailDuplicationCfgPass`: the test in front of a
+        # shared tail gets its own copy right behind it) has the largest id but belongs right behind the block
+        # that falls into it, `follows` (98/1738). Every other block keeps its id.
+        def position(block_id: int):
+            block = loose_blocks_by_id.get(block_id)
+
+            if block is None:
+                block = children_by_header_id[block_id].header
+
+            anchor = getattr(block, "follows", None)
+
+            return (anchor.id, 1, block_id) if anchor is not None else (block_id, 0, block_id)
+
         ordered_ids = sorted(
             set(loose_blocks_by_id)
-            | set(children_by_header_id)
+            | set(children_by_header_id),
+            key=position,
         )
 
         for block_id in ordered_ids:

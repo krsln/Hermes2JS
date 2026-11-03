@@ -75,6 +75,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-02 | after F-192 (a for-of binding the body assigns is a `let`) | 182 | 190 | n/a | n/a | 1110 passed |
 | 2026-11-02 | after F-193 (a shared tail is copied in a function with a `try` when nothing it touches is protected) | 173 | 189 | n/a | n/a | 1112 passed |
 | 2026-11-02 | after F-194 (the later of two tests that jump to one short tail gets its own copy, last rung) | 171 | 184 | n/a | n/a | 1114 passed |
+| 2026-11-03 | after F-195 (a shared tail inside a try range is copied when its ways in are under the same handlers) | 167 | 179 | n/a | n/a | 1116 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1

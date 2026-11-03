@@ -62,7 +62,7 @@ class SharedTailDuplicationCfgPass:
         copied = 0
 
         for tail in list(self.cfg.blocks):
-            if protected and (tail in protected or any(p in protected for p in tail.predecessors)):
+            if protected and not self._same_handlers(tail, protected):
                 continue
 
             faller = self._faller_that_skips(tail)
@@ -88,15 +88,32 @@ class SharedTailDuplicationCfgPass:
 
         return copied
 
-    def _protected_blocks(self) -> set[BasicBlock]:
-        """Every block a handler protects or starts at (the fragments of a merged range are not looked at:
-        the set is only ever too big)."""
-        return {
-            block
-            for handler in self.cfg.exception_handlers
-            for block in (*handler.get("try_blocks", ()), handler.get("handler_block"))
-            if block is not None
-        }
+    def _protected_blocks(self) -> dict[BasicBlock, frozenset]:
+        """Block -> the handlers that protect it or start at it (the fragments of a merged range are not looked
+        at: the sets are only ever too big)."""
+        found: dict[BasicBlock, set] = {}
+
+        for number, handler in enumerate(self.cfg.exception_handlers):
+            for block in handler.get("try_blocks", ()):
+                found.setdefault(block, set()).add((number, "try"))
+
+            if handler.get("handler_block") is not None:
+                found.setdefault(handler["handler_block"], set()).add((number, "handler"))
+
+        return {block: frozenset(handlers) for block, handlers in found.items()}
+
+    @staticmethod
+    def _same_handlers(tail: BasicBlock, protected: dict) -> bool:
+        """The tail and every way into it sit under the same handlers (or none). The copy goes right in front
+        of the tail, so it is inside the same try range as the tail and the test that gets it; a tail a way in
+        from OUTSIDE the range reaches, or a handler's own entry, is left alone (98/1738 `getChildNodes`: the
+        loop body of a for-of is the whole range, the push tail and both tests are in it)."""
+        own = protected.get(tail, frozenset())
+
+        if any(kind == "handler" for _, kind in own):
+            return False
+
+        return all(protected.get(pred, frozenset()) == own for pred in tail.predecessors)
 
     def _faller_that_skips(self, tail: BasicBlock) -> BasicBlock | None:
         if len(tail.instructions) > self._MAX_INSTRUCTIONS or len(tail.predecessors) < 2:
@@ -179,6 +196,9 @@ class SharedTailDuplicationCfgPass:
             clone.terminator = clone.instructions[-1].terminator
         else:
             clone.terminator = TerminatorJump(target=end.address)
+
+        # Read by `LoopStructurer`: the copy is laid out right behind the block that falls into it.
+        clone.follows = faller
 
         faller.successors = [clone if s is tail else s for s in faller.successors]
         tail.predecessors.remove(faller)
