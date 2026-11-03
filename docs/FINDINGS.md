@@ -78,6 +78,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-03 | after F-195 (a shared tail inside a try range is copied when its ways in are under the same handlers) | 167 | 179 | n/a | n/a | 1116 passed |
 | 2026-11-03 | after F-196 (the later of two tests that jump to a `return`/`throw` tail gets its own copy, last rung) | 166 | 177 | n/a | n/a | 1118 passed |
 | 2026-11-03 | after F-197 (a guard whose `return` exit no sequence holds becomes `if (c) { return }`) | 165 | 172 | n/a | n/a | 1119 passed |
+| 2026-11-03 | after F-198 (a `break` to the join behind a loop exit that only jumps on) | 165 | 171 | n/a | n/a | 1120 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
