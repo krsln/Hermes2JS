@@ -1,0 +1,68 @@
+
+=> [Function #8283 "_handleAnimatedStylesUpdate" of 217 bytes]: 4 params, frame size=18, strict=1, exc handler=1, debug info=0  @ offset 0x001ec980
+  [Exception handlers: [start=0xb4, end=0xbb, target=0xbb] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 0>
+==> 00000003: <CreateFunctionEnvironment>: <Reg8: 0, UInt8: 6>
+==> 00000006: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000009: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 0000000c: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
+==> 00000010: <LoadParam>: <Reg8: 2, UInt8: 3>
+==> 00000013: <StoreToEnvironment>: <Reg8: 0, UInt8: 1, Reg8: 2>
+==> 00000017: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 0, string_id: 15242>  # String: '_getViewInfo' (Identifier)
+==> 0000001d: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 00000021: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12688>  # String: 'viewTag' (Identifier)
+==> 00000027: <StoreToEnvironment>: <Reg8: 0, UInt8: 2, Reg8: 3>
+==> 0000002b: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 2, string_id: 12687>  # String: 'shadowNodeWrapper' (Identifier)
+==> 00000031: <StoreToEnvironment>: <Reg8: 0, UInt8: 3, Reg8: 2>
+==> 00000035: <GetGlobalObject>: <Reg8: 2>
+==> 00000037: <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 31>  # String: 'Set' (Identifier)
+==> 0000003d: <CreateThisForNew>: <Reg8: 3, Reg8: 2, UInt8: 4>
+==> 00000041: <Mov>: <Reg8: 10, Reg8: 3>
+==> 00000044: <Mov>: <Reg8: 9, Reg8: 4>
+==> 00000047: <Construct>: <Reg8: 2, Reg8: 2, UInt8: 2>
+==> 0000004b: <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
+==> 0000004f: <StoreToEnvironment>: <Reg8: 0, UInt8: 4, Reg8: 2>
+==> 00000053: <CreateClosure>: <Reg8: 5, Reg8: 0, function_id: 11980>  # Function: [#11980 isStyleAttached of 28 bytes]: 2 params @ offset 0x002346a3
+==> 00000058: <StoreToEnvironment>: <Reg8: 0, UInt8: 5, Reg8: 5>
+==> 0000005c: <JmpFalse>: <Addr8: 102, Reg8: 1>  # Address: 000000c2
+==> 0000005f: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 177>  # String: 'length' (Identifier)
+==> 00000064: <LoadConstUInt8>: <Reg8: 7, UInt8: 1>
+==> 00000067: <StrictEq>: <Reg8: 3, Reg8: 3, Reg8: 7>
+==> 0000006b: <JmpFalse>: <Addr8: 12, Reg8: 3>  # Address: 00000077
+==> 0000006e: <GetByIdShort>: <Reg8: 6, Reg8: 1, UInt8: 5, string_id: 177>  # String: 'length' (Identifier)
+==> 00000073: <StrictEq>: <Reg8: 3, Reg8: 6, Reg8: 7>
+==> 00000077: <JmpFalse>: <Addr8: 15, Reg8: 3>  # Address: 00000086
+==> 0000007a: <GetByIndex>: <Reg8: 6, Reg8: 4, UInt8: 0>
+==> 0000007e: <GetByIndex>: <Reg8: 4, Reg8: 1, UInt8: 0>
+==> 00000082: <StrictEq>: <Reg8: 3, Reg8: 6, Reg8: 4>
+==> 00000086: <JmpFalse>: <Addr8: 17, Reg8: 3>  # Address: 00000097
+==> 00000089: <GetByIndex>: <Reg8: 4, Reg8: 1, UInt8: 0>
+==> 0000008d: <LoadConstZero>: <Reg8: 3>
+==> 0000008f: <Call2>: <Reg8: 3, Reg8: 5, Reg8: 3, Reg8: 4>
+==> 00000094: <JmpTrue>: <Addr8: 65, Reg8: 3>  # Address: 000000d5
+==> 00000097: <CreateClosure>: <Reg8: 6, Reg8: 0, function_id: 11981>  # Function: [#11981 _loop of 60 bytes]: 2 params @ offset 0x002346bf
+==> 0000009c: <Mov>: <Reg8: 5, Reg8: 1>
+==> 0000009f: <IteratorBegin>: <Reg8: 3, Reg8: 5>
+==> 000000a2: <LoadConstZero>: <Reg8: 4>
+==> 000000a4: <LoadConstUndefined>: <Reg8: 1>
+==> 000000a6: <Mov>: <Reg8: 7, Reg8: 5>
+==> 000000a9: <IteratorNext>: <Reg8: 7, Reg8: 3, Reg8: 7>
+==> 000000ad: <Mov>: <Reg8: 8, Reg8: 3>
+==> 000000b0: <JStrictEqual>: <Addr8: 18, Reg8: 8, Reg8: 1>  # Address: 000000c2
+==> 000000b4: <Call2>: <Reg8: 7, Reg8: 6, Reg8: 4, Reg8: 7>
+==> 000000b9: <Jmp>: <Addr8: -19>  # Address: 000000a6
+==> 000000bb: <Catch>: <Reg8: 1>
+==> 000000bd: <IteratorClose>: <Reg8: 3, UInt8: 1>
+==> 000000c0: <Throw>: <Reg8: 1>
+==> 000000c2: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 6, string_id: 148>  # String: 'forEach' (Identifier)
+==> 000000c7: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11982>  # Function: [#11982  of 122 bytes]: 2 params @ offset 0x002346fb
+==> 000000cc: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 000000d1: <LoadConstUndefined>: <Reg8: 0>
+==> 000000d3: <Ret>: <Reg8: 0>
+==> 000000d5: <LoadConstUndefined>: <Reg8: 0>
+==> 000000d7: <Ret>: <Reg8: 0>
+
+
