@@ -33,7 +33,12 @@ import dataclasses
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.shared import repoint_node
 from hermes_decompiler.ir.expressions import Identifier
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
+from hermes_decompiler.ir.terminators import (
+    TerminatorConditionalBranch,
+    TerminatorJump,
+    TerminatorReturn,
+    TerminatorThrow,
+)
 
 
 class SharedTailDuplicationCfgPass:
@@ -350,11 +355,16 @@ class SharedTailDuplicationCfgPass:
 
         if tail not in blocks or len(tail.predecessors) != 2 or not 1 <= len(tail.instructions) <= 6:
             return False
-        if tail.terminator is not None and not isinstance(tail.terminator, TerminatorJump):
+
+        # The tail runs on into a block behind it, or it ENDS the function / the path (`return`, `throw`: the
+        # break path of a for-of that sets something and leaves, 98/8693).
+        exits = isinstance(tail.terminator, (TerminatorReturn, TerminatorThrow)) and not tail.successors
+
+        if tail.terminator is not None and not exits and not isinstance(tail.terminator, TerminatorJump):
             return False
         if any(i.terminator is not None and i.terminator is not tail.terminator for i in tail.instructions):
             return False
-        if len(tail.successors) != 1 or tail.successors[0].address <= tail.address:
+        if not exits and (len(tail.successors) != 1 or tail.successors[0].address <= tail.address):
             return False
 
         first, second = sorted(tail.predecessors, key=lambda b: b.address)
@@ -370,20 +380,25 @@ class SharedTailDuplicationCfgPass:
         if first is second or any(b.address == tail.address - 1 for b in blocks):
             return False
 
-        end = tail.successors[0]
+        end = None if exits else tail.successors[0]
         clone = BasicBlock(max(b.id for b in blocks) + 1, tail.address - 1)
 
         for instruction in tail.instructions:
             duplicate = copy.copy(instruction)
             duplicate.value = copy.deepcopy(instruction.value)
             duplicate.statement = copy.deepcopy(instruction.statement)
-            duplicate.terminator = None
+            duplicate.terminator = copy.copy(
+                instruction.terminator) if exits and instruction.terminator is not None else None
             clone.instructions.append(duplicate)
 
-        clone.terminator = TerminatorJump(target=end.address)
-        clone.successors = [end]
         clone.predecessors = [second]
-        end.predecessors.append(clone)
+
+        if exits:
+            clone.terminator = clone.instructions[-1].terminator
+        else:
+            clone.terminator = TerminatorJump(target=end.address)
+            clone.successors = [end]
+            end.predecessors.append(clone)
 
         retargeted = dataclasses.replace(second.terminator, target=clone.address)
         for instruction in second.instructions:
