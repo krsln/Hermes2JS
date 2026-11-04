@@ -25,27 +25,13 @@ async function _anon_0_(param1) {
         r8 = r1;
         // CODE → addr: 61 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
         // USED → r3 = delay;
-        // CODE → addr: 65 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
-        r3 = await delay(r9);
         // CODE → addr: 70 | <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
-        r3 = await yield;
-        // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
-        // USED → r9 = __resumeIsReturn;
-        if (__resumeIsReturn) {
-            // ──────────────── Block 7 ──────────────── 
-            // CODE → addr: 90 | <Ret>: <Reg8: 3>
-            return r3;
-        }
+        r3 = await delay(r9);
         // ──────────────── Block 6 ──────────────── 
         // CODE → addr: 80 | <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
         r1 = r8 + r3;
     }
     // LOOP → END
-    // ──────────────── Block 4 ──────────────── 
-    // CODE → addr: 72 | <Ret>: <Reg8: 3>
-    return r3;
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr: 99 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;

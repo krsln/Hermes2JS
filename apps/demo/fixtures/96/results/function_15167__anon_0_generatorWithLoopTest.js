@@ -34,9 +34,6 @@ function* _anon_0_generatorWithLoopTest(param1) {
             }
         }
         // LOOP → END
-        // ──────────────── Block 4 ──────────────── 
-        // CODE → addr: 61 | <Ret>: <Reg8: 7>
-        return r7;
     }
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr: 95 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

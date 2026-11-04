@@ -83,6 +83,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-03 | after F-202 (a guard's function-ending tail taken from the end of a loop body / `else` arm) | 158 | 164 | n/a | n/a | 1124 passed |
 | 2026-11-03 | after F-203 (the crossed `a \|\| b` fold rematerializes an environment load END reads) | 158 | 161 | n/a | n/a | 1125 passed |
 | 2026-11-04 | after F-204 (a suspend point whose resume pair is followed by `Mov`s; `SaveGenerator` is kept) | 154 | 161 | n/a | n/a | 1127 passed |
+| 2026-11-04 | after F-205 (a resume guard with the rest of the loop body behind it; the yield is what the `Ret` returns) | 153 | 161 | n/a | n/a | 1130 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -134,11 +135,13 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   (F-113, F-114, F-115, F-117, F-119, and (a) below). Left: (b) jumps whose target is not a `return`
   (sibling region, `none` terminator); the shared-`throw` size part is F-174 (archive). (a) 96/11046 `areDependenciesEqual` is done: see the archive.
 - **F-12 `await`/`yield` dispatch and 98 generator opcodes (partly fixed).** 96/12207 `_anon_0`. Without a batch
-  table the dispatch cannot be resolved; some generator opcodes are missing in 98. F-204 (archive) folds the
-  resume pair when `Mov`s follow it: 96 prints `__resumeIsReturn` in 12 functions now (31 before), 98 in none.
-  Left in 96: 720 `createKeyIterator`, 718, 722 (`yield` in a `do { } while` body: the `r1 = await yield;
-  if (__resumeIsReturn)` pair stays inside the loop); 15185 (an `await` in a `for-of` body); 3625, 3628, 12653
-  (not triaged); and five with a `goto` left: 14482, 14867, 8059 (one each), 14940, 14945 (two each; not triaged).
+  table the dispatch cannot be resolved; some generator opcodes are missing in 98. F-204 and F-205 (archive)
+  fold the resume pair when `Mov`s follow it and when the guard has the rest of a loop body behind it: 96 prints
+  `__resumeIsReturn` in 7 functions now (31 before F-204), 98 in none. Left in 96, not triaged: 3625
+  `generateValues`, 3628 `generateEntries`, 12653 (no `goto`); 14482, 14867, 8059 (one `goto` each), 14945 (two).
+  Also left, not about the guard: a resumed value read through an inlined expression prints as `await yield`
+  (96/12207: `if (await yield)`, `{ "src": await yield }`), because only a read of the register by name makes the
+  fold bind it.
 - **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.
 - **F-14 `for-of` generator unrolling.** The loop stays as an unrolled generator.
 - **F-15 Shared tail returns.** 96/10216.
