@@ -180,7 +180,9 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
 
         resume_block = self._child_at(region, index + offset)
 
-        if not self._is_resume_block(resume_block):
+        pair_at = self._resume_pair_index(resume_block)
+
+        if pair_at is None:
             return False
 
         if_region = self._child_at(region, index + offset + 1)
@@ -188,7 +190,7 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
         if not self._is_resume_guard(if_region):
             return False
 
-        resumed_reg = resume_block.instructions[-2].dest_reg
+        resumed_reg = resume_block.instructions[pair_at].dest_reg
 
         # Safety invariant this fold relies on: when `if_region` has no
         # else_body, everything that would otherwise need checking for
@@ -243,7 +245,25 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
         # the body's own setup in front of it (`r2 = createEnvironment()`,
         # the parameter loads): dropping those left every `r2[0] = …` after
         # the fold reading an environment nothing defined.
-        resume_block.instructions = resume_block.instructions[:-2]
+        #
+        # The `Mov`s the compiler leaves between the pair and the guard's test
+        # are protocol too, except for one kind (96/6777):
+        #
+        #     ResumeGenerator r1, r2; Mov r4, r2; Mov r2, r1; JmpFalse r4, ...
+        #
+        # `Mov r4, r2` copies the return flag the guard tests (its value is the
+        # flag identifier: nothing prints it, the guard's own test already reads
+        # `__resumeIsReturn`) and `Mov r2, r1` copies the RESUMED VALUE into the
+        # register the rest of the function reads. The first is dropped with the
+        # pair; the second is the binding the yield must keep.
+        tail = resume_block.instructions[pair_at + 2:]
+        resume_block.instructions = resume_block.instructions[:pair_at]
+
+        value_copies = [instruction for instruction in tail if self._is_resume_value_copy(instruction)]
+        other_tail = [
+            instruction for instruction in tail
+            if instruction not in value_copies and not self._is_resume_flag_copy(instruction)
+        ]
 
         if all(instruction.handler == "LoadParam" for instruction in resume_block.instructions):
             # Parameters are read by name already; nothing to keep.
@@ -254,10 +274,28 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
         # statement of a loop iteration) - there's nothing after it to
         # check (the trailing_siblings guard above confirms this
         # holds), which is fine; treat it the same as "not referenced".
-        resumed_is_used = (
-                if_region.else_body is not None
-                and self._register_is_referenced(if_region.else_body, resumed_reg)
+        resumed_is_read = (
+                                  if_region.else_body is not None
+                                  and self._register_is_referenced(if_region.else_body, resumed_reg)
+                          ) or any(
+            self._expression_references(instruction.value, f"r{resumed_reg}")
+            for instruction in other_tail
         )
+
+        # One copy of the resumed value and nothing else reading its own
+        # register: the yield binds the copy's register directly
+        # (`r2 = await call()`), the copy itself is gone. Otherwise the yield
+        # binds the resumed register and every copy reads it by name.
+        bind_reg = resumed_reg
+
+        if len(value_copies) == 1 and not resumed_is_read and value_copies[0].dest_reg is not None:
+            bind_reg = value_copies[0].dest_reg
+            value_copies = []
+
+        for instruction in value_copies:
+            instruction.value = Identifier(name=f"r{resumed_reg}")
+
+        resumed_is_used = resumed_is_read or bool(value_copies) or bind_reg != resumed_reg
 
         if resumed_is_used and yield_block is None:
             # The entry-point resume (right after StartGenerator, with
@@ -307,12 +345,16 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
                     # when something downstream actually reads it -
                     # otherwise a bare `yield value;` statement, same
                     # as before.
-                    dest_reg=resumed_reg if resumed_is_used else None,
+                    dest_reg=bind_reg if resumed_is_used else None,
                 )
             ]
             yield_block.terminator = None
 
             new_children.append(yield_block)
+
+        # What stays of the resume block, then the copies of the resumed value
+        # and any other `Mov` that ran between the pair and the test.
+        resume_block.instructions = resume_block.instructions + value_copies + other_tail
 
         if resume_block.instructions:
             new_children.append(resume_block)
@@ -333,13 +375,54 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
         return None
 
     @staticmethod
-    def _is_resume_block(block) -> bool:
+    def _resume_pair_index(block) -> int | None:
+        """Index of the `ResumeGenerator` pair's first instruction when `block`
+        ends with the pair, optionally followed by `Mov`s (the compiler copies
+        the resumed value and the return flag to the registers the code behind
+        the guard reads, 96/6777); `None` when it does not."""
+        if not isinstance(block, BasicBlock) or block.terminator is not None:
+            return None
+
+        instructions = block.instructions
+        end = len(instructions)
+
+        while end > 0 and instructions[end - 1].handler == "Mov":
+            end -= 1
+
+        if end < 2:
+            return None
+
+        if (
+                instructions[end - 1].handler != _RESUME_GENERATOR_HANDLER
+                or instructions[end - 2].handler != _RESUME_GENERATOR_HANDLER
+        ):
+            return None
+
+        return end - 2
+
+    @staticmethod
+    def _is_resume_flag_copy(instruction) -> bool:
+        """`Mov rX, <return flag>`: the guard's own test already reads the flag."""
+        value = instruction.value
+
         return (
-                isinstance(block, BasicBlock)
-                and len(block.instructions) >= 2
-                and block.terminator is None
-                and block.instructions[-1].handler == _RESUME_GENERATOR_HANDLER
-                and block.instructions[-2].handler == _RESUME_GENERATOR_HANDLER
+                instruction.handler == "Mov"
+                and isinstance(value, Identifier)
+                and value.name == _RESUME_FLAG_NAME
+        )
+
+    @staticmethod
+    def _is_resume_value_copy(instruction) -> bool:
+        """`Mov rX, <resumed value>`: the value `ResumeGenerator` produced, copied to
+        the register the code behind the guard reads. Its source printed as the resume
+        placeholder (`await yield`), the same shape `ResumeGenerator` builds."""
+        value = instruction.value
+
+        return (
+                instruction.handler == "Mov"
+                and isinstance(value, AwaitExpression)
+                and isinstance(value.argument, YieldExpression)
+                and value.argument.argument is None
         )
 
     @staticmethod
@@ -357,6 +440,17 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
             child
             for child in node.then_body.children
             if not (isinstance(child, BasicBlock) and not child.instructions)
+               # The `Ret` Hermes lays out right behind a `SaveGenerator` is never
+               # reached (the save jumps straight to the resume address). The structurer
+               # may leave it in the guard of ANOTHER suspend point whose own landing pad
+               # sits right before it in address order (96/6777, 0x64 behind 0x4c): a
+               # second `Ret` in the `then` arm that nothing runs.
+               and not (
+                    isinstance(child, BasicBlock)
+                    and not child.predecessors
+                    and [i.handler for i in child.instructions] == ["Ret"]
+                    and len(node.then_body.children) > 1
+            )
         ]
 
         if len(then_children) != 1:

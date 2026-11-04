@@ -9,6 +9,8 @@ from ._base import RegionPass
 
 logger = get_logger(__name__)
 
+_SAVE_GENERATOR_HANDLERS = ("SaveGenerator", "SaveGeneratorLong")
+
 
 class RedundantJumpRegionPass(RegionPass, RegionVisitor):
     """Drops a bare unconditional-Jmp block whose target is simply the
@@ -582,10 +584,16 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
 
         last = block.instructions[-1]
 
-        if last.value is not None or last.statement is not None:
+        if last.value is not None or last.statement is not None or last.handler in _SAVE_GENERATOR_HANDLERS:
             # This instruction does more than just carry the jump
             # (unusual for a bare Jmp, but don't guess) - only clear
             # the terminator, keep the instruction itself.
+            #
+            # `SaveGenerator` is such an instruction: its jump edge (to the
+            # resume address) is only how the CFG sees it, the opcode itself is
+            # the suspend point `GeneratorStateMachineRegionPass` anchors its
+            # `yield`/`await` fold on. Popping it left the resume pair without
+            # a suspend before it and the fold bailed out (96/6777).
             last.terminator = None
         else:
             block.instructions.pop()

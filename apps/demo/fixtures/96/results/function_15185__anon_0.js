@@ -27,6 +27,7 @@ async function _anon_0_(param1) {
         // USED → r3 = delay;
         // CODE → addr: 65 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
         r3 = await delay(r9);
+        // CODE → addr: 70 | <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
         r3 = await yield;

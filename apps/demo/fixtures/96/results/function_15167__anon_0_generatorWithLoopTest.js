@@ -29,8 +29,8 @@ function* _anon_0_generatorWithLoopTest(param1) {
                 console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/skip");
             } else {
                 // ──────────────── Block 3 ──────────────── 
-                // CODE → addr: 55 | <Mul>: <Reg8: 7, Reg8: 6, Reg8: 6>
-                r7 = i * i;
+                // CODE → addr: 59 | <SaveGenerator>: <Addr8: 4>  # Address: 0000003f
+                yield i * i;
             }
         }
         // LOOP → END
