@@ -390,11 +390,26 @@ class _DominanceIfBuilder(RegionStructurer):
 
             else_root = self.graph.find_covering_item(region, goto_block)
 
-            if else_root is None or else_root is then_root:
+            if (
+                    else_root is None
+                    # Nothing of REST jumps to T itself (those jumps would stay `goto`s next to the `if`).
+                    and not any(
+                pred is not block and self.cfg.dominator_tree.dominates(then_entry, pred)
+                for pred in goto_block.predecessors
+            )
+                    and self._finishing_the_arm_reaches(region, goto_block)
+            ):
+                # `if (c) goto T; REST` at the end of an arm whose finish runs T next: the target is no
+                # sibling here, it is what follows the enclosing `if`s, so the branch only skips REST
+                # (98/2186 `splitGradients`, 98/3265 `dispatchEvent`). No `else`: `if (!c) { REST }`.
+                merge_block = goto_block
+                has_else = False
+            elif else_root is None or else_root is then_root:
                 # goto target isn't a distinct sibling in this region -
                 # bail rather than guess.
                 return False
-            else_entry = representative_block(else_root)
+            else:
+                else_entry = representative_block(else_root)
 
         # -------------------------------------------------------------
         # Classify region.children[then_start:] by dominance until the
@@ -508,6 +523,30 @@ class _DominanceIfBuilder(RegionStructurer):
     # -------------------------------------------------------------
     # Reachability fallback (see `_convert`'s own comment)
     # -------------------------------------------------------------
+
+    def _finishing_the_arm_reaches(self, region: SequenceRegion, target: BasicBlock) -> bool:
+        """True when finishing `region` (an arm, or the body of an `if`) runs `target` next: up the
+        enclosing `if`s while the region is the last thing of its sequence, then the first block of the item that
+        follows. Only `if` arms count; a loop body, a `try` or a `switch` finish elsewhere."""
+        sequence = region
+
+        while True:
+            parent = getattr(sequence, "parent", None)
+
+            if not isinstance(parent, IfRegion):
+                return False
+
+            holder = getattr(parent, "parent", None)
+
+            if not isinstance(holder, SequenceRegion) or not any(c is parent for c in holder.children):
+                return False
+
+            index = next(i for i, c in enumerate(holder.children) if c is parent)
+
+            if index + 1 < len(holder.children):
+                return representative_block(holder.children[index + 1]) is target
+
+            sequence = holder
 
     def _arm_tests_into(self, then_entry: BasicBlock, goto_block: BasicBlock) -> bool:
         """True if a conditional branch inside the fallthrough arm jumps to

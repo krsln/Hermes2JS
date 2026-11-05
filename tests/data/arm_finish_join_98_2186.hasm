@@ -1,0 +1,58 @@
+
+=> [Function #2186 "splitGradients" of 185 bytes]: 2 params, frame size=31, strict=1, exc handler=0, debug info=0  @ offset 0x00161a0f
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 18, UInt8: 1>
+==> 00000003: <NewArray>: <Reg8: 10, UInt16: 0>
+==> 00000007: <GetByIdShort>: <Reg8: 11, Reg8: 18, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 0000000c: <LoadConstZero>: <Reg8: 7>
+==> 0000000e: <Less>: <Reg8: 9, Reg8: 7, Reg8: 11>
+==> 00000012: <LoadConstString>: <Reg8: 12, string_id: 6457>  # String: '' (Identifier)
+==> 00000016: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 00000019: <LoadConstString>: <Reg8: 17, string_id: 575>  # String: ',' (String)
+==> 0000001d: <LoadConstString>: <Reg8: 16, string_id: 870>  # String: ')' (String)
+==> 00000021: <LoadConstString>: <Reg8: 15, string_id: 1069>  # String: '(' (String)
+==> 00000025: <LoadConstZero>: <Reg8: 1>
+==> 00000027: <LoadConstZero>: <Reg8: 4>
+==> 00000029: <Mov>: <Reg8: 14, Reg8: 12>
+==> 0000002c: <Mov>: <Reg8: 13, Reg8: 14>
+==> 0000002f: <JmpFalse>: <Addr8: 104, Reg8: 9>  # Address: 00000097
+==> 00000032: <GetByVal>: <Reg8: 20, Reg8: 18, Reg8: 1>
+==> 00000036: <Mov>: <Reg8: 6, Reg8: 1>
+==> 00000039: <Mov>: <Reg8: 2, Reg8: 4>
+==> 0000003c: <Mov>: <Reg8: 11, Reg8: 14>
+==> 0000003f: <JStrictEqual>: <Addr8: 55, Reg8: 20, Reg8: 15>  # Address: 00000076
+==> 00000043: <JStrictEqual>: <Addr8: 45, Reg8: 20, Reg8: 16>  # Address: 00000070
+==> 00000047: <Mov>: <Reg8: 0, Reg8: 2>
+==> 0000004a: <JStrictNotEqual>: <Addr8: 48, Reg8: 20, Reg8: 17>  # Address: 0000007a
+==> 0000004e: <Mov>: <Reg8: 0, Reg8: 2>
+==> 00000051: <JStrictNotEqual>: <Addr8: 41, Reg8: 2, Reg8: 7>  # Address: 0000007a
+==> 00000055: <GetByIdShort>: <Reg8: 21, Reg8: 10, UInt8: 1, string_id: 88>  # String: 'push' (Identifier)
+==> 0000005a: <GetByIdShort>: <Reg8: 19, Reg8: 11, UInt8: 2, string_id: 201>  # String: 'trim' (Identifier)
+==> 0000005f: <Call1>: <Reg8: 19, Reg8: 19, Reg8: 11>
+==> 00000063: <Call2>: <Reg8: 19, Reg8: 21, Reg8: 10, Reg8: 19>
+==> 00000068: <Mov>: <Reg8: 3, Reg8: 2>
+==> 0000006b: <Mov>: <Reg8: 19, Reg8: 12>
+==> 0000006e: <Jmp>: <Addr8: 19>  # Address: 00000081
+==> 00000070: <SubN>: <Reg8: 0, Reg8: 2, Reg8: 5>
+==> 00000074: <Jmp>: <Addr8: 6>  # Address: 0000007a
+==> 00000076: <AddN>: <Reg8: 0, Reg8: 2, Reg8: 5>
+==> 0000007a: <Add>: <Reg8: 19, Reg8: 11, Reg8: 20>
+==> 0000007e: <Mov>: <Reg8: 3, Reg8: 0>
+==> 00000081: <AddN>: <Reg8: 1, Reg8: 6, Reg8: 5>
+==> 00000085: <GetByIdShort>: <Reg8: 11, Reg8: 18, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 0000008a: <Mov>: <Reg8: 4, Reg8: 3>
+==> 0000008d: <Mov>: <Reg8: 14, Reg8: 19>
+==> 00000090: <Mov>: <Reg8: 13, Reg8: 14>
+==> 00000093: <JLess>: <Addr8: -97, Reg8: 1, Reg8: 11>  # Address: 00000032
+==> 00000097: <GetByIdShort>: <Reg8: 11, Reg8: 13, UInt8: 2, string_id: 201>  # String: 'trim' (Identifier)
+==> 0000009c: <Call1>: <Reg8: 11, Reg8: 11, Reg8: 13>
+==> 000000a0: <JStrictEqual>: <Addr8: 23, Reg8: 11, Reg8: 12>  # Address: 000000b7
+==> 000000a4: <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 1, string_id: 88>  # String: 'push' (Identifier)
+==> 000000a9: <GetByIdShort>: <Reg8: 11, Reg8: 13, UInt8: 2, string_id: 201>  # String: 'trim' (Identifier)
+==> 000000ae: <Call1>: <Reg8: 11, Reg8: 11, Reg8: 13>
+==> 000000b2: <Call2>: <Reg8: 11, Reg8: 12, Reg8: 10, Reg8: 11>
+==> 000000b7: <Ret>: <Reg8: 10>
+
+
