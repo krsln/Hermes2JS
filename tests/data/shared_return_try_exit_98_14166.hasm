@@ -1,0 +1,45 @@
+
+=> [Function #14166 "reactNativeWorklets_threadsNativeTs5" of 148 bytes]: 1 params, frame size=18, strict=1, exc handler=1, debug info=0  @ offset 0x0026c5ea
+  [Exception handlers: [start=0x7, end=0x5c, target=0x5c] ]
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000003: <LoadConstUndefined>: <Reg8: 0>
+==> 00000005: <LoadConstUndefined>: <Reg8: 3>
+==> 00000007: <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 0>
+==> 0000000b: <LoadFromEnvironment>: <Reg8: 8, Reg8: 1, UInt8: 1>
+==> 0000000f: <NewArray>: <Reg8: 2, UInt16: 0>
+==> 00000013: <LoadConstZero>: <Reg8: 7>
+==> 00000015: <Mov>: <Reg8: 9, Reg8: 2>
+==> 00000018: <CallBuiltin>: <Reg8: 5, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+==> 0000001c: <Mov>: <Reg8: 9, Reg8: 4>
+==> 0000001f: <Mov>: <Reg8: 8, Reg8: 2>
+==> 00000022: <LoadConstUndefined>: <Reg8: 7>
+==> 00000024: <CallBuiltin>: <Reg8: 3, UInt8: 49, UInt8: 4>  # Built-in function: [#49 apply]
+==> 00000028: <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 2>
+==> 0000002c: <JmpFalse>: <Addr8: 46, Reg8: 5>  # Address: 0000005a
+==> 0000002f: <GetGlobalObject>: <Reg8: 2>
+==> 00000031: <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 0, string_id: 156>  # String: 'globalThis' (Identifier)
+==> 00000037: <GetById>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 6802>  # String: '__serializer' (Identifier)
+==> 0000003d: <Call2>: <Reg8: 4, Reg8: 4, Reg8: 6, Reg8: 3>
+==> 00000042: <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 0, string_id: 156>  # String: 'globalThis' (Identifier)
+==> 00000048: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 6801>  # String: '__workletsModuleProxy' (Identifier)
+==> 0000004e: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 13104>  # String: 'handlePromise' (Identifier)
+==> 00000054: <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
+==> 0000005a: <Jmp>: <Addr8: 56>  # Address: 00000092
+==> 0000005c: <Catch>: <Reg8: 5>
+==> 0000005e: <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 3>
+==> 00000062: <JmpTrue>: <Addr8: 5, Reg8: 4>  # Address: 00000067
+==> 00000065: <Throw>: <Reg8: 5>
+==> 00000067: <GetGlobalObject>: <Reg8: 1>
+==> 00000069: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 156>  # String: 'globalThis' (Identifier)
+==> 0000006f: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 6802>  # String: '__serializer' (Identifier)
+==> 00000075: <Call2>: <Reg8: 3, Reg8: 2, Reg8: 3, Reg8: 5>
+==> 0000007a: <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 0, string_id: 156>  # String: 'globalThis' (Identifier)
+==> 00000080: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 6801>  # String: '__workletsModuleProxy' (Identifier)
+==> 00000086: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 3, string_id: 13104>  # String: 'handlePromise' (Identifier)
+==> 0000008c: <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3>
+==> 00000092: <Ret>: <Reg8: 0>
+
+

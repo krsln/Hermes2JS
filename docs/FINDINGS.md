@@ -85,6 +85,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-04 | after F-204 (a suspend point whose resume pair is followed by `Mov`s; `SaveGenerator` is kept) | 154 | 161 | n/a | n/a | 1127 passed |
 | 2026-11-04 | after F-205 (a resume guard with the rest of the loop body behind it; the yield is what the `Ret` returns) | 153 | 161 | n/a | n/a | 1130 passed |
 | 2026-11-05 | after F-199 (`if (c) goto T; REST` at the end of an arm, T what runs when the arm is done) | 150 | 159 | n/a | n/a | 1132 passed |
+| 2026-11-05 | after F-206 (a handler counts as running from inside its try range when the shared `return` is copied) | 142 | 153 | n/a | n/a | 1134 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -133,7 +134,8 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 - **F-10 Conditional jump to an exit block.** `if (c) goto finalReturn`: conditional jumps to a shared
   `return` block (examples: 96/2019 `mountDeferredValueImpl`, part of 98/11891). Partly resolved
   (F-113, F-114, F-115, F-117, F-119, and (a) below). Left: (b) jumps whose target is not a `return`
-  (sibling region, `none` terminator); the shared-`throw` size part is F-174 (archive). (a) 96/11046 `areDependenciesEqual` is done: see the archive.
+  (sibling region, `none` terminator); the shared-`throw` size part is F-174 (archive). (a) 96/11046 `areDependenciesEqual` is done: see the archive. (b) F-206 (archive) did the part where the target is the function's closing `return` and a `try` body or a `catch` falls or jumps to it (98/14166, 98/13178, 96/2100). Still open: jumps to a `return` that sits in a sibling arm (98/9633 `Tr`: `if (r2) goto` a `return` of another `if`), and a `try` body whose jump leaves the `try` for a join that is not a `return` (98/2629 `safelyDetachRef`, `goto label_100` in a `try`/`finally`).
+- **F-207 A `finally` that follows a setup behind a null guard prints around the guard (98/2676 `flushSpawnedWork`).** Bytecode: `if (r9 === null) goto END; r4 = env[2].T; r1 = env[385]; env[385] = 2; try { ... } finally { env[2].T = r4; env[385] = r1 }`. The `try` range starts after the setup, so the faithful shape is `if (r9 !== null) { setup; try {...} finally {...} }`. The output (before F-206 with `r1 = 4;` in front, after it without) puts the guard INSIDE the `try`, so the `finally` also runs when `r9` is null and reads `r4`/`r1` unset. Not caused by F-206 (the old output had the same flaw); noted because the code now looks cleaner than it is.
 - **F-12 `await`/`yield` dispatch and 98 generator opcodes (partly fixed).** 96/12207 `_anon_0`. Without a batch
   table the dispatch cannot be resolved; some generator opcodes are missing in 98. F-204 and F-205 (archive)
   fold the resume pair when `Mov`s follow it and when the guard has the rest of a loop body behind it: 96 prints

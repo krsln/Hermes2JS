@@ -27,6 +27,7 @@ import re
 from collections import deque
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
+from hermes_decompiler.backend.transforms.shared._absorb import substitute_register
 from hermes_decompiler.backend.transforms.shared._purity import TRIVIAL_NODE_TYPES
 from hermes_decompiler.backend.transforms.shared._structural_key import structural_key
 from hermes_decompiler.ir.expressions import Identifier, Literal
@@ -213,13 +214,13 @@ class SharedReturnDuplicationCfgPass:
             for register in exposed
         )
 
-    @staticmethod
-    def _single_reaching_value(block: BasicBlock, register: int) -> bool:
+    def _single_reaching_value(self, block: BasicBlock, register: int) -> bool:
         seen = {block}
         queue = deque(block.predecessors)
         keys: set = set()
         constants = True
         unset = False
+        inside = set()  # try-range blocks: a throw can come from before their last write
 
         while queue:
             pred = queue.popleft()
@@ -235,16 +236,68 @@ class SharedReturnDuplicationCfgPass:
             if definition is not None:
                 keys.add(structural_key(definition.value))
                 constants = constants and isinstance(definition.value, Literal)
-                continue
+                if pred not in inside:
+                    continue
 
             if not pred.predecessors:
-                unset = True
+                # A handler has no predecessor, but it runs from inside its try range: the register
+                # holds there what the range's blocks (and what leads to them) say (98/13178 `listener`:
+                # `r0 = undefined` at the entry, the `catch` tail returns it).
+                protected = [
+                    t for h in self.cfg.exception_handlers if h.get("handler_block") is pred
+                    for t in h.get("try_blocks", ())
+                ]
+                if protected:
+                    queue.extend(protected)
+                    inside.update(protected)
+                else:
+                    unset = True
             queue.extend(pred.predecessors)
 
         # Several DIFFERENT constants are fine: each jumper's copy returns its own (`r0 = false;
         # if (!c) goto RET` is `return false`) and the closing `return r0` keeps the register's name,
         # which every path that reaches it has set (96/11046 `areDependenciesEqual`).
         return (len(keys) <= 1 or constants) and not (keys and unset)
+
+    def _constant_reaching(self, block: BasicBlock, register: int):
+        """The one literal every path into `block` leaves in `register`, else None (same walk as
+        `_single_reaching_value`, through a handler into its try range)."""
+        seen = {block}
+        queue = deque(block.predecessors)
+        found = None
+        inside = set()
+
+        while queue:
+            pred = queue.popleft()
+            if pred in seen:
+                continue
+            seen.add(pred)
+
+            definition = next((i for i in reversed(pred.instructions) if i.dest_reg == register), None)
+
+            if definition is not None:
+                # Only a plain constant load counts: a `Mov` join can print a literal it took from one arm
+                # (98/2477: `r1 = null` seen through `Mov r1, r2`).
+                if not definition.entry.opcode.startswith("LoadConst") or not isinstance(definition.value, Literal):
+                    return None
+                if found is not None and structural_key(found) != structural_key(definition.value):
+                    return None
+                found = definition.value
+                if pred not in inside:
+                    continue
+
+            if not pred.predecessors:
+                protected = [
+                    t for h in self.cfg.exception_handlers if h.get("handler_block") is pred
+                    for t in h.get("try_blocks", ())
+                ]
+                if not protected:
+                    return None
+                queue.extend(protected)
+                inside.update(protected)
+            queue.extend(pred.predecessors)
+
+        return found
 
     @staticmethod
     def _is_copyable(instruction) -> bool:
@@ -266,6 +319,18 @@ class SharedReturnDuplicationCfgPass:
             return terminator.target == block.address
         return False
 
+    @staticmethod
+    def _say_the_value(block: BasicBlock, name: str, constant) -> None:
+        for instruction in block.instructions:
+            instruction.value = substitute_register(instruction.value, name, copy.deepcopy(constant))
+            instruction.statement = substitute_register(instruction.statement, name, copy.deepcopy(constant))
+            terminator = instruction.terminator
+            if terminator is not None and getattr(terminator, "value", None) is not None:
+                instruction.terminator = dataclasses.replace(
+                    terminator, value=substitute_register(terminator.value, name, copy.deepcopy(constant))
+                )
+        block.terminator = block.instructions[-1].terminator
+
     def _give_private_copy(self, pred: BasicBlock, block: BasicBlock) -> None:
         blocks = self.cfg.blocks
         new_id = max(b.id for b in blocks) + 1
@@ -283,6 +348,17 @@ class SharedReturnDuplicationCfgPass:
                 duplicate.terminator = copy.copy(instruction.terminator)
             clone.instructions.append(duplicate)
         clone.terminator = clone.instructions[-1].terminator
+
+        if self.cfg.exception_handlers:
+            # The register's definition may print nowhere (`r0 = undefined` at the entry): the copy
+            # and the original say the value instead of naming it (98/2647: `return r0` after a `catch`).
+            for register in self._exposed_registers(block):
+                constant = self._constant_reaching(block, register)
+                if constant is None:
+                    continue
+                for target in (clone, block):
+                    self._say_the_value(target, f"r{register}", constant)
+                clone.terminator = clone.instructions[-1].terminator
 
         if isinstance(pred.terminator, TerminatorJump):
             # A plain `jmp` to the shared return IS the return: put the copy in the jumper
