@@ -26,12 +26,12 @@ def _render(name: str, function_id: int) -> str:
     return "\n".join(line for line in out.split("\n") if not line.strip().startswith("//"))
 
 
-def test_a_long_tail_only_jumps_reach_is_copied_for_each_jump():
+def test_a_long_tail_the_guard_jumps_to_follows_the_if():
     out = _render("long_shared_return_98_10767.hasm", 10767)
 
     assert "goto" not in out
-    assert out.count("r0 = Object.assign(param1, r0);") == 2
-    assert "if (r0) {" in out
+    assert out.count("r0 = Object.assign(param1, r0);") == 1
+    assert "if (!r0) {" in out
 
 
 def test_a_tail_something_falls_into_keeps_its_own_values():

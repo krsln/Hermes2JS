@@ -325,6 +325,18 @@ class _DominanceIfBuilder(RegionStructurer):
                         and self._arm_runs_into(then_entry, goto_block, block, outside_loops=True)
                 )
                 or (
+                        # `if (a) { ...; if (!ok) throw e; } return body`: the arm's own test jumps to
+                        # a `return` that is a whole body (98/9633: the object built after the
+                        # `signal` check), and the arm ends in a `throw` otherwise. The body follows
+                        # the `if`; as an `else` arm it would be reached by a `goto` from the test.
+                        merge_block is None
+                        and not goto_block.successors
+                        and isinstance(goto_block.terminator, TerminatorReturn)
+                        and len(goto_block.instructions) > 2
+                        and not self._reaches_itself(then_entry)
+                        and self._arm_tests_into(then_entry, goto_block)
+                )
+                or (
                         # `if (n > 0) { for (...) { ... } } tail`: the loop the guard
                         # skips ends into the very code the guard jumps to (its exit
                         # edge is the one of `tail`), so `tail` follows the `if`.
