@@ -105,6 +105,15 @@ row; a row is only added when all of its columns were measured on the same tree.
   per-file comparison (`compare_outputs.py`) finds about as many files with more unassigned reads
   (96: 39, 98: 71) as with fewer (96: 38, 98: 61), so the check is noise-dominated at this level (not triaged per file); the totals are flat for 96 (+2) and
   better for 98 (-18).
+- Where the remaining `goto` files sit (2026-11-06, output of F-209, rough text heuristics on the printed
+  code, not a bytecode analysis, so read the counts as +/- 10): 96 has 141 non-raw `goto` files: about 47
+  with a single `if (c) goto L` (the best next target), 57 not matching a shape, 18 generator/async
+  (`await`, `yield`, `.next(`), 11 with six or more `goto`s (the CSS parsers `parseRadialGradientCSSString`,
+  `describeNativeComponentFrame`), 8 with a `goto` as the last statement of a `try` body. 98 has 147:
+  36 single `if (c) goto L`, 42 other, 39 generator/async, 15 with six or more, 15 with a `try`-exit `goto`
+  (`generatorTryFinallyTest`, `downloadAsync`, `fetchLoader`, `_openBrowserAndWaitAndroidAsync`). The F-206/F-208
+  cases are gone from those groups; the single-`goto` group is what the open F-190 / F-10(b) items and the
+  `Tr` (98/9633) shape fill.
 - Older notes recorded `pathdefs` of 160 (96) and 193 (98) from a survey tool that is not in the
   repository; those numbers are not comparable with this column and were dropped. The per-change
   history of the `goto` count up to F-123 is in the archive appendix.
