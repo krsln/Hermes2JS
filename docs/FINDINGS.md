@@ -88,6 +88,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-05 | after F-206 (a handler counts as running from inside its try range when the shared `return` is copied) | 142 | 153 | n/a | n/a | 1134 passed |
 | 2026-11-06 | after F-208 (`GuardExit` pulls an exit held by its own sequence when code runs between) | 141 | 147 | n/a | n/a | 1135 passed |
 | 2026-11-06 | after F-209 (`IfTailMerge` keeps a `throw` that something jumps to; a correctness fix, 21 files) | 141 | 147 | n/a | n/a | 1137 passed |
+| 2026-11-06 | after F-210 (the `typeof` kept in a register makes the target a join; `IfTailMerge` keeps a `return` that a test ending its sequence jumps to) | 139 | 147 | n/a | n/a | 1139 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1

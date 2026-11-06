@@ -575,6 +575,15 @@ class _DominanceIfBuilder(RegionStructurer):
                     # `typeof x !== "object"` is a kind test, never a `case` label: any other test of the arm
                     # that falls into the target makes the target the join (98/4239 `keyExtractor`).
                     or (is_typeof_test(condition) and not same_case_subject(condition, pred.terminator.condition))
+                    # The `typeof` kept in a register that the target tests again (`r5 !== "object"` here,
+                    # `r5 !== "number"` at the target: 96/1139 `processColor`).
+                    or (
+                            is_constant_comparison(condition)
+                            and isinstance(goto_block.terminator, TerminatorConditionalBranch)
+                            and same_case_subject(condition, goto_block.terminator.condition)
+                            and not same_case_subject(condition, pred.terminator.condition)
+                            and not same_constant_test(condition, goto_block.terminator.condition)
+                    )
             )
             for pred in goto_block.predecessors
         )
