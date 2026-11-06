@@ -133,29 +133,7 @@ class IfTailMergeRegionPass(RegionPass, RegionVisitor):
         if self._is_generator_or_async(self.cfg):
             return
 
-        # Blocks that END a sequence: a test there still falls out of its sequence on its other edge.
-        self._loose_blocks = set()
-        self._collect_loose(self.graph.root)
-
         self.visit(self.graph.root)
-
-    def _collect_loose(self, node) -> None:
-        if isinstance(node, BasicBlock):
-            return
-
-        if isinstance(node, SequenceRegion):
-            if node.children and isinstance(node.children[-1], BasicBlock):
-                self._loose_blocks.add(node.children[-1])
-
-        for name in ("children", "then_body", "else_body", "body", "try_body", "catch_body", "finally_",
-                     "finally_body"):
-            child = getattr(node, name, None)
-
-            if child is None or callable(child):
-                continue
-
-            for item in child if isinstance(child, list) else [child]:
-                self._collect_loose(item)
 
     @classmethod
     def _is_generator_or_async(cls, cfg) -> bool:
@@ -239,9 +217,10 @@ class IfTailMergeRegionPass(RegionPass, RegionVisitor):
         # `throw` leaves the jumper to fall out of the arm's last `if` into whatever follows it
         # (98/2673 `commitRoot`: `if (r2 === r3) goto <throw>` inside a `try`, the throw block laid out after
         # the try's `return`). Its exit stays where it is.
-        # A `return` block is only kept when a TEST jumps to it (96/13834 `getInitialURL`: `if (r1) goto <href>`
-        # whose other edge runs on elsewhere; trimmed, the test printed its `return` away). Plain jumps to a
-        # `return` stay mergeable (`tests/test_jump_to_shared_return_after_try.py`).
+        # A `return` block is only kept when a TEST still jumps to it (96/13834 `getInitialURL`: `if (r1) goto <href>`
+        # whose other edge runs on elsewhere; 96/4144 `parseScheme`: the first of several exits; trimmed, the test
+        # printed its `return` away). Plain jumps to a `return` stay mergeable
+        # (`tests/test_jump_to_shared_return_after_try.py`).
         if any(
                 (
                         isinstance(block.instructions[-1].terminator, TerminatorThrow)
@@ -313,7 +292,6 @@ class IfTailMergeRegionPass(RegionPass, RegionVisitor):
         return any(
             isinstance(pred.terminator, TerminatorConditionalBranch)
             and pred.terminator.target == block.address
-            and pred in self._loose_blocks
             for pred in block.predecessors
         )
 

@@ -661,6 +661,11 @@ class _DominanceIfBuilder(RegionStructurer):
                 if dominators.dominates(then_entry, successor) and not self._is_lone_return(successor.address):
                     continue
 
+                # Another exit of the arm that is its own, too (`beside-icon` -> `return true`, `below-icon`
+                # -> `return false`: 96/13262): the tail merge keeps a `return` a test jumps to (F-210).
+                if self._is_lone_return(successor.address) and list(successor.predecessors) == [block]:
+                    continue
+
                 return False
 
         return True
