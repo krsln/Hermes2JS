@@ -80,7 +80,13 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
         # `_handleAnimatedStylesUpdate`) is still the guard's exit: it is the one way in, nothing prints it.
         orphan = exit_owner is None and exit_block not in self.graph.root.covered_blocks
 
-        if (exit_owner is None and not orphan) or exit_owner is owner:
+        if exit_owner is None and not orphan:
+            return
+
+        # In the guard's own sequence the exit is pulled in only when something runs between the two: the
+        # guarded code never falls into the exit (its one way in is this branch), so the code between ends
+        # in exits of its own (98/12276 `validateType`: `if (!r) goto T; ...if/else that both exit...; T:`).
+        if exit_owner is owner and not self._something_runs_between(owner, block, exit_block):
             return
 
         # Inside a loop the branch may be one of the loop's own exits. Walk the
@@ -114,6 +120,15 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
 
         self.graph.insert_at(owner, owner.children.index(block) + 1, if_region)
         logger.debug("guard exit: block %d takes %d", block.id, exit_block.id)
+
+    @staticmethod
+    def _something_runs_between(owner: SequenceRegion, block: BasicBlock, exit_block: BasicBlock) -> bool:
+        children = owner.children
+
+        if block not in children or exit_block not in children:
+            return False
+
+        return children.index(exit_block) > children.index(block) + 1
 
     def _try_region_exit(self, owner, block: BasicBlock, branch, exit_block: BasicBlock, other: BasicBlock) -> None:
         """`if (c) goto X` where X starts code that only this branch enters and that ends the function.

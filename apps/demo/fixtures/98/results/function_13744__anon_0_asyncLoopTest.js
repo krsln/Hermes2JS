@@ -171,12 +171,28 @@ async function _anon_0_asyncLoopTest(param1) {
                 }
                 // Switch → END
             }
-            // ──────────────── Block 10 ──────────────── 
-            // CODE → addr:170 | <JStrictEqualLong>: <Addr32: 240, Reg8: 3, Reg8: 5>  # Address: 0000019a
-            if (param1 === 1) goto label_410;
-            // ──────────────── Block 11 ──────────────── 
-            // CODE → addr:177 | <JStrictEqualLong>: <Addr32: 214, Reg8: 3, Reg8: 4>  # Address: 00000187
-            if (param1 === 2) goto label_391;
+            if (param1 === 1) {
+                // ──────────────── Block 17 ──────────────── 
+                // CODE → addr:410 | <Mov>: <Reg8: 2, Reg8: 7>
+                r2 = 3;
+                // CODE → addr:413 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 7>
+                r1[9] = 3;
+                // CODE → addr:417 | <Throw>: <Reg8: 0>
+                throw param2;
+            }
+            if (param1 === 2) {
+                // ──────────────── Block 16 ──────────────── 
+                // CODE → addr:391 | <Mov>: <Reg8: 2, Reg8: 7>
+                r2 = 3;
+                // CODE → addr:394 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 7>
+                r1[9] = 3;
+                // CODE → addr:398 | <NewObjectWithBuffer>: <Reg8: 14, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
+                // USED → r14 = { "value": null, "done": true };
+                // CODE → addr:404 | <PutOwnBySlotIdx>: <Reg8: 14, Reg8: 0, UInt8: 0>
+                r14 = { "value": param2, "done": true };
+                // CODE → addr:408 | <Ret>: <Reg8: 14>
+                return r14;
+            }
             // ──────────────── Block 12 ──────────────── 
             // CODE → addr:184 | <StoreToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 9>
             r1[5] = r9;
@@ -279,24 +295,6 @@ async function _anon_0_asyncLoopTest(param1) {
             // ──────────────── Block 27 ──────────────── 
             // CODE → addr:389 | <Ret>: <Reg8: 14>
             return r14;
-            // ──────────────── Block 16 ──────────────── 
-            // CODE → addr:391 | <Mov>: <Reg8: 2, Reg8: 7>
-            r2 = 3;
-            // CODE → addr:394 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 7>
-            r1[9] = 3;
-            // CODE → addr:398 | <NewObjectWithBuffer>: <Reg8: 14, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-            // USED → r14 = { "value": null, "done": true };
-            // CODE → addr:404 | <PutOwnBySlotIdx>: <Reg8: 14, Reg8: 0, UInt8: 0>
-            r14 = { "value": param2, "done": true };
-            // CODE → addr:408 | <Ret>: <Reg8: 14>
-            return r14;
-            // ──────────────── Block 17 ──────────────── 
-            // CODE → addr:410 | <Mov>: <Reg8: 2, Reg8: 7>
-            r2 = 3;
-            // CODE → addr:413 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 7>
-            r1[9] = 3;
-            // CODE → addr:417 | <Throw>: <Reg8: 0>
-            throw param2;
         }
     }
 }
