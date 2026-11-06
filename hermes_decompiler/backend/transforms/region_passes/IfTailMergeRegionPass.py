@@ -9,6 +9,11 @@ from hermes_decompiler.backend.regions import (
     SequenceRegion,
 )
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.ir.terminators import (
+    TerminatorConditionalBranch,
+    TerminatorJump,
+    TerminatorThrow,
+)
 from ._base import RegionPass
 
 logger = get_logger(__name__)
@@ -207,6 +212,18 @@ class IfTailMergeRegionPass(RegionPass, RegionVisitor):
         if match_count == 0:
             return None
 
+        # A block something JUMPS to is not the arm's end just because it is its last item: trimming its
+        # `throw` leaves the jumper to fall out of the arm's last `if` into whatever follows it
+        # (98/2673 `commitRoot`: `if (r2 === r3) goto <throw>` inside a `try`, the throw block laid out after
+        # the try's `return`). Its exit stays where it is.
+        if any(
+                isinstance(block.instructions[-1].terminator, TerminatorThrow) and self._entered_by_a_jump(block)
+                for block in (then_block, else_block)
+        ) and match_count >= 1 and any(
+            instruction.terminator is not None for instruction in then_block.instructions[-match_count:]
+        ):
+            return None
+
         matched_instructions = then_block.instructions[len(then_block.instructions) - match_count:]
 
         # Both arms' own `Ret` end up as ONE instruction after the merge. It is a copy:
@@ -251,6 +268,14 @@ class IfTailMergeRegionPass(RegionPass, RegionVisitor):
         return merged_block
 
     # ------------------------------------------------------------------
+
+    @staticmethod
+    def _entered_by_a_jump(block: BasicBlock) -> bool:
+        return any(
+            isinstance(pred.terminator, (TerminatorJump, TerminatorConditionalBranch))
+            and pred.terminator.target == block.address
+            for pred in block.predecessors
+        )
 
     def _trim_trailing(self, body: SequenceRegion, block: BasicBlock, match_count: int) -> None:
         """Remove `block`'s own last `match_count` instructions - the
