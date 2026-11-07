@@ -31,7 +31,7 @@ class Mov(OpcodeHandler):
                 src is not None
                 and isinstance(expression, Identifier)
                 and expression.name == f"r{dest_reg}"
-                and ctx.analysis.written_in_a_closed_arm(src)
+                and ctx.analysis.is_join_value(src)
         ):
             # `if (r0 == null) r0 = r1; r1 = r0` (98/6705): the arm's `r1` inlined into the join read made
             # `r1 = r1`, which prints nothing, for a value that is `r0` on the path that skipped the arm.
