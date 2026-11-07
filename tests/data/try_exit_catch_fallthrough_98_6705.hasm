@@ -1,0 +1,93 @@
+
+=> [Function #6705 "getLayoutNode" of 358 bytes]: 3 params, frame size=20, strict=1, exc handler=1, debug info=0  @ offset 0x001d1d5d
+  [Exception handlers: [start=0x6f, end=0x96, target=0x96] ]
+
+Bytecode listing:
+
+==> 00000000: <CreateTopLevelEnvironment>: <Reg8: 0, UInt32: 1>
+==> 00000006: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000009: <LoadConstUndefined>: <Reg8: 7>
+==> 0000000b: <LoadConstUndefined>: <Reg8: 1>
+==> 0000000d: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000010: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 0>
+==> 00000014: <GetById>: <Reg8: 4, Reg8: 3, UInt8: 0, string_id: 17633>  # String: 'matchLastGroupName' (Identifier)
+==> 0000001a: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 221>  # String: 'route' (Identifier)
+==> 0000001f: <Call2>: <Reg8: 6, Reg8: 4, Reg8: 7, Reg8: 3>
+==> 00000024: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 6>
+==> 00000028: <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 2, string_id: 101>  # String: 'children' (Identifier)
+==> 0000002d: <GetById>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 8919>  # String: 'find' (Identifier)
+==> 00000033: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11444>  # Function: [#11444  of 50 bytes]: 2 params @ offset 0x0022a1d0
+==> 00000038: <Call2>: <Reg8: 4, Reg8: 3, Reg8: 4, Reg8: 0>
+==> 0000003d: <LoadConstNull>: <Reg8: 3>
+==> 0000003f: <Eq>: <Reg8: 5, Reg8: 4, Reg8: 3>
+==> 00000043: <LoadConstUndefined>: <Reg8: 0>
+==> 00000045: <JmpTrue>: <Addr8: 8, Reg8: 5>  # Address: 0000004d
+==> 00000048: <GetByIdShort>: <Reg8: 0, Reg8: 4, UInt8: 1, string_id: 221>  # String: 'route' (Identifier)
+==> 0000004d: <Mov>: <Reg8: 1, Reg8: 0>
+==> 00000050: <GetById>: <Reg8: 0, Reg8: 2, UInt8: 4, string_id: 10313>  # String: 'loadRoute' (Identifier)
+==> 00000056: <Call1>: <Reg8: 4, Reg8: 0, Reg8: 2>
+==> 0000005a: <Eq>: <Reg8: 5, Reg8: 4, Reg8: 3>
+==> 0000005e: <LoadConstUndefined>: <Reg8: 0>
+==> 00000060: <JmpTrue>: <Addr8: 9, Reg8: 5>  # Address: 00000069
+==> 00000063: <GetById>: <Reg8: 0, Reg8: 4, UInt8: 5, string_id: 13969>  # String: 'unstable_settings' (Identifier)
+==> 00000069: <JmpFalseLong>: <Addr32: 183, Reg8: 0>  # Address: 00000120
+==> 0000006f: <GetById>: <Reg8: 0, Reg8: 4, UInt8: 5, string_id: 13969>  # String: 'unstable_settings' (Identifier)
+==> 00000075: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 6, string_id: 7048>  # String: 'anchor' (Identifier)
+==> 0000007b: <JNotEqual>: <Addr8: 15, Reg8: 0, Reg8: 3>  # Address: 0000008a
+==> 0000007f: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 5, string_id: 13969>  # String: 'unstable_settings' (Identifier)
+==> 00000085: <GetByIdShort>: <Reg8: 0, Reg8: 5, UInt8: 7, string_id: 166>  # String: 'initialRouteName' (Identifier)
+==> 0000008a: <JNotEqual>: <Addr8: 7, Reg8: 0, Reg8: 3>  # Address: 00000091
+==> 0000008e: <Mov>: <Reg8: 0, Reg8: 1>
+==> 00000091: <Mov>: <Reg8: 1, Reg8: 0>
+==> 00000094: <Jmp>: <Addr8: 53>  # Address: 000000c9
+==> 00000096: <Catch>: <Reg8: 0>
+==> 00000098: <GetGlobalObject>: <Reg8: 5>
+==> 0000009a: <TryGetById>: <Reg8: 5, Reg8: 5, UInt8: 8, string_id: 9>  # String: 'Error' (Identifier)
+==> 000000a0: <InstanceOf>: <Reg8: 5, Reg8: 0, Reg8: 5>
+==> 000000a4: <JmpFalse>: <Addr8: 37, Reg8: 5>  # Address: 000000c9
+==> 000000a7: <GetByIdShort>: <Reg8: 9, Reg8: 0, UInt8: 9, string_id: 183>  # String: 'message' (Identifier)
+==> 000000ac: <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 10, string_id: 180>  # String: 'match' (Identifier)
+==> 000000b1: <CreateRegExp>: <Reg8: 5, string_id: 513, string_id: 6457, UInt32: 134>  # String: 'You cannot dot into a client module' (String)  # String: '' (Identifier)
+==> 000000bf: <Call2>: <Reg8: 5, Reg8: 8, Reg8: 9, Reg8: 5>
+==> 000000c4: <JmpTrue>: <Addr8: 5, Reg8: 5>  # Address: 000000c9
+==> 000000c7: <Throw>: <Reg8: 0>
+==> 000000c9: <JmpFalse>: <Addr8: 87, Reg8: 6>  # Address: 00000120
+==> 000000cc: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 5, string_id: 13969>  # String: 'unstable_settings' (Identifier)
+==> 000000d2: <Eq>: <Reg8: 8, Reg8: 5, Reg8: 3>
+==> 000000d6: <LoadConstUndefined>: <Reg8: 0>
+==> 000000d8: <JmpTrue>: <Addr8: 22, Reg8: 8>  # Address: 000000ee
+==> 000000db: <GetByVal>: <Reg8: 5, Reg8: 5, Reg8: 6>
+==> 000000df: <Eq>: <Reg8: 8, Reg8: 5, Reg8: 3>
+==> 000000e3: <LoadConstUndefined>: <Reg8: 0>
+==> 000000e5: <JmpTrue>: <Addr8: 9, Reg8: 8>  # Address: 000000ee
+==> 000000e8: <GetById>: <Reg8: 0, Reg8: 5, UInt8: 6, string_id: 7048>  # String: 'anchor' (Identifier)
+==> 000000ee: <JNotEqual>: <Addr8: 40, Reg8: 0, Reg8: 3>  # Address: 00000116
+==> 000000f2: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 5, string_id: 13969>  # String: 'unstable_settings' (Identifier)
+==> 000000f8: <Eq>: <Reg8: 8, Reg8: 5, Reg8: 3>
+==> 000000fc: <LoadConstUndefined>: <Reg8: 4>
+==> 000000fe: <JmpTrue>: <Addr8: 21, Reg8: 8>  # Address: 00000113
+==> 00000101: <GetByVal>: <Reg8: 5, Reg8: 5, Reg8: 6>
+==> 00000105: <Eq>: <Reg8: 6, Reg8: 5, Reg8: 3>
+==> 00000109: <LoadConstUndefined>: <Reg8: 4>
+==> 0000010b: <JmpTrue>: <Addr8: 8, Reg8: 6>  # Address: 00000113
+==> 0000010e: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 7, string_id: 166>  # String: 'initialRouteName' (Identifier)
+==> 00000113: <Mov>: <Reg8: 0, Reg8: 4>
+==> 00000116: <JNotEqual>: <Addr8: 7, Reg8: 0, Reg8: 3>  # Address: 0000011d
+==> 0000011a: <Mov>: <Reg8: 0, Reg8: 1>
+==> 0000011d: <Mov>: <Reg8: 1, Reg8: 0>
+==> 00000120: <NewObject>: <Reg8: 0>
+==> 00000122: <Mov>: <Reg8: 11, Reg8: 0>
+==> 00000125: <Mov>: <Reg8: 10, Reg8: 2>
+==> 00000128: <CallBuiltin>: <Reg8: 3, UInt8: 46, UInt8: 3>  # Built-in function: [#46 copyDataProperties]
+==> 0000012c: <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 221>  # String: 'route' (Identifier)
+==> 00000131: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 11, string_id: 217>  # String: 'replace' (Identifier)
+==> 00000136: <LoadConstString>: <Reg8: 3, string_id: 6457>  # String: '' (Identifier)
+==> 0000013a: <CreateRegExp>: <Reg8: 2, string_id: 4593, string_id: 6457, UInt32: 97>  # String: '\\/?_layout$' (String)  # String: '' (Identifier)
+==> 00000148: <Call3>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 2, Reg8: 3>
+==> 0000014e: <DefineOwnById>: <Reg8: 0, Reg8: 2, UInt8: 0, string_id: 221>  # String: 'route' (Identifier)
+==> 00000154: <NewArray>: <Reg8: 2, UInt16: 0>
+==> 00000158: <DefineOwnById>: <Reg8: 0, Reg8: 2, UInt8: 1, string_id: 101>  # String: 'children' (Identifier)
+==> 0000015e: <DefineOwnById>: <Reg8: 0, Reg8: 1, UInt8: 2, string_id: 166>  # String: 'initialRouteName' (Identifier)
+==> 00000164: <Ret>: <Reg8: 0>
+
+

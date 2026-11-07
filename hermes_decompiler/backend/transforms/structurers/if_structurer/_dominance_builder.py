@@ -393,6 +393,23 @@ class _DominanceIfBuilder(RegionStructurer):
             # chain (`switchTest`) needs `has_else` at every link.
             merge_block = goto_block
 
+        if (
+                merge_block is None
+                and goto_block is not None
+                and goto_block.successors
+                and not self.cfg.dominator_tree.dominates(block, goto_block)
+                and any(
+            not self.cfg.dominator_tree.dominates(block, pred)
+            for pred in goto_block.predecessors
+            if pred is not block
+        )
+                and self._in_handler(block)
+        ):
+            # Code of a `catch` that something outside the handler jumps into is the code after the
+            # `try`, not an `else` arm of the catch's own test (98/6705: the `if (!(e instanceof Error))`
+            # guard falls out of the catch into what the `try` body also jumps to).
+            merge_block = goto_block
+
         has_else = goto_block is not merge_block and goto_block is not None
 
         # else_root = None
@@ -681,6 +698,16 @@ class _DominanceIfBuilder(RegionStructurer):
                 return False
 
         return True
+
+    def _in_handler(self, block: BasicBlock) -> bool:
+        """True if `block` is reached from an exception handler's entry (a block with no predecessor)."""
+        for entry in self.cfg.exception_handlers:
+            handler = entry["handler_block"]
+
+            if handler is not None and (handler is block or self._is_reachable(handler, block)):
+                return True
+
+        return False
 
     def _is_lone_return(self, address: int) -> bool:
         target = next((b for b in self.cfg.blocks if b.address == address), None)

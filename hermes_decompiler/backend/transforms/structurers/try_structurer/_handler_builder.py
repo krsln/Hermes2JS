@@ -161,7 +161,7 @@ class _HandlerBuilder:
         if loop_home is not None:
             body, body_start_idx, body_end_idx = loop_home
 
-            stop_at = self._catch_stop_blocks(handler_block)
+            stop_at = self._catch_stop_blocks(handler_block, handler)
 
             catch_end = self._find_catch_boundary(
                 lca_seq,
@@ -228,7 +228,7 @@ class _HandlerBuilder:
         if end_idx is None:
             return None
 
-        stop_at = self._catch_stop_blocks(handler_block)
+        stop_at = self._catch_stop_blocks(handler_block, handler)
 
         catch_end = self._find_catch_boundary(
             lca_seq,
@@ -296,7 +296,7 @@ class _HandlerBuilder:
 
     # -------------------------------------------------------------
 
-    def _catch_stop_blocks(self, handler_block: BasicBlock) -> set:
+    def _catch_stop_blocks(self, handler_block: BasicBlock, handler: dict | None = None) -> set:
         """Where the catch body ends: the block its paths merge into.
 
         That is the handler's immediate post-dominator - unless the catch
@@ -314,7 +314,7 @@ class _HandlerBuilder:
         merge_block = self.cfg.post_dominator_tree.immediate_post_dominator(handler_block)
 
         if merge_block is None:
-            return set()
+            return self._try_exit_the_catch_runs_into(handler_block, handler)
 
         dominators = self.cfg.dominator_tree
 
@@ -328,6 +328,43 @@ class _HandlerBuilder:
         return {merge_block}
 
     # -------------------------------------------------------------
+
+    def _try_exit_the_catch_runs_into(self, handler_block: BasicBlock, handler: dict | None) -> set:
+        """The catch has a `throw` of its own, so it has no post-dominator; the code after the `try` is then the
+        block the protected code jumps out to that the catch falls into as well (98/6705: `catch (e) { if (!(e
+        instanceof Error)) <fall out>; else throw e }` and the `try` body jumps to the same `if (r6) {...}`)."""
+        if handler is None or self.cfg.dominator_tree is None:
+            return set()
+
+        inside = set(handler["try_blocks"])
+        exits = {
+            successor
+            for block in inside
+            for successor in block.successors
+            if successor not in inside
+               and successor is not handler_block
+               and successor.successors
+               and not self.cfg.dominator_tree.dominates(handler_block, successor)
+               and self._reaches(handler_block, successor)
+        }
+
+        return exits if len(exits) == 1 else set()
+
+    @staticmethod
+    def _reaches(start: BasicBlock, target: BasicBlock) -> bool:
+        seen = {start}
+        stack = [start]
+
+        while stack:
+            for successor in stack.pop().successors:
+                if successor is target:
+                    return True
+
+                if successor not in seen:
+                    seen.add(successor)
+                    stack.append(successor)
+
+        return False
 
     def _shared_stop_blocks(self, handler_block: BasicBlock, stop_at: set) -> set:
         """The stop blocks the normal flow reaches too (the handler does not dominate them) and that go on to

@@ -91,6 +91,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-06 | after F-210 (the `typeof` kept in a register makes the target a join; `IfTailMerge` keeps a `return` that a test ending its sequence jumps to) | 139 | 147 | n/a | n/a | 1139 passed |
 | 2026-11-06 | after F-211 (an arm with several private exits; `IfTailMerge` keeps every `return` a pending test jumps to) | 138 | 146 | n/a | n/a | 1140 passed |
 | 2026-11-06 | after F-212 (an arm that throws unless its test jumps to the returning body the guard skips to) | 138 | 144 | n/a | n/a | 1141 passed |
+| 2026-11-07 | after F-213 (a `catch` that falls out into the code after the `try`; join `Mov` after an arm's copy) | 136 | 142 | n/a | n/a | 1144 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1

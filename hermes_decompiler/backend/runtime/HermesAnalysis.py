@@ -333,6 +333,18 @@ class HermesAnalysis:
 
         return sum(1 for start, end in self.skip_ranges if start < address < end <= current) >= 2
 
+    def written_in_a_closed_arm(self, state: RegisterState) -> bool:
+        """The definition ran inside a forward jump that ended at or before the read: the read joins the
+        arm with the jump."""
+        current = self.current_address
+
+        if current is None:
+            return False
+
+        address = state.definition.address
+
+        return any(start < address < end <= current for start, end in self.skip_ranges)
+
     def crosses_try_boundary(self, state: RegisterState) -> bool:
         """The definition ran inside a `try` range and the instruction being handled is
         outside it. A value that can throw (a member read: `p.aborted` on a getter or on
