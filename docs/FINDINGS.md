@@ -95,6 +95,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-07 | after F-214 (iterator-cleanup handler that closes a copy of the iterator) | 136 | 141 | n/a | n/a | 1145 passed |
 | 2026-11-07 | after F-215 (iterator destructuring with object-pattern and slot-store targets) | 136 | 139 | n/a | n/a | 1147 passed |
 | 2026-11-07 | after F-216 (a copy that the same block writes again no longer blocks the fold of a test's setup) | 126 | 136 | n/a | n/a | 1148 passed |
+| 2026-11-07 | after F-218 (a tail a fall-through also enters is copied on the last rung when every path reads the same) | 126 | 134 | n/a | n/a | 1149 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1

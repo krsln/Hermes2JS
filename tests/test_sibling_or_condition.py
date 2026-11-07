@@ -38,8 +38,12 @@ def test_the_second_test_joins_the_condition_of_the_arm_it_jumps_to():
 def test_a_type_check_after_a_null_check_is_one_condition():
     out = _render("sibling_or_condition_98_3265.hasm", 3265)
 
-    assert 'typeof param1.type !== "string") goto' not in out
-    assert 'if (param1 == null || typeof param1.type !== "string") {\n        throw' in out
+    # The rest of the function left a `goto` once, so the first attempt (with the `||`) was kept. F-218 lets the
+    # last rung copy a longer tail that a fall-through enters too; the whole function is `goto`-free at that rung,
+    # and the shared `throw` is written once per test instead of once for the `||`.
+    assert "goto" not in out
+    assert 'if (param1 == null) {\n        throw new TypeError(' in out
+    assert '} else if (typeof param1.type !== "string") {' in out
 
 
 def test_a_case_chain_is_not_taken_by_the_fold():

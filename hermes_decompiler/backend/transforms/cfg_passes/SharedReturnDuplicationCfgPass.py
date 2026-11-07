@@ -122,9 +122,15 @@ class SharedReturnDuplicationCfgPass:
         # (`Object.assign(a, { [k]: v }); return` is seven instructions, 98/10767) is worth its copy there,
         # when only jumps reach it. With a fall-through into it the paths may hold different values for what
         # it reads (98/2844: `r4.decodedBodySize = r5` after `r5 = 0` / `r5 = v`).
+        # A fall-through is fine too when the tail reads the same thing on every path into it (98/2930
+        # `resolve`: `_y = 1; _z = v; finale(p)` is eight instructions, entered by two jumps and the
+        # fall-through of the `typeof then` test).
         if (
                 self.statements and self.own_values
-                and all(self._jumps_to(p, block) for p in block.predecessors)
+                and (
+                all(self._jumps_to(p, block) for p in block.predecessors)
+                or self._reads_the_same_on_every_path(block)
+        )
         ):
             limit = self._MAX_TAIL_LAST_RUNG
 
