@@ -364,6 +364,7 @@ class _DominanceIfBuilder(RegionStructurer):
                         (
                                 not is_constant_comparison(branch.condition)
                                 or self._arm_retests_constant(then_entry, goto_block, branch.condition)
+                                or self._arm_falls_into_after_private_returns(then_entry, goto_block, block)
                         )
                         and goto_block.successors
                         and self._arm_falls_into(
@@ -663,6 +664,15 @@ class _DominanceIfBuilder(RegionStructurer):
             and goto_block.address > pred.address
             and dominators.dominates(then_entry, pred)
             for pred in goto_block.predecessors
+        )
+
+    def _arm_falls_into_after_private_returns(self, then_entry: BasicBlock, goto_block: BasicBlock,
+                                              block: BasicBlock) -> bool:
+        """The arm leaves only through `return`s of its own and runs on into `goto_block` (98/13851: the
+        `r6 !== undefined` test skips to the code the arm's last guard falls into). Such a test cannot be a
+        case-chain link: nothing of the arm is another branch to the target."""
+        return not getattr(self.cfg, "duplicated_returns", False) and self._arm_falls_into(
+            then_entry, goto_block, block, exits_must_return=True,
         )
 
     def _returns_privately(self, pred: BasicBlock, then_entry: BasicBlock, goto_block: BasicBlock) -> bool:
