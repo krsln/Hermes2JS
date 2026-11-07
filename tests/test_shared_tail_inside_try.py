@@ -32,11 +32,14 @@ def test_the_filter_result_decides_the_push():
     out = _render("shared_tail_inside_try_98_1738.hasm", 1738)
 
     assert "goto" not in out
-    assert "r8 = param2(r8) && r0.push(r6);" in out
+    # the tests now fold into one condition (F-216), so nothing needs the tail twice
+    assert "if (r8 != null && (param2 == null || param2(r6))) {" in out
+    assert out.count("r0.push(") == 1
 
 
 def test_the_transform_check_that_fails_keeps_the_plain_assignment():
     out = _render("shared_tail_inside_try_98_8837.hasm", 8837)
 
     assert "goto" not in out
-    assert out.count("r3[r11] = r10;") == 2
+    assert out.count("r3[r11] = r10;") == 1
+    assert 'if (r10 !== "transform" || !r0[5].call(0, r8)) {' in out

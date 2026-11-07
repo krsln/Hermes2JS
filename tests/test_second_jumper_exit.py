@@ -31,8 +31,9 @@ def test_the_natural_exit_of_the_loop_does_not_set_the_position():
 
     assert "goto" not in out
     # only the break paths set it, each leaves the function right away; nothing behind the loop does
-    assert out.count('if (r7) {\n                param1.style.position = "absolute";\n                return undefined;\n            }') == 2
-    assert out.count('param1.style.position = "absolute";') == 2
+    # (F-216: both tests are one `||` now, so the one break path is written once)
+    assert out.count('if (r7 || "originY" in r6) {\n                param1.style.position = "absolute";\n                return undefined;\n            }') == 1
+    assert out.count('param1.style.position = "absolute";') == 1
 
 
 def test_a_throw_tail_two_tests_jump_to_is_copied():

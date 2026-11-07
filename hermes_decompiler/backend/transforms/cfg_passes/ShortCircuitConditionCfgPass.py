@@ -495,7 +495,10 @@ class ShortCircuitConditionCfgPass:
                     # A copy (`Mov r5, r4`) is an input of a join the exits read
                     # through another register's inlined value; a fold cannot see
                     # that, so only values the test itself computes are folded.
-                    or instruction.entry.opcode in ("Mov", "MovLong")
+                    # (A copy the same block writes the register of again is not that: nothing outside
+                    # the block can see it, `r9 = r8; r9 = r9.type` reads `r8.type`, 98/11306.)
+                    or (instruction.entry.opcode in ("Mov", "MovLong")
+                        and not any(later.dest_reg == instruction.dest_reg for later in setup[position + 1:]))
                     or not (
                     # The global object is the same on every path and every reader
                     # already inlined it: nothing is left to read the register.
