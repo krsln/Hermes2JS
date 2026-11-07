@@ -655,8 +655,14 @@ class _DominanceIfBuilder(RegionStructurer):
                                     or (
                                             (pred is then_entry or self._returns_privately(pred, then_entry,
                                                                                            goto_block))
-                                            and self._is_lone_return(pred.terminator.target)
-                                            and min(x.address for x in pred.successors) == goto_block.address
+                                            and (
+                                                    (
+                                                            self._is_lone_return(pred.terminator.target)
+                                                            and min(x.address for x in pred.successors)
+                                                            == goto_block.address
+                                                    )
+                                                    or self._is_closed_returning_region(pred, goto_block)
+                                            )
                                     )
                             )
                     )
@@ -674,6 +680,30 @@ class _DominanceIfBuilder(RegionStructurer):
         return not getattr(self.cfg, "duplicated_returns", False) and self._arm_falls_into(
             then_entry, goto_block, block, exits_must_return=True,
         )
+
+    def _is_closed_returning_region(self, pred: BasicBlock, goto_block: BasicBlock) -> bool:
+        """The test's taken edge enters code only it reaches, which ends in `return`s / `throw`s and never gets to
+        `goto_block` (98/10919: `if (result !== null) { <the rest of the function> }` after the arm that falls
+        into `goto_block`): the region is the body of the test and the arm runs on into `goto_block` after it."""
+        target = next((b for b in self.cfg.blocks if b.address == pred.terminator.target), None)
+
+        if target is None or list(target.predecessors) != [pred]:
+            return False
+
+        region = {target}
+        pending = [target]
+
+        while pending:
+            for successor in pending.pop().successors:
+                if successor is goto_block or successor is pred:
+                    return False
+
+                if successor not in region:
+                    region.add(successor)
+                    pending.append(successor)
+
+        # Entered only through the test: every predecessor of a block of the region is in it (or is the test).
+        return all(p is pred or p in region for block in region for p in block.predecessors)
 
     def _returns_privately(self, pred: BasicBlock, then_entry: BasicBlock, goto_block: BasicBlock) -> bool:
         """The test's taken edge goes to a `return` nothing else reaches, and it is the ONLY way out of the
