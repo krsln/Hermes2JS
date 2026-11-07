@@ -39,8 +39,9 @@ from dataclasses import dataclass
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.cfg_passes._generator_dispatch import _operands
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import ArrayExpression, AssignmentExpression, Identifier
-from hermes_decompiler.ir.expressions.Collections import ArrayHole, SpreadElement
+from hermes_decompiler.ir.expressions import ArrayExpression, AssignmentExpression, Identifier, MemberExpression, \
+    NumericLiteral
+from hermes_decompiler.ir.expressions.Collections import ArrayHole, ObjectExpression, ObjectProperty, SpreadElement
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.terminators import TerminatorJump
 
@@ -138,7 +139,44 @@ class ArrayDestructuringCfgPass:
         if len(set(leaves)) != len(leaves):
             return None
 
+        # The temporary an object pattern was read from is not assigned any more: nothing after the
+        # pattern may still read it.
+        for temp in _object_temps(items):
+            if temp in leaves or not self._dead_after(join, temp, dropped_ids):
+                return None
+
         return items, drop, join, kept_undefined, removed_handlers, cleanup
+
+    def _dead_after(self, start: BasicBlock, register: int, dropped_ids: set[int]) -> bool:
+        """True if no path from `start` reads `register` before writing it."""
+        name = f"r{register}"
+        seen: set[int] = set()
+        stack = [start]
+
+        while stack:
+            block = stack.pop()
+
+            if block.id in seen or block.id in dropped_ids:
+                continue
+
+            seen.add(block.id)
+            written = False
+
+            for instruction in block.instructions:
+                if _reads_name(instruction, name):
+                    return False
+
+                if instruction.dest_reg == register:
+                    written = True
+                    break
+
+            if not written:
+                stack.extend(block.successors)
+
+            if block.terminator is not None and _reads_name(block.terminator, name):
+                return False
+
+        return True
 
     def _plan_handlers(self, head: BasicBlock, ctx: "_Ctx", dropped_ids: set[int]):
         """
@@ -381,6 +419,30 @@ class ArrayDestructuringCfgPass:
                 prev_tmp = None
                 cur_block, cur_insts = sub_join, list(sub_join.instructions)
                 continue
+
+            # An object pattern as the element's target (`[{ a, b }, c] = src`): the element value is
+            # read by plain property loads before the next fetch, in the order the pattern runs them.
+            if peeled is None and prev_tmp is not None and items and items[-1].kind == "reg" \
+                    and items[-1].default is None and items[-1].reg == prev_tmp:
+                props = []
+
+                while insts:
+                    read = _property_read(insts[0], prev_tmp)
+
+                    if read is None:
+                        break
+
+                    props.append((read, _Elem("reg", insts[0].dest_reg, insts[0])))
+                    insts = insts[1:]
+
+                if props:
+                    items[-1] = _Elem("object", props=props, temp=prev_tmp)
+                    prev_tmp = None
+                elif insts and (store := _plain_store(insts[0], prev_tmp)) is not None:
+                    # `[..., slot] = src`: the element is stored into a slot that needs no evaluation.
+                    items[-1] = _Elem("target", items=None, default=store, temp=prev_tmp)
+                    insts = insts[1:]
+                    prev_tmp = None
 
             if prev_tmp is not None:
                 if ctx.peeled_form is None:
@@ -800,11 +862,13 @@ class ArrayDestructuringCfgPass:
 class _Elem:
     """One slot of a destructuring pattern."""
 
-    kind: str  # "reg" | "hole" | "nested" | "rest"
+    kind: str  # "reg" | "hole" | "nested" | "rest" | "object"
     reg: int | None = None
     result: object = None
     items: list | None = None
     default: object = None  # `[a = 0]`: the default value expression
+    props: list | None = None  # "object": (property name, leaf `_Elem`) in the order the reads run
+    temp: int | None = None  # "object": the register the element value was fetched into
 
 
 class _Ctx:
@@ -817,10 +881,84 @@ class _Ctx:
         self.peeled_form: bool | None = None
 
 
+def _property_read(instruction, source: int):
+    """`rD = rSource.name` (a plain property load of the element value into a new register), as its name."""
+    value = instruction.value
+
+    if (
+            not isinstance(value, MemberExpression)
+            or value.computed
+            or value.optional
+            or value.receiver is not None
+            or not isinstance(value.obj, Identifier)
+            or value.obj.name != f"r{source}"
+            or not isinstance(value.prop, Identifier)
+            or not value.prop.name.isidentifier()
+            or not isinstance(instruction.dest_reg, int)
+            or instruction.dest_reg == source
+    ):
+        return None
+
+    return value.prop.name
+
+
+def _plain_store(instruction, source: int):
+    """`slot = rSource` where the slot is a member of a register or of the environment reached by a constant
+    key, so that no code runs when the target is evaluated: returns the target expression."""
+    value = instruction.value
+
+    if (
+            not isinstance(value, AssignmentExpression)
+            or value.operator != AssignmentOperator.ASSIGN
+            or not isinstance(value.right, Identifier)
+            or value.right.name != f"r{source}"
+            or instruction.dest_reg is not None
+    ):
+        return None
+
+    left = value.left
+
+    if (
+            not isinstance(left, MemberExpression)
+            or left.optional
+            or left.receiver is not None
+            or not isinstance(left.obj, Identifier)
+            or left.obj.name == f"r{source}"
+    ):
+        return None
+
+    if left.computed and not isinstance(left.prop, NumericLiteral):
+        return None
+
+    if not left.computed and not isinstance(left.prop, Identifier):
+        return None
+
+    return left
+
+
+def _reads_name(node, name: str) -> bool:
+    for part in (getattr(node, "value", None), getattr(node, "statement", None)):
+        if part is not None and any(isinstance(n, Identifier) and n.name == name for n in part.walk()):
+            return True
+
+    return False
+
+
+def _object_temps(items):
+    for item in items:
+        if item.kind == "nested":
+            yield from _object_temps(item.items)
+        elif item.kind in ("object", "target"):
+            yield item.temp
+
+
 def _leaves(items):
     for item in items:
         if item.kind == "nested":
             yield from _leaves(item.items)
+        elif item.kind == "object":
+            for _, leaf in item.props:
+                yield leaf
         elif item.kind in ("reg", "rest"):
             yield item
 
@@ -833,6 +971,13 @@ def _pattern_expression(items) -> ArrayExpression:
             elements.append(ArrayHole())
         elif item.kind == "nested":
             elements.append(_pattern_expression(item.items))
+        elif item.kind == "target":
+            elements.append(item.default)
+        elif item.kind == "object":
+            elements.append(ObjectExpression(properties=tuple(
+                ObjectProperty(key=Identifier(name=name), value=Identifier(name=f"r{leaf.reg}"))
+                for name, leaf in item.props
+            )))
         elif item.kind == "rest":
             elements.append(SpreadElement(argument=Identifier(name=f"r{item.reg}")))
         elif item.default is not None:
