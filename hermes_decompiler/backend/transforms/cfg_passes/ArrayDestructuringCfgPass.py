@@ -849,12 +849,21 @@ _CLEANUP_HANDLERS = {"Catch", "Mov", "Jmp", "JmpTrue", "JmpTrueLong", "LoadConst
 
 
 def _cleanup_vocabulary(block: BasicBlock, iterators: set[int]) -> bool:
+    # `Mov r20 <- it; IteratorClose r20, 1` closes a copy of the iterator (98/5707): the copy is the iterator.
+    closable = set(iterators)
+
     for instruction in block.instructions:
         if instruction.handler not in _CLEANUP_HANDLERS:
             return False
 
+        if instruction.handler == "Mov":
+            operands = _operands(instruction)
+
+            if len(operands) == 2 and operands[1] in iterators:
+                closable.add(operands[0])
+
         if instruction.handler == "IteratorClose" and _operands(instruction)[:1] and _operands(instruction)[
-            0] not in iterators:
+            0] not in closable:
             return False
 
     return True
