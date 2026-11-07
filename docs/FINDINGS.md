@@ -99,6 +99,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-07 | after F-220 (a constant test whose arm leaves only by private returns and falls into the target is an `if`, not an `else`) | 123 | 132 | n/a | n/a | 1150 passed |
 | 2026-11-07 | after F-221 (`a?.b` tested in a folds: the jump to M keeps the head's own value) | 122 | 131 | n/a | n/a | 1151 passed |
 | 2026-11-07 | after F-222 (an arm falling into the target after a test whose taken side is a closed region of returns) | 116 | 129 | n/a | n/a | 1152 passed |
+| 2026-11-07 | after F-223 (both arms of a test enter one block though an arm also leaves through a `throw`) | 116 | 127 | n/a | n/a | 1153 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1

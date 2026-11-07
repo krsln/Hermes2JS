@@ -411,6 +411,9 @@ class _DominanceIfBuilder(RegionStructurer):
             # guard falls out of the catch into what the `try` body also jumps to).
             merge_block = goto_block
 
+        if merge_block is None and goto_block is not None:
+            merge_block = self._join_of_both_arms(block, then_entry, goto_block)
+
         has_else = goto_block is not merge_block and goto_block is not None
 
         # else_root = None
@@ -680,6 +683,32 @@ class _DominanceIfBuilder(RegionStructurer):
         return not getattr(self.cfg, "duplicated_returns", False) and self._arm_falls_into(
             then_entry, goto_block, block, exits_must_return=True,
         )
+
+    def _join_of_both_arms(self, block: BasicBlock, then_entry: BasicBlock, goto_block: BasicBlock):
+        """The block both arms of the test run on into, when the post-dominator cannot name it because an arm
+        also leaves through a `throw` / `return` of its own (98/8536: the `then` arm throws if `some(...)`, the
+        `else` arm computes the same register: both go on to `if (r12)`).
+
+        It is entered directly from `block`'s dominance only: its immediate dominator is `block`, one
+        predecessor lies in each arm and no predecessor lies outside them."""
+        dominators = self.cfg.dominator_tree
+        candidates = []
+
+        for candidate in self.cfg.blocks:
+            if (
+                    candidate is block or candidate is then_entry or candidate is goto_block
+                    or dominators.immediate_dominator(candidate) is not block
+                    or candidate.address < goto_block.address and candidate.address < then_entry.address
+            ):
+                continue
+
+            in_then = [p for p in candidate.predecessors if dominators.dominates(then_entry, p)]
+            in_goto = [p for p in candidate.predecessors if dominators.dominates(goto_block, p)]
+
+            if in_then and in_goto and len(in_then) + len(in_goto) == len(candidate.predecessors):
+                candidates.append(candidate)
+
+        return min(candidates, key=lambda c: c.address) if len(candidates) >= 1 else None
 
     def _is_closed_returning_region(self, pred: BasicBlock, goto_block: BasicBlock) -> bool:
         """The test's taken edge enters code only it reaches, which ends in `return`s / `throw`s and never gets to
