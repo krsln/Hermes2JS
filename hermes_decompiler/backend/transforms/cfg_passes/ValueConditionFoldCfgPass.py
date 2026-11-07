@@ -271,7 +271,17 @@ class ValueConditionFoldCfgPass:
         if any(isinstance(n, Identifier) and n.name == name for n in condition.walk()):
             return None
 
-        then = self._value(target, m, register, visited)
+        # `r = undefined; if (a == null) goto M; r = a.b; M:` (`a?.b`): the jump to M itself keeps the value
+        # the block just wrote (98/7639). The fold drops every write of the register, so only a block that writes
+        # it once qualifies (98/5937 read an earlier value of it), and the value must not be read after M
+        # (98/6004 returned it).
+        if target is m and (
+                len(defs) != 1
+                or not all(_Liveness._dead_on_entry(s, register, set()) for s in m.successors)
+        ):
+            return None
+
+        then = defs[-1].value if target is m else self._value(target, m, register, visited)
         other = self._value(fall, m, register, visited)
 
         if then is None or other is None:
