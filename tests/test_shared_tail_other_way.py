@@ -44,8 +44,10 @@ def test_an_empty_list_is_the_else_of_the_validity_test():
     out = _render("shared_tail_other_way_98_11896.hasm", 11896)
 
     assert "goto" not in out
-    assert "if (r6) {\n                    r6 = { \"scaleX\": null };" in out
-    assert out.count("r7 = [];") == 2
+    # With the closure-environment read pure (F-228) the guard and the validity test are ONE condition, and the
+    # empty list is the `else` of that condition (it used to be two `r7 = [];` around a nested `if`).
+    assert 'if (r7 === 1 && __getClosureEnvironment__(r3[1])[0].call(undefined, r5[0])) {' in out
+    assert "} else {\n                r7 = [];\n            }" in out
 
 
 def test_a_loop_the_plain_skip_solved_keeps_its_shape():

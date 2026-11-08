@@ -43,7 +43,7 @@ IMPURE_EXPRESSION_TYPES = (
 # Calls that never have an effect of their own, so folding one away or moving
 # it across another instruction changes nothing observable:
 #
-# - `getEnvironment` / `getParentEnvironment` / `createEnvironment`: the
+# - `getEnvironment` / `getParentEnvironment` / `__getClosureEnvironment__` / `createEnvironment`: the
 #   closure-environment plumbing (`GetEnvironment`, `GetParentEnvironment`,
 #   `CreateEnvironment` opcodes), which is not a JS call at all.
 # - `exponentiationOperator`: `a ** b`. Hermes itself treats it as
@@ -55,6 +55,7 @@ IMPURE_EXPRESSION_TYPES = (
 PURE_CALLEES = frozenset({
     "getEnvironment",
     "getParentEnvironment",
+    "__getClosureEnvironment__",
     "createEnvironment",
     "exponentiationOperator",
 })
