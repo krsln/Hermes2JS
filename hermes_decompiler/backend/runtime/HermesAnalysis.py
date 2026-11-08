@@ -8,7 +8,7 @@ from hermes_decompiler.backend.transforms import StructuralAnalyzer
 from hermes_decompiler.backend.transforms.shared import may_alias, read_members, stored_member
 from hermes_decompiler.backend.transforms.cfg_passes import (
     ArrayDestructuringCfgPass, EnvArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass,
-    SharedReturnDuplicationCfgPass, SharedTailDuplicationCfgPass, generator_dispatch,
+    SharedReturnDuplicationCfgPass, SharedTailDuplicationCfgPass, TestConstantSinkCfgPass, generator_dispatch,
 )
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
 from hermes_decompiler.core.logging import get_logger
@@ -465,7 +465,7 @@ class HermesAnalysis:
             # retries; there a retry only wins when it is `goto`-free and loses fewer paths.
             whole = []
 
-            for level in (1, 2, 3, 4, 5, 6):
+            for level in (1, 2, 3, 4, 5, 6, 7):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if not retry[3]:
                     continue
@@ -634,6 +634,9 @@ class HermesAnalysis:
                 cfg, regions=duplicate_returns >= 3, per_predecessor=duplicate_returns >= 5,
                 large=duplicate_returns >= 6,
             ).run()
+
+            if duplicate_returns >= 7:
+                TestConstantSinkCfgPass(cfg).run()
 
         cfg.verify()
         cfg.compute_dominators()
