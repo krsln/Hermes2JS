@@ -8,7 +8,8 @@ from hermes_decompiler.backend.transforms import StructuralAnalyzer
 from hermes_decompiler.backend.transforms.shared import may_alias, read_members, stored_member
 from hermes_decompiler.backend.transforms.cfg_passes import (
     ArrayDestructuringCfgPass, EnvArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass,
-    SharedReturnDuplicationCfgPass, SharedTailDuplicationCfgPass, TestConstantSinkCfgPass, generator_dispatch,
+    SharedReturnDuplicationCfgPass, SharedTailDuplicationCfgPass, TestConstantSinkCfgPass, FallThroughLayoutCfgPass,
+    generator_dispatch,
 )
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
 from hermes_decompiler.core.logging import get_logger
@@ -637,6 +638,8 @@ class HermesAnalysis:
 
             if duplicate_returns >= 7:
                 TestConstantSinkCfgPass(cfg).run()
+
+            FallThroughLayoutCfgPass(cfg).run()
 
         cfg.verify()
         cfg.compute_dominators()

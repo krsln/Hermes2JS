@@ -175,7 +175,8 @@ class SharedReturnDuplicationCfgPass:
 
     _MAX_LEAD = 2
     _MAX_TAIL = 6
-    _MAX_TAIL_LAST_RUNG = 9
+    # Ten instructions: the `requestPermission(...)` exit of 98/12903 `request` (nine before F-230).
+    _MAX_TAIL_LAST_RUNG = 12
     _MAX_THROW = 16
 
     _REGISTER_NAME = re.compile(r"r(\d+)")
