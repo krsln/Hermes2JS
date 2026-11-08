@@ -1,0 +1,13 @@
+
+=> [Generator function #13879 "?anon_0_loadIcon" of 20 bytes]: 1 params, frame size=2, strict=1, exc handler=0, debug info=0  @ offset 0x002649ce
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 4>
+==> 00000003: <LoadConstZero>: <Reg8: 0>
+==> 00000005: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 0>
+==> 00000009: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 0>
+==> 0000000d: <CreateGenerator>: <Reg8: 1, Reg8: 1, function_id: 14158>  # Function: [#14158 ?anon_0_loadIcon of 289 bytes]: 1 params @ offset 0x0026c17b
+==> 00000012: <Ret>: <Reg8: 1>
+
+

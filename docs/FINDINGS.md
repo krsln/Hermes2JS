@@ -107,6 +107,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-08 | after F-228 (`__getClosureEnvironment__` is a pure callee) | 115 | 118 | n/a | n/a | 1161 passed |
 | 2026-11-08 | after F-229 (a jump to a loop block finds the block, not its bare `break`) | 109 | 108 | n/a | n/a | 1162 passed |
 | 2026-11-08 | after F-230 (a conditional's fall-through stays behind it; return tail up to 12) | 106 | 107 | n/a | n/a | 1164 passed |
+| 2026-11-08 | after F-231 (a yielded value computed in an earlier block) | 106 | 106 | n/a | n/a | 1165 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -176,6 +177,12 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   Also left, not about the guard: a resumed value read through an inlined expression prints as `await yield`
   (96/12207: `if (await yield)`, `{ "src": await yield }`), because only a read of the register by name makes the
   fold bind it.
+  Why 98's generators still keep their raw form (DEBUG log, one record per ladder rung, so divide by 8): about 21 functions
+  "recognized only partially: resume point 1 has no dispatch target" on a second state slot, and about 5 "the entry dispatch
+  chain is still reachable after simulating the rewrite" (a `catch` that re-enters the dispatch: every async function with
+  a `try`, e.g. 98/12918 `readAsBuffer`, 12930, 12942, 13261, 13743, 13744); 3 "unrecognized instruction between the yielded
+  value and the suspend" and 1 "could not find the yielded value" (F-231 fixed the latter's 14158 case). The `try` ones need
+  the dispatch to know the protected range (cf. F-190).
 - **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.
 - **F-14 `for-of` generator unrolling.** The loop stays as an unrolled generator.
 - **F-15 Shared tail returns.** 96/10216.

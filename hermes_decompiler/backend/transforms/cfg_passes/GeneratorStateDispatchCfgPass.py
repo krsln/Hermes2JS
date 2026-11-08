@@ -80,6 +80,8 @@ def _literal_expression(value):
 #: `_generator_dispatch` for why more than just the resume slot gets
 #: written here), then the `{value, done: false}` object construction.
 #: Anything else in the tail is unrecognized and the site is left alone.
+_CONSTANT_LOADS = frozenset({"LoadConstUInt8", "LoadConstZero", "LoadConstInt"})
+
 _TAIL_HANDLERS = frozenset({
     "Mov",
     "StoreToEnvironment", "StoreToEnvironmentL",
@@ -640,7 +642,19 @@ class GeneratorStateDispatchCfgPass:
                 instruction = block.instructions[index]
                 return instruction.value, index, instruction.entry, index + 1
 
-        return None
+        # The value was computed in an earlier block (98/14158 `loadIcon`: `x instanceof Promise` guards the
+        # suspend, so `r7 = env[1]` sits before the guard). The block is nothing but the protocol: leading
+        # constant loads (the resume point's number), the stores, the result object. The suspend takes the
+        # register by name.
+        lead = 0
+
+        while lead < result_index and block.instructions[lead].handler in _CONSTANT_LOADS:
+            lead += 1
+
+        if lead == 0 and result_index > 0:
+            return None
+
+        return Identifier(name=f"r{value_reg}"), 0, block.instructions[0].entry, lead
 
     @staticmethod
     def _reads_resumed_value(continuation: BasicBlock) -> bool:
