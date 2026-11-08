@@ -11,8 +11,7 @@ from hermes_decompiler.backend.transforms.shared import negate_condition, is_loo
 from hermes_decompiler.backend.transforms.structurers import RegionStructurer
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import BinaryExpression, Literal, UndefinedLiteral
-from hermes_decompiler.ir.Operators import BinaryOperator
+from hermes_decompiler.ir.statements import BreakStatement
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorReturn
 from ._predicates import (
     is_backward_branch, is_constant_comparison, is_typeof_test, representative_block, same_case_subject,
@@ -68,10 +67,22 @@ class _DominanceIfBuilder(RegionStructurer):
     def __init__(self, graph, cfg):
         super().__init__(graph, cfg)
 
-        self._address_to_block: dict[int, BasicBlock] = {
-            block.address: block
-            for block in cfg.blocks
-        }
+        self._address_to_block: dict[int, BasicBlock] = {}
+
+        for block in cfg.blocks:
+            known = self._address_to_block.get(block.address)
+
+            # A bare `break` split off a loop block carries that block's address (LoopBreakStructurer,
+            # shape D): a jump to the address means the block, never the break (98/14187 `onStart`).
+            if known is None or not self._is_bare_break(block):
+                self._address_to_block[block.address] = block
+
+    @staticmethod
+    def _is_bare_break(block: BasicBlock) -> bool:
+        return (
+                len(block.instructions) == 1
+                and isinstance(getattr(block.instructions[0], "statement", None), BreakStatement)
+        )
 
     # -------------------------------------------------------------
 

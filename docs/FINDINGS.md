@@ -105,6 +105,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-08 | after F-226 (a long shared tail is copied on the last rung) | 115 | 121 | n/a | n/a | 1157 passed |
 | 2026-11-08 | after F-227 (a test's hoisted constant moves onto its edge) | 115 | 120 | n/a | n/a | 1159 passed |
 | 2026-11-08 | after F-228 (`__getClosureEnvironment__` is a pure callee) | 115 | 118 | n/a | n/a | 1161 passed |
+| 2026-11-08 | after F-229 (a jump to a loop block finds the block, not its bare `break`) | 109 | 108 | n/a | n/a | 1162 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
