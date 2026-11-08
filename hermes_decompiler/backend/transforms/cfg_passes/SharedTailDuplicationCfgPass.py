@@ -44,9 +44,16 @@ from hermes_decompiler.ir.terminators import (
 class SharedTailDuplicationCfgPass:
     _MAX_INSTRUCTIONS = 12
     _MAX_REGION_BLOCKS = 4
+    # The last rung only (`large`): a tail up to this size gets its copy.
+    _LARGE_INSTRUCTIONS = 40
+    _LARGE_REGION_BLOCKS = 10
 
-    def __init__(self, cfg: CFG, regions: bool = False, per_predecessor: bool = False):
+    def __init__(self, cfg: CFG, regions: bool = False, per_predecessor: bool = False, large: bool = False):
         self.cfg = cfg
+        # `large`: the tail may be several times bigger. Only the last rung: raising the limit for every
+        # retry restyled functions the small limit already structured (98/13397 `loadRoute`).
+        self.max_instructions = self._LARGE_INSTRUCTIONS if large else self._MAX_INSTRUCTIONS
+        self.max_region_blocks = self._LARGE_REGION_BLOCKS if large else self._MAX_REGION_BLOCKS
         # `per_predecessor`: a small tail entered by a fall-through AND by jumps, while an EARLIER
         # test of the same chain skips it, gets one private copy per way in (98/2216 `getScriptURL`:
         # `r3 = r5` after the `file://` test). The last resort, run only when nothing else
@@ -121,7 +128,7 @@ class SharedTailDuplicationCfgPass:
         return all(protected.get(pred, frozenset()) == own for pred in tail.predecessors)
 
     def _faller_that_skips(self, tail: BasicBlock) -> BasicBlock | None:
-        if len(tail.instructions) > self._MAX_INSTRUCTIONS or len(tail.predecessors) < 2:
+        if len(tail.instructions) > self.max_instructions or len(tail.predecessors) < 2:
             return None
         if tail.terminator is not None and not isinstance(tail.terminator, TerminatorJump):
             return None
@@ -240,14 +247,14 @@ class SharedTailDuplicationCfgPass:
                 break
             region.append(block)
 
-        if not 2 <= len(region) <= self._MAX_REGION_BLOCKS:
+        if not 2 <= len(region) <= self.max_region_blocks:
             return None
 
         end = next((b for b in blocks if b.address == branch.target), None)
         if end is None or end.address != blocks[index + len(region)].address:
             return None
 
-        if sum(len(b.instructions) for b in region) > self._MAX_INSTRUCTIONS:
+        if sum(len(b.instructions) for b in region) > self.max_instructions:
             return None
 
         # Room for one address per copied block between the test and the tail.

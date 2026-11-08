@@ -465,7 +465,7 @@ class HermesAnalysis:
             # retries; there a retry only wins when it is `goto`-free and loses fewer paths.
             whole = []
 
-            for level in (1, 2, 3, 4, 5):
+            for level in (1, 2, 3, 4, 5, 6):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if not retry[3]:
                     continue
@@ -632,6 +632,7 @@ class HermesAnalysis:
             ).run()
             SharedTailDuplicationCfgPass(
                 cfg, regions=duplicate_returns >= 3, per_predecessor=duplicate_returns >= 5,
+                large=duplicate_returns >= 6,
             ).run()
 
         cfg.verify()
