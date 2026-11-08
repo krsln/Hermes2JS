@@ -498,7 +498,8 @@ class ShortCircuitConditionCfgPass:
                     # (A copy the same block writes the register of again is not that: nothing outside
                     # the block can see it, `r9 = r8; r9 = r9.type` reads `r8.type`, 98/11306.)
                     or (instruction.entry.opcode in ("Mov", "MovLong")
-                        and not any(later.dest_reg == instruction.dest_reg for later in setup[position + 1:]))
+                        and not any(later.dest_reg == instruction.dest_reg for later in setup[position + 1:])
+                        and not self._copy_feeds_the_test(successor, instruction, probe, setup[position + 1:]))
                     or not (
                     # The global object is the same on every path and every reader
                     # already inlined it: nothing is left to read the register.
@@ -547,6 +548,24 @@ class ShortCircuitConditionCfgPass:
             current[f"r{instruction.dest_reg}"] = value
 
         return self._substitute_all(condition, current, resolved)
+
+    def _copy_feeds_the_test(self, successor: BasicBlock, copy_instruction, probe, later: list) -> bool:
+        """`r18 = r13; if (r18) goto T;  r18 = r12; if (r18) goto T`: both tests read the one register they copy
+        their operand into, so the second copy exists only to be tested and the test takes the source register
+        in its place when nothing after the copy writes that register (98/11466: `a || b` in a `for...of`)."""
+        name = f"r{copy_instruction.dest_reg}"
+        source = copy_instruction.value
+        before = successor.predecessors[0] if len(successor.predecessors) == 1 else None
+
+        return (
+                isinstance(source, Identifier)
+                and before is not None
+                and isinstance(before.terminator, TerminatorConditionalBranch)
+                and isinstance(before.terminator.condition, Identifier)
+                and before.terminator.condition.name == name
+                and not any(i.dest_reg is not None and f"r{i.dest_reg}" == source.name for i in later)
+                and sum(1 for n in probe.walk() if isinstance(n, Identifier) and n.name == name) == 1
+        )
 
     @classmethod
     def _read_before_any_effect(cls, node, name: str) -> bool:

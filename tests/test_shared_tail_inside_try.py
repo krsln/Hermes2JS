@@ -42,4 +42,5 @@ def test_the_transform_check_that_fails_keeps_the_plain_assignment():
 
     assert "goto" not in out
     assert out.count("r3[r11] = r10;") == 1
-    assert 'if (r10 !== "transform" || !r0[5].call(0, r8)) {' in out
+    # the copy of the first test's operand folds into the condition (F-225)
+    assert 'if (!r10 && (r9 !== "transform" || !r0[5].call(0, r8))) {' in out
