@@ -322,8 +322,15 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         """
         # The unwrapped try's close/rethrow blocks still sit in `cfg.blocks`
         # (and still say `rN.return()`), but nothing prints them any more:
-        # only blocks the region tree still covers can read the register.
-        live = SimpleNamespace(blocks=[b for b in self.cfg.blocks if b in self.graph.root.covered_blocks])
+        # only blocks the region tree still covers can read the register. A copy of the iterator
+        # (`Mov y <- it`) whose value was inlined into its uses prints nothing; the uses that carry the
+        # name are visible on their own (98/4310: the loop header's done-check copy).
+        live = SimpleNamespace(blocks=[
+            SimpleNamespace(instructions=[
+                i for i in b.instructions if not (i.handler == "Mov" and i.definition_used)
+            ])
+            for b in self.cfg.blocks if b in self.graph.root.covered_blocks
+        ])
 
         for block in self.cfg.blocks:
             for instr in block.instructions:

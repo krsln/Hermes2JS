@@ -1,0 +1,36 @@
+
+=> [Function #4310 "anyInCell" of 88 bytes]: 3 params, frame size=15, strict=1, exc handler=1, debug info=0  @ offset 0x0019fd25
+  [Exception handlers: [start=0x39, end=0x43, target=0x4d] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 2>
+==> 00000003: <LoadParam>: <Reg8: 0, UInt8: 0>
+==> 00000006: <GetById>: <Reg8: 2, Reg8: 0, UInt8: 0, string_id: 11695>  # String: '_cellKeyToChildren' (Identifier)
+==> 0000000c: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 49>  # String: 'get' (Identifier)
+==> 00000011: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000014: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000019: <LoadConstNull>: <Reg8: 1>
+==> 0000001b: <JNotEqual>: <Addr8: 8, Reg8: 0, Reg8: 1>  # Address: 00000023
+==> 0000001f: <NewArray>: <Reg8: 0, UInt16: 0>
+==> 00000023: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000026: <IteratorBegin>: <Reg8: 1, Reg8: 2>
+==> 00000029: <LoadConstUndefined>: <Reg8: 0>
+==> 0000002b: <Mov>: <Reg8: 4, Reg8: 2>
+==> 0000002e: <IteratorNext>: <Reg8: 4, Reg8: 1, Reg8: 4>
+==> 00000032: <Mov>: <Reg8: 5, Reg8: 1>
+==> 00000035: <JStrictEqual>: <Addr8: 31, Reg8: 5, Reg8: 0>  # Address: 00000054
+==> 00000039: <Call2>: <Reg8: 4, Reg8: 3, Reg8: 0, Reg8: 4>
+==> 0000003e: <JmpTrue>: <Addr8: 5, Reg8: 4>  # Address: 00000043
+==> 00000041: <Jmp>: <Addr8: -22>  # Address: 0000002b
+==> 00000043: <Mov>: <Reg8: 0, Reg8: 1>
+==> 00000046: <IteratorClose>: <Reg8: 0, UInt8: 0>
+==> 00000049: <LoadConstTrue>: <Reg8: 0>
+==> 0000004b: <Ret>: <Reg8: 0>
+==> 0000004d: <Catch>: <Reg8: 0>
+==> 0000004f: <IteratorClose>: <Reg8: 1, UInt8: 1>
+==> 00000052: <Throw>: <Reg8: 0>
+==> 00000054: <LoadConstFalse>: <Reg8: 0>
+==> 00000056: <Ret>: <Reg8: 0>
+
+
