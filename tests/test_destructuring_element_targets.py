@@ -37,3 +37,14 @@ def test_a_hole_followed_by_a_slot_store():
 
     assert "[, __environment__[1]] = r9;" in code
     assert ".next()" not in code
+
+
+def test_member_targets_with_constant_keys_in_a_per_element_try():
+    # 98/11908 `maybeSwapComponents`: `[a[0], a[1]] = src`. The element value is stored straight from the fetch
+    # register (the copy was folded away) and the key loads are dead; every store sits in its own try range whose
+    # handler only closes the iterator.
+    code = _code("destructuring_member_targets_98_11908.hasm", 11908)
+
+    assert "[r0[0], r0[1]] = r5;" in code
+    assert "goto" not in code
+    assert ".next()" not in code

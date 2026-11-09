@@ -145,6 +145,11 @@ class ArrayDestructuringCfgPass:
             if temp in leaves or not self._dead_after(join, temp, dropped_ids):
                 return None
 
+        # A store that read the fetch register itself leaves no copy of the value behind (98/3759).
+        for register in ctx.fetched:
+            if register not in leaves and not self._dead_after(join, register, dropped_ids):
+                return None
+
         return items, drop, join, kept_undefined, removed_handlers, cleanup
 
     def _dead_after(self, start: BasicBlock, register: int, dropped_ids: set[int]) -> bool:
@@ -372,6 +377,8 @@ class ArrayDestructuringCfgPass:
             prev_tmp = None
             cur_block, cur_insts = head, [undef_e, jmp]
 
+        # Element 1's copy `Mov e1 <- v1` may be folded away, the store then reads v1 itself.
+        first_value = v1
         seen: set[int] = set()
 
         while True:
@@ -438,11 +445,22 @@ class ArrayDestructuringCfgPass:
                 if props:
                     items[-1] = _Elem("object", props=props, temp=prev_tmp)
                     prev_tmp = None
-                elif insts and (store := _plain_store(insts[0], prev_tmp)) is not None:
-                    # `[..., slot] = src`: the element is stored into a slot that needs no evaluation.
-                    items[-1] = _Elem("target", items=None, default=store, temp=prev_tmp)
-                    insts = insts[1:]
-                    prev_tmp = None
+                else:
+                    # A constant key loaded just for the store is inlined into it, so its load is dead.
+                    lead = 0
+
+                    while lead < len(insts) and insts[lead].handler in _KEY_LOADS and insts[lead].definition_used:
+                        lead += 1
+
+                    if lead < len(insts) and (store := _plain_store(insts[lead], prev_tmp, first_value)) is not None:
+                        # `[..., slot] = src`: the element is stored into a slot that needs no evaluation.
+                        items[-1] = _Elem("target", items=None, default=store, temp=prev_tmp)
+
+                        if insts[lead].value.right.name == f"r{first_value}":
+                            ctx.fetched.append(first_value)
+
+                        insts = insts[lead + 1:]
+                        prev_tmp = None
 
             if prev_tmp is not None:
                 if ctx.peeled_form is None:
@@ -564,6 +582,7 @@ class ArrayDestructuringCfgPass:
 
             # Element k >= 2.
             ek = _operands(undef_inst)[0]
+            first_value = None
 
             # Fetch: [Mov t <- src] Next vk; Mov y <- it; StrictEq f2 <- y === undefined;
             #        [LoadConstUndefined ek]; Mov f <- f2; JmpTrue f -> X
@@ -879,6 +898,7 @@ class _Ctx:
         self.drop: list[BasicBlock] = []
         self.iterators: set[int] = set()
         self.peeled_form: bool | None = None
+        self.fetched: list[int] = []  # fetch registers a slot store read directly, no copy of them is kept
 
 
 def _property_read(instruction, source: int):
@@ -902,7 +922,7 @@ def _property_read(instruction, source: int):
     return value.prop.name
 
 
-def _plain_store(instruction, source: int):
+def _plain_store(instruction, source: int, alias: int | None = None):
     """`slot = rSource` where the slot is a member of a register or of the environment reached by a constant
     key, so that no code runs when the target is evaluated: returns the target expression."""
     value = instruction.value
@@ -911,7 +931,7 @@ def _plain_store(instruction, source: int):
             not isinstance(value, AssignmentExpression)
             or value.operator != AssignmentOperator.ASSIGN
             or not isinstance(value.right, Identifier)
-            or value.right.name != f"r{source}"
+            or value.right.name not in (f"r{source}", f"r{alias}")
             or instruction.dest_reg is not None
     ):
         return None
@@ -923,7 +943,7 @@ def _plain_store(instruction, source: int):
             or left.optional
             or left.receiver is not None
             or not isinstance(left.obj, Identifier)
-            or left.obj.name == f"r{source}"
+            or left.obj.name in (f"r{source}", f"r{alias}")
     ):
         return None
 
@@ -989,6 +1009,8 @@ def _pattern_expression(items) -> ArrayExpression:
 
     return ArrayExpression(elements=tuple(elements))
 
+
+_KEY_LOADS = frozenset({"LoadConstUInt8", "LoadConstZero", "LoadConstInt"})
 
 _CLEANUP_HANDLERS = {"Catch", "Mov", "Jmp", "JmpTrue", "JmpTrueLong", "LoadConstUndefined", "IteratorClose", "Throw"}
 
