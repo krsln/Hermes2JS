@@ -1,0 +1,70 @@
+
+=> [Function #11908 "maybeSwapComponents" of 192 bytes]: 2 params, frame size=19, strict=1, exc handler=1, debug info=0  @ offset 0x002326e5
+  [Exception handlers: [start=0x72, end=0x76, target=0xad] [start=0x97, end=0x9e, target=0xa9] ]
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000003: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000006: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 0>
+==> 0000000a: <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
+==> 0000000e: <IsIn>: <Reg8: 2, Reg8: 3, Reg8: 2>
+==> 00000012: <JmpFalse>: <Addr8: 28, Reg8: 2>  # Address: 0000002e
+==> 00000015: <GetByIndex>: <Reg8: 2, Reg8: 1, UInt8: 1>
+==> 00000019: <LoadConstUndefined>: <Reg8: 3>
+==> 0000001b: <JStrictEqual>: <Addr8: 21, Reg8: 2, Reg8: 3>  # Address: 00000030
+==> 0000001f: <GetByIndex>: <Reg8: 2, Reg8: 1, UInt8: 1>
+==> 00000023: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 1>
+==> 00000027: <IsIn>: <Reg8: 0, Reg8: 2, Reg8: 0>
+==> 0000002b: <JmpTrue>: <Addr8: 5, Reg8: 0>  # Address: 00000030
+==> 0000002e: <Ret>: <Reg8: 1>
+==> 00000030: <NewArray>: <Reg8: 0, UInt16: 0>
+==> 00000034: <LoadConstZero>: <Reg8: 6>
+==> 00000036: <Mov>: <Reg8: 10, Reg8: 0>
+==> 00000039: <Mov>: <Reg8: 9, Reg8: 1>
+==> 0000003c: <LoadConstZero>: <Reg8: 8>
+==> 0000003e: <CallBuiltin>: <Reg8: 1, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+==> 00000042: <GetByIndex>: <Reg8: 1, Reg8: 0, UInt8: 1>
+==> 00000046: <NewArray>: <Reg8: 2, UInt16: 2>
+==> 0000004a: <DefineOwnInDenseArray>: <Reg8: 2, Reg8: 1, UInt8: 0>
+==> 0000004e: <GetByIndex>: <Reg8: 1, Reg8: 0, UInt8: 0>
+==> 00000052: <DefineOwnInDenseArray>: <Reg8: 2, Reg8: 1, UInt8: 1>
+==> 00000056: <Mov>: <Reg8: 5, Reg8: 2>
+==> 00000059: <IteratorBegin>: <Reg8: 1, Reg8: 5>
+==> 0000005c: <Mov>: <Reg8: 2, Reg8: 5>
+==> 0000005f: <IteratorNext>: <Reg8: 7, Reg8: 1, Reg8: 2>
+==> 00000063: <Mov>: <Reg8: 2, Reg8: 1>
+==> 00000066: <StrictEq>: <Reg8: 4, Reg8: 2, Reg8: 3>
+==> 0000006a: <LoadConstUndefined>: <Reg8: 2>
+==> 0000006c: <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000072
+==> 0000006f: <Mov>: <Reg8: 2, Reg8: 7>
+==> 00000072: <PutByValStrict>: <Reg8: 0, Reg8: 6, Reg8: 2>
+==> 00000076: <LoadConstUndefined>: <Reg8: 6>
+==> 00000078: <Mov>: <Reg8: 2, Reg8: 4>
+==> 0000007b: <JmpTrue>: <Addr8: 28, Reg8: 4>  # Address: 00000097
+==> 0000007e: <IteratorNext>: <Reg8: 7, Reg8: 1, Reg8: 5>
+==> 00000082: <Mov>: <Reg8: 5, Reg8: 1>
+==> 00000085: <StrictEq>: <Reg8: 5, Reg8: 5, Reg8: 3>
+==> 00000089: <LoadConstUndefined>: <Reg8: 6>
+==> 0000008b: <Mov>: <Reg8: 2, Reg8: 5>
+==> 0000008e: <JmpTrue>: <Addr8: 9, Reg8: 5>  # Address: 00000097
+==> 00000091: <Mov>: <Reg8: 6, Reg8: 7>
+==> 00000094: <Mov>: <Reg8: 2, Reg8: 5>
+==> 00000097: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 0000009a: <PutByValStrict>: <Reg8: 0, Reg8: 5, Reg8: 6>
+==> 0000009e: <JmpTrue>: <Addr8: 9, Reg8: 2>  # Address: 000000a7
+==> 000000a1: <Mov>: <Reg8: 5, Reg8: 1>
+==> 000000a4: <IteratorClose>: <Reg8: 5, UInt8: 0>
+==> 000000a7: <Ret>: <Reg8: 0>
+==> 000000a9: <Catch>: <Reg8: 0>
+==> 000000ab: <Jmp>: <Addr8: 13>  # Address: 000000b8
+==> 000000ad: <Catch>: <Reg8: 0>
+==> 000000af: <Mov>: <Reg8: 2, Reg8: 4>
+==> 000000b2: <Jmp>: <Addr8: 6>  # Address: 000000b8
+==> 000000b4: <Catch>: <Reg8: 0>
+==> 000000b6: <LoadConstUndefined>: <Reg8: 2>
+==> 000000b8: <JmpTrue>: <Addr8: 6, Reg8: 2>  # Address: 000000be
+==> 000000bb: <IteratorClose>: <Reg8: 1, UInt8: 1>
+==> 000000be: <Throw>: <Reg8: 0>
+
+
