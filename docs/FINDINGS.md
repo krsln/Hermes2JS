@@ -190,6 +190,19 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   a `try`, e.g. 98/12918 `readAsBuffer`, 12930, 12942, 13261, 13743, 13744); 3 "unrecognized instruction between the yielded
   value and the suspend" and 1 "could not find the yielded value" (F-231 fixed the latter's 14158 case). The `try` ones need
   the dispatch to know the protected range (cf. F-190).
+  Triage of 98/12918 `readAsBuffer` (2026-11-10), the `try` shape in detail: the entry chain on `env[4]` (state) is
+  `0 -> 0x1d2`, `1 -> 0x1b3`, `2 -> 0x63` (mode checks on the resume mode `r3`: 1 -> 0x1aa, 2 -> 0x181), and its DEFAULT
+  arm (0x4f: `r6 = env[5]; env[6] = 0; env[1].return(); throw r12`) is the "rethrow the saved exception, close the
+  iterator" path. All six exception ranges target ONE catch block (0x2ab: `env[5] = e; if (env[6] === 0) goto 0x2d2 (store
+  env[7] = 3; throw e); if (env[6] === 1) { env[4] = 1 } else { env[4] = 3 }; jmp 0x32`), i.e. the catch re-enters the entry
+  chain with a CONSTANT state (1 = resume at the `catch` clause 0x1b3, 3 = run the default arm), which is why
+  `_dispatch_survives` fires. A fix is "jump threading": retarget a re-entry that stores a known state constant right
+  before `jmp <dispatch head>` to the table's block for that constant, and make the chain's default arm (not a resume
+  point, but live code once threaded) part of the output; the protected range then has to stay as a real `try` around
+  the `catch` clause body. Not started: it changes `GeneratorStateDispatchCfgPass` (state table, default arm, strip of
+  the protocol writes) and the structurer's try/catch recovery at once, and the `r6`/`env[5]` saved-exception protocol
+  has no counterpart in the folded form yet. All six functions share this single catch re-entry, so one fix would
+  take all of them.
 - **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.
 - **F-14 `for-of` generator unrolling.** The loop stays as an unrolled generator.
 - **F-15 Shared tail returns.** 96/10216.
