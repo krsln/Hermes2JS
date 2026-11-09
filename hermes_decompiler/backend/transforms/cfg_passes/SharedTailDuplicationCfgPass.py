@@ -247,11 +247,50 @@ class SharedTailDuplicationCfgPass:
                 break
             region.append(block)
 
+        end = next((b for b in blocks if b.address == branch.target), None)
+
+        if end is None:
+            return None
+
+        # The blocks up to `END` are the region when nothing else sits among them (the plain shape); when a
+        # block of another way sits there (`beside` sets `r1 = true` between the tail and `END`, 98/6324),
+        # the region is the run of blocks only the region itself enters, ending in a jump to `END`.
+        candidates = [region]
+
+        plain = end.address == blocks[index + len(region)].address and all(
+            pred in region for block in region[1:] for pred in block.predecessors
+        )
+
+        if not plain:
+            closed = [tail]
+
+            for block in region[1:]:
+                if all(pred in closed for pred in block.predecessors):
+                    closed.append(block)
+                else:
+                    break
+
+            candidates = [closed] if closed != region else []
+
+        for candidate in candidates:
+            found = self._check_region(tail, faller, end, candidate, index, closed=candidate is not region)
+
+            if found is not None:
+                return found
+
+        return None
+
+    def _check_region(self, tail: BasicBlock, faller: BasicBlock, end: BasicBlock, region: list, index: int,
+                      closed: bool):
+        blocks = self.cfg.blocks
+
         if not 2 <= len(region) <= self.max_region_blocks:
             return None
 
-        end = next((b for b in blocks if b.address == branch.target), None)
-        if end is None or end.address != blocks[index + len(region)].address:
+        if closed:
+            if not isinstance(region[-1].terminator, TerminatorJump) or region[-1].terminator.target != end.address:
+                return None
+        elif end.address != blocks[index + len(region)].address:
             return None
 
         if sum(len(b.instructions) for b in region) > self.max_instructions:
