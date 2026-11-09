@@ -34,6 +34,7 @@ around the chain and are left alone.
 
 from __future__ import annotations
 
+import copy
 from dataclasses import dataclass
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
@@ -141,16 +142,31 @@ class ArrayDestructuringCfgPass:
 
         # The temporary an object pattern was read from is not assigned any more: nothing after the
         # pattern may still read it.
+        # A register that is still read afterwards (a closure variable also kept in a register) is
+        # restored from the environment slot the element was stored into: a slot is a plain variable, so
+        # reading it back yields the stored value. Any other target would be read twice, so it declines.
+        slots = {item.temp: item.default for item in _targets(items) if _is_env_slot(item.default)}
+        restores: dict[int, object] = {}
+
         for temp in _object_temps(items):
-            if temp in leaves or not self._dead_after(join, temp, dropped_ids):
+            if temp in leaves:
                 return None
+
+            if not self._dead_after(join, temp, dropped_ids):
+                if temp not in slots:
+                    return None
+
+                restores[temp] = slots[temp]
 
         # A store that read the fetch register itself leaves no copy of the value behind (98/3759).
-        for register in ctx.fetched:
+        for register, slot in ctx.fetched:
             if register not in leaves and not self._dead_after(join, register, dropped_ids):
-                return None
+                if not _is_env_slot(slot):
+                    return None
 
-        return items, drop, join, kept_undefined, removed_handlers, cleanup
+                restores[register] = slot
+
+        return items, drop, join, kept_undefined, removed_handlers, cleanup, restores
 
     def _dead_after(self, start: BasicBlock, register: int, dropped_ids: set[int]) -> bool:
         """True if no path from `start` reads `register` before writing it."""
@@ -457,7 +473,7 @@ class ArrayDestructuringCfgPass:
                         items[-1] = _Elem("target", items=None, default=store, temp=prev_tmp)
 
                         if insts[lead].value.right.name == f"r{first_value}":
-                            ctx.fetched.append(first_value)
+                            ctx.fetched.append((first_value, store))
 
                         insts = insts[lead + 1:]
                         prev_tmp = None
@@ -808,7 +824,7 @@ class ArrayDestructuringCfgPass:
     # ------------------------------------------------------------------
 
     def _apply(self, head: BasicBlock, begin_index: int, match) -> None:
-        items, drop, join, kept_undefined, removed_handlers, cleanup = match
+        items, drop, join, kept_undefined, removed_handlers, cleanup, restores = match
 
         begin = head.instructions[begin_index]
         source = begin.value.arguments[0]
@@ -842,7 +858,16 @@ class ArrayDestructuringCfgPass:
         keep = [kept_undefined] if kept_undefined is not None else []
         removed -= {id(result) for result in keep}
 
-        head.instructions = head.instructions[:begin_index + 1] + keep + silent
+        # `rN = <slot>` for a register that outlives the pattern (see `_match`).
+        restored = []
+        for register, slot in restores.items():
+            copy_ = copy.copy(begin)
+            copy_.dest_reg = register
+            copy_.value = slot
+            copy_.definition_used = False
+            restored.append(copy_)
+
+        head.instructions = head.instructions[:begin_index + 1] + keep + silent + restored
         head.terminator = TerminatorJump(target=join.address)
 
         for successor in list(head.successors):
@@ -898,7 +923,8 @@ class _Ctx:
         self.drop: list[BasicBlock] = []
         self.iterators: set[int] = set()
         self.peeled_form: bool | None = None
-        self.fetched: list[int] = []  # fetch registers a slot store read directly, no copy of them is kept
+        self.fetched: list[
+            tuple[int, object]] = []  # fetch registers a slot store read directly, no copy of them is kept
 
 
 def _property_read(instruction, source: int):
@@ -962,6 +988,25 @@ def _reads_name(node, name: str) -> bool:
             return True
 
     return False
+
+
+def _targets(items):
+    for item in items:
+        if item.kind == "nested":
+            yield from _targets(item.items)
+        elif item.kind == "target":
+            yield item
+
+
+def _is_env_slot(expression) -> bool:
+    return (
+            isinstance(expression, MemberExpression)
+            and expression.computed
+            and not expression.optional
+            and isinstance(expression.obj, Identifier)
+            and expression.obj.name == "__environment__"
+            and isinstance(expression.prop, NumericLiteral)
+    )
 
 
 def _object_temps(items):

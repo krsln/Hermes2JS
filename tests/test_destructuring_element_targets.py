@@ -48,3 +48,14 @@ def test_member_targets_with_constant_keys_in_a_per_element_try():
     assert "[r0[0], r0[1]] = r5;" in code
     assert "goto" not in code
     assert ".next()" not in code
+
+
+def test_a_register_read_after_the_pattern_is_restored_from_its_slot():
+    # 98/5806: `const [a, b] = useState(...)` where `a` is a closure variable that is also kept in a register
+    # (`r8`) and read later. The pattern stores into the slot; the register is read back from it.
+    code = _code("destructuring_slot_restore_98_5806.hasm", 5806)
+
+    assert "[__environment__[3], __environment__[4]] = r11;" in code
+    assert "r8 = __environment__[3];" in code
+    assert "goto" not in code
+    assert ".next()" not in code
