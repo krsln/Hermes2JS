@@ -59,3 +59,12 @@ def test_a_register_read_after_the_pattern_is_restored_from_its_slot():
     assert "r8 = __environment__[3];" in code
     assert "goto" not in code
     assert ".next()" not in code
+
+
+def test_fetch_that_reads_the_source_register_without_a_copy():
+    # 98/10000: `const [key] = args`: the source already sits in the register `IteratorNext` reads, so
+    # there is no `Mov t <- src` before the first fetch.
+    code = _code("destructuring_no_source_copy_98_10000.hasm", 10000)
+
+    assert "[r3] = r2;" in code
+    assert ".next()" not in code

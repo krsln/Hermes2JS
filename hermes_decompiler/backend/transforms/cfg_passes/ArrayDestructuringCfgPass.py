@@ -324,11 +324,14 @@ class ArrayDestructuringCfgPass:
         elif shapes == ["LoadConstUndefined", "Mov", "IteratorNext", "Mov", "StrictEq", "JmpTrue"]:
             # An element with a default loads its `undefined` first.
             tail = [*tail[1:5], tail[0], tail[5]]
+        elif shapes == expected[1:]:
+            # The fetch reads the source register itself (it already holds it): no `Mov t <- src`.
+            tail = [None, *tail]
         elif shapes != expected:
             return None
 
         mov_t, nxt, mov_x, eq, undef_e, jmp = tail
-        t = _operands(mov_t)
+        t = _operands(mov_t) if mov_t is not None else [src, src]
         n = _operands(nxt)
         x = _operands(mov_x)
         e = _operands(eq)
