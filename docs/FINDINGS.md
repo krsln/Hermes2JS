@@ -203,6 +203,10 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   the protocol writes) and the structurer's try/catch recovery at once, and the `r6`/`env[5]` saved-exception protocol
   has no counterpart in the folded form yet. All six functions share this single catch re-entry, so one fix would
   take all of them.
+  Count (2026-11-10, after F-238): 23 of the 103 goto files in 98 are generator state machines kept in their raw form
+  (they print `Generator functions may not be called on executing generators`): 12484, 12720, 12721, 12743, 12744, 12745,
+  12749, 12918, 12930, 12932, 12942, 13261, 13726, 13727, 13743, 13744, 13832, 14155, 14167, 14230, 9672, 9673, 9674 - the
+  largest single cluster of the remaining gotos. The rest are 33 files with one `if (C) goto L`, 26 with two, and a tail.
 - **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.
 - **F-14 `for-of` generator unrolling.** The loop stays as an unrolled generator.
 - **F-15 Shared tail returns.** 96/10216.
