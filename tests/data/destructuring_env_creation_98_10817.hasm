@@ -1,0 +1,120 @@
+
+=> [Function #10817 "" of 429 bytes]: 2 params, frame size=23, strict=1, exc handler=0, debug info=0  @ offset 0x0021ed73
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 6, UInt8: 1>
+==> 00000003: <IteratorBegin>: <Reg8: 5, Reg8: 6>
+==> 00000006: <Mov>: <Reg8: 4, Reg8: 6>
+==> 00000009: <IteratorNext>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 0000000d: <Mov>: <Reg8: 7, Reg8: 5>
+==> 00000010: <LoadConstUndefined>: <Reg8: 1>
+==> 00000012: <StrictEq>: <Reg8: 0, Reg8: 7, Reg8: 1>
+==> 00000016: <LoadConstUndefined>: <Reg8: 8>
+==> 00000018: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 0000001e
+==> 0000001b: <Mov>: <Reg8: 8, Reg8: 4>
+==> 0000001e: <CreateFunctionEnvironment>: <Reg8: 4, UInt8: 4>
+==> 00000021: <StoreToEnvironment>: <Reg8: 4, UInt8: 0, Reg8: 8>
+==> 00000025: <LoadConstUndefined>: <Reg8: 11>
+==> 00000027: <JmpTrue>: <Addr8: 28, Reg8: 0>  # Address: 00000043
+==> 0000002a: <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
+==> 0000002e: <Mov>: <Reg8: 7, Reg8: 5>
+==> 00000031: <StrictEq>: <Reg8: 2, Reg8: 7, Reg8: 1>
+==> 00000035: <LoadConstUndefined>: <Reg8: 11>
+==> 00000037: <Mov>: <Reg8: 0, Reg8: 2>
+==> 0000003a: <JmpTrue>: <Addr8: 9, Reg8: 2>  # Address: 00000043
+==> 0000003d: <Mov>: <Reg8: 11, Reg8: 6>
+==> 00000040: <Mov>: <Reg8: 0, Reg8: 2>
+==> 00000043: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000049
+==> 00000046: <IteratorClose>: <Reg8: 5, UInt8: 0>
+==> 00000049: <StoreNPToEnvironment>: <Reg8: 4, UInt8: 2, Reg8: 1>
+==> 0000004d: <StoreNPToEnvironment>: <Reg8: 4, UInt8: 3, Reg8: 1>
+==> 00000051: <NewObject>: <Reg8: 5>
+==> 00000053: <StoreToEnvironment>: <Reg8: 4, UInt8: 1, Reg8: 5>
+==> 00000057: <LoadConstString>: <Reg8: 5, string_id: 188>  # String: 'screen' (Identifier)
+==> 0000005b: <IsIn>: <Reg8: 0, Reg8: 5, Reg8: 11>
+==> 0000005f: <JmpTrue>: <Addr8: 91, Reg8: 0>  # Address: 000000ba
+==> 00000062: <GetParentEnvironment>: <Reg8: 5, UInt8: 1>
+==> 00000065: <LoadFromEnvironment>: <Reg8: 6, Reg8: 5, UInt8: 4>
+==> 00000069: <GetById>: <Reg8: 6, Reg8: 6, UInt8: 0, string_id: 17567>  # String: 'isValidElementType' (Identifier)
+==> 0000006f: <Call2>: <Reg8: 6, Reg8: 6, Reg8: 1, Reg8: 11>
+==> 00000074: <LoadConstFalse>: <Reg8: 0>
+==> 00000076: <Mov>: <Reg8: 10, Reg8: 11>
+==> 00000079: <JmpTrueLong>: <Addr32: 186, Reg8: 6>  # Address: 00000133
+==> 0000007f: <LoadConstString>: <Reg8: 6, string_id: 106>  # String: 'config' (Identifier)
+==> 00000083: <IsIn>: <Reg8: 2, Reg8: 6, Reg8: 11>
+==> 00000087: <LoadConstFalse>: <Reg8: 0>
+==> 00000089: <LoadConstUndefined>: <Reg8: 10>
+==> 0000008b: <JmpFalseLong>: <Addr32: 168, Reg8: 2>  # Address: 00000133
+==> 00000091: <LoadFromEnvironment>: <Reg8: 6, Reg8: 5, UInt8: 8>
+==> 00000095: <GetGlobalObject>: <Reg8: 5>
+==> 00000097: <TryGetById>: <Reg8: 5, Reg8: 5, UInt8: 1, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 0000009d: <GetByIdShort>: <Reg8: 9, Reg8: 5, UInt8: 2, string_id: 105>  # String: 'concat' (Identifier)
+==> 000000a2: <LoadConstString>: <Reg8: 7, string_id: 8182>  # String: 'Navigator' (Identifier)
+==> 000000a6: <LoadConstString>: <Reg8: 5, string_id: 6457>  # String: '' (Identifier)
+==> 000000aa: <Call3>: <Reg8: 5, Reg8: 9, Reg8: 5, Reg8: 8, Reg8: 7>
+==> 000000b0: <Call3>: <Reg8: 10, Reg8: 6, Reg8: 1, Reg8: 11, Reg8: 5>
+==> 000000b6: <LoadConstTrue>: <Reg8: 0>
+==> 000000b8: <Jmp>: <Addr8: 123>  # Address: 00000133
+==> 000000ba: <GetByIdShort>: <Reg8: 7, Reg8: 11, UInt8: 3, string_id: 188>  # String: 'screen' (Identifier)
+==> 000000bf: <GetById>: <Reg8: 6, Reg8: 11, UInt8: 4, string_id: 11175>  # String: 'if' (Identifier)
+==> 000000c5: <NewObject>: <Reg8: 14>
+==> 000000c7: <LoadConstNull>: <Reg8: 2>
+==> 000000c9: <NewObjectWithBufferAndParent>: <Reg8: 12, Reg8: 2, UInt32: 2018, UInt32: 18893>
+==> 000000d4: <Mov>: <Reg8: 13, Reg8: 11>
+==> 000000d7: <CallBuiltin>: <Reg8: 5, UInt8: 46, UInt8: 4>  # Built-in function: [#46 copyDataProperties]
+==> 000000db: <StoreToEnvironment>: <Reg8: 4, UInt8: 2, Reg8: 6>
+==> 000000df: <StoreToEnvironment>: <Reg8: 4, UInt8: 1, Reg8: 5>
+==> 000000e3: <GetParentEnvironment>: <Reg8: 5, UInt8: 1>
+==> 000000e6: <LoadFromEnvironment>: <Reg8: 6, Reg8: 5, UInt8: 4>
+==> 000000ea: <GetById>: <Reg8: 6, Reg8: 6, UInt8: 0, string_id: 17567>  # String: 'isValidElementType' (Identifier)
+==> 000000f0: <Call2>: <Reg8: 6, Reg8: 6, Reg8: 1, Reg8: 7>
+==> 000000f5: <LoadConstFalse>: <Reg8: 0>
+==> 000000f7: <Mov>: <Reg8: 10, Reg8: 7>
+==> 000000fa: <JmpTrue>: <Addr8: 57, Reg8: 6>  # Address: 00000133
+==> 000000fd: <LoadConstString>: <Reg8: 6, string_id: 106>  # String: 'config' (Identifier)
+==> 00000101: <IsIn>: <Reg8: 2, Reg8: 6, Reg8: 7>
+==> 00000105: <LoadConstFalse>: <Reg8: 0>
+==> 00000107: <LoadConstUndefined>: <Reg8: 10>
+==> 00000109: <JmpFalse>: <Addr8: 42, Reg8: 2>  # Address: 00000133
+==> 0000010c: <LoadFromEnvironment>: <Reg8: 6, Reg8: 5, UInt8: 8>
+==> 00000110: <GetGlobalObject>: <Reg8: 5>
+==> 00000112: <TryGetById>: <Reg8: 5, Reg8: 5, UInt8: 1, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000118: <GetByIdShort>: <Reg8: 11, Reg8: 5, UInt8: 2, string_id: 105>  # String: 'concat' (Identifier)
+==> 0000011d: <LoadConstString>: <Reg8: 9, string_id: 8182>  # String: 'Navigator' (Identifier)
+==> 00000121: <LoadConstString>: <Reg8: 5, string_id: 6457>  # String: '' (Identifier)
+==> 00000125: <Call3>: <Reg8: 5, Reg8: 11, Reg8: 5, Reg8: 8, Reg8: 9>
+==> 0000012b: <Call3>: <Reg8: 10, Reg8: 6, Reg8: 1, Reg8: 7, Reg8: 5>
+==> 00000131: <LoadConstTrue>: <Reg8: 0>
+==> 00000133: <LoadConstNull>: <Reg8: 2>
+==> 00000135: <JEqual>: <Addr8: 70, Reg8: 10, Reg8: 2>  # Address: 0000017b
+==> 00000139: <GetParentEnvironment>: <Reg8: 6, UInt8: 1>
+==> 0000013c: <JmpTrue>: <Addr8: 34, Reg8: 0>  # Address: 0000015e
+==> 0000013f: <LoadFromEnvironment>: <Reg8: 5, Reg8: 6, UInt8: 2>
+==> 00000143: <GetByIdShort>: <Reg8: 9, Reg8: 5, UInt8: 5, string_id: 168>  # String: 'jsx' (Identifier)
+==> 00000148: <LoadFromEnvironment>: <Reg8: 7, Reg8: 6, UInt8: 6>
+==> 0000014c: <NewObjectWithBuffer>: <Reg8: 5, UInt16: 2019, UInt16: 20>  # Object: {'component': null}
+==> 00000152: <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 10, UInt8: 0>
+==> 00000156: <Call3>: <Reg8: 5, Reg8: 9, Reg8: 1, Reg8: 7, Reg8: 5>
+==> 0000015c: <Jmp>: <Addr8: 20>  # Address: 00000170
+==> 0000015e: <LoadFromEnvironment>: <Reg8: 9, Reg8: 6, UInt8: 3>
+==> 00000162: <GetById>: <Reg8: 7, Reg8: 9, UInt8: 6, string_id: 16632>  # String: 'createElement' (Identifier)
+==> 00000168: <NewObject>: <Reg8: 6>
+==> 0000016a: <Call3>: <Reg8: 5, Reg8: 7, Reg8: 9, Reg8: 10, Reg8: 6>
+==> 00000170: <StoreToEnvironment>: <Reg8: 4, UInt8: 3, Reg8: 5>
+==> 00000174: <CreateClosure>: <Reg8: 4, Reg8: 4, function_id: 13088>  # Function: [#13088  of 93 bytes]: 1 params @ offset 0x002541da
+==> 00000179: <Ret>: <Reg8: 4>
+==> 0000017b: <GetGlobalObject>: <Reg8: 4>
+==> 0000017d: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 7, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000183: <TryGetById>: <Reg8: 4, Reg8: 4, UInt8: 1, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000189: <GetByIdShort>: <Reg8: 7, Reg8: 4, UInt8: 2, string_id: 105>  # String: 'concat' (Identifier)
+==> 0000018e: <LoadConstString>: <Reg8: 5, string_id: 561>  # String: "'. This can happen if you passed 'undefined'. You likely forgot to export your component from the file it's defined in, or mixed up default import and named import when importing." (String)
+==> 00000192: <LoadConstString>: <Reg8: 4, string_id: 1800>  # String: "Couldn't find a 'screen' property for the screen '" (String)
+==> 00000196: <Call3>: <Reg8: 14, Reg8: 7, Reg8: 4, Reg8: 8, Reg8: 5>
+==> 0000019c: <CreateThisForNew>: <Reg8: 5, Reg8: 6, UInt8: 8>
+==> 000001a0: <Mov>: <Reg8: 15, Reg8: 5>
+==> 000001a3: <Construct>: <Reg8: 4, Reg8: 6, UInt8: 2>
+==> 000001a7: <SelectObject>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 000001ab: <Throw>: <Reg8: 4>
+
+

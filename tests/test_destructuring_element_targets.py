@@ -68,3 +68,13 @@ def test_fetch_that_reads_the_source_register_without_a_copy():
 
     assert "[r3] = r2;" in code
     assert ".next()" not in code
+
+
+def test_environment_created_between_the_fetch_and_the_first_store():
+    # 98/10817: parameter destructuring into a fresh environment. `CreateFunctionEnvironment` sits in the
+    # element block, right before the store into its slot; the allocation moves in front of the pattern.
+    code = _code("destructuring_env_creation_98_10817.hasm", 10817)
+
+    assert "[__environment__[0], r11] = param1;" in code
+    assert "r8 = __environment__[0];" in code
+    assert ".next()" not in code

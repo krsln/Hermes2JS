@@ -166,7 +166,15 @@ class ArrayDestructuringCfgPass:
 
                 restores[register] = slot
 
-        return items, drop, join, kept_undefined, removed_handlers, cleanup, restores
+        # A moved creation writes its register before the chain: nothing the pattern keeps may live there.
+        for created in ctx.hoist:
+            kept = {*leaves, *(t for t, _ in ((r, None) for r in _object_temps(items))), *(r for r, _ in ctx.fetched)}
+            source = head.instructions[begin_index].value.arguments[0]
+
+            if created.dest_reg in kept or _mentions_register(source, created.dest_reg):
+                return None
+
+        return items, drop, join, kept_undefined, removed_handlers, cleanup, restores, ctx.hoist
 
     def _dead_after(self, start: BasicBlock, register: int, dropped_ids: set[int]) -> bool:
         """True if no path from `start` reads `register` before writing it."""
@@ -468,10 +476,23 @@ class ArrayDestructuringCfgPass:
                     # A constant key loaded just for the store is inlined into it, so its load is dead.
                     lead = 0
 
-                    while lead < len(insts) and insts[lead].handler in _KEY_LOADS and insts[lead].definition_used:
+                    creates = []
+
+                    while lead < len(insts) and (
+                            (insts[lead].handler in _KEY_LOADS and insts[lead].definition_used)
+                            or (insts[lead].handler in _ENV_CREATES and not ctx.hoist and not creates
+                                and _is_env_creation(insts[lead]))
+                    ):
+                        if insts[lead].handler in _ENV_CREATES:
+                            creates.append(insts[lead])
+
                         lead += 1
 
-                    if lead < len(insts) and (store := _plain_store(insts[lead], prev_tmp, first_value)) is not None:
+                    if lead < len(insts) and (store := _plain_store(insts[lead], prev_tmp, first_value)) is not None \
+                            and not any(_reads_name(insts[lead], f"r{c.dest_reg}") for c in creates):
+                        # The environment the slot belongs to is created right before its first store; it moves
+                        # in front of the pattern (an allocation: nothing observable runs in between).
+                        ctx.hoist.extend(creates)
                         # `[..., slot] = src`: the element is stored into a slot that needs no evaluation.
                         items[-1] = _Elem("target", items=None, default=store, temp=prev_tmp)
 
@@ -827,7 +848,7 @@ class ArrayDestructuringCfgPass:
     # ------------------------------------------------------------------
 
     def _apply(self, head: BasicBlock, begin_index: int, match) -> None:
-        items, drop, join, kept_undefined, removed_handlers, cleanup, restores = match
+        items, drop, join, kept_undefined, removed_handlers, cleanup, restores, hoist = match
 
         begin = head.instructions[begin_index]
         source = begin.value.arguments[0]
@@ -870,7 +891,10 @@ class ArrayDestructuringCfgPass:
             copy_.definition_used = False
             restored.append(copy_)
 
-        head.instructions = head.instructions[:begin_index + 1] + keep + silent + restored
+        hoisted_ids = {id(i) for i in hoist}
+        removed -= hoisted_ids
+        before = head.instructions[:begin_index]
+        head.instructions = before + hoist + [begin] + keep + silent + restored
         head.terminator = TerminatorJump(target=join.address)
 
         for successor in list(head.successors):
@@ -926,6 +950,7 @@ class _Ctx:
         self.drop: list[BasicBlock] = []
         self.iterators: set[int] = set()
         self.peeled_form: bool | None = None
+        self.hoist: list = []  # environment creations that move in front of the pattern
         self.fetched: list[
             tuple[int, object]] = []  # fetch registers a slot store read directly, no copy of them is kept
 
@@ -985,12 +1010,22 @@ def _plain_store(instruction, source: int, alias: int | None = None):
     return left
 
 
+def _mentions_register(expression, register: int) -> bool:
+    return any(isinstance(n, Identifier) and n.name == f"r{register}" for n in expression.walk())
+
+
 def _reads_name(node, name: str) -> bool:
     for part in (getattr(node, "value", None), getattr(node, "statement", None)):
         if part is not None and any(isinstance(n, Identifier) and n.name == name for n in part.walk()):
             return True
 
     return False
+
+
+def _is_env_creation(instruction) -> bool:
+    value = instruction.value
+
+    return isinstance(value, Identifier) and value.name == "__environment__" and isinstance(instruction.dest_reg, int)
 
 
 def _targets(items):
@@ -1057,6 +1092,8 @@ def _pattern_expression(items) -> ArrayExpression:
 
     return ArrayExpression(elements=tuple(elements))
 
+
+_ENV_CREATES = frozenset({"CreateFunctionEnvironment", "CreateTopLevelEnvironment"})
 
 _KEY_LOADS = frozenset({"LoadConstUInt8", "LoadConstZero", "LoadConstInt"})
 
