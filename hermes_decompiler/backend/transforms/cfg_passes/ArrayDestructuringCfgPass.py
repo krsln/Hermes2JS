@@ -332,6 +332,10 @@ class ArrayDestructuringCfgPass:
         elif shapes == ["LoadConstUndefined", "Mov", "IteratorNext", "Mov", "StrictEq", "JmpTrue"]:
             # An element with a default loads its `undefined` first.
             tail = [*tail[1:5], tail[0], tail[5]]
+        elif top and shapes == ["IteratorNext", "Mov", "LoadConstUndefined", *expected[3:]]:
+            # Both: the source needs no copy, and the `undefined` is loaded in the middle of the check.
+            kept_undefined = tail[2]
+            tail = [None, *tail[:2], *tail[3:]]
         elif shapes == expected[1:]:
             # The fetch reads the source register itself (it already holds it): no `Mov t <- src`.
             tail = [None, *tail]

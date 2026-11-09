@@ -78,3 +78,12 @@ def test_environment_created_between_the_fetch_and_the_first_store():
     assert "[__environment__[0], r11] = param1;" in code
     assert "r8 = __environment__[0];" in code
     assert ".next()" not in code
+
+
+def test_no_source_copy_and_the_undefined_loaded_inside_the_check():
+    # 98/10001: `const [key] = args` where the first block is `IteratorNext; Mov; LoadConstUndefined; StrictEq;
+    # LoadConstUndefined; JmpTrue` (the shape of F-234 with the `undefined` loaded in the middle of the check).
+    code = _code("destructuring_no_copy_late_undefined_98_10001.hasm", 10001)
+
+    assert "[r2] = r1;" in code
+    assert ".next()" not in code

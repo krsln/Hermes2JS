@@ -1,0 +1,50 @@
+
+=> [Function #10001 "" of 135 bytes]: 1 params, frame size=17, strict=1, exc handler=1, debug info=0  @ offset 0x0020f90c
+  [Exception handlers: [start=0x68, end=0x72, target=0x7c] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadConstZero>: <Reg8: 4>
+==> 00000002: <LoadConstZero>: <Reg8: 8>
+==> 00000004: <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 2>  # Built-in function: [#47 copyRestArgs]
+==> 00000008: <GetParentEnvironment>: <Reg8: 0, UInt8: 0>
+==> 0000000b: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 0>
+==> 0000000f: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 00000012: <LoadConstString>: <Reg8: 0, string_id: 11>  # String: 'has' (Identifier)
+==> 00000016: <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 2, Reg8: 1>
+==> 0000001d: <Mov>: <Reg8: 1, Reg8: 2>
+==> 00000020: <IteratorBegin>: <Reg8: 0, Reg8: 1>
+==> 00000023: <IteratorNext>: <Reg8: 4, Reg8: 0, Reg8: 1>
+==> 00000027: <Mov>: <Reg8: 1, Reg8: 0>
+==> 0000002a: <LoadConstUndefined>: <Reg8: 3>
+==> 0000002c: <StrictEq>: <Reg8: 1, Reg8: 1, Reg8: 3>
+==> 00000030: <LoadConstUndefined>: <Reg8: 2>
+==> 00000032: <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 00000038
+==> 00000035: <Mov>: <Reg8: 2, Reg8: 4>
+==> 00000038: <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 0000003e
+==> 0000003b: <IteratorClose>: <Reg8: 0, UInt8: 0>
+==> 0000003e: <LoadParam>: <Reg8: 0, UInt8: 0>
+==> 00000041: <GetGlobalObject>: <Reg8: 1>
+==> 00000043: <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 0, string_id: 33>  # String: 'String' (Identifier)
+==> 00000049: <Call2>: <Reg8: 2, Reg8: 1, Reg8: 3, Reg8: 2>
+==> 0000004e: <GetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 15402>  # String: '_parts' (Identifier)
+==> 00000054: <Mov>: <Reg8: 0, Reg8: 4>
+==> 00000057: <IteratorBegin>: <Reg8: 1, Reg8: 0>
+==> 0000005a: <Mov>: <Reg8: 4, Reg8: 0>
+==> 0000005d: <IteratorNext>: <Reg8: 4, Reg8: 1, Reg8: 4>
+==> 00000061: <Mov>: <Reg8: 5, Reg8: 1>
+==> 00000064: <JStrictEqual>: <Addr8: 31, Reg8: 5, Reg8: 3>  # Address: 00000083
+==> 00000068: <GetByIndex>: <Reg8: 4, Reg8: 4, UInt8: 0>
+==> 0000006c: <JStrictEqual>: <Addr8: 6, Reg8: 4, Reg8: 2>  # Address: 00000072
+==> 00000070: <Jmp>: <Addr8: -22>  # Address: 0000005a
+==> 00000072: <Mov>: <Reg8: 0, Reg8: 1>
+==> 00000075: <IteratorClose>: <Reg8: 0, UInt8: 0>
+==> 00000078: <LoadConstTrue>: <Reg8: 0>
+==> 0000007a: <Ret>: <Reg8: 0>
+==> 0000007c: <Catch>: <Reg8: 0>
+==> 0000007e: <IteratorClose>: <Reg8: 1, UInt8: 1>
+==> 00000081: <Throw>: <Reg8: 0>
+==> 00000083: <LoadConstFalse>: <Reg8: 0>
+==> 00000085: <Ret>: <Reg8: 0>
+
+
