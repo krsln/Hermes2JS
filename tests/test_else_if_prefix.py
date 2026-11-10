@@ -60,9 +60,10 @@ def test_definition_read_by_the_nested_condition_is_kept():
 
 
 def test_generator_state_is_loaded_before_the_state_check():
-    # `else if (r12 === 3)` used to read r12 with `r12 = r1[0]` gone.
+    # The `catch` state check used to read r12 with its load gone (`else if (r12 === 3)` with no `r12 = r1[0]`).
+    # 98/12484 folds into a `try` now (F-12 re-entry threading): the state is loaded right before the check.
     out = decompile("98", 12484)
 
-    assert "r12 = r1[0]" in out
-    assert "else if (r12 === 3)" not in out
-    assert out.index("r12 = r1[0]") < out.index("if (r12 === 3)")
+    assert "r12 = r1[3];" in out
+    assert "else if (r12" not in out
+    assert out.index("r12 = r1[3];") < out.index("if (0 === r12)")

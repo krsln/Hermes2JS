@@ -32,6 +32,8 @@ knows how to handle.
 
 from __future__ import annotations
 
+import copy
+import dataclasses
 import re
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
@@ -43,7 +45,9 @@ from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import AwaitExpression, Identifier, YieldExpression
 from hermes_decompiler.ir.expressions.Literals import BooleanLiteral, NullLiteral, NumericLiteral, StringLiteral
-from hermes_decompiler.ir.terminators import TerminatorJump, TerminatorReturn, TerminatorThrow
+from hermes_decompiler.ir.terminators import (
+    TerminatorConditionalBranch, TerminatorJump, TerminatorReturn, TerminatorThrow,
+)
 
 logger = get_logger(__name__)
 
@@ -94,6 +98,12 @@ _TAIL_HANDLERS = frozenset({
     # twin is inert leftover, not a real statement to preserve or reject.
     "Ret",
 })
+
+_PROLOGUE_DEFS = frozenset({
+    "GetParentEnvironment", "GetEnvironment", "LoadConstUndefined", "LoadConstNull", "LoadConstTrue",
+    "LoadConstFalse", "LoadConstZero", "LoadConstUInt8", "LoadConstInt",
+})
+_MAX_REENTRY_BLOCKS = 8  # a re-entered state's code is copied per re-entry: only small exits
 
 
 class GeneratorStateDispatchCfgPass:
@@ -163,6 +173,11 @@ class GeneratorStateDispatchCfgPass:
         site_continuations = {site.block.id: continuation for site, continuation, _, _ in foldable}
         dispatch_ids = {block.id for block in self.dispatch.dispatch_blocks}
 
+        # A catch that re-enters the chain with a known state is a jump to that state's target; simulate the
+        # threaded jump the same way as the sites' rewiring.
+        reentries = self._reentry_jumps(by_address)
+        site_continuations.update({block.id: target for block, target in reentries})
+
         if self._dispatch_survives(entry_block, site_continuations, dispatch_ids):
             logger.debug(
                 "Generator dispatch on env[%d]: the entry dispatch chain is still reachable "
@@ -180,11 +195,47 @@ class GeneratorStateDispatchCfgPass:
         for site, continuation, cut_index, result in foldable:
             self._apply_fold(site, continuation, cut_index, result)
 
+        for block, target in reentries:
+            self._thread_reentry(block, target)
+
+        # What else the prologue defined (`r9 = getParentEnvironment(1)`, `r8 = getEnvironment(r10, 1)`, constants)
+        # is read by the body too (98/13832 `pull`: `r1[2] = r9`, 98/14155: `await r8[0]`); it goes with the
+        # prologue, so remember it to define it again.
+        head_address = min(b.address for b in self.dispatch.dispatch_blocks)
+        outer_defs = [
+            i for b in self.cfg.blocks if b.address < head_address for i in b.instructions
+            if i.handler in _PROLOGUE_DEFS and i.dest_reg is not None and (prelude is None or i is not prelude[0])
+        ]
+
         self._prune_unreachable(entry_block)
         self._strip_protocol_writes(prelude, entry_block)
+
+        restored = True
+
+        while restored:
+            restored = False
+
+            for instruction in reversed(outer_defs):
+                if (
+                        not any(instruction in b.instructions for b in self.cfg.blocks)
+                        and self._is_read(instruction.dest_reg)
+                ):
+                    entry_block.instructions.insert(0, instruction)
+                    restored = True
         self._order_by_control_flow(entry_block)
+        self._order_try_blocks()
 
         return True
+
+    def _order_try_blocks(self) -> None:
+        """`try_blocks` was listed in address order when the CFG was built; the structurer starts the `try` at its
+        first entry. The fold moves a continuation in front of its site (the resume code sits at a lower address
+        than the code that suspends), so the first block by address is no longer the first one the `try` runs
+        into: in 98/12918 the `try` began after the `await` it protects. Sort them by the new block order."""
+        position = {block.id: n for n, block in enumerate(self.cfg.blocks)}
+
+        for handler in self.cfg.exception_handlers:
+            handler["try_blocks"] = sorted(handler["try_blocks"], key=lambda b: position.get(b.id, len(position)))
 
     # ------------------------------------------------------------------
     # Block order
@@ -511,6 +562,163 @@ class GeneratorStateDispatchCfgPass:
             frontier = new_frontier
 
         return bool(reachable & dispatch_ids)
+
+    # ------------------------------------------------------------------
+    # Re-entries of the dispatch chain
+    # ------------------------------------------------------------------
+
+    def _reentry_jumps(self, by_address: dict[int, BasicBlock]) -> list[tuple[BasicBlock, BasicBlock]]:
+        """
+        `(block, target)` for every block outside the chain that ends in `rE[slot] = K; jmp <chain head>` with a
+        constant `K` the chain maps to a block: a `catch` that resumes at a state by re-entering the dispatch
+        (98/12918: state 1 resumes at the clause, 3 runs the rethrow arm). Such a jump is a jump to `target`
+        itself; the chain is not needed for it.
+
+        The store has to be the last write to the slot in its block, `K` has to be a register loaded once with a
+        constant (the compiler keeps the small integers in registers for the whole body). A block that does not
+        fit is left alone: the chain then stays reachable through it and the pass declines as before.
+        """
+        prelude = self._read_prelude()
+        dispatch_blocks = self.dispatch.dispatch_blocks
+
+        if prelude is None or not dispatch_blocks:
+            return []
+
+        env_reg = prelude[1]
+        head = min(dispatch_blocks, key=lambda b: b.address)
+        inside = {b.id for b in dispatch_blocks}
+        constants: dict[int, list[int]] = {}
+
+        for block in self.cfg.blocks:
+            for instruction in block.instructions:
+                if instruction.handler in _LOAD_CONST_HANDLERS and instruction.dest_reg is not None:
+                    operands = _operands(instruction)
+                    constants.setdefault(instruction.dest_reg, []).append(
+                        operands[1] if len(operands) >= 2 and isinstance(operands[1], int) else None
+                    )
+                elif instruction.dest_reg is not None:
+                    constants.setdefault(instruction.dest_reg, []).append(None)
+
+        found = []
+
+        for block in self.cfg.blocks:
+            if block.id in inside or not isinstance(block.terminator, TerminatorJump):
+                continue
+            if block.terminator.target != head.address or head not in block.successors:
+                continue
+
+            state = None
+
+            for instruction in block.instructions:
+                operands = _operands(instruction)
+
+                if (
+                        instruction.handler in _STORE_ENV_HANDLERS
+                        and len(operands) >= 3
+                        and operands[0] == env_reg
+                        and operands[1] == self.dispatch.resume_slot
+                ):
+                    values = constants.get(operands[2], [])
+                    state = values[0] if len(values) == 1 else None
+
+            target_address = self.dispatch.dispatch_targets.get(state) if state is not None else None
+            target = by_address.get(target_address) if target_address is not None else None
+
+            if target is not None and self._closure(target):
+                found.append((block, target))
+
+        return found
+
+    def _thread_reentry(self, block: BasicBlock, target: BasicBlock) -> None:
+        """
+        Make the re-entering block jump to its OWN copy of `target`'s code. The target lies in the protected
+        range of the `try` whose `catch` this block belongs to; an edge from the `catch` into that range would
+        put the handler in front of the try in the block order and no `try` could be built. The copy is the
+        closure of `target` (small, ends in `throw`/`return`; see `_closure`).
+        """
+        blocks = self.cfg.blocks
+        closure = self._closure(target)
+        first_id = max(b.id for b in blocks) + 1
+        base = max(b.address for b in blocks) + 1
+        clones = {b: BasicBlock(first_id + n, base + n) for n, b in enumerate(closure)}
+        mapping = {b.address: clones[b].address for b in closure}
+
+        for original in closure:
+            clone = clones[original]
+            terminator = original.terminator
+
+            if isinstance(terminator, (TerminatorJump, TerminatorConditionalBranch)):
+                terminator = dataclasses.replace(terminator, target=mapping.get(terminator.target, terminator.target))
+
+            for instruction in original.instructions:
+                duplicate = copy.copy(instruction)
+                duplicate.value = copy.deepcopy(instruction.value)
+                duplicate.statement = copy.deepcopy(instruction.statement)
+                if instruction.terminator is not None:
+                    duplicate.terminator = terminator
+                clone.instructions.append(duplicate)
+
+            clone.terminator = terminator
+            clone.successors = [clones.get(s, s) for s in original.successors]
+
+            for successor in clone.successors:
+                successor.predecessors.append(clone)
+
+        entry = clones[target]
+        retargeted = TerminatorJump(target=entry.address)
+
+        for instruction in block.instructions:
+            if instruction.terminator is not None:
+                instruction.terminator = retargeted
+
+        block.terminator = retargeted
+
+        for successor in list(block.successors):
+            block.successors.remove(successor)
+            if block in successor.predecessors:
+                successor.predecessors.remove(block)
+
+        block.successors.append(entry)
+        entry.predecessors.append(block)
+
+        position = blocks.index(block) + 1
+        blocks[position:position] = [clones[b] for b in closure]
+
+    def _closure(self, target: BasicBlock) -> list[BasicBlock]:
+        """The blocks `target` runs through, in layout order; `[]` when they are not a small, self-contained
+        exit (an acyclic run that ends in `throw`/`return` and in which every conditional's fall-through is the
+        next block of the run)."""
+        seen: dict[int, BasicBlock] = {}
+        stack = [target]
+
+        while stack:
+            block = stack.pop()
+
+            if block.id in seen:
+                continue
+            seen[block.id] = block
+            stack.extend(block.successors)
+
+            if len(seen) > _MAX_REENTRY_BLOCKS:
+                return []
+
+        order = {b.id: n for n, b in enumerate(self.cfg.blocks)}
+        run = sorted(seen.values(), key=lambda b: order[b.id])
+
+        for n, block in enumerate(run):
+            for successor in block.successors:
+                if order[successor.id] <= order[block.id]:
+                    return []
+            if isinstance(block.terminator, TerminatorConditionalBranch):
+                fall = run[n + 1] if n + 1 < len(run) else None
+                if fall is None or fall not in block.successors or order[fall.id] != order[block.id] + 1:
+                    return []
+            elif block.terminator is None and block.successors:
+                if n + 1 >= len(run) or run[n + 1] is not block.successors[0] or order[run[n + 1].id] != order[
+                    block.id] + 1:
+                    return []
+
+        return run
 
     # ------------------------------------------------------------------
     # Per-site folding
