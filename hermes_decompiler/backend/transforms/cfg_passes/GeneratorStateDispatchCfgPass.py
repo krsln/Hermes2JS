@@ -880,10 +880,14 @@ class GeneratorStateDispatchCfgPass:
         while lead < result_index and block.instructions[lead].handler in _CONSTANT_LOADS:
             lead += 1
 
-        if lead == 0 and result_index > 0:
-            return None
+        # No leading constant load is fine too (98/13533 `startAnimating`: the resume point's number was loaded
+        # in the dispatch chain, `r5 = 1`, and the value joins two paths: `ref?.f()`): everything in front of the
+        # result object then is validated as protocol by the caller, so anything else still declines.
+        # The suspend takes the identity of the first instruction it replaces; a protocol store there would make
+        # the protocol strip remove the suspend with it, so it borrows the result object's.
+        first = block.instructions[0] if lead else block.instructions[result_index]
 
-        return Identifier(name=f"r{value_reg}"), 0, block.instructions[0].entry, lead
+        return Identifier(name=f"r{value_reg}"), 0, first.entry, lead
 
     @staticmethod
     def _reads_resumed_value(continuation: BasicBlock) -> bool:

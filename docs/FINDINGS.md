@@ -118,6 +118,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-10 | after F-239 (generator/async `catch` that re-enters the dispatch with a constant state) | 102 | 85 | n/a | n/a | 1175 passed |
 | 2026-11-10 | after F-240 (generator `yield` with the resume constant after the value; branch fall-through bridge) | 102 | 82 | n/a | n/a | 1176 passed |
 | 2026-11-10 | after F-241 (`yield [k, v]`: element stores stay in front of the suspend) | 102 | 81 | n/a | n/a | 1177 passed |
+| 2026-11-10 | after F-242 (suspend block without a leading constant load) | 102 | 81 | n/a | n/a | 1178 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -193,7 +194,7 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   a `try`, e.g. 98/12918 `readAsBuffer`, 12930, 12942, 13261, 13743, 13744); 3 "unrecognized instruction between the yielded
   value and the suspend" and 1 "could not find the yielded value" (F-231 fixed the latter's 14158 case). The `try` ones need
   the dispatch to know the protected range (cf. F-190).
-  RESOLVED by F-239 (archive) for the single-constant re-entry shape: 20 of the 23 files fold (98 goto files 103 -> 85). Left: 12484-family ones that still decline for other reasons. The triage below is kept as the description of the shape.
+  RESOLVED by F-239 (archive) for the single-constant re-entry shape: 20 of the 23 files fold (98 goto files 103 -> 85). Left: 12484-family ones that still decline for other reasons. F-242: 6 more async files fold (98 raw generator files without a `goto`: 23 -> 17: 12831, 12864, 12927, 12933, 12935, 12943, 13235-13238, 13520, 13521, 13525, 13531, 13532, 13838, 9849 remain; not triaged: `dbgwhy` prints no decline reason for most of them, so the cause is elsewhere (batch table / shape check)). The triage below is kept as the description of the shape.
   Triage of 98/12918 `readAsBuffer` (2026-11-10), the `try` shape in detail: the entry chain on `env[4]` (state) is
   `0 -> 0x1d2`, `1 -> 0x1b3`, `2 -> 0x63` (mode checks on the resume mode `r3`: 1 -> 0x1aa, 2 -> 0x181), and its DEFAULT
   arm (0x4f: `r6 = env[5]; env[6] = 0; env[1].return(); throw r12`) is the "rethrow the saved exception, close the
