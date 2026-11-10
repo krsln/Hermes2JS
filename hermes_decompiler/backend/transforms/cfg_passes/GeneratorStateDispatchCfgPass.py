@@ -99,6 +99,8 @@ _TAIL_HANDLERS = frozenset({
     "Ret",
 })
 
+_FILL_HANDLERS = frozenset({"DefineOwnInDenseArray", "DefineOwnInDenseArrayL", "PutOwnByIndex", "PutOwnByIndexL"})
+
 _PROLOGUE_DEFS = frozenset({
     "GetParentEnvironment", "GetEnvironment", "LoadConstUndefined", "LoadConstNull", "LoadConstTrue",
     "LoadConstFalse", "LoadConstZero", "LoadConstUInt8", "LoadConstInt",
@@ -853,6 +855,20 @@ class GeneratorStateDispatchCfgPass:
         for index in range(result_index - 1, -1, -1):
             if block.instructions[index].dest_reg == value_reg:
                 instruction = block.instructions[index]
+                end = index + 1
+
+                # `yield [k, v]` (98/9674): the array is created and then filled by element stores that name its
+                # register first, with the elements' own computations in between. All of it is part of the value
+                # and stays in front of the suspend: the cut moves behind the last element store.
+                for later in range(end, result_index):
+                    if block.instructions[later].handler in _FILL_HANDLERS and (
+                            (_operands(block.instructions[later]) or [None])[0] == value_reg
+                    ):
+                        end = later + 1
+
+                if end > index + 1:
+                    return Identifier(name=f"r{value_reg}"), end, instruction.entry, end
+
                 return instruction.value, index, instruction.entry, index + 1
 
         # The value was computed in an earlier block (98/14158 `loadIcon`: `x instanceof Promise` guards the
