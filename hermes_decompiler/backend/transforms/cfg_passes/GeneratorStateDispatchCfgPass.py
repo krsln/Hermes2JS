@@ -747,7 +747,12 @@ class GeneratorStateDispatchCfgPass:
         value_expression, cut_index, source_entry, tail_start = extracted
         tail = block.instructions[tail_start:]
 
-        if any(instruction.handler not in _TAIL_HANDLERS for instruction in tail):
+        # The resume point's number is a constant load that may sit *after* the value's computation
+        # (98/9673 `createKeyIterator`: `r7 = env[1][1]; r5 = 1; env[2] = r5`). It is protocol machinery too.
+        if any(
+                instruction.handler not in _TAIL_HANDLERS and instruction.handler not in _CONSTANT_LOADS
+                for instruction in tail
+        ):
             logger.debug(
                 "Generator dispatch: unrecognized instruction between the yielded value and "
                 "the suspend at block %d (0x%x); leaving the raw form in place.",

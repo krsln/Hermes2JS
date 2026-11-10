@@ -466,7 +466,7 @@ class HermesAnalysis:
             # retries; there a retry only wins when it is `goto`-free and loses fewer paths.
             whole = []
 
-            for level in (1, 2, 3, 4, 5, 6, 7):
+            for level in (1, 2, 3, 4, 5, 6, 7, 8):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if not retry[3]:
                     continue
@@ -641,6 +641,7 @@ class HermesAnalysis:
 
             FallThroughLayoutCfgPass(cfg).run()
 
+        FallThroughLayoutCfgPass(cfg).bridge_remaining(everywhere=bool(duplicate_returns) and duplicate_returns >= 8)
         cfg.verify()
         cfg.compute_dominators()
         cfg.compute_post_dominators()
