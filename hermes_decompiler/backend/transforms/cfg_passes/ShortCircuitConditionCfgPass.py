@@ -186,6 +186,9 @@ class ShortCircuitConditionCfgPass:
                 block in self._loop_members
                 and isinstance(successor.terminator, TerminatorConditionalBranch)
                 and self._is_case_test(successor.terminator.condition, branch.condition)
+                # The same register is not the same value when the second block loads it again
+                # (98/2621: `r20 = r21.tag; if (22 !== r20)` then `r20 = r21.memoizedState; if (null !== r20)`).
+                and not self._reloads_the_subject(successor, branch.condition)
                 and (
                 successor.terminator.target != branch.target
                 or self._case_chain_has_another_body(block, successor, branch.target)
@@ -883,6 +886,16 @@ class ShortCircuitConditionCfgPass:
             current = previous
 
         return False
+
+    @classmethod
+    def _reloads_the_subject(cls, block: BasicBlock, condition) -> bool:
+        """Does `block` write a register the compared value of `condition` is read through?"""
+        subject = cls._compared_constant(condition)
+
+        return subject is not None and any(
+            i.terminator is None and i.dest_reg is not None and cls._mentions(subject, f"r{i.dest_reg}")
+            for i in block.instructions
+        )
 
     @classmethod
     def _is_case_test(cls, condition, previous) -> bool:

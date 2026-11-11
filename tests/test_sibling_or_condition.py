@@ -46,8 +46,11 @@ def test_a_type_check_after_a_null_check_is_one_condition():
     assert '} else if (typeof param1.type !== "string") {' in out
 
 
-def test_a_case_chain_is_not_taken_by_the_fold():
+def test_tests_of_one_value_read_again_each_time_are_one_condition():
     out = _render("sibling_or_condition_98_2541.hasm", 2541)
 
+    # `r7` is the tag in the first test and `memoizedProps.revealOrder` in the next four: the program reads the
+    # property again for every test, and that is what the condition says (F-244; it was a nest of `else` arms with
+    # the loads repeated in front of every one before).
     assert "goto" not in out
-    assert '"unstable_legacy-backwards" === r7 || "together" === r7' in out
+    assert '"unstable_legacy-backwards" === r6.memoizedProps.revealOrder || "together" === r6.memoizedProps.revealOrder' in out

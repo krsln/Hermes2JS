@@ -18,8 +18,9 @@ def test_a_branch_to_an_empty_latch_is_a_continue_and_the_body_still_follows():
     out = Decompiler.render(Decompiler.build_context(hasm, 8548, strict=False), verbose=False, raw=False)
 
     assert "goto" not in out
-    assert 'if (r13 === "__initData") {' in out
-    assert "continue;" in out
-    # the body runs after the guard, not inside an else arm that drops it
-    assert out.index("continue;") < out.index("r15[r14] = r13;")
+    # The second test reloads `r13` (`r13 = r0.__initData; if (r13 !== undefined) continue`) - not the same value as the
+    # first test's `r13`, so the two are not a `case` chain and the crossed fold takes them (F-244):
+    # the body runs unless `k === "__initData" && v !== undefined`.
+    assert 'if (r13 !== "__initData" || r0.__initData === undefined) {' in out
+    assert out.index("if (r13 !== ") < out.index("r15[r14] = r13;")
     assert "} else {" not in out

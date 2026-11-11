@@ -120,6 +120,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-10 | after F-241 (`yield [k, v]`: element stores stay in front of the suspend) | 102 | 81 | n/a | n/a | 1177 passed |
 | 2026-11-10 | after F-242 (suspend block without a leading constant load) | 102 | 81 | n/a | n/a | 1178 passed |
 | 2026-11-11 | after F-243 (generator/async function with no suspend site) | 102 | 81 | n/a | n/a | 1179 passed |
+| 2026-11-11 | after F-244 (a reloaded register is not a `case` subject) | 96 | 79 | n/a | n/a | 1180 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
