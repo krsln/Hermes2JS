@@ -149,7 +149,7 @@ def detect(cfg: CFG) -> GeneratorDispatch | None:
     sites_by_slot = _suspend_sites_by_slot(cfg)
 
     if not sites_by_slot:
-        return None
+        return _straight_line_dispatch(cfg)
 
     # The resume slot is whichever candidate the entry dispatch actually
     # reads, and among candidates that parse as a complete dispatch, the
@@ -195,6 +195,65 @@ def detect(cfg: CFG) -> GeneratorDispatch | None:
             best, best_start = dispatch, start
 
     return best
+
+
+def _straight_line_dispatch(cfg: CFG) -> GeneratorDispatch | None:
+    """
+    The state machine of a generator/async function that never suspends (`async f() { return g(); }`).
+
+    There is no resume slot to compare, only the guards and the action tests in front of the body:
+
+        if (state == 2) throw TypeError(...)      # running
+        if (state == 3) <completed>               # exhausted
+        state = 2; if (action == THROW) ..; if (action == RETURN) ..;
+        <body>
+
+    The body is what the first `.next()` runs: resume point 0, found by walking the guards (1-3 equality tests
+    of the state against 2 or 3) and then the action tests. A function that does build a `{value, done: false}`
+    object is not this shape (an unrecognized yield), and neither is one whose action register or tests are
+    missing; both decline.
+    """
+    from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
+
+    blocks = sorted(cfg.blocks, key=lambda b: b.address)
+
+    if not blocks or any(_yield_result_index(block) is not None for block in blocks):
+        return None
+
+    action = _action_register(blocks)
+
+    if action is None:
+        return None
+
+    index = 0
+
+    while index < len(blocks):
+        block = blocks[index]
+        comparison = _equality_comparison(block, blocks)
+
+        if not isinstance(block.terminator, TerminatorConditionalBranch) or comparison is None:
+            return None
+
+        if comparison[0] == action:
+            break
+
+        if comparison[1] not in (2, 3) or comparison[2]:
+            return None
+
+        index += 1
+
+    if not 1 <= index <= 3 or index >= len(blocks):
+        return None
+
+    by_address = {block.address: block for block in blocks}
+    entry = _skip_action_dispatch(by_address, blocks[index].address, action)
+
+    if entry == blocks[index].address or entry not in by_address:
+        return None
+
+    chain = [b for b in blocks if b.address < entry]
+
+    return GeneratorDispatch(resume_slot=-1, dispatch_targets={0: entry}, dispatch_blocks=chain)
 
 
 def _suspend_sites_by_slot(cfg: CFG) -> dict[int, list[SuspendSite]]:
