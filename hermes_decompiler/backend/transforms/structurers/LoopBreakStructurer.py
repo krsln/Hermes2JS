@@ -4,7 +4,6 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import (
     Region, TryRegion, CatchRegion, FinallyRegion,
     SequenceRegion, LoopRegion, IfRegion,
-
 )
 from hermes_decompiler.backend.transforms.shared import (
     negate_condition, is_loop_guard_shaped, has_bottom_tested_guard
@@ -539,6 +538,21 @@ class LoopBreakStructurer(RegionStructurer):
 
         for predecessor in others:
             if predecessor in latches:
+                continue
+
+            # Another way out of the loop onto the same block (98/2609 `updateSimpleMemoComponent`: the
+            # `Object.is`/`hasOwnProperty` tests of an inlined `shallowEqual` both leave the loop for the code after
+            # it). It is a `break` as well, and nothing is moved, so it does not make the block someone else's.
+            # Last retry rung only (`cfg.sibling_loop_exits`): 98/10170 `useAnimatedPropsMemo` structured worse with it
+            # than without. Only with the loop's own completion landing there too (a latch is among the predecessors), and only
+            # for exits of this loop's own body: one inside a nested loop is a labeled exit that stays as it is. Not for a closing `return`: the exits are
+            # copies of it (`return false;`, 96/11046), which reads better than `r0 = false; break;`.
+            if (
+                    getattr(self.cfg, "sibling_loop_exits", False)
+                    and latches & others
+                    and predecessor in loop.body.children
+                    and not isinstance(exit_block.terminator, TerminatorReturn)
+            ):
                 continue
 
             if (
