@@ -332,6 +332,12 @@ class ArrayDestructuringCfgPass:
         elif shapes == ["LoadConstUndefined", "Mov", "IteratorNext", "Mov", "StrictEq", "JmpTrue"]:
             # An element with a default loads its `undefined` first.
             tail = [*tail[1:5], tail[0], tail[5]]
+        elif top and shapes == ["LoadConstUndefined", "LoadConstUndefined", "Mov", "IteratorNext", "Mov", "StrictEq",
+                                "JmpTrue"]:
+            # A later element has a default: the `undefined` the checks compare with is loaded ahead of
+            # everything (it outlives the chain, like the mid-check load), then comes element 1's own.
+            kept_undefined = tail[0]
+            tail = [*tail[2:6], tail[1], tail[6]]
         elif top and shapes == ["IteratorNext", "Mov", "LoadConstUndefined", *expected[3:]]:
             # Both: the source needs no copy, and the `undefined` is loaded in the middle of the check.
             kept_undefined = tail[2]
