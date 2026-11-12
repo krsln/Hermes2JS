@@ -511,6 +511,11 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         if not inside:
             return None
 
+        if sibling.source_block is not None:
+            # the test block the `if` was built from, when it kept one (98/2140: the next block up that
+            # branches into the arms is the `else if`'s own test, not where the switch resumes)
+            return sibling.source_block.address
+
         held = self.graph.root.covered_blocks
         first = min(b.address for b in inside)
         tests = [

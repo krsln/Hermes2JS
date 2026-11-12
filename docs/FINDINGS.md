@@ -124,6 +124,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-11 | after F-245 (sibling loop exits onto one block, last retry rung) | 96 | 77 | n/a | n/a | 1181 passed |
 | 2026-11-11 | after F-246 (terminal tail behind the closing return, rung 10) | 94 | 72 | n/a | n/a | 1182 passed |
 | 2026-11-12 | after F-247 (copy of a tail no longer reads the other path's register) | 94 | 72 | n/a | n/a | 1183 passed |
+| 2026-11-12 | after F-219 (StringSwitchImm table read from the bundle; switch merge fixes) | 91 | 64 | n/a | n/a | 1186 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -157,7 +158,6 @@ row; a row is only added when all of its columns were measured on the same tree.
 
 The output is wrong or misleading. Because it contains no `goto` it does not show in the `goto` count.
 
-- **F-219 `StringSwitchImm` prints as a raw switch: every case body in a row (96: 5 files, 98: 12; 98/2184 `getDirectionForKeyword`, 98/2182 `parseLinearGradientCSSString`, 98/2151 `normalizeColor`, 98/2140 `getNativeComponentAttributes`, the React work-loop functions 2619, 2636, 2639, 2643, 2671, 98/4463, 8181, 11903).** The output carries `// Raw TerminatorSwitch reached Printer` and prints the case bodies one after the other (`r1 = {...}; return r1; r1 = {...}; return r1; ...`), which reads as dead code after the first `return`. Cause: the case strings and the jump targets of a `StringSwitchImm` are in an out-of-line table of the bytecode file, and the HASM the decompiler reads has none (`SwitchImm` has `# Jump table: [...]` in the listing, `StringSwitchImm` only `Reg8, tableOffset, stringTableOffset, Addr32 default, count`). `StringSwitchImm.handle` says so and builds a switch with no cases. Not fixable from the HASM alone: the listing tool has to print the table (case string ids with their targets), then `StringSwitchImm` builds `case_map` the way `SwitchImm` does; with the targets alone (they are the blocks in order) the strings are still missing. Needs a decision on the input side: extend the listing, or read the table from the `.hbc`.
 - **F-138 `getComponentNameFromType` (partly fixed).** 96/1801, 96/2294, 98/2477. The main cause (a
   computed value inlined into copies on other arms) is fixed, see the archive. Left: (a) inside the
   `ForwardRef` arm `BooleanChainRegionPass` copies `r2.displayName || r1.name || ""` into a test that

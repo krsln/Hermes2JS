@@ -1,0 +1,36 @@
+
+=> [Function #2184 "getDirectionForKeyword" of 126 bytes]: 2 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x00161841
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 4, UInt8: 1>
+==> 00000003: <LoadConstNull>: <Reg8: 0>
+==> 00000005: <JEqual>: <Addr8: 119, Reg8: 4, Reg8: 0>  # Address: 0000007c
+==> 00000009: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000000c: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 0, string_id: 217>  # String: 'replace' (Identifier)
+==> 00000011: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 6>
+==> 00000015: <LoadConstString>: <Reg8: 1, string_id: 831>  # String: ' ' (String)
+==> 00000019: <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 1>
+==> 0000001f: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 242>  # String: 'toLowerCase' (Identifier)
+==> 00000024: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000028: <StringSwitchImm>: <Reg8: 1, UInt32: 3, UInt32: 86, Addr32: 82, UInt32: 12>  # Address: 0000007a  # String switch table: [["to top", "00000072"], ["to right", "0000006a"], ["to bottom", "00000062"], ["to left", "0000005a"], ["to top right", "00000052"], ["to right top", "00000052"], ["to bottom right", "0000004a"], ["to right bottom", "0000004a"], ["to top left", "00000042"], ["to left top", "00000042"], ["to bottom left", "0000003a"], ["to left bottom", "0000003a"]]
+==> 0000003a: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 53, UInt16: 46272>  # Object: {'type': 'keyword', 'value': 'to bottom left'}
+==> 00000040: <Ret>: <Reg8: 1>
+==> 00000042: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 53, UInt16: 46277>  # Object: {'type': 'keyword', 'value': 'to top left'}
+==> 00000048: <Ret>: <Reg8: 1>
+==> 0000004a: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 53, UInt16: 46282>  # Object: {'type': 'keyword', 'value': 'to bottom right'}
+==> 00000050: <Ret>: <Reg8: 1>
+==> 00000052: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 53, UInt16: 46287>  # Object: {'type': 'keyword', 'value': 'to top right'}
+==> 00000058: <Ret>: <Reg8: 1>
+==> 0000005a: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 53, UInt16: 46292>  # Object: {'type': 'angle', 'value': 270}
+==> 00000060: <Ret>: <Reg8: 1>
+==> 00000062: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 53, UInt16: 18117>  # Object: {'type': 'angle', 'value': 180}
+==> 00000068: <Ret>: <Reg8: 1>
+==> 0000006a: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 53, UInt16: 46300>  # Object: {'type': 'angle', 'value': 90}
+==> 00000070: <Ret>: <Reg8: 1>
+==> 00000072: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 53, UInt16: 46308>  # Object: {'type': 'angle', 'value': 0}
+==> 00000078: <Ret>: <Reg8: 1>
+==> 0000007a: <Ret>: <Reg8: 0>
+==> 0000007c: <Ret>: <Reg8: 0>
+
+

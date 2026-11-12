@@ -69,7 +69,7 @@ class TerminatorThrow(Terminator):
 @dataclass(frozen=True, slots=True, eq=False)
 class TerminatorSwitch(Terminator):
     selector: Expression
-    case_map: dict[int, int]
+    case_map: dict[int | str, int]
     default_target: int | None
 
     @property
