@@ -474,6 +474,13 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         if target == exit_address:
             return True
 
+        # Two empty trampolines to the same place are the same exit (98/2204: the default arm jumped to one
+        # `jmp loop-head`, the code behind the switch ended in another).
+        destination = self._final_destination(target)
+
+        if destination is not None and destination == self._final_destination(exit_address):
+            return True
+
         by_address = {b.address: b for b in self.cfg.blocks}
         block = by_address.get(target)
         seen = set()
@@ -493,6 +500,31 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                 return True
 
         return False
+
+    def _final_destination(self, address: int) -> int | None:
+        """Where a chain of empty `jmp` blocks starting at `address` ends (None when it does not start with one)."""
+        by_address = {b.address: b for b in self.cfg.blocks}
+        block = by_address.get(address)
+        seen: set[int] = set()
+        moved = False
+
+        while block is not None and block.address not in seen:
+            seen.add(block.address)
+
+            if any(i.value is not None or i.statement is not None for i in block.instructions):
+                break
+
+            if not isinstance(block.terminator, TerminatorJump):
+                break
+
+            nxt = by_address.get(block.terminator.target)
+
+            if nxt is None:
+                break
+
+            block, moved = nxt, True
+
+        return block.address if moved and block is not None else None
 
     def _leading_address(self, sibling) -> int | None:
         """Address of the first statement `sibling` runs.
