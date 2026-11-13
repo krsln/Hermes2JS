@@ -80,13 +80,40 @@ class RegionGraph:
             if isinstance(item, BasicBlock):
                 continue
 
-            if block in item.covered_blocks:
+            if block in item.covered_blocks or RegionGraph._test_block_owner(block, item) is not None:
                 return item
 
         return None
 
+    @staticmethod
+    def _test_block_owner(block, region):
+        """The sequence holding the `IfRegion` whose consumed test block is `block` (that block is no child
+        of any sequence any more)."""
+        stack = [region]
+
+        while stack:
+            node = stack.pop()
+
+            if isinstance(node, SequenceRegion):
+                for child in node.children:
+                    if not isinstance(child, BasicBlock):
+                        if getattr(child, "source_block", None) is block:
+                            return node
+                        stack.append(child)
+                continue
+
+            for attr in ("body", "then_body", "else_body", "try_body", "catch", "finally_", "default_body"):
+                inner = getattr(node, attr, None)
+                if inner is not None:
+                    stack.append(inner)
+
+            for case in getattr(node, "cases", ()) or ():
+                stack.append(case.body)
+
+        return None
+
     def lowest_common_sequence(self, block_a, block_b):
-        owner_a = self.owner(block_a)
+        owner_a = self.owner(block_a) or self._test_block_owner(block_a, self.root)
 
         seq = owner_a
         depth = 0

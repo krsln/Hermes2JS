@@ -18,10 +18,10 @@ from hermes_decompiler.backend.transforms.shared import resolve_identifier as _s
 from hermes_decompiler.backend.transforms.shared import is_bare_register
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Expression
-from hermes_decompiler.ir.Operators import BinaryOperator
+from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import (
     ArrayExpression, AssignmentExpression, BinaryExpression, CallExpression, Identifier, MemberExpression,
-    UndefinedLiteral,
+    UnaryExpression, UndefinedLiteral,
 )
 from hermes_decompiler.ir.expressions.Collections import SpreadElement
 from hermes_decompiler.ir.statements import BreakStatement
@@ -90,7 +90,12 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
     def run(self) -> None:
         self._for_in_loops: list[LoopRegion] = []
+        self._loops: list[LoopRegion] = []
         self.visit(self.graph.root)
+
+        # Last: a loop a `try` claims (close scaffold) must keep that route.
+        for loop in self._loops:
+            self._try_recognize_for_of_bare(loop)
 
         # After the walk: unwrapping replaces a region in its parent's child list.
         for loop in self._for_in_loops:
@@ -121,6 +126,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
             self.visit(node_finally.body)
 
     def visit_LoopRegion(self, node: LoopRegion) -> None:
+        self._loops.append(node)
         self._try_recognize_for_in(node)
         self.visit(node.body)
         self._try_recognize_for_of_with_inner_try(node)
@@ -175,6 +181,50 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
             self._unwrap_try(try_region, loop)
             self._strip_inline_closes(loop, raw_iterator_ref)
 
+        self._drop_iterator_setup(iterator_expr)
+        self._fold_binding_pattern(loop)
+
+    def _try_recognize_for_of_bare(self, loop: LoopRegion) -> None:
+        """for-of with no close scaffold at all (no exception handler covers the loop).
+
+        `IteratorNext; Mov; JStrictEqual it undefined -> exit` heads the loop and `LoopConditionRegionPass`
+        leaves the test as the `while` condition, so the unrecognized form tests a register the body only
+        sets AFTER the test (one iteration too late). The loop is a `for (x of xs)`; there is no close
+        to unwrap, only the copies in front of a `break`/`return`."""
+        if loop.loop_kind is not LoopKind.WHILE:
+            return
+
+        condition = loop.condition
+
+        if not (
+                isinstance(condition, UnaryExpression)
+                and condition.operator == UnaryOperator.LOGICAL_NOT
+                and isinstance(condition.operand, BinaryExpression)
+                and condition.operand.operator == BinaryOperator.STRICT_EQUAL
+                and isinstance(condition.operand.left, Identifier)
+                and isinstance(condition.operand.right, UndefinedLiteral)
+        ):
+            return
+
+        next_call, next_instr, header_block = self._match_header_call(loop, "next")
+
+        if next_call is None:
+            return
+
+        raw_iterator_ref = next_call.callee.obj
+        iterator_expr = self._resolve_identifier(raw_iterator_ref, next_instr, header_block)
+        iterable = self._match_call(iterator_expr, "GetIterator")
+
+        if iterable is None:
+            return
+
+        loop.loop_kind = LoopKind.FOR_OF
+        loop.iterable = iterable
+        loop.loop_binding = next_instr.dest_reg
+        loop.condition = None
+
+        self._strip_next_call_scaffold(header_block, next_instr)
+        self._strip_inline_closes(loop, raw_iterator_ref)
         self._drop_iterator_setup(iterator_expr)
         self._fold_binding_pattern(loop)
 
