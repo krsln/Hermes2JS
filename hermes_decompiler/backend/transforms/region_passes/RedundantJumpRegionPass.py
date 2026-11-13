@@ -535,6 +535,9 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         if isinstance(sibling, BasicBlock):
             return sibling.address
 
+        if isinstance(sibling, SwitchRegion):
+            return self._switch_header_address(sibling)
+
         if not isinstance(sibling, IfRegion):
             return None
 
@@ -558,6 +561,26 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         ]
 
         return max(tests, key=lambda b: b.address).address if tests else None
+
+    def _switch_header_address(self, switch: SwitchRegion) -> int | None:
+        """Address of the block a `switch` was built from (its discriminant is all the region keeps of it).
+
+        That block is outside the tree and its terminator is gone, but its edges still lead into the switch's
+        own blocks: the one block above them that does is the header; None when that is not exactly one block
+        (98/2636: `try { ...; goto <the switch> } catch {}`)."""
+        inside = switch.covered_blocks
+
+        if not inside:
+            return None
+
+        held = self.graph.root.covered_blocks
+        first = min(b.address for b in inside)
+        headers = [
+            b for b in self.cfg.blocks
+            if b not in held and b.address < first and any(x in inside for x in b.successors)
+        ]
+
+        return headers[0].address if len(headers) == 1 else None
 
     def _next_fallthrough_address(self, region) -> int | None:
         """Address where control resumes once `region` (a TryRegion or

@@ -127,6 +127,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-12 | after F-219 (StringSwitchImm table read from the bundle; switch merge fixes) | 91 | 64 | n/a | n/a | 1186 passed |
 | 2026-11-12 | after F-248 (destructuring with a default on a later element) | 91 | 63 | n/a | n/a | 1187 passed |
 | 2026-11-12 | after F-249 (switch arm ending in its own `jmp` to the same place) | 89 | 60 | n/a | n/a | 1188 passed |
+| 2026-11-13 | after F-250 (try's jump into a following `switch`) | 89 | 59 | n/a | n/a | 1189 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
