@@ -132,6 +132,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-14 | after F-207 (`try` built inside the guard `if` whose setup precedes the range) | 89 | 59 | n/a | n/a | 1193 passed |
 | 2026-11-14 | after F-252 (value diamond with one call folded into an `&&` chain) | 89 | 58 | n/a | n/a | 1195 passed |
 | 2026-11-14 | after F-253 (`if (A) { if (B) goto NEXT; X }` folded on a last ladder rung) | 89 | 58 | n/a | n/a | 1196 passed |
+| 2026-11-14 | after F-254 (crossed fold with a constant for the join, in a function with handlers) | 87 | 57 | n/a | n/a | 1197 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -231,7 +232,7 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 - **F-17 `getStateForAction`.** 96/7152: large and already `goto`-ful; its `pathdefs` flag is accepted.
   Skip it unless it is handled on its own.
 - **F-18 Long tail of "different region" gotos.** About 230 functions with no single common cause;
-  96/1351 `processTransformOrigin` (`case "left": case "right":` shared label) fixed by F-253 (archive); sampled 2026-11-14 and mapped onto open shapes: 96/7888 is F-201, 98/8193, 8194, 12172 are F-217, 98/3508 is two nested iterator destructurings (F-215).
+  96/1351 `processTransformOrigin` (`case "left": case "right":` shared label) fixed by F-253 (archive); 96/474 `anonymous` (`typeof D === "function" || typeof D === "object"`) fixed by F-254 (archive); sampled 2026-11-14 and mapped onto open shapes: 96/7888 is F-201, 98/8193, 8194, 12172 are F-217 (96/474 was too; its constant `r2 = false` for the join is what F-254 handles), 98/3508 is two nested iterator destructurings (F-215).
   the cheapest start is the small ones (one `goto`, under 26 lines: 79 functions).
 
 ## Open: readability

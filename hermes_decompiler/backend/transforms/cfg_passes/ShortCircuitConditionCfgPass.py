@@ -372,7 +372,18 @@ class ShortCircuitConditionCfgPass:
         """Constant loads of the second test block that END also reads: the arm
         overwrites the register first, and only this block leads to END, so a
         copy of the load on the edge into END gives it the same value."""
-        if list(end_block.predecessors) != [successor] or self.cfg.exception_handlers:
+        if self.cfg.exception_handlers:
+            # Only outside every protected range, and the register unread by every handler (96/474: a `try`
+            # later in the arm, the test and END before and after it).
+            if (
+                    self._in_try(successor) or self._in_try(end_block) or self._in_try(arm)
+                    # A rotated loop's guard and its body test share registers (96/956 `replacer`).
+                    or successor in self._loop_blocks or end_block in self._loop_blocks or arm in self._loop_blocks
+                    or not all(
+                self._dead_on_entry(h, d, set()) for h in self._handlers() for d in self._written(successor))
+            ):
+                return []
+        elif list(end_block.predecessors) != [successor]:
             return []
 
         found = []
@@ -419,7 +430,9 @@ class ShortCircuitConditionCfgPass:
         blocks = self.cfg.blocks
         index = blocks.index(end_block)
 
-        if self.cfg.exception_handlers:
+        if self.cfg.exception_handlers and (
+                self._in_try(successor) or self._in_try(end_block) or (index and self._in_try(blocks[index - 1]))
+        ):
             # An edge block would sit outside every try range.
             return None
 
@@ -676,6 +689,13 @@ class ShortCircuitConditionCfgPass:
                 return False
 
         return True
+
+    def _in_try(self, block: BasicBlock) -> bool:
+        return any(block in handler["try_blocks"] for handler in self.cfg.exception_handlers)
+
+    @staticmethod
+    def _written(block: BasicBlock) -> set:
+        return {i.dest_reg for i in block.instructions if i.terminator is None and i.dest_reg is not None}
 
     def _handlers(self) -> list[BasicBlock]:
         return [b for b in self.cfg.blocks if not b.predecessors and b is not self.cfg.entry]
@@ -1033,6 +1053,10 @@ class ShortCircuitConditionCfgPass:
 
             if dead in self.cfg.blocks:
                 self.cfg.blocks.remove(dead)
+
+            for handler in self.cfg.exception_handlers:
+                if dead in handler["try_blocks"]:
+                    handler["try_blocks"].remove(dead)
 
     @staticmethod
     def _connect(source: BasicBlock, target: BasicBlock) -> None:

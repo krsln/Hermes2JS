@@ -108,11 +108,15 @@ def test_a_function_with_exception_handlers_still_gets_its_shared_return_copied(
     """96/3900 `normalizeRootMargin`: a `for-of` gives the function an exception
     handler, which used to switch the copy off for the whole function. The
     shared `return "0px 0px 0px 0px"` lies outside every protected range, so
-    each jumper may own a copy: no `goto label_505`."""
+    each jumper may own a copy: no `goto label_505`.
+
+    The crossed fold now also runs in a function with handlers (96/474), so the first two jumpers are one
+    `param1 == null || param1 === ""` test and the exit is copied for it and for the `trim()` test only."""
     out = _render("shared_return_with_handler_96_3900.hasm", 3900)
 
     assert "goto" not in out
-    assert out.count('return "0px 0px 0px 0px";') == 3
+    assert out.count('return "0px 0px 0px 0px";') == 2
+    assert 'if (param1 == null || param1 === "") {' in out
 
 
 def test_a_phi_return_is_not_copied_in_a_function_with_exception_handlers():
