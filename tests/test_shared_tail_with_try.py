@@ -29,7 +29,7 @@ def test_the_tail_behind_a_try_is_copied_for_the_test_that_skips_it():
 
     assert "goto" not in out
     assert "} catch (caughtException) {" in out
-    assert "if (r2 != null) {\n                r2 = r0;\n                r1 = r2._result;\n            } else {\n                r1 = r0;" in out
+    assert 'if ("_result" in r0 && r0._result != null) {\n            r2 = r0;\n            r1 = r2._result;\n        } else {\n            r1 = r0;' in out
 
 
 def test_the_instanceof_test_that_falls_into_the_new_set_is_one_if():

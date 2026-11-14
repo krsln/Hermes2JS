@@ -530,7 +530,8 @@ class ShortCircuitConditionCfgPass:
                     # may read the register the try body had set.
                     or not (
                     instruction.entry.opcode == "GetGlobalObject"
-                    or all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in self._handlers())
+                    or all(self._dead_on_entry(b, instruction.dest_reg, set())
+                           for b in self._handlers_reached(successor, instruction.dest_reg))
             )
             ):
                 return None
@@ -696,6 +697,46 @@ class ShortCircuitConditionCfgPass:
     @staticmethod
     def _written(block: BasicBlock) -> set:
         return {i.dest_reg for i in block.instructions if i.terminator is None and i.dest_reg is not None}
+
+    def _handlers_reached(self, start: BasicBlock, register: int) -> list[BasicBlock]:
+        """The handlers that can still see `rN` as `start` left it: those whose protected range holds `start`
+        or a block reached from it before the register is written again. A `for-of` later in the function
+        guards its own loop only (its handler reads the iterator, which `IteratorBegin` sets after the test,
+        96/12624), so it does not count for a test before the loop."""
+        if not self.cfg.exception_handlers:
+            return self._handlers()
+
+        name = f"r{register}"
+        reached = set()
+        seen = {id(start)}
+        pending = [start]
+
+        while pending:
+            block = pending.pop()
+
+            for handler in self.cfg.exception_handlers:
+                if block in handler["try_blocks"]:
+                    reached.add(id(handler["handler_block"]))
+
+            if block is not start:
+                first = next(
+                    (
+                        "write" if i.dest_reg == register and i.terminator is None else "read"
+                        for i in block.instructions
+                        if (i.dest_reg == register and i.terminator is None) or register in self._source_registers(i)
+                    ),
+                    None,
+                )
+
+                if first == "write":
+                    continue
+
+            for successor in block.successors:
+                if id(successor) not in seen:
+                    seen.add(id(successor))
+                    pending.append(successor)
+
+        return [b for b in self._handlers() if id(b) in reached]
 
     def _handlers(self) -> list[BasicBlock]:
         return [b for b in self.cfg.blocks if not b.predecessors and b is not self.cfg.entry]

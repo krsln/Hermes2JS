@@ -158,6 +158,7 @@ class UnfoldedMergeRepairPass(RegionPass):
 
     def run(self) -> None:
         self._index = None
+        self._sibling_body = None
         self._made: set[int] = set()  # ids of the replacement identifiers this pass created
 
         collector = _IfCollector()
@@ -174,6 +175,7 @@ class UnfoldedMergeRepairPass(RegionPass):
             if not arm_blocks:
                 continue
 
+            self._sibling_body = if_region.else_body if body is if_region.then_body else if_region.then_body
             arm_instructions = [i for blk in arm_blocks for i in blk.instructions]
             other_blocks = set(_blocks_of(if_region.then_body)) | set(_blocks_of(if_region.else_body))
             arm_set = set(arm_instructions)
@@ -325,7 +327,23 @@ class UnfoldedMergeRepairPass(RegionPass):
             if i.address < write.address and i.dest_reg == write.dest_reg and i.value is not None
         ]
 
-        return bool(earlier) and prints_definition(max(earlier, key=lambda i: i.address))
+        if earlier and prints_definition(max(earlier, key=lambda i: i.address)):
+            return True
+
+        # The other arm of the same `if` is the default when it always writes the register and that write prints
+        # (`if (a && b) { r3 = x } else { r3 = new Set() }`: the `&&` used to be an outer `if`, whose else arm
+        # was the earlier write, 96/7898).
+        sibling = self._sibling_body
+
+        if sibling is None or not _always_assigns(sibling, write.dest_reg):
+            return False
+
+        last = [
+            i for blk in _blocks_of(sibling) for i in blk.instructions
+            if i.dest_reg == write.dest_reg and i.value is not None
+        ]
+
+        return bool(last) and prints_definition(max(last, key=lambda i: i.address))
 
     def _repoint_copies_of_printed_write(self, write, arm_set, region_blocks, arm_blocks, is_last) -> None:
         """Readers outside the `if` that hold the printed arm write's value

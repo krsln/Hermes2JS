@@ -25,4 +25,6 @@ def test_a_guard_with_an_orphan_return_exit_has_no_goto():
     out = _render("guard_exit_orphan_98_8283.hasm", 8283)
 
     assert "goto" not in out
-    assert "if (r3) {\n                return undefined;\n            }" in out
+    # The guard's test and the call behind it are one condition (a function with a `for-of` handler no longer
+    # keeps the fold off): the call still runs only after `r3` held.
+    assert "if (r3 && isStyleAttached.call(0, param1[0])) {\n            return undefined;\n        } else {" in out

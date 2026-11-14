@@ -36,8 +36,10 @@ def test_a_copy_that_nothing_reads_is_removed():
 def test_a_dead_copy_in_front_of_a_test_no_longer_nests_the_else():
     code = _code("dead_copy_chain_96_12298.hasm", 12298)
 
-    assert "} else if (!param2) {" in code
-    assert "r1 = param2;\n        r1 = Object.keys(r1);" in code
+    # The three tests are one `||` now (the dead copy fed the middle one): no `else` nest and no copy.
+    assert "goto" not in code
+    assert "if (!param1 || (!param2 || Object.keys(param2).length === 0)) {" in code
+    assert "r1 = param2;" not in code
 
 
 def test_a_copy_read_by_a_tail_merged_instruction_stays():
