@@ -158,6 +158,9 @@ class _HandlerBuilder:
         # ordinary path below, unchanged.
         loop_home = self._find_loop_nested_home(start_repr, start_block, handler["end"])
 
+        if loop_home is None:
+            loop_home = self._find_guard_home(start_repr, start_block, handler)
+
         if loop_home is not None:
             body, body_start_idx, body_end_idx = loop_home
 
@@ -507,6 +510,56 @@ class _HandlerBuilder:
             return None
 
         return None
+
+    # -------------------------------------------------------------
+
+    def _find_guard_home(
+            self,
+            start_repr,
+            start_block: BasicBlock,
+            handler: dict,
+    ) -> tuple[SequenceRegion, int, int] | None:
+        """The `try` of a protected range that starts INSIDE a guard `if (c) { setup; try { ... } finally {} }`.
+
+        The guard's test runs before the range starts, so it is not protected: the `try` belongs in the guard's
+        `then` arm, next to the setup (98/2676 `flushSpawnedWork`: `if (r9 !== null) { r4 = env.T; ...; try {...}
+        finally { env.T = r4 } }`). Built around the whole `if`, the `finally` would also run when the guard
+        fails, reading what the setup never set. Only for a chain of `if`s without `else` arms that ends in the
+        sequence holding `start_block` directly, with every protected block inside it. The code in front of the
+        range in that block is split off first (`_split_leading_unprotected_content`)."""
+        node = start_repr
+        body = None
+
+        for _ in range(_MAX_LOOP_DESCENT):
+            if not isinstance(node, IfRegion) or node.else_body is not None:
+                return None
+
+            branch = node.then_body
+
+            if start_block not in branch.covered_blocks:
+                return None
+
+            if start_block in branch.children:
+                body = branch
+                break
+
+            node = self.graph.find_covering_item(branch, start_block)
+
+        if body is None:
+            return None
+
+        if any(block not in body.covered_blocks for block in handler["try_blocks"]):
+            return None
+
+        self._split_leading_unprotected_content(body, body.children.index(start_block), start_block, handler["start"])
+
+        start_idx = body.children.index(start_block)
+        end_idx = self._scan_loop_body_protected_extent(body, start_idx, handler["end"], set())
+
+        if end_idx is None:
+            return None
+
+        return body, start_idx, end_idx
 
     # -------------------------------------------------------------
 

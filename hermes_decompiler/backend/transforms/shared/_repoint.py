@@ -493,7 +493,9 @@ def reclaim_definition(cfg, root, last, old_value, arm_result, *, ignore_blocks,
     return True
 
 
-def _reads_register_by_name(cfg, register: int, after_address: int, ignore_node=None, root=None) -> bool:
+def _reads_register_by_name(
+        cfg, register: int, after_address: int, ignore_node=None, root=None, ignore_blocks=()
+) -> bool:
     """True if, going forward in bytecode order from `after_address`, some
     consumer refers to register `rN` BY NAME before `rN` is written again.
 
@@ -530,7 +532,8 @@ def _reads_register_by_name(cfg, register: int, after_address: int, ignore_node=
     # is read just before the region's first block.
     events = [
         (instr.address, 1, [instr.value, instr.statement, instr.terminator], instr.dest_reg)
-        for block in cfg.blocks for instr in block.instructions if instr.address > after_address
+        for block in cfg.blocks if not any(block is ignored for ignored in ignore_blocks)
+        for instr in block.instructions if instr.address > after_address
     ]
 
     if root is not None:

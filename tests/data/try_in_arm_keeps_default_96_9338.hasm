@@ -1,0 +1,49 @@
+
+=> [Function #9338 "test" of 153 bytes]: 2 params, frame size=19, strict=1, exc handler=1, debug info=0  @ offset 0x001db6b9
+  [Exception handlers: [start=0x4f, end=0x6f, target=0x8f] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 7, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 0, UInt8: 0>
+==> 00000006: <Mov>: <Reg8: 1, Reg8: 7>
+==> 00000009: <GetEnvironment>: <Reg8: 2, UInt8: 1>
+==> 0000000c: <LoadFromEnvironment>: <Reg8: 6, Reg8: 2, UInt8: 7>
+==> 00000010: <GetByIdShort>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 189>  # String: 'options' (Identifier)
+==> 00000015: <GetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 7594>  # String: 'loose' (Identifier)
+==> 0000001b: <LoadConstUndefined>: <Reg8: 5>
+==> 0000001d: <LoadConstString>: <Reg8: 3, string_id: 2299>  # String: 'Comparator.test' (String)
+==> 00000021: <Call4>: <Reg8: 3, Reg8: 6, Reg8: 5, Reg8: 3, Reg8: 7, Reg8: 4>
+==> 00000028: <GetById>: <Reg8: 4, Reg8: 0, UInt8: 3, string_id: 10767>  # String: 'semver' (Identifier)
+==> 0000002e: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 2>
+==> 00000032: <JStrictEqual>: <Addr8: 99, Reg8: 4, Reg8: 3>  # Address: 00000095
+==> 00000036: <Mov>: <Reg8: 4, Reg8: 1>
+==> 00000039: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 2>
+==> 0000003d: <JStrictEqual>: <Addr8: 88, Reg8: 4, Reg8: 3>  # Address: 00000095
+==> 00000041: <Mov>: <Reg8: 3, Reg8: 1>
+==> 00000044: <TypeOf>: <Reg8: 4, Reg8: 3>
+==> 00000047: <LoadConstString>: <Reg8: 3, string_id: 7961>  # String: 'string' (Identifier)
+==> 0000004b: <JStrictNotEqual>: <Addr8: 36, Reg8: 4, Reg8: 3>  # Address: 0000006f
+==> 0000004f: <LoadFromEnvironment>: <Reg8: 7, Reg8: 2, UInt8: 8>
+==> 00000053: <Mov>: <Reg8: 11, Reg8: 1>
+==> 00000056: <GetByIdShort>: <Reg8: 10, Reg8: 0, UInt8: 1, string_id: 189>  # String: 'options' (Identifier)
+==> 0000005b: <GetByIdShort>: <Reg8: 4, Reg8: 7, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000060: <CreateThis>: <Reg8: 4, Reg8: 4, Reg8: 7>
+==> 00000064: <Mov>: <Reg8: 12, Reg8: 4>
+==> 00000067: <Construct>: <Reg8: 3, Reg8: 7, UInt8: 3>
+==> 0000006b: <SelectObject>: <Reg8: 1, Reg8: 4, Reg8: 3>
+==> 0000006f: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 6>
+==> 00000073: <Mov>: <Reg8: 11, Reg8: 1>
+==> 00000076: <GetById>: <Reg8: 10, Reg8: 0, UInt8: 5, string_id: 9721>  # String: 'operator' (Identifier)
+==> 0000007c: <GetById>: <Reg8: 9, Reg8: 0, UInt8: 3, string_id: 10767>  # String: 'semver' (Identifier)
+==> 00000082: <GetByIdShort>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 189>  # String: 'options' (Identifier)
+==> 00000087: <LoadConstUndefined>: <Reg8: 12>
+==> 00000089: <Call>: <Reg8: 0, Reg8: 4, UInt8: 5>
+==> 0000008d: <Ret>: <Reg8: 0>
+==> 0000008f: <Catch>: <Reg8: 0>
+==> 00000091: <LoadConstFalse>: <Reg8: 0>
+==> 00000093: <Ret>: <Reg8: 0>
+==> 00000095: <LoadConstTrue>: <Reg8: 0>
+==> 00000097: <Ret>: <Reg8: 0>
+
+

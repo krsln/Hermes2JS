@@ -635,12 +635,27 @@ class UnfoldedMergeRepairPass(RegionPass):
     def _named_after_the_if(self, write, region_blocks) -> bool:
         """Does code after the `if` read `write`'s register BY NAME, before
         anything writes it again?"""
+        # A `catch` laid out behind the code after the `if` (a `try` inside the arm: 98/2676, 96/9338) is not
+        # where the arm ends: its blocks sit at higher addresses than the reader, which would never be "after".
+        handlers = set()
+        stack = [h["handler_block"] for h in self.cfg.exception_handlers if h.get("handler_block") in region_blocks]
+
+        while stack:
+            blk = stack.pop()
+
+            if blk in handlers:
+                continue
+            handlers.add(blk)
+            stack.extend(nxt for nxt in blk.successors if nxt in region_blocks)
+
         end = max(
-            (i.address for blk in region_blocks for i in blk.instructions),
+            (i.address for blk in region_blocks if blk not in handlers for i in blk.instructions),
             default=write.address,
         )
 
-        return _reads_register_by_name(self.cfg, write.dest_reg, end, root=self.graph.root)
+        return _reads_register_by_name(
+            self.cfg, write.dest_reg, end, root=self.graph.root, ignore_blocks=tuple(region_blocks)
+        )
 
     def _reprint_default_for_printed_write(self, if_region, write, region_blocks) -> None:
         """`rN = d; if (c) { rN = v }; ...rN...` where `rN = v` prints: when `c`
