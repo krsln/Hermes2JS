@@ -501,6 +501,8 @@ class ShortCircuitConditionCfgPass:
                     # (A copy the same block writes the register of again is not that: nothing outside
                     # the block can see it, `r9 = r8; r9 = r9.type` reads `r8.type`, 98/11306.)
                     or (instruction.entry.opcode in ("Mov", "MovLong")
+                        # A value `ValueConditionFoldCfgPass` computed (`r7 = r4 && f(r4)`) is not a plain copy.
+                        and not any(instruction is f for f in getattr(self.cfg, "folded_values", ()))
                         and not any(later.dest_reg == instruction.dest_reg for later in setup[position + 1:])
                         and not self._copy_feeds_the_test(successor, instruction, probe, setup[position + 1:]))
                     or not (

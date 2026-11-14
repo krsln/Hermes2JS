@@ -33,7 +33,8 @@ import copy
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.shared import has_side_effects, negate_condition
 from hermes_decompiler.ir import LogicalOperator
-from hermes_decompiler.ir.expressions import BinaryExpression, ConditionalExpression, Identifier
+from hermes_decompiler.ir.expressions import BinaryExpression, CallExpression, ConditionalExpression, Identifier
+from hermes_decompiler.ir.expressions import MemberExpression
 from hermes_decompiler.ir.expressions import UnaryExpression
 from hermes_decompiler.ir.Operators import UnaryOperator
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
@@ -129,11 +130,43 @@ class ValueConditionFoldCfgPass:
 
         successors = list(m.successors)
 
+        # At most ONE effect in the whole diamond: it stays evaluated once, on the path its arm was on
+        # (`r7 = p && DataView.prototype.isPrototypeOf(p)`, 98/12704). Two would need their order proven.
+        effects = sum(
+            1 for block in region for i in block.instructions
+            if i.terminator is None and i.value is not None and has_side_effects(i.value)
+        )
+
+        if effects > 1 or (effects and not self._crossed_into(head, m)):
+            return False
+
         # Whatever an arm wrote besides the tested register must be unread after M.
         dropped = {
             i.dest_reg for block in region[1:] for i in block.instructions
             if i.terminator is None and i.dest_reg is not None and i.dest_reg != register
         }
+
+        # A receiver the call keeps by name (`r9 = DataView.prototype; ... r9.isPrototypeOf(p)`) is a pure value
+        # written once in the diamond: it goes into the value, in the place the name stood.
+        for reg in sorted(dropped, reverse=True):
+            name = f"r{reg}"
+            writes = [
+                i for block in region[1:] for i in block.instructions
+                if i.terminator is None and i.dest_reg == reg
+            ]
+
+            if (
+                    len(writes) == 1 and writes[0].value is not None and writes[0].statement is None
+                    and not has_side_effects(writes[0].value)
+                    and sum(1 for n in value.walk() if isinstance(n, Identifier) and n.name == name) == 1
+                    and any(
+                isinstance(n, CallExpression) and isinstance(n.callee, MemberExpression)
+                and isinstance(n.callee.obj, Identifier) and n.callee.obj.name == name
+                for n in value.walk()
+            )
+                    and not any(isinstance(n, Identifier) and n.name == name for n in writes[0].value.walk())
+            ):
+                value = _Liveness._substitute_all(value, {name: copy.deepcopy(writes[0].value)})
 
         # A temporary the arms computed stays a NAME inside the value (`r0 = r2 instanceof ...`,
         # its own statement printed above): dropping it would leave that name unset.
@@ -150,6 +183,23 @@ class ValueConditionFoldCfgPass:
 
         return True
 
+    @staticmethod
+    def _crossed_into(head: BasicBlock, m: BasicBlock) -> bool:
+        """`X: if (c) goto T; H: <value diamond>; M: if (r) goto E; T: ...`: X jumps to M's fall-through, so the
+        diamond is the next link of an `A && B && value` chain (a call in it runs only after A and B held, as
+        inside the chain). Anywhere else a call in an arm is left alone."""
+        if len(head.predecessors) != 1:
+            return False
+
+        before = head.predecessors[0]
+
+        if not isinstance(before.terminator, TerminatorConditionalBranch) or before.terminator.target <= before.address:
+            return False
+
+        blocks = [b for b in m.successors if b.address != m.terminator.target]
+
+        return len(blocks) == 1 and blocks[0].address == before.terminator.target
+
     def _rewrite(self, head, m, register, value, region) -> None:
         template = next(
             (i for i in reversed(head.instructions) if i.terminator is None and i.dest_reg == register), None
@@ -163,6 +213,9 @@ class ValueConditionFoldCfgPass:
             template = copy.copy(template)
 
         template.value = value
+        if not hasattr(self.cfg, "folded_values"):
+            self.cfg.folded_values = []
+        self.cfg.folded_values.append(template)
         template.statement = None
         template.definition_used = False
 
@@ -196,7 +249,8 @@ class ValueConditionFoldCfgPass:
         for i in block.instructions:
             if i.terminator is not None:
                 continue
-            if i.dest_reg is None or i.value is None or i.statement is not None or has_side_effects(i.value):
+            # One call is fine (see `_fold`): inside the value it runs where the arm ran it.
+            if i.dest_reg is None or i.value is None or i.statement is not None:
                 return False
 
         return True
