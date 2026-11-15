@@ -671,9 +671,32 @@ class UnfoldedMergeRepairPass(RegionPass):
             default=write.address,
         )
 
+        # A COPY of a tail (SharedTailDuplicationCfgPass) keeps its original's instruction addresses, so the
+        # copy on the other path reads `r3` "after" this arm by address. Only what the arm can reach reads
+        # its value (98/8193: the copy's `r1 = r3` kept the original's `r1 = r3` from being repointed).
+        reachable = set(region_blocks)
+        todo = list(region_blocks)
+
+        while todo:
+            block = todo.pop()
+
+            for successor in [*block.successors, *self._snapshot_handlers(block)]:
+                if successor not in reachable:
+                    reachable.add(successor)
+                    todo.append(successor)
+
+        cut_off = tuple(b for b in self.cfg.blocks if b not in reachable and getattr(b, "tail_copy", False))
+
         return _reads_register_by_name(
-            self.cfg, write.dest_reg, end, root=self.graph.root, ignore_blocks=tuple(region_blocks)
+            self.cfg, write.dest_reg, end, root=self.graph.root, ignore_blocks=(*region_blocks, *cut_off)
         )
+
+    def _snapshot_handlers(self, block) -> list:
+        """The catch entries a block of a try range can run into (edges the CFG does not carry)."""
+        return [
+            handler["handler_block"] for handler in self.cfg.exception_handlers
+            if block in handler.get("try_blocks", ()) and handler.get("handler_block") is not None
+        ]
 
     def _reprint_default_for_printed_write(self, if_region, write, region_blocks) -> None:
         """`rN = d; if (c) { rN = v }; ...rN...` where `rN = v` prints: when `c`

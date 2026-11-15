@@ -135,6 +135,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-14 | after F-254 (crossed fold with a constant for the join, in a function with handlers) | 87 | 57 | n/a | n/a | 1197 passed |
 | 2026-11-14 | after F-255 (setup fold in functions whose handlers guard only a later range; repair default from the sibling arm) | 81 | 56 | n/a | n/a | 1198 passed |
 | 2026-11-15 | after F-256 (END's constant written after the test's other writes of its register) | 80 | 56 | n/a | n/a | 1199 passed |
+| 2026-11-15 | after F-257 (copied tail region keeps its readers wired) | 80 | 56 | n/a | n/a | 1201 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -198,7 +199,10 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
   predecessors already decided is skipped: `P: if (!r10) goto B; Q: ...; B: if (!r11) goto C; D: r3 = 1; if (!r10) goto E`)
   removed every `goto`, but `IfStructurer` then printed a silent miscompile (a `Jump` that ends a then-arm and does not go to the
   join was read as falling into it: `r3 = 1` ran on into the compare). Reverted. The structurer's join choice has to refuse such
-  an arm (fall back to a `goto`) before threading can be tried again.
+  an arm (fall back to a `goto`) before threading can be tried again. Update 2026-11-15: a hand-made file with the same shape
+  (98/8193 with its `0x61` a plain `jmp`) printed the same kind of wrong tree with no threading at all; that one was the
+  copy of the shared tail (F-257, archive), not the structurer. Whether `IfStructurer` itself still misreads such a `Jump` is
+  not shown yet: retry the threading now and look at the printed arm before blaming it.
 - **F-12 `await`/`yield` dispatch and 98 generator opcodes (partly fixed).** 96/12207 `_anon_0`. Without a batch
   table the dispatch cannot be resolved; some generator opcodes are missing in 98. F-204 and F-205 (archive)
   fold the resume pair when `Mov`s follow it and when the guard has the rest of a loop body behind it: 96 prints

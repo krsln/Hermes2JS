@@ -194,6 +194,7 @@ class SharedTailDuplicationCfgPass:
         end = tail.successors[0]
 
         clone = BasicBlock(max(b.id for b in blocks) + 1, tail.address - 1)
+        clone.tail_copy = True  # read by `UnfoldedMergeRepairPass`: its instructions keep the original's addresses
 
         for instruction in tail.instructions:
             duplicate = copy.copy(instruction)
@@ -349,7 +350,16 @@ class SharedTailDuplicationCfgPass:
             block: BasicBlock(first_id + n, base + n)
             for n, block in enumerate(region)
         }
+
+        for made in clones.values():
+            made.tail_copy = True
         new_address = {block.address: clones[block].address for block in region}
+
+        # One memo for the whole region: a reader inside it (`r3 = r2` behind the arm that wrote `r2`) holds the
+        # very object its writer holds, and the ternary/merge passes find the readers of an arm's value by that
+        # identity. Copied one by one the copy's reader kept the arm's constant, so the merge's ternary never
+        # reached it and `r1 = r3` printed as `r1 = -1` (98/8193).
+        memo: dict = {}
 
         for block in region:
             clone = clones[block]
@@ -363,8 +373,8 @@ class SharedTailDuplicationCfgPass:
 
             for instruction in block.instructions:
                 duplicate = copy.copy(instruction)
-                duplicate.value = copy.deepcopy(instruction.value)
-                duplicate.statement = copy.deepcopy(instruction.statement)
+                duplicate.value = copy.deepcopy(instruction.value, memo)
+                duplicate.statement = copy.deepcopy(instruction.statement, memo)
                 if instruction.terminator is not None:
                     duplicate.terminator = retargeted
                 clone.instructions.append(duplicate)
@@ -428,6 +438,7 @@ class SharedTailDuplicationCfgPass:
 
         end = None if exits else tail.successors[0]
         clone = BasicBlock(max(b.id for b in blocks) + 1, tail.address - 1)
+        clone.tail_copy = True  # read by `UnfoldedMergeRepairPass`: its instructions keep the original's addresses
 
         for instruction in tail.instructions:
             duplicate = copy.copy(instruction)
@@ -505,6 +516,7 @@ class SharedTailDuplicationCfgPass:
 
         for n, pred in enumerate(ways):
             clone = BasicBlock(first_id + n, tail.address - len(ways) + n)
+            clone.tail_copy = True
 
             for instruction in tail.instructions:
                 duplicate = copy.copy(instruction)
