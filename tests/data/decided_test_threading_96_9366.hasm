@@ -1,0 +1,52 @@
+
+=> [Function #9366 "compareIdentifiers" of 156 bytes]: 3 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x001dd6a4
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 1, UInt8: 2>
+==> 00000006: <TypeOf>: <Reg8: 0, Reg8: 2>
+==> 00000009: <LoadConstString>: <Reg8: 3, string_id: 7552>  # String: 'number' (Identifier)
+==> 0000000d: <JStrictNotEqual>: <Addr8: 11, Reg8: 0, Reg8: 3>  # Address: 00000018
+==> 00000011: <TypeOf>: <Reg8: 0, Reg8: 1>
+==> 00000014: <JStrictEqual>: <Addr8: 109, Reg8: 0, Reg8: 3>  # Address: 00000081
+==> 00000018: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 0000001b: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 0>
+==> 0000001f: <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 1, string_id: 238>  # String: 'test' (Identifier)
+==> 00000024: <Call2>: <Reg8: 7, Reg8: 0, Reg8: 3, Reg8: 2>
+==> 00000029: <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 1, string_id: 238>  # String: 'test' (Identifier)
+==> 0000002e: <Call2>: <Reg8: 4, Reg8: 0, Reg8: 3, Reg8: 1>
+==> 00000033: <Mov>: <Reg8: 6, Reg8: 2>
+==> 00000036: <Mov>: <Reg8: 5, Reg8: 1>
+==> 00000039: <JmpFalse>: <Addr8: 18, Reg8: 7>  # Address: 0000004b
+==> 0000003c: <Mov>: <Reg8: 6, Reg8: 2>
+==> 0000003f: <Mov>: <Reg8: 5, Reg8: 1>
+==> 00000042: <JmpFalse>: <Addr8: 9, Reg8: 4>  # Address: 0000004b
+==> 00000045: <ToNumber>: <Reg8: 6, Reg8: 2>
+==> 00000048: <ToNumber>: <Reg8: 5, Reg8: 1>
+==> 0000004b: <LoadConstZero>: <Reg8: 0>
+==> 0000004d: <JStrictEqual>: <Addr8: 50, Reg8: 6, Reg8: 5>  # Address: 0000007f
+==> 00000051: <JmpFalse>: <Addr8: 12, Reg8: 7>  # Address: 0000005d
+==> 00000054: <LoadConstInt>: <Reg8: 3, Imm32: -1>
+==> 0000005a: <JmpFalse>: <Addr8: 34, Reg8: 4>  # Address: 0000007c
+==> 0000005d: <JmpFalse>: <Addr8: 9, Reg8: 4>  # Address: 00000066
+==> 00000060: <LoadConstUInt8>: <Reg8: 4, UInt8: 1>
+==> 00000063: <JmpFalse>: <Addr8: 22, Reg8: 7>  # Address: 00000079
+==> 00000066: <Less>: <Reg8: 6, Reg8: 6, Reg8: 5>
+==> 0000006a: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 0000006d: <JmpFalse>: <Addr8: 9, Reg8: 6>  # Address: 00000076
+==> 00000070: <LoadConstInt>: <Reg8: 5, Imm32: -1>
+==> 00000076: <Mov>: <Reg8: 4, Reg8: 5>
+==> 00000079: <Mov>: <Reg8: 3, Reg8: 4>
+==> 0000007c: <Mov>: <Reg8: 0, Reg8: 3>
+==> 0000007f: <Ret>: <Reg8: 0>
+==> 00000081: <LoadConstZero>: <Reg8: 0>
+==> 00000083: <JStrictEqual>: <Addr8: 23, Reg8: 2, Reg8: 1>  # Address: 0000009a
+==> 00000087: <Less>: <Reg8: 2, Reg8: 2, Reg8: 1>
+==> 0000008b: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 0000008e: <JmpFalse>: <Addr8: 9, Reg8: 2>  # Address: 00000097
+==> 00000091: <LoadConstInt>: <Reg8: 1, Imm32: -1>
+==> 00000097: <Mov>: <Reg8: 0, Reg8: 1>
+==> 0000009a: <Ret>: <Reg8: 0>
+
+

@@ -2,6 +2,7 @@
 
 from . import _generator_dispatch as generator_dispatch
 from .ArrayDestructuringCfgPass import ArrayDestructuringCfgPass
+from .DecidedTestThreadingCfgPass import DecidedTestThreadingCfgPass
 from .EnvArrayDestructuringCfgPass import EnvArrayDestructuringCfgPass
 from .GeneratorStateDispatchCfgPass import GeneratorStateDispatchCfgPass
 from .SharedReturnDuplicationCfgPass import SharedReturnDuplicationCfgPass
@@ -12,6 +13,7 @@ from .TestConstantSinkCfgPass import TestConstantSinkCfgPass
 from .ValueConditionFoldCfgPass import ValueConditionFoldCfgPass
 
 __all__ = [
+    "DecidedTestThreadingCfgPass",
     "ArrayDestructuringCfgPass",
     "EnvArrayDestructuringCfgPass",
     "GeneratorStateDispatchCfgPass",
