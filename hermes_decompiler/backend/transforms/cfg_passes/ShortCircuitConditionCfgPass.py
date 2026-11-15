@@ -522,7 +522,8 @@ class ShortCircuitConditionCfgPass:
                         and not any(instruction is f for f in getattr(self.cfg, "folded_values", ()))
                         and not any(later.dest_reg == instruction.dest_reg for later in setup[position + 1:])
                         and not self._copy_feeds_the_test(successor, instruction, probe, setup[position + 1:])
-                        and not self._copy_is_the_call_receiver(instruction, probe, setup[position + 1:]))
+                        and not self._copy_is_the_call_receiver(instruction, probe, setup[position + 1:])
+                        and not self._copy_is_private_to_the_block(successor, instruction, setup[position + 1:]))
                     or not (
                     # The global object is the same on every path and every reader
                     # already inlined it: nothing is left to read the register.
@@ -613,6 +614,32 @@ class ShortCircuitConditionCfgPass:
         )
 
         return reads == 1 and receivers == 1
+
+    def _copy_is_private_to_the_block(self, successor: BasicBlock, copy_instruction, later: list) -> bool:
+        """`r11 = r7; ... r8[r11] ... r8[r11]` (the key the test indexes twice): no other block reads the copy's
+        register, by operand or by an inlined name, and nothing after it writes the source, so the readers the
+        test inlines are all there is to it (96/9613 `a[k] && deepEqual(a[k], b[k])` inside a for-of)."""
+        source = copy_instruction.value
+
+        if not isinstance(source, Identifier) or any(
+                i.dest_reg is not None and f"r{i.dest_reg}" == source.name for i in later
+        ):
+            return False
+
+        register = copy_instruction.dest_reg
+        name = f"r{register}"
+
+        for block in self.cfg.blocks:
+            if block is successor:
+                continue
+
+            for other in block.instructions:
+                if self._reads_operand(other, register) or (
+                        other.value is not None and self._mentions(other.value, name)
+                ):
+                    return False
+
+        return True
 
     @classmethod
     def _read_before_any_effect(cls, node, name: str) -> bool:
