@@ -402,7 +402,9 @@ class ShortCircuitConditionCfgPass:
                     # tested, then `r10 & -r10` in END).
                     or self._is_plain_environment_load(instruction, successor)
             )
-                    or sum(1 for i in successor.instructions if i.dest_reg == instruction.dest_reg) != 1
+                    # The block's LAST write of the register is what END reads (96/3450: `r2 = env[3]; r6 = r2.status;
+                    # r2 = 200`); the earlier ones only feed the test.
+                    or [i for i in successor.instructions if i.dest_reg == instruction.dest_reg][-1] is not instruction
                     or not self._dead_on_entry(arm, instruction.dest_reg, set())
                     or self._dead_on_entry(end_block, instruction.dest_reg, set())
             ):
@@ -524,7 +526,8 @@ class ShortCircuitConditionCfgPass:
                     instruction.entry.opcode == "GetGlobalObject"
                     # A load END gets its own copy of is only dead on the first exit.
                     or all(self._dead_on_entry(b, instruction.dest_reg, set())
-                           for b in (exits[:1] if any(instruction is r for r in rematerialized) else exits))
+                           for b in (exits[:1] if any(
+                instruction.dest_reg == r.dest_reg for r in rematerialized) else exits))
             )
                     # A handler is entered by an edge the CFG does not have: it
                     # may read the register the try body had set.

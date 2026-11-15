@@ -185,10 +185,11 @@ def test_constant_comparison_in_a_plain_chain_is_not_a_case_test():
     """96/150: `... || p < 0 || p === Infinity` all jump to one `throw`.
 
     The old output folded the three tests into `!(r1 || p < 0) && p !== Infinity` and put
-    the `throw` nowhere: an invalid size returned `undefined`. Every test keeps its own
-    `throw` now (the shared `throw` is copied to each jump)."""
+    the `throw` nowhere: an invalid size returned `undefined`. The tests are one `||` and the
+    `throw` is written once (it was copied per test while the fold of the call test, whose
+    constant the throw's block reads, failed: 96/3450)."""
     out = _render("size_checks_throw_96_150.hasm", 150)
 
     assert "goto" not in out
-    assert out.count('throw new RangeError("Size must be a finite, non-NaN, non-negative number.")') == 4
-    assert "param3 === Infinity" in out
+    assert out.count('throw new RangeError("Size must be a finite, non-NaN, non-negative number.")') == 1
+    assert '"number" !== r0 || getEnvironment(0)[20].call(undefined, param3) || param3 < 0 || param3 === Infinity' in out

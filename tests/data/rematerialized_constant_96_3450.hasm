@@ -1,0 +1,70 @@
+
+=> [Function #3450 "" of 262 bytes]: 1 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x00158ab1
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 1>
+==> 00000002: <NewObject>: <Reg8: 5>
+==> 00000004: <GetEnvironment>: <Reg8: 4, UInt8: 0>
+==> 00000007: <LoadFromEnvironment>: <Reg8: 0, Reg8: 4, UInt8: 3>
+==> 0000000b: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 1, string_id: 15406>  # String: 'statusText' (Identifier)
+==> 00000011: <PutNewOwnById>: <Reg8: 5, Reg8: 0, string_id: 15406>  # String: 'statusText' (Identifier)
+==> 00000016: <GetEnvironment>: <Reg8: 0, UInt8: 2>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 21>
+==> 0000001d: <LoadFromEnvironment>: <Reg8: 2, Reg8: 4, UInt8: 3>
+==> 00000021: <GetById>: <Reg8: 0, Reg8: 2, UInt8: 2, string_id: 17591>  # String: 'getAllResponseHeaders' (Identifier)
+==> 00000027: <Call1>: <Reg8: 2, Reg8: 0, Reg8: 2>
+==> 0000002b: <JmpTrue>: <Addr8: 7, Reg8: 2>  # Address: 00000032
+==> 0000002e: <LoadConstString>: <Reg8: 2, string_id: 7163>  # String: '' (Identifier)
+==> 00000032: <LoadConstUndefined>: <Reg8: 0>
+==> 00000034: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 2>
+==> 00000039: <PutNewOwnByIdShort>: <Reg8: 5, Reg8: 2, string_id: 156>  # String: 'headers' (Identifier)
+==> 0000003d: <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 5>
+==> 00000041: <LoadFromEnvironment>: <Reg8: 2, Reg8: 4, UInt8: 2>
+==> 00000045: <GetByIdShort>: <Reg8: 6, Reg8: 2, UInt8: 3, string_id: 247>  # String: 'url' (Identifier)
+==> 0000004a: <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 4, string_id: 162>  # String: 'indexOf' (Identifier)
+==> 0000004f: <LoadConstString>: <Reg8: 2, string_id: 2127>  # String: 'file://' (String)
+==> 00000053: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 2>
+==> 00000058: <LoadConstZero>: <Reg8: 3>
+==> 0000005a: <JStrictNotEqual>: <Addr8: 39, Reg8: 2, Reg8: 3>  # Address: 00000081
+==> 0000005e: <LoadFromEnvironment>: <Reg8: 2, Reg8: 4, UInt8: 3>
+==> 00000062: <GetByIdShort>: <Reg8: 6, Reg8: 2, UInt8: 5, string_id: 235>  # String: 'status' (Identifier)
+==> 00000067: <LoadConstUInt8>: <Reg8: 2, UInt8: 200>
+==> 0000006a: <JLess>: <Addr8: 40, Reg8: 6, Reg8: 2>  # Address: 00000092
+==> 0000006e: <LoadFromEnvironment>: <Reg8: 6, Reg8: 4, UInt8: 3>
+==> 00000072: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 5, string_id: 235>  # String: 'status' (Identifier)
+==> 00000077: <LoadConstInt>: <Reg8: 6, Imm32: 599>
+==> 0000007d: <JGreater>: <Addr8: 21, Reg8: 7, Reg8: 6>  # Address: 00000092
+==> 00000081: <LoadFromEnvironment>: <Reg8: 6, Reg8: 4, UInt8: 3>
+==> 00000085: <GetByIdShort>: <Reg8: 6, Reg8: 6, UInt8: 5, string_id: 235>  # String: 'status' (Identifier)
+==> 0000008a: <PutById>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 235>  # String: 'status' (Identifier)
+==> 00000090: <Jmp>: <Addr8: 8>  # Address: 00000098
+==> 00000092: <PutById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 235>  # String: 'status' (Identifier)
+==> 00000098: <LoadFromEnvironment>: <Reg8: 6, Reg8: 4, UInt8: 3>
+==> 0000009c: <LoadConstString>: <Reg8: 2, string_id: 11401>  # String: 'responseURL' (Identifier)
+==> 000000a0: <IsIn>: <Reg8: 2, Reg8: 2, Reg8: 6>
+==> 000000a4: <JmpTrue>: <Addr8: 24, Reg8: 2>  # Address: 000000bc
+==> 000000a7: <GetByIdShort>: <Reg8: 7, Reg8: 5, UInt8: 6, string_id: 156>  # String: 'headers' (Identifier)
+==> 000000ac: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 7, string_id: 50>  # String: 'get' (Identifier)
+==> 000000b1: <LoadConstString>: <Reg8: 2, string_id: 4192>  # String: 'X-Request-URL' (String)
+==> 000000b5: <Call2>: <Reg8: 2, Reg8: 6, Reg8: 7, Reg8: 2>
+==> 000000ba: <Jmp>: <Addr8: 12>  # Address: 000000c6
+==> 000000bc: <LoadFromEnvironment>: <Reg8: 6, Reg8: 4, UInt8: 3>
+==> 000000c0: <GetById>: <Reg8: 2, Reg8: 6, UInt8: 8, string_id: 11401>  # String: 'responseURL' (Identifier)
+==> 000000c6: <PutById>: <Reg8: 5, Reg8: 2, UInt8: 2, string_id: 247>  # String: 'url' (Identifier)
+==> 000000cc: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 3>
+==> 000000d0: <LoadConstString>: <Reg8: 2, string_id: 7567>  # String: 'response' (Identifier)
+==> 000000d4: <IsIn>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 000000d8: <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 3>
+==> 000000dc: <JmpTrue>: <Addr8: 11, Reg8: 2>  # Address: 000000e7
+==> 000000df: <GetById>: <Reg8: 2, Reg8: 4, UInt8: 9, string_id: 7622>  # String: 'responseText' (Identifier)
+==> 000000e5: <Jmp>: <Addr8: 8>  # Address: 000000ed
+==> 000000e7: <GetById>: <Reg8: 2, Reg8: 4, UInt8: 10, string_id: 7567>  # String: 'response' (Identifier)
+==> 000000ed: <StoreToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 2>
+==> 000000f1: <GetGlobalObject>: <Reg8: 2>
+==> 000000f3: <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 11, string_id: 223>  # String: 'setTimeout' (Identifier)
+==> 000000f9: <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 3451>  # Function: [#3451  of 54 bytes]: 1 params @ offset 0x00158bb7
+==> 000000fe: <Call3>: <Reg8: 1, Reg8: 2, Reg8: 0, Reg8: 1, Reg8: 3>
+==> 00000104: <Ret>: <Reg8: 0>
+
+

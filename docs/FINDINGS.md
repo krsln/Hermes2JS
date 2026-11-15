@@ -134,6 +134,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-14 | after F-253 (`if (A) { if (B) goto NEXT; X }` folded on a last ladder rung) | 89 | 58 | n/a | n/a | 1196 passed |
 | 2026-11-14 | after F-254 (crossed fold with a constant for the join, in a function with handlers) | 87 | 57 | n/a | n/a | 1197 passed |
 | 2026-11-14 | after F-255 (setup fold in functions whose handlers guard only a later range; repair default from the sibling arm) | 81 | 56 | n/a | n/a | 1198 passed |
+| 2026-11-15 | after F-256 (END's constant written after the test's other writes of its register) | 80 | 56 | n/a | n/a | 1199 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
