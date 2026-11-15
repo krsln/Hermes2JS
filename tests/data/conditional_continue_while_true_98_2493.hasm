@@ -1,0 +1,131 @@
+
+=> [Function #2493 "recomputePluginOrdering" of 488 bytes]: 1 params, frame size=38, strict=1, exc handler=0, debug info=0  @ offset 0x00169312
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 21, UInt8: 0>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 11, Reg8: 21, UInt8: 57>
+==> 00000007: <JmpFalseLong>: <Addr32: 477, Reg8: 11>  # Address: 000001e4
+==> 0000000d: <LoadFromEnvironment>: <Reg8: 19, Reg8: 21, UInt8: 58>
+==> 00000011: <LoadConstInt>: <Reg8: 6, Imm32: -1>
+==> 00000017: <GetPNameList>: <Reg8: 20, Reg8: 19, Reg8: 4, Reg8: 5>
+==> 0000001c: <JmpUndefinedLong>: <Addr32: 456, Reg8: 20>  # Address: 000001e4
+==> 00000022: <GetNextPName>: <Reg8: 18, Reg8: 20, Reg8: 19, Reg8: 4, Reg8: 5>
+==> 00000028: <JmpUndefinedLong>: <Addr32: 444, Reg8: 18>  # Address: 000001e4
+==> 0000002e: <Mov>: <Reg8: 13, Reg8: 18>
+==> 00000031: <LoadFromEnvironment>: <Reg8: 11, Reg8: 21, UInt8: 58>
+==> 00000035: <GetByVal>: <Reg8: 17, Reg8: 11, Reg8: 13>
+==> 00000039: <LoadFromEnvironment>: <Reg8: 12, Reg8: 21, UInt8: 57>
+==> 0000003d: <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 0, string_id: 165>  # String: 'indexOf' (Identifier)
+==> 00000042: <Call2>: <Reg8: 12, Reg8: 11, Reg8: 12, Reg8: 13>
+==> 00000047: <JGreaterEqualLong>: <Addr32: 380, Reg8: 6, Reg8: 12>  # Address: 000001c3
+==> 0000004e: <LoadFromEnvironment>: <Reg8: 11, Reg8: 21, UInt8: 59>
+==> 00000052: <GetByVal>: <Reg8: 14, Reg8: 11, Reg8: 12>
+==> 00000056: <JmpTrue>: <Addr8: -52, Reg8: 14>  # Address: 00000022
+==> 00000059: <GetById>: <Reg8: 14, Reg8: 17, UInt8: 1, string_id: 8457>  # String: 'extractEvents' (Identifier)
+==> 0000005f: <JmpTrue>: <Addr8: 36, Reg8: 14>  # Address: 00000083
+==> 00000062: <GetGlobalObject>: <Reg8: 14>
+==> 00000064: <TryGetById>: <Reg8: 15, Reg8: 14, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 0000006a: <LoadConstString>: <Reg8: 14, string_id: 2265>  # String: '` does not.' (String)
+==> 0000006e: <Add>: <Reg8: 16, Reg8: 13, Reg8: 14>
+==> 00000072: <LoadConstUndefined>: <Reg8: 7>
+==> 00000074: <LoadConstString>: <Reg8: 14, string_id: 2399>  # String: 'EventPluginRegistry: Event plugins must implement an `extractEvents` method, but `' (String)
+==> 00000078: <AddS>: <Reg8: 14, Reg8: 14, Reg8: 16>
+==> 0000007c: <Call2>: <Reg8: 14, Reg8: 15, Reg8: 7, Reg8: 14>
+==> 00000081: <Throw>: <Reg8: 14>
+==> 00000083: <PutByValStrict>: <Reg8: 11, Reg8: 12, Reg8: 17>
+==> 00000087: <GetById>: <Reg8: 16, Reg8: 17, UInt8: 3, string_id: 11853>  # String: 'eventTypes' (Identifier)
+==> 0000008d: <Mov>: <Reg8: 12, Reg8: 16>
+==> 00000090: <GetPNameList>: <Reg8: 15, Reg8: 12, Reg8: 2, Reg8: 3>
+==> 00000095: <JmpUndefined>: <Addr8: -115, Reg8: 15>  # Address: 00000022
+==> 00000098: <GetNextPName>: <Reg8: 11, Reg8: 15, Reg8: 12, Reg8: 2, Reg8: 3>
+==> 0000009e: <JmpUndefined>: <Addr8: -124, Reg8: 11>  # Address: 00000022
+==> 000000a1: <Mov>: <Reg8: 14, Reg8: 11>
+==> 000000a4: <GetByVal>: <Reg8: 22, Reg8: 16, Reg8: 14>
+==> 000000a8: <LoadFromEnvironment>: <Reg8: 23, Reg8: 21, UInt8: 60>
+==> 000000ac: <GetByIdShort>: <Reg8: 24, Reg8: 23, UInt8: 4, string_id: 12>  # String: 'hasOwnProperty' (Identifier)
+==> 000000b1: <Call2>: <Reg8: 24, Reg8: 24, Reg8: 23, Reg8: 14>
+==> 000000b6: <JmpTrueLong>: <Addr32: 236, Reg8: 24>  # Address: 000001a2
+==> 000000bc: <PutByValStrict>: <Reg8: 23, Reg8: 14, Reg8: 22>
+==> 000000c0: <GetByIdShort>: <Reg8: 26, Reg8: 22, UInt8: 5, string_id: 204>  # String: 'phasedRegistrationNames' (Identifier)
+==> 000000c5: <JmpTrue>: <Addr8: 76, Reg8: 26>  # Address: 00000111
+==> 000000c8: <GetByIdShort>: <Reg8: 23, Reg8: 22, UInt8: 6, string_id: 216>  # String: 'registrationName' (Identifier)
+==> 000000cd: <LoadConstFalse>: <Reg8: 7>
+==> 000000cf: <JmpFalseLong>: <Addr32: 160, Reg8: 23>  # Address: 0000016f
+==> 000000d5: <GetByIdShort>: <Reg8: 24, Reg8: 22, UInt8: 6, string_id: 216>  # String: 'registrationName' (Identifier)
+==> 000000da: <LoadFromEnvironment>: <Reg8: 22, Reg8: 21, UInt8: 61>
+==> 000000de: <GetByVal>: <Reg8: 23, Reg8: 22, Reg8: 24>
+==> 000000e2: <JmpTrue>: <Addr8: 14, Reg8: 23>  # Address: 000000f0
+==> 000000e5: <PutByValStrict>: <Reg8: 22, Reg8: 24, Reg8: 17>
+==> 000000e9: <LoadConstTrue>: <Reg8: 7>
+==> 000000eb: <JmpLong>: <Addr32: 132>  # Address: 0000016f
+==> 000000f0: <GetGlobalObject>: <Reg8: 22>
+==> 000000f2: <TryGetById>: <Reg8: 23, Reg8: 22, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 000000f8: <LoadConstString>: <Reg8: 22, string_id: 310>  # String: '`.' (String)
+==> 000000fc: <Add>: <Reg8: 24, Reg8: 24, Reg8: 22>
+==> 00000100: <LoadConstUndefined>: <Reg8: 10>
+==> 00000102: <LoadConstString>: <Reg8: 22, string_id: 3102>  # String: 'EventPluginRegistry: More than one plugin attempted to publish the same registration name, `' (String)
+==> 00000106: <AddS>: <Reg8: 22, Reg8: 22, Reg8: 24>
+==> 0000010a: <Call2>: <Reg8: 22, Reg8: 23, Reg8: 10, Reg8: 22>
+==> 0000010f: <Throw>: <Reg8: 22>
+==> 00000111: <Mov>: <Reg8: 23, Reg8: 26>
+==> 00000114: <LoadConstTrue>: <Reg8: 7>
+==> 00000116: <GetPNameList>: <Reg8: 25, Reg8: 23, Reg8: 0, Reg8: 1>
+==> 0000011b: <JmpUndefined>: <Addr8: 84, Reg8: 25>  # Address: 0000016f
+==> 0000011e: <LoadConstTrue>: <Reg8: 7>
+==> 00000120: <GetNextPName>: <Reg8: 22, Reg8: 25, Reg8: 23, Reg8: 0, Reg8: 1>
+==> 00000126: <JmpUndefined>: <Addr8: 73, Reg8: 22>  # Address: 0000016f
+==> 00000129: <Mov>: <Reg8: 24, Reg8: 22>
+==> 0000012c: <GetByIdShort>: <Reg8: 27, Reg8: 26, UInt8: 4, string_id: 12>  # String: 'hasOwnProperty' (Identifier)
+==> 00000131: <Call2>: <Reg8: 27, Reg8: 27, Reg8: 26, Reg8: 24>
+==> 00000136: <JmpFalse>: <Addr8: -24, Reg8: 27>  # Address: 0000011e
+==> 00000139: <GetByVal>: <Reg8: 24, Reg8: 26, Reg8: 24>
+==> 0000013d: <LoadFromEnvironment>: <Reg8: 27, Reg8: 21, UInt8: 61>
+==> 00000141: <GetByVal>: <Reg8: 28, Reg8: 27, Reg8: 24>
+==> 00000145: <JmpTrue>: <Addr8: 9, Reg8: 28>  # Address: 0000014e
+==> 00000148: <PutByValStrict>: <Reg8: 27, Reg8: 24, Reg8: 17>
+==> 0000014c: <Jmp>: <Addr8: -46>  # Address: 0000011e
+==> 0000014e: <GetGlobalObject>: <Reg8: 22>
+==> 00000150: <TryGetById>: <Reg8: 23, Reg8: 22, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000156: <LoadConstString>: <Reg8: 22, string_id: 310>  # String: '`.' (String)
+==> 0000015a: <Add>: <Reg8: 24, Reg8: 24, Reg8: 22>
+==> 0000015e: <LoadConstUndefined>: <Reg8: 10>
+==> 00000160: <LoadConstString>: <Reg8: 22, string_id: 3102>  # String: 'EventPluginRegistry: More than one plugin attempted to publish the same registration name, `' (String)
+==> 00000164: <AddS>: <Reg8: 22, Reg8: 22, Reg8: 24>
+==> 00000168: <Call2>: <Reg8: 22, Reg8: 23, Reg8: 10, Reg8: 22>
+==> 0000016d: <Throw>: <Reg8: 22>
+==> 0000016f: <JmpTrueLong>: <Addr32: -215, Reg8: 7>  # Address: 00000098
+==> 00000175: <GetGlobalObject>: <Reg8: 11>
+==> 00000177: <TryGetById>: <Reg8: 12, Reg8: 11, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 0000017d: <LoadConstString>: <Reg8: 11, string_id: 3096>  # String: 'EventPluginRegistry: Failed to publish event `' (String)
+==> 00000181: <Add>: <Reg8: 15, Reg8: 11, Reg8: 14>
+==> 00000185: <LoadConstString>: <Reg8: 11, string_id: 2686>  # String: '` for plugin `' (String)
+==> 00000189: <AddS>: <Reg8: 11, Reg8: 15, Reg8: 11>
+==> 0000018d: <Add>: <Reg8: 15, Reg8: 11, Reg8: 13>
+==> 00000191: <LoadConstUndefined>: <Reg8: 7>
+==> 00000193: <LoadConstString>: <Reg8: 11, string_id: 310>  # String: '`.' (String)
+==> 00000197: <AddS>: <Reg8: 11, Reg8: 15, Reg8: 11>
+==> 0000019b: <Call2>: <Reg8: 11, Reg8: 12, Reg8: 7, Reg8: 11>
+==> 000001a0: <Throw>: <Reg8: 11>
+==> 000001a2: <GetGlobalObject>: <Reg8: 11>
+==> 000001a4: <TryGetById>: <Reg8: 12, Reg8: 11, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 000001aa: <LoadConstString>: <Reg8: 11, string_id: 310>  # String: '`.' (String)
+==> 000001ae: <Add>: <Reg8: 14, Reg8: 14, Reg8: 11>
+==> 000001b2: <LoadConstUndefined>: <Reg8: 7>
+==> 000001b4: <LoadConstString>: <Reg8: 11, string_id: 351>  # String: 'EventPluginRegistry: More than one plugin attempted to publish the same event name, `' (String)
+==> 000001b8: <AddS>: <Reg8: 11, Reg8: 11, Reg8: 14>
+==> 000001bc: <Call2>: <Reg8: 11, Reg8: 12, Reg8: 7, Reg8: 11>
+==> 000001c1: <Throw>: <Reg8: 11>
+==> 000001c3: <GetGlobalObject>: <Reg8: 11>
+==> 000001c5: <TryGetById>: <Reg8: 12, Reg8: 11, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 000001cb: <LoadConstString>: <Reg8: 11, string_id: 310>  # String: '`.' (String)
+==> 000001cf: <Add>: <Reg8: 13, Reg8: 13, Reg8: 11>
+==> 000001d3: <LoadConstUndefined>: <Reg8: 7>
+==> 000001d5: <LoadConstString>: <Reg8: 11, string_id: 3085>  # String: 'EventPluginRegistry: Cannot inject event plugins that do not exist in the plugin ordering, `' (String)
+==> 000001d9: <AddS>: <Reg8: 11, Reg8: 11, Reg8: 13>
+==> 000001dd: <Call2>: <Reg8: 11, Reg8: 12, Reg8: 7, Reg8: 11>
+==> 000001e2: <Throw>: <Reg8: 11>
+==> 000001e4: <LoadConstUndefined>: <Reg8: 7>
+==> 000001e6: <Ret>: <Reg8: 7>
+
+

@@ -186,6 +186,9 @@ class ShortCircuitConditionCfgPass:
                 block in self._loop_members
                 and isinstance(successor.terminator, TerminatorConditionalBranch)
                 and self._is_case_test(successor.terminator.condition, branch.condition)
+                # The same register is not the same value when the second block loads it again
+                # (98/2621: `r20 = r21.tag; if (22 !== r20)` then `r20 = r21.memoizedState; if (null !== r20)`).
+                and not self._reloads_the_subject(successor, branch.condition)
                 and (
                 successor.terminator.target != branch.target
                 or self._case_chain_has_another_body(block, successor, branch.target)
@@ -369,7 +372,18 @@ class ShortCircuitConditionCfgPass:
         """Constant loads of the second test block that END also reads: the arm
         overwrites the register first, and only this block leads to END, so a
         copy of the load on the edge into END gives it the same value."""
-        if list(end_block.predecessors) != [successor] or self.cfg.exception_handlers:
+        if self.cfg.exception_handlers:
+            # Only outside every protected range, and the register unread by every handler (96/474: a `try`
+            # later in the arm, the test and END before and after it).
+            if (
+                    self._in_try(successor) or self._in_try(end_block) or self._in_try(arm)
+                    # A rotated loop's guard and its body test share registers (96/956 `replacer`).
+                    or successor in self._loop_blocks or end_block in self._loop_blocks or arm in self._loop_blocks
+                    or not all(
+                self._dead_on_entry(h, d, set()) for h in self._handlers() for d in self._written(successor))
+            ):
+                return []
+        elif list(end_block.predecessors) != [successor]:
             return []
 
         found = []
@@ -380,9 +394,17 @@ class ShortCircuitConditionCfgPass:
                     or any(instruction is t for t in taken)
                     or instruction.dest_reg is None
                     or instruction.statement is not None
-                    or not instruction.entry.opcode.startswith("LoadConst")
-                    or not isinstance(instruction.value, (Literal, UndefinedLiteral))
-                    or sum(1 for i in successor.instructions if i.dest_reg == instruction.dest_reg) != 1
+                    or not (
+                    (instruction.entry.opcode.startswith("LoadConst")
+                     and isinstance(instruction.value, (Literal, UndefinedLiteral)))
+                    # A read of an environment slot: nothing between the test and END writes it, so END's own
+                    # copy of the load sees the same value (98/2654 `requestUpdateLane`: `r10 = env[296]`
+                    # tested, then `r10 & -r10` in END).
+                    or self._is_plain_environment_load(instruction, successor)
+            )
+                    # The block's LAST write of the register is what END reads (96/3450: `r2 = env[3]; r6 = r2.status;
+                    # r2 = 200`); the earlier ones only feed the test.
+                    or [i for i in successor.instructions if i.dest_reg == instruction.dest_reg][-1] is not instruction
                     or not self._dead_on_entry(arm, instruction.dest_reg, set())
                     or self._dead_on_entry(end_block, instruction.dest_reg, set())
             ):
@@ -392,13 +414,27 @@ class ShortCircuitConditionCfgPass:
 
         return found
 
+    def _is_plain_environment_load(self, instruction, block: BasicBlock) -> bool:
+        if not instruction.entry.opcode.startswith("LoadFromEnvironment") or instruction.value is None:
+            return False
+
+        if has_side_effects(instruction.value):
+            return False
+
+        written = {i.dest_reg for i in block.instructions if i.dest_reg is not None}
+
+        # The environment register it reads must not be one this block writes.
+        return not (self._source_registers(instruction) & written)
+
     def _sink_copies(self, copies: list, end_block: BasicBlock, successor: BasicBlock):
         """A block on the edge into `end_block` that runs the copies. It sits right
         before END; the block that used to fall into END jumps over it."""
         blocks = self.cfg.blocks
         index = blocks.index(end_block)
 
-        if self.cfg.exception_handlers:
+        if self.cfg.exception_handlers and (
+                self._in_try(successor) or self._in_try(end_block) or (index and self._in_try(blocks[index - 1]))
+        ):
             # An edge block would sit outside every try range.
             return None
 
@@ -477,20 +513,28 @@ class ShortCircuitConditionCfgPass:
                     # A copy (`Mov r5, r4`) is an input of a join the exits read
                     # through another register's inlined value; a fold cannot see
                     # that, so only values the test itself computes are folded.
-                    or instruction.entry.opcode in ("Mov", "MovLong")
+                    # (A copy the same block writes the register of again is not that: nothing outside
+                    # the block can see it, `r9 = r8; r9 = r9.type` reads `r8.type`, 98/11306.)
+                    or (instruction.entry.opcode in ("Mov", "MovLong")
+                        # A value `ValueConditionFoldCfgPass` computed (`r7 = r4 && f(r4)`) is not a plain copy.
+                        and not any(instruction is f for f in getattr(self.cfg, "folded_values", ()))
+                        and not any(later.dest_reg == instruction.dest_reg for later in setup[position + 1:])
+                        and not self._copy_feeds_the_test(successor, instruction, probe, setup[position + 1:]))
                     or not (
                     # The global object is the same on every path and every reader
                     # already inlined it: nothing is left to read the register.
                     instruction.entry.opcode == "GetGlobalObject"
                     # A load END gets its own copy of is only dead on the first exit.
                     or all(self._dead_on_entry(b, instruction.dest_reg, set())
-                           for b in (exits[:1] if any(instruction is r for r in rematerialized) else exits))
+                           for b in (exits[:1] if any(
+                instruction.dest_reg == r.dest_reg for r in rematerialized) else exits))
             )
                     # A handler is entered by an edge the CFG does not have: it
                     # may read the register the try body had set.
                     or not (
                     instruction.entry.opcode == "GetGlobalObject"
-                    or all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in self._handlers())
+                    or all(self._dead_on_entry(b, instruction.dest_reg, set())
+                           for b in self._handlers_reached(successor, instruction.dest_reg))
             )
             ):
                 return None
@@ -526,6 +570,24 @@ class ShortCircuitConditionCfgPass:
             current[f"r{instruction.dest_reg}"] = value
 
         return self._substitute_all(condition, current, resolved)
+
+    def _copy_feeds_the_test(self, successor: BasicBlock, copy_instruction, probe, later: list) -> bool:
+        """`r18 = r13; if (r18) goto T;  r18 = r12; if (r18) goto T`: both tests read the one register they copy
+        their operand into, so the second copy exists only to be tested and the test takes the source register
+        in its place when nothing after the copy writes that register (98/11466: `a || b` in a `for...of`)."""
+        name = f"r{copy_instruction.dest_reg}"
+        source = copy_instruction.value
+        before = successor.predecessors[0] if len(successor.predecessors) == 1 else None
+
+        return (
+                isinstance(source, Identifier)
+                and before is not None
+                and isinstance(before.terminator, TerminatorConditionalBranch)
+                and isinstance(before.terminator.condition, Identifier)
+                and before.terminator.condition.name == name
+                and not any(i.dest_reg is not None and f"r{i.dest_reg}" == source.name for i in later)
+                and sum(1 for n in probe.walk() if isinstance(n, Identifier) and n.name == name) == 1
+        )
 
     @classmethod
     def _read_before_any_effect(cls, node, name: str) -> bool:
@@ -631,6 +693,53 @@ class ShortCircuitConditionCfgPass:
                 return False
 
         return True
+
+    def _in_try(self, block: BasicBlock) -> bool:
+        return any(block in handler["try_blocks"] for handler in self.cfg.exception_handlers)
+
+    @staticmethod
+    def _written(block: BasicBlock) -> set:
+        return {i.dest_reg for i in block.instructions if i.terminator is None and i.dest_reg is not None}
+
+    def _handlers_reached(self, start: BasicBlock, register: int) -> list[BasicBlock]:
+        """The handlers that can still see `rN` as `start` left it: those whose protected range holds `start`
+        or a block reached from it before the register is written again. A `for-of` later in the function
+        guards its own loop only (its handler reads the iterator, which `IteratorBegin` sets after the test,
+        96/12624), so it does not count for a test before the loop."""
+        if not self.cfg.exception_handlers:
+            return self._handlers()
+
+        name = f"r{register}"
+        reached = set()
+        seen = {id(start)}
+        pending = [start]
+
+        while pending:
+            block = pending.pop()
+
+            for handler in self.cfg.exception_handlers:
+                if block in handler["try_blocks"]:
+                    reached.add(id(handler["handler_block"]))
+
+            if block is not start:
+                first = next(
+                    (
+                        "write" if i.dest_reg == register and i.terminator is None else "read"
+                        for i in block.instructions
+                        if (i.dest_reg == register and i.terminator is None) or register in self._source_registers(i)
+                    ),
+                    None,
+                )
+
+                if first == "write":
+                    continue
+
+            for successor in block.successors:
+                if id(successor) not in seen:
+                    seen.add(id(successor))
+                    pending.append(successor)
+
+        return [b for b in self._handlers() if id(b) in reached]
 
     def _handlers(self) -> list[BasicBlock]:
         return [b for b in self.cfg.blocks if not b.predecessors and b is not self.cfg.entry]
@@ -845,6 +954,16 @@ class ShortCircuitConditionCfgPass:
         return False
 
     @classmethod
+    def _reloads_the_subject(cls, block: BasicBlock, condition) -> bool:
+        """Does `block` write a register the compared value of `condition` is read through?"""
+        subject = cls._compared_constant(condition)
+
+        return subject is not None and any(
+            i.terminator is None and i.dest_reg is not None and cls._mentions(subject, f"r{i.dest_reg}")
+            for i in block.instructions
+        )
+
+    @classmethod
     def _is_case_test(cls, condition, previous) -> bool:
         """A link of a `case` chain: the same value compared with a constant again."""
         subject = cls._compared_constant(condition)
@@ -978,6 +1097,10 @@ class ShortCircuitConditionCfgPass:
 
             if dead in self.cfg.blocks:
                 self.cfg.blocks.remove(dead)
+
+            for handler in self.cfg.exception_handlers:
+                if dead in handler["try_blocks"]:
+                    handler["try_blocks"].remove(dead)
 
     @staticmethod
     def _connect(source: BasicBlock, target: BasicBlock) -> None:

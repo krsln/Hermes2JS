@@ -1,0 +1,33 @@
+
+=> [Function #7633 "resolveTransition" of 100 bytes]: 3 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x001e3ed8
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <JmpTypeOfIs>: <Addr32: 85, Reg8: 2, UInt16: 32>  # Address: 00000058
+==> 0000000b: <JmpTrue>: <Addr8: 64, Reg8: 2>  # Address: 0000004b
+==> 0000000e: <LoadParam>: <Reg8: 3, UInt8: 2>
+==> 00000011: <JmpTypeOfIs>: <Addr32: 58, Reg8: 3, UInt16: 479>  # Address: 0000004b
+==> 00000019: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000001c: <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 3>
+==> 00000020: <JmpTrue>: <Addr8: 31, Reg8: 0>  # Address: 0000003f
+==> 00000023: <GetGlobalObject>: <Reg8: 4>
+==> 00000025: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000002b: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 253>  # String: 'warn' (Identifier)
+==> 00000030: <LoadConstString>: <Reg8: 4, string_id: 4559>  # String: '[expo-image]: Prop "fadeDuration" is deprecated, use "transition" instead' (String)
+==> 00000034: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 00000039: <LoadConstTrue>: <Reg8: 0>
+==> 0000003b: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 0>
+==> 0000003f: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 338, UInt16: 20>  # Object: {'duration': null}
+==> 00000045: <PutOwnBySlotIdx>: <Reg8: 1, Reg8: 3, UInt8: 0>
+==> 00000049: <Ret>: <Reg8: 1>
+==> 0000004b: <LoadConstNull>: <Reg8: 0>
+==> 0000004d: <Mov>: <Reg8: 1, Reg8: 2>
+==> 00000050: <JNotEqual>: <Addr8: 6, Reg8: 1, Reg8: 0>  # Address: 00000056
+==> 00000054: <LoadConstNull>: <Reg8: 1>
+==> 00000056: <Ret>: <Reg8: 1>
+==> 00000058: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 338, UInt16: 20>  # Object: {'duration': null}
+==> 0000005e: <PutOwnBySlotIdx>: <Reg8: 1, Reg8: 2, UInt8: 0>
+==> 00000062: <Ret>: <Reg8: 1>
+
+

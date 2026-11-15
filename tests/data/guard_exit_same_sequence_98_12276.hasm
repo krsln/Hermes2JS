@@ -1,0 +1,84 @@
+
+=> [Function #12276 "validateType" of 322 bytes]: 2 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x0023de44
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 4, UInt8: 0>
+==> 00000003: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000006: <NewObjectWithBuffer>: <Reg8: 2, UInt16: 2188, UInt16: 17356>  # Object: {'extrapolateLeft': null, 'extrapolateRight': null}
+==> 0000000c: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 0>
+==> 00000010: <GetById>: <Reg8: 6, Reg8: 5, UInt8: 0, string_id: 9599>  # String: 'EXTEND' (Identifier)
+==> 00000016: <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 6, UInt8: 0>
+==> 0000001a: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 0, string_id: 9599>  # String: 'EXTEND' (Identifier)
+==> 00000020: <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 5, UInt8: 1>
+==> 00000024: <JmpTrue>: <Addr8: 5, Reg8: 3>  # Address: 00000029
+==> 00000027: <Ret>: <Reg8: 2>
+==> 00000029: <JmpTypeOfIs>: <Addr32: 188, Reg8: 3, UInt16: 4>  # Address: 000000e5
+==> 00000031: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 10966>  # String: 'extrapolateLeft' (Identifier)
+==> 00000037: <JmpFalse>: <Addr8: 59, Reg8: 5>  # Address: 00000072
+==> 0000003a: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 1>
+==> 0000003e: <GetById>: <Reg8: 6, Reg8: 3, UInt8: 1, string_id: 10966>  # String: 'extrapolateLeft' (Identifier)
+==> 00000044: <GetClosureEnvironment>: <Reg8: 5, Reg8: 5>
+==> 00000047: <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 0>
+==> 0000004b: <GetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 9599>  # String: 'EXTEND' (Identifier)
+==> 00000051: <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 7>
+==> 00000055: <JmpTrue>: <Addr8: 13, Reg8: 0>  # Address: 00000062
+==> 00000058: <GetById>: <Reg8: 7, Reg8: 5, UInt8: 2, string_id: 9598>  # String: 'CLAMP' (Identifier)
+==> 0000005e: <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 7>
+==> 00000062: <JmpTrue>: <Addr8: 13, Reg8: 0>  # Address: 0000006f
+==> 00000065: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 9601>  # String: 'IDENTITY' (Identifier)
+==> 0000006b: <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 5>
+==> 0000006f: <JmpFalse>: <Addr8: 68, Reg8: 0>  # Address: 000000b3
+==> 00000072: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 4, string_id: 10969>  # String: 'extrapolateRight' (Identifier)
+==> 00000078: <JmpFalse>: <Addr8: 88, Reg8: 5>  # Address: 000000d0
+==> 0000007b: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 1>
+==> 0000007f: <GetById>: <Reg8: 6, Reg8: 3, UInt8: 4, string_id: 10969>  # String: 'extrapolateRight' (Identifier)
+==> 00000085: <GetClosureEnvironment>: <Reg8: 5, Reg8: 5>
+==> 00000088: <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 0>
+==> 0000008c: <GetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 9599>  # String: 'EXTEND' (Identifier)
+==> 00000092: <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 7>
+==> 00000096: <JmpTrue>: <Addr8: 13, Reg8: 0>  # Address: 000000a3
+==> 00000099: <GetById>: <Reg8: 7, Reg8: 5, UInt8: 2, string_id: 9598>  # String: 'CLAMP' (Identifier)
+==> 0000009f: <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 7>
+==> 000000a3: <JmpTrue>: <Addr8: 13, Reg8: 0>  # Address: 000000b0
+==> 000000a6: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 9601>  # String: 'IDENTITY' (Identifier)
+==> 000000ac: <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 5>
+==> 000000b0: <JmpTrue>: <Addr8: 32, Reg8: 0>  # Address: 000000d0
+==> 000000b3: <GetGlobalObject>: <Reg8: 5>
+==> 000000b5: <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 000000bb: <CreateThisForNew>: <Reg8: 6, Reg8: 7, UInt8: 6>
+==> 000000bf: <LoadConstString>: <Reg8: 9, string_id: 4497>  # String: '[Reanimated] Unsupported value for "interpolate" \nSupported values: ["extend", "clamp", "identity", Extrapolation.CLAMP, Extrapolation.EXTEND, Extrapolation.IDENTITY]\n Valid example:\n      interpolate(value, [inputRange], [outputRange], {\n        extrapolateLeft: Extrapolation.CLAMP,\n        extrapolateRight: Extrapolation.IDENTITY\n      }})' (String)
+==> 000000c3: <Mov>: <Reg8: 10, Reg8: 6>
+==> 000000c6: <Construct>: <Reg8: 5, Reg8: 7, UInt8: 2>
+==> 000000ca: <SelectObject>: <Reg8: 5, Reg8: 6, Reg8: 5>
+==> 000000ce: <Throw>: <Reg8: 5>
+==> 000000d0: <GetGlobalObject>: <Reg8: 5>
+==> 000000d2: <TryGetById>: <Reg8: 6, Reg8: 5, UInt8: 7, string_id: 23>  # String: 'Object' (Identifier)
+==> 000000d8: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 8, string_id: 87>  # String: 'assign' (Identifier)
+==> 000000dd: <Call3>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 2, Reg8: 3>
+==> 000000e3: <Ret>: <Reg8: 2>
+==> 000000e5: <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 1>
+==> 000000e9: <GetClosureEnvironment>: <Reg8: 4, Reg8: 4>
+==> 000000ec: <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 0>
+==> 000000f0: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 0, string_id: 9599>  # String: 'EXTEND' (Identifier)
+==> 000000f6: <StrictEq>: <Reg8: 0, Reg8: 3, Reg8: 5>
+==> 000000fa: <JmpTrue>: <Addr8: 13, Reg8: 0>  # Address: 00000107
+==> 000000fd: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 2, string_id: 9598>  # String: 'CLAMP' (Identifier)
+==> 00000103: <StrictEq>: <Reg8: 0, Reg8: 3, Reg8: 5>
+==> 00000107: <JmpTrue>: <Addr8: 13, Reg8: 0>  # Address: 00000114
+==> 0000010a: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 9601>  # String: 'IDENTITY' (Identifier)
+==> 00000110: <StrictEq>: <Reg8: 0, Reg8: 3, Reg8: 4>
+==> 00000114: <JmpTrue>: <Addr8: 32, Reg8: 0>  # Address: 00000134
+==> 00000117: <GetGlobalObject>: <Reg8: 4>
+==> 00000119: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 5, string_id: 9>  # String: 'Error' (Identifier)
+==> 0000011f: <CreateThisForNew>: <Reg8: 5, Reg8: 6, UInt8: 6>
+==> 00000123: <LoadConstString>: <Reg8: 9, string_id: 3404>  # String: '[Reanimated] Unsupported value for "interpolate" \nSupported values: ["extend", "clamp", "identity", Extrapolation.CLAMP, Extrapolation.EXTEND, Extrapolation.IDENTITY]\n Valid example:\n        interpolate(value, [inputRange], [outputRange], "clamp")' (String)
+==> 00000127: <Mov>: <Reg8: 10, Reg8: 5>
+==> 0000012a: <Construct>: <Reg8: 4, Reg8: 6, UInt8: 2>
+==> 0000012e: <SelectObject>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 00000132: <Throw>: <Reg8: 4>
+==> 00000134: <PutByIdStrict>: <Reg8: 2, Reg8: 3, UInt8: 0, string_id: 10966>  # String: 'extrapolateLeft' (Identifier)
+==> 0000013a: <PutByIdStrict>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 10969>  # String: 'extrapolateRight' (Identifier)
+==> 00000140: <Ret>: <Reg8: 2>
+
+

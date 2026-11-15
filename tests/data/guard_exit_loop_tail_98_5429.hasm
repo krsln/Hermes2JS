@@ -1,0 +1,60 @@
+
+=> [Function #5429 "findInitialRoute" of 176 bytes]: 4 params, frame size=23, strict=1, exc handler=1, debug info=0  @ offset 0x001b42ff
+  [Exception handlers: [start=0x24, end=0x9f, target=0xa7] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 7, UInt8: 2>
+==> 00000003: <LoadConstUndefined>: <Reg8: 0>
+==> 00000005: <LoadConstUndefined>: <Reg8: 3>
+==> 00000007: <LoadConstUndefined>: <Reg8: 9>
+==> 00000009: <LoadConstUndefined>: <Reg8: 8>
+==> 0000000b: <LoadParam>: <Reg8: 6, UInt8: 3>
+==> 0000000e: <IteratorBegin>: <Reg8: 2, Reg8: 6>
+==> 00000011: <LoadConstZero>: <Reg8: 1>
+==> 00000013: <Mov>: <Reg8: 10, Reg8: 6>
+==> 00000016: <IteratorNext>: <Reg8: 10, Reg8: 2, Reg8: 10>
+==> 0000001a: <Mov>: <Reg8: 11, Reg8: 2>
+==> 0000001d: <JStrictEqualLong>: <Addr32: 145, Reg8: 11, Reg8: 0>  # Address: 000000ae
+==> 00000024: <Mov>: <Reg8: 3, Reg8: 10>
+==> 00000027: <GetByIdShort>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 0000002c: <GetById>: <Reg8: 10, Reg8: 10, UInt8: 1, string_id: 17310>  # String: 'parentScreens' (Identifier)
+==> 00000032: <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 00000037: <JStrictNotEqual>: <Addr8: 80, Reg8: 11, Reg8: 10>  # Address: 00000087
+==> 0000003b: <LoadConstTrue>: <Reg8: 9>
+==> 0000003d: <LoadConstZero>: <Reg8: 8>
+==> 0000003f: <GetByIdShort>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 00000044: <JNotLess>: <Addr8: 61, Reg8: 1, Reg8: 10>  # Address: 00000081
+==> 00000048: <Mov>: <Reg8: 13, Reg8: 8>
+==> 0000004b: <GetByVal>: <Reg8: 12, Reg8: 7, Reg8: 13>
+==> 0000004f: <GetById>: <Reg8: 11, Reg8: 12, UInt8: 2, string_id: 15740>  # String: 'localeCompare' (Identifier)
+==> 00000055: <Mov>: <Reg8: 10, Reg8: 3>
+==> 00000058: <GetById>: <Reg8: 10, Reg8: 10, UInt8: 1, string_id: 17310>  # String: 'parentScreens' (Identifier)
+==> 0000005e: <GetByVal>: <Reg8: 10, Reg8: 10, Reg8: 13>
+==> 00000062: <Call2>: <Reg8: 10, Reg8: 11, Reg8: 12, Reg8: 10>
+==> 00000067: <JStrictNotEqual>: <Addr8: 24, Reg8: 10, Reg8: 1>  # Address: 0000007f
+==> 0000006b: <Mov>: <Reg8: 10, Reg8: 8>
+==> 0000006e: <Inc>: <Reg8: 11, Reg8: 10>
+==> 00000071: <Mov>: <Reg8: 8, Reg8: 11>
+==> 00000074: <GetByIdShort>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 00000079: <JLess>: <Addr8: -49, Reg8: 11, Reg8: 10>  # Address: 00000048
+==> 0000007d: <Jmp>: <Addr8: 4>  # Address: 00000081
+==> 0000007f: <LoadConstFalse>: <Reg8: 9>
+==> 00000081: <Mov>: <Reg8: 10, Reg8: 9>
+==> 00000084: <JmpTrue>: <Addr8: 5, Reg8: 10>  # Address: 00000089
+==> 00000087: <Jmp>: <Addr8: -116>  # Address: 00000013
+==> 00000089: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 0000008c: <Mov>: <Reg8: 1, Reg8: 3>
+==> 0000008f: <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 166>  # String: 'initialRouteName' (Identifier)
+==> 00000094: <LoadConstUndefined>: <Reg8: 1>
+==> 00000096: <JStrictEqual>: <Addr8: 9, Reg8: 5, Reg8: 4>  # Address: 0000009f
+==> 0000009a: <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 3, string_id: 166>  # String: 'initialRouteName' (Identifier)
+==> 0000009f: <Mov>: <Reg8: 3, Reg8: 2>
+==> 000000a2: <IteratorClose>: <Reg8: 3, UInt8: 0>
+==> 000000a5: <Ret>: <Reg8: 1>
+==> 000000a7: <Catch>: <Reg8: 1>
+==> 000000a9: <IteratorClose>: <Reg8: 2, UInt8: 1>
+==> 000000ac: <Throw>: <Reg8: 1>
+==> 000000ae: <Ret>: <Reg8: 0>
+
+

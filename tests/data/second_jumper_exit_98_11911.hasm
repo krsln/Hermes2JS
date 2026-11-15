@@ -1,0 +1,156 @@
+
+=> [Function #11911 "reactNativeReanimated_transformOriginTs7" of 647 bytes]: 2 params, frame size=28, strict=1, exc handler=0, debug info=0  @ offset 0x002328a0
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 9, UInt8: 3>
+==> 00000003: <LoadParam>: <Reg8: 8, UInt8: 1>
+==> 00000006: <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 8>
+==> 0000000a: <GetGlobalObject>: <Reg8: 4>
+==> 0000000c: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 3>  # String: 'Array' (Identifier)
+==> 00000012: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 2>  # String: 'isArray' (Identifier)
+==> 00000017: <Call2>: <Reg8: 6, Reg8: 5, Reg8: 6, Reg8: 8>
+==> 0000001c: <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 6>
+==> 00000020: <Mov>: <Reg8: 7, Reg8: 8>
+==> 00000023: <JmpTypeOfIs>: <Addr32: 32, Reg8: 7, UInt16: 507>  # Address: 00000043
+==> 0000002b: <GetByIdShort>: <Reg8: 10, Reg8: 8, UInt8: 2, string_id: 230>  # String: 'split' (Identifier)
+==> 00000030: <CreateRegExp>: <Reg8: 5, string_id: 1908, string_id: 6457, UInt32: 18>  # String: '\\s+' (String)  # String: '' (Identifier)
+==> 0000003e: <Call2>: <Reg8: 7, Reg8: 10, Reg8: 8, Reg8: 5>
+==> 00000043: <GetParentEnvironment>: <Reg8: 5, UInt8: 0>
+==> 00000046: <StoreToEnvironment>: <Reg8: 9, UInt8: 2, Reg8: 7>
+==> 0000004a: <JmpTrue>: <Addr8: 9, Reg8: 6>  # Address: 00000053
+==> 0000004d: <LoadFromEnvironment>: <Reg8: 11, Reg8: 5, UInt8: 0>
+==> 00000051: <Jmp>: <Addr8: 9>  # Address: 0000005a
+==> 00000053: <LoadConstUndefined>: <Reg8: 2>
+==> 00000055: <CreateClosure>: <Reg8: 11, Reg8: 2, function_id: 13547>  # Function: [#13547  of 4 bytes]: 1 params @ offset 0x001591cf
+==> 0000005a: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 3, string_id: 177>  # String: 'length' (Identifier)
+==> 0000005f: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 00000062: <JLessLong>: <Addr32: 491, Reg8: 6, Reg8: 0>  # Address: 0000024d
+==> 00000069: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 3, string_id: 177>  # String: 'length' (Identifier)
+==> 0000006e: <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
+==> 00000071: <JGreaterLong>: <Addr32: 476, Reg8: 6, Reg8: 0>  # Address: 0000024d
+==> 00000078: <LoadFromEnvironment>: <Reg8: 6, Reg8: 5, UInt8: 2>
+==> 0000007c: <LoadConstUndefined>: <Reg8: 1>
+==> 0000007e: <Call2>: <Reg8: 7, Reg8: 6, Reg8: 1, Reg8: 7>
+==> 00000083: <StoreToEnvironment>: <Reg8: 9, UInt8: 2, Reg8: 7>
+==> 00000087: <GetByIndex>: <Reg8: 12, Reg8: 7, UInt8: 0>
+==> 0000008b: <LoadConstNull>: <Reg8: 2>
+==> 0000008d: <JNotEqual>: <Addr8: 8, Reg8: 12, Reg8: 2>  # Address: 00000095
+==> 00000091: <LoadConstString>: <Reg8: 12, string_id: 1725>  # String: '50%' (String)
+==> 00000095: <LoadFromEnvironment>: <Reg8: 6, Reg8: 5, UInt8: 4>
+==> 00000099: <Mov>: <Reg8: 10, Reg8: 12>
+==> 0000009c: <JmpTypeOfIs>: <Addr32: 156, Reg8: 10, UInt16: 32>  # Address: 00000138
+==> 000000a4: <IsIn>: <Reg8: 3, Reg8: 12, Reg8: 6>
+==> 000000a8: <JmpTrueLong>: <Addr32: 140, Reg8: 3>  # Address: 00000134
+==> 000000ae: <GetByIdShort>: <Reg8: 13, Reg8: 12, UInt8: 4, string_id: 135>  # String: 'endsWith' (Identifier)
+==> 000000b3: <LoadConstString>: <Reg8: 16, string_id: 856>  # String: '%' (String)
+==> 000000b7: <Call2>: <Reg8: 13, Reg8: 13, Reg8: 12, Reg8: 16>
+==> 000000bc: <JmpFalse>: <Addr8: 57, Reg8: 13>  # Address: 000000f5
+==> 000000bf: <TryGetById>: <Reg8: 13, Reg8: 4, UInt8: 5, string_id: 197>  # String: 'parseFloat' (Identifier)
+==> 000000c5: <Call2>: <Reg8: 15, Reg8: 13, Reg8: 1, Reg8: 12>
+==> 000000ca: <LoadConstZero>: <Reg8: 10>
+==> 000000cc: <JStrictEqual>: <Addr8: 108, Reg8: 15, Reg8: 10>  # Address: 00000138
+==> 000000d0: <TryGetById>: <Reg8: 13, Reg8: 4, UInt8: 6, string_id: 12809>  # String: 'isNaN' (Identifier)
+==> 000000d6: <Call2>: <Reg8: 13, Reg8: 13, Reg8: 1, Reg8: 15>
+==> 000000db: <JmpTrue>: <Addr8: 26, Reg8: 13>  # Address: 000000f5
+==> 000000de: <TryGetById>: <Reg8: 13, Reg8: 4, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 000000e4: <GetByIdShort>: <Reg8: 14, Reg8: 13, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 000000e9: <LoadConstString>: <Reg8: 13, string_id: 6457>  # String: '' (Identifier)
+==> 000000ed: <Call3>: <Reg8: 10, Reg8: 14, Reg8: 13, Reg8: 15, Reg8: 16>
+==> 000000f3: <Jmp>: <Addr8: 69>  # Address: 00000138
+==> 000000f5: <Call2>: <Reg8: 10, Reg8: 11, Reg8: 1, Reg8: 12>
+==> 000000fa: <JStrictNotEqual>: <Addr8: 62, Reg8: 10, Reg8: 2>  # Address: 00000138
+==> 000000fe: <CreateClosure>: <Reg8: 13, Reg8: 9, function_id: 13548>  # Function: [#13548  of 45 bytes]: 1 params @ offset 0x0025b812
+==> 00000103: <TryGetById>: <Reg8: 15, Reg8: 4, UInt8: 9, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000109: <LoadConstZero>: <Reg8: 0>
+==> 0000010b: <Call1>: <Reg8: 16, Reg8: 13, Reg8: 0>
+==> 0000010f: <TryGetById>: <Reg8: 13, Reg8: 4, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000115: <GetByIdShort>: <Reg8: 14, Reg8: 13, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 0000011a: <LoadConstString>: <Reg8: 13, string_id: 4477>  # String: '[Reanimated] ' (String)
+==> 0000011e: <Call2>: <Reg8: 19, Reg8: 14, Reg8: 13, Reg8: 16>
+==> 00000123: <CreateThisForNew>: <Reg8: 14, Reg8: 15, UInt8: 10>
+==> 00000127: <Mov>: <Reg8: 20, Reg8: 14>
+==> 0000012a: <Construct>: <Reg8: 13, Reg8: 15, UInt8: 2>
+==> 0000012e: <SelectObject>: <Reg8: 13, Reg8: 14, Reg8: 13>
+==> 00000132: <Throw>: <Reg8: 13>
+==> 00000134: <GetByVal>: <Reg8: 10, Reg8: 6, Reg8: 12>
+==> 00000138: <NewArray>: <Reg8: 6, UInt16: 3>
+==> 0000013c: <DefineOwnInDenseArray>: <Reg8: 6, Reg8: 10, UInt8: 0>
+==> 00000140: <GetByIndex>: <Reg8: 13, Reg8: 7, UInt8: 1>
+==> 00000144: <JNotEqual>: <Addr8: 8, Reg8: 13, Reg8: 2>  # Address: 0000014c
+==> 00000148: <LoadConstString>: <Reg8: 13, string_id: 1725>  # String: '50%' (String)
+==> 0000014c: <LoadFromEnvironment>: <Reg8: 12, Reg8: 5, UInt8: 5>
+==> 00000150: <Mov>: <Reg8: 10, Reg8: 13>
+==> 00000153: <JmpTypeOfIs>: <Addr32: 156, Reg8: 10, UInt16: 32>  # Address: 000001ef
+==> 0000015b: <IsIn>: <Reg8: 3, Reg8: 13, Reg8: 12>
+==> 0000015f: <JmpTrueLong>: <Addr32: 140, Reg8: 3>  # Address: 000001eb
+==> 00000165: <GetByIdShort>: <Reg8: 14, Reg8: 13, UInt8: 4, string_id: 135>  # String: 'endsWith' (Identifier)
+==> 0000016a: <LoadConstString>: <Reg8: 17, string_id: 856>  # String: '%' (String)
+==> 0000016e: <Call2>: <Reg8: 14, Reg8: 14, Reg8: 13, Reg8: 17>
+==> 00000173: <JmpFalse>: <Addr8: 57, Reg8: 14>  # Address: 000001ac
+==> 00000176: <TryGetById>: <Reg8: 14, Reg8: 4, UInt8: 5, string_id: 197>  # String: 'parseFloat' (Identifier)
+==> 0000017c: <Call2>: <Reg8: 16, Reg8: 14, Reg8: 1, Reg8: 13>
+==> 00000181: <LoadConstZero>: <Reg8: 10>
+==> 00000183: <JStrictEqual>: <Addr8: 108, Reg8: 16, Reg8: 10>  # Address: 000001ef
+==> 00000187: <TryGetById>: <Reg8: 14, Reg8: 4, UInt8: 6, string_id: 12809>  # String: 'isNaN' (Identifier)
+==> 0000018d: <Call2>: <Reg8: 14, Reg8: 14, Reg8: 1, Reg8: 16>
+==> 00000192: <JmpTrue>: <Addr8: 26, Reg8: 14>  # Address: 000001ac
+==> 00000195: <TryGetById>: <Reg8: 14, Reg8: 4, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 0000019b: <GetByIdShort>: <Reg8: 15, Reg8: 14, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 000001a0: <LoadConstString>: <Reg8: 14, string_id: 6457>  # String: '' (Identifier)
+==> 000001a4: <Call3>: <Reg8: 10, Reg8: 15, Reg8: 14, Reg8: 16, Reg8: 17>
+==> 000001aa: <Jmp>: <Addr8: 69>  # Address: 000001ef
+==> 000001ac: <Call2>: <Reg8: 10, Reg8: 11, Reg8: 1, Reg8: 13>
+==> 000001b1: <JStrictNotEqual>: <Addr8: 62, Reg8: 10, Reg8: 2>  # Address: 000001ef
+==> 000001b5: <CreateClosure>: <Reg8: 14, Reg8: 9, function_id: 13549>  # Function: [#13549  of 45 bytes]: 1 params @ offset 0x0025b83f
+==> 000001ba: <TryGetById>: <Reg8: 16, Reg8: 4, UInt8: 9, string_id: 9>  # String: 'Error' (Identifier)
+==> 000001c0: <LoadConstZero>: <Reg8: 0>
+==> 000001c2: <Call1>: <Reg8: 17, Reg8: 14, Reg8: 0>
+==> 000001c6: <TryGetById>: <Reg8: 14, Reg8: 4, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 000001cc: <GetByIdShort>: <Reg8: 15, Reg8: 14, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 000001d1: <LoadConstString>: <Reg8: 14, string_id: 4477>  # String: '[Reanimated] ' (String)
+==> 000001d5: <Call2>: <Reg8: 19, Reg8: 15, Reg8: 14, Reg8: 17>
+==> 000001da: <CreateThisForNew>: <Reg8: 15, Reg8: 16, UInt8: 10>
+==> 000001de: <Mov>: <Reg8: 20, Reg8: 15>
+==> 000001e1: <Construct>: <Reg8: 14, Reg8: 16, UInt8: 2>
+==> 000001e5: <SelectObject>: <Reg8: 14, Reg8: 15, Reg8: 14>
+==> 000001e9: <Throw>: <Reg8: 14>
+==> 000001eb: <GetByVal>: <Reg8: 10, Reg8: 12, Reg8: 13>
+==> 000001ef: <DefineOwnInDenseArray>: <Reg8: 6, Reg8: 10, UInt8: 1>
+==> 000001f3: <GetByIndex>: <Reg8: 10, Reg8: 7, UInt8: 2>
+==> 000001f7: <JNotEqual>: <Addr8: 6, Reg8: 10, Reg8: 2>  # Address: 000001fd
+==> 000001fb: <LoadConstZero>: <Reg8: 10>
+==> 000001fd: <Mov>: <Reg8: 7, Reg8: 10>
+==> 00000200: <JmpTypeOfIs>: <Addr32: 71, Reg8: 7, UInt16: 32>  # Address: 00000247
+==> 00000208: <Call2>: <Reg8: 7, Reg8: 11, Reg8: 1, Reg8: 10>
+==> 0000020d: <JStrictNotEqual>: <Addr8: 58, Reg8: 7, Reg8: 2>  # Address: 00000247
+==> 00000211: <CreateClosure>: <Reg8: 9, Reg8: 9, function_id: 13550>  # Function: [#13550  of 45 bytes]: 1 params @ offset 0x0025b86c
+==> 00000216: <TryGetById>: <Reg8: 11, Reg8: 4, UInt8: 9, string_id: 9>  # String: 'Error' (Identifier)
+==> 0000021c: <LoadConstZero>: <Reg8: 0>
+==> 0000021e: <Call1>: <Reg8: 12, Reg8: 9, Reg8: 0>
+==> 00000222: <TryGetById>: <Reg8: 9, Reg8: 4, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000228: <GetByIdShort>: <Reg8: 10, Reg8: 9, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 0000022d: <LoadConstString>: <Reg8: 9, string_id: 4477>  # String: '[Reanimated] ' (String)
+==> 00000231: <Call2>: <Reg8: 19, Reg8: 10, Reg8: 9, Reg8: 12>
+==> 00000236: <CreateThisForNew>: <Reg8: 10, Reg8: 11, UInt8: 10>
+==> 0000023a: <Mov>: <Reg8: 20, Reg8: 10>
+==> 0000023d: <Construct>: <Reg8: 9, Reg8: 11, UInt8: 2>
+==> 00000241: <SelectObject>: <Reg8: 9, Reg8: 10, Reg8: 9>
+==> 00000245: <Throw>: <Reg8: 9>
+==> 00000247: <DefineOwnInDenseArray>: <Reg8: 6, Reg8: 7, UInt8: 2>
+==> 0000024b: <Ret>: <Reg8: 6>
+==> 0000024d: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 9, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000253: <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 1>
+==> 00000257: <GetById>: <Reg8: 5, Reg8: 7, UInt8: 11, string_id: 13040>  # String: 'invalidTransformOrigin' (Identifier)
+==> 0000025d: <Call2>: <Reg8: 7, Reg8: 5, Reg8: 7, Reg8: 8>
+==> 00000262: <TryGetById>: <Reg8: 4, Reg8: 4, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000268: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 0000026d: <LoadConstString>: <Reg8: 4, string_id: 4477>  # String: '[Reanimated] ' (String)
+==> 00000271: <Call2>: <Reg8: 19, Reg8: 5, Reg8: 4, Reg8: 7>
+==> 00000276: <CreateThisForNew>: <Reg8: 5, Reg8: 6, UInt8: 10>
+==> 0000027a: <Mov>: <Reg8: 20, Reg8: 5>
+==> 0000027d: <Construct>: <Reg8: 4, Reg8: 6, UInt8: 2>
+==> 00000281: <SelectObject>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 00000285: <Throw>: <Reg8: 4>
+
+

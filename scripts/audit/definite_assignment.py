@@ -9,6 +9,8 @@ usage: python3 scripts/audit/definite_assignment.py <file.js | directory> [...]
 import re,sys
 REG=re.compile(r'\br(\d+)\b')
 ASSIGN=re.compile(r'^(r\d+)\s*=[^=>]')
+# `[r1, { a: r2 }, __environment__[3], r4 = d] = rhs;`: every register that is not read (not after `= `) is assigned
+PATTERN=re.compile(r'^\[(.*?)\]\s*=\s+(.*)$')
 def check(text):
     lines=[l.strip() for l in text.split('\n') if l.strip() and not l.strip().startswith('//')]
     # stack frames: (kind, assigned_in_branch_sets)
@@ -61,6 +63,13 @@ def check(text):
         if re.match(r'^(case .*|default):$',ln): cur=set(stack[-1]['base']) if stack else cur; continue
         if term: continue
         mm=ASSIGN.match(ln)
+        pm=None if mm else PATTERN.match(ln)
+        if pm:
+            targets=set(re.findall(r'(?<!= )\b(r\d+)\b', re.sub(r'__environment__\[\d+\]', '', pm.group(1))))
+            for r in reads(pm.group(2))-cur: bad.append((r,ln))
+            cur|=targets
+            if ln.startswith(('return','throw')): term=True
+            continue
         rhs=ln.split('=',1)[1] if mm else ln
         for r in reads(rhs)-cur: bad.append((r,ln))
         if mm: cur.add(mm.group(1))

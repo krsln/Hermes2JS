@@ -484,12 +484,33 @@ class RegionPrinter:
         else:
             binding = f"r{region.loop_binding}"
 
-        self.ctx.write(lines, f"for (const {binding} {keyword} {source}) {{")
+        # A `const` cannot be assigned: when the body reuses the element's register for another value
+        # (`r8 = _loop.call(0, r8)`, 98/5425) the binding is a `let`.
+        declaration = "let" if self._body_assigns(region, region.loop_binding) else "const"
+
+        self.ctx.write(lines, f"for ({declaration} {binding} {keyword} {source}) {{")
 
         with self.ctx.indented():
             self._emit_region(region.body, lines)
 
         self.ctx.write(lines, "}")
+
+    @staticmethod
+    def _body_assigns(region: LoopRegion, binding) -> bool:
+        """True if an instruction the body prints writes the element's register."""
+        if not isinstance(binding, int):
+            return False
+
+        name = f"r{binding}"
+
+        return any(
+            instruction.dest_reg == binding
+            and instruction.value is not None
+            and not instruction.definition_used
+            and not (isinstance(instruction.value, Identifier) and instruction.value.name == name)
+            for block in region.body.covered_blocks
+            for instruction in block.instructions
+        )
 
     def _emit_while(self, region: LoopRegion, lines: list[str]) -> None:
         condition = (

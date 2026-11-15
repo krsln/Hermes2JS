@@ -1,0 +1,183 @@
+
+=> [Function #2844 "rawToPerformanceEntry" of 770 bytes]: 2 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x00181557
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000003: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000006: <GetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 9390>  # String: 'entryType' (Identifier)
+==> 0000000c: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 5>
+==> 00000010: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 1, string_id: 9086>  # String: 'EVENT' (Identifier)
+==> 00000016: <JStrictEqualLong>: <Addr32: 654, Reg8: 5, Reg8: 6>  # Address: 000002a4
+==> 0000001d: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 2, string_id: 9171>  # String: 'LONGTASK' (Identifier)
+==> 00000023: <JStrictEqualLong>: <Addr32: 577, Reg8: 5, Reg8: 6>  # Address: 00000264
+==> 0000002a: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 10273>  # String: 'MARK' (Identifier)
+==> 00000030: <JStrictEqualLong>: <Addr32: 513, Reg8: 5, Reg8: 6>  # Address: 00000231
+==> 00000037: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 4, string_id: 8116>  # String: 'MEASURE' (Identifier)
+==> 0000003d: <JStrictEqualLong>: <Addr32: 436, Reg8: 5, Reg8: 6>  # Address: 000001f1
+==> 00000044: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 5, string_id: 9224>  # String: 'RESOURCE' (Identifier)
+==> 0000004a: <JStrictEqualLong>: <Addr32: 195, Reg8: 5, Reg8: 6>  # Address: 0000010d
+==> 00000051: <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 2>
+==> 00000055: <GetById>: <Reg8: 7, Reg8: 5, UInt8: 6, string_id: 9365>  # String: 'PerformanceEntry' (Identifier)
+==> 0000005b: <GetById>: <Reg8: 9, Reg8: 3, UInt8: 0, string_id: 9390>  # String: 'entryType' (Identifier)
+==> 00000061: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 10273>  # String: 'MARK' (Identifier)
+==> 00000067: <LoadConstString>: <Reg8: 6, string_id: 7213>  # String: 'mark' (Identifier)
+==> 0000006b: <JStrictEqual>: <Addr8: 105, Reg8: 5, Reg8: 9>  # Address: 000000d4
+==> 0000006f: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 4, string_id: 8116>  # String: 'MEASURE' (Identifier)
+==> 00000075: <LoadConstString>: <Reg8: 6, string_id: 7631>  # String: 'measure' (Identifier)
+==> 00000079: <JStrictEqual>: <Addr8: 91, Reg8: 5, Reg8: 9>  # Address: 000000d4
+==> 0000007d: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 1, string_id: 9086>  # String: 'EVENT' (Identifier)
+==> 00000083: <LoadConstString>: <Reg8: 6, string_id: 7454>  # String: 'event' (Identifier)
+==> 00000087: <JStrictEqual>: <Addr8: 77, Reg8: 5, Reg8: 9>  # Address: 000000d4
+==> 0000008b: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 2, string_id: 9171>  # String: 'LONGTASK' (Identifier)
+==> 00000091: <LoadConstString>: <Reg8: 6, string_id: 5112>  # String: 'longtask' (String)
+==> 00000095: <JStrictEqual>: <Addr8: 63, Reg8: 5, Reg8: 9>  # Address: 000000d4
+==> 00000099: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 9224>  # String: 'RESOURCE' (Identifier)
+==> 0000009f: <LoadConstString>: <Reg8: 6, string_id: 4614>  # String: 'resource' (String)
+==> 000000a3: <JStrictEqual>: <Addr8: 49, Reg8: 4, Reg8: 9>  # Address: 000000d4
+==> 000000a7: <GetGlobalObject>: <Reg8: 4>
+==> 000000a9: <TryGetById>: <Reg8: 8, Reg8: 4, UInt8: 7, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 000000af: <TryGetById>: <Reg8: 4, Reg8: 4, UInt8: 8, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 000000b5: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 9, string_id: 105>  # String: 'concat' (Identifier)
+==> 000000ba: <LoadConstString>: <Reg8: 4, string_id: 2746>  # String: 'rawToPerformanceEntryType: unexpected performance entry type received: ' (String)
+==> 000000be: <Call2>: <Reg8: 11, Reg8: 5, Reg8: 4, Reg8: 9>
+==> 000000c3: <CreateThisForNew>: <Reg8: 5, Reg8: 8, UInt8: 10>
+==> 000000c7: <Mov>: <Reg8: 12, Reg8: 5>
+==> 000000ca: <Construct>: <Reg8: 4, Reg8: 8, UInt8: 2>
+==> 000000ce: <SelectObject>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 000000d2: <Throw>: <Reg8: 4>
+==> 000000d4: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 996, UInt16: 17424>  # Object: {'name': null, 'startTime': null, 'duration': null}
+==> 000000da: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 11, string_id: 187>  # String: 'name' (Identifier)
+==> 000000df: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 0>
+==> 000000e3: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 12, string_id: 9373>  # String: 'startTime' (Identifier)
+==> 000000e9: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 1>
+==> 000000ed: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 13, string_id: 127>  # String: 'duration' (Identifier)
+==> 000000f2: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 2>
+==> 000000f6: <CreateThisForNew>: <Reg8: 5, Reg8: 7, UInt8: 10>
+==> 000000fa: <Mov>: <Reg8: 12, Reg8: 5>
+==> 000000fd: <Mov>: <Reg8: 11, Reg8: 6>
+==> 00000100: <Mov>: <Reg8: 10, Reg8: 4>
+==> 00000103: <Construct>: <Reg8: 4, Reg8: 7, UInt8: 3>
+==> 00000107: <SelectObject>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 0000010b: <Ret>: <Reg8: 4>
+==> 0000010d: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 3>
+==> 00000111: <GetById>: <Reg8: 6, Reg8: 4, UInt8: 14, string_id: 9370>  # String: 'PerformanceResourceTiming' (Identifier)
+==> 00000117: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 998, UInt16: 17736>  # Object: {'name': null, 'startTime': null, 'duration': null, 'fetchStart': null, 'requestStart': null, 'connectStart': null, 'connectEnd': null, 'responseStart': null, 'responseEnd': null, 'responseStatus': null, 'contentType': null, 'encodedBodySize': null, 'decodedBodySize': null}
+==> 0000011d: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 11, string_id: 187>  # String: 'name' (Identifier)
+==> 00000122: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 0>
+==> 00000126: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 12, string_id: 9373>  # String: 'startTime' (Identifier)
+==> 0000012c: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 1>
+==> 00000130: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 13, string_id: 127>  # String: 'duration' (Identifier)
+==> 00000135: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 2>
+==> 00000139: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 15, string_id: 14235>  # String: 'fetchStart' (Identifier)
+==> 0000013f: <LoadConstNull>: <Reg8: 1>
+==> 00000141: <JNotEqual>: <Addr8: 6, Reg8: 5, Reg8: 1>  # Address: 00000147
+==> 00000145: <LoadConstZero>: <Reg8: 5>
+==> 00000147: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 3>
+==> 0000014b: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 16, string_id: 14253>  # String: 'requestStart' (Identifier)
+==> 00000151: <JNotEqual>: <Addr8: 6, Reg8: 5, Reg8: 1>  # Address: 00000157
+==> 00000155: <LoadConstZero>: <Reg8: 5>
+==> 00000157: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 4>
+==> 0000015b: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 17, string_id: 14214>  # String: 'connectStart' (Identifier)
+==> 00000161: <JNotEqual>: <Addr8: 6, Reg8: 5, Reg8: 1>  # Address: 00000167
+==> 00000165: <LoadConstZero>: <Reg8: 5>
+==> 00000167: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 5>
+==> 0000016b: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 18, string_id: 14212>  # String: 'connectEnd' (Identifier)
+==> 00000171: <JNotEqual>: <Addr8: 6, Reg8: 5, Reg8: 1>  # Address: 00000177
+==> 00000175: <LoadConstZero>: <Reg8: 5>
+==> 00000177: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 6>
+==> 0000017b: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 19, string_id: 14258>  # String: 'responseStart' (Identifier)
+==> 00000181: <JNotEqual>: <Addr8: 6, Reg8: 5, Reg8: 1>  # Address: 00000187
+==> 00000185: <LoadConstZero>: <Reg8: 5>
+==> 00000187: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 7>
+==> 0000018b: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 20, string_id: 14256>  # String: 'responseEnd' (Identifier)
+==> 00000191: <JNotEqual>: <Addr8: 6, Reg8: 5, Reg8: 1>  # Address: 00000197
+==> 00000195: <LoadConstZero>: <Reg8: 5>
+==> 00000197: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 8>
+==> 0000019b: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 21, string_id: 9946>  # String: 'responseStatus' (Identifier)
+==> 000001a1: <JNotEqual>: <Addr8: 6, Reg8: 5, Reg8: 1>  # Address: 000001a7
+==> 000001a5: <LoadConstZero>: <Reg8: 5>
+==> 000001a7: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 9>
+==> 000001ab: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 22, string_id: 14217>  # String: 'contentType' (Identifier)
+==> 000001b1: <JNotEqual>: <Addr8: 8, Reg8: 5, Reg8: 1>  # Address: 000001b9
+==> 000001b5: <LoadConstString>: <Reg8: 5, string_id: 6457>  # String: '' (Identifier)
+==> 000001b9: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 10>
+==> 000001bd: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 23, string_id: 14224>  # String: 'encodedBodySize' (Identifier)
+==> 000001c3: <JNotEqual>: <Addr8: 6, Reg8: 5, Reg8: 1>  # Address: 000001c9
+==> 000001c7: <LoadConstZero>: <Reg8: 5>
+==> 000001c9: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 11>
+==> 000001cd: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 24, string_id: 14222>  # String: 'decodedBodySize' (Identifier)
+==> 000001d3: <JNotEqual>: <Addr8: 6, Reg8: 5, Reg8: 1>  # Address: 000001d9
+==> 000001d7: <LoadConstZero>: <Reg8: 5>
+==> 000001d9: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 12>
+==> 000001dd: <CreateThisForNew>: <Reg8: 5, Reg8: 6, UInt8: 10>
+==> 000001e1: <Mov>: <Reg8: 12, Reg8: 5>
+==> 000001e4: <Mov>: <Reg8: 11, Reg8: 4>
+==> 000001e7: <Construct>: <Reg8: 4, Reg8: 6, UInt8: 2>
+==> 000001eb: <SelectObject>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 000001ef: <Ret>: <Reg8: 4>
+==> 000001f1: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 4>
+==> 000001f5: <GetById>: <Reg8: 6, Reg8: 4, UInt8: 25, string_id: 9368>  # String: 'PerformanceMeasure' (Identifier)
+==> 000001fb: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 996, UInt16: 17424>  # Object: {'name': null, 'startTime': null, 'duration': null}
+==> 00000201: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 11, string_id: 187>  # String: 'name' (Identifier)
+==> 00000206: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 0>
+==> 0000020a: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 12, string_id: 9373>  # String: 'startTime' (Identifier)
+==> 00000210: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 1>
+==> 00000214: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 13, string_id: 127>  # String: 'duration' (Identifier)
+==> 00000219: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 2>
+==> 0000021d: <CreateThisForNew>: <Reg8: 5, Reg8: 6, UInt8: 10>
+==> 00000221: <Mov>: <Reg8: 12, Reg8: 5>
+==> 00000224: <Mov>: <Reg8: 11, Reg8: 4>
+==> 00000227: <Construct>: <Reg8: 4, Reg8: 6, UInt8: 2>
+==> 0000022b: <SelectObject>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 0000022f: <Ret>: <Reg8: 4>
+==> 00000231: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 4>
+==> 00000235: <GetById>: <Reg8: 7, Reg8: 4, UInt8: 26, string_id: 9374>  # String: 'PerformanceMark' (Identifier)
+==> 0000023b: <GetByIdShort>: <Reg8: 11, Reg8: 3, UInt8: 11, string_id: 187>  # String: 'name' (Identifier)
+==> 00000240: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 997, UInt16: 20>  # Object: {'startTime': null}
+==> 00000246: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 12, string_id: 9373>  # String: 'startTime' (Identifier)
+==> 0000024c: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 0>
+==> 00000250: <CreateThisForNew>: <Reg8: 5, Reg8: 7, UInt8: 10>
+==> 00000254: <Mov>: <Reg8: 12, Reg8: 5>
+==> 00000257: <Mov>: <Reg8: 10, Reg8: 4>
+==> 0000025a: <Construct>: <Reg8: 4, Reg8: 7, UInt8: 3>
+==> 0000025e: <SelectObject>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 00000262: <Ret>: <Reg8: 4>
+==> 00000264: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
+==> 00000268: <GetById>: <Reg8: 6, Reg8: 4, UInt8: 27, string_id: 9367>  # String: 'PerformanceLongTaskTiming' (Identifier)
+==> 0000026e: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 996, UInt16: 17424>  # Object: {'name': null, 'startTime': null, 'duration': null}
+==> 00000274: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 11, string_id: 187>  # String: 'name' (Identifier)
+==> 00000279: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 0>
+==> 0000027d: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 12, string_id: 9373>  # String: 'startTime' (Identifier)
+==> 00000283: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 1>
+==> 00000287: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 13, string_id: 127>  # String: 'duration' (Identifier)
+==> 0000028c: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 2>
+==> 00000290: <CreateThisForNew>: <Reg8: 5, Reg8: 6, UInt8: 10>
+==> 00000294: <Mov>: <Reg8: 12, Reg8: 5>
+==> 00000297: <Mov>: <Reg8: 11, Reg8: 4>
+==> 0000029a: <Construct>: <Reg8: 4, Reg8: 6, UInt8: 2>
+==> 0000029e: <SelectObject>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 000002a2: <Ret>: <Reg8: 4>
+==> 000002a4: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
+==> 000002a8: <GetById>: <Reg8: 4, Reg8: 2, UInt8: 28, string_id: 9366>  # String: 'PerformanceEventTiming' (Identifier)
+==> 000002ae: <NewObjectWithBuffer>: <Reg8: 2, UInt16: 995, UInt16: 17985>  # Object: {'name': null, 'startTime': null, 'duration': null, 'processingStart': null, 'processingEnd': null, 'interactionId': null}
+==> 000002b4: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 11, string_id: 187>  # String: 'name' (Identifier)
+==> 000002b9: <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 5, UInt8: 0>
+==> 000002bd: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 12, string_id: 9373>  # String: 'startTime' (Identifier)
+==> 000002c3: <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 5, UInt8: 1>
+==> 000002c7: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 13, string_id: 127>  # String: 'duration' (Identifier)
+==> 000002cc: <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 5, UInt8: 2>
+==> 000002d0: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 29, string_id: 14248>  # String: 'processingStart' (Identifier)
+==> 000002d6: <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 5, UInt8: 3>
+==> 000002da: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 30, string_id: 14246>  # String: 'processingEnd' (Identifier)
+==> 000002e0: <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 5, UInt8: 4>
+==> 000002e4: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 31, string_id: 14238>  # String: 'interactionId' (Identifier)
+==> 000002ea: <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 3, UInt8: 5>
+==> 000002ee: <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 10>
+==> 000002f2: <Mov>: <Reg8: 12, Reg8: 3>
+==> 000002f5: <Mov>: <Reg8: 11, Reg8: 2>
+==> 000002f8: <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
+==> 000002fc: <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
+==> 00000300: <Ret>: <Reg8: 2>
+
+

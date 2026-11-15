@@ -27,7 +27,9 @@ def _render(name: str, function_id: int) -> str:
 def test_both_tests_reach_the_shared_body():
     out = _render("dropped_case_jump_98_2633.hasm", 2633)
 
-    assert "if (27 === r9 || 5 === r9) {" in out
+    # the dispatch on the fiber tag now comes out as a `switch` (its default jumps to the code behind it, which
+    # used to leave the jump table raw): the labels `5`, `26` and `27` share one body, none is an `else if`
+    assert "        case 5:\n        case 26:\n        case 27:\n" in out
     assert "5 !== r9" not in out
 
 

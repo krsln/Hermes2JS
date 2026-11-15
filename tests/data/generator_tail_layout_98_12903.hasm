@@ -1,0 +1,123 @@
+
+=> [Function #12903 "?anon_2_request" of 458 bytes]: 3 params, frame size=24, strict=1, exc handler=1, debug info=0  @ offset 0x0024fef3
+  [Exception handlers: [start=0x27, end=0x8e, target=0x18c] [start=0x9e, end=0xa5, target=0x18c] [start=0xb1, end=0x139, target=0x18c] [start=0x145, end=0x164, target=0x18c] [start=0x170, end=0x177, target=0x18c] [start=0x183, end=0x18c, target=0x18c] ]
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 5>
+==> 00000007: <Mov>: <Reg8: 2, Reg8: 0>
+==> 0000000a: <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
+==> 0000000d: <JStrictEqualLong>: <Addr32: 427, Reg8: 0, Reg8: 4>  # Address: 000001b8
+==> 00000014: <LoadParam>: <Reg8: 0, UInt8: 2>
+==> 00000017: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 0000001a: <Mov>: <Reg8: 5, Reg8: 2>
+==> 0000001d: <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
+==> 00000020: <JStrictEqualLong>: <Addr32: 375, Reg8: 5, Reg8: 6>  # Address: 00000197
+==> 00000027: <Mov>: <Reg8: 2, Reg8: 4>
+==> 0000002a: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 4>
+==> 0000002e: <LoadFromEnvironment>: <Reg8: 7, Reg8: 1, UInt8: 4>
+==> 00000032: <LoadConstZero>: <Reg8: 5>
+==> 00000034: <JStrictEqualLong>: <Addr32: 134, Reg8: 5, Reg8: 7>  # Address: 000000ba
+==> 0000003b: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 0000003e: <JStrictEqual>: <Addr8: 115, Reg8: 3, Reg8: 5>  # Address: 000000b1
+==> 00000042: <JStrictEqual>: <Addr8: 92, Reg8: 3, Reg8: 4>  # Address: 0000009e
+==> 00000046: <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 2>
+==> 0000004a: <StoreToEnvironment>: <Reg8: 5, UInt8: 2, Reg8: 0>
+==> 0000004e: <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 2>
+==> 00000052: <JmpFalseLong>: <Addr32: 192, Reg8: 5>  # Address: 00000112
+==> 00000058: <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 3>
+==> 0000005c: <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 0>
+==> 00000060: <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 0, string_id: 115>  # String: 'default' (Identifier)
+==> 00000065: <JmpFalseLong>: <Addr32: 173, Reg8: 5>  # Address: 00000112
+==> 0000006b: <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 2>
+==> 0000006f: <GetGlobalObject>: <Reg8: 7>
+==> 00000071: <TryGetById>: <Reg8: 8, Reg8: 7, UInt8: 1, string_id: 26>  # String: 'Promise' (Identifier)
+==> 00000077: <CreateThisForNew>: <Reg8: 7, Reg8: 8, UInt8: 2>
+==> 0000007b: <CreateClosure>: <Reg8: 15, Reg8: 5, function_id: 13829>  # Function: [#13829  of 72 bytes]: 3 params @ offset 0x00263644
+==> 00000080: <Mov>: <Reg8: 16, Reg8: 7>
+==> 00000083: <Construct>: <Reg8: 5, Reg8: 8, UInt8: 2>
+==> 00000087: <Mov>: <Reg8: 2, Reg8: 6>
+==> 0000008a: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 6>
+==> 0000008e: <SelectObject>: <Reg8: 7, Reg8: 7, Reg8: 5>
+==> 00000092: <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
+==> 00000098: <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 7, UInt8: 0>
+==> 0000009c: <Ret>: <Reg8: 5>
+==> 0000009e: <Mov>: <Reg8: 2, Reg8: 6>
+==> 000000a1: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 6>
+==> 000000a5: <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
+==> 000000ab: <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 0, UInt8: 0>
+==> 000000af: <Ret>: <Reg8: 5>
+==> 000000b1: <Mov>: <Reg8: 2, Reg8: 6>
+==> 000000b4: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 6>
+==> 000000b8: <Throw>: <Reg8: 0>
+==> 000000ba: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 000000bd: <JStrictEqualLong>: <Addr32: 198, Reg8: 3, Reg8: 5>  # Address: 00000183
+==> 000000c4: <JStrictEqualLong>: <Addr32: 172, Reg8: 3, Reg8: 4>  # Address: 00000170
+==> 000000cb: <GetParentEnvironment>: <Reg8: 7, UInt8: 1>
+==> 000000ce: <StoreToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 7>
+==> 000000d2: <CreateEnvironment>: <Reg8: 10, Reg8: 7, UInt32: 3>
+==> 000000d9: <StoreToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 10>
+==> 000000dd: <LoadFromEnvironment>: <Reg8: 9, Reg8: 1, UInt8: 0>
+==> 000000e1: <StoreToEnvironment>: <Reg8: 10, UInt8: 0, Reg8: 9>
+==> 000000e5: <LoadFromEnvironment>: <Reg8: 8, Reg8: 1, UInt8: 1>
+==> 000000e9: <StoreToEnvironment>: <Reg8: 10, UInt8: 1, Reg8: 8>
+==> 000000ed: <LoadConstUndefined>: <Reg8: 13>
+==> 000000ef: <StoreNPToEnvironment>: <Reg8: 10, UInt8: 2, Reg8: 13>
+==> 000000f3: <LoadFromEnvironment>: <Reg8: 10, Reg8: 7, UInt8: 2>
+==> 000000f7: <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 115>  # String: 'default' (Identifier)
+==> 000000fc: <LoadFromEnvironment>: <Reg8: 10, Reg8: 7, UInt8: 1>
+==> 00000100: <GetByIdShort>: <Reg8: 11, Reg8: 10, UInt8: 0, string_id: 115>  # String: 'default' (Identifier)
+==> 00000105: <LoadConstString>: <Reg8: 10, string_id: 3826>  # String: 'PermissionsAndroid is not installed correctly.' (String)
+==> 00000109: <Call3>: <Reg8: 10, Reg8: 12, Reg8: 13, Reg8: 11, Reg8: 10>
+==> 0000010f: <JmpTrue>: <Addr8: 54, Reg8: 8>  # Address: 00000145
+==> 00000112: <LoadFromEnvironment>: <Reg8: 8, Reg8: 1, UInt8: 2>
+==> 00000116: <LoadFromEnvironment>: <Reg8: 10, Reg8: 1, UInt8: 3>
+==> 0000011a: <LoadFromEnvironment>: <Reg8: 10, Reg8: 10, UInt8: 1>
+==> 0000011e: <GetByIdShort>: <Reg8: 11, Reg8: 10, UInt8: 0, string_id: 115>  # String: 'default' (Identifier)
+==> 00000123: <GetById>: <Reg8: 10, Reg8: 11, UInt8: 3, string_id: 7742>  # String: 'requestPermission' (Identifier)
+==> 00000129: <LoadFromEnvironment>: <Reg8: 8, Reg8: 8, UInt8: 0>
+==> 0000012d: <Call2>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 8>
+==> 00000132: <Mov>: <Reg8: 2, Reg8: 6>
+==> 00000135: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 6>
+==> 00000139: <NewObjectWithBuffer>: <Reg8: 8, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
+==> 0000013f: <PutOwnBySlotIdx>: <Reg8: 8, Reg8: 10, UInt8: 0>
+==> 00000143: <Ret>: <Reg8: 8>
+==> 00000145: <LoadFromEnvironment>: <Reg8: 7, Reg8: 7, UInt8: 1>
+==> 00000149: <GetByIdShort>: <Reg8: 8, Reg8: 7, UInt8: 0, string_id: 115>  # String: 'default' (Identifier)
+==> 0000014e: <GetById>: <Reg8: 7, Reg8: 8, UInt8: 4, string_id: 14230>  # String: 'shouldShowRequestPermissionRationale' (Identifier)
+==> 00000154: <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 9>
+==> 00000159: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 4, Reg8: 5>
+==> 0000015d: <Mov>: <Reg8: 2, Reg8: 5>
+==> 00000160: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 5>
+==> 00000164: <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18061>  # Object: {'value': null, 'done': false}
+==> 0000016a: <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 7, UInt8: 0>
+==> 0000016e: <Ret>: <Reg8: 5>
+==> 00000170: <Mov>: <Reg8: 2, Reg8: 6>
+==> 00000173: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 6>
+==> 00000177: <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
+==> 0000017d: <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 0, UInt8: 0>
+==> 00000181: <Ret>: <Reg8: 5>
+==> 00000183: <Mov>: <Reg8: 2, Reg8: 6>
+==> 00000186: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 6>
+==> 0000018a: <Throw>: <Reg8: 0>
+==> 0000018c: <Catch>: <Reg8: 5>
+==> 0000018e: <Mov>: <Reg8: 2, Reg8: 6>
+==> 00000191: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 6>
+==> 00000195: <Throw>: <Reg8: 5>
+==> 00000197: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 0000019a: <JStrictEqual>: <Addr8: 28, Reg8: 3, Reg8: 5>  # Address: 000001b6
+==> 0000019e: <JStrictEqual>: <Addr8: 12, Reg8: 3, Reg8: 4>  # Address: 000001aa
+==> 000001a2: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
+==> 000001a8: <Ret>: <Reg8: 3>
+==> 000001aa: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
+==> 000001b0: <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 0, UInt8: 0>
+==> 000001b4: <Ret>: <Reg8: 3>
+==> 000001b6: <Throw>: <Reg8: 0>
+==> 000001b8: <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
+==> 000001bb: <Mov>: <Reg8: 2, Reg8: 0>
+==> 000001be: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 0>
+==> 000001c2: <LoadConstString>: <Reg8: 15, string_id: 3340>  # String: 'Generator functions may not be called on executing generators' (String)
+==> 000001c6: <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+
+

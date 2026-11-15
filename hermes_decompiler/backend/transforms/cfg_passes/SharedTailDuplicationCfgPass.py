@@ -33,15 +33,27 @@ import dataclasses
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.shared import repoint_node
 from hermes_decompiler.ir.expressions import Identifier
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
+from hermes_decompiler.ir.terminators import (
+    TerminatorConditionalBranch,
+    TerminatorJump,
+    TerminatorReturn,
+    TerminatorThrow,
+)
 
 
 class SharedTailDuplicationCfgPass:
     _MAX_INSTRUCTIONS = 12
     _MAX_REGION_BLOCKS = 4
+    # The last rung only (`large`): a tail up to this size gets its copy.
+    _LARGE_INSTRUCTIONS = 40
+    _LARGE_REGION_BLOCKS = 10
 
-    def __init__(self, cfg: CFG, regions: bool = False, per_predecessor: bool = False):
+    def __init__(self, cfg: CFG, regions: bool = False, per_predecessor: bool = False, large: bool = False):
         self.cfg = cfg
+        # `large`: the tail may be several times bigger. Only the last rung: raising the limit for every
+        # retry restyled functions the small limit already structured (98/13397 `loadRoute`).
+        self.max_instructions = self._LARGE_INSTRUCTIONS if large else self._MAX_INSTRUCTIONS
+        self.max_region_blocks = self._LARGE_REGION_BLOCKS if large else self._MAX_REGION_BLOCKS
         # `per_predecessor`: a small tail entered by a fall-through AND by jumps, while an EARLIER
         # test of the same chain skips it, gets one private copy per way in (98/2216 `getScriptURL`:
         # `r3 = r5` after the `file://` test). The last resort, run only when nothing else
@@ -54,12 +66,17 @@ class SharedTailDuplicationCfgPass:
         self.regions = regions
 
     def run(self) -> int:
-        if self.cfg.exception_handlers:
-            return 0
+        # A copy sits outside every try range: fine for a tail whose test and ways in all lie outside
+        # them (98/13397 `loadRoute`: the `try` is the first thing of the function, the tail is far behind
+        # it), wrong for anything a handler protects or starts at.
+        protected = self._protected_blocks()
 
         copied = 0
 
         for tail in list(self.cfg.blocks):
+            if protected and not self._same_handlers(tail, protected):
+                continue
+
             faller = self._faller_that_skips(tail)
 
             if faller is not None:
@@ -76,11 +93,42 @@ class SharedTailDuplicationCfgPass:
 
             if self.per_predecessor and self._split_per_predecessor(tail):
                 copied += 1
+                continue
+
+            if self.per_predecessor and self._copy_for_the_second_jumper(tail):
+                copied += 1
 
         return copied
 
+    def _protected_blocks(self) -> dict[BasicBlock, frozenset]:
+        """Block -> the handlers that protect it or start at it (the fragments of a merged range are not looked
+        at: the sets are only ever too big)."""
+        found: dict[BasicBlock, set] = {}
+
+        for number, handler in enumerate(self.cfg.exception_handlers):
+            for block in handler.get("try_blocks", ()):
+                found.setdefault(block, set()).add((number, "try"))
+
+            if handler.get("handler_block") is not None:
+                found.setdefault(handler["handler_block"], set()).add((number, "handler"))
+
+        return {block: frozenset(handlers) for block, handlers in found.items()}
+
+    @staticmethod
+    def _same_handlers(tail: BasicBlock, protected: dict) -> bool:
+        """The tail and every way into it sit under the same handlers (or none). The copy goes right in front
+        of the tail, so it is inside the same try range as the tail and the test that gets it; a tail a way in
+        from OUTSIDE the range reaches, or a handler's own entry, is left alone (98/1738 `getChildNodes`: the
+        loop body of a for-of is the whole range, the push tail and both tests are in it)."""
+        own = protected.get(tail, frozenset())
+
+        if any(kind == "handler" for _, kind in own):
+            return False
+
+        return all(protected.get(pred, frozenset()) == own for pred in tail.predecessors)
+
     def _faller_that_skips(self, tail: BasicBlock) -> BasicBlock | None:
-        if len(tail.instructions) > self._MAX_INSTRUCTIONS or len(tail.predecessors) < 2:
+        if len(tail.instructions) > self.max_instructions or len(tail.predecessors) < 2:
             return None
         if tail.terminator is not None and not isinstance(tail.terminator, TerminatorJump):
             return None
@@ -100,7 +148,12 @@ class SharedTailDuplicationCfgPass:
 
         if not isinstance(branch, TerminatorConditionalBranch) or faller not in tail.predecessors:
             return None
-        if branch.target != tail.successors[0].address or branch.target <= faller.address:
+        if branch.target <= faller.address:
+            return None
+        if branch.target != tail.successors[0].address and not (
+                # A later rung only: at the first ones it changed shapes the plain skip already solved (96/2264).
+                self.regions and self._skips_to_the_other_way(tail, blocks, index, branch)
+        ):
             return None
         if faller.address >= tail.address - 1:
             return None
@@ -117,11 +170,31 @@ class SharedTailDuplicationCfgPass:
 
         return faller
 
+    @staticmethod
+    def _skips_to_the_other_way(tail: BasicBlock, blocks, index: int, branch) -> bool:
+        """The test jumps over the tail to the block right behind it, and that block runs on into the very
+        place the tail jumps to (`if (c) goto B; T: x; jmp END; B: y; END:`, 98/8059 `processPercentage`):
+        both ways meet at `END`, the tail's copy is the test's own `else`."""
+        if index + 1 >= len(blocks):
+            return False
+
+        other = blocks[index + 1]
+        end = tail.successors[0]
+
+        return (
+                other.address == branch.target
+                and list(other.successors) == [end]
+                and list(other.predecessors) == [blocks[index - 1]]
+                and (other.terminator is None or isinstance(other.terminator, TerminatorJump))
+                and other.address > tail.address
+        )
+
     def _give_private_copy(self, faller: BasicBlock, tail: BasicBlock) -> None:
         blocks = self.cfg.blocks
         end = tail.successors[0]
 
         clone = BasicBlock(max(b.id for b in blocks) + 1, tail.address - 1)
+        clone.tail_copy = True  # read by `UnfoldedMergeRepairPass`: its instructions keep the original's addresses
 
         for instruction in tail.instructions:
             duplicate = copy.copy(instruction)
@@ -136,6 +209,9 @@ class SharedTailDuplicationCfgPass:
             clone.terminator = clone.instructions[-1].terminator
         else:
             clone.terminator = TerminatorJump(target=end.address)
+
+        # Read by `LoopStructurer`: the copy is laid out right behind the block that falls into it.
+        clone.follows = faller
 
         faller.successors = [clone if s is tail else s for s in faller.successors]
         tail.predecessors.remove(faller)
@@ -172,14 +248,53 @@ class SharedTailDuplicationCfgPass:
                 break
             region.append(block)
 
-        if not 2 <= len(region) <= self._MAX_REGION_BLOCKS:
-            return None
-
         end = next((b for b in blocks if b.address == branch.target), None)
-        if end is None or end.address != blocks[index + len(region)].address:
+
+        if end is None:
             return None
 
-        if sum(len(b.instructions) for b in region) > self._MAX_INSTRUCTIONS:
+        # The blocks up to `END` are the region when nothing else sits among them (the plain shape); when a
+        # block of another way sits there (`beside` sets `r1 = true` between the tail and `END`, 98/6324),
+        # the region is the run of blocks only the region itself enters, ending in a jump to `END`.
+        candidates = [region]
+
+        plain = end.address == blocks[index + len(region)].address and all(
+            pred in region for block in region[1:] for pred in block.predecessors
+        )
+
+        if not plain:
+            closed = [tail]
+
+            for block in region[1:]:
+                if all(pred in closed for pred in block.predecessors):
+                    closed.append(block)
+                else:
+                    break
+
+            candidates = [closed] if closed != region else []
+
+        for candidate in candidates:
+            found = self._check_region(tail, faller, end, candidate, index, closed=candidate is not region)
+
+            if found is not None:
+                return found
+
+        return None
+
+    def _check_region(self, tail: BasicBlock, faller: BasicBlock, end: BasicBlock, region: list, index: int,
+                      closed: bool):
+        blocks = self.cfg.blocks
+
+        if not 2 <= len(region) <= self.max_region_blocks:
+            return None
+
+        if closed:
+            if not isinstance(region[-1].terminator, TerminatorJump) or region[-1].terminator.target != end.address:
+                return None
+        elif end.address != blocks[index + len(region)].address:
+            return None
+
+        if sum(len(b.instructions) for b in region) > self.max_instructions:
             return None
 
         # Room for one address per copied block between the test and the tail.
@@ -235,7 +350,16 @@ class SharedTailDuplicationCfgPass:
             block: BasicBlock(first_id + n, base + n)
             for n, block in enumerate(region)
         }
+
+        for made in clones.values():
+            made.tail_copy = True
         new_address = {block.address: clones[block].address for block in region}
+
+        # One memo for the whole region: a reader inside it (`r3 = r2` behind the arm that wrote `r2`) holds the
+        # very object its writer holds, and the ternary/merge passes find the readers of an arm's value by that
+        # identity. Copied one by one the copy's reader kept the arm's constant, so the merge's ternary never
+        # reached it and `r1 = r3` printed as `r1 = -1` (98/8193).
+        memo: dict = {}
 
         for block in region:
             clone = clones[block]
@@ -249,8 +373,8 @@ class SharedTailDuplicationCfgPass:
 
             for instruction in block.instructions:
                 duplicate = copy.copy(instruction)
-                duplicate.value = copy.deepcopy(instruction.value)
-                duplicate.statement = copy.deepcopy(instruction.statement)
+                duplicate.value = copy.deepcopy(instruction.value, memo)
+                duplicate.statement = copy.deepcopy(instruction.statement, memo)
                 if instruction.terminator is not None:
                     duplicate.terminator = retargeted
                 clone.instructions.append(duplicate)
@@ -276,6 +400,76 @@ class SharedTailDuplicationCfgPass:
         blocks[position:position] = [clones[b] for b in region]
 
     # -- one copy per way in -------------------------------------------------------
+
+    def _copy_for_the_second_jumper(self, tail: BasicBlock) -> bool:
+        """`if (A) goto T; ...; if (B) goto T; ...; T: x; END:` - two tests jump to the same short tail, which
+        runs on into `END`. `A || B` cannot be one condition when statements of the else arm stand in front of
+        `B` (98/13588 `get`: `r4 = env[1]` is read by the test), so the later test gets its own copy of the tail
+        and the earlier one keeps the original. The last rung only: on a function that structures without it,
+        the copy breaks an `||` chain apart."""
+        blocks = self.cfg.blocks
+
+        if tail not in blocks or len(tail.predecessors) != 2 or not 1 <= len(tail.instructions) <= 6:
+            return False
+
+        # The tail runs on into a block behind it, or it ENDS the function / the path (`return`, `throw`: the
+        # break path of a for-of that sets something and leaves, 98/8693).
+        exits = isinstance(tail.terminator, (TerminatorReturn, TerminatorThrow)) and not tail.successors
+
+        if tail.terminator is not None and not exits and not isinstance(tail.terminator, TerminatorJump):
+            return False
+        if any(i.terminator is not None and i.terminator is not tail.terminator for i in tail.instructions):
+            return False
+        if not exits and (len(tail.successors) != 1 or tail.successors[0].address <= tail.address):
+            return False
+
+        first, second = sorted(tail.predecessors, key=lambda b: b.address)
+
+        for pred in (first, second):
+            terminator = pred.terminator
+            if not isinstance(terminator, TerminatorConditionalBranch):
+                return False
+            if terminator.target != tail.address or terminator.target <= pred.address:
+                return False
+
+        # Nothing falls into the tail: the two jumps are its only ways in, and `second` is a different test.
+        if first is second or any(b.address == tail.address - 1 for b in blocks):
+            return False
+
+        end = None if exits else tail.successors[0]
+        clone = BasicBlock(max(b.id for b in blocks) + 1, tail.address - 1)
+        clone.tail_copy = True  # read by `UnfoldedMergeRepairPass`: its instructions keep the original's addresses
+
+        for instruction in tail.instructions:
+            duplicate = copy.copy(instruction)
+            duplicate.value = copy.deepcopy(instruction.value)
+            duplicate.statement = copy.deepcopy(instruction.statement)
+            duplicate.terminator = copy.copy(
+                instruction.terminator) if exits and instruction.terminator is not None else None
+            clone.instructions.append(duplicate)
+
+        clone.predecessors = [second]
+
+        if exits:
+            clone.terminator = clone.instructions[-1].terminator
+        else:
+            clone.terminator = TerminatorJump(target=end.address)
+            clone.successors = [end]
+            end.predecessors.append(clone)
+
+        retargeted = dataclasses.replace(second.terminator, target=clone.address)
+        for instruction in second.instructions:
+            if instruction.terminator is second.terminator:
+                instruction.terminator = retargeted
+        second.terminator = retargeted
+        second.successors = [clone if s is tail else s for s in second.successors]
+        tail.predecessors.remove(second)
+
+        self._name_the_register_after_the_join(tail, [clone], blocks)
+
+        blocks.insert(blocks.index(tail), clone)
+
+        return True
 
     def _split_per_predecessor(self, tail: BasicBlock) -> bool:
         blocks = self.cfg.blocks
@@ -322,6 +516,7 @@ class SharedTailDuplicationCfgPass:
 
         for n, pred in enumerate(ways):
             clone = BasicBlock(first_id + n, tail.address - len(ways) + n)
+            clone.tail_copy = True
 
             for instruction in tail.instructions:
                 duplicate = copy.copy(instruction)

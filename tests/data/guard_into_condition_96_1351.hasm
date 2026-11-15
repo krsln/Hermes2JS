@@ -1,0 +1,130 @@
+
+=> [Function #1351 "processTransformOrigin" of 505 bytes]: 2 params, frame size=46, strict=1, exc handler=0, debug info=0  @ offset 0x00115cbf
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 25, UInt8: 1>
+==> 00000003: <TypeOf>: <Reg8: 2, Reg8: 25>
+==> 00000006: <LoadConstString>: <Reg8: 1, string_id: 7961>  # String: 'string' (Identifier)
+==> 0000000a: <Mov>: <Reg8: 0, Reg8: 25>
+==> 0000000d: <JStrictNotEqualLong>: <Addr32: 490, Reg8: 2, Reg8: 1>  # Address: 000001f7
+==> 00000014: <CreateRegExp>: <Reg8: 24, string_id: 1990, string_id: 1003, UInt32: 45>  # String: '(top|bottom|left|right|center|\\d+(?:%|px)|0)' (String)  # String: 'gi' (String)
+==> 00000022: <NewArrayWithBuffer>: <Reg8: 23, UInt16: 3, UInt16: 3, UInt16: 18643>  # Array: ['50%', '50%', 0]
+==> 0000002a: <GetEnvironment>: <Reg8: 22, UInt8: 0>
+==> 0000002d: <LoadFromEnvironment>: <Reg8: 21, Reg8: 22, UInt8: 1>
+==> 00000031: <GetByIdShort>: <Reg8: 1, Reg8: 24, UInt8: 1, string_id: 135>  # String: 'exec' (Identifier)
+==> 00000036: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 24, Reg8: 25>
+==> 0000003b: <LoadConstUndefined>: <Reg8: 20>
+==> 0000003d: <LoadConstZero>: <Reg8: 19>
+==> 0000003f: <LoadConstString>: <Reg8: 18, string_id: 2554>  # String: 'Transform-origin %s can only be used for x-position' (String)
+==> 00000043: <LoadConstString>: <Reg8: 17, string_id: 842>  # String: '100%' (String)
+==> 00000047: <LoadConstString>: <Reg8: 16, string_id: 74>  # String: 'left' (Identifier)
+==> 0000004b: <LoadConstString>: <Reg8: 15, string_id: 584>  # String: '50%' (String)
+==> 0000004f: <LoadConstFalse>: <Reg8: 14>
+==> 00000051: <LoadConstString>: <Reg8: 13, string_id: 1803>  # String: 'Could not parse transform-origin: %s' (String)
+==> 00000055: <LoadConstString>: <Reg8: 12, string_id: 8612>  # String: 'center' (Identifier)
+==> 00000059: <LoadConstString>: <Reg8: 11, string_id: 75>  # String: 'right' (Identifier)
+==> 0000005d: <LoadConstNull>: <Reg8: 10>
+==> 0000005f: <LoadConstString>: <Reg8: 9, string_id: 4130>  # String: 'Transform-origin %s can only be used for y-position' (String)
+==> 00000063: <LoadConstString>: <Reg8: 8, string_id: 73>  # String: 'top' (Identifier)
+==> 00000067: <LoadConstString>: <Reg8: 7, string_id: 4133>  # String: 'Transform-origin value %s cannot be used for z-position' (String)
+==> 0000006b: <GetGlobalObject>: <Reg8: 6>
+==> 0000006d: <LoadConstString>: <Reg8: 5, string_id: 844>  # String: '%' (String)
+==> 00000071: <LoadConstString>: <Reg8: 4, string_id: 76>  # String: 'bottom' (Identifier)
+==> 00000075: <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
+==> 00000078: <LoadConstUndefined>: <Reg8: 2>
+==> 0000007a: <Mov>: <Reg8: 0, Reg8: 23>
+==> 0000007d: <JmpFalseLong>: <Addr32: 378, Reg8: 1>  # Address: 000001f7
+==> 00000083: <Add>: <Reg8: 29, Reg8: 21, Reg8: 3>
+==> 00000087: <GetByVal>: <Reg8: 33, Reg8: 1, Reg8: 19>
+==> 0000008b: <GetByIdShort>: <Reg8: 26, Reg8: 33, UInt8: 2, string_id: 209>  # String: 'toLowerCase' (Identifier)
+==> 00000090: <Call1>: <Reg8: 32, Reg8: 26, Reg8: 33>
+==> 00000094: <Mov>: <Reg8: 34, Reg8: 21>
+==> 00000097: <Mov>: <Reg8: 26, Reg8: 2>
+==> 0000009a: <JStrictEqualLong>: <Addr32: 277, Reg8: 16, Reg8: 32>  # Address: 000001af
+==> 000000a1: <JStrictEqualLong>: <Addr32: 270, Reg8: 11, Reg8: 32>  # Address: 000001af
+==> 000000a8: <JStrictEqual>: <Addr8: 105, Reg8: 8, Reg8: 32>  # Address: 00000111
+==> 000000ac: <JStrictEqual>: <Addr8: 101, Reg8: 4, Reg8: 32>  # Address: 00000111
+==> 000000b0: <JStrictEqual>: <Addr8: 58, Reg8: 12, Reg8: 32>  # Address: 000000ea
+==> 000000b4: <GetByIdShort>: <Reg8: 27, Reg8: 33, UInt8: 3, string_id: 130>  # String: 'endsWith' (Identifier)
+==> 000000b9: <Call2>: <Reg8: 27, Reg8: 27, Reg8: 33, Reg8: 5>
+==> 000000be: <JmpTrue>: <Addr8: 29, Reg8: 27>  # Address: 000000db
+==> 000000c1: <TryGetById>: <Reg8: 27, Reg8: 6, UInt8: 4, string_id: 191>  # String: 'parseFloat' (Identifier)
+==> 000000c7: <Call2>: <Reg8: 27, Reg8: 27, Reg8: 20, Reg8: 33>
+==> 000000cc: <PutByVal>: <Reg8: 23, Reg8: 34, Reg8: 27>
+==> 000000d0: <Mov>: <Reg8: 28, Reg8: 29>
+==> 000000d3: <Mov>: <Reg8: 27, Reg8: 26>
+==> 000000d6: <JmpLong>: <Addr32: 264>  # Address: 000001de
+==> 000000db: <PutByVal>: <Reg8: 23, Reg8: 34, Reg8: 33>
+==> 000000df: <Mov>: <Reg8: 28, Reg8: 29>
+==> 000000e2: <Mov>: <Reg8: 27, Reg8: 26>
+==> 000000e5: <JmpLong>: <Addr32: 249>  # Address: 000001de
+==> 000000ea: <LoadFromEnvironment>: <Reg8: 30, Reg8: 22, UInt8: 0>
+==> 000000ee: <GetByIdShort>: <Reg8: 31, Reg8: 30, UInt8: 5, string_id: 107>  # String: 'default' (Identifier)
+==> 000000f3: <LoadFromEnvironment>: <Reg8: 30, Reg8: 22, UInt8: 3>
+==> 000000f7: <StrictNeq>: <Reg8: 30, Reg8: 34, Reg8: 30>
+==> 000000fb: <Call4>: <Reg8: 30, Reg8: 31, Reg8: 20, Reg8: 30, Reg8: 7, Reg8: 33>
+==> 00000102: <PutByVal>: <Reg8: 23, Reg8: 34, Reg8: 15>
+==> 00000106: <Mov>: <Reg8: 28, Reg8: 29>
+==> 00000109: <Mov>: <Reg8: 27, Reg8: 26>
+==> 0000010c: <JmpLong>: <Addr32: 210>  # Address: 000001de
+==> 00000111: <LoadFromEnvironment>: <Reg8: 30, Reg8: 22, UInt8: 0>
+==> 00000115: <GetByIdShort>: <Reg8: 31, Reg8: 30, UInt8: 5, string_id: 107>  # String: 'default' (Identifier)
+==> 0000011a: <LoadFromEnvironment>: <Reg8: 30, Reg8: 22, UInt8: 3>
+==> 0000011e: <StrictNeq>: <Reg8: 30, Reg8: 34, Reg8: 30>
+==> 00000122: <Call4>: <Reg8: 30, Reg8: 31, Reg8: 20, Reg8: 30, Reg8: 9, Reg8: 33>
+==> 00000129: <LoadFromEnvironment>: <Reg8: 31, Reg8: 22, UInt8: 2>
+==> 0000012d: <Mov>: <Reg8: 30, Reg8: 17>
+==> 00000130: <JStrictNotEqual>: <Addr8: 6, Reg8: 32, Reg8: 8>  # Address: 00000136
+==> 00000134: <LoadConstZero>: <Reg8: 30>
+==> 00000136: <PutByVal>: <Reg8: 23, Reg8: 31, Reg8: 30>
+==> 0000013a: <LoadFromEnvironment>: <Reg8: 30, Reg8: 22, UInt8: 1>
+==> 0000013e: <Mov>: <Reg8: 28, Reg8: 29>
+==> 00000141: <Mov>: <Reg8: 27, Reg8: 26>
+==> 00000144: <JStrictNotEqualLong>: <Addr32: 154, Reg8: 34, Reg8: 30>  # Address: 000001de
+==> 0000014b: <GetByIdShort>: <Reg8: 30, Reg8: 24, UInt8: 1, string_id: 135>  # String: 'exec' (Identifier)
+==> 00000150: <Call2>: <Reg8: 30, Reg8: 30, Reg8: 24, Reg8: 25>
+==> 00000155: <Mov>: <Reg8: 0, Reg8: 23>
+==> 00000158: <JEqualLong>: <Addr32: 159, Reg8: 30, Reg8: 10>  # Address: 000001f7
+==> 0000015f: <GetByVal>: <Reg8: 35, Reg8: 30, Reg8: 19>
+==> 00000163: <GetByIdShort>: <Reg8: 31, Reg8: 35, UInt8: 2, string_id: 209>  # String: 'toLowerCase' (Identifier)
+==> 00000168: <Call1>: <Reg8: 31, Reg8: 31, Reg8: 35>
+==> 0000016c: <JStrictEqual>: <Addr8: 50, Reg8: 16, Reg8: 31>  # Address: 0000019e
+==> 00000170: <JStrictEqual>: <Addr8: 36, Reg8: 11, Reg8: 31>  # Address: 00000194
+==> 00000174: <JStrictEqual>: <Addr8: 22, Reg8: 12, Reg8: 31>  # Address: 0000018a
+==> 00000178: <LoadFromEnvironment>: <Reg8: 31, Reg8: 22, UInt8: 0>
+==> 0000017c: <GetByIdShort>: <Reg8: 31, Reg8: 31, UInt8: 5, string_id: 107>  # String: 'default' (Identifier)
+==> 00000181: <Call4>: <Reg8: 31, Reg8: 31, Reg8: 20, Reg8: 14, Reg8: 13, Reg8: 25>
+==> 00000188: <Jmp>: <Addr8: 30>  # Address: 000001a6
+==> 0000018a: <LoadFromEnvironment>: <Reg8: 31, Reg8: 22, UInt8: 1>
+==> 0000018e: <PutByVal>: <Reg8: 23, Reg8: 31, Reg8: 15>
+==> 00000192: <Jmp>: <Addr8: 20>  # Address: 000001a6
+==> 00000194: <LoadFromEnvironment>: <Reg8: 31, Reg8: 22, UInt8: 1>
+==> 00000198: <PutByVal>: <Reg8: 23, Reg8: 31, Reg8: 17>
+==> 0000019c: <Jmp>: <Addr8: 10>  # Address: 000001a6
+==> 0000019e: <LoadFromEnvironment>: <Reg8: 31, Reg8: 22, UInt8: 1>
+==> 000001a2: <PutByVal>: <Reg8: 23, Reg8: 31, Reg8: 19>
+==> 000001a6: <LoadFromEnvironment>: <Reg8: 28, Reg8: 22, UInt8: 3>
+==> 000001aa: <Mov>: <Reg8: 27, Reg8: 30>
+==> 000001ad: <Jmp>: <Addr8: 49>  # Address: 000001de
+==> 000001af: <LoadFromEnvironment>: <Reg8: 30, Reg8: 22, UInt8: 0>
+==> 000001b3: <GetByIdShort>: <Reg8: 31, Reg8: 30, UInt8: 5, string_id: 107>  # String: 'default' (Identifier)
+==> 000001b8: <LoadFromEnvironment>: <Reg8: 30, Reg8: 22, UInt8: 1>
+==> 000001bc: <StrictEq>: <Reg8: 30, Reg8: 34, Reg8: 30>
+==> 000001c0: <Call4>: <Reg8: 30, Reg8: 31, Reg8: 20, Reg8: 30, Reg8: 18, Reg8: 33>
+==> 000001c7: <LoadFromEnvironment>: <Reg8: 31, Reg8: 22, UInt8: 1>
+==> 000001cb: <Mov>: <Reg8: 30, Reg8: 17>
+==> 000001ce: <JStrictNotEqual>: <Addr8: 6, Reg8: 32, Reg8: 16>  # Address: 000001d4
+==> 000001d2: <LoadConstZero>: <Reg8: 30>
+==> 000001d4: <PutByVal>: <Reg8: 23, Reg8: 31, Reg8: 30>
+==> 000001d8: <Mov>: <Reg8: 28, Reg8: 29>
+==> 000001db: <Mov>: <Reg8: 27, Reg8: 26>
+==> 000001de: <GetByIdShort>: <Reg8: 26, Reg8: 24, UInt8: 1, string_id: 135>  # String: 'exec' (Identifier)
+==> 000001e3: <Call2>: <Reg8: 1, Reg8: 26, Reg8: 24, Reg8: 25>
+==> 000001e8: <Mov>: <Reg8: 21, Reg8: 28>
+==> 000001eb: <Mov>: <Reg8: 2, Reg8: 27>
+==> 000001ee: <Mov>: <Reg8: 0, Reg8: 23>
+==> 000001f1: <JmpTrueLong>: <Addr32: -366, Reg8: 1>  # Address: 00000083
+==> 000001f7: <Ret>: <Reg8: 0>
+
+

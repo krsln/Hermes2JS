@@ -1,0 +1,82 @@
+
+=> [Function #13533 "?anon_0_startAnimating" of 270 bytes]: 1 params, frame size=19, strict=1, exc handler=1, debug info=0  @ offset 0x0025ae9b
+  [Exception handlers: [start=0x27, end=0x4a, target=0xd0] [start=0x52, end=0x59, target=0xd0] [start=0x65, end=0xa8, target=0xd0] [start=0xb4, end=0xbb, target=0xd0] [start=0xc7, end=0xd0, target=0xd0] ]
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 1>
+==> 00000007: <Mov>: <Reg8: 2, Reg8: 0>
+==> 0000000a: <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
+==> 0000000d: <JStrictEqualLong>: <Addr32: 239, Reg8: 0, Reg8: 4>  # Address: 000000fc
+==> 00000014: <LoadParam>: <Reg8: 0, UInt8: 2>
+==> 00000017: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 0000001a: <Mov>: <Reg8: 5, Reg8: 2>
+==> 0000001d: <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
+==> 00000020: <JStrictEqualLong>: <Addr32: 187, Reg8: 5, Reg8: 6>  # Address: 000000db
+==> 00000027: <Mov>: <Reg8: 2, Reg8: 4>
+==> 0000002a: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 4>
+==> 0000002e: <LoadFromEnvironment>: <Reg8: 7, Reg8: 1, UInt8: 2>
+==> 00000032: <LoadConstZero>: <Reg8: 5>
+==> 00000034: <JStrictEqual>: <Addr8: 58, Reg8: 5, Reg8: 7>  # Address: 0000006e
+==> 00000038: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 0000003b: <JStrictEqual>: <Addr8: 42, Reg8: 3, Reg8: 5>  # Address: 00000065
+==> 0000003f: <JStrictEqual>: <Addr8: 19, Reg8: 3, Reg8: 4>  # Address: 00000052
+==> 00000043: <Mov>: <Reg8: 2, Reg8: 6>
+==> 00000046: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 6>
+==> 0000004a: <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
+==> 00000050: <Ret>: <Reg8: 5>
+==> 00000052: <Mov>: <Reg8: 2, Reg8: 6>
+==> 00000055: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 6>
+==> 00000059: <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
+==> 0000005f: <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 0, UInt8: 0>
+==> 00000063: <Ret>: <Reg8: 5>
+==> 00000065: <Mov>: <Reg8: 2, Reg8: 6>
+==> 00000068: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 6>
+==> 0000006c: <Throw>: <Reg8: 0>
+==> 0000006e: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 00000071: <JStrictEqual>: <Addr8: 86, Reg8: 3, Reg8: 5>  # Address: 000000c7
+==> 00000075: <JStrictEqual>: <Addr8: 63, Reg8: 3, Reg8: 4>  # Address: 000000b4
+==> 00000079: <LoadFromEnvironment>: <Reg8: 7, Reg8: 1, UInt8: 0>
+==> 0000007d: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 0, string_id: 6790>  # String: 'nativeViewRef' (Identifier)
+==> 00000083: <GetByIdShort>: <Reg8: 9, Reg8: 7, UInt8: 1, string_id: 57>  # String: 'current' (Identifier)
+==> 00000088: <LoadConstNull>: <Reg8: 7>
+==> 0000008a: <Eq>: <Reg8: 8, Reg8: 9, Reg8: 7>
+==> 0000008e: <LoadConstUndefined>: <Reg8: 7>
+==> 00000090: <JmpTrue>: <Addr8: 13, Reg8: 8>  # Address: 0000009d
+==> 00000093: <GetById>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 8484>  # String: 'startAnimating' (Identifier)
+==> 00000099: <Call1>: <Reg8: 7, Reg8: 8, Reg8: 9>
+==> 0000009d: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 5>
+==> 000000a1: <Mov>: <Reg8: 2, Reg8: 5>
+==> 000000a4: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 5>
+==> 000000a8: <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18061>  # Object: {'value': null, 'done': false}
+==> 000000ae: <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 7, UInt8: 0>
+==> 000000b2: <Ret>: <Reg8: 5>
+==> 000000b4: <Mov>: <Reg8: 2, Reg8: 6>
+==> 000000b7: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 6>
+==> 000000bb: <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
+==> 000000c1: <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 0, UInt8: 0>
+==> 000000c5: <Ret>: <Reg8: 5>
+==> 000000c7: <Mov>: <Reg8: 2, Reg8: 6>
+==> 000000ca: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 6>
+==> 000000ce: <Throw>: <Reg8: 0>
+==> 000000d0: <Catch>: <Reg8: 5>
+==> 000000d2: <Mov>: <Reg8: 2, Reg8: 6>
+==> 000000d5: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 6>
+==> 000000d9: <Throw>: <Reg8: 5>
+==> 000000db: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 000000de: <JStrictEqual>: <Addr8: 28, Reg8: 3, Reg8: 5>  # Address: 000000fa
+==> 000000e2: <JStrictEqual>: <Addr8: 12, Reg8: 3, Reg8: 4>  # Address: 000000ee
+==> 000000e6: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
+==> 000000ec: <Ret>: <Reg8: 3>
+==> 000000ee: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
+==> 000000f4: <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 0, UInt8: 0>
+==> 000000f8: <Ret>: <Reg8: 3>
+==> 000000fa: <Throw>: <Reg8: 0>
+==> 000000fc: <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
+==> 000000ff: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000102: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 0>
+==> 00000106: <LoadConstString>: <Reg8: 10, string_id: 3340>  # String: 'Generator functions may not be called on executing generators' (String)
+==> 0000010a: <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+
+

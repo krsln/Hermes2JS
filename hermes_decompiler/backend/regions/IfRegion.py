@@ -10,6 +10,11 @@ class IfRegion(Region):
 
         self.condition: Expression | None = None
 
+        # The block whose conditional branch this region replaced (set by `_DominanceIfBuilder`). The block itself
+        # is left empty and dropped from the tree, so this is the only trace of it: the try structurer looks for
+        # the block a catch merges into by identity (98/171).
+        self.source_block = None
+
         self._then_body = SequenceRegion()
         self._then_body.parent = self
 

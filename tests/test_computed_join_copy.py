@@ -39,4 +39,6 @@ def test_a_copy_on_another_arm_reads_the_register_not_the_forward_ref_string():
 
     # Seven arms read it before the fix; only the two inside the `ForwardRef` arm are left.
     assert code.count(_GARBAGE) <= 2
-    assert code.count("r1 = r3;") >= 4
+    # Each such arm ends in `r1 = r3; return r1`, or in `return r3` once the shared closing `return` is
+    # copied into the jumpers (F-10(b)); the value is the register either way.
+    assert code.count("r1 = r3;") + code.count("return r3;") >= 4

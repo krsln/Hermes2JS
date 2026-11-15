@@ -12,7 +12,7 @@ from hermes_decompiler.backend.transforms.shared._repoint import _contains, _rea
     sibling_arm_instructions
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
-from hermes_decompiler.ir.expressions import ConditionalExpression, Identifier, ThisPlaceholder
+from hermes_decompiler.ir.expressions import ConditionalExpression, Identifier, StringLiteral, ThisPlaceholder
 from hermes_decompiler.ir.terminators import TerminatorReturn, TerminatorThrow
 from ._base import RegionPass
 
@@ -158,6 +158,7 @@ class UnfoldedMergeRepairPass(RegionPass):
 
     def run(self) -> None:
         self._index = None
+        self._sibling_body = None
         self._made: set[int] = set()  # ids of the replacement identifiers this pass created
 
         collector = _IfCollector()
@@ -174,6 +175,7 @@ class UnfoldedMergeRepairPass(RegionPass):
             if not arm_blocks:
                 continue
 
+            self._sibling_body = if_region.else_body if body is if_region.then_body else if_region.then_body
             arm_instructions = [i for blk in arm_blocks for i in blk.instructions]
             other_blocks = set(_blocks_of(if_region.then_body)) | set(_blocks_of(if_region.else_body))
             arm_set = set(arm_instructions)
@@ -288,12 +290,26 @@ class UnfoldedMergeRepairPass(RegionPass):
         # is the inner part of the update path's chain, which then read the mount path's `r19`).
         # Two arms cannot run one after the other (outside a loop).
         other_arm = sibling_arm_instructions(self.graph.root, write)
+        # Nor one the write can never reach: the register is unset on that path (96/43 `formatValue`:
+        # the same `": " + name` laid out on a second path read `r15`, which only the first path sets).
+        # (`false`/`null`/numbers/names are left alone: unrelated flags and registers share them, and the
+        # flow cannot tell whose value a loop-carried reader holds, `!r5` read `!false`.)
+        reaches = None
+
+        if not isinstance(old_value, TRIVIAL_NODE_TYPES) or isinstance(old_value, StringLiteral):
+            reaches = self._reader_reachability(write, strict=isinstance(old_value, StringLiteral))
+
+        def reader_value(reader):
+            if reader in other_arm or (reaches is not None and not reaches(reader)):
+                return old_value
+
+            return replacement
 
         repoint_references(
             self.cfg, self.graph.root, old_value, replacement,
             min_block_id=min(b.id for b in arm_blocks),
             exclude=arm_set,
-            reader_value=None if not other_arm else (lambda reader: old_value if reader in other_arm else replacement),
+            reader_value=reader_value if other_arm or reaches is not None else None,
         )
 
         self._index = None
@@ -311,7 +327,23 @@ class UnfoldedMergeRepairPass(RegionPass):
             if i.address < write.address and i.dest_reg == write.dest_reg and i.value is not None
         ]
 
-        return bool(earlier) and prints_definition(max(earlier, key=lambda i: i.address))
+        if earlier and prints_definition(max(earlier, key=lambda i: i.address)):
+            return True
+
+        # The other arm of the same `if` is the default when it always writes the register and that write prints
+        # (`if (a && b) { r3 = x } else { r3 = new Set() }`: the `&&` used to be an outer `if`, whose else arm
+        # was the earlier write, 96/7898).
+        sibling = self._sibling_body
+
+        if sibling is None or not _always_assigns(sibling, write.dest_reg):
+            return False
+
+        last = [
+            i for blk in _blocks_of(sibling) for i in blk.instructions
+            if i.dest_reg == write.dest_reg and i.value is not None
+        ]
+
+        return bool(last) and prints_definition(max(last, key=lambda i: i.address))
 
     def _repoint_copies_of_printed_write(self, write, arm_set, region_blocks, arm_blocks, is_last) -> None:
         """Readers outside the `if` that hold the printed arm write's value
@@ -355,7 +387,7 @@ class UnfoldedMergeRepairPass(RegionPass):
         self._index = None
         logger.debug("unfolded merge: copies of printed r%s after the if read the register", write.dest_reg)
 
-    def _reader_reachability(self, write):
+    def _reader_reachability(self, write, strict: bool = False):
         """A predicate: can `write` run before this instruction? None when the flow is unknown."""
         if self._snapshot is None:
             return None
@@ -377,8 +409,69 @@ class UnfoldedMergeRepairPass(RegionPass):
                     reachable.add(successor)
                     todo.append(successor)
 
-        # An instruction the snapshot does not know (made after it) is read as reachable.
-        return lambda reader: block_of.get(reader) is None or block_of[reader] in reachable
+        # A COPY of a tail (made after the snapshot) is as reachable as the original it was cut from, which
+        # the address tells; an instruction with no original at all is read as reachable.
+        by_address: dict[int, list[int]] = {}
+
+        for block_id, _, instructions in self._snapshot.blocks:
+            for i in instructions:
+                by_address.setdefault(i.address, []).append(block_id)
+
+        # A shared literal (`false`, `": "`) says little about which write a reader holds, and the snapshot's
+        # edges miss the `finally` paths: a reader is only cut off from it when the flow as it stands now
+        # agrees (a loop flag `!r5` read `!false`).
+        now = {id(i): blk for blk in self.cfg.blocks for i in blk.instructions}
+        start = now.get(id(write))
+        ahead: set[int] = set()
+
+        if strict and start is not None:
+            todo = [start]
+
+            while todo:
+                for successor in todo.pop().successors:
+                    if id(successor) not in ahead:
+                        ahead.add(id(successor))
+                        todo.append(successor)
+
+        def on_a_cycle(block) -> bool:
+            # a loop carries a write round to every reader in it, whatever the edges the snapshot kept
+            seen: set[int] = set()
+            todo = list(block.successors)
+
+            while todo:
+                nxt = todo.pop()
+
+                if nxt is block:
+                    return True
+
+                if id(nxt) not in seen:
+                    seen.add(id(nxt))
+                    todo.extend(nxt.successors)
+
+            return False
+
+        def reachable_reader(reader) -> bool:
+            if reader in block_of:
+                if block_of[reader] in reachable or not strict or start is None:
+                    return block_of[reader] in reachable
+
+                home = now.get(id(reader))
+
+                return home is None or home is start or id(home) in ahead or on_a_cycle(home)
+
+            homes = by_address.get(reader.address)
+
+            if not homes or any(home in reachable for home in homes):
+                return True
+
+            if not strict or start is None:
+                return False
+
+            home = now.get(id(reader))
+
+            return home is None or home is start or id(home) in ahead
+
+        return reachable_reader
 
     _MOV_SOURCE_RE = re.compile(r"Reg(?:8|32):\s*\d+,\s*Reg(?:8|32):\s*(\d+)")
 
@@ -560,12 +653,50 @@ class UnfoldedMergeRepairPass(RegionPass):
     def _named_after_the_if(self, write, region_blocks) -> bool:
         """Does code after the `if` read `write`'s register BY NAME, before
         anything writes it again?"""
+        # A `catch` laid out behind the code after the `if` (a `try` inside the arm: 98/2676, 96/9338) is not
+        # where the arm ends: its blocks sit at higher addresses than the reader, which would never be "after".
+        handlers = set()
+        stack = [h["handler_block"] for h in self.cfg.exception_handlers if h.get("handler_block") in region_blocks]
+
+        while stack:
+            blk = stack.pop()
+
+            if blk in handlers:
+                continue
+            handlers.add(blk)
+            stack.extend(nxt for nxt in blk.successors if nxt in region_blocks)
+
         end = max(
-            (i.address for blk in region_blocks for i in blk.instructions),
+            (i.address for blk in region_blocks if blk not in handlers for i in blk.instructions),
             default=write.address,
         )
 
-        return _reads_register_by_name(self.cfg, write.dest_reg, end, root=self.graph.root)
+        # A COPY of a tail (SharedTailDuplicationCfgPass) keeps its original's instruction addresses, so the
+        # copy on the other path reads `r3` "after" this arm by address. Only what the arm can reach reads
+        # its value (98/8193: the copy's `r1 = r3` kept the original's `r1 = r3` from being repointed).
+        reachable = set(region_blocks)
+        todo = list(region_blocks)
+
+        while todo:
+            block = todo.pop()
+
+            for successor in [*block.successors, *self._snapshot_handlers(block)]:
+                if successor not in reachable:
+                    reachable.add(successor)
+                    todo.append(successor)
+
+        cut_off = tuple(b for b in self.cfg.blocks if b not in reachable and getattr(b, "tail_copy", False))
+
+        return _reads_register_by_name(
+            self.cfg, write.dest_reg, end, root=self.graph.root, ignore_blocks=(*region_blocks, *cut_off)
+        )
+
+    def _snapshot_handlers(self, block) -> list:
+        """The catch entries a block of a try range can run into (edges the CFG does not carry)."""
+        return [
+            handler["handler_block"] for handler in self.cfg.exception_handlers
+            if block in handler.get("try_blocks", ()) and handler.get("handler_block") is not None
+        ]
 
     def _reprint_default_for_printed_write(self, if_region, write, region_blocks) -> None:
         """`rN = d; if (c) { rN = v }; ...rN...` where `rN = v` prints: when `c`

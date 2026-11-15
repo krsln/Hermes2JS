@@ -8,7 +8,7 @@ from hermes_decompiler.backend.regions import (
     SequenceRegion,
     TryRegion,
 )
-from hermes_decompiler.backend.transforms.shared import negate_condition, is_loop_guard_shaped
+from hermes_decompiler.backend.transforms.shared import negate_condition, is_loop_guard_shaped, prints_definition
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import LogicalOperator
@@ -342,6 +342,13 @@ class _CompoundConditionFolder:
 
         if (
                 target_block is not None
+                and not left_to_the_switch
+                and self._fold_into_sibling_condition(region, index, block, branch, target_block)
+        ):
+            return True
+
+        if (
+                target_block is not None
                 # A `case` test's shared target is `SwitchStructurer`'s business -
                 # when it sits next to another `case` test. A lone comparison is an `if`.
                 and not left_to_the_switch
@@ -432,6 +439,53 @@ class _CompoundConditionFolder:
                 self._fold_all(then_body, frozenset())
             finally:
                 self._in_built_arm = saved
+
+        return True
+
+    def _fold_into_sibling_condition(self, region, index: int, block, branch, target_block) -> bool:
+        """`if (A) { X } else { if (C) goto X; REST }` is `if (A || C) { X } else { REST }`.
+
+        The residual test is the first thing of the else arm and jumps to the ENTRY of the then arm: both tests
+        lead to `X`, and `C` is only evaluated when `A` failed. Only unprinted set-up may stand in front of it
+        (98/7633 `resolveTransition`: `if (param1) {X} else { if (typeof param2 !== "number") goto X; ... }`)."""
+        outer = getattr(region, "parent", None)
+
+        if (
+                not isinstance(outer, IfRegion)
+                or outer.else_body is not region
+                or outer.condition is None
+                or outer.then_body is None
+                or target_block not in outer.then_body.covered_blocks
+                or index + 1 >= len(region.children)
+        ):
+            return False
+
+        entries = [b.address for b in outer.then_body.covered_blocks if b.address >= 0]
+
+        if not entries or min(entries) != target_block.address:
+            return False
+
+        # A definition that prints (`r2 = r1.length`) is a statement too: the test would run before it.
+        if any(i.statement is not None or prints_definition(i) for i in block.instructions[:-1]) or any(
+                not isinstance(item, BasicBlock)
+                or any(i.statement is not None or i.terminator is not None or prints_definition(i)
+                       for i in item.instructions)
+                for item in region.children[:index]
+        ):
+            return False
+
+        if not branch.condition.structurally_equal(outer.condition):
+            outer.condition = BinaryExpression(left=outer.condition, operator=LogicalOperator.OR,
+                                               right=branch.condition)
+
+        if block.instructions and block.instructions[-1].terminator is branch:
+            block.instructions.pop()
+
+        block.terminator = None
+
+        if not block.instructions:
+            self.graph.splice_out(region, index, index + 1)
+            self.graph.block_owner.pop(block, None)
 
         return True
 

@@ -1,0 +1,54 @@
+
+=> [Function #2304 "sendAccessibilityEvent" of 193 bytes]: 3 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x00164a75
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 7, UInt8: 2>
+==> 00000003: <LoadConstString>: <Reg8: 5, string_id: 7788>  # String: 'focus' (Identifier)
+==> 00000007: <LoadConstUInt8>: <Reg8: 0, UInt8: 8>
+==> 0000000a: <JStrictEqual>: <Addr8: 79, Reg8: 7, Reg8: 0>  # Address: 00000059
+==> 0000000e: <LoadConstString>: <Reg8: 5, string_id: 819>  # String: 'windowStateChange' (String)
+==> 00000012: <LoadConstUInt8>: <Reg8: 0, UInt8: 32>
+==> 00000015: <JStrictEqual>: <Addr8: 68, Reg8: 7, Reg8: 0>  # Address: 00000059
+==> 00000019: <LoadConstString>: <Reg8: 5, string_id: 5257>  # String: 'click' (String)
+==> 0000001d: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 00000020: <JStrictEqual>: <Addr8: 57, Reg8: 7, Reg8: 0>  # Address: 00000059
+==> 00000024: <LoadConstString>: <Reg8: 5, string_id: 2490>  # String: 'viewHoverEnter' (String)
+==> 00000028: <LoadConstUInt8>: <Reg8: 0, UInt8: 128>
+==> 0000002b: <JStrictEqual>: <Addr8: 46, Reg8: 7, Reg8: 0>  # Address: 00000059
+==> 0000002f: <GetGlobalObject>: <Reg8: 2>
+==> 00000031: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000037: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 140>  # String: 'error' (Identifier)
+==> 0000003c: <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000042: <GetByIdShort>: <Reg8: 6, Reg8: 2, UInt8: 3, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000047: <LoadConstString>: <Reg8: 2, string_id: 6345>  # String: 'sendAccessibilityEvent() dropping event: Called with unsupported eventType: ' (String)
+==> 0000004b: <Call2>: <Reg8: 2, Reg8: 6, Reg8: 2, Reg8: 7>
+==> 00000050: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000055: <LoadConstUndefined>: <Reg8: 1>
+==> 00000057: <Ret>: <Reg8: 1>
+==> 00000059: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 0000005c: <LoadParam>: <Reg8: 9, UInt8: 1>
+==> 0000005f: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 3>
+==> 00000063: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 115>  # String: 'default' (Identifier)
+==> 00000068: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 2>
+==> 0000006c: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 5, string_id: 10534>  # String: 'getFabricUIManager' (Identifier)
+==> 00000072: <LoadConstUndefined>: <Reg8: 1>
+==> 00000074: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
+==> 00000078: <Call2>: <Reg8: 4, Reg8: 3, Reg8: 1, Reg8: 2>
+==> 0000007d: <GetById>: <Reg8: 2, Reg8: 4, UInt8: 6, string_id: 16917>  # String: 'findShadowNodeByTag_DEPRECATED' (Identifier)
+==> 00000083: <Call2>: <Reg8: 3, Reg8: 2, Reg8: 4, Reg8: 9>
+==> 00000088: <JmpTrue>: <Addr8: 43, Reg8: 3>  # Address: 000000b3
+==> 0000008b: <GetGlobalObject>: <Reg8: 2>
+==> 0000008d: <TryGetById>: <Reg8: 7, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000093: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 140>  # String: 'error' (Identifier)
+==> 00000098: <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 0000009e: <GetByIdShort>: <Reg8: 8, Reg8: 2, UInt8: 3, string_id: 105>  # String: 'concat' (Identifier)
+==> 000000a3: <LoadConstString>: <Reg8: 2, string_id: 1577>  # String: 'sendAccessibilityEvent() dropping event: Cannot find view with tag #' (String)
+==> 000000a7: <Call2>: <Reg8: 2, Reg8: 8, Reg8: 2, Reg8: 9>
+==> 000000ac: <Call2>: <Reg8: 2, Reg8: 6, Reg8: 7, Reg8: 2>
+==> 000000b1: <Ret>: <Reg8: 1>
+==> 000000b3: <GetById>: <Reg8: 2, Reg8: 4, UInt8: 7, string_id: 14013>  # String: 'sendAccessibilityEvent' (Identifier)
+==> 000000b9: <Call3>: <Reg8: 2, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 5>
+==> 000000bf: <Ret>: <Reg8: 1>
+
+

@@ -11,6 +11,7 @@ from hermes_decompiler.backend.transforms.shared import negate_condition, is_loo
 from hermes_decompiler.backend.transforms.structurers import RegionStructurer
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.ir.statements import BreakStatement
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorReturn
 from ._predicates import (
     is_backward_branch, is_constant_comparison, is_typeof_test, representative_block, same_case_subject,
@@ -66,10 +67,22 @@ class _DominanceIfBuilder(RegionStructurer):
     def __init__(self, graph, cfg):
         super().__init__(graph, cfg)
 
-        self._address_to_block: dict[int, BasicBlock] = {
-            block.address: block
-            for block in cfg.blocks
-        }
+        self._address_to_block: dict[int, BasicBlock] = {}
+
+        for block in cfg.blocks:
+            known = self._address_to_block.get(block.address)
+
+            # A bare `break` split off a loop block carries that block's address (LoopBreakStructurer,
+            # shape D): a jump to the address means the block, never the break (98/14187 `onStart`).
+            if known is None or not self._is_bare_break(block):
+                self._address_to_block[block.address] = block
+
+    @staticmethod
+    def _is_bare_break(block: BasicBlock) -> bool:
+        return (
+                len(block.instructions) == 1
+                and isinstance(getattr(block.instructions[0], "statement", None), BreakStatement)
+        )
 
     # -------------------------------------------------------------
 
@@ -323,6 +336,18 @@ class _DominanceIfBuilder(RegionStructurer):
                         and self._arm_runs_into(then_entry, goto_block, block, outside_loops=True)
                 )
                 or (
+                        # `if (a) { ...; if (!ok) throw e; } return body`: the arm's own test jumps to
+                        # a `return` that is a whole body (98/9633: the object built after the
+                        # `signal` check), and the arm ends in a `throw` otherwise. The body follows
+                        # the `if`; as an `else` arm it would be reached by a `goto` from the test.
+                        merge_block is None
+                        and not goto_block.successors
+                        and isinstance(goto_block.terminator, TerminatorReturn)
+                        and len(goto_block.instructions) > 2
+                        and not self._reaches_itself(then_entry)
+                        and self._arm_tests_into(then_entry, goto_block)
+                )
+                or (
                         # `if (n > 0) { for (...) { ... } } tail`: the loop the guard
                         # skips ends into the very code the guard jumps to (its exit
                         # edge is the one of `tail`), so `tail` follows the `if`.
@@ -350,6 +375,7 @@ class _DominanceIfBuilder(RegionStructurer):
                         (
                                 not is_constant_comparison(branch.condition)
                                 or self._arm_retests_constant(then_entry, goto_block, branch.condition)
+                                or self._arm_falls_into_after_private_returns(then_entry, goto_block, block)
                         )
                         and goto_block.successors
                         and self._arm_falls_into(
@@ -379,6 +405,26 @@ class _DominanceIfBuilder(RegionStructurer):
             # chain (`switchTest`) needs `has_else` at every link.
             merge_block = goto_block
 
+        if (
+                merge_block is None
+                and goto_block is not None
+                and goto_block.successors
+                and not self.cfg.dominator_tree.dominates(block, goto_block)
+                and any(
+            not self.cfg.dominator_tree.dominates(block, pred)
+            for pred in goto_block.predecessors
+            if pred is not block
+        )
+                and self._in_handler(block)
+        ):
+            # Code of a `catch` that something outside the handler jumps into is the code after the
+            # `try`, not an `else` arm of the catch's own test (98/6705: the `if (!(e instanceof Error))`
+            # guard falls out of the catch into what the `try` body also jumps to).
+            merge_block = goto_block
+
+        if merge_block is None and goto_block is not None:
+            merge_block = self._join_of_both_arms(block, then_entry, goto_block)
+
         has_else = goto_block is not merge_block and goto_block is not None
 
         # else_root = None
@@ -388,11 +434,26 @@ class _DominanceIfBuilder(RegionStructurer):
 
             else_root = self.graph.find_covering_item(region, goto_block)
 
-            if else_root is None or else_root is then_root:
+            if (
+                    else_root is None
+                    # Nothing of REST jumps to T itself (those jumps would stay `goto`s next to the `if`).
+                    and not any(
+                pred is not block and self.cfg.dominator_tree.dominates(then_entry, pred)
+                for pred in goto_block.predecessors
+            )
+                    and self._finishing_the_arm_reaches(region, goto_block)
+            ):
+                # `if (c) goto T; REST` at the end of an arm whose finish runs T next: the target is no
+                # sibling here, it is what follows the enclosing `if`s, so the branch only skips REST
+                # (98/2186 `splitGradients`, 98/3265 `dispatchEvent`). No `else`: `if (!c) { REST }`.
+                merge_block = goto_block
+                has_else = False
+            elif else_root is None or else_root is then_root:
                 # goto target isn't a distinct sibling in this region -
                 # bail rather than guess.
                 return False
-            else_entry = representative_block(else_root)
+            else:
+                else_entry = representative_block(else_root)
 
         # -------------------------------------------------------------
         # Classify region.children[then_start:] by dominance until the
@@ -485,6 +546,7 @@ class _DominanceIfBuilder(RegionStructurer):
 
         if_region = IfRegion()
         if_region.condition = condition
+        if_region.source_block = block
         if_region.then_body = then_body
         if_region.else_body = else_body
 
@@ -505,6 +567,30 @@ class _DominanceIfBuilder(RegionStructurer):
     # -------------------------------------------------------------
     # Reachability fallback (see `_convert`'s own comment)
     # -------------------------------------------------------------
+
+    def _finishing_the_arm_reaches(self, region: SequenceRegion, target: BasicBlock) -> bool:
+        """True when finishing `region` (an arm, or the body of an `if`) runs `target` next: up the
+        enclosing `if`s while the region is the last thing of its sequence, then the first block of the item that
+        follows. Only `if` arms count; a loop body, a `try` or a `switch` finish elsewhere."""
+        sequence = region
+
+        while True:
+            parent = getattr(sequence, "parent", None)
+
+            if not isinstance(parent, IfRegion):
+                return False
+
+            holder = getattr(parent, "parent", None)
+
+            if not isinstance(holder, SequenceRegion) or not any(c is parent for c in holder.children):
+                return False
+
+            index = next(i for i, c in enumerate(holder.children) if c is parent)
+
+            if index + 1 < len(holder.children):
+                return representative_block(holder.children[index + 1]) is target
+
+            sequence = holder
 
     def _arm_tests_into(self, then_entry: BasicBlock, goto_block: BasicBlock) -> bool:
         """True if a conditional branch inside the fallthrough arm jumps to
@@ -533,6 +619,15 @@ class _DominanceIfBuilder(RegionStructurer):
                     # `typeof x !== "object"` is a kind test, never a `case` label: any other test of the arm
                     # that falls into the target makes the target the join (98/4239 `keyExtractor`).
                     or (is_typeof_test(condition) and not same_case_subject(condition, pred.terminator.condition))
+                    # The `typeof` kept in a register that the target tests again (`r5 !== "object"` here,
+                    # `r5 !== "number"` at the target: 96/1139 `processColor`).
+                    or (
+                            is_constant_comparison(condition)
+                            and isinstance(goto_block.terminator, TerminatorConditionalBranch)
+                            and same_case_subject(condition, goto_block.terminator.condition)
+                            and not same_case_subject(condition, pred.terminator.condition)
+                            and not same_constant_test(condition, goto_block.terminator.condition)
+                    )
             )
             for pred in goto_block.predecessors
         )
@@ -574,8 +669,14 @@ class _DominanceIfBuilder(RegionStructurer):
                                     or (
                                             (pred is then_entry or self._returns_privately(pred, then_entry,
                                                                                            goto_block))
-                                            and self._is_lone_return(pred.terminator.target)
-                                            and min(x.address for x in pred.successors) == goto_block.address
+                                            and (
+                                                    (
+                                                            self._is_lone_return(pred.terminator.target)
+                                                            and min(x.address for x in pred.successors)
+                                                            == goto_block.address
+                                                    )
+                                                    or self._is_closed_returning_region(pred, goto_block)
+                                            )
                                     )
                             )
                     )
@@ -584,6 +685,65 @@ class _DominanceIfBuilder(RegionStructurer):
             and dominators.dominates(then_entry, pred)
             for pred in goto_block.predecessors
         )
+
+    def _arm_falls_into_after_private_returns(self, then_entry: BasicBlock, goto_block: BasicBlock,
+                                              block: BasicBlock) -> bool:
+        """The arm leaves only through `return`s of its own and runs on into `goto_block` (98/13851: the
+        `r6 !== undefined` test skips to the code the arm's last guard falls into). Such a test cannot be a
+        case-chain link: nothing of the arm is another branch to the target."""
+        return not getattr(self.cfg, "duplicated_returns", False) and self._arm_falls_into(
+            then_entry, goto_block, block, exits_must_return=True,
+        )
+
+    def _join_of_both_arms(self, block: BasicBlock, then_entry: BasicBlock, goto_block: BasicBlock):
+        """The block both arms of the test run on into, when the post-dominator cannot name it because an arm
+        also leaves through a `throw` / `return` of its own (98/8536: the `then` arm throws if `some(...)`, the
+        `else` arm computes the same register: both go on to `if (r12)`).
+
+        It is entered directly from `block`'s dominance only: its immediate dominator is `block`, one
+        predecessor lies in each arm and no predecessor lies outside them."""
+        dominators = self.cfg.dominator_tree
+        candidates = []
+
+        for candidate in self.cfg.blocks:
+            if (
+                    candidate is block or candidate is then_entry or candidate is goto_block
+                    or dominators.immediate_dominator(candidate) is not block
+                    or candidate.address < goto_block.address and candidate.address < then_entry.address
+            ):
+                continue
+
+            in_then = [p for p in candidate.predecessors if dominators.dominates(then_entry, p)]
+            in_goto = [p for p in candidate.predecessors if dominators.dominates(goto_block, p)]
+
+            if in_then and in_goto and len(in_then) + len(in_goto) == len(candidate.predecessors):
+                candidates.append(candidate)
+
+        return min(candidates, key=lambda c: c.address) if len(candidates) >= 1 else None
+
+    def _is_closed_returning_region(self, pred: BasicBlock, goto_block: BasicBlock) -> bool:
+        """The test's taken edge enters code only it reaches, which ends in `return`s / `throw`s and never gets to
+        `goto_block` (98/10919: `if (result !== null) { <the rest of the function> }` after the arm that falls
+        into `goto_block`): the region is the body of the test and the arm runs on into `goto_block` after it."""
+        target = next((b for b in self.cfg.blocks if b.address == pred.terminator.target), None)
+
+        if target is None or list(target.predecessors) != [pred]:
+            return False
+
+        region = {target}
+        pending = [target]
+
+        while pending:
+            for successor in pending.pop().successors:
+                if successor is goto_block or successor is pred:
+                    return False
+
+                if successor not in region:
+                    region.add(successor)
+                    pending.append(successor)
+
+        # Entered only through the test: every predecessor of a block of the region is in it (or is the test).
+        return all(p is pred or p in region for block in region for p in block.predecessors)
 
     def _returns_privately(self, pred: BasicBlock, then_entry: BasicBlock, goto_block: BasicBlock) -> bool:
         """The test's taken edge goes to a `return` nothing else reaches, and it is the ONLY way out of the
@@ -610,9 +770,24 @@ class _DominanceIfBuilder(RegionStructurer):
                 if dominators.dominates(then_entry, successor) and not self._is_lone_return(successor.address):
                     continue
 
+                # Another exit of the arm that is its own, too (`beside-icon` -> `return true`, `below-icon`
+                # -> `return false`: 96/13262): the tail merge keeps a `return` a test jumps to (F-210).
+                if self._is_lone_return(successor.address) and list(successor.predecessors) == [block]:
+                    continue
+
                 return False
 
         return True
+
+    def _in_handler(self, block: BasicBlock) -> bool:
+        """True if `block` is reached from an exception handler's entry (a block with no predecessor)."""
+        for entry in self.cfg.exception_handlers:
+            handler = entry["handler_block"]
+
+            if handler is not None and (handler is block or self._is_reachable(handler, block)):
+                return True
+
+        return False
 
     def _is_lone_return(self, address: int) -> bool:
         target = next((b for b in self.cfg.blocks if b.address == address), None)
@@ -635,7 +810,11 @@ class _DominanceIfBuilder(RegionStructurer):
         loops = list(loop_analysis.loops.values()) if loop_analysis is not None else []
         return any(
             pred is not block
-            and pred.terminator is None
+            and (
+                    pred.terminator is None
+                    # the arm's last block jumps over what follows it (`new SemVer(x); jmp T`, 98/8188)
+                    or (isinstance(pred.terminator, TerminatorJump) and pred.terminator.target == goto_block.address)
+            )
             and dominators.dominates(then_entry, pred)
             and not any(pred in loop.members for loop in loops)
             for pred in goto_block.predecessors

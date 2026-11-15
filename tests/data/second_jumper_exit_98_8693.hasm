@@ -1,0 +1,51 @@
+
+=> [Function #8693 "maybeModifyStyleForKeyframe" of 154 bytes]: 3 params, frame size=18, strict=1, exc handler=1, debug info=0  @ offset 0x001f2f13
+  [Exception handlers: [start=0x64, end=0x89, target=0x91] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 2>
+==> 00000003: <LoadConstUndefined>: <Reg8: 0>
+==> 00000005: <LoadConstUndefined>: <Reg8: 6>
+==> 00000007: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000000a: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 6>
+==> 0000000e: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 0, string_id: 6563>  # String: 'Keyframe' (Identifier)
+==> 00000014: <InstanceOf>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 00000018: <JmpTrue>: <Addr8: 5, Reg8: 1>  # Address: 0000001d
+==> 0000001b: <Ret>: <Reg8: 0>
+==> 0000001d: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000020: <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 235>  # String: 'style' (Identifier)
+==> 00000025: <LoadConstString>: <Reg8: 3, string_id: 5463>  # String: 'forwards' (String)
+==> 00000029: <PutByIdStrict>: <Reg8: 4, Reg8: 3, UInt8: 0, string_id: 15850>  # String: 'animationFillMode' (Identifier)
+==> 0000002f: <GetGlobalObject>: <Reg8: 3>
+==> 00000031: <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 23>  # String: 'Object' (Identifier)
+==> 00000037: <GetById>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 7749>  # String: 'values' (Identifier)
+==> 0000003d: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 4, string_id: 15984>  # String: 'definitions' (Identifier)
+==> 00000043: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000048: <Mov>: <Reg8: 5, Reg8: 3>
+==> 0000004b: <IteratorBegin>: <Reg8: 2, Reg8: 5>
+==> 0000004e: <LoadConstString>: <Reg8: 4, string_id: 12938>  # String: 'originY' (Identifier)
+==> 00000052: <LoadConstString>: <Reg8: 3, string_id: 12936>  # String: 'originX' (Identifier)
+==> 00000056: <Mov>: <Reg8: 7, Reg8: 5>
+==> 00000059: <IteratorNext>: <Reg8: 7, Reg8: 2, Reg8: 7>
+==> 0000005d: <Mov>: <Reg8: 8, Reg8: 2>
+==> 00000060: <JStrictEqual>: <Addr8: 56, Reg8: 8, Reg8: 0>  # Address: 00000098
+==> 00000064: <Mov>: <Reg8: 6, Reg8: 7>
+==> 00000067: <IsIn>: <Reg8: 7, Reg8: 3, Reg8: 7>
+==> 0000006b: <JmpTrue>: <Addr8: 15, Reg8: 7>  # Address: 0000007a
+==> 0000006e: <Mov>: <Reg8: 7, Reg8: 6>
+==> 00000071: <IsIn>: <Reg8: 7, Reg8: 4, Reg8: 7>
+==> 00000075: <JmpTrue>: <Addr8: 5, Reg8: 7>  # Address: 0000007a
+==> 00000078: <Jmp>: <Addr8: -34>  # Address: 00000056
+==> 0000007a: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 235>  # String: 'style' (Identifier)
+==> 0000007f: <LoadConstString>: <Reg8: 1, string_id: 6755>  # String: 'absolute' (Identifier)
+==> 00000083: <PutByIdStrict>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 73>  # String: 'position' (Identifier)
+==> 00000089: <Mov>: <Reg8: 1, Reg8: 2>
+==> 0000008c: <IteratorClose>: <Reg8: 1, UInt8: 0>
+==> 0000008f: <Ret>: <Reg8: 0>
+==> 00000091: <Catch>: <Reg8: 1>
+==> 00000093: <IteratorClose>: <Reg8: 2, UInt8: 1>
+==> 00000096: <Throw>: <Reg8: 1>
+==> 00000098: <Ret>: <Reg8: 0>
+
+

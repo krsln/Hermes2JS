@@ -8,7 +8,8 @@ from hermes_decompiler.backend.transforms import StructuralAnalyzer
 from hermes_decompiler.backend.transforms.shared import may_alias, read_members, stored_member
 from hermes_decompiler.backend.transforms.cfg_passes import (
     ArrayDestructuringCfgPass, EnvArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass,
-    SharedReturnDuplicationCfgPass, SharedTailDuplicationCfgPass, generator_dispatch,
+    SharedReturnDuplicationCfgPass, SharedTailDuplicationCfgPass, TestConstantSinkCfgPass, FallThroughLayoutCfgPass,
+    generator_dispatch,
 )
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
 from hermes_decompiler.core.logging import get_logger
@@ -439,6 +440,11 @@ class HermesAnalysis:
 
         return False
 
+    # Last rung: the plain level-1 copies and `GuardIntoConditionRegionPass`. Earlier rungs may structure the shape
+    # better (98/2211: a `switch` with `case "left": case "right":`), and the copies of rungs 5+ change the layout
+    # the guard fold matches (96/1351), so it gets a rung of its own.
+    _FOLD_GUARDS_RUNG = 11
+
     def generate_js(
             self,
             verbose: bool = False,
@@ -465,7 +471,7 @@ class HermesAnalysis:
             # retries; there a retry only wins when it is `goto`-free and loses fewer paths.
             whole = []
 
-            for level in (1, 2, 3, 4, 5):
+            for level in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, self._FOLD_GUARDS_RUNG):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if not retry[3]:
                     continue
@@ -551,6 +557,11 @@ class HermesAnalysis:
         # method stays safe to call more than once against the same
         # `HermesAnalysis` - e.g. `Decompiler.render()` called for both
         # `raw=True` and `raw=False` output from one `build_context()`.
+        fold_guards = duplicate_returns == self._FOLD_GUARDS_RUNG
+
+        if fold_guards:
+            duplicate_returns = 1
+
         results = [result.clone() for result in self.results]
 
         cfg = CFG.from_results(results, self.metadata.get("exception_handlers", []))
@@ -632,8 +643,20 @@ class HermesAnalysis:
             ).run()
             SharedTailDuplicationCfgPass(
                 cfg, regions=duplicate_returns >= 3, per_predecessor=duplicate_returns >= 5,
+                large=duplicate_returns >= 6,
             ).run()
 
+            if duplicate_returns >= 7:
+                TestConstantSinkCfgPass(cfg).run()
+
+            FallThroughLayoutCfgPass(cfg).run()
+
+        if duplicate_returns and duplicate_returns >= 10:
+            FallThroughLayoutCfgPass(cfg).relocate_terminal_tails()
+        FallThroughLayoutCfgPass(cfg).bridge_remaining(everywhere=bool(duplicate_returns) and duplicate_returns >= 8)
+        # The last rung also lets one loop exit be a `break` while others leave for the same block (LoopBreakStructurer).
+        cfg.sibling_loop_exits = bool(duplicate_returns) and duplicate_returns >= 9
+        cfg.fold_arm_guards = fold_guards
         cfg.verify()
         cfg.compute_dominators()
         cfg.compute_post_dominators()

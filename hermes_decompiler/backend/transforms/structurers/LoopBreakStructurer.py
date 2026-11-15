@@ -4,7 +4,6 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import (
     Region, TryRegion, CatchRegion, FinallyRegion,
     SequenceRegion, LoopRegion, IfRegion,
-
 )
 from hermes_decompiler.backend.transforms.shared import (
     negate_condition, is_loop_guard_shaped, has_bottom_tested_guard
@@ -287,7 +286,10 @@ class LoopBreakStructurer(RegionStructurer):
             # sitting exactly where it needs to stay - nothing needs
             # relocating at all. See Shape D below.
             if self._is_loops_own_merge_block(loop, block, exit_block):
-                return self._convert_bare_break(loop, block, branch, condition)
+                return self._convert_bare_break(
+                    loop, block, branch, condition,
+                    forwarded=len(block.instructions) > 1 and self._exit_is_forwarded(loop, exit_block),
+                )
 
             logger.debug(
                 "LoopBreakStructurer: block %d's exit target %d has other "
@@ -435,6 +437,22 @@ class LoopBreakStructurer(RegionStructurer):
     # Shape D: exit target IS the loop's own merge block - bare `break`
     # -------------------------------------------------------------
 
+    @staticmethod
+    def _exit_is_forwarded(loop: LoopRegion, exit_block: BasicBlock) -> bool:
+        """The loop's own way out is a block that only jumps on: the latch falls into a lone `jmp MERGE` and
+        the break jumps to MERGE itself (the loop closes an `else` arm whose `if` joins at MERGE; 98/10142
+        `BezierEasing`). A bare `break` lands right behind the loop, on that jump, so MERGE is reached the
+        same way, whoever else jumps there."""
+        latches = set(loop.latches)
+
+        return any(
+            isinstance(predecessor.terminator, TerminatorJump)
+            and len(predecessor.instructions) == 1
+            and predecessor.predecessors
+            and all(p in latches for p in predecessor.predecessors)
+            for predecessor in exit_block.predecessors
+        )
+
     def _is_loops_own_merge_block(self, loop: LoopRegion, block: BasicBlock, exit_block: BasicBlock) -> bool:
         """True when every predecessor of `exit_block` OTHER than
         `block` itself is either one of `loop.latches` DIRECTLY, or a
@@ -511,10 +529,30 @@ class LoopBreakStructurer(RegionStructurer):
             ):
                 return False
 
+        # Not for a block that holds nothing but the branch: once stripped it is no block in the tree, and the
+        # arms that jump to it lose their join (98/2620 `appendAllChildren`).
+        if len(block.instructions) > 1 and self._exit_is_forwarded(loop, exit_block):
+            return True
+
         dominator_tree = self.cfg.dominator_tree
 
         for predecessor in others:
             if predecessor in latches:
+                continue
+
+            # Another way out of the loop onto the same block (98/2609 `updateSimpleMemoComponent`: the
+            # `Object.is`/`hasOwnProperty` tests of an inlined `shallowEqual` both leave the loop for the code after
+            # it). It is a `break` as well, and nothing is moved, so it does not make the block someone else's.
+            # Last retry rung only (`cfg.sibling_loop_exits`): 98/10170 `useAnimatedPropsMemo` structured worse with it
+            # than without. Only with the loop's own completion landing there too (a latch is among the predecessors), and only
+            # for exits of this loop's own body: one inside a nested loop is a labeled exit that stays as it is. Not for a closing `return`: the exits are
+            # copies of it (`return false;`, 96/11046), which reads better than `r0 = false; break;`.
+            if (
+                    getattr(self.cfg, "sibling_loop_exits", False)
+                    and latches & others
+                    and predecessor in loop.body.children
+                    and not isinstance(exit_block.terminator, TerminatorReturn)
+            ):
                 continue
 
             if (
@@ -581,6 +619,7 @@ class LoopBreakStructurer(RegionStructurer):
             block: BasicBlock,
             branch: TerminatorConditionalBranch,
             condition,
+            forwarded: bool = False,
     ) -> bool:
         """Shape D: splice in a bare `if (cond) { break; }`, touching
         nothing but `block` itself - unlike every other shape, there is
@@ -600,7 +639,11 @@ class LoopBreakStructurer(RegionStructurer):
 
         new_id = max((b.id for b in self.cfg.blocks), default=0) + 1
 
-        break_block = BasicBlock(new_id, address=block.address)
+        # A break that took over a forwarded exit is a synthetic block (address -1, `flow_audit.synthetic_kind`):
+        # sharing its block's address it would shadow that block in the address lookups (98/10142 `BezierEasing`:
+        # the `if` jumping to the block no longer found it). The others keep the address; the output of
+        # 98/3265 `dispatchEvent` and 98/8192 `inc` depends on the shadowing.
+        break_block = BasicBlock(new_id, address=-1 if forwarded else block.address)
 
         entry = OpcodeEntry(bytecode="<synthetic>: BreakStatement", hex_address="")
         break_block.instructions.append(OpcodeResult(entry, statement=BreakStatement(label=None)))

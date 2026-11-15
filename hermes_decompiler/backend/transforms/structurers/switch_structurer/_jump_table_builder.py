@@ -3,7 +3,7 @@ from __future__ import annotations
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import SequenceRegion, SwitchCase, SwitchRegion
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
-from hermes_decompiler.ir.expressions import NumericLiteral
+from hermes_decompiler.ir.expressions import NumericLiteral, StringLiteral
 from hermes_decompiler.ir.terminators import TerminatorSwitch
 from ._predicates import is_transparent
 
@@ -55,7 +55,7 @@ class _JumpTableSwitchBuilder:
 
         address_to_block = {b.address: b for b in self.cfg.blocks}
 
-        groups: dict[int, list[int]] = {}
+        groups: dict[int, list[int | str]] = {}
 
         for value, target in switch_term.case_map.items():
 
@@ -64,7 +64,7 @@ class _JumpTableSwitchBuilder:
 
             groups.setdefault(target, []).append(value)
 
-        resolved: list[tuple[list[int], object]] = []
+        resolved: list[tuple[list[int | str], object]] = []
         target_of: dict[int, BasicBlock] = {}
 
         for target, values in groups.items():
@@ -93,6 +93,37 @@ class _JumpTableSwitchBuilder:
             if default_block is not None:
                 default_item = self.graph.find_covering_item(region, default_block)
 
+        end_boundary = len(region.children)
+        merge_item = None
+
+        if self.cfg.post_dominator_tree is not None:
+
+            merge_block = self.cfg.post_dominator_tree.immediate_post_dominator(header)
+
+            if merge_block is not None:
+
+                merge_item = self.graph.find_covering_item(region, merge_block)
+
+                if merge_item is None:
+                    # an `if` already built from the code behind the switch is covered by its two arms,
+                    # its own test block (the merge) is only its `source_block` (98/2140)
+                    merge_item = next((i for i in region.children if getattr(i, "source_block", None) is merge_block),
+                                      None)
+
+                if merge_item is not None:
+                    end_boundary = region.children.index(merge_item)
+
+        if default_item is not None and default_item is merge_item:
+            # no `default:` arm: the default jumps straight to the code behind the switch
+            default_item = None
+
+        # Values that jump straight to the code behind the switch are `case x: break;` (98/2151: colour
+        # names with nothing to do), not a body of their own.
+        empty_cases = [values for values, item in resolved if merge_item is not None and item is merge_item]
+
+        if empty_cases:
+            resolved = [r for r in resolved if r[1] is not merge_item]
+
         all_items = [item for _, item in resolved]
 
         if default_item is not None:
@@ -112,19 +143,6 @@ class _JumpTableSwitchBuilder:
             return False
 
         ordered_items = sorted(all_items, key=lambda i: item_index[id(i)])
-
-        end_boundary = len(region.children)
-
-        if self.cfg.post_dominator_tree is not None:
-
-            merge_block = self.cfg.post_dominator_tree.immediate_post_dominator(header)
-
-            if merge_block is not None:
-
-                merge_item = self.graph.find_covering_item(region, merge_block)
-
-                if merge_item is not None:
-                    end_boundary = region.children.index(merge_item)
 
         boundaries = [item_index[id(i)] for i in ordered_items] + [end_boundary]
 
@@ -150,7 +168,7 @@ class _JumpTableSwitchBuilder:
         case_ids = {id(i) for _, i in resolved}
 
         for values, item in sorted(resolved, key=lambda r: item_index[id(r[1])]):
-            tests = [NumericLiteral(value=v) for v in values]
+            tests = [StringLiteral(value=v) if isinstance(v, str) else NumericLiteral(value=v) for v in values]
             following = next_item.get(id(item))
             falls = (
                     following is not None
@@ -161,6 +179,12 @@ class _JumpTableSwitchBuilder:
             )
             )
             switch_region.add_case(SwitchCase(tests, bodies[id(item)], falls_through=falls))
+
+        for values in empty_cases:
+            switch_region.add_case(SwitchCase(
+                [StringLiteral(value=v) if isinstance(v, str) else NumericLiteral(value=v) for v in values],
+                SequenceRegion(), falls_through=False,
+            ))
 
         if default_item is not None:
             switch_region.default_body = bodies[id(default_item)]

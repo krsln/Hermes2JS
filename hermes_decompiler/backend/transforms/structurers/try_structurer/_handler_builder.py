@@ -158,10 +158,13 @@ class _HandlerBuilder:
         # ordinary path below, unchanged.
         loop_home = self._find_loop_nested_home(start_repr, start_block, handler["end"])
 
+        if loop_home is None:
+            loop_home = self._find_guard_home(start_repr, start_block, handler)
+
         if loop_home is not None:
             body, body_start_idx, body_end_idx = loop_home
 
-            stop_at = self._catch_stop_blocks(handler_block)
+            stop_at = self._catch_stop_blocks(handler_block, handler)
 
             catch_end = self._find_catch_boundary(
                 lca_seq,
@@ -228,12 +231,13 @@ class _HandlerBuilder:
         if end_idx is None:
             return None
 
-        stop_at = self._catch_stop_blocks(handler_block)
+        stop_at = self._catch_stop_blocks(handler_block, handler)
 
         catch_end = self._find_catch_boundary(
             lca_seq,
             handler_idx,
             stop_at,
+            self._shared_stop_blocks(handler_block, stop_at),
         )
 
         # Splice out the catch content FIRST (it sits at a position
@@ -295,7 +299,7 @@ class _HandlerBuilder:
 
     # -------------------------------------------------------------
 
-    def _catch_stop_blocks(self, handler_block: BasicBlock) -> set:
+    def _catch_stop_blocks(self, handler_block: BasicBlock, handler: dict | None = None) -> set:
         """Where the catch body ends: the block its paths merge into.
 
         That is the handler's immediate post-dominator - unless the catch
@@ -313,7 +317,7 @@ class _HandlerBuilder:
         merge_block = self.cfg.post_dominator_tree.immediate_post_dominator(handler_block)
 
         if merge_block is None:
-            return set()
+            return self._try_exit_the_catch_runs_into(handler_block, handler)
 
         dominators = self.cfg.dominator_tree
 
@@ -325,6 +329,69 @@ class _HandlerBuilder:
             return set()
 
         return {merge_block}
+
+    # -------------------------------------------------------------
+
+    def _try_exit_the_catch_runs_into(self, handler_block: BasicBlock, handler: dict | None) -> set:
+        """The catch has a `throw` of its own, so it has no post-dominator; the code after the `try` is then the
+        block the protected code jumps out to that the catch falls into as well (98/6705: `catch (e) { if (!(e
+        instanceof Error)) <fall out>; else throw e }` and the `try` body jumps to the same `if (r6) {...}`)."""
+        if handler is None or self.cfg.dominator_tree is None:
+            return set()
+
+        inside = set(handler["try_blocks"])
+        exits = {
+            successor
+            for block in inside
+            for successor in block.successors
+            if successor not in inside
+               and successor is not handler_block
+               and successor.successors
+               and not self.cfg.dominator_tree.dominates(handler_block, successor)
+               and self._reaches(handler_block, successor)
+        }
+
+        return exits if len(exits) == 1 else set()
+
+    @staticmethod
+    def _reaches(start: BasicBlock, target: BasicBlock) -> bool:
+        seen = {start}
+        stack = [start]
+
+        while stack:
+            for successor in stack.pop().successors:
+                if successor is target:
+                    return True
+
+                if successor not in seen:
+                    seen.add(successor)
+                    stack.append(successor)
+
+        return False
+
+    def _shared_stop_blocks(self, handler_block: BasicBlock, stop_at: set) -> set:
+        """The stop blocks the normal flow reaches too (the handler does not dominate them) and that go on to
+        something other than the catch's own `throw` (`catch (e) { if (it) it.return(); throw e }` ends in one)."""
+        dominators = self.cfg.dominator_tree
+        post_dominators = self.cfg.post_dominator_tree
+
+        if dominators is None or post_dominators is None:
+            return set()
+
+        shared = set()
+
+        for block in stop_at:
+            if dominators.dominates(handler_block, block):
+                continue
+
+            after = post_dominators.immediate_post_dominator(block)
+
+            if after is not None and isinstance(after.terminator, TerminatorThrow):
+                continue
+
+            shared.add(block)
+
+        return shared
 
     # -------------------------------------------------------------
 
@@ -443,6 +510,56 @@ class _HandlerBuilder:
             return None
 
         return None
+
+    # -------------------------------------------------------------
+
+    def _find_guard_home(
+            self,
+            start_repr,
+            start_block: BasicBlock,
+            handler: dict,
+    ) -> tuple[SequenceRegion, int, int] | None:
+        """The `try` of a protected range that starts INSIDE a guard `if (c) { setup; try { ... } finally {} }`.
+
+        The guard's test runs before the range starts, so it is not protected: the `try` belongs in the guard's
+        `then` arm, next to the setup (98/2676 `flushSpawnedWork`: `if (r9 !== null) { r4 = env.T; ...; try {...}
+        finally { env.T = r4 } }`). Built around the whole `if`, the `finally` would also run when the guard
+        fails, reading what the setup never set. Only for a chain of `if`s without `else` arms that ends in the
+        sequence holding `start_block` directly, with every protected block inside it. The code in front of the
+        range in that block is split off first (`_split_leading_unprotected_content`)."""
+        node = start_repr
+        body = None
+
+        for _ in range(_MAX_LOOP_DESCENT):
+            if not isinstance(node, IfRegion) or node.else_body is not None:
+                return None
+
+            branch = node.then_body
+
+            if start_block not in branch.covered_blocks:
+                return None
+
+            if start_block in branch.children:
+                body = branch
+                break
+
+            node = self.graph.find_covering_item(branch, start_block)
+
+        if body is None:
+            return None
+
+        if any(block not in body.covered_blocks for block in handler["try_blocks"]):
+            return None
+
+        self._split_leading_unprotected_content(body, body.children.index(start_block), start_block, handler["start"])
+
+        start_idx = body.children.index(start_block)
+        end_idx = self._scan_loop_body_protected_extent(body, start_idx, handler["end"], set())
+
+        if end_idx is None:
+            return None
+
+        return body, start_idx, end_idx
 
     # -------------------------------------------------------------
 
@@ -740,7 +857,8 @@ class _HandlerBuilder:
     # -------------------------------------------------------------
 
     @staticmethod
-    def _find_catch_boundary(region: SequenceRegion, start: int, stop_at: set) -> int:
+    def _find_catch_boundary(region: SequenceRegion, start: int, stop_at: set,
+                             shared_stop_at: set = frozenset()) -> int:
 
         index = start
 
@@ -749,6 +867,13 @@ class _HandlerBuilder:
             item = region.children[index]
 
             if item in stop_at:
+                return index
+
+            # The merge block may be a test that became an `IfRegion` (`try { r = f() } catch { r = false }
+            # if (!r) ...`): its emptied block left the tree, the region that replaced it is the boundary. Only
+            # when the normal flow reaches it as well: a test only the handler reaches is the catch's own
+            # (`catch (e) { if (it) it.return(); throw e }`).
+            if getattr(item, "source_block", None) in shared_stop_at:
                 return index
 
             if (

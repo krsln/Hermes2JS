@@ -1,3 +1,4 @@
+import json
 import re
 import ast
 from dataclasses import dataclass
@@ -39,6 +40,7 @@ _ARRAY_RE = re.compile(r"Array:\s*(\[.*])")
 
 # ==> 00000008: <SwitchImm>: <Reg8: 1, UInt32: 193, Addr32: 187, UInt32: 0, UInt32: 27>  # Address: 000000c3  # Jump table: [0000004c, 0000001a, 0000004c, 000000c3, 000000c3, 000000aa, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 00000030, 000000c3, 0000007a, 000000c3, 0000004c, 00000092, 000000c3, 000000c3, 00000062, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000aa, 000000aa]
 _JUMP_TABLE_RE = re.compile(r"Jump table:\s*\[([^]]*)]")
+_STRING_SWITCH_RE = re.compile(r"String switch table:\s*(?=\[)")
 
 # ==> 0000000f: <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 apply]
 _BUILTIN_RE = re.compile(r"Built-in function:\s*\[#(\d+)\s+([^]]+)]")
@@ -183,6 +185,7 @@ class OpcodeEntry:
 
     target_address: int | None = None
     jump_table: tuple[int, ...] | None = None
+    string_switch_table: tuple[tuple[str, int], ...] | None = None
 
     identifier_name: str | None = None
     string_literal: str | None = None
@@ -271,6 +274,14 @@ class OpcodeEntry:
 
         if match := _BUILTIN_RE.search(self.comment):
             self.builtin_function = BuiltinFunctionReference(id=int(match.group(1)), name=match.group(2))
+
+        if match := _STRING_SWITCH_RE.search(self.comment):
+            # `[["case", "0000007a"], ...]` (JSON: a case string may hold `]`, `#`, quotes)
+            try:
+                pairs, _ = json.JSONDecoder().raw_decode(self.comment, match.end())
+                self.string_switch_table = tuple((str(text), int(target, 16)) for text, target in pairs)
+            except (ValueError, TypeError):
+                logger.warning("Invalid string switch table in %r", self.comment[:80])
 
         if match := _JUMP_TABLE_RE.search(self.comment):
             entries = []

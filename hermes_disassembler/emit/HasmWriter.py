@@ -89,6 +89,8 @@ filenames, not anonymous `section_N` ones.
 """
 from __future__ import annotations
 
+import json
+
 from hermes_disassembler.core.Exceptions import HermesBytecodeError
 from hermes_disassembler.format.BigIntTable import resolve_bigint
 from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
@@ -102,7 +104,7 @@ from hermes_disassembler.format.LiteralBuffer import _Undefined, decode_literal_
 from hermes_disassembler.format.ObjectLiteral import resolve_object_literal
 from hermes_disassembler.format.Opcode import Instruction, decode_function, load_opcode_table
 from hermes_disassembler.format.StringTable import StringTable
-from hermes_disassembler.format.SwitchTable import resolve_switch_table_entries
+from hermes_disassembler.format.SwitchTable import resolve_string_switch_entries, resolve_switch_table_entries
 
 #: scripts/split_output_file.py's own separator constant, duplicated
 #: here rather than imported (that script isn't part of this package
@@ -242,6 +244,16 @@ def format_instruction(
         targets = resolve_switch_table_entries(data, instruction, 1, 3, 4)
         entries = ", ".join(f"{t - function_offset:08x}" for t in targets)
         comment_parts.append(f"Jump table: [{entries}]")
+
+    if instruction.name == "StringSwitchImm":
+        # `# String switch table: [["to top", "0000007a"], ...]` - JSON, so a case string may hold any
+        # character; the target is function-relative like the other jump comments. Real hermes-dec prints
+        # nothing here, which left the decompiler a switch without cases (F-219).
+        entries = [
+            [table.resolve(string_id), f"{target - function_offset:08x}"]
+            for string_id, target in resolve_string_switch_entries(data, instruction)
+        ]
+        comment_parts.append(f"String switch table: {json.dumps(entries)}")
 
     rel_offset = instruction.offset - function_offset
     line = f"==> {rel_offset:08x}: <{instruction.name}>: <{', '.join(operand_strs)}>"

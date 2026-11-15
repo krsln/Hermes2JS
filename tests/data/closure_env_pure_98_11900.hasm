@@ -1,0 +1,78 @@
+
+=> [Function #11900 "parseSkew" of 267 bytes]: 2 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x00231d85
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 8, UInt8: 1>
+==> 00000003: <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 00000008: <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
+==> 0000000b: <JGreaterLong>: <Addr32: 250, Reg8: 4, Reg8: 2>  # Address: 00000105
+==> 00000012: <GetParentEnvironment>: <Reg8: 4, UInt8: 0>
+==> 00000015: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 0>
+==> 00000019: <GetByIndex>: <Reg8: 6, Reg8: 8, UInt8: 0>
+==> 0000001d: <NewArray>: <Reg8: 7, UInt16: 1>
+==> 00000021: <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 6, UInt8: 0>
+==> 00000025: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 0000002a: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 0000002d: <JStrictNotEqual>: <Addr8: 35, Reg8: 6, Reg8: 0>  # Address: 00000050
+==> 00000031: <GetClosureEnvironment>: <Reg8: 5, Reg8: 5>
+==> 00000034: <LoadFromEnvironment>: <Reg8: 6, Reg8: 5, UInt8: 0>
+==> 00000038: <GetByIndex>: <Reg8: 5, Reg8: 7, UInt8: 0>
+==> 0000003c: <LoadConstUndefined>: <Reg8: 3>
+==> 0000003e: <Call2>: <Reg8: 5, Reg8: 6, Reg8: 3, Reg8: 5>
+==> 00000043: <JmpTrue>: <Addr8: 19, Reg8: 5>  # Address: 00000056
+==> 00000046: <GetByIndex>: <Reg8: 5, Reg8: 7, UInt8: 0>
+==> 0000004a: <LoadConstZero>: <Reg8: 1>
+==> 0000004c: <JStrictEqual>: <Addr8: 10, Reg8: 5, Reg8: 1>  # Address: 00000056
+==> 00000050: <NewArray>: <Reg8: 6, UInt16: 0>
+==> 00000054: <Jmp>: <Addr8: 41>  # Address: 0000007d
+==> 00000056: <GetByIndex>: <Reg8: 9, Reg8: 7, UInt8: 0>
+==> 0000005a: <LoadConstString>: <Reg8: 5, string_id: 2036>  # String: '0deg' (String)
+==> 0000005e: <LoadConstZero>: <Reg8: 1>
+==> 00000060: <JStrictEqual>: <Addr8: 8, Reg8: 9, Reg8: 1>  # Address: 00000068
+==> 00000064: <GetByIndex>: <Reg8: 5, Reg8: 7, UInt8: 0>
+==> 00000068: <NewObjectWithBuffer>: <Reg8: 7, UInt16: 767, UInt16: 20>  # Object: {'skewX': null}
+==> 0000006e: <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 5, UInt8: 0>
+==> 00000072: <NewArray>: <Reg8: 5, UInt16: 1>
+==> 00000076: <DefineOwnInDenseArray>: <Reg8: 5, Reg8: 7, UInt8: 0>
+==> 0000007a: <Mov>: <Reg8: 6, Reg8: 5>
+==> 0000007d: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000082: <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 1>
+==> 00000086: <GetByIndex>: <Reg8: 7, Reg8: 8, UInt8: 1>
+==> 0000008a: <LoadConstNull>: <Reg8: 3>
+==> 0000008c: <JNotEqual>: <Addr8: 8, Reg8: 7, Reg8: 3>  # Address: 00000094
+==> 00000090: <GetByIndex>: <Reg8: 7, Reg8: 8, UInt8: 0>
+==> 00000094: <NewArray>: <Reg8: 8, UInt16: 1>
+==> 00000098: <DefineOwnInDenseArray>: <Reg8: 8, Reg8: 7, UInt8: 0>
+==> 0000009c: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 000000a1: <JStrictNotEqual>: <Addr8: 35, Reg8: 7, Reg8: 0>  # Address: 000000c4
+==> 000000a5: <GetClosureEnvironment>: <Reg8: 4, Reg8: 4>
+==> 000000a8: <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 0>
+==> 000000ac: <GetByIndex>: <Reg8: 4, Reg8: 8, UInt8: 0>
+==> 000000b0: <LoadConstUndefined>: <Reg8: 3>
+==> 000000b2: <Call2>: <Reg8: 4, Reg8: 7, Reg8: 3, Reg8: 4>
+==> 000000b7: <JmpTrue>: <Addr8: 19, Reg8: 4>  # Address: 000000ca
+==> 000000ba: <GetByIndex>: <Reg8: 4, Reg8: 8, UInt8: 0>
+==> 000000be: <LoadConstZero>: <Reg8: 0>
+==> 000000c0: <JStrictEqual>: <Addr8: 10, Reg8: 4, Reg8: 0>  # Address: 000000ca
+==> 000000c4: <NewArray>: <Reg8: 4, UInt16: 0>
+==> 000000c8: <Jmp>: <Addr8: 41>  # Address: 000000f1
+==> 000000ca: <GetByIndex>: <Reg8: 9, Reg8: 8, UInt8: 0>
+==> 000000ce: <LoadConstString>: <Reg8: 7, string_id: 2036>  # String: '0deg' (String)
+==> 000000d2: <LoadConstZero>: <Reg8: 0>
+==> 000000d4: <JStrictEqual>: <Addr8: 8, Reg8: 9, Reg8: 0>  # Address: 000000dc
+==> 000000d8: <GetByIndex>: <Reg8: 7, Reg8: 8, UInt8: 0>
+==> 000000dc: <NewObjectWithBuffer>: <Reg8: 8, UInt16: 2129, UInt16: 20>  # Object: {'skewY': null}
+==> 000000e2: <PutOwnBySlotIdx>: <Reg8: 8, Reg8: 7, UInt8: 0>
+==> 000000e6: <NewArray>: <Reg8: 7, UInt16: 1>
+==> 000000ea: <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 8, UInt8: 0>
+==> 000000ee: <Mov>: <Reg8: 4, Reg8: 7>
+==> 000000f1: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 000000f6: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 000000fb: <JStrictEqual>: <Addr8: 8, Reg8: 5, Reg8: 2>  # Address: 00000103
+==> 000000ff: <NewArray>: <Reg8: 4, UInt16: 0>
+==> 00000103: <Ret>: <Reg8: 4>
+==> 00000105: <NewArray>: <Reg8: 4, UInt16: 0>
+==> 00000109: <Ret>: <Reg8: 4>
+
+

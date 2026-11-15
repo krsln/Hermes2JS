@@ -8,7 +8,11 @@ destructuring's `done` flag):
     r8 = undefined;  if (!done) { r8 = r18; ... }  env[1] = r8
 """
 
+import importlib
+
 from hermes_decompiler.Decompiler import Decompiler
+
+_ANALYSIS = importlib.import_module("hermes_decompiler.backend.runtime.HermesAnalysis")
 
 _HASM = r"""
 => [Function #4563 "useWindowDimensions" of 125 bytes]: 1 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x001a5143
@@ -54,7 +58,11 @@ Bytecode listing:
 """
 
 
-def test_arm_write_read_after_the_if_is_not_folded_away():
+def test_arm_write_read_after_the_if_is_not_folded_away(monkeypatch):
+    # The destructuring pass now turns this input into one pattern (F-236); the subject here is the fold,
+    # which still meets this shape in an iterator state machine that is left open-coded, so keep it that way.
+    monkeypatch.setattr(_ANALYSIS, "ArrayDestructuringCfgPass", lambda cfg: type("Off", (), {"run": lambda self: 0})())
+
     js = Decompiler.render(Decompiler.build_context(_HASM, 4563, strict=False), verbose=False, raw=False)
     code = "\n".join(line for line in js.splitlines() if not line.strip().startswith("//"))
 

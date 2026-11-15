@@ -38,8 +38,15 @@ literal here).
 
 `StringSwitchImm` (bytecode 98/99 only - a distinct opcode from
 `UIntSwitchImm`, switching on interned string identity rather than an
-integer range) is a DELIBERATE non-feature here. Two separate reasons,
-worth keeping distinct:
+integer range) has its own table, read by `resolve_string_switch_entries`
+at the end of this module (operands `(value_reg, cache_index,
+table_offset, default_target, count)`; the table is `count` pairs of
+`uint32 string_id, uint32 jump_offset`, sorted by descending offset,
+the offset relative to the instruction like every other jump target;
+checked against 98/2184 `getDirectionForKeyword`, whose twelve strings
+land exactly on its eight `return` blocks). `resolve_switch_table_entries`
+itself still refuses it. The notes below were written when no table
+reader existed, and still hold for what real hermes-dec prints:
 
   Real hermes-dec's own output never prints a `# Jump table:` comment
   for `UIntSwitchImm` OR `StringSwitchImm` - its jump-table-comment code
@@ -78,7 +85,7 @@ import struct
 from hermes_disassembler.core.Exceptions import HermesBytecodeError, TruncatedFileError
 from hermes_disassembler.format.Opcode import Instruction
 
-__all__ = ["resolve_switch_table_entries"]
+__all__ = ["resolve_switch_table_entries", "resolve_string_switch_entries"]
 
 _ENTRY_SIZE = 4  # uint32 per jump table entry
 _ALIGNMENT = 4
@@ -128,3 +135,28 @@ def resolve_switch_table_entries(
         instruction.offset + raw
         for raw in struct.unpack_from(f"<{count}I", data, start)
     )
+
+
+def resolve_string_switch_entries(
+        data: bytes, instruction: Instruction, table_offset_operand: int = 2, count_operand: int = 4,
+) -> tuple[tuple[int, int], ...]:
+    """
+    `(string_id, absolute target offset)` for every case of a
+    `StringSwitchImm` (see the module docstring for the layout). Several
+    strings may share one target (`'to top right'` / `'to right top'`).
+    Raises `HermesBytecodeError` for any other instruction and
+    `TruncatedFileError` if the table would read past the end of `data`.
+    """
+    if instruction.name != "StringSwitchImm":
+        raise HermesBytecodeError(f"{instruction.name} is not a StringSwitchImm")
+
+    start = _align_up(instruction.offset + instruction.operands[table_offset_operand])
+    count = instruction.operands[count_operand]
+    end = start + count * 2 * _ENTRY_SIZE
+
+    if len(data) < end:
+        raise TruncatedFileError(f"{instruction.name} string table", end, len(data))
+
+    raw = struct.unpack_from(f"<{count * 2}I", data, start)
+
+    return tuple((raw[2 * n], instruction.offset + raw[2 * n + 1]) for n in range(count))

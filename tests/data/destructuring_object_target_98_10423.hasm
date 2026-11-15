@@ -1,0 +1,66 @@
+
+=> [Function #10423 "VirtualCollectionSpacer" of 203 bytes]: 2 params, frame size=22, strict=1, exc handler=1, debug info=0  @ offset 0x00217c3e
+  [Exception handlers: [start=0x5c, end=0x62, target=0xbb] ]
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 6, UInt8: 3>
+==> 00000003: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000006: <GetById>: <Reg8: 7, Reg8: 1, UInt8: 0, string_id: 14431>  # String: 'nativeID' (Identifier)
+==> 0000000c: <GetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 18062>  # String: 'virtualItemCount' (Identifier)
+==> 00000012: <StoreToEnvironment>: <Reg8: 6, UInt8: 0, Reg8: 8>
+==> 00000016: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 15953>  # String: 'onRenderMoreItems' (Identifier)
+==> 0000001c: <StoreToEnvironment>: <Reg8: 6, UInt8: 1, Reg8: 1>
+==> 00000020: <LoadConstUndefined>: <Reg8: 3>
+==> 00000022: <LoadConstUndefined>: <Reg8: 0>
+==> 00000024: <StoreNPToEnvironment>: <Reg8: 6, UInt8: 2, Reg8: 3>
+==> 00000028: <GetParentEnvironment>: <Reg8: 4, UInt8: 1>
+==> 0000002b: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 3>
+==> 0000002f: <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 251>  # String: 'useState' (Identifier)
+==> 00000034: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000037: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 3>
+==> 0000003b: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000040: <Mov>: <Reg8: 10, Reg8: 2>
+==> 00000043: <IteratorBegin>: <Reg8: 1, Reg8: 10>
+==> 00000046: <Mov>: <Reg8: 2, Reg8: 10>
+==> 00000049: <IteratorNext>: <Reg8: 9, Reg8: 1, Reg8: 2>
+==> 0000004d: <Mov>: <Reg8: 2, Reg8: 1>
+==> 00000050: <StrictEq>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 00000054: <LoadConstUndefined>: <Reg8: 5>
+==> 00000056: <JmpTrue>: <Addr8: 6, Reg8: 2>  # Address: 0000005c
+==> 00000059: <Mov>: <Reg8: 5, Reg8: 9>
+==> 0000005c: <GetById>: <Reg8: 0, Reg8: 5, UInt8: 4, string_id: 7305>  # String: 'SpacerView' (Identifier)
+==> 00000062: <LoadConstUndefined>: <Reg8: 9>
+==> 00000064: <Mov>: <Reg8: 5, Reg8: 2>
+==> 00000067: <JmpTrue>: <Addr8: 28, Reg8: 2>  # Address: 00000083
+==> 0000006a: <IteratorNext>: <Reg8: 11, Reg8: 1, Reg8: 10>
+==> 0000006e: <Mov>: <Reg8: 10, Reg8: 1>
+==> 00000071: <StrictEq>: <Reg8: 10, Reg8: 10, Reg8: 3>
+==> 00000075: <LoadConstUndefined>: <Reg8: 9>
+==> 00000077: <Mov>: <Reg8: 5, Reg8: 10>
+==> 0000007a: <JmpTrue>: <Addr8: 9, Reg8: 10>  # Address: 00000083
+==> 0000007d: <Mov>: <Reg8: 9, Reg8: 11>
+==> 00000080: <Mov>: <Reg8: 5, Reg8: 10>
+==> 00000083: <StoreToEnvironment>: <Reg8: 6, UInt8: 2, Reg8: 9>
+==> 00000087: <JmpTrue>: <Addr8: 9, Reg8: 5>  # Address: 00000090
+==> 0000008a: <Mov>: <Reg8: 5, Reg8: 1>
+==> 0000008d: <IteratorClose>: <Reg8: 5, UInt8: 0>
+==> 00000090: <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 4>
+==> 00000094: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 5, string_id: 168>  # String: 'jsx' (Identifier)
+==> 00000099: <Mov>: <Reg8: 4, Reg8: 0>
+==> 0000009c: <NewObjectWithBuffer>: <Reg8: 0, UInt16: 1985, UInt16: 17424>  # Object: {'itemCount': null, 'nativeID': null, 'onModeChange': null}
+==> 000000a2: <PutOwnBySlotIdx>: <Reg8: 0, Reg8: 8, UInt8: 0>
+==> 000000a6: <PutOwnBySlotIdx>: <Reg8: 0, Reg8: 7, UInt8: 1>
+==> 000000aa: <CreateClosure>: <Reg8: 6, Reg8: 6, function_id: 12892>  # Function: [#12892 handleModeChange of 154 bytes]: 2 params @ offset 0x0024fbcd
+==> 000000af: <PutOwnBySlotIdx>: <Reg8: 0, Reg8: 6, UInt8: 2>
+==> 000000b3: <Call3>: <Reg8: 0, Reg8: 5, Reg8: 3, Reg8: 4, Reg8: 0>
+==> 000000b9: <Ret>: <Reg8: 0>
+==> 000000bb: <Catch>: <Reg8: 0>
+==> 000000bd: <Jmp>: <Addr8: 6>  # Address: 000000c3
+==> 000000bf: <Catch>: <Reg8: 0>
+==> 000000c1: <LoadConstUndefined>: <Reg8: 2>
+==> 000000c3: <JmpTrue>: <Addr8: 6, Reg8: 2>  # Address: 000000c9
+==> 000000c6: <IteratorClose>: <Reg8: 1, UInt8: 1>
+==> 000000c9: <Throw>: <Reg8: 0>
+
+

@@ -73,7 +73,12 @@ class UIntSwitchImm(SwitchImm):
 # DEFINE_OPCODE_5(StringSwitchImm, Reg8, UInt32, UInt32, Addr32, UInt32)
 # Example: <StringSwitchImm>: <Reg8: 1, UInt32: 3, UInt32: 86, Addr32: 82, UInt32: 12>  # Address: 0000007a
 class StringSwitchImm(OpcodeHandler):
-    """All-string `switch` statement. Case targets come from an out-of-line table this handler can't yet resolve."""
+    """All-string `switch` statement.
+
+    The case strings and targets sit in an out-of-line table of the bytecode file; the disassembler prints it
+    as `# String switch table: [["case", "<target>"], ...]` (see `hermes_disassembler.format.SwitchTable`). A
+    listing without that comment (real hermes-dec's) gets a switch with no cases, as before.
+    """
 
     ARGUMENTS = ArgsPattern(sequence(REG, UINT32, UINT32, ADDR, UINT32), "Reg8, UInt32, UInt32, Addr32, UInt32")
 
@@ -96,7 +101,7 @@ class StringSwitchImm(OpcodeHandler):
             ctx.analysis.goto_list.append(target)
             targets.append(target)
 
-        case_map = {}
+        case_map = dict(ctx.entry.string_switch_table or ())
 
         default_target = ctx.entry.target_address
         terminator = TerminatorSwitch(selector=selector, case_map=case_map, default_target=default_target)

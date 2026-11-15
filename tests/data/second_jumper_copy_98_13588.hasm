@@ -1,0 +1,41 @@
+
+=> [Function #13588 "get" of 148 bytes]: 1 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x0025caf8
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000003: <GetGlobalObject>: <Reg8: 3>
+==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 0, string_id: 156>  # String: 'globalThis' (Identifier)
+==> 0000000b: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 1, string_id: 7971>  # String: '__RUNTIME_KIND' (Identifier)
+==> 00000011: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 00000014: <TryGetById>: <Reg8: 3, Reg8: 3, UInt8: 0, string_id: 156>  # String: 'globalThis' (Identifier)
+==> 0000001a: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 1, string_id: 7971>  # String: '__RUNTIME_KIND' (Identifier)
+==> 00000020: <JStrictNotEqual>: <Addr8: 92, Reg8: 3, Reg8: 0>  # Address: 0000007c
+==> 00000024: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
+==> 00000028: <LoadConstUndefined>: <Reg8: 1>
+==> 0000002a: <JStrictEqual>: <Addr8: 82, Reg8: 4, Reg8: 1>  # Address: 0000007c
+==> 0000002e: <GetById>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 9447>  # String: 'getBlocking' (Identifier)
+==> 00000034: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 4>
+==> 00000038: <JmpFalse>: <Addr8: 86, Reg8: 3>  # Address: 0000008e
+==> 0000003b: <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 0>
+==> 0000003f: <GetParentEnvironment>: <Reg8: 3, UInt8: 1>
+==> 00000042: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 1>
+==> 00000046: <GetParentEnvironment>: <Reg8: 3, UInt8: 2>
+==> 00000049: <LoadFromEnvironment>: <Reg8: 6, Reg8: 3, UInt8: 6>
+==> 0000004d: <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 14231>  # Function: [#14231 reactNativeReanimated_mutablesTs4 of 29 bytes]: 2 params @ offset 0x0026eb1a
+==> 00000052: <NewObject>: <Reg8: 7>
+==> 00000054: <PutByIdStrict>: <Reg8: 3, Reg8: 7, UInt8: 0, string_id: 42>  # String: '__closure' (Identifier)
+==> 0000005a: <LoadConstDouble>: <Reg8: 0, Double: 4622127655843.0>
+==> 00000064: <PutByIdStrict>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 51>  # String: '__workletHash' (Identifier)
+==> 0000006a: <PutByIdStrict>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 52>  # String: '__initData' (Identifier)
+==> 00000070: <Call3>: <Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 3, Reg8: 5>
+==> 00000076: <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 3>
+==> 0000007a: <Jmp>: <Addr8: 20>  # Address: 0000008e
+==> 0000007c: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 0>
+==> 00000080: <GetById>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 6807>  # String: 'getSync' (Identifier)
+==> 00000086: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 4>
+==> 0000008a: <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 3>
+==> 0000008e: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 2>
+==> 00000092: <Ret>: <Reg8: 2>
+
+

@@ -2,6 +2,72 @@
 
 ## [Unreleased]
 
+## [2026-11-15]
+
+### Added
+
+* Added string switch table extraction to the disassembler, making string case values and their targets available to the
+  decompiler.
+* Added string-based case reconstruction in switch regions, including multiple string labels sharing the same target.
+* Added CFG-level shared-tail duplication to preserve branch-specific control flow when multiple paths converge.
+* Added CFG-level value-condition folding for conditional expressions and short-circuit chains.
+* Added support for recognizing `for...of` loops without iterator close scaffolding.
+* Added generator yield-value tracking based on the corresponding `SaveGenerator` and unreachable return instructions.
+* Added regression fixtures for generator suspension/resumption, string switches, destructuring, shared tails, loop
+  exits, and complex branch joins.
+
+### Changed
+
+* Improved generator state-machine reconstruction, including `yield` and `await` expressions, resumed values, resume
+  flags, and generator control-flow paths.
+* Improved handling of generator loops and `yield` expressions when the yielded value is not the instruction immediately
+  preceding `SaveGenerator`.
+* Improved `for...of` reconstruction, including parameter-based iterables, iterator copies, guarded bodies, and inline
+  iterator closing.
+* Improved array destructuring reconstruction, including member-expression targets, environment creation, default
+  values, holes, and delayed undefined stores.
+* Improved switch structuring by supporting string cases, empty cases, shared targets, and fall-through behavior.
+* Improved `if` structuring by recognizing sibling conditions that can be combined into logical OR expressions.
+* Improved shared-tail and shared-return handling across branches, loops, and exception-handler boundaries.
+* Improved try/catch reconstruction, including catch fall-through, shared exits, and guard-related control-flow paths.
+* Improved loop structuring and break handling to preserve forwarded exits and avoid incorrect block-address resolution.
+* Improved register tracking and expression folding to preserve values across joins, copied registers, and conditional
+  branches.
+* Improved dead move elimination and redundant jump cleanup.
+* Updated Hermes 96 and Hermes 98 fixture outputs and findings documentation.
+
+### Fixed
+
+* Fixed incorrect generator output where yielded values were emitted as ordinary returns or omitted from the
+  reconstructed function.
+* Fixed generator resume handling when resumed values are copied into different registers or referenced by statements
+  following the resume guard.
+* Fixed cases where unreachable `Ret` instructions following `SaveGenerator` were incorrectly emitted as executable
+  returns.
+* Fixed missing string switch case labels caused by unresolved out-of-line switch tables.
+* Fixed incorrect switch reconstruction when multiple string labels share a target or cases jump directly to the merge
+  block.
+* Fixed `for...of` loops that were incorrectly left as ordinary `while` loops when iterator close scaffolding was
+  absent.
+* Fixed iterator cleanup when close calls use temporary register copies.
+* Fixed array destructuring cases involving member targets, environment slots, and default-value handling.
+* Fixed lost branch behavior when shared tails or return blocks were reached through multiple control-flow paths.
+* Fixed incorrect `if` / `else` reconstruction around catch handlers, throws, and shared exits.
+* Fixed loop break reconstruction where synthetic blocks could shadow original CFG blocks during address lookup.
+* Fixed unsafe value folding when calls or other side effects occur inside conditional value-producing branches.
+* Fixed register definition loss when copied values are folded into conditional joins.
+
+### Testing
+
+* Added 90 Hermes assembly fixtures under `tests/data`.
+* Added 76 regression test modules covering generators, async functions, destructuring, string switches, shared tails,
+  conditional expressions, loops, and exception handling.
+* Expanded coverage for generator yield/resume behavior, including loop yields, awaited values, catch re-entry, and
+  resume-register copies.
+* Added tests for string switch tables, shared case targets, switch exit trampolines, and fall-through layout.
+* Added tests for complex branch joins, shared returns, catch fall-through, and loop exit reconstruction.
+* Updated Hermes 96 and Hermes 98 demo fixture outputs.
+
 ## [2026-11-01]
 
 ### Added

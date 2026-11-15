@@ -14,6 +14,7 @@ it is only exact when nothing reads what it wrote.
   arm), or the test reads `r5` before anything set it.
 """
 
+import re
 from pathlib import Path
 
 from hermes_decompiler.Decompiler import Decompiler
@@ -31,7 +32,10 @@ def _render(name: str, function_id: int) -> str:
 def test_register_read_after_the_pair_keeps_its_definition():
     out = _render("getNavigateAction_98_6009.hasm", 6009)
 
-    assert '} else {\n                        r7 = r4.type;\n                        r9 = "NAVIGATE";\n' in out
+    # The write stays in the `else` arm, in front of the `stack` test (the shape changed with the larger tail
+    # copy of F-217, which made the function goto-free: the test no longer fixes the indentation).
+    assert re.search(r'\} else \{\n\s+r7 = r4\.type;\n\s+r9 = "NAVIGATE";\n\s+if \(r7 === "stack"\)', out)
+    assert "goto" not in out
 
 
 def test_if_condition_is_not_repointed_to_its_own_arms_register():

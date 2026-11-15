@@ -1,0 +1,14 @@
+
+=> [Generator function #10269 "?anon_0_queryCache" of 23 bytes]: 2 params, frame size=3, strict=1, exc handler=0, debug info=0  @ offset 0x00214e33
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 2>
+==> 00000003: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000006: <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 2>
+==> 0000000a: <LoadConstZero>: <Reg8: 0>
+==> 0000000c: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 0>
+==> 00000010: <CreateGenerator>: <Reg8: 1, Reg8: 1, function_id: 12831>  # Function: [#12831 ?anon_0_queryCache of 190 bytes]: 2 params @ offset 0x0024f03a
+==> 00000015: <Ret>: <Reg8: 1>
+
+

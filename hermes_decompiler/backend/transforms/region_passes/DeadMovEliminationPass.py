@@ -308,4 +308,8 @@ class DeadMovEliminationPass(RegionPass):
         if instr.statement is not None and walk_value(instr.statement):
             return True
 
+        # A branch that stayed raw (`if (r18) goto L`) still reads its condition (98/11466).
+        if instr.terminator is not None and walk_value(getattr(instr.terminator, "condition", None)):
+            return True
+
         return False

@@ -1,0 +1,76 @@
+
+=> [Function #10166 "useAnimatedProps" of 271 bytes]: 2 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x00212f64
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 2, UInt8: 6>
+==> 00000003: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000006: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 5>
+==> 0000000a: <GetParentEnvironment>: <Reg8: 0, UInt8: 1>
+==> 0000000d: <LoadFromEnvironment>: <Reg8: 6, Reg8: 0, UInt8: 8>
+==> 00000011: <GetById>: <Reg8: 3, Reg8: 6, UInt8: 0, string_id: 6882>  # String: 'useReducer' (Identifier)
+==> 00000017: <LoadConstZero>: <Reg8: 4>
+==> 00000019: <LoadConstUndefined>: <Reg8: 7>
+==> 0000001b: <CreateClosure>: <Reg8: 1, Reg8: 7, function_id: 12795>  # Function: [#12795  of 12 bytes]: 2 params @ offset 0x0024e8bd
+==> 00000020: <Call3>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 1, Reg8: 4>
+==> 00000026: <Mov>: <Reg8: 9, Reg8: 3>
+==> 00000029: <IteratorBegin>: <Reg8: 1, Reg8: 9>
+==> 0000002c: <Mov>: <Reg8: 3, Reg8: 9>
+==> 0000002f: <IteratorNext>: <Reg8: 3, Reg8: 1, Reg8: 3>
+==> 00000033: <Mov>: <Reg8: 3, Reg8: 1>
+==> 00000036: <StrictEq>: <Reg8: 3, Reg8: 3, Reg8: 7>
+==> 0000003a: <LoadConstUndefined>: <Reg8: 8>
+==> 0000003c: <JmpTrue>: <Addr8: 28, Reg8: 3>  # Address: 00000058
+==> 0000003f: <IteratorNext>: <Reg8: 10, Reg8: 1, Reg8: 9>
+==> 00000043: <Mov>: <Reg8: 9, Reg8: 1>
+==> 00000046: <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 7>
+==> 0000004a: <LoadConstUndefined>: <Reg8: 8>
+==> 0000004c: <Mov>: <Reg8: 3, Reg8: 9>
+==> 0000004f: <JmpTrue>: <Addr8: 9, Reg8: 9>  # Address: 00000058
+==> 00000052: <Mov>: <Reg8: 8, Reg8: 10>
+==> 00000055: <Mov>: <Reg8: 3, Reg8: 9>
+==> 00000058: <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 8>
+==> 0000005c: <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 00000065
+==> 0000005f: <Mov>: <Reg8: 3, Reg8: 1>
+==> 00000062: <IteratorClose>: <Reg8: 3, UInt8: 0>
+==> 00000065: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000068: <GetByIdShort>: <Reg8: 8, Reg8: 6, UInt8: 1, string_id: 250>  # String: 'useRef' (Identifier)
+==> 0000006d: <LoadConstNull>: <Reg8: 9>
+==> 0000006f: <Call2>: <Reg8: 8, Reg8: 8, Reg8: 7, Reg8: 9>
+==> 00000074: <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 8>
+==> 00000078: <GetByIdShort>: <Reg8: 8, Reg8: 6, UInt8: 1, string_id: 250>  # String: 'useRef' (Identifier)
+==> 0000007d: <Call2>: <Reg8: 8, Reg8: 8, Reg8: 7, Reg8: 9>
+==> 00000082: <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 8>
+==> 00000086: <GetById>: <Reg8: 9, Reg8: 6, UInt8: 2, string_id: 13429>  # String: 'useContext' (Identifier)
+==> 0000008c: <LoadFromEnvironment>: <Reg8: 8, Reg8: 0, UInt8: 3>
+==> 00000090: <GetById>: <Reg8: 8, Reg8: 8, UInt8: 3, string_id: 8098>  # String: 'RootTagContext' (Identifier)
+==> 00000096: <Call2>: <Reg8: 8, Reg8: 9, Reg8: 7, Reg8: 8>
+==> 0000009b: <StoreToEnvironment>: <Reg8: 2, UInt8: 4, Reg8: 8>
+==> 0000009f: <LoadFromEnvironment>: <Reg8: 8, Reg8: 3, UInt8: 1>
+==> 000000a3: <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 12796>  # Function: [#12796  of 52 bytes]: 1 params @ offset 0x0024e8c9
+==> 000000a8: <Call3>: <Reg8: 3, Reg8: 8, Reg8: 7, Reg8: 3, Reg8: 5>
+==> 000000ae: <StoreToEnvironment>: <Reg8: 2, UInt8: 5, Reg8: 3>
+==> 000000b2: <GetByIdShort>: <Reg8: 9, Reg8: 6, UInt8: 4, string_id: 249>  # String: 'useEffect' (Identifier)
+==> 000000b7: <CreateClosure>: <Reg8: 8, Reg8: 2, function_id: 12797>  # Function: [#12797  of 109 bytes]: 1 params @ offset 0x0024e8fd
+==> 000000bc: <Call2>: <Reg8: 8, Reg8: 9, Reg8: 7, Reg8: 8>
+==> 000000c1: <LoadFromEnvironment>: <Reg8: 8, Reg8: 0, UInt8: 13>
+==> 000000c5: <Call2>: <Reg8: 8, Reg8: 8, Reg8: 4, Reg8: 3>
+==> 000000ca: <GetByIdShort>: <Reg8: 8, Reg8: 6, UInt8: 5, string_id: 248>  # String: 'useCallback' (Identifier)
+==> 000000cf: <NewArray>: <Reg8: 6, UInt16: 1>
+==> 000000d3: <DefineOwnInDenseArray>: <Reg8: 6, Reg8: 3, UInt8: 0>
+==> 000000d7: <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 12798>  # Function: [#12798  of 223 bytes]: 2 params @ offset 0x0024e96a
+==> 000000dc: <Call3>: <Reg8: 6, Reg8: 8, Reg8: 7, Reg8: 2, Reg8: 6>
+==> 000000e2: <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 4>
+==> 000000e6: <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 6, string_id: 115>  # String: 'default' (Identifier)
+==> 000000eb: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 7, Reg8: 6>
+==> 000000f0: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 10>
+==> 000000f4: <Call3>: <Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 3, Reg8: 5>
+==> 000000fa: <NewArray>: <Reg8: 0, UInt16: 2>
+==> 000000fe: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 0>
+==> 00000102: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 2, UInt8: 1>
+==> 00000106: <Ret>: <Reg8: 0>
+==> 00000108: <Catch>: <Reg8: 0>
+==> 0000010a: <IteratorClose>: <Reg8: 1, UInt8: 1>
+==> 0000010d: <Throw>: <Reg8: 0>
+
+

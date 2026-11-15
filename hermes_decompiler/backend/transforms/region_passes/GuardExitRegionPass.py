@@ -3,6 +3,7 @@ from __future__ import annotations
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import IfRegion, RegionVisitor, SequenceRegion
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.ir.statements import ContinueStatement
 from hermes_decompiler.ir.terminators import (
     TerminatorConditionalBranch,
     TerminatorJump,
@@ -75,7 +76,17 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
         # The graph's owner map can lag behind earlier splices; trust the tree.
         exit_owner = self._holder(self.graph.root, exit_block)
 
-        if exit_owner is None or exit_owner is owner:
+        # A block no sequence holds (a bare `return undefined` an earlier pass took out of the tree, 98/8283
+        # `_handleAnimatedStylesUpdate`) is still the guard's exit: it is the one way in, nothing prints it.
+        orphan = exit_owner is None and exit_block not in self.graph.root.covered_blocks
+
+        if exit_owner is None and not orphan:
+            return
+
+        # In the guard's own sequence the exit is pulled in only when something runs between the two: the
+        # guarded code never falls into the exit (its one way in is this branch), so the code between ends
+        # in exits of its own (98/12276 `validateType`: `if (!r) goto T; ...if/else that both exit...; T:`).
+        if exit_owner is owner and not self._something_runs_between(owner, block, exit_block):
             return
 
         # Inside a loop the branch may be one of the loop's own exits. Walk the
@@ -93,11 +104,14 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
         block.instructions.pop()
         block.terminator = None
 
-        exit_owner.children.remove(exit_block)
-        exit_owner.invalidate_coverage()
-
         then_body = SequenceRegion()
-        self.graph.transfer([exit_block], then_body)
+
+        if orphan:
+            self.graph.append(then_body, exit_block)
+        else:
+            exit_owner.children.remove(exit_block)
+            exit_owner.invalidate_coverage()
+            self.graph.transfer([exit_block], then_body)
 
         if_region = IfRegion()
         if_region.condition = branch.condition
@@ -106,6 +120,15 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
 
         self.graph.insert_at(owner, owner.children.index(block) + 1, if_region)
         logger.debug("guard exit: block %d takes %d", block.id, exit_block.id)
+
+    @staticmethod
+    def _something_runs_between(owner: SequenceRegion, block: BasicBlock, exit_block: BasicBlock) -> bool:
+        children = owner.children
+
+        if block not in children or exit_block not in children:
+            return False
+
+        return children.index(exit_block) > children.index(block) + 1
 
     def _try_region_exit(self, owner, block: BasicBlock, branch, exit_block: BasicBlock, other: BasicBlock) -> None:
         """`if (c) goto X` where X starts code that only this branch enters and that ends the function.
@@ -123,6 +146,22 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
 
         tail = exit_owner.children[exit_owner.children.index(exit_block):]
         covered = set()
+
+        # The function's own last `return` (another path enters it: the natural exit of a loop) is not part of
+        # the tail the branch takes (98/5429 `findInitialRoute`).
+        if (
+                len(tail) > 1
+                and isinstance(tail[-1], BasicBlock)
+                and isinstance(tail[-1].terminator, TerminatorReturn)
+                and tail[-1].predecessors
+                and block not in tail[-1].predecessors
+                and not any(
+            pred in item.covered_blocks if not isinstance(item, BasicBlock) else pred is item
+            for pred in tail[-1].predecessors
+            for item in tail[:-1]
+        )
+        ):
+            tail = tail[:-1]
 
         for item in tail:
             covered.update(
@@ -175,7 +214,47 @@ class GuardExitRegionPass(RegionPass, RegionVisitor):
             return False
 
         parent = owner.parent
-        return type(parent).__name__ == "LoopRegion" and follower in getattr(parent, "covered_blocks", ())
+
+        if type(parent).__name__ == "LoopRegion" and follower in getattr(parent, "covered_blocks", ()):
+            return True
+
+        return self._ends_the_loop_body(owner, follower)
+
+    def _ends_the_loop_body(self, owner: SequenceRegion, follower: BasicBlock) -> bool:
+        """`block` is the last thing of its arm, the arm the last thing of the `if`s up to a loop body's end,
+        and `follower` only jumps back to that loop (the `continue` block the other arm of an `if` printed:
+        98/5429 `findInitialRoute`, `if (found) goto TAIL` at the end of a `for-of` body)."""
+        # Only a jump back: a bare `continue`, or what an earlier pass left of one.
+        if len(follower.successors) != 1 or len(follower.instructions) > 1 or any(
+                i.terminator is None and not isinstance(i.statement, ContinueStatement)
+                for i in follower.instructions
+        ):
+            return False
+
+        sequence = owner
+
+        while True:
+            parent = sequence.parent
+
+            if type(parent).__name__ == "LoopRegion":
+                header = getattr(parent, "header_block", None)
+                target = getattr(parent, "continue_target", None) or header
+
+                return target is not None and follower.successors[0] is target
+
+            if not isinstance(parent, IfRegion):
+                return False
+
+            holder = parent.parent
+
+            if (
+                    not isinstance(holder, SequenceRegion)
+                    or not holder.children
+                    or holder.children[-1] is not parent
+            ):
+                return False
+
+            sequence = holder
 
     def _try_jump_exit(self, owner: SequenceRegion, block: BasicBlock, jump) -> None:
         """`goto EXIT` as the last thing of an arm, EXIT only ending the function.

@@ -9,6 +9,8 @@ from ._base import RegionPass
 
 logger = get_logger(__name__)
 
+_SAVE_GENERATOR_HANDLERS = ("SaveGenerator", "SaveGeneratorLong")
+
 
 class RedundantJumpRegionPass(RegionPass, RegionVisitor):
     """Drops a bare unconditional-Jmp block whose target is simply the
@@ -318,6 +320,19 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                     header.id, latch.id, latch.address,
                 )
 
+        # The last block of the body may be a COPY of a latch (a pass that gave a branch its own `continue`
+        # block clones it; `loop.latches` still holds the original, 98/5425): a jump to the header that ends
+        # the body is the back edge as well.
+        last = loop.body.children[-1] if loop.body.children else None
+
+        if (
+                isinstance(last, BasicBlock)
+                and isinstance(last.terminator, TerminatorJump)
+                and last.terminator.target == header.address
+                and last not in loop.latches
+        ):
+            self._clear_trailing_jump(last, last.terminator)
+
     def _strip_try_exit_jumps(self, node: TryRegion) -> None:
         exit_address = self._next_fallthrough_address(node)
 
@@ -459,6 +474,13 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         if target == exit_address:
             return True
 
+        # Two empty trampolines to the same place are the same exit (98/2204: the default arm jumped to one
+        # `jmp loop-head`, the code behind the switch ended in another).
+        destination = self._final_destination(target)
+
+        if destination is not None and destination == self._final_destination(exit_address):
+            return True
+
         by_address = {b.address: b for b in self.cfg.blocks}
         block = by_address.get(target)
         seen = set()
@@ -479,6 +501,31 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
 
         return False
 
+    def _final_destination(self, address: int) -> int | None:
+        """Where a chain of empty `jmp` blocks starting at `address` ends (None when it does not start with one)."""
+        by_address = {b.address: b for b in self.cfg.blocks}
+        block = by_address.get(address)
+        seen: set[int] = set()
+        moved = False
+
+        while block is not None and block.address not in seen:
+            seen.add(block.address)
+
+            if any(i.value is not None or i.statement is not None for i in block.instructions):
+                break
+
+            if not isinstance(block.terminator, TerminatorJump):
+                break
+
+            nxt = by_address.get(block.terminator.target)
+
+            if nxt is None:
+                break
+
+            block, moved = nxt, True
+
+        return block.address if moved and block is not None else None
+
     def _leading_address(self, sibling) -> int | None:
         """Address of the first statement `sibling` runs.
 
@@ -488,6 +535,9 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         if isinstance(sibling, BasicBlock):
             return sibling.address
 
+        if isinstance(sibling, SwitchRegion):
+            return self._switch_header_address(sibling)
+
         if not isinstance(sibling, IfRegion):
             return None
 
@@ -495,6 +545,11 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
 
         if not inside:
             return None
+
+        if sibling.source_block is not None:
+            # the test block the `if` was built from, when it kept one (98/2140: the next block up that
+            # branches into the arms is the `else if`'s own test, not where the switch resumes)
+            return sibling.source_block.address
 
         held = self.graph.root.covered_blocks
         first = min(b.address for b in inside)
@@ -506,6 +561,26 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         ]
 
         return max(tests, key=lambda b: b.address).address if tests else None
+
+    def _switch_header_address(self, switch: SwitchRegion) -> int | None:
+        """Address of the block a `switch` was built from (its discriminant is all the region keeps of it).
+
+        That block is outside the tree and its terminator is gone, but its edges still lead into the switch's
+        own blocks: the one block above them that does is the header; None when that is not exactly one block
+        (98/2636: `try { ...; goto <the switch> } catch {}`)."""
+        inside = switch.covered_blocks
+
+        if not inside:
+            return None
+
+        held = self.graph.root.covered_blocks
+        first = min(b.address for b in inside)
+        headers = [
+            b for b in self.cfg.blocks
+            if b not in held and b.address < first and any(x in inside for x in b.successors)
+        ]
+
+        return headers[0].address if len(headers) == 1 else None
 
     def _next_fallthrough_address(self, region) -> int | None:
         """Address where control resumes once `region` (a TryRegion or
@@ -569,10 +644,16 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
 
         last = block.instructions[-1]
 
-        if last.value is not None or last.statement is not None:
+        if last.value is not None or last.statement is not None or last.handler in _SAVE_GENERATOR_HANDLERS:
             # This instruction does more than just carry the jump
             # (unusual for a bare Jmp, but don't guess) - only clear
             # the terminator, keep the instruction itself.
+            #
+            # `SaveGenerator` is such an instruction: its jump edge (to the
+            # resume address) is only how the CFG sees it, the opcode itself is
+            # the suspend point `GeneratorStateMachineRegionPass` anchors its
+            # `yield`/`await` fold on. Popping it left the resume pair without
+            # a suspend before it and the fold bailed out (96/6777).
             last.terminator = None
         else:
             block.instructions.pop()

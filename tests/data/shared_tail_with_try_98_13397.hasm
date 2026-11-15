@@ -1,0 +1,44 @@
+
+=> [Function #13397 "loadRoute" of 125 bytes]: 1 params, frame size=15, strict=1, exc handler=1, debug info=0  @ offset 0x00258462
+  [Exception handlers: [start=0x26, end=0x35, target=0x35] ]
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000003: <LoadConstUndefined>: <Reg8: 4>
+==> 00000005: <LoadConstUndefined>: <Reg8: 0>
+==> 00000007: <GetParentEnvironment>: <Reg8: 1, UInt8: 1>
+==> 0000000a: <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 1>
+==> 0000000e: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 0, string_id: 8912>  # String: 'ignoreRequireErrors' (Identifier)
+==> 00000014: <JmpTrue>: <Addr8: 18, Reg8: 3>  # Address: 00000026
+==> 00000017: <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 0>
+==> 0000001b: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
+==> 0000001f: <Call2>: <Reg8: 0, Reg8: 5, Reg8: 4, Reg8: 3>
+==> 00000024: <Jmp>: <Addr8: 21>  # Address: 00000039
+==> 00000026: <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 0>
+==> 0000002a: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
+==> 0000002e: <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000033: <Jmp>: <Addr8: 6>  # Address: 00000039
+==> 00000035: <Catch>: <Reg8: 2>
+==> 00000037: <NewObject>: <Reg8: 0>
+==> 00000039: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 2>
+==> 0000003d: <LoadConstString>: <Reg8: 1, string_id: 9707>  # String: 'lazy' (Identifier)
+==> 00000041: <JStrictEqual>: <Addr8: 12, Reg8: 2, Reg8: 1>  # Address: 0000004d
+==> 00000045: <LoadConstString>: <Reg8: 1, string_id: 3498>  # String: 'lazy-once' (String)
+==> 00000049: <JStrictNotEqual>: <Addr8: 50, Reg8: 2, Reg8: 1>  # Address: 0000007b
+==> 0000004d: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000050: <LoadConstString>: <Reg8: 1, string_id: 7899>  # String: '_result' (Identifier)
+==> 00000054: <IsIn>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000058: <JmpFalse>: <Addr8: 18, Reg8: 1>  # Address: 0000006a
+==> 0000005b: <Mov>: <Reg8: 1, Reg8: 0>
+==> 0000005e: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 7899>  # String: '_result' (Identifier)
+==> 00000064: <LoadConstNull>: <Reg8: 1>
+==> 00000066: <JNotEqual>: <Addr8: 9, Reg8: 2, Reg8: 1>  # Address: 0000006f
+==> 0000006a: <Mov>: <Reg8: 1, Reg8: 0>
+==> 0000006d: <Jmp>: <Addr8: 11>  # Address: 00000078
+==> 0000006f: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000072: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 7899>  # String: '_result' (Identifier)
+==> 00000078: <Mov>: <Reg8: 0, Reg8: 1>
+==> 0000007b: <Ret>: <Reg8: 0>
+
+

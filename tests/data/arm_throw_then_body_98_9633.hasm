@@ -1,0 +1,77 @@
+
+=> [Function #9633 "Tr" of 294 bytes]: 3 params, frame size=23, strict=1, exc handler=0, debug info=0  @ offset 0x0020589a
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 4, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 1>
+==> 00000005: <JStrictEqual>: <Addr8: 20, Reg8: 1, Reg8: 4>  # Address: 00000019
+==> 00000009: <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 258>  # Address: 00000019
+==> 00000011: <JmpTypeOfIs>: <Addr32: 223, Reg8: 4, UInt16: 383>  # Address: 000000f0
+==> 00000019: <LoadConstNull>: <Reg8: 2>
+==> 0000001b: <Eq>: <Reg8: 3, Reg8: 2, Reg8: 4>
+==> 0000001f: <LoadConstUndefined>: <Reg8: 10>
+==> 00000021: <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 0000002a
+==> 00000024: <GetById>: <Reg8: 10, Reg8: 4, UInt8: 0, string_id: 8579>  # String: 'preventAbort' (Identifier)
+==> 0000002a: <Eq>: <Reg8: 3, Reg8: 2, Reg8: 4>
+==> 0000002e: <LoadConstUndefined>: <Reg8: 9>
+==> 00000030: <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 00000039
+==> 00000033: <GetById>: <Reg8: 9, Reg8: 4, UInt8: 1, string_id: 15424>  # String: 'preventCancel' (Identifier)
+==> 00000039: <Eq>: <Reg8: 3, Reg8: 2, Reg8: 4>
+==> 0000003d: <LoadConstUndefined>: <Reg8: 7>
+==> 0000003f: <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 00000048
+==> 00000042: <GetById>: <Reg8: 7, Reg8: 4, UInt8: 2, string_id: 17840>  # String: 'preventClose' (Identifier)
+==> 00000048: <Eq>: <Reg8: 2, Reg8: 2, Reg8: 4>
+==> 0000004c: <LoadConstUndefined>: <Reg8: 5>
+==> 0000004e: <JmpTrue>: <Addr8: 9, Reg8: 2>  # Address: 00000057
+==> 00000051: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 7585>  # String: 'signal' (Identifier)
+==> 00000057: <JStrictEqual>: <Addr8: 94, Reg8: 1, Reg8: 5>  # Address: 000000b5
+==> 0000005b: <GetGlobalObject>: <Reg8: 4>
+==> 0000005d: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 4, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000063: <GetByIdShort>: <Reg8: 11, Reg8: 6, UInt8: 5, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000068: <LoadConstString>: <Reg8: 8, string_id: 1260>  # String: " has member 'signal' that" (String)
+==> 0000006c: <LoadConstString>: <Reg8: 6, string_id: 3908>  # String: 'Second parameter' (String)
+==> 00000070: <LoadConstString>: <Reg8: 12, string_id: 6457>  # String: '' (Identifier)
+==> 00000074: <Call3>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 6, Reg8: 8>
+==> 0000007a: <LoadConstZero>: <Reg8: 0>
+==> 0000007c: <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 13768>  # Function: [#13768  of 40 bytes]: 2 params @ offset 0x0026233a
+==> 00000081: <Call2>: <Reg8: 2, Reg8: 6, Reg8: 0, Reg8: 5>
+==> 00000086: <JmpTrue>: <Addr8: 47, Reg8: 2>  # Address: 000000b5
+==> 00000089: <TryGetById>: <Reg8: 8, Reg8: 4, UInt8: 6, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 0000008f: <TryGetById>: <Reg8: 4, Reg8: 4, UInt8: 4, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000095: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 5, string_id: 105>  # String: 'concat' (Identifier)
+==> 0000009a: <LoadConstString>: <Reg8: 4, string_id: 1346>  # String: ' is not an AbortSignal.' (String)
+==> 0000009e: <Call3>: <Reg8: 14, Reg8: 6, Reg8: 12, Reg8: 11, Reg8: 4>
+==> 000000a4: <CreateThisForNew>: <Reg8: 6, Reg8: 8, UInt8: 7>
+==> 000000a8: <Mov>: <Reg8: 15, Reg8: 6>
+==> 000000ab: <Construct>: <Reg8: 4, Reg8: 8, UInt8: 2>
+==> 000000af: <SelectObject>: <Reg8: 4, Reg8: 6, Reg8: 4>
+==> 000000b3: <Throw>: <Reg8: 4>
+==> 000000b5: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 1927, UInt16: 17291>  # Object: {'preventAbort': null, 'preventCancel': null, 'preventClose': null, 'signal': null}
+==> 000000bb: <GetGlobalObject>: <Reg8: 6>
+==> 000000bd: <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 8, string_id: 5>  # String: 'Boolean' (Identifier)
+==> 000000c3: <Call2>: <Reg8: 8, Reg8: 8, Reg8: 1, Reg8: 10>
+==> 000000c8: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 8, UInt8: 0>
+==> 000000cc: <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 8, string_id: 5>  # String: 'Boolean' (Identifier)
+==> 000000d2: <Call2>: <Reg8: 8, Reg8: 8, Reg8: 1, Reg8: 9>
+==> 000000d7: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 8, UInt8: 1>
+==> 000000db: <TryGetById>: <Reg8: 6, Reg8: 6, UInt8: 8, string_id: 5>  # String: 'Boolean' (Identifier)
+==> 000000e1: <Call2>: <Reg8: 6, Reg8: 6, Reg8: 1, Reg8: 7>
+==> 000000e6: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 6, UInt8: 2>
+==> 000000ea: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 5, UInt8: 3>
+==> 000000ee: <Ret>: <Reg8: 4>
+==> 000000f0: <GetGlobalObject>: <Reg8: 4>
+==> 000000f2: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 6, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 000000f8: <TryGetById>: <Reg8: 4, Reg8: 4, UInt8: 4, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 000000fe: <GetByIdShort>: <Reg8: 8, Reg8: 4, UInt8: 5, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000103: <LoadConstString>: <Reg8: 7, string_id: 591>  # String: ' is not an object.' (String)
+==> 00000107: <LoadConstString>: <Reg8: 5, string_id: 3908>  # String: 'Second parameter' (String)
+==> 0000010b: <LoadConstString>: <Reg8: 4, string_id: 6457>  # String: '' (Identifier)
+==> 0000010f: <Call3>: <Reg8: 14, Reg8: 8, Reg8: 4, Reg8: 5, Reg8: 7>
+==> 00000115: <CreateThisForNew>: <Reg8: 5, Reg8: 6, UInt8: 7>
+==> 00000119: <Mov>: <Reg8: 15, Reg8: 5>
+==> 0000011c: <Construct>: <Reg8: 4, Reg8: 6, UInt8: 2>
+==> 00000120: <SelectObject>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 00000124: <Throw>: <Reg8: 4>
+
+

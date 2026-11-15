@@ -1,0 +1,48 @@
+
+=> [Function #1738 "getChildNodes" of 145 bytes]: 3 params, frame size=19, strict=1, exc handler=1, debug info=0  @ offset 0x00159271
+  [Exception handlers: [start=0x4e, end=0x82, target=0x82] ]
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 7, UInt8: 0>
+==> 00000003: <LoadParam>: <Reg8: 5, UInt8: 2>
+==> 00000006: <LoadConstUndefined>: <Reg8: 4>
+==> 00000008: <LoadConstUndefined>: <Reg8: 6>
+==> 0000000a: <LoadFromEnvironment>: <Reg8: 0, Reg8: 7, UInt8: 1>
+==> 0000000e: <GetById>: <Reg8: 1, Reg8: 0, UInt8: 0, string_id: 17154>  # String: 'getNativeNodeReference' (Identifier)
+==> 00000014: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000017: <Call2>: <Reg8: 2, Reg8: 1, Reg8: 4, Reg8: 0>
+==> 0000001c: <LoadConstNull>: <Reg8: 3>
+==> 0000001e: <JEqual>: <Addr8: 109, Reg8: 2, Reg8: 3>  # Address: 0000008b
+==> 00000022: <LoadFromEnvironment>: <Reg8: 0, Reg8: 7, UInt8: 2>
+==> 00000026: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 115>  # String: 'default' (Identifier)
+==> 0000002b: <GetById>: <Reg8: 0, Reg8: 1, UInt8: 2, string_id: 9763>  # String: 'getChildNodes' (Identifier)
+==> 00000031: <Call2>: <Reg8: 8, Reg8: 0, Reg8: 1, Reg8: 2>
+==> 00000036: <NewArray>: <Reg8: 0, UInt16: 0>
+==> 0000003a: <Mov>: <Reg8: 1, Reg8: 8>
+==> 0000003d: <IteratorBegin>: <Reg8: 2, Reg8: 1>
+==> 00000040: <Mov>: <Reg8: 8, Reg8: 1>
+==> 00000043: <IteratorNext>: <Reg8: 9, Reg8: 2, Reg8: 8>
+==> 00000047: <Mov>: <Reg8: 8, Reg8: 2>
+==> 0000004a: <JStrictEqual>: <Addr8: 63, Reg8: 8, Reg8: 4>  # Address: 00000089
+==> 0000004e: <LoadFromEnvironment>: <Reg8: 8, Reg8: 7, UInt8: 1>
+==> 00000052: <GetById>: <Reg8: 8, Reg8: 8, UInt8: 3, string_id: 13396>  # String: 'getPublicInstanceFromInstanceHandle' (Identifier)
+==> 00000058: <Call2>: <Reg8: 8, Reg8: 8, Reg8: 4, Reg8: 9>
+==> 0000005d: <Mov>: <Reg8: 6, Reg8: 8>
+==> 00000060: <JEqual>: <Addr8: 32, Reg8: 8, Reg8: 3>  # Address: 00000080
+==> 00000064: <JEqual>: <Addr8: 15, Reg8: 5, Reg8: 3>  # Address: 00000073
+==> 00000068: <Mov>: <Reg8: 8, Reg8: 6>
+==> 0000006b: <Call2>: <Reg8: 8, Reg8: 5, Reg8: 4, Reg8: 8>
+==> 00000070: <JmpFalse>: <Addr8: 16, Reg8: 8>  # Address: 00000080
+==> 00000073: <GetByIdShort>: <Reg8: 9, Reg8: 0, UInt8: 4, string_id: 88>  # String: 'push' (Identifier)
+==> 00000078: <Mov>: <Reg8: 8, Reg8: 6>
+==> 0000007b: <Call2>: <Reg8: 8, Reg8: 9, Reg8: 0, Reg8: 8>
+==> 00000080: <Jmp>: <Addr8: -64>  # Address: 00000040
+==> 00000082: <Catch>: <Reg8: 1>
+==> 00000084: <IteratorClose>: <Reg8: 2, UInt8: 1>
+==> 00000087: <Throw>: <Reg8: 1>
+==> 00000089: <Ret>: <Reg8: 0>
+==> 0000008b: <NewArray>: <Reg8: 0, UInt16: 0>
+==> 0000008f: <Ret>: <Reg8: 0>
+
+

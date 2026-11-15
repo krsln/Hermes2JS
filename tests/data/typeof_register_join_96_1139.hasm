@@ -1,0 +1,43 @@
+
+=> [Function #1139 "processColor" of 126 bytes]: 2 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x0010f0ec
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 1>
+==> 00000005: <JStrictEqual>: <Addr8: 119, Reg8: 0, Reg8: 1>  # Address: 0000007c
+==> 00000009: <LoadConstNull>: <Reg8: 3>
+==> 0000000b: <JStrictEqual>: <Addr8: 113, Reg8: 0, Reg8: 3>  # Address: 0000007c
+==> 0000000f: <GetEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000012: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 2>
+==> 00000016: <Call2>: <Reg8: 6, Reg8: 4, Reg8: 1, Reg8: 0>
+==> 0000001b: <JStrictEqual>: <Addr8: 95, Reg8: 6, Reg8: 3>  # Address: 0000007a
+==> 0000001f: <JStrictEqual>: <Addr8: 91, Reg8: 6, Reg8: 1>  # Address: 0000007a
+==> 00000023: <TypeOf>: <Reg8: 5, Reg8: 6>
+==> 00000026: <LoadConstString>: <Reg8: 4, string_id: 7532>  # String: 'object' (Identifier)
+==> 0000002a: <JStrictNotEqual>: <Addr8: 39, Reg8: 5, Reg8: 4>  # Address: 00000051
+==> 0000002e: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 0>
+==> 00000032: <LoadFromEnvironment>: <Reg8: 7, Reg8: 2, UInt8: 1>
+==> 00000036: <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
+==> 00000039: <GetByVal>: <Reg8: 2, Reg8: 7, Reg8: 2>
+==> 0000003d: <Call2>: <Reg8: 2, Reg8: 4, Reg8: 1, Reg8: 2>
+==> 00000042: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 1, string_id: 18368>  # String: 'processColorObject' (Identifier)
+==> 00000048: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 1, Reg8: 6>
+==> 0000004d: <JNotEqual>: <Addr8: 43, Reg8: 2, Reg8: 3>  # Address: 00000078
+==> 00000051: <LoadConstString>: <Reg8: 4, string_id: 7552>  # String: 'number' (Identifier)
+==> 00000055: <JStrictNotEqual>: <Addr8: 33, Reg8: 5, Reg8: 4>  # Address: 00000076
+==> 00000059: <LoadConstUInt8>: <Reg8: 4, UInt8: 24>
+==> 0000005c: <LShift>: <Reg8: 5, Reg8: 6, Reg8: 4>
+==> 00000060: <LoadConstUInt8>: <Reg8: 4, UInt8: 8>
+==> 00000063: <URshift>: <Reg8: 4, Reg8: 6, Reg8: 4>
+==> 00000067: <BitOr>: <Reg8: 5, Reg8: 5, Reg8: 4>
+==> 0000006b: <LoadConstZero>: <Reg8: 4>
+==> 0000006d: <URshift>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 00000071: <ToInt32>: <Reg8: 4, Reg8: 4>
+==> 00000074: <Ret>: <Reg8: 4>
+==> 00000076: <Ret>: <Reg8: 3>
+==> 00000078: <Ret>: <Reg8: 2>
+==> 0000007a: <Ret>: <Reg8: 1>
+==> 0000007c: <Ret>: <Reg8: 0>
+
+

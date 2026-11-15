@@ -34,13 +34,15 @@ around the chain and are left alone.
 
 from __future__ import annotations
 
+import copy
 from dataclasses import dataclass
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.cfg_passes._generator_dispatch import _operands
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import ArrayExpression, AssignmentExpression, Identifier
-from hermes_decompiler.ir.expressions.Collections import ArrayHole, SpreadElement
+from hermes_decompiler.ir.expressions import ArrayExpression, AssignmentExpression, Identifier, MemberExpression, \
+    NumericLiteral
+from hermes_decompiler.ir.expressions.Collections import ArrayHole, ObjectExpression, ObjectProperty, SpreadElement
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.terminators import TerminatorJump
 
@@ -138,7 +140,72 @@ class ArrayDestructuringCfgPass:
         if len(set(leaves)) != len(leaves):
             return None
 
-        return items, drop, join, kept_undefined, removed_handlers, cleanup
+        # The temporary an object pattern was read from is not assigned any more: nothing after the
+        # pattern may still read it.
+        # A register that is still read afterwards (a closure variable also kept in a register) is
+        # restored from the environment slot the element was stored into: a slot is a plain variable, so
+        # reading it back yields the stored value. Any other target would be read twice, so it declines.
+        slots = {item.temp: item.default for item in _targets(items) if _is_env_slot(item.default)}
+        restores: dict[int, object] = {}
+
+        for temp in _object_temps(items):
+            if temp in leaves:
+                return None
+
+            if not self._dead_after(join, temp, dropped_ids):
+                if temp not in slots:
+                    return None
+
+                restores[temp] = slots[temp]
+
+        # A store that read the fetch register itself leaves no copy of the value behind (98/3759).
+        for register, slot in ctx.fetched:
+            if register not in leaves and not self._dead_after(join, register, dropped_ids):
+                if not _is_env_slot(slot):
+                    return None
+
+                restores[register] = slot
+
+        # A moved creation writes its register before the chain: nothing the pattern keeps may live there.
+        for created in ctx.hoist:
+            kept = {*leaves, *(t for t, _ in ((r, None) for r in _object_temps(items))), *(r for r, _ in ctx.fetched)}
+            source = head.instructions[begin_index].value.arguments[0]
+
+            if created.dest_reg in kept or _mentions_register(source, created.dest_reg):
+                return None
+
+        return items, drop, join, kept_undefined, removed_handlers, cleanup, restores, ctx.hoist
+
+    def _dead_after(self, start: BasicBlock, register: int, dropped_ids: set[int]) -> bool:
+        """True if no path from `start` reads `register` before writing it."""
+        name = f"r{register}"
+        seen: set[int] = set()
+        stack = [start]
+
+        while stack:
+            block = stack.pop()
+
+            if block.id in seen or block.id in dropped_ids:
+                continue
+
+            seen.add(block.id)
+            written = False
+
+            for instruction in block.instructions:
+                if _reads_name(instruction, name):
+                    return False
+
+                if instruction.dest_reg == register:
+                    written = True
+                    break
+
+            if not written:
+                stack.extend(block.successors)
+
+            if block.terminator is not None and _reads_name(block.terminator, name):
+                return False
+
+        return True
 
     def _plan_handlers(self, head: BasicBlock, ctx: "_Ctx", dropped_ids: set[int]):
         """
@@ -265,11 +332,24 @@ class ArrayDestructuringCfgPass:
         elif shapes == ["LoadConstUndefined", "Mov", "IteratorNext", "Mov", "StrictEq", "JmpTrue"]:
             # An element with a default loads its `undefined` first.
             tail = [*tail[1:5], tail[0], tail[5]]
+        elif top and shapes == ["LoadConstUndefined", "LoadConstUndefined", "Mov", "IteratorNext", "Mov", "StrictEq",
+                                "JmpTrue"]:
+            # A later element has a default: the `undefined` the checks compare with is loaded ahead of
+            # everything (it outlives the chain, like the mid-check load), then comes element 1's own.
+            kept_undefined = tail[0]
+            tail = [*tail[2:6], tail[1], tail[6]]
+        elif top and shapes == ["IteratorNext", "Mov", "LoadConstUndefined", *expected[3:]]:
+            # Both: the source needs no copy, and the `undefined` is loaded in the middle of the check.
+            kept_undefined = tail[2]
+            tail = [None, *tail[:2], *tail[3:]]
+        elif shapes == expected[1:]:
+            # The fetch reads the source register itself (it already holds it): no `Mov t <- src`.
+            tail = [None, *tail]
         elif shapes != expected:
             return None
 
         mov_t, nxt, mov_x, eq, undef_e, jmp = tail
-        t = _operands(mov_t)
+        t = _operands(mov_t) if mov_t is not None else [src, src]
         n = _operands(nxt)
         x = _operands(mov_x)
         e = _operands(eq)
@@ -334,6 +414,8 @@ class ArrayDestructuringCfgPass:
             prev_tmp = None
             cur_block, cur_insts = head, [undef_e, jmp]
 
+        # Element 1's copy `Mov e1 <- v1` may be folded away, the store then reads v1 itself.
+        first_value = v1
         seen: set[int] = set()
 
         while True:
@@ -381,6 +463,54 @@ class ArrayDestructuringCfgPass:
                 prev_tmp = None
                 cur_block, cur_insts = sub_join, list(sub_join.instructions)
                 continue
+
+            # An object pattern as the element's target (`[{ a, b }, c] = src`): the element value is
+            # read by plain property loads before the next fetch, in the order the pattern runs them.
+            if peeled is None and prev_tmp is not None and items and items[-1].kind == "reg" \
+                    and items[-1].default is None and items[-1].reg == prev_tmp:
+                props = []
+
+                while insts:
+                    read = _property_read(insts[0], prev_tmp)
+
+                    if read is None:
+                        break
+
+                    props.append((read, _Elem("reg", insts[0].dest_reg, insts[0])))
+                    insts = insts[1:]
+
+                if props:
+                    items[-1] = _Elem("object", props=props, temp=prev_tmp)
+                    prev_tmp = None
+                else:
+                    # A constant key loaded just for the store is inlined into it, so its load is dead.
+                    lead = 0
+
+                    creates = []
+
+                    while lead < len(insts) and (
+                            (insts[lead].handler in _KEY_LOADS and insts[lead].definition_used)
+                            or (insts[lead].handler in _ENV_CREATES and not ctx.hoist and not creates
+                                and _is_env_creation(insts[lead]))
+                    ):
+                        if insts[lead].handler in _ENV_CREATES:
+                            creates.append(insts[lead])
+
+                        lead += 1
+
+                    if lead < len(insts) and (store := _plain_store(insts[lead], prev_tmp, first_value)) is not None \
+                            and not any(_reads_name(insts[lead], f"r{c.dest_reg}") for c in creates):
+                        # The environment the slot belongs to is created right before its first store; it moves
+                        # in front of the pattern (an allocation: nothing observable runs in between).
+                        ctx.hoist.extend(creates)
+                        # `[..., slot] = src`: the element is stored into a slot that needs no evaluation.
+                        items[-1] = _Elem("target", items=None, default=store, temp=prev_tmp)
+
+                        if insts[lead].value.right.name == f"r{first_value}":
+                            ctx.fetched.append((first_value, store))
+
+                        insts = insts[lead + 1:]
+                        prev_tmp = None
 
             if prev_tmp is not None:
                 if ctx.peeled_form is None:
@@ -502,6 +632,7 @@ class ArrayDestructuringCfgPass:
 
             # Element k >= 2.
             ek = _operands(undef_inst)[0]
+            first_value = None
 
             # Fetch: [Mov t <- src] Next vk; Mov y <- it; StrictEq f2 <- y === undefined;
             #        [LoadConstUndefined ek]; Mov f <- f2; JmpTrue f -> X
@@ -727,7 +858,7 @@ class ArrayDestructuringCfgPass:
     # ------------------------------------------------------------------
 
     def _apply(self, head: BasicBlock, begin_index: int, match) -> None:
-        items, drop, join, kept_undefined, removed_handlers, cleanup = match
+        items, drop, join, kept_undefined, removed_handlers, cleanup, restores, hoist = match
 
         begin = head.instructions[begin_index]
         source = begin.value.arguments[0]
@@ -761,7 +892,19 @@ class ArrayDestructuringCfgPass:
         keep = [kept_undefined] if kept_undefined is not None else []
         removed -= {id(result) for result in keep}
 
-        head.instructions = head.instructions[:begin_index + 1] + keep + silent
+        # `rN = <slot>` for a register that outlives the pattern (see `_match`).
+        restored = []
+        for register, slot in restores.items():
+            copy_ = copy.copy(begin)
+            copy_.dest_reg = register
+            copy_.value = slot
+            copy_.definition_used = False
+            restored.append(copy_)
+
+        hoisted_ids = {id(i) for i in hoist}
+        removed -= hoisted_ids
+        before = head.instructions[:begin_index]
+        head.instructions = before + hoist + [begin] + keep + silent + restored
         head.terminator = TerminatorJump(target=join.address)
 
         for successor in list(head.successors):
@@ -800,11 +943,13 @@ class ArrayDestructuringCfgPass:
 class _Elem:
     """One slot of a destructuring pattern."""
 
-    kind: str  # "reg" | "hole" | "nested" | "rest"
+    kind: str  # "reg" | "hole" | "nested" | "rest" | "object"
     reg: int | None = None
     result: object = None
     items: list | None = None
     default: object = None  # `[a = 0]`: the default value expression
+    props: list | None = None  # "object": (property name, leaf `_Elem`) in the order the reads run
+    temp: int | None = None  # "object": the register the element value was fetched into
 
 
 class _Ctx:
@@ -815,12 +960,118 @@ class _Ctx:
         self.drop: list[BasicBlock] = []
         self.iterators: set[int] = set()
         self.peeled_form: bool | None = None
+        self.hoist: list = []  # environment creations that move in front of the pattern
+        self.fetched: list[
+            tuple[int, object]] = []  # fetch registers a slot store read directly, no copy of them is kept
+
+
+def _property_read(instruction, source: int):
+    """`rD = rSource.name` (a plain property load of the element value into a new register), as its name."""
+    value = instruction.value
+
+    if (
+            not isinstance(value, MemberExpression)
+            or value.computed
+            or value.optional
+            or value.receiver is not None
+            or not isinstance(value.obj, Identifier)
+            or value.obj.name != f"r{source}"
+            or not isinstance(value.prop, Identifier)
+            or not value.prop.name.isidentifier()
+            or not isinstance(instruction.dest_reg, int)
+            or instruction.dest_reg == source
+    ):
+        return None
+
+    return value.prop.name
+
+
+def _plain_store(instruction, source: int, alias: int | None = None):
+    """`slot = rSource` where the slot is a member of a register or of the environment reached by a constant
+    key, so that no code runs when the target is evaluated: returns the target expression."""
+    value = instruction.value
+
+    if (
+            not isinstance(value, AssignmentExpression)
+            or value.operator != AssignmentOperator.ASSIGN
+            or not isinstance(value.right, Identifier)
+            or value.right.name not in (f"r{source}", f"r{alias}")
+            or instruction.dest_reg is not None
+    ):
+        return None
+
+    left = value.left
+
+    if (
+            not isinstance(left, MemberExpression)
+            or left.optional
+            or left.receiver is not None
+            or not isinstance(left.obj, Identifier)
+            or left.obj.name in (f"r{source}", f"r{alias}")
+    ):
+        return None
+
+    if left.computed and not isinstance(left.prop, NumericLiteral):
+        return None
+
+    if not left.computed and not isinstance(left.prop, Identifier):
+        return None
+
+    return left
+
+
+def _mentions_register(expression, register: int) -> bool:
+    return any(isinstance(n, Identifier) and n.name == f"r{register}" for n in expression.walk())
+
+
+def _reads_name(node, name: str) -> bool:
+    for part in (getattr(node, "value", None), getattr(node, "statement", None)):
+        if part is not None and any(isinstance(n, Identifier) and n.name == name for n in part.walk()):
+            return True
+
+    return False
+
+
+def _is_env_creation(instruction) -> bool:
+    value = instruction.value
+
+    return isinstance(value, Identifier) and value.name == "__environment__" and isinstance(instruction.dest_reg, int)
+
+
+def _targets(items):
+    for item in items:
+        if item.kind == "nested":
+            yield from _targets(item.items)
+        elif item.kind == "target":
+            yield item
+
+
+def _is_env_slot(expression) -> bool:
+    return (
+            isinstance(expression, MemberExpression)
+            and expression.computed
+            and not expression.optional
+            and isinstance(expression.obj, Identifier)
+            and expression.obj.name == "__environment__"
+            and isinstance(expression.prop, NumericLiteral)
+    )
+
+
+def _object_temps(items):
+    for item in items:
+        if item.kind == "nested":
+            yield from _object_temps(item.items)
+        elif item.kind in ("object", "target"):
+            yield item.temp
 
 
 def _leaves(items):
     for item in items:
         if item.kind == "nested":
             yield from _leaves(item.items)
+        elif item.kind == "object":
+            for _, leaf in item.props:
+                yield leaf
         elif item.kind in ("reg", "rest"):
             yield item
 
@@ -833,6 +1084,13 @@ def _pattern_expression(items) -> ArrayExpression:
             elements.append(ArrayHole())
         elif item.kind == "nested":
             elements.append(_pattern_expression(item.items))
+        elif item.kind == "target":
+            elements.append(item.default)
+        elif item.kind == "object":
+            elements.append(ObjectExpression(properties=tuple(
+                ObjectProperty(key=Identifier(name=name), value=Identifier(name=f"r{leaf.reg}"))
+                for name, leaf in item.props
+            )))
         elif item.kind == "rest":
             elements.append(SpreadElement(argument=Identifier(name=f"r{item.reg}")))
         elif item.default is not None:
@@ -845,16 +1103,29 @@ def _pattern_expression(items) -> ArrayExpression:
     return ArrayExpression(elements=tuple(elements))
 
 
+_ENV_CREATES = frozenset({"CreateFunctionEnvironment", "CreateTopLevelEnvironment"})
+
+_KEY_LOADS = frozenset({"LoadConstUInt8", "LoadConstZero", "LoadConstInt"})
+
 _CLEANUP_HANDLERS = {"Catch", "Mov", "Jmp", "JmpTrue", "JmpTrueLong", "LoadConstUndefined", "IteratorClose", "Throw"}
 
 
 def _cleanup_vocabulary(block: BasicBlock, iterators: set[int]) -> bool:
+    # `Mov r20 <- it; IteratorClose r20, 1` closes a copy of the iterator (98/5707): the copy is the iterator.
+    closable = set(iterators)
+
     for instruction in block.instructions:
         if instruction.handler not in _CLEANUP_HANDLERS:
             return False
 
+        if instruction.handler == "Mov":
+            operands = _operands(instruction)
+
+            if len(operands) == 2 and operands[1] in iterators:
+                closable.add(operands[0])
+
         if instruction.handler == "IteratorClose" and _operands(instruction)[:1] and _operands(instruction)[
-            0] not in iterators:
+            0] not in closable:
             return False
 
     return True

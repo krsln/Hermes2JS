@@ -1,0 +1,81 @@
+
+=> [Function #2541 "findFirstSuspended" of 304 bytes]: 2 params, frame size=28, strict=1, exc handler=0, debug info=0  @ offset 0x0016c3e9
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 13, UInt8: 1>
+==> 00000003: <LoadConstNull>: <Reg8: 5>
+==> 00000005: <LoadConstUInt8>: <Reg8: 0, UInt8: 128>
+==> 00000008: <LoadConstZero>: <Reg8: 2>
+==> 0000000a: <LoadConstString>: <Reg8: 12, string_id: 382>  # String: 'together' (String)
+==> 0000000e: <LoadConstString>: <Reg8: 11, string_id: 5160>  # String: 'unstable_legacy-backwards' (String)
+==> 00000012: <LoadConstString>: <Reg8: 10, string_id: 5161>  # String: 'backwards' (String)
+==> 00000016: <LoadConstString>: <Reg8: 9, string_id: 5463>  # String: 'forwards' (String)
+==> 0000001a: <LoadConstUInt8>: <Reg8: 3, UInt8: 19>
+==> 0000001d: <LoadConstUInt8>: <Reg8: 4, UInt8: 13>
+==> 00000020: <Mov>: <Reg8: 8, Reg8: 13>
+==> 00000023: <JStrictEqualLong>: <Addr32: 234, Reg8: 5, Reg8: 8>  # Address: 0000010d
+==> 0000002a: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 0, string_id: 194>  # String: 'tag' (Identifier)
+==> 0000002f: <Mov>: <Reg8: 6, Reg8: 8>
+==> 00000032: <JStrictEqual>: <Addr8: 115, Reg8: 4, Reg8: 7>  # Address: 000000a5
+==> 00000036: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 0, string_id: 194>  # String: 'tag' (Identifier)
+==> 0000003b: <JStrictNotEqual>: <Addr8: 64, Reg8: 3, Reg8: 7>  # Address: 0000007b
+==> 0000003f: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 171>  # String: 'memoizedProps' (Identifier)
+==> 00000044: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 2, string_id: 14494>  # String: 'revealOrder' (Identifier)
+==> 0000004a: <JStrictEqual>: <Addr8: 76, Reg8: 9, Reg8: 7>  # Address: 00000096
+==> 0000004e: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 171>  # String: 'memoizedProps' (Identifier)
+==> 00000053: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 2, string_id: 14494>  # String: 'revealOrder' (Identifier)
+==> 00000059: <JStrictEqual>: <Addr8: 61, Reg8: 10, Reg8: 7>  # Address: 00000096
+==> 0000005d: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 171>  # String: 'memoizedProps' (Identifier)
+==> 00000062: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 2, string_id: 14494>  # String: 'revealOrder' (Identifier)
+==> 00000068: <JStrictEqual>: <Addr8: 46, Reg8: 11, Reg8: 7>  # Address: 00000096
+==> 0000006c: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 171>  # String: 'memoizedProps' (Identifier)
+==> 00000071: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 2, string_id: 14494>  # String: 'revealOrder' (Identifier)
+==> 00000077: <JStrictEqual>: <Addr8: 31, Reg8: 12, Reg8: 7>  # Address: 00000096
+==> 0000007b: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 3, string_id: 99>  # String: 'child' (Identifier)
+==> 00000080: <JStrictEqual>: <Addr8: 46, Reg8: 5, Reg8: 7>  # Address: 000000ae
+==> 00000084: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 3, string_id: 99>  # String: 'child' (Identifier)
+==> 00000089: <PutByIdStrict>: <Reg8: 7, Reg8: 6, UInt8: 0, string_id: 136>  # String: 'return' (Identifier)
+==> 0000008f: <GetByIdShort>: <Reg8: 14, Reg8: 6, UInt8: 3, string_id: 99>  # String: 'child' (Identifier)
+==> 00000094: <Jmp>: <Addr8: 107>  # Address: 000000ff
+==> 00000096: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 4, string_id: 144>  # String: 'flags' (Identifier)
+==> 0000009b: <BitAnd>: <Reg8: 1, Reg8: 7, Reg8: 0>
+==> 0000009f: <JStrictEqual>: <Addr8: 15, Reg8: 2, Reg8: 1>  # Address: 000000ae
+==> 000000a3: <Ret>: <Reg8: 6>
+==> 000000a5: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 5, string_id: 182>  # String: 'memoizedState' (Identifier)
+==> 000000aa: <JStrictNotEqual>: <Addr8: 101, Reg8: 5, Reg8: 7>  # Address: 0000010f
+==> 000000ae: <JStrictEqual>: <Addr8: 95, Reg8: 6, Reg8: 13>  # Address: 0000010d
+==> 000000b2: <GetByIdShort>: <Reg8: 16, Reg8: 6, UInt8: 6, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000000b7: <Mov>: <Reg8: 17, Reg8: 6>
+==> 000000ba: <Mov>: <Reg8: 15, Reg8: 17>
+==> 000000bd: <JStrictNotEqual>: <Addr8: 45, Reg8: 5, Reg8: 16>  # Address: 000000ea
+==> 000000c1: <GetByIdShort>: <Reg8: 18, Reg8: 17, UInt8: 7, string_id: 136>  # String: 'return' (Identifier)
+==> 000000c6: <Mov>: <Reg8: 16, Reg8: 17>
+==> 000000c9: <JStrictEqual>: <Addr8: 66, Reg8: 5, Reg8: 18>  # Address: 0000010b
+==> 000000cd: <GetByIdShort>: <Reg8: 18, Reg8: 16, UInt8: 7, string_id: 136>  # String: 'return' (Identifier)
+==> 000000d2: <JStrictEqual>: <Addr8: 57, Reg8: 18, Reg8: 13>  # Address: 0000010b
+==> 000000d6: <GetByIdShort>: <Reg8: 18, Reg8: 16, UInt8: 7, string_id: 136>  # String: 'return' (Identifier)
+==> 000000db: <GetByIdShort>: <Reg8: 16, Reg8: 18, UInt8: 6, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000000e0: <Mov>: <Reg8: 17, Reg8: 18>
+==> 000000e3: <Mov>: <Reg8: 15, Reg8: 17>
+==> 000000e6: <JStrictEqual>: <Addr8: -37, Reg8: 5, Reg8: 16>  # Address: 000000c1
+==> 000000ea: <GetByIdShort>: <Reg8: 17, Reg8: 15, UInt8: 6, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000000ef: <GetByIdShort>: <Reg8: 16, Reg8: 15, UInt8: 7, string_id: 136>  # String: 'return' (Identifier)
+==> 000000f4: <PutByIdStrict>: <Reg8: 17, Reg8: 16, UInt8: 0, string_id: 136>  # String: 'return' (Identifier)
+==> 000000fa: <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 6, string_id: 229>  # String: 'sibling' (Identifier)
+==> 000000ff: <Mov>: <Reg8: 8, Reg8: 14>
+==> 00000102: <JStrictNotEqualLong>: <Addr32: -216, Reg8: 5, Reg8: 8>  # Address: 0000002a
+==> 00000109: <Jmp>: <Addr8: 4>  # Address: 0000010d
+==> 0000010b: <Ret>: <Reg8: 5>
+==> 0000010d: <Ret>: <Reg8: 5>
+==> 0000010f: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 8, string_id: 8565>  # String: 'dehydrated' (Identifier)
+==> 00000115: <JStrictEqual>: <Addr8: 25, Reg8: 5, Reg8: 7>  # Address: 0000012e
+==> 00000119: <GetGlobalObject>: <Reg8: 7>
+==> 0000011b: <TryGetById>: <Reg8: 8, Reg8: 7, UInt8: 9, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000121: <LoadConstString>: <Reg8: 7, string_id: 4175>  # String: 'The current renderer does not support hydration. This error is likely caused by a bug in React. Please file an issue.' (String)
+==> 00000125: <LoadConstUndefined>: <Reg8: 5>
+==> 00000127: <Call2>: <Reg8: 7, Reg8: 8, Reg8: 5, Reg8: 7>
+==> 0000012c: <Throw>: <Reg8: 7>
+==> 0000012e: <Ret>: <Reg8: 6>
+
+
