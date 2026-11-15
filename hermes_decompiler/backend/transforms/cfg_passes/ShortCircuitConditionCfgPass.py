@@ -8,7 +8,9 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir import LogicalOperator, Node
 from hermes_decompiler.ir.Operators import BinaryOperator
-from hermes_decompiler.ir.expressions import BinaryExpression, Identifier, Literal, UndefinedLiteral
+from hermes_decompiler.ir.expressions import (
+    BinaryExpression, CallExpression, Identifier, Literal, MemberExpression, UndefinedLiteral,
+)
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.backend.transforms.shared import (
     negate_condition, TRIVIAL_NODE_TYPES, has_side_effects, keep_call_this_unbound, substitute_register,
@@ -519,7 +521,8 @@ class ShortCircuitConditionCfgPass:
                         # A value `ValueConditionFoldCfgPass` computed (`r7 = r4 && f(r4)`) is not a plain copy.
                         and not any(instruction is f for f in getattr(self.cfg, "folded_values", ()))
                         and not any(later.dest_reg == instruction.dest_reg for later in setup[position + 1:])
-                        and not self._copy_feeds_the_test(successor, instruction, probe, setup[position + 1:]))
+                        and not self._copy_feeds_the_test(successor, instruction, probe, setup[position + 1:])
+                        and not self._copy_is_the_call_receiver(instruction, probe, setup[position + 1:]))
                     or not (
                     # The global object is the same on every path and every reader
                     # already inlined it: nothing is left to read the register.
@@ -588,6 +591,28 @@ class ShortCircuitConditionCfgPass:
                 and not any(i.dest_reg is not None and f"r{i.dest_reg}" == source.name for i in later)
                 and sum(1 for n in probe.walk() if isinstance(n, Identifier) and n.name == name) == 1
         )
+
+    @staticmethod
+    def _copy_is_the_call_receiver(copy_instruction, probe, later: list) -> bool:
+        """`r12 = r10; r11 = r12.includes(...)`: the copy exists only to be the receiver of the one call the test
+        makes, so the call takes the source register (98/12172 `a.includes("x") || a.includes("y")`).
+        Every read of the copy in the test is such a receiver, and nothing after it writes the source."""
+        name = f"r{copy_instruction.dest_reg}"
+        source = copy_instruction.value
+
+        if not isinstance(source, Identifier) or any(
+                i.dest_reg is not None and f"r{i.dest_reg}" == source.name for i in later
+        ):
+            return False
+
+        reads = sum(1 for n in probe.walk() if isinstance(n, Identifier) and n.name == name)
+        receivers = sum(
+            1 for n in probe.walk()
+            if isinstance(n, CallExpression) and isinstance(n.callee, MemberExpression)
+            and isinstance(n.callee.obj, Identifier) and n.callee.obj.name == name
+        )
+
+        return reads == 1 and receivers == 1
 
     @classmethod
     def _read_before_any_effect(cls, node, name: str) -> bool:
