@@ -1,0 +1,41 @@
+
+=> [Function #1822 "traverseTwoPhase$1" of 128 bytes]: 4 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x0012171b
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 6, UInt8: 2>
+==> 00000006: <LoadParam>: <Reg8: 5, UInt8: 3>
+==> 00000009: <NewArray>: <Reg8: 4, UInt16: 0>
+==> 0000000d: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000010: <LoadConstUndefined>: <Reg8: 0>
+==> 00000012: <JmpFalse>: <Addr8: 25, Reg8: 2>  # Address: 0000002b
+==> 00000015: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 207>  # String: 'push' (Identifier)
+==> 0000001a: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000001f: <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 221>
+==> 00000023: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 2>
+==> 00000028: <JmpTrue>: <Addr8: -19, Reg8: 2>  # Address: 00000015
+==> 0000002b: <GetByIdShort>: <Reg8: 1, Reg8: 4, UInt8: 2, string_id: 169>  # String: 'length' (Identifier)
+==> 00000030: <ToNumeric>: <Reg8: 1, Reg8: 1>
+==> 00000033: <Dec>: <Reg8: 7, Reg8: 1>
+==> 00000036: <LoadConstString>: <Reg8: 2, string_id: 14200>  # String: 'captured' (Identifier)
+==> 0000003a: <LoadConstZero>: <Reg8: 3>
+==> 0000003c: <JNotLess>: <Addr8: 25, Reg8: 3, Reg8: 1>  # Address: 00000055
+==> 00000040: <GetByVal>: <Reg8: 1, Reg8: 4, Reg8: 7>
+==> 00000044: <Call4>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 5>
+==> 0000004b: <ToNumeric>: <Reg8: 1, Reg8: 7>
+==> 0000004e: <Dec>: <Reg8: 7, Reg8: 1>
+==> 00000051: <JLess>: <Addr8: -17, Reg8: 3, Reg8: 1>  # Address: 00000040
+==> 00000055: <GetByIdShort>: <Reg8: 1, Reg8: 4, UInt8: 2, string_id: 169>  # String: 'length' (Identifier)
+==> 0000005a: <Less>: <Reg8: 1, Reg8: 3, Reg8: 1>
+==> 0000005e: <LoadConstString>: <Reg8: 2, string_id: 16813>  # String: 'bubbled' (Identifier)
+==> 00000062: <LoadConstZero>: <Reg8: 3>
+==> 00000064: <JmpFalse>: <Addr8: 26, Reg8: 1>  # Address: 0000007e
+==> 00000067: <GetByVal>: <Reg8: 1, Reg8: 4, Reg8: 3>
+==> 0000006b: <Call4>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 5>
+==> 00000072: <Inc>: <Reg8: 3, Reg8: 3>
+==> 00000075: <GetByIdShort>: <Reg8: 1, Reg8: 4, UInt8: 2, string_id: 169>  # String: 'length' (Identifier)
+==> 0000007a: <JLess>: <Addr8: -19, Reg8: 3, Reg8: 1>  # Address: 00000067
+==> 0000007e: <Ret>: <Reg8: 0>
+
+

@@ -350,6 +350,14 @@ class OpcodeHandler(ABC):
         state.mark_used()
         return value
 
+    @staticmethod
+    def _parameter_is_rewritten(analysis, state, reg: int) -> bool:
+        """A register that still holds a parameter's value on entry to a loop that rewrites it (`r10 = param2`,
+        `r10 = r1.return` ends the body) holds something else on the next iteration: its reads in the loop are
+        the register, not the parameter's name (F-175 for plain reads; 96/2158 `captureCommitPhaseError`:
+        `r11 = param2.tag` for `r10.tag`)."""
+        return state.handler in ("LoadParam", "LoadParamLong") and analysis.is_rewritten_in_loop(reg)
+
     @classmethod
     def resolve_get_by_argument(cls, analysis, reg: int) -> Expression:
         state = analysis.get_register_state(reg)
@@ -358,7 +366,8 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}_undefined")
 
         # _GET_BY_ARGUMENT_INLINE_OPCODES
-        if analysis.may_inline(state) and state.handler in frozenset({
+        if analysis.may_inline(state) and not cls._parameter_is_rewritten(analysis, state,
+                                                                          reg) and state.handler in frozenset({
             "GetGlobalObject",
             "TryGetById",
             "LoadParam",
@@ -394,7 +403,8 @@ class OpcodeHandler(ABC):
 
         value = state.value
         # _CALL_ARGUMENT_INLINE_OPCODES
-        if analysis.may_inline(state) and state.handler in frozenset({
+        if analysis.may_inline(state) and not cls._parameter_is_rewritten(analysis, state,
+                                                                          reg) and state.handler in frozenset({
             "CreateClosure",
             "GetById",
             "GetByIdShort",
@@ -459,7 +469,8 @@ class OpcodeHandler(ABC):
         # definition being read).
         value = state.value
         # _CONDITION_ARGUMENT_INLINE_OPCODES
-        if analysis.may_inline(state) and state.handler in frozenset({
+        if analysis.may_inline(state) and not cls._parameter_is_rewritten(analysis, state,
+                                                                          reg) and state.handler in frozenset({
             "LoadParam",
             "LoadConstZero",
             "LoadConstUInt8",
