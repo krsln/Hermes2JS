@@ -381,8 +381,11 @@ class ShortCircuitConditionCfgPass:
                     self._in_try(successor) or self._in_try(end_block) or self._in_try(arm)
                     # A rotated loop's guard and its body test share registers (96/956 `replacer`).
                     or successor in self._loop_blocks or end_block in self._loop_blocks or arm in self._loop_blocks
+                    # (a handler counts only where the register still holds the test's value on the way to its
+                    # protected range: a `for-of` after END writes the iterator first, 96/11000)
                     or not all(
-                self._dead_on_entry(h, d, set()) for h in self._handlers() for d in self._written(successor))
+                self._dead_on_entry(h, d, set()) for d in self._written(successor)
+                for h in self._handlers_reached(successor, d))
             ):
                 return []
         elif list(end_block.predecessors) != [successor]:
