@@ -21,4 +21,4 @@ def test_the_tests_of_the_chain_are_one_condition():
     code = "\n".join(line for line in out.split("\n") if not line.strip().startswith("//"))
 
     assert "goto" not in code
-    assert 'if (!r9 || r8.type !== "menu" || !r8.menu) {\n            continue;' in code
+    assert 'if (r9 && r8.type === "menu" && r8.menu) {' in code

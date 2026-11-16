@@ -1,0 +1,45 @@
+
+=> [Function #2148 "unwindUnitOfWork" of 151 bytes]: 3 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x00130d90
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 8, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 7, UInt8: 2>
+==> 00000006: <GetEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000009: <LoadConstNull>: <Reg8: 3>
+==> 0000000b: <LoadConstInt>: <Reg8: 6, Imm32: 32768>
+==> 00000011: <LoadConstZero>: <Reg8: 5>
+==> 00000013: <LoadConstUndefined>: <Reg8: 0>
+==> 00000015: <LoadFromEnvironmentL>: <Reg8: 4, Reg8: 2, UInt16: 422>
+==> 0000001a: <GetByIdShort>: <Reg8: 1, Reg8: 8, UInt8: 1, string_id: 61>  # String: 'alternate' (Identifier)
+==> 0000001f: <Call3>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1, Reg8: 8>
+==> 00000025: <Mov>: <Reg8: 10, Reg8: 8>
+==> 00000028: <JStrictNotEqual>: <Addr8: 84, Reg8: 3, Reg8: 1>  # Address: 0000007c
+==> 0000002c: <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 2, string_id: 214>  # String: 'return' (Identifier)
+==> 00000031: <StrictNeq>: <Reg8: 4, Reg8: 3, Reg8: 9>
+==> 00000035: <JmpFalse>: <Addr8: 30, Reg8: 4>  # Address: 00000053
+==> 00000038: <GetByIdShort>: <Reg8: 11, Reg8: 9, UInt8: 3, string_id: 139>  # String: 'flags' (Identifier)
+==> 0000003d: <BitOr>: <Reg8: 11, Reg8: 11, Reg8: 6>
+==> 00000041: <PutById>: <Reg8: 9, Reg8: 11, UInt8: 1, string_id: 139>  # String: 'flags' (Identifier)
+==> 00000047: <PutById>: <Reg8: 9, Reg8: 5, UInt8: 2, string_id: 124>  # String: 'subtreeFlags' (Identifier)
+==> 0000004d: <PutById>: <Reg8: 9, Reg8: 3, UInt8: 3, string_id: 11855>  # String: 'deletions' (Identifier)
+==> 00000053: <JmpTrue>: <Addr8: 18, Reg8: 7>  # Address: 00000065
+==> 00000056: <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 4, string_id: 225>  # String: 'sibling' (Identifier)
+==> 0000005b: <JStrictEqual>: <Addr8: 10, Reg8: 3, Reg8: 10>  # Address: 00000065
+==> 0000005f: <StoreToEnvironment>: <Reg8: 2, UInt8: 143, Reg8: 10>
+==> 00000063: <Ret>: <Reg8: 0>
+==> 00000065: <StoreToEnvironment>: <Reg8: 2, UInt8: 143, Reg8: 9>
+==> 00000069: <Mov>: <Reg8: 8, Reg8: 9>
+==> 0000006c: <JmpTrue>: <Addr8: -87, Reg8: 4>  # Address: 00000015
+==> 0000006f: <LoadConstUInt8>: <Reg8: 4, UInt8: 6>
+==> 00000072: <StoreNPToEnvironment>: <Reg8: 2, UInt8: 151, Reg8: 4>
+==> 00000076: <StoreNPToEnvironment>: <Reg8: 2, UInt8: 143, Reg8: 3>
+==> 0000007a: <Ret>: <Reg8: 0>
+==> 0000007c: <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 139>  # String: 'flags' (Identifier)
+==> 00000081: <LoadConstInt>: <Reg8: 3, Imm32: 32767>
+==> 00000087: <BitAnd>: <Reg8: 3, Reg8: 4, Reg8: 3>
+==> 0000008b: <PutById>: <Reg8: 1, Reg8: 3, UInt8: 1, string_id: 139>  # String: 'flags' (Identifier)
+==> 00000091: <StoreToEnvironment>: <Reg8: 2, UInt8: 143, Reg8: 1>
+==> 00000095: <Ret>: <Reg8: 0>
+
+

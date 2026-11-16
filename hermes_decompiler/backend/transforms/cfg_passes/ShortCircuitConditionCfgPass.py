@@ -508,6 +508,12 @@ class ShortCircuitConditionCfgPass:
                     return None
                 effect_seen = True
 
+            dead_copy = (
+                    instruction.dest_reg is not None
+                    and getattr(getattr(instruction, "entry", None), "opcode", None) in ("Mov", "MovLong")
+                    and self._copy_only_feeds_dead_copies(successor, instruction)
+            )
+
             if (
                     instruction.dest_reg is None
                     or instruction.value is None
@@ -523,11 +529,14 @@ class ShortCircuitConditionCfgPass:
                         and not any(later.dest_reg == instruction.dest_reg for later in setup[position + 1:])
                         and not self._copy_feeds_the_test(successor, instruction, probe, setup[position + 1:])
                         and not self._copy_is_the_call_receiver(instruction, probe, setup[position + 1:])
-                        and not self._copy_is_private_to_the_block(successor, instruction, setup[position + 1:]))
+                        and not self._copy_is_private_to_the_block(successor, instruction, setup[position + 1:])
+                        and not dead_copy)
                     or not (
                     # The global object is the same on every path and every reader
                     # already inlined it: nothing is left to read the register.
                     instruction.entry.opcode == "GetGlobalObject"
+                    # A copy only other dead copies read has no reader to protect.
+                    or dead_copy
                     # A load END gets its own copy of is only dead on the first exit.
                     or all(self._dead_on_entry(b, instruction.dest_reg, set())
                            for b in (exits[:1] if any(
@@ -537,6 +546,7 @@ class ShortCircuitConditionCfgPass:
                     # may read the register the try body had set.
                     or not (
                     instruction.entry.opcode == "GetGlobalObject"
+                    or dead_copy
                     or all(self._dead_on_entry(b, instruction.dest_reg, set())
                            for b in self._handlers_reached(successor, instruction.dest_reg))
             )
@@ -592,6 +602,65 @@ class ShortCircuitConditionCfgPass:
                 and not any(i.dest_reg is not None and f"r{i.dest_reg}" == source.name for i in later)
                 and sum(1 for n in probe.walk() if isinstance(n, Identifier) and n.name == name) == 1
         )
+
+    def _copy_only_feeds_dead_copies(self, block: BasicBlock, copy_instruction) -> bool:
+        """Is the register a copy writes read only by other plain copies that nothing reads either?
+
+        `r12 = r13` ... `r6 = r12` ... `r12 = r6` is a loop-carried cycle of copies (96/2158
+        `captureCommitPhaseError`, React's `Ya`): every read is a copy into a register that is
+        written again before anything real reads it, so dropping one copy loses nothing. Followed
+        forward from the copy with the set of registers still carrying its value."""
+        if self.cfg.exception_handlers:
+            return False
+
+        start = block.instructions.index(copy_instruction) + 1
+        seen: set = set()
+
+        def reads(instruction, register: int) -> bool:
+            described = bool(
+                getattr(getattr(instruction, "entry", None), "args", "")) and instruction.terminator is None
+            name = f"r{register}"
+            nodes = [] if described else [
+                instruction.value, instruction.statement, getattr(instruction.terminator, "condition", None),
+                getattr(instruction.terminator, "value", None),
+            ]
+
+            return self._reads_operand(instruction, register) or any(
+                n is not None and self._mentions(n, name) for n in nodes)
+
+        def walk(current: BasicBlock, index: int, carried: frozenset) -> bool:
+            for instruction in current.instructions[index:]:
+                for register in carried:
+                    if not reads(instruction, register):
+                        continue
+
+                    is_copy = (
+                            instruction.terminator is None
+                            and instruction.dest_reg is not None
+                            and instruction.entry.opcode in ("Mov", "MovLong")
+                            and self._source_registers(instruction) == {register}
+                    )
+
+                    if not is_copy:
+                        return False
+
+                    carried = carried | {instruction.dest_reg}
+
+                if instruction.terminator is None and instruction.dest_reg in carried and not any(
+                        reads(instruction, r) for r in carried):
+                    carried = carried - {instruction.dest_reg}
+
+                if not carried:
+                    return True
+
+            if (current, carried) in seen:
+                return True
+
+            seen.add((current, carried))
+
+            return all(walk(successor, 0, carried) for successor in current.successors)
+
+        return walk(block, start, frozenset({copy_instruction.dest_reg}))
 
     @staticmethod
     def _copy_is_the_call_receiver(copy_instruction, probe, later: list) -> bool:

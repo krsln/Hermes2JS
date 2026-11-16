@@ -661,6 +661,20 @@ class _DominanceIfBuilder(RegionStructurer):
             pred is not block
             and (
                     (pred.terminator is None and not exits_must_return)
+                    # A guard `LoopBreakStructurer` already took out of the block (`if (r11) return r2;` in
+                    # the loop body): its branch is gone but the edges to the lone `return` and on into the
+                    # target stay (96/12510 `sortRoutes`, once `A && B` is one test).
+                    or (
+                            pred.terminator is None
+                            and exits_must_return
+                            and pred is then_entry
+                            and len(pred.successors) == 2
+                            and goto_block in pred.successors
+                            and any(
+                        self._is_lone_return(x.address)
+                        for x in pred.successors if x is not goto_block
+                    )
+                    )
                     or (
                             isinstance(pred.terminator, TerminatorConditionalBranch)
                             and pred.terminator.target != goto_block.address
