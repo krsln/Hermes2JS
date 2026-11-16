@@ -139,6 +139,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-15 | after F-258 (a register test the way in decided is skipped) | 79 | 54 | n/a | n/a | 1203 passed |
 | 2026-11-15 | after F-259 (a receiver copy no longer stops the fold) | 77 | 52 | n/a | n/a | 1204 passed |
 | 2026-11-15 | after F-260 (a copy only the second test reads folds) | 76 | 52 | n/a | n/a | 1205 passed |
+| 2026-11-16 | after F-261 (a copy the next test overwrites folds) | 70 | 51 | n/a | n/a | 1206 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1

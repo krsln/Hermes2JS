@@ -32,4 +32,4 @@ def test_default_of_a_register_written_in_a_try_inside_the_arm_still_prints():
     out = Decompiler.render(Decompiler.build_context(hasm, 9338, strict=False), verbose=False, raw=False)
 
     assert "    r1 = param1;\n" in out
-    assert 'if (r4 === "string") {\n                try {' in out
+    assert 'if (r4 === "string") {\n            try {' in out

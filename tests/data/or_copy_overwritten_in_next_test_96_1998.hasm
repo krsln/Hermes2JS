@@ -1,0 +1,78 @@
+
+=> [Function #1998 "updateActionStateImpl" of 264 bytes]: 4 params, frame size=24, strict=1, exc handler=1, debug info=0  @ offset 0x0012768e
+  [Exception handlers: [start=0x6c, end=0x79, target=0xf3] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 7, UInt8: 2>
+==> 00000003: <LoadParam>: <Reg8: 12, UInt8: 3>
+==> 00000006: <Mov>: <Reg8: 4, Reg8: 7>
+==> 00000009: <LoadConstUndefined>: <Reg8: 10>
+==> 0000000b: <LoadConstUndefined>: <Reg8: 2>
+==> 0000000d: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000010: <LoadFromEnvironmentL>: <Reg8: 6, Reg8: 0, UInt16: 337>
+==> 00000015: <LoadFromEnvironmentL>: <Reg8: 5, Reg8: 0, UInt16: 352>
+==> 0000001a: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 0000001d: <Call4>: <Reg8: 3, Reg8: 6, Reg8: 10, Reg8: 3, Reg8: 7, Reg8: 5>
+==> 00000024: <LoadConstZero>: <Reg8: 6>
+==> 00000026: <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 6>
+==> 0000002a: <Mov>: <Reg8: 4, Reg8: 5>
+==> 0000002d: <LoadFromEnvironmentL>: <Reg8: 7, Reg8: 0, UInt16: 336>
+==> 00000032: <LoadFromEnvironmentL>: <Reg8: 3, Reg8: 0, UInt16: 335>
+==> 00000037: <Call2>: <Reg8: 3, Reg8: 7, Reg8: 10, Reg8: 3>
+==> 0000003c: <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 6>
+==> 00000040: <LoadConstString>: <Reg8: 6, string_id: 7532>  # String: 'object' (Identifier)
+==> 00000044: <TypeOf>: <Reg8: 5, Reg8: 5>
+==> 00000047: <JStrictNotEqual>: <Addr8: 32, Reg8: 6, Reg8: 5>  # Address: 00000067
+==> 0000004b: <Mov>: <Reg8: 6, Reg8: 4>
+==> 0000004e: <LoadConstNull>: <Reg8: 5>
+==> 00000050: <JStrictEqual>: <Addr8: 23, Reg8: 5, Reg8: 6>  # Address: 00000067
+==> 00000054: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000057: <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 1, string_id: 239>  # String: 'then' (Identifier)
+==> 0000005c: <LoadConstString>: <Reg8: 6, string_id: 8218>  # String: 'function' (Identifier)
+==> 00000060: <TypeOf>: <Reg8: 5, Reg8: 5>
+==> 00000063: <JStrictEqual>: <Addr8: 9, Reg8: 6, Reg8: 5>  # Address: 0000006c
+==> 00000067: <Mov>: <Reg8: 2, Reg8: 4>
+==> 0000006a: <Jmp>: <Addr8: 15>  # Address: 00000079
+==> 0000006c: <LoadFromEnvironmentL>: <Reg8: 6, Reg8: 0, UInt16: 334>
+==> 00000071: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000074: <Call2>: <Reg8: 2, Reg8: 6, Reg8: 10, Reg8: 5>
+==> 00000079: <LoadFromEnvironmentL>: <Reg8: 5, Reg8: 0, UInt16: 332>
+==> 0000007e: <Call1>: <Reg8: 5, Reg8: 5, Reg8: 10>
+==> 00000082: <Mov>: <Reg8: 4, Reg8: 5>
+==> 00000085: <GetByIdShort>: <Reg8: 11, Reg8: 5, UInt8: 2, string_id: 208>  # String: 'queue' (Identifier)
+==> 0000008a: <GetByIdShort>: <Reg8: 4, Reg8: 11, UInt8: 3, string_id: 119>  # String: 'dispatch' (Identifier)
+==> 0000008f: <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 4, string_id: 173>  # String: 'memoizedState' (Identifier)
+==> 00000094: <JStrictEqual>: <Addr8: 74, Reg8: 12, Reg8: 5>  # Address: 000000de
+==> 00000098: <LoadFromEnvironment>: <Reg8: 6, Reg8: 0, UInt8: 117>
+==> 0000009c: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 5, string_id: 139>  # String: 'flags' (Identifier)
+==> 000000a1: <LoadConstInt>: <Reg8: 5, Imm32: 2048>
+==> 000000a7: <BitOr>: <Reg8: 5, Reg8: 7, Reg8: 5>
+==> 000000ab: <PutById>: <Reg8: 6, Reg8: 5, UInt8: 1, string_id: 139>  # String: 'flags' (Identifier)
+==> 000000b1: <LoadFromEnvironmentL>: <Reg8: 9, Reg8: 0, UInt16: 355>
+==> 000000b6: <NewObject>: <Reg8: 8>
+==> 000000b8: <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 7738>  # String: 'destroy' (Identifier)
+==> 000000bd: <LoadFromEnvironmentL>: <Reg8: 6, Reg8: 0, UInt16: 354>
+==> 000000c2: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 6, string_id: 71>  # String: 'bind' (Identifier)
+==> 000000c7: <LoadConstNull>: <Reg8: 7>
+==> 000000c9: <Call4>: <Reg8: 14, Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 11, Reg8: 12>
+==> 000000d0: <LoadConstUInt8>: <Reg8: 16, UInt8: 9>
+==> 000000d3: <LoadConstUndefined>: <Reg8: 17>
+==> 000000d5: <Mov>: <Reg8: 15, Reg8: 8>
+==> 000000d8: <LoadConstNull>: <Reg8: 13>
+==> 000000da: <Call>: <Reg8: 5, Reg8: 9, UInt8: 5>
+==> 000000de: <Mov>: <Reg8: 5, Reg8: 2>
+==> 000000e1: <NewArray>: <Reg8: 2, UInt16: 3>
+==> 000000e5: <PutOwnByIndex>: <Reg8: 2, Reg8: 5, UInt8: 0>
+==> 000000e9: <PutOwnByIndex>: <Reg8: 2, Reg8: 4, UInt8: 1>
+==> 000000ed: <PutOwnByIndex>: <Reg8: 2, Reg8: 3, UInt8: 2>
+==> 000000f1: <Ret>: <Reg8: 2>
+==> 000000f3: <Catch>: <Reg8: 3>
+==> 000000f5: <Mov>: <Reg8: 1, Reg8: 3>
+==> 000000f8: <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 97>
+==> 000000fc: <JStrictEqual>: <Addr8: 6, Reg8: 3, Reg8: 2>  # Address: 00000102
+==> 00000100: <Throw>: <Reg8: 1>
+==> 00000102: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 99>
+==> 00000106: <Throw>: <Reg8: 0>
+
+

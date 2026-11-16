@@ -31,7 +31,9 @@ def test_the_code_after_an_early_return_arm_follows_the_if():
 
     assert "goto" not in out
     assert out.count("try {") == 1
-    assert out.index("return undefined;") < out.index("try {")
+    # The early-return arm folds into the test: `if (!(handler && handler(...))) { <the rest> }`.
+    assert "return undefined;" not in out
+    assert "if (!(r7 && r3[0].RN$handleException(param1, param2, true))) {" in out
 
 
 def test_a_clamped_branch_runs_on_into_the_energy_test():

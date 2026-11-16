@@ -633,11 +633,16 @@ class ShortCircuitConditionCfgPass:
             if block is successor:
                 continue
 
+            # A block that writes the register before it reads it does not see the copy (`r6 = 'function'` in
+            # the next test, 96/1998 `updateActionStateImpl`).
             for other in block.instructions:
                 if self._reads_operand(other, register) or (
                         other.value is not None and self._mentions(other.value, name)
                 ):
                     return False
+
+                if other.dest_reg == register:
+                    break
 
         return True
 
