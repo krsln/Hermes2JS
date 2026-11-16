@@ -221,7 +221,7 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
 
         if_region = self._child_at(region, index + offset + 1)
 
-        if not self._is_resume_guard(if_region):
+        if not self._is_resume_guard(if_region, self._suspends_on_a_real_await(yield_block)):
             return False
 
         resumed_reg = resume_block.instructions[pair_at].dest_reg
@@ -482,8 +482,30 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
                 and value.argument.argument is None
         )
 
+    def _suspends_on_a_real_await(self, yield_block) -> bool:
+        """True when the save in `yield_block` suspends on a Call-derived `await`.
+
+        Only a generator's `.return()` resumes with the return flag set; an `await`'s resume
+        never does, so the guard's `then` arm is dead code even when it holds the cleanup a
+        `finally` copies onto the return path (96/14482, a `try { await f() } finally { ... }`).
+        """
+        if yield_block is None or len(yield_block.instructions) < 2:
+            return False
+
+        save_instruction = yield_block.instructions[-1]
+        before_save = yield_block.instructions[:-1]
+        yielded_reg = self._yielded_reg.get(id(save_instruction))
+        value_instruction = before_save[-1]
+
+        if yielded_reg is not None:
+            value_instruction = next((i for i in reversed(before_save) if i.dest_reg == yielded_reg), None)
+
+        value = value_instruction.value if value_instruction is not None else None
+
+        return isinstance(value, AwaitExpression) and not isinstance(value.argument, YieldExpression)
+
     @staticmethod
-    def _is_resume_guard(node) -> bool:
+    def _is_resume_guard(node, dead_return_arm: bool = False) -> bool:
         if not isinstance(node, IfRegion):
             return False
 
@@ -509,6 +531,12 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
                     and len(node.then_body.children) > 1
             )
         ]
+
+        if dead_return_arm:
+            # the arm only has to leave the function; its content never runs
+            last = then_children[-1] if then_children else None
+
+            return isinstance(last, BasicBlock) and bool(last.instructions) and last.instructions[-1].handler == "Ret"
 
         if len(then_children) != 1:
             return False

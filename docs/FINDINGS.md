@@ -140,6 +140,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-15 | after F-259 (a receiver copy no longer stops the fold) | 77 | 52 | n/a | n/a | 1204 passed |
 | 2026-11-15 | after F-260 (a copy only the second test reads folds) | 76 | 52 | n/a | n/a | 1205 passed |
 | 2026-11-16 | after F-261 (a copy the next test overwrites folds) | 70 | 51 | n/a | n/a | 1206 passed |
+| 2026-11-16 | after F-262 (an `await` whose return arm holds cleanup folds) | 69 | 51 | n/a | n/a | 1207 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
@@ -245,6 +246,8 @@ The output is wrong or misleading. Because it contains no `goto` it does not sho
 - **F-18 Long tail of "different region" gotos.** About 230 functions with no single common cause;
   96/1351 `processTransformOrigin` (`case "left": case "right":` shared label) fixed by F-253 (archive); 96/474 `anonymous` (`typeof D === "function" || typeof D === "object"`) fixed by F-254 (archive); 96/12624 `getInternalExpoRouterParams` fixed by F-255 (archive); sampled 2026-11-14 and mapped onto open shapes: 96/7888 is F-201, 98/8193, 8194 (F-258) and 12172 (F-259) are F-217 (96/474 was too; its constant `r2 = false` for the join is what F-254 handles), 98/3508 is two nested iterator destructurings (F-215).
   the cheapest start is the small ones (one `goto`, under 26 lines: 79 functions).
+
+- **F-263 Async bodies and loops the structurer still cannot shape (96/14867 and 8059 `_anon_0`, 98/2474 `describeNativeComponentFrame`).** (a) 96/14867 and 8059: an `await` INSIDE an expression (`[true, await x]`) under a `try`/`finally` copy keeps the save as `goto label_25` and prints the resume guard with `await yield`; the guard's arms hold the copied code, and F-262 only covers a suspend that is a plain Call-derived `await`. (b) 98/2474: React's two nested compare loops (`for (; 1 <= s && 0 <= c && l[s] !== a[c];) c--;` then `for (...) { if (l[s] !== a[c]) { do { ... } while (...); break } }`) print as a `do { } while (r9 !== r14[r8])` that reads a stale `r9` plus four `goto`s; the stale read is in the loop structure (it was the same before F-261), not in a fold. Needs multi-exit nested loop recognition in `StructuralAnalyzer`.
 
 ## Open: readability
 

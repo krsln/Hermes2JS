@@ -1,0 +1,49 @@
+
+=> [Function #14482 "?anon_0_" of 144 bytes]: 1 params, frame size=16, strict=1, exc handler=1, debug info=0  @ offset 0x0025acc6
+  [Exception handlers: [start=0xa, end=0x47, target=0x71] ]
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000004: <JmpTrueLong>: <Addr32: 137, Reg8: 1>  # Address: 0000008d
+==> 0000000a: <GetEnvironment>: <Reg8: 3, UInt8: 4>
+==> 0000000d: <LoadFromEnvironment>: <Reg8: 1, Reg8: 3, UInt8: 4>
+==> 00000011: <GetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 11524>  # String: 'loadSingleFontAsync' (Identifier)
+==> 00000017: <GetEnvironment>: <Reg8: 2, UInt8: 1>
+==> 0000001a: <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 0>
+==> 0000001e: <LoadFromEnvironment>: <Reg8: 1, Reg8: 2, UInt8: 1>
+==> 00000022: <LoadConstUndefined>: <Reg8: 4>
+==> 00000024: <Call3>: <Reg8: 1, Reg8: 6, Reg8: 4, Reg8: 5, Reg8: 1>
+==> 0000002a: <SaveGenerator>: <Addr8: 4>  # Address: 0000002e
+==> 0000002c: <Ret>: <Reg8: 1>
+==> 0000002e: <ResumeGenerator>: <Reg8: 1, Reg8: 5>
+==> 00000031: <JmpTrue>: <Addr8: 43, Reg8: 5>  # Address: 0000005c
+==> 00000034: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 5>
+==> 00000038: <GetById>: <Reg8: 6, Reg8: 5, UInt8: 2, string_id: 18132>  # String: 'markLoaded' (Identifier)
+==> 0000003e: <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 0>
+==> 00000042: <Call2>: <Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 5>
+==> 00000047: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 5>
+==> 0000004b: <GetById>: <Reg8: 6, Reg8: 5, UInt8: 3, string_id: 9213>  # String: 'loadPromises' (Identifier)
+==> 00000051: <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 0>
+==> 00000055: <DelByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
+==> 00000059: <CompleteGenerator>: <>
+==> 0000005a: <Ret>: <Reg8: 4>
+==> 0000005c: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 5>
+==> 00000060: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 3, string_id: 9213>  # String: 'loadPromises' (Identifier)
+==> 00000066: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
+==> 0000006a: <DelByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
+==> 0000006e: <CompleteGenerator>: <>
+==> 0000006f: <Ret>: <Reg8: 1>
+==> 00000071: <Catch>: <Reg8: 1>
+==> 00000073: <GetEnvironment>: <Reg8: 2, UInt8: 4>
+==> 00000076: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 5>
+==> 0000007a: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 9213>  # String: 'loadPromises' (Identifier)
+==> 00000080: <GetEnvironment>: <Reg8: 2, UInt8: 1>
+==> 00000083: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
+==> 00000087: <DelByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
+==> 0000008b: <Throw>: <Reg8: 1>
+==> 0000008d: <CompleteGenerator>: <>
+==> 0000008e: <Ret>: <Reg8: 0>
+
+
