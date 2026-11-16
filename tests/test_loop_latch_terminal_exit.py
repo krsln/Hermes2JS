@@ -42,6 +42,9 @@ def test_the_code_after_the_loop_is_reached_by_the_break_only():
     """98/9880 `finish`: the search loop `break`s on a match; running out returns `undefined`."""
     code = _code("loop_latch_return_exit_98_9880.hasm", 9880)
 
+    # the found branch is several blocks and only returns, so it moves into the loop (Shape E); running out of
+    # the loop is the end of the function (`undefined`)
     assert "goto" not in code
-    assert "break;" in code
-    assert code.count("return undefined;") == 2
+    assert "break;" not in code
+    assert code.index("if (r6 === param1) {") < code.index("return r5[11];")
+    assert code.rstrip().endswith("}\n    }\n}")

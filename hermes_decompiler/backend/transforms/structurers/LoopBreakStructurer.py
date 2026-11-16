@@ -308,7 +308,7 @@ class LoopBreakStructurer(RegionStructurer):
         if isinstance(exit_terminator, TerminatorJump):
             natural_merge = self._natural_loop_merge(loop)
             if natural_merge is None or exit_terminator.target != natural_merge:
-                return False
+                return self._convert_terminal_region(loop, block, branch, exit_block, condition)
             return self._convert_break_shape(
                 loop, block, branch, exit_block, exit_terminator, condition,
             )
@@ -331,14 +331,14 @@ class LoopBreakStructurer(RegionStructurer):
                     or len(successors) != 1
                     or successors[0].address != natural_merge
             ):
-                return False
+                return self._convert_terminal_region(loop, block, branch, exit_block, condition)
             return self._convert_break_shape_fallthrough(loop, block, branch, exit_block, condition)
 
         # ---- Shape B: exit body terminates the function directly ----
         if isinstance(exit_terminator, (TerminatorReturn, TerminatorThrow)):
             return self._convert_terminal_shape(loop, block, branch, exit_block, condition)
 
-        return False
+        return self._convert_terminal_region(loop, block, branch, exit_block, condition)
 
     def _convert_break_shape_fallthrough(
             self,
@@ -431,6 +431,76 @@ class LoopBreakStructurer(RegionStructurer):
             return False
 
         self._splice_exit_block_as_then(loop, block, exit_block, condition)
+        return True
+
+    # -------------------------------------------------------------
+    # Shape E: a several-block exit body that only ends the function
+    # -------------------------------------------------------------
+
+    def _terminal_region(self, loop: LoopRegion, block: BasicBlock, exit_block: BasicBlock) -> list | None:
+        """The blocks of an exit body that is entered only through `exit_block` and never leaves again.
+
+        Every block's predecessors lie inside the body (`exit_block`'s is `block`), every successor too,
+        and the body ends in `return`/`throw` leaves only (96/2158 `captureCommitPhaseError`: the found
+        branch of `for (; r10 !== null; r10 = r10.return)` runs a body of several blocks and returns, laid
+        out behind the loop). Anything that reaches back into the loop or on to code another path shares
+        is not such a body."""
+        covered = loop.body.covered_blocks
+        owner = self.graph.owner(exit_block)
+        region: list = []
+        seen: set = set()
+        stack = [exit_block]
+
+        while stack:
+            current = stack.pop()
+
+            if current in seen:
+                continue
+
+            if current in covered or self.graph.owner(current) is not owner or len(seen) >= 60:
+                return None
+
+            seen.add(current)
+            region.append(current)
+            stack.extend(current.successors)
+
+        for member in region:
+            allowed = seen | {block} if member is exit_block else seen
+
+            if any(p not in allowed for p in member.predecessors):
+                return None
+
+            if not member.successors and not isinstance(member.terminator, (TerminatorReturn, TerminatorThrow)):
+                return None
+
+        return region
+
+    def _convert_terminal_region(self, loop, block, branch, exit_block, condition) -> bool:
+        """Shape E: splice a several-block, function-ending exit body in as `if (cond) { ... }`."""
+        region = self._terminal_region(loop, block, exit_block)
+
+        if region is None or len(region) < 2:
+            return False
+
+        if not self._strip_block_branch(block, branch):
+            return False
+
+        owner_children = self.graph.owner(exit_block).children
+        ordered = sorted(region, key=lambda b: owner_children.index(b))
+
+        for member in ordered:
+            self.graph.extract_block(member)
+
+        then_body = SequenceRegion()
+        self.graph.transfer(ordered, then_body)
+
+        if_region = IfRegion()
+        if_region.condition = condition
+        if_region.then_body = then_body
+        if_region.else_body = None
+
+        self.graph.insert_at(loop.body, loop.body.children.index(block) + 1, if_region)
+
         return True
 
     # -------------------------------------------------------------
