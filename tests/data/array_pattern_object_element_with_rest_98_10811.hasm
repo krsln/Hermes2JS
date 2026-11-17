@@ -1,0 +1,62 @@
+
+=> [Function #10811 "" of 179 bytes]: 2 params, frame size=20, strict=1, exc handler=1, debug info=0  @ offset 0x0021eaf1
+  [Exception handlers: [start=0x48, end=0x6f, target=0xa2] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadConstUndefined>: <Reg8: 6>
+==> 00000002: <LoadConstUndefined>: <Reg8: 4>
+==> 00000004: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000007: <IteratorBegin>: <Reg8: 1, Reg8: 5>
+==> 0000000a: <Mov>: <Reg8: 0, Reg8: 5>
+==> 0000000d: <IteratorNext>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 00000011: <Mov>: <Reg8: 2, Reg8: 1>
+==> 00000014: <StrictEq>: <Reg8: 3, Reg8: 2, Reg8: 6>
+==> 00000018: <LoadConstUndefined>: <Reg8: 2>
+==> 0000001a: <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 00000020
+==> 0000001d: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000020: <CreateFunctionEnvironment>: <Reg8: 0, UInt8: 4>
+==> 00000023: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 2>
+==> 00000027: <LoadConstUndefined>: <Reg8: 8>
+==> 00000029: <Mov>: <Reg8: 2, Reg8: 3>
+==> 0000002c: <JmpTrue>: <Addr8: 28, Reg8: 3>  # Address: 00000048
+==> 0000002f: <IteratorNext>: <Reg8: 7, Reg8: 1, Reg8: 5>
+==> 00000033: <Mov>: <Reg8: 5, Reg8: 1>
+==> 00000036: <StrictEq>: <Reg8: 5, Reg8: 5, Reg8: 6>
+==> 0000003a: <LoadConstUndefined>: <Reg8: 8>
+==> 0000003c: <Mov>: <Reg8: 2, Reg8: 5>
+==> 0000003f: <JmpTrue>: <Addr8: 9, Reg8: 5>  # Address: 00000048
+==> 00000042: <Mov>: <Reg8: 8, Reg8: 7>
+==> 00000045: <Mov>: <Reg8: 2, Reg8: 5>
+==> 00000048: <GetById>: <Reg8: 5, Reg8: 8, UInt8: 0, string_id: 11175>  # String: 'if' (Identifier)
+==> 0000004e: <StoreToEnvironment>: <Reg8: 0, UInt8: 1, Reg8: 5>
+==> 00000052: <NewObject>: <Reg8: 11>
+==> 00000054: <LoadConstNull>: <Reg8: 5>
+==> 00000056: <NewObjectWithBufferAndParent>: <Reg8: 9, Reg8: 5, UInt32: 2017, UInt32: 17298>
+==> 00000061: <Mov>: <Reg8: 10, Reg8: 8>
+==> 00000064: <CallBuiltin>: <Reg8: 5, UInt8: 46, UInt8: 4>  # Built-in function: [#46 copyDataProperties]
+==> 00000068: <Mov>: <Reg8: 4, Reg8: 5>
+==> 0000006b: <StoreToEnvironment>: <Reg8: 0, UInt8: 2, Reg8: 5>
+==> 0000006f: <JmpTrue>: <Addr8: 9, Reg8: 2>  # Address: 00000078
+==> 00000072: <Mov>: <Reg8: 5, Reg8: 1>
+==> 00000075: <IteratorClose>: <Reg8: 5, UInt8: 0>
+==> 00000078: <GetParentEnvironment>: <Reg8: 5, UInt8: 0>
+==> 0000007b: <StoreNPToEnvironment>: <Reg8: 0, UInt8: 3, Reg8: 6>
+==> 0000007f: <GetParentEnvironment>: <Reg8: 6, UInt8: 1>
+==> 00000082: <LoadFromEnvironment>: <Reg8: 7, Reg8: 6, UInt8: 7>
+==> 00000086: <LoadFromEnvironment>: <Reg8: 6, Reg8: 5, UInt8: 2>
+==> 0000008a: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 1, string_id: 189>  # String: 'screens' (Identifier)
+==> 0000008f: <LoadConstZero>: <Reg8: 4>
+==> 00000091: <Call3>: <Reg8: 4, Reg8: 7, Reg8: 4, Reg8: 6, Reg8: 5>
+==> 00000097: <StoreToEnvironment>: <Reg8: 0, UInt8: 3, Reg8: 4>
+==> 0000009b: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 13083>  # Function: [#13083  of 105 bytes]: 1 params @ offset 0x00254078
+==> 000000a0: <Ret>: <Reg8: 0>
+==> 000000a2: <Catch>: <Reg8: 0>
+==> 000000a4: <Jmp>: <Addr8: 7>  # Address: 000000ab
+==> 000000a6: <Catch>: <Reg8: 0>
+==> 000000a8: <Mov>: <Reg8: 2, Reg8: 3>
+==> 000000ab: <JmpTrue>: <Addr8: 6, Reg8: 2>  # Address: 000000b1
+==> 000000ae: <IteratorClose>: <Reg8: 1, UInt8: 1>
+==> 000000b1: <Throw>: <Reg8: 0>
+
+

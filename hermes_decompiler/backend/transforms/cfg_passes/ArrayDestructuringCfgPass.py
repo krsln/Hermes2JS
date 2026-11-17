@@ -35,13 +35,14 @@ around the chain and are left alone.
 from __future__ import annotations
 
 import copy
+import dataclasses
 from dataclasses import dataclass
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.cfg_passes._generator_dispatch import _operands
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import ArrayExpression, AssignmentExpression, Identifier, MemberExpression, \
-    NumericLiteral
+from hermes_decompiler.ir.expressions import ArrayExpression, AssignmentExpression, CallExpression, Identifier, \
+    MemberExpression, NumericLiteral
 from hermes_decompiler.ir.expressions.Collections import ArrayHole, ObjectExpression, ObjectProperty, SpreadElement
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.terminators import TerminatorJump
@@ -158,6 +159,15 @@ class ArrayDestructuringCfgPass:
 
                 restores[temp] = slots[temp]
 
+        # The temporaries of an object rest are gone; a register that kept a slot's value is restored from it.
+        for register in ctx.scratch:
+            if register in leaves or not self._dead_after(join, register, dropped_ids):
+                return None
+
+        for register, slot in ctx.slot_copies:
+            if register not in leaves and not self._dead_after(join, register, dropped_ids):
+                restores[register] = slot
+
         # A store that read the fetch register itself leaves no copy of the value behind (98/3759).
         for register, slot in ctx.fetched:
             if register not in leaves and not self._dead_after(join, register, dropped_ids):
@@ -175,6 +185,59 @@ class ArrayDestructuringCfgPass:
                 return None
 
         return items, drop, join, kept_undefined, removed_handlers, cleanup, restores, ctx.hoist
+
+    def _match_object_rest(self, insts, source: int, ctx):
+        """`{ a, ...rest }` after the property reads of an object pattern.
+
+            NewObject A; LoadConstNull N; NewObjectWithBufferAndParent B (`Object.setPrototypeOf({keys}, null)`)
+            Mov C <- source; CallBuiltin D = copyDataProperties(A, C, B); [Mov X <- D]...; [slot = D]
+
+        Returns ((slot or None, register or None, result instruction or None), the instructions after it) or
+        None. The temporaries A, N, B, C are dead after the pattern (checked in `_match`); the registers that
+        keep the rest value are restored from the slot, or - without a slot - the rest is the register D."""
+        if len(insts) < 5 or [i.handler for i in insts[:5]] != [
+            "NewObject", "LoadConstNull", "NewObjectWithBufferAndParent", "Mov", "CallBuiltin"
+        ]:
+            return None
+
+        new, null, keys, copy_of, call = insts[:5]
+        value = call.value
+
+        if not (
+                isinstance(value, CallExpression) and isinstance(value.callee, Identifier)
+                and value.callee.name == "copyDataProperties" and len(value.arguments) == 3
+                and all(isinstance(a, Identifier) for a in value.arguments)
+                and [a.name for a in value.arguments] == [f"r{new.dest_reg}", f"r{copy_of.dest_reg}",
+                                                          f"r{keys.dest_reg}"]
+                and isinstance(copy_of.value, Identifier) and copy_of.value.name == f"r{source}"
+                and isinstance(call.dest_reg, int)
+        ):
+            return None
+
+        rest_reg = call.dest_reg
+        copies = []
+        later = insts[5:]
+
+        while later and later[0].handler == "Mov" and isinstance(later[0].value, Identifier) \
+                and later[0].value.name == f"r{rest_reg}" and isinstance(later[0].dest_reg, int):
+            copies.append(later[0].dest_reg)
+            later = later[1:]
+
+        scratch = [new.dest_reg, null.dest_reg, keys.dest_reg, copy_of.dest_reg]
+        store = _plain_store(later[0], rest_reg) if later else None
+
+        if store is not None and _is_env_slot(store):
+            ctx.scratch.extend(scratch)
+            ctx.slot_copies.extend((r, store) for r in (rest_reg, *copies))
+
+            return (store, None, None), later[1:]
+
+        if store is None and not copies:
+            ctx.scratch.extend(scratch)
+
+            return (None, rest_reg, call), later
+
+        return None
 
     def _dead_after(self, start: BasicBlock, register: int, dropped_ids: set[int]) -> bool:
         """True if no path from `start` reads `register` before writing it."""
@@ -476,12 +539,27 @@ class ArrayDestructuringCfgPass:
                     if read is None:
                         break
 
-                    props.append((read, _Elem("reg", insts[0].dest_reg, insts[0])))
+                    leaf = _Elem("reg", insts[0].dest_reg, insts[0])
                     insts = insts[1:]
+
+                    # `{ a: slot }`: the value goes straight into an environment slot (nothing runs on the way).
+                    if insts and (
+                            store := _plain_store(insts[0], leaf.reg) or _plain_store_of_read(insts[0], prev_tmp, read,
+                                                                                              leaf.reg)
+                    ) is not None and _is_env_slot(store):
+                        leaf.slot = store
+                        ctx.slot_copies.append((leaf.reg, store))
+                        insts = insts[1:]
+
+                    props.append((read, leaf))
 
                 if props:
                     items[-1] = _Elem("object", props=props, temp=prev_tmp)
                     prev_tmp = None
+                    matched_rest = self._match_object_rest(insts, items[-1].temp, ctx)
+
+                    if matched_rest is not None:
+                        items[-1].rest, insts = matched_rest
                 else:
                     # A constant key loaded just for the store is inlined into it, so its load is dead.
                     lead = 0
@@ -950,6 +1028,8 @@ class _Elem:
     default: object = None  # `[a = 0]`: the default value expression
     props: list | None = None  # "object": (property name, leaf `_Elem`) in the order the reads run
     temp: int | None = None  # "object": the register the element value was fetched into
+    slot: object = None  # "reg" leaf of an object pattern stored straight into an environment slot
+    rest: object = None  # "object": `...rest` of the pattern: (target expression or None, register or None, result)
 
 
 class _Ctx:
@@ -961,6 +1041,8 @@ class _Ctx:
         self.iterators: set[int] = set()
         self.peeled_form: bool | None = None
         self.hoist: list = []  # environment creations that move in front of the pattern
+        self.scratch: list[int] = []  # registers an object-rest sequence wrote: dead after the pattern
+        self.slot_copies: list[tuple[int, object]] = []  # (register holding the value of a slot, the slot)
         self.fetched: list[
             tuple[int, object]] = []  # fetch registers a slot store read directly, no copy of them is kept
 
@@ -1020,6 +1102,28 @@ def _plain_store(instruction, source: int, alias: int | None = None):
     return left
 
 
+def _plain_store_of_read(instruction, source: int, name: str, leaf_register: int):
+    """`slot = rSource.name` where the property load was inlined into the store: the store of that leaf."""
+    value = instruction.value
+
+    if not isinstance(value, AssignmentExpression) or not isinstance(value.right, MemberExpression):
+        return None
+
+    right = value.right
+
+    if (
+            right.computed or right.optional or right.receiver is not None
+            or not isinstance(right.obj, Identifier) or right.obj.name != f"r{source}"
+            or not isinstance(right.prop, Identifier) or right.prop.name != name
+    ):
+        return None
+
+    probe = copy.copy(instruction)
+    probe.value = dataclasses.replace(value, right=Identifier(name=f"r{leaf_register}"))
+
+    return _plain_store(probe, leaf_register)
+
+
 def _mentions_register(expression, register: int) -> bool:
     return any(isinstance(n, Identifier) and n.name == f"r{register}" for n in expression.walk())
 
@@ -1071,7 +1175,11 @@ def _leaves(items):
             yield from _leaves(item.items)
         elif item.kind == "object":
             for _, leaf in item.props:
-                yield leaf
+                if leaf.slot is None:
+                    yield leaf
+
+            if item.rest is not None and item.rest[1] is not None:
+                yield _Elem("reg", item.rest[1], item.rest[2])
         elif item.kind in ("reg", "rest"):
             yield item
 
@@ -1087,10 +1195,16 @@ def _pattern_expression(items) -> ArrayExpression:
         elif item.kind == "target":
             elements.append(item.default)
         elif item.kind == "object":
-            elements.append(ObjectExpression(properties=tuple(
-                ObjectProperty(key=Identifier(name=name), value=Identifier(name=f"r{leaf.reg}"))
+            properties = [
+                ObjectProperty(key=Identifier(name=name), value=leaf.slot or Identifier(name=f"r{leaf.reg}"))
                 for name, leaf in item.props
-            )))
+            ]
+
+            if item.rest is not None:
+                slot, register, _ = item.rest
+                properties.append(SpreadElement(argument=slot or Identifier(name=f"r{register}")))
+
+            elements.append(ObjectExpression(properties=tuple(properties)))
         elif item.kind == "rest":
             elements.append(SpreadElement(argument=Identifier(name=f"r{item.reg}")))
         elif item.default is not None:
