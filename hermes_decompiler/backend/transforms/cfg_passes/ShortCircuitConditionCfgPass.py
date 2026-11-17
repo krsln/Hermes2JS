@@ -7,9 +7,9 @@ import re
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir import LogicalOperator, Node
-from hermes_decompiler.ir.Operators import BinaryOperator
+from hermes_decompiler.ir.Operators import AssignmentOperator, BinaryOperator
 from hermes_decompiler.ir.expressions import (
-    BinaryExpression, CallExpression, Identifier, Literal, MemberExpression, UndefinedLiteral,
+    AssignmentExpression, BinaryExpression, CallExpression, Identifier, Literal, MemberExpression, UndefinedLiteral,
 )
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.backend.transforms.shared import (
@@ -306,8 +306,9 @@ class ShortCircuitConditionCfgPass:
             # A pure value the second test reads through its register
             # (`r0 = arguments[1]; if (r0 !== undefined)`): the test takes the
             # value itself when nothing reads the register afterwards.
+            self._kept_effects = []
             second = self._fold_pure_setup(
-                successor, second, [arm, end_block], skip=sunk, rematerialized=constants,
+                successor, second, [arm, end_block], skip=sunk, rematerialized=constants, end_reads=True,
             )
 
             if second is None:
@@ -338,6 +339,23 @@ class ShortCircuitConditionCfgPass:
 
         # `block` now jumps to Y's old target and falls through to `A`.
         self._rewire_crossed(block, successor, branch, merged, end_block, edge)
+
+        # A call kept in the test as `(rN = f(x))` stays a definition of `rN` for the lookups that walk the
+        # blocks back from a reader (`return rN` must not take an earlier write of the register): `rN = rN`.
+        for effect in getattr(self, "_kept_effects", []):
+            silent = copy.copy(effect)
+            silent.value = Identifier(name=f"r{effect.dest_reg}")
+            silent.statement = None
+            silent.terminator = None
+            silent.definition_used = False
+
+            for index, instruction in enumerate(block.instructions):
+                if instruction.terminator is merged:
+                    block.instructions.insert(index, silent)
+                    break
+
+        self._kept_effects = []
+
         return True
 
     def _copies_for_the_end_edge(self, successor: BasicBlock, arm: BasicBlock, end_block: BasicBlock) -> list:
@@ -484,7 +502,44 @@ class ShortCircuitConditionCfgPass:
                 and sum(1 for i in setup if has_side_effects(i.value)) <= 1
         )
 
-    def _fold_pure_setup(self, successor: BasicBlock, condition, exits: list, skip=(), rematerialized=()):
+    def _effect_read_by_end(self, setup: list, exits: list) -> bool:
+        """The setup of a crossed test holds ONE effect (a call) whose register END reads again while the arm
+        (the exit the first test also reaches) writes it first: the call stays in the test as an assignment."""
+        if len(exits) != 2:
+            return False
+
+        effects = [
+            i for i in setup
+            if i.dest_reg is not None and i.value is not None and has_side_effects(i.value)
+        ]
+
+        if len(effects) != 1:
+            return False
+
+        register = effects[0].dest_reg
+
+        if self._dead_on_entry(exits[1], register, set()) or not self._dead_on_entry(exits[0], register, set()):
+            return False
+
+        # END must read the register BY NAME: a read the frontend already inlined from an earlier write
+        # (`return r12.notFound` for `Ret r2`) would keep that stale value once the call is in the test.
+        name = f"r{register}"
+
+        for instruction in exits[1].instructions:
+            nodes = [instruction.value, instruction.statement, getattr(instruction.terminator, "condition", None),
+                     getattr(instruction.terminator, "value", None)]
+
+            if self._reads_operand(instruction, register):
+                return any(n is not None and self._mentions(n, name) for n in nodes)
+
+            if instruction.dest_reg == register and instruction.terminator is None:
+                return False
+
+        return False
+
+    def _fold_pure_setup(
+            self, successor: BasicBlock, condition, exits: list, skip=(), rematerialized=(), end_reads=False
+    ):
         """The second test's condition with its pure setup instructions
         substituted in, or None when that is not exact.
 
@@ -493,6 +548,9 @@ class ShortCircuitConditionCfgPass:
         on every path), so dropping the write loses nothing."""
         setup = [i for i in successor.instructions if i.terminator is None and not any(i is k for k in skip)]
         effect_seen = False
+        assigned: set[int] = set()  # effects whose register END reads: kept as `(rN = value)` in the test
+        relaxed = end_reads and self._effect_read_by_end(setup, exits)
+        dead = self._dead_for_fold if relaxed else self._dead_on_entry
         probe = condition  # what the later instructions have made of it (only to count uses)
 
         for position in range(len(setup) - 1, -1, -1):
@@ -510,6 +568,16 @@ class ShortCircuitConditionCfgPass:
                 ):
                     return None
                 effect_seen = True
+
+                # The call's result is read again on the way to END (the exit only this test reaches): it stays
+                # an assignment inside the condition, `(r19 = f(x)) != null`; the other exit must not read it.
+                if (
+                        relaxed and instruction.dest_reg is not None
+                        and not all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in exits)
+                        and all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in exits[:1])
+                ):
+                    assigned.add(id(instruction))
+                    self._kept_effects.append(instruction)
 
             dead_copy = (
                     instruction.dest_reg is not None
@@ -533,6 +601,9 @@ class ShortCircuitConditionCfgPass:
                         and not self._copy_feeds_the_test(successor, instruction, probe, setup[position + 1:])
                         and not self._copy_is_the_call_receiver(instruction, probe, setup[position + 1:])
                         and not self._copy_is_private_to_the_block(successor, instruction, setup[position + 1:])
+                        # A crossed test whose copy only the test reads: the exits copy the register on into
+                        # registers nobody reads (`r1 = r22` at every `continue`), which liveness sees through.
+                        and not (relaxed and self._copy_dead_by_liveness(instruction, exits))
                         and not dead_copy)
                     or not (
                     # The global object is the same on every path and every reader
@@ -541,16 +612,19 @@ class ShortCircuitConditionCfgPass:
                     # A copy only other dead copies read has no reader to protect.
                     or dead_copy
                     # A load END gets its own copy of is only dead on the first exit.
-                    or all(self._dead_on_entry(b, instruction.dest_reg, set())
+                    or all(dead(b, instruction.dest_reg, set())
                            for b in (exits[:1] if any(
                 instruction.dest_reg == r.dest_reg for r in rematerialized) else exits))
+                    # Written again later in the same block: the exits only ever see the later value.
+                    or (relaxed and any(later.dest_reg == instruction.dest_reg for later in setup[position + 1:]))
+                    or id(instruction) in assigned
             )
                     # A handler is entered by an edge the CFG does not have: it
                     # may read the register the try body had set.
                     or not (
                     instruction.entry.opcode == "GetGlobalObject"
                     or dead_copy
-                    or all(self._dead_on_entry(b, instruction.dest_reg, set())
+                    or all(dead(b, instruction.dest_reg, set())
                            for b in self._handlers_reached(successor, instruction.dest_reg))
             )
             ):
@@ -584,6 +658,12 @@ class ShortCircuitConditionCfgPass:
             # A copy: the setup's own node stays the identity a later repair looks for.
             value = copy.deepcopy(self._substitute_all(instruction.value, current, resolved))
             resolved[id(instruction.value)] = value
+
+            if id(instruction) in assigned:
+                value = AssignmentExpression(
+                    left=Identifier(name=f"r{instruction.dest_reg}"), operator=AssignmentOperator.ASSIGN, right=value
+                )
+
             current[f"r{instruction.dest_reg}"] = value
 
         return self._substitute_all(condition, current, resolved)
@@ -923,6 +1003,100 @@ class ShortCircuitConditionCfgPass:
                 return True
 
         return all(cls._dead_on_entry(succ, register, visited) for succ in block.successors)
+
+    def _live_in(self) -> dict:
+        """Registers live on entry to each block (by block id), where a plain copy `Mov d <- s` reads `s` only
+        if `d` is live after it. Loop-carried leftovers of the register allocator (`r1 = r22` at every
+        `continue`, `r22 = r1` at the header, both overwritten before anyone reads them) are not reads."""
+        key = (len(self.cfg.blocks), sum(len(b.instructions) for b in self.cfg.blocks))
+        cached = getattr(self, "_live_cache", None)
+
+        if cached is not None and cached[0] == key:
+            return cached[1]
+
+        def reads_of(instruction) -> set[int]:
+            entry = getattr(instruction, "entry", None)
+            args = getattr(entry, "args", "") or ""
+
+            if args:
+                operands = [int(m) for m in self._OPERAND_RE.findall(args)]
+
+                if instruction.dest_reg is not None and operands and operands[0] == instruction.dest_reg:
+                    operands = operands[1:]
+
+                found = set(operands)
+            else:
+                found = set()
+
+            # A name inside an inlined value reads that register too (a call's arguments sit in consecutive
+            # registers its operands do not list): more reads only ever make a register live.
+            if True:
+                for node in (instruction.value, instruction.statement,
+                             getattr(instruction.terminator, "condition", None),
+                             getattr(instruction.terminator, "value", None)):
+                    if isinstance(node, Node):
+                        for n in node.walk():
+                            if isinstance(n, Identifier) and re.fullmatch(r"r\d+", n.name):
+                                found.add(int(n.name[1:]))
+
+            return found
+
+        plan = {}
+
+        for block in self.cfg.blocks:
+            steps = []
+
+            for instruction in block.instructions:
+                entry = getattr(instruction, "entry", None)
+                is_copy = (
+                        getattr(entry, "opcode", None) in ("Mov", "MovLong") and instruction.terminator is None
+                        and instruction.dest_reg is not None and len(reads_of(instruction)) == 1
+                )
+                steps.append((instruction.dest_reg if instruction.terminator is None else None,
+                              reads_of(instruction), is_copy))
+
+            plan[block.id] = steps
+
+        live_in: dict = {b.id: set() for b in self.cfg.blocks}
+        changed = True
+
+        while changed:
+            changed = False
+
+            for block in reversed(self.cfg.blocks):
+                live = set()
+
+                for successor in block.successors:
+                    live |= live_in.get(successor.id, set())
+
+                for dest, reads, is_copy in reversed(plan[block.id]):
+                    was_live = dest in live
+
+                    if dest is not None:
+                        live.discard(dest)
+
+                    if not is_copy or was_live:
+                        live |= reads
+
+                if live != live_in[block.id]:
+                    live_in[block.id] = live
+                    changed = True
+
+        self._live_cache = (key, live_in)
+
+        return live_in
+
+    def _copy_dead_by_liveness(self, copy_instruction, exits: list) -> bool:
+        live = self._live_in()
+
+        return all(copy_instruction.dest_reg not in live.get(b.id, {copy_instruction.dest_reg}) for b in exits)
+
+    def _dead_for_fold(self, block: BasicBlock, register: int, visited: set) -> bool:
+        """`_dead_on_entry`, or - when a path only copies the register into registers nobody reads - dead by liveness."""
+        if self._dead_on_entry(block, register, visited):
+            return True
+
+        return register not in self._live_in().get(block.id, {register})
 
     _OPERAND_RE = re.compile(r"Reg(?:8|32):\s*(\d+)")
 

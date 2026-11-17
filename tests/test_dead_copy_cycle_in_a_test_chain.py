@@ -24,7 +24,8 @@ def test_the_tests_fold_and_the_tail_follows_the_if():
     code = _render("dead_copy_cycle_and_loop_guard_96_12510.hasm", 12510)
 
     assert "goto" not in code
-    assert "if (r12.notFound && r10.notFound) {" in code
+    # F-273: the call whose result END reads stays in the test as an assignment.
+    assert "if (r12.notFound && r10.notFound && (r2 = r8[1].call(undefined, r12, r10))) {\n                                return r2;" in code
     assert "} else {\n                                r2 =" not in code
     assert "r7 = r5 + 1;" in code
 

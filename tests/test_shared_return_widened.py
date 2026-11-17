@@ -57,8 +57,11 @@ def test_a_two_block_tail_with_an_inner_test_is_copied_for_the_test_that_skips_i
     out = _render("shared_tail_region_98_1871.hasm", 1871)
 
     assert "goto" not in out
-    assert out.count("r3 = r3[1][param1];") == 2
-    assert out.count("r2 = null;") == 2
+    # F-273: `f == null || (r2 = f(p)) == null` is one test (the call's result is what the function returns
+    # when it is not null), so the tail is no longer copied.
+    assert "if (r2 == null || (r2 = r2(param1)) == null) {" in out
+    assert out.count("r3 = r3[1][param1];") == 1
+    assert out.count("r2 = null;") == 1
 
 
 def test_a_copy_written_in_one_arm_is_not_taken_for_the_whole_merge():
