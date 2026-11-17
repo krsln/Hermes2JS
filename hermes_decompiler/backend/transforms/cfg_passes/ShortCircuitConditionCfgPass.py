@@ -871,7 +871,27 @@ class ShortCircuitConditionCfgPass:
         return [b for b in self._handlers() if id(b) in reached]
 
     def _handlers(self) -> list[BasicBlock]:
-        return [b for b in self.cfg.blocks if not b.predecessors and b is not self.cfg.entry]
+        return [
+            b for b in self.cfg.blocks
+            if not b.predecessors and b is not self.cfg.entry and not self._is_suspend_return(b)
+        ]
+
+    def _is_suspend_return(self, block: BasicBlock) -> bool:
+        """The `Ret` a `SaveGenerator` is followed by (`await`'s suspend): nothing enters it by an edge, but it
+        runs straight after the save and reads what that block computed, never a test's registers before it
+        (96/6029 `_anon_0`: `r1` of the call, not of the `height` test)."""
+        if not block.instructions or getattr(getattr(block.instructions[0], "entry", None), "opcode", None) != "Ret":
+            return False
+
+        before = [b for b in self.cfg.blocks if b.address is not None and b.address < block.address]
+
+        if not before:
+            return False
+
+        previous = max(before, key=lambda b: b.address)
+
+        return bool(previous.instructions) and getattr(
+            getattr(previous.instructions[-1], "entry", None), "opcode", None) == "SaveGenerator"
 
     @classmethod
     def _dead_on_entry(cls, block: BasicBlock, register: int, visited: set) -> bool:
