@@ -5,6 +5,7 @@ import re
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import Region
+from hermes_decompiler.backend.regions.IfRegion import IfRegion
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import (
     ArrayExpression, ArrayHole, AssignmentExpression, Identifier, RawExpression, SpreadElement, UndefinedLiteral,
@@ -102,7 +103,8 @@ class DeadUndefinedStorePass(RegionPass):
         snapshot_ids = set(known)
         # A tail merge's shared `return rN` is a copy of the arms' own (which the flow has).
         known |= set(getattr(self.cfg, "tail_origins", {}))
-        always_live = self._region_reads()
+        self._if_conditions: dict[int, set[int]] = {}
+        always_live = self._region_reads(snapshot_block_ids={bid for bid, _, _ in self.snapshot.blocks})
 
         # Instructions created after the snapshot have no known position.
         for block in list(self.cfg.blocks) + list(self.graph.blocks()) + tree_blocks:
@@ -148,7 +150,7 @@ class DeadUndefinedStorePass(RegionPass):
                 for h in self.snapshot.handlers.get(bid, ()):
                     handler |= live_in.get(h, set())
 
-                state = self._scan(instrs, block_out(bid, succ), handler)[0]
+                state = self._scan(instrs, block_out(bid, succ) | self._if_conditions.get(bid, set()), handler)[0]
 
                 if state != live_in[bid]:
                     live_in[bid] = state
@@ -163,7 +165,9 @@ class DeadUndefinedStorePass(RegionPass):
             for h in self.snapshot.handlers.get(bid, ()):
                 handler |= live_in.get(h, set())
 
-            _, live_after = self._scan(instrs, block_out(bid, succ), handler)
+            _, live_after = self._scan(
+                instrs, block_out(bid, succ) | self._if_conditions.get(bid, set()), handler
+            )
 
             for instruction in instrs:
                 if id(instruction) in candidates and id(instruction) in current:
@@ -304,8 +308,13 @@ class DeadUndefinedStorePass(RegionPass):
 
     # -----------------------------------------------------------------
 
-    def _region_reads(self) -> set[int]:
-        """Registers read by an expression that lives on a region object."""
+    def _region_reads(self, snapshot_block_ids=frozenset()) -> set[int]:
+        """Registers read by an expression that lives on a region object.
+
+        An `if` condition is the exception: it is evaluated at the end of the block whose branch the
+        region replaced (`source_block`), so its registers are reads there and not "live everywhere" -
+        unless that block itself writes one of them (a condition merged from several tests, 96/9291
+        `r1.has("")`)."""
         reads: set[int] = set()
         seen: set[int] = set()
 
@@ -333,13 +342,41 @@ class DeadUndefinedStorePass(RegionPass):
                 return
 
             if isinstance(value, Region) or dataclasses.is_dataclass(value):
+                condition_reads = self._placed_condition(value, snapshot_block_ids)
+
+                if condition_reads:
+                    reads.update(condition_reads)
+
                 for name, item in vars(value).items() if hasattr(value, "__dict__") else ():
-                    if name != "parent":
+                    if name != "parent" and not (condition_reads is not None and name == "condition"):
                         visit(item)
 
         visit(self.graph.root)
 
         return reads
+
+    def _placed_condition(self, region, snapshot_block_ids):
+        """The registers an `if` condition reads when they can be pinned to its source block, else None."""
+        if not isinstance(region, IfRegion) or region.condition is None or region.source_block is None:
+            return None
+
+        bid = region.source_block.id
+
+        if bid not in snapshot_block_ids:
+            return None
+
+        read = self._registers_read(region.condition)
+        written = set()
+
+        for block_id, _, instrs in self.snapshot.blocks:
+            if block_id == bid:
+                for instruction in instrs:
+                    written |= self._effects(instruction)[0]
+
+        # What the block itself writes cannot be told apart from the value the test saw: stays live everywhere.
+        self._if_conditions.setdefault(bid, set()).update(read - written)
+
+        return read & written
 
     def _tree_blocks(self) -> list[BasicBlock]:
         """Every block the region tree holds. `graph.blocks()` is an index the passes do not
