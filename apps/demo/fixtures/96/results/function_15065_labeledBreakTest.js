@@ -16,7 +16,7 @@ function labeledBreakTest() {
     // USED → r2 = 1;
     loop_1:
     // LOOP → START (for)
-    for (i = 0; i < 3; i = r5 + 1) {
+    for (i = 0; i < 3; i++) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 30 | <Mov>: <Reg8: 5, Reg8: 1>
         r5 = i;

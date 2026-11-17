@@ -1,0 +1,42 @@
+
+=> [Function #3146 "catch" of 137 bytes]: 2 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x00151b9f
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 2, UInt8: 0>
+==> 00000006: <GetById>: <Reg8: 0, Reg8: 2, UInt8: 1, string_id: 11345>  # String: 'tryEntries' (Identifier)
+==> 0000000c: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 169>  # String: 'length' (Identifier)
+==> 00000011: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 00000014: <Sub>: <Reg8: 1, Reg8: 1, Reg8: 0>
+==> 00000018: <LoadConstZero>: <Reg8: 0>
+==> 0000001a: <JNotGreaterEqualN>: <Addr8: 34, Reg8: 1, Reg8: 0>  # Address: 0000003c
+==> 0000001e: <GetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 11345>  # String: 'tryEntries' (Identifier)
+==> 00000024: <GetByVal>: <Reg8: 4, Reg8: 4, Reg8: 1>
+==> 00000028: <GetById>: <Reg8: 6, Reg8: 4, UInt8: 3, string_id: 12135>  # String: 'tryLoc' (Identifier)
+==> 0000002e: <Mov>: <Reg8: 5, Reg8: 1>
+==> 00000031: <JStrictEqual>: <Addr8: 45, Reg8: 6, Reg8: 3>  # Address: 0000005e
+==> 00000035: <Dec>: <Reg8: 1, Reg8: 5>
+==> 00000038: <JGreaterEqual>: <Addr8: -26, Reg8: 1, Reg8: 0>  # Address: 0000001e
+==> 0000003c: <GetGlobalObject>: <Reg8: 0>
+==> 0000003e: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 12>  # String: 'Error' (Identifier)
+==> 00000044: <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000049: <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 2>
+==> 0000004d: <LoadConstString>: <Reg8: 7, string_id: 4266>  # String: 'illegal catch attempt' (String)
+==> 00000051: <Mov>: <Reg8: 8, Reg8: 1>
+==> 00000054: <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
+==> 00000058: <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 0000005c: <Throw>: <Reg8: 0>
+==> 0000005e: <GetById>: <Reg8: 1, Reg8: 4, UInt8: 6, string_id: 17064>  # String: 'completion' (Identifier)
+==> 00000064: <GetByIdShort>: <Reg8: 5, Reg8: 1, UInt8: 7, string_id: 1>  # String: 'type' (Identifier)
+==> 00000069: <LoadConstUndefined>: <Reg8: 3>
+==> 0000006b: <LoadConstString>: <Reg8: 2, string_id: 3974>  # String: 'throw' (String)
+==> 0000006f: <LoadConstUndefined>: <Reg8: 0>
+==> 00000071: <JStrictNotEqual>: <Addr8: 22, Reg8: 5, Reg8: 2>  # Address: 00000087
+==> 00000075: <GetById>: <Reg8: 0, Reg8: 1, UInt8: 8, string_id: 7964>  # String: 'arg' (Identifier)
+==> 0000007b: <GetEnvironment>: <Reg8: 2, UInt8: 0>
+==> 0000007e: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 21>
+==> 00000082: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
+==> 00000087: <Ret>: <Reg8: 0>
+
+

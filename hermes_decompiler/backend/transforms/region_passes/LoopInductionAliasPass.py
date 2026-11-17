@@ -195,6 +195,9 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
             # The Mov carries the induction register itself (not its initial
             # literal), so a write to it inside the iteration would make the
             # copy and the register differ at the update.
+            self._repoint_update_only(
+                loop, header, covered, alias_instr, header.instructions.index(alias_instr), induction_reg, body_reg
+            )
             return
 
         # Position of the alias Mov within the header. Only writes to
@@ -212,6 +215,7 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
         if not self._body_reg_only_defined_here(
                 covered, header, alias_index, alias_instr, body_reg
         ):
+            self._repoint_update_only(loop, header, covered, alias_instr, alias_index, induction_reg, body_reg)
             return
 
         # ---- convert: drop the alias Mov, repoint every read ----
@@ -240,6 +244,47 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
             "induction register r%d",
             header.id, body_reg, induction_reg,
         )
+
+    def _repoint_update_only(self, loop, header, covered, alias_instr, alias_index, induction_reg, body_reg) -> None:
+        """`r5 = r1; ... r1 = r5 - 1` where the body rewrites `r5` only on a path that leaves the loop.
+
+        The alias cannot be folded away (the exit arm reads its own `r5`), but the UPDATE only runs on the paths
+        that reach a latch: when neither register is written on any of those paths after the copy, the update
+        reads the induction register itself and prints `i--` (96/3146 `catch`, 8596 `cloneRecursive`)."""
+        latches = [b for b in loop.latches if b is not None]
+
+        if not latches or not isinstance(loop.update.right, (Identifier, BinaryExpression)):
+            return
+
+        inside = {*covered, header}
+        reaching: set[BasicBlock] = set()
+        work = [b for b in latches if b in inside]
+
+        while work:
+            block = work.pop()
+
+            if block in reaching:
+                continue
+
+            reaching.add(block)
+            work.extend(p for p in block.predecessors if p in inside and p not in reaching)
+
+        if header not in reaching:
+            return
+
+        for block in reaching:
+            instructions = header.instructions[alias_index + 1:] if block is header else block.instructions
+
+            for instruction in instructions:
+                if instruction is not alias_instr and instruction.dest_reg in (body_reg, induction_reg):
+                    return
+
+        new_right, changed = self._repoint_node(
+            loop.update.right, Identifier(name=f"r{body_reg}"), Identifier(name=f"r{induction_reg}")
+        )
+
+        if changed:
+            loop.update = dataclasses.replace(loop.update, right=new_right)
 
     @staticmethod
     def _induction_register(loop: LoopRegion) -> int | None:

@@ -22,7 +22,7 @@ function labeledContinueTest() {
     // LOOP → START (for)
     for (i = 0; i < 3; i++) {
         // LOOP → START (for)
-        for (j = 0; j < 3; j = r9 + 1) {
+        for (j = 0; j < 3; j++) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 43 | <Mov>: <Reg8: 9, Reg8: 8>
             r9 = j;
