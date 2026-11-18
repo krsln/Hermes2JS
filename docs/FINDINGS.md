@@ -153,6 +153,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-18 | after F-274 (a `finally` whose handler copy branches, and its copy after the `try`) | 57 | 48 | n/a | n/a | 1219 passed |
 | 2026-11-18 | after F-275 (a crossed `\|\|` whose setup is overwritten by a dead copy) | 56 | 48 | n/a | n/a | 1220 passed |
 | 2026-11-18 | after F-277 (an early-return tail behind the closing return, in a function with a `try`) | 55 | 48 | n/a | n/a | 1221 passed |
+| 2026-11-18 | after F-278 (array-pattern defaults whose cleanup handler jumps by `JmpLong`) | 55 | 47 | n/a | n/a | 1222 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1

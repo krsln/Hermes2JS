@@ -1221,7 +1221,8 @@ _ENV_CREATES = frozenset({"CreateFunctionEnvironment", "CreateTopLevelEnvironmen
 
 _KEY_LOADS = frozenset({"LoadConstUInt8", "LoadConstZero", "LoadConstInt"})
 
-_CLEANUP_HANDLERS = {"Catch", "Mov", "Jmp", "JmpTrue", "JmpTrueLong", "LoadConstUndefined", "IteratorClose", "Throw"}
+_CLEANUP_HANDLERS = {"Catch", "Mov", "Jmp", "JmpLong", "JmpTrue", "JmpTrueLong", "LoadConstUndefined", "IteratorClose",
+                     "Throw"}
 
 
 def _cleanup_vocabulary(block: BasicBlock, iterators: set[int]) -> bool:
