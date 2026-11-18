@@ -27,7 +27,10 @@ instr, block)` triples rather than flat value lists.
 
 from __future__ import annotations
 
+import re
+
 from hermes_decompiler.backend.regions import IfRegion, SequenceRegion
+from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.transforms.shared import structural_key as structural_key
 from hermes_decompiler.backend.transforms.shared import resolved_structural_equal
@@ -97,7 +100,11 @@ def strip_duplicate_run(region: SequenceRegion, item_triples: list) -> None:
             block.instructions.remove(instr)
 
 
-def _items_structurally_equal(a, b) -> bool:
+def _register_shape(value) -> str:
+    return re.sub(r"Identifier\(name='r\d+'\)", "R", repr(value))
+
+
+def _items_structurally_equal(a, b, loose: bool = False) -> bool:
     """Structural equality between two SequenceRegion children.
 
     `strip_duplicate_run` above only ever matches a flat run of
@@ -121,11 +128,19 @@ def _items_structurally_equal(a, b) -> bool:
     """
 
     if isinstance(a, BasicBlock) and isinstance(b, BasicBlock):
-        a_pairs = [(i.value, i) for i in a.instructions if i.value is not None]
-        b_pairs = [(i.value, i) for i in b.instructions if i.value is not None]
+        a_pairs = _block_value_instr_pairs(a, loose)
+        b_pairs = _block_value_instr_pairs(b, loose)
 
         if len(a_pairs) != len(b_pairs):
             return False
+
+        if loose:
+            # Register names are the one thing the two copies disagree on
+            # (`r4 = r3; r4.types` against `r3 = r3.types`), and resolving
+            # them cannot see through a register that is redefined from
+            # itself, so compare the statements' shape: same operators,
+            # literals and property names, any register.
+            return all(_register_shape(x) == _register_shape(y) for (x, _), (y, _) in zip(a_pairs, b_pairs))
 
         return all(
             resolved_structural_equal(x, xi, a, y, yi, b)
@@ -166,7 +181,7 @@ def _items_structurally_equal(a, b) -> bool:
         # unique per call site - is a non-issue in practice, and the
         # body comparison below still requires full structural
         # equality of both branches.
-        if not _sequence_structurally_equal(a.then_body, b.then_body):
+        if not _sequence_structurally_equal(a.then_body, b.then_body, loose):
             return False
 
         a_else, b_else = a.else_body, b.else_body
@@ -174,7 +189,7 @@ def _items_structurally_equal(a, b) -> bool:
         if (a_else is None) != (b_else is None):
             return False
 
-        if a_else is not None and not _sequence_structurally_equal(a_else, b_else):
+        if a_else is not None and not _sequence_structurally_equal(a_else, b_else, loose):
             return False
 
         return True
@@ -182,13 +197,13 @@ def _items_structurally_equal(a, b) -> bool:
     return False
 
 
-def _sequence_structurally_equal(a: SequenceRegion, b: SequenceRegion) -> bool:
+def _sequence_structurally_equal(a: SequenceRegion, b: SequenceRegion, loose: bool = False) -> bool:
     if len(a.children) != len(b.children):
         return False
-    return all(_items_structurally_equal(x, y) for x, y in zip(a.children, b.children))
+    return all(_items_structurally_equal(x, y, loose) for x, y in zip(a.children, b.children))
 
 
-def strip_duplicate_span(region: SequenceRegion, span: list) -> bool:
+def strip_duplicate_span(region: SequenceRegion, span: list, loose: bool = False) -> bool:
     """Remove the first contiguous run of `region`'s DIRECT children
     that structurally matches `span` (see `_items_structurally_equal`
     for non-edge items).
@@ -224,6 +239,13 @@ def strip_duplicate_span(region: SequenceRegion, span: list) -> bool:
     finally-duplication has never been observed splicing unrelated
     statements into the MIDDLE of a duplicated span.
 
+    `loose` ignores bare register reads/copies (`r4 = r3`, a lone `r1`)
+    on both sides: the copy of a `finally` that follows the try keeps the
+    temporaries its first emission needed, so one side has `r4 = r3; r4 =
+    r4.types` where the other has `r3 = r3.types` (96/1030). Only the
+    value-bearing statements are compared; the skipped reads are removed
+    with the run they sit in.
+
     Returns True if a match was found and removed.
     """
     if not span:
@@ -235,23 +257,27 @@ def strip_duplicate_span(region: SequenceRegion, span: list) -> bool:
     for start in range(len(children) - n + 1):
         window = children[start:start + n]
 
-        plan = _match_span_window(window, span)
+        plan = _match_span_window(window, span, loose)
 
         if plan is None:
             continue
 
-        _apply_span_removal(children, start, window, plan)
+        _apply_span_removal(children, start, window, plan, loose)
         region.invalidate_coverage()
         return True
 
     return False
 
 
-def _block_value_instr_pairs(block: BasicBlock) -> list:
-    return [(instr.value, instr) for instr in block.instructions if instr.value is not None]
+def _block_value_instr_pairs(block: BasicBlock, loose: bool = False) -> list:
+    return [
+        (instr.value, instr)
+        for instr in block.instructions
+        if instr.value is not None and not (loose and isinstance(instr.value, Identifier))
+    ]
 
 
-def _match_span_window(window: list, span: list):
+def _match_span_window(window: list, span: list, loose: bool = False):
     """Try to match `window` (a same-length slice of some region's
     children) against `span`. Returns a per-item removal plan (a list
     the same length as `span`) on success, or None on failure.
@@ -279,8 +305,8 @@ def _match_span_window(window: list, span: list):
         is_edge = i == 0 or i == n - 1
 
         if is_edge and isinstance(candidate, BasicBlock) and isinstance(target, BasicBlock):
-            target_triples = [(value, instr, target) for value, instr in _block_value_instr_pairs(target)]
-            candidates = [instr for _, instr in _block_value_instr_pairs(candidate)]
+            target_triples = [(value, instr, target) for value, instr in _block_value_instr_pairs(target, loose)]
+            candidates = [instr for _, instr in _block_value_instr_pairs(candidate, loose)]
 
             match_range = find_run_match(candidates, candidate, target_triples)
 
@@ -290,7 +316,7 @@ def _match_span_window(window: list, span: list):
             plan.append(match_range)
             continue
 
-        if not _items_structurally_equal(candidate, target):
+        if not _items_structurally_equal(candidate, target, loose):
             return None
 
         plan.append(None)
@@ -298,7 +324,7 @@ def _match_span_window(window: list, span: list):
     return plan
 
 
-def _apply_span_removal(children: list, start: int, window: list, plan: list) -> None:
+def _apply_span_removal(children: list, start: int, window: list, plan: list, loose: bool = False) -> None:
     """Perform the removal described by `plan` (see
     `_match_span_window`) against `children[start:start + len(window)]`.
 
@@ -316,9 +342,18 @@ def _apply_span_removal(children: list, start: int, window: list, plan: list) ->
             continue
 
         lo, hi = entry
-        pairs = _block_value_instr_pairs(item)
+        pairs = _block_value_instr_pairs(item, loose)
+        removed = [instr for _, instr in pairs[lo:hi]]
 
-        for _, instr in pairs[lo:hi]:
+        if loose and removed:
+            first = item.instructions.index(removed[0])
+            last = item.instructions.index(removed[-1])
+            removed = [
+                instr for instr in item.instructions[first:last + 1]
+                if instr in removed or isinstance(instr.value, Identifier)
+            ]
+
+        for instr in removed:
             item.instructions.remove(instr)
 
     for index in sorted(whole_item_indices, reverse=True):

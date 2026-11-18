@@ -148,7 +148,11 @@ class _FinallyAttacher:
                 owner = self.graph.owner(merge_block)
                 if owner is not None:
                     if any(not isinstance(item, BasicBlock) for item in finally_items):
-                        strip_duplicate_span(owner, finally_items)
+                        # The copy after the try keeps the temporaries its first
+                        # emission needed (`r4 = r3; r4 = r4.types` against the
+                        # handler's `r3 = r3.types`), so an exact match can miss it.
+                        if not strip_duplicate_span(owner, finally_items):
+                            strip_duplicate_span(owner, finally_items, loose=True)
                     else:
                         finally_item_triples = [
                             triple
@@ -228,6 +232,17 @@ class _FinallyAttacher:
                 return index + 1
 
             if not isinstance(item, BasicBlock) and merge_block in item.covered_blocks:
+                return index + 1
+
+            # The merge block is the TEST of the handler's last `if` (`if (r4) { ... }` right before the
+            # rethrow): an IfRegion's own condition block is not among its covered blocks, so the span ends
+            # behind that `if` and the rethrow block that follows it (96/1030 `startTransition`).
+            if getattr(item, "source_block", None) is merge_block:
+                following = owner.children[index + 1] if index + 1 < len(owner.children) else None
+
+                if isinstance(following, BasicBlock) and isinstance(following.terminator, TerminatorThrow):
+                    return index + 2
+
                 return index + 1
 
         return start_idx + 1
