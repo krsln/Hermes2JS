@@ -474,6 +474,13 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         if target == exit_address:
             return True
 
+        # The finally copy the try body jumps into was stripped as a whole (98/2068: a branching
+        # copy, whose test blocks still hold instructions, so the empty-block walk below cannot
+        # follow it); control resumes at the block that is left behind.
+        if target in getattr(self.cfg, "finally_copy_addresses",
+                             ()) and exit_address not in self.cfg.finally_copy_addresses:
+            return True
+
         # Two empty trampolines to the same place are the same exit (98/2204: the default arm jumped to one
         # `jmp loop-head`, the code behind the switch ended in another).
         destination = self._final_destination(target)

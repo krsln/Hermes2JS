@@ -151,8 +151,15 @@ class _FinallyAttacher:
                         # The copy after the try keeps the temporaries its first
                         # emission needed (`r4 = r3; r4 = r4.types` against the
                         # handler's `r3 = r3.types`), so an exact match can miss it.
-                        if not strip_duplicate_span(owner, finally_items):
-                            strip_duplicate_span(owner, finally_items, loose=True)
+                        copied: set = set()
+
+                        if strip_duplicate_span(owner, finally_items, removed=copied) or strip_duplicate_span(
+                                owner, finally_items, loose=True, removed=copied):
+                            # a block only partly stripped is still there: it is where control resumes
+                            copied -= {child.address for child in owner.children if isinstance(child, BasicBlock)}
+                            stripped = getattr(cfg, "finally_copy_addresses", set())
+                            stripped.update(copied)
+                            cfg.finally_copy_addresses = stripped
                     else:
                         finally_item_triples = [
                             triple

@@ -100,6 +100,20 @@ def strip_duplicate_run(region: SequenceRegion, item_triples: list) -> None:
             block.instructions.remove(instr)
 
 
+def _item_addresses(item) -> set:
+    """Addresses of every block a sequence child stands for (an `if`'s own test block included)."""
+    if isinstance(item, BasicBlock):
+        return {item.address}
+
+    found = {block.address for block in getattr(item, "covered_blocks", ())}
+    source = getattr(item, "source_block", None)
+
+    if source is not None:
+        found.add(source.address)
+
+    return found
+
+
 def _register_shape(value) -> str:
     return re.sub(r"Identifier\(name='r\d+'\)", "R", repr(value))
 
@@ -203,7 +217,7 @@ def _sequence_structurally_equal(a: SequenceRegion, b: SequenceRegion, loose: bo
     return all(_items_structurally_equal(x, y, loose) for x, y in zip(a.children, b.children))
 
 
-def strip_duplicate_span(region: SequenceRegion, span: list, loose: bool = False) -> bool:
+def strip_duplicate_span(region: SequenceRegion, span: list, loose: bool = False, removed: set | None = None) -> bool:
     """Remove the first contiguous run of `region`'s DIRECT children
     that structurally matches `span` (see `_items_structurally_equal`
     for non-edge items).
@@ -246,6 +260,9 @@ def strip_duplicate_span(region: SequenceRegion, span: list, loose: bool = False
     value-bearing statements are compared; the skipped reads are removed
     with the run they sit in.
 
+    `removed`, when given, collects the addresses of the blocks the matched window covered (the
+    jump from the try body names one of them, not the block that is left behind).
+
     Returns True if a match was found and removed.
     """
     if not span:
@@ -261,6 +278,10 @@ def strip_duplicate_span(region: SequenceRegion, span: list, loose: bool = False
 
         if plan is None:
             continue
+
+        if removed is not None:
+            for item in window:
+                removed.update(_item_addresses(item))
 
         _apply_span_removal(children, start, window, plan, loose)
         region.invalidate_coverage()
@@ -355,6 +376,11 @@ def _apply_span_removal(children: list, start: int, window: list, plan: list, lo
 
         for instr in removed:
             item.instructions.remove(instr)
+
+        # A block the strip emptied is the same as a block stripped whole: leaving it behind
+        # keeps a jump into it from the try body as a `goto` (98/2068 `startTransition`).
+        if not item.instructions and item.terminator is None:
+            whole_item_indices.append(start + offset)
 
     for index in sorted(whole_item_indices, reverse=True):
         del children[index]

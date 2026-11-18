@@ -22,3 +22,13 @@ def test_the_branching_finally_is_whole_and_not_repeated_after_the_try():
     assert out.count("r1.types") == 1
     assert out.count(".T = r1") == 1
     assert out.rstrip().endswith("}\n}")
+
+
+def test_the_try_body_does_not_jump_into_the_stripped_copy():
+    """98/2068: the try body's `Jmp` names the first block of the copy that was stripped, not the block left behind."""
+    hasm = (_DATA / "try_finally_branching_copy_jump_into_stripped_98_2068.hasm").read_text(encoding="utf-8")
+    out = Decompiler.render(Decompiler.build_context(hasm, 2068, strict=False), verbose=False, raw=False)
+
+    assert "goto" not in out
+    assert "} finally {" in out
+    assert out.count(".T = r1") == 1
