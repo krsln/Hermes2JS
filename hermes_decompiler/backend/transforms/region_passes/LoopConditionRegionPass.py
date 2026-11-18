@@ -334,6 +334,21 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
     # Bottom-tested classification (shared by both call sites above)
     # ------------------------------------------------------------------
 
+    def _break_at_end_of_body(self, loop: LoopRegion) -> None:
+        from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+
+        last = loop.body.children[-1] if loop.body.children else None
+
+        if isinstance(last, BasicBlock) and any(
+                isinstance(getattr(i, "statement", None), BreakStatement) for i in last.instructions
+        ) and last.address == -1:
+            return
+
+        block = BasicBlock(max(b.id for b in self.graph.block_owner) + 1, address=-1)
+        entry = OpcodeEntry(bytecode="<synthetic>: BreakStatement", hex_address="")
+        block.instructions.append(OpcodeResult(entry, statement=BreakStatement(label=None)))
+        self.graph.transfer([block], loop.body)
+
     def _classify_bottom_tested(
             self,
             loop: LoopRegion,
@@ -417,6 +432,14 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         register it touches - which is exactly why falling back to it
         is always safe, never just "less bad".
         """
+        if latch not in loop.body.children and len(latch.predecessors) < 2:
+            # The latch sits inside an `if` of the body and nothing else jumps to it (no `continue`): the
+            # paths that skip it leave the loop through the `if`'s other edge, so printing its test as the `while (...)` of the loop would test (stale
+            # registers) on those paths too (98/2474 `do { ... } while (r9 !== r14[r8])`). Left as a branch,
+            # whose back edge is an explicit `continue`: what falls off the end of the body is the exit.
+            self._break_at_end_of_body(loop)
+            return False
+
         if update_block is not None:
             if self._consume_guard(latch, loop, LoopKind.FOR, update_block=update_block):
                 loop.update_block = update_block
