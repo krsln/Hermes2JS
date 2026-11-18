@@ -1,0 +1,265 @@
+
+=> [Function #6599 "LinkWithPreview" of 1060 bytes]: 2 params, frame size=33, strict=1, exc handler=1, debug info=0  @ offset 0x001ce2bc
+  [Exception handlers: [start=0x167, end=0x181, target=0x414] ]
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000003: <CreateFunctionEnvironment>: <Reg8: 9, UInt8: 16>
+==> 00000006: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000009: <GetByIdShort>: <Reg8: 7, Reg8: 3, UInt8: 0, string_id: 101>  # String: 'children' (Identifier)
+==> 0000000e: <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 7>
+==> 00000012: <NewObject>: <Reg8: 24>
+==> 00000014: <LoadConstNull>: <Reg8: 1>
+==> 00000016: <NewObjectWithBufferAndParent>: <Reg8: 22, Reg8: 1, UInt32: 1153, UInt32: 17298>
+==> 00000021: <Mov>: <Reg8: 23, Reg8: 3>
+==> 00000024: <CallBuiltin>: <Reg8: 6, UInt8: 46, UInt8: 4>  # Built-in function: [#46 copyDataProperties]
+==> 00000028: <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 6>
+==> 0000002c: <LoadConstUndefined>: <Reg8: 3>
+==> 0000002e: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 2, Reg8: 3>
+==> 00000032: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 3, Reg8: 3>
+==> 00000036: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 4, Reg8: 3>
+==> 0000003a: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 5, Reg8: 3>
+==> 0000003e: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 6, Reg8: 3>
+==> 00000042: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 7, Reg8: 3>
+==> 00000046: <LoadConstUndefined>: <Reg8: 4>
+==> 00000048: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 8, Reg8: 3>
+==> 0000004c: <LoadConstUndefined>: <Reg8: 8>
+==> 0000004e: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 9, Reg8: 3>
+==> 00000052: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 10, Reg8: 3>
+==> 00000056: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 11, Reg8: 3>
+==> 0000005a: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 12, Reg8: 3>
+==> 0000005e: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 13, Reg8: 3>
+==> 00000062: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 14, Reg8: 3>
+==> 00000066: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 15, Reg8: 3>
+==> 0000006a: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 4>
+==> 0000006e: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 1, string_id: 18025>  # String: 'useRouter' (Identifier)
+==> 00000074: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 3>
+==> 00000078: <StoreToEnvironment>: <Reg8: 9, UInt8: 2, Reg8: 1>
+==> 0000007c: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 10>
+==> 00000080: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 8225>  # String: 'useLinkPreviewContext' (Identifier)
+==> 00000086: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 3>
+==> 0000008a: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 10661>  # String: 'setOpenPreviewKey' (Identifier)
+==> 00000090: <StoreToEnvironment>: <Reg8: 9, UInt8: 3, Reg8: 1>
+==> 00000094: <LoadFromEnvironment>: <Reg8: 10, Reg8: 0, UInt8: 3>
+==> 00000098: <GetByIdShort>: <Reg8: 1, Reg8: 10, UInt8: 4, string_id: 251>  # String: 'useState' (Identifier)
+==> 0000009d: <LoadConstFalse>: <Reg8: 12>
+==> 0000009f: <Call2>: <Reg8: 2, Reg8: 1, Reg8: 3, Reg8: 12>
+==> 000000a4: <Mov>: <Reg8: 11, Reg8: 2>
+==> 000000a7: <IteratorBegin>: <Reg8: 1, Reg8: 11>
+==> 000000aa: <Mov>: <Reg8: 2, Reg8: 11>
+==> 000000ad: <IteratorNext>: <Reg8: 5, Reg8: 1, Reg8: 2>
+==> 000000b1: <Mov>: <Reg8: 2, Reg8: 1>
+==> 000000b4: <StrictEq>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 000000b8: <LoadConstUndefined>: <Reg8: 21>
+==> 000000ba: <JmpTrue>: <Addr8: 6, Reg8: 2>  # Address: 000000c0
+==> 000000bd: <Mov>: <Reg8: 21, Reg8: 5>
+==> 000000c0: <StoreToEnvironment>: <Reg8: 9, UInt8: 4, Reg8: 21>
+==> 000000c4: <LoadConstUndefined>: <Reg8: 5>
+==> 000000c6: <JmpTrue>: <Addr8: 28, Reg8: 2>  # Address: 000000e2
+==> 000000c9: <IteratorNext>: <Reg8: 13, Reg8: 1, Reg8: 11>
+==> 000000cd: <Mov>: <Reg8: 11, Reg8: 1>
+==> 000000d0: <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 3>
+==> 000000d4: <LoadConstUndefined>: <Reg8: 5>
+==> 000000d6: <Mov>: <Reg8: 2, Reg8: 11>
+==> 000000d9: <JmpTrue>: <Addr8: 9, Reg8: 11>  # Address: 000000e2
+==> 000000dc: <Mov>: <Reg8: 5, Reg8: 13>
+==> 000000df: <Mov>: <Reg8: 2, Reg8: 11>
+==> 000000e2: <StoreToEnvironment>: <Reg8: 9, UInt8: 5, Reg8: 5>
+==> 000000e6: <JmpTrue>: <Addr8: 6, Reg8: 2>  # Address: 000000ec
+==> 000000e9: <IteratorClose>: <Reg8: 1, UInt8: 0>
+==> 000000ec: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 9>
+==> 000000f0: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 5, string_id: 10791>  # String: 'resolveHref' (Identifier)
+==> 000000f6: <GetById>: <Reg8: 1, Reg8: 6, UInt8: 6, string_id: 9999>  # String: 'hrefForPreviewNavigation' (Identifier)
+==> 000000fc: <Call2>: <Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000101: <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 7, string_id: 230>  # String: 'split' (Identifier)
+==> 00000106: <LoadConstString>: <Reg8: 1, string_id: 1865>  # String: '?' (String)
+==> 0000010a: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 1>
+==> 0000010f: <GetByIndex>: <Reg8: 1, Reg8: 1, UInt8: 0>
+==> 00000113: <StoreToEnvironment>: <Reg8: 9, UInt8: 6, Reg8: 1>
+==> 00000117: <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 8, string_id: 250>  # String: 'useRef' (Identifier)
+==> 0000011c: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000121: <StoreToEnvironment>: <Reg8: 9, UInt8: 7, Reg8: 2>
+==> 00000125: <GetByIdShort>: <Reg8: 5, Reg8: 10, UInt8: 9, string_id: 249>  # String: 'useEffect' (Identifier)
+==> 0000012a: <NewArray>: <Reg8: 2, UInt16: 1>
+==> 0000012e: <DefineOwnInDenseArray>: <Reg8: 2, Reg8: 1, UInt8: 0>
+==> 00000132: <CreateClosure>: <Reg8: 1, Reg8: 9, function_id: 11364>  # Function: [#11364  of 72 bytes]: 1 params @ offset 0x002287ba
+==> 00000137: <Call3>: <Reg8: 1, Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 2>
+==> 0000013d: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 12>
+==> 00000141: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 10, string_id: 18012>  # String: 'useNextScreenId' (Identifier)
+==> 00000147: <Call1>: <Reg8: 2, Reg8: 1, Reg8: 3>
+==> 0000014b: <Mov>: <Reg8: 13, Reg8: 2>
+==> 0000014e: <IteratorBegin>: <Reg8: 1, Reg8: 13>
+==> 00000151: <Mov>: <Reg8: 2, Reg8: 13>
+==> 00000154: <IteratorNext>: <Reg8: 11, Reg8: 1, Reg8: 2>
+==> 00000158: <Mov>: <Reg8: 2, Reg8: 1>
+==> 0000015b: <StrictEq>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 0000015f: <LoadConstUndefined>: <Reg8: 5>
+==> 00000161: <JmpTrue>: <Addr8: 6, Reg8: 2>  # Address: 00000167
+==> 00000164: <Mov>: <Reg8: 5, Reg8: 11>
+==> 00000167: <GetById>: <Reg8: 11, Reg8: 5, UInt8: 11, string_id: 16966>  # String: 'nextScreenId' (Identifier)
+==> 0000016d: <Mov>: <Reg8: 4, Reg8: 11>
+==> 00000170: <StoreToEnvironment>: <Reg8: 9, UInt8: 8, Reg8: 11>
+==> 00000174: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 12, string_id: 15078>  # String: 'tabPath' (Identifier)
+==> 0000017a: <Mov>: <Reg8: 8, Reg8: 5>
+==> 0000017d: <StoreToEnvironment>: <Reg8: 9, UInt8: 9, Reg8: 5>
+==> 00000181: <LoadConstUndefined>: <Reg8: 11>
+==> 00000183: <Mov>: <Reg8: 5, Reg8: 2>
+==> 00000186: <JmpTrue>: <Addr8: 28, Reg8: 2>  # Address: 000001a2
+==> 00000189: <IteratorNext>: <Reg8: 14, Reg8: 1, Reg8: 13>
+==> 0000018d: <Mov>: <Reg8: 13, Reg8: 1>
+==> 00000190: <StrictEq>: <Reg8: 13, Reg8: 13, Reg8: 3>
+==> 00000194: <LoadConstUndefined>: <Reg8: 11>
+==> 00000196: <Mov>: <Reg8: 5, Reg8: 13>
+==> 00000199: <JmpTrue>: <Addr8: 9, Reg8: 13>  # Address: 000001a2
+==> 0000019c: <Mov>: <Reg8: 11, Reg8: 14>
+==> 0000019f: <Mov>: <Reg8: 5, Reg8: 13>
+==> 000001a2: <StoreToEnvironment>: <Reg8: 9, UInt8: 10, Reg8: 11>
+==> 000001a6: <JmpTrue>: <Addr8: 9, Reg8: 5>  # Address: 000001af
+==> 000001a9: <Mov>: <Reg8: 5, Reg8: 1>
+==> 000001ac: <IteratorClose>: <Reg8: 5, UInt8: 0>
+==> 000001af: <GetByIdShort>: <Reg8: 13, Reg8: 10, UInt8: 9, string_id: 249>  # String: 'useEffect' (Identifier)
+==> 000001b4: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 13, string_id: 160>  # String: 'href' (Identifier)
+==> 000001b9: <NewArray>: <Reg8: 11, UInt16: 2>
+==> 000001bd: <DefineOwnInDenseArray>: <Reg8: 11, Reg8: 5, UInt8: 0>
+==> 000001c1: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 14, string_id: 217>  # String: 'replace' (Identifier)
+==> 000001c6: <DefineOwnInDenseArray>: <Reg8: 11, Reg8: 5, UInt8: 1>
+==> 000001ca: <CreateClosure>: <Reg8: 5, Reg8: 9, function_id: 11365>  # Function: [#11365  of 41 bytes]: 1 params @ offset 0x00228802
+==> 000001cf: <Call3>: <Reg8: 5, Reg8: 13, Reg8: 3, Reg8: 5, Reg8: 11>
+==> 000001d5: <GetByIdShort>: <Reg8: 14, Reg8: 10, UInt8: 15, string_id: 115>  # String: 'default' (Identifier)
+==> 000001da: <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 16, string_id: 113>  # String: 'useMemo' (Identifier)
+==> 000001df: <NewArray>: <Reg8: 11, UInt16: 1>
+==> 000001e3: <DefineOwnInDenseArray>: <Reg8: 11, Reg8: 7, UInt8: 0>
+==> 000001e7: <CreateClosure>: <Reg8: 5, Reg8: 9, function_id: 11366>  # Function: [#11366  of 40 bytes]: 1 params @ offset 0x0022882b
+==> 000001ec: <Call3>: <Reg8: 11, Reg8: 13, Reg8: 14, Reg8: 5, Reg8: 11>
+==> 000001f2: <StoreToEnvironment>: <Reg8: 9, UInt8: 11, Reg8: 11>
+==> 000001f6: <GetByIdShort>: <Reg8: 15, Reg8: 10, UInt8: 15, string_id: 115>  # String: 'default' (Identifier)
+==> 000001fb: <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 16, string_id: 113>  # String: 'useMemo' (Identifier)
+==> 00000200: <NewArray>: <Reg8: 13, UInt16: 1>
+==> 00000204: <DefineOwnInDenseArray>: <Reg8: 13, Reg8: 7, UInt8: 0>
+==> 00000208: <CreateClosure>: <Reg8: 5, Reg8: 9, function_id: 11367>  # Function: [#11367  of 40 bytes]: 1 params @ offset 0x00228853
+==> 0000020d: <Call3>: <Reg8: 16, Reg8: 14, Reg8: 15, Reg8: 5, Reg8: 13>
+==> 00000213: <GetByIdShort>: <Reg8: 15, Reg8: 10, UInt8: 15, string_id: 115>  # String: 'default' (Identifier)
+==> 00000218: <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 16, string_id: 113>  # String: 'useMemo' (Identifier)
+==> 0000021d: <NewArray>: <Reg8: 13, UInt16: 1>
+==> 00000221: <DefineOwnInDenseArray>: <Reg8: 13, Reg8: 7, UInt8: 0>
+==> 00000225: <CreateClosure>: <Reg8: 5, Reg8: 9, function_id: 11368>  # Function: [#11368  of 40 bytes]: 1 params @ offset 0x0022887b
+==> 0000022a: <Call3>: <Reg8: 5, Reg8: 14, Reg8: 15, Reg8: 5, Reg8: 13>
+==> 00000230: <StoreToEnvironment>: <Reg8: 9, UInt8: 12, Reg8: 5>
+==> 00000234: <JmpTrue>: <Addr8: 6, Reg8: 5>  # Address: 0000023a
+==> 00000237: <JmpFalse>: <Addr8: 28, Reg8: 16>  # Address: 00000253
+==> 0000023a: <JmpTrue>: <Addr8: 25, Reg8: 11>  # Address: 00000253
+==> 0000023d: <GetGlobalObject>: <Reg8: 13>
+==> 0000023f: <TryGetById>: <Reg8: 15, Reg8: 13, UInt8: 17, string_id: 108>  # String: 'console' (Identifier)
+==> 00000245: <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 18, string_id: 253>  # String: 'warn' (Identifier)
+==> 0000024a: <LoadConstString>: <Reg8: 13, string_id: 4423>  # String: 'When you use Link.Preview, you must use Link.Trigger to specify the trigger element.' (String)
+==> 0000024e: <Call2>: <Reg8: 13, Reg8: 14, Reg8: 15, Reg8: 13>
+==> 00000253: <GetByIdShort>: <Reg8: 15, Reg8: 10, UInt8: 15, string_id: 115>  # String: 'default' (Identifier)
+==> 00000258: <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 16, string_id: 113>  # String: 'useMemo' (Identifier)
+==> 0000025d: <NewArray>: <Reg8: 13, UInt16: 2>
+==> 00000261: <DefineOwnInDenseArray>: <Reg8: 13, Reg8: 11, UInt8: 0>
+==> 00000265: <DefineOwnInDenseArray>: <Reg8: 13, Reg8: 7, UInt8: 1>
+==> 00000269: <CreateClosure>: <Reg8: 11, Reg8: 9, function_id: 11369>  # Function: [#11369  of 59 bytes]: 1 params @ offset 0x002288a3
+==> 0000026e: <Call3>: <Reg8: 20, Reg8: 14, Reg8: 15, Reg8: 11, Reg8: 13>
+==> 00000274: <GetByIdShort>: <Reg8: 15, Reg8: 10, UInt8: 15, string_id: 115>  # String: 'default' (Identifier)
+==> 00000279: <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 16, string_id: 113>  # String: 'useMemo' (Identifier)
+==> 0000027e: <NewArray>: <Reg8: 13, UInt16: 2>
+==> 00000282: <DefineOwnInDenseArray>: <Reg8: 13, Reg8: 5, UInt8: 0>
+==> 00000286: <GetByIdShort>: <Reg8: 11, Reg8: 6, UInt8: 13, string_id: 160>  # String: 'href' (Identifier)
+==> 0000028b: <DefineOwnInDenseArray>: <Reg8: 13, Reg8: 11, UInt8: 1>
+==> 0000028f: <CreateClosure>: <Reg8: 11, Reg8: 9, function_id: 11370>  # Function: [#11370  of 64 bytes]: 1 params @ offset 0x002288de
+==> 00000294: <Call3>: <Reg8: 17, Reg8: 14, Reg8: 15, Reg8: 11, Reg8: 13>
+==> 0000029a: <GetByIdShort>: <Reg8: 11, Reg8: 10, UInt8: 8, string_id: 250>  # String: 'useRef' (Identifier)
+==> 0000029f: <Call2>: <Reg8: 11, Reg8: 11, Reg8: 3, Reg8: 12>
+==> 000002a4: <StoreToEnvironment>: <Reg8: 9, UInt8: 13, Reg8: 11>
+==> 000002a8: <GetByIdShort>: <Reg8: 11, Reg8: 10, UInt8: 8, string_id: 250>  # String: 'useRef' (Identifier)
+==> 000002ad: <Call2>: <Reg8: 19, Reg8: 11, Reg8: 3, Reg8: 12>
+==> 000002b2: <StoreToEnvironment>: <Reg8: 9, UInt8: 14, Reg8: 19>
+==> 000002b6: <GetByIdShort>: <Reg8: 11, Reg8: 10, UInt8: 16, string_id: 113>  # String: 'useMemo' (Identifier)
+==> 000002bb: <NewArray>: <Reg8: 10, UInt16: 1>
+==> 000002bf: <DefineOwnInDenseArray>: <Reg8: 10, Reg8: 8, UInt8: 0>
+==> 000002c3: <CreateClosure>: <Reg8: 8, Reg8: 9, function_id: 11371>  # Function: [#11371  of 19 bytes]: 1 params @ offset 0x0022891e
+==> 000002c8: <Call3>: <Reg8: 11, Reg8: 11, Reg8: 3, Reg8: 8, Reg8: 10>
+==> 000002ce: <Not>: <Reg8: 5, Reg8: 5>
+==> 000002d1: <Not>: <Reg8: 5, Reg8: 5>
+==> 000002d4: <StoreNPToEnvironment>: <Reg8: 9, UInt8: 15, Reg8: 5>
+==> 000002d8: <GetByIdShort>: <Reg8: 8, Reg8: 6, UInt8: 14, string_id: 217>  # String: 'replace' (Identifier)
+==> 000002dd: <LoadFromEnvironment>: <Reg8: 15, Reg8: 0, UInt8: 2>
+==> 000002e1: <GetByIdShort>: <Reg8: 5, Reg8: 15, UInt8: 19, string_id: 168>  # String: 'jsx' (Identifier)
+==> 000002e6: <JmpTrueLong>: <Addr32: 264, Reg8: 8>  # Address: 000003ee
+==> 000002ec: <LoadFromEnvironment>: <Reg8: 8, Reg8: 0, UInt8: 11>
+==> 000002f0: <GetById>: <Reg8: 8, Reg8: 8, UInt8: 20, string_id: 12181>  # String: 'NativeLinkPreview' (Identifier)
+==> 000002f6: <LoadFromEnvironment>: <Reg8: 12, Reg8: 0, UInt8: 15>
+==> 000002fa: <LoadConstUndefined>: <Reg8: 10>
+==> 000002fc: <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 00000302
+==> 000002ff: <Mov>: <Reg8: 10, Reg8: 4>
+==> 00000302: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 1517, UInt16: 19800>  # Object: {'nextScreenId': null, 'tabPath': null, 'onWillPreviewOpen': null, 'onPreviewWillClose': null, 'onPreviewDidClose': null, 'onPreviewTapped': null, 'style': null, 'disableForceFlatten': true, 'children': null}
+==> 00000308: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 10, UInt8: 0>
+==> 0000030c: <LoadConstUndefined>: <Reg8: 10>
+==> 0000030e: <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 00000314
+==> 00000311: <Mov>: <Reg8: 10, Reg8: 11>
+==> 00000314: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 10, UInt8: 1>
+==> 00000318: <CreateClosure>: <Reg8: 10, Reg8: 9, function_id: 11372>  # Function: [#11372 onWillPreviewOpen of 67 bytes]: 1 params @ offset 0x00228931
+==> 0000031d: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 10, UInt8: 2>
+==> 00000321: <CreateClosure>: <Reg8: 10, Reg8: 9, function_id: 11373>  # Function: [#11373 onPreviewWillClose of 58 bytes]: 1 params @ offset 0x00228974
+==> 00000326: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 10, UInt8: 3>
+==> 0000032a: <CreateClosure>: <Reg8: 10, Reg8: 9, function_id: 11374>  # Function: [#11374 onPreviewDidClose of 87 bytes]: 1 params @ offset 0x002289ae
+==> 0000032f: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 10, UInt8: 4>
+==> 00000333: <CreateClosure>: <Reg8: 9, Reg8: 9, function_id: 11375>  # Function: [#11375 onPreviewTapped of 68 bytes]: 1 params @ offset 0x00228a05
+==> 00000338: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 9, UInt8: 5>
+==> 0000033c: <NewObjectWithBuffer>: <Reg8: 9, UInt16: 233, UInt16: 20127>  # Object: {'display': 'contents'}
+==> 00000342: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 9, UInt8: 6>
+==> 00000346: <GetByIdShort>: <Reg8: 11, Reg8: 15, UInt8: 19, string_id: 168>  # String: 'jsx' (Identifier)
+==> 0000034b: <LoadFromEnvironment>: <Reg8: 9, Reg8: 0, UInt8: 7>
+==> 0000034f: <GetById>: <Reg8: 10, Reg8: 9, UInt8: 21, string_id: 14601>  # String: 'NativeMenuContext' (Identifier)
+==> 00000355: <NewObjectWithBuffer>: <Reg8: 9, UInt16: 1028, UInt16: 18011>  # Object: {'value': true, 'children': null}
+==> 0000035b: <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 22, string_id: 169>  # String: 'jsxs' (Identifier)
+==> 00000360: <LoadFromEnvironment>: <Reg8: 12, Reg8: 0, UInt8: 6>
+==> 00000364: <GetById>: <Reg8: 13, Reg8: 12, UInt8: 23, string_id: 9544>  # String: 'InternalLinkPreviewContext' (Identifier)
+==> 0000036a: <NewObjectWithBuffer>: <Reg8: 12, UInt16: 1028, UInt16: 17356>  # Object: {'value': null, 'children': null}
+==> 00000370: <NewObjectWithBuffer>: <Reg8: 18, UInt16: 1518, UInt16: 17424>  # Object: {'isVisible': null, 'href': null, 'blockPressRef': null}
+==> 00000376: <PutOwnBySlotIdx>: <Reg8: 18, Reg8: 21, UInt8: 0>
+==> 0000037a: <GetById>: <Reg8: 21, Reg8: 6, UInt8: 6, string_id: 9999>  # String: 'hrefForPreviewNavigation' (Identifier)
+==> 00000380: <PutOwnBySlotIdx>: <Reg8: 18, Reg8: 21, UInt8: 1>
+==> 00000384: <PutOwnBySlotIdx>: <Reg8: 18, Reg8: 19, UInt8: 2>
+==> 00000388: <PutOwnBySlotIdx>: <Reg8: 12, Reg8: 18, UInt8: 0>
+==> 0000038c: <GetByIdShort>: <Reg8: 19, Reg8: 15, UInt8: 19, string_id: 168>  # String: 'jsx' (Identifier)
+==> 00000391: <LoadFromEnvironment>: <Reg8: 15, Reg8: 0, UInt8: 5>
+==> 00000395: <GetById>: <Reg8: 18, Reg8: 15, UInt8: 24, string_id: 7407>  # String: 'BaseExpoRouterLink' (Identifier)
+==> 0000039b: <NewObject>: <Reg8: 15>
+==> 0000039d: <Mov>: <Reg8: 24, Reg8: 15>
+==> 000003a0: <Mov>: <Reg8: 23, Reg8: 6>
+==> 000003a3: <CallBuiltin>: <Reg8: 21, UInt8: 46, UInt8: 3>  # Built-in function: [#46 copyDataProperties]
+==> 000003a7: <DefineOwnById>: <Reg8: 15, Reg8: 20, UInt8: 0, string_id: 101>  # String: 'children' (Identifier)
+==> 000003ad: <GetByIdShort>: <Reg8: 20, Reg8: 6, UInt8: 25, string_id: 161>  # String: 'ref' (Identifier)
+==> 000003b2: <DefineOwnById>: <Reg8: 15, Reg8: 20, UInt8: 1, string_id: 161>  # String: 'ref' (Identifier)
+==> 000003b8: <Call3>: <Reg8: 18, Reg8: 19, Reg8: 3, Reg8: 18, Reg8: 15>
+==> 000003be: <NewArray>: <Reg8: 15, UInt16: 3>
+==> 000003c2: <DefineOwnInDenseArray>: <Reg8: 15, Reg8: 18, UInt8: 0>
+==> 000003c6: <DefineOwnInDenseArray>: <Reg8: 15, Reg8: 17, UInt8: 1>
+==> 000003ca: <DefineOwnInDenseArray>: <Reg8: 15, Reg8: 16, UInt8: 2>
+==> 000003ce: <PutOwnBySlotIdx>: <Reg8: 12, Reg8: 15, UInt8: 1>
+==> 000003d2: <Call3>: <Reg8: 12, Reg8: 14, Reg8: 3, Reg8: 13, Reg8: 12>
+==> 000003d8: <PutOwnBySlotIdx>: <Reg8: 9, Reg8: 12, UInt8: 1>
+==> 000003dc: <Call3>: <Reg8: 9, Reg8: 11, Reg8: 3, Reg8: 10, Reg8: 9>
+==> 000003e2: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 9, UInt8: 8>
+==> 000003e6: <Call3>: <Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 8, Reg8: 4>
+==> 000003ec: <Ret>: <Reg8: 4>
+==> 000003ee: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 5>
+==> 000003f2: <GetById>: <Reg8: 4, Reg8: 0, UInt8: 24, string_id: 7407>  # String: 'BaseExpoRouterLink' (Identifier)
+==> 000003f8: <NewObjectWithBuffer>: <Reg8: 0, UInt16: 1153, UInt16: 20>  # Object: {'children': null}
+==> 000003fe: <PutOwnBySlotIdx>: <Reg8: 0, Reg8: 7, UInt8: 0>
+==> 00000402: <Mov>: <Reg8: 24, Reg8: 0>
+==> 00000405: <Mov>: <Reg8: 23, Reg8: 6>
+==> 00000408: <CallBuiltin>: <Reg8: 6, UInt8: 46, UInt8: 3>  # Built-in function: [#46 copyDataProperties]
+==> 0000040c: <Call3>: <Reg8: 0, Reg8: 5, Reg8: 3, Reg8: 4, Reg8: 0>
+==> 00000412: <Ret>: <Reg8: 0>
+==> 00000414: <Catch>: <Reg8: 0>
+==> 00000416: <Jmp>: <Addr8: 6>  # Address: 0000041c
+==> 00000418: <Catch>: <Reg8: 0>
+==> 0000041a: <LoadConstUndefined>: <Reg8: 2>
+==> 0000041c: <JmpTrue>: <Addr8: 6, Reg8: 2>  # Address: 00000422
+==> 0000041f: <IteratorClose>: <Reg8: 1, UInt8: 1>
+==> 00000422: <Throw>: <Reg8: 0>
+
+

@@ -154,6 +154,9 @@ class ArrayDestructuringCfgPass:
                 return None
 
             if not self._dead_after(join, temp, dropped_ids):
+                if any(register == temp for register, _ in ctx.slot_copies):
+                    continue  # the last property was read into it: restored below like any slot copy
+
                 if temp not in slots:
                     return None
 
@@ -534,24 +537,44 @@ class ArrayDestructuringCfgPass:
                 props = []
 
                 while insts:
-                    read = _property_read(insts[0], prev_tmp)
+                    read = _property_read(insts[0], prev_tmp, allow_self=True)
 
                     if read is None:
                         break
 
                     leaf = _Elem("reg", insts[0].dest_reg, insts[0])
+                    self_read = insts[0].dest_reg == prev_tmp
                     insts = insts[1:]
 
+                    # A closure variable is also kept in its own register: `rA = leaf` sits between the read and the
+                    # store of the slot (98/6599). The copy is restored from the slot when something still reads it.
+                    copies = 0
+
+                    while copies < len(insts) and insts[copies].handler == "Mov" \
+                            and _operands(insts[copies])[1] == leaf.reg \
+                            and _operands(insts[copies])[0] not in (leaf.reg, prev_tmp):
+                        copies += 1
+
+                    after = insts[copies:]
+
                     # `{ a: slot }`: the value goes straight into an environment slot (nothing runs on the way).
-                    if insts and (
-                            store := _plain_store(insts[0], leaf.reg) or _plain_store_of_read(insts[0], prev_tmp, read,
+                    if after and (
+                            store := _plain_store(after[0], leaf.reg) or _plain_store_of_read(after[0], prev_tmp, read,
                                                                                               leaf.reg)
                     ) is not None and _is_env_slot(store):
                         leaf.slot = store
                         ctx.slot_copies.append((leaf.reg, store))
-                        insts = insts[1:]
+                        ctx.slot_copies.extend((_operands(c)[0], store) for c in insts[:copies])
+                        insts = after[1:]
 
                     props.append((read, leaf))
+
+                    # The source register now holds the leaf: nothing can read a further property from it.
+                    if self_read:
+                        if leaf.slot is None:
+                            return None
+
+                        break
 
                 if props:
                     items[-1] = _Elem("object", props=props, temp=prev_tmp)
@@ -1047,8 +1070,10 @@ class _Ctx:
             tuple[int, object]] = []  # fetch registers a slot store read directly, no copy of them is kept
 
 
-def _property_read(instruction, source: int):
-    """`rD = rSource.name` (a plain property load of the element value into a new register), as its name."""
+def _property_read(instruction, source: int, allow_self: bool = False):
+    """`rD = rSource.name` (a plain property load of the element value into a new register), as its name.
+
+    `allow_self`: the last property of a pattern may be read into the source register itself."""
     value = instruction.value
 
     if (
@@ -1061,7 +1086,7 @@ def _property_read(instruction, source: int):
             or not isinstance(value.prop, Identifier)
             or not value.prop.name.isidentifier()
             or not isinstance(instruction.dest_reg, int)
-            or instruction.dest_reg == source
+            or (instruction.dest_reg == source and not allow_self)
     ):
         return None
 
