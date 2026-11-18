@@ -151,6 +151,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-17 | after F-272 (object element with `...rest` in an array pattern) | 60 | 49 | n/a | n/a | 1216 passed |
 | 2026-11-17 | after F-273 (a crossed test keeps its call as `(rN = f(x))`) | 58 | 48 | n/a | n/a | 1217 passed |
 | 2026-11-18 | after F-274 (a `finally` whose handler copy branches, and its copy after the `try`) | 57 | 48 | n/a | n/a | 1219 passed |
+| 2026-11-18 | after F-275 (a crossed `\|\|` whose setup is overwritten by a dead copy) | 56 | 48 | n/a | n/a | 1220 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1

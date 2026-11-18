@@ -616,7 +616,8 @@ class ShortCircuitConditionCfgPass:
                            for b in (exits[:1] if any(
                 instruction.dest_reg == r.dest_reg for r in rematerialized) else exits))
                     # Written again later in the same block: the exits only ever see the later value.
-                    or (relaxed and any(later.dest_reg == instruction.dest_reg for later in setup[position + 1:]))
+                    or ((relaxed or end_reads) and any(
+                later.dest_reg == instruction.dest_reg for later in setup[position + 1:]))
                     or id(instruction) in assigned
             )
                     # A handler is entered by an edge the CFG does not have: it
