@@ -636,6 +636,9 @@ class HermesAnalysis:
         # `[a, b] = src` as one statement instead of the iterator-protocol
         # diamonds. Needs to see the final block order, after the generator
         # rewrite above, and before any analysis is computed.
+        # A suspend-resume machine nothing recognised stays in its raw form: layout passes that only
+        # relax for ordinary functions leave it alone.
+        cfg.unresolved_dispatch = bool(unresolved_dispatch_reason and unresolved_dispatch_reason[1])
         ArrayDestructuringCfgPass(cfg).run()
         EnvArrayDestructuringCfgPass(cfg).run()
         if duplicate_returns:

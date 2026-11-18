@@ -121,13 +121,24 @@ class FallThroughLayoutCfgPass:
 
         It is an `if (c) { tail }`: the tail moves right behind the branch, which is inverted to jump over it to the
         code it used to fall into. The tail's own blocks keep their order, so their fall-throughs stay intact."""
-        if self.cfg.exception_handlers:
+        # A branch or tail a handler guards or starts at stays where it is; the rest of a function that has
+        # handlers moves like any other (96/3448: the abort test sits before the `try`).
+        if self.cfg.exception_handlers and getattr(self.cfg, "unresolved_dispatch", False):
             return 0
+
+        protected = {
+            block
+            for handler in self.cfg.exception_handlers
+            for block in (*handler["try_blocks"], handler["handler_block"])
+        }
 
         moved = 0
 
         for block in list(self.cfg.blocks):
             if not isinstance(block.terminator, TerminatorConditionalBranch) or len(block.successors) != 2:
+                continue
+
+            if block in protected:
                 continue
 
             taken, fall = block.successors
@@ -139,7 +150,7 @@ class FallThroughLayoutCfgPass:
 
             tail = self._closed_tail(taken, block)
 
-            if tail is None or fall in tail or blocks.index(fall) != at + 1:
+            if tail is None or fall in tail or blocks.index(fall) != at + 1 or tail & protected:
                 continue
 
             tail_blocks = [b for b in blocks if b in tail]
