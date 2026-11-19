@@ -99,6 +99,32 @@ class ShortCircuitConditionCfgPass:
 
         return frozenset(blocks)
 
+    def _crossed_test_inside_the_loop(self, block, successor, branch) -> bool:
+        """`if (0 === t) goto A; if (11 !== t && 15 !== t) goto END; A:` in a loop body (98/2658): the first test falls
+        into a second one whose fall-through is the first one's target, and no target of either leaves the loop, so
+        neither test is the loop's own condition: they are one `||` inside the body, whatever block is the header."""
+        if successor is None or not isinstance(successor.terminator, TerminatorConditionalBranch):
+            return False
+
+        if not self._falls_into(successor, branch.target) or successor.terminator.target <= successor.address:
+            return False
+
+        by_address = {b.address: b for b in self.cfg.blocks}
+        targets = [by_address.get(branch.target), by_address.get(successor.terminator.target)]
+
+        if any(t is None for t in targets):
+            return False
+
+        loops = [
+            loop for loop in self.cfg.loop_analysis.loops.values()
+            if loop.header is block or block in loop.members
+        ]
+
+        return bool(loops) and all(
+            all(t is loop.header or t in loop.members for t in targets) and successor in loop.members
+            for loop in loops
+        )
+
     def _both_tests_leave_the_loop(self, block, successor, branch) -> bool:
         """`if (a) break-to-X; if (b) break-to-X;` inside a loop body.
 
@@ -161,7 +187,11 @@ class ShortCircuitConditionCfgPass:
 
         successor = self._fallthrough(block)
 
-        if block in self._loop_blocks and not self._both_tests_leave_the_loop(block, successor, branch):
+        if (
+                block in self._loop_blocks
+                and not self._both_tests_leave_the_loop(block, successor, branch)
+                and not self._crossed_test_inside_the_loop(block, successor, branch)
+        ):
             # Loop header/latch/member - never fold its condition into
             # or out of another block. See _collect_loop_blocks.
             return False
@@ -191,6 +221,10 @@ class ShortCircuitConditionCfgPass:
                 # The same register is not the same value when the second block loads it again
                 # (98/2621: `r20 = r21.tag; if (22 !== r20)` then `r20 = r21.memoizedState; if (null !== r20)`).
                 and not self._reloads_the_subject(successor, branch.condition)
+                # The second test falls into the first one's target: `0 === t || 11 === t || 15 === t` lowered as
+                # `if (0 === t) goto A; if (11 === t) goto A; if (15 !== t) goto END; A:`, the crossed form; no
+                # `switch` has a body that a later test's fall-through enters (98/2658).
+                and not self._falls_into(successor, branch.target)
                 and (
                 successor.terminator.target != branch.target
                 or self._case_chain_has_another_body(block, successor, branch.target)
@@ -1260,6 +1294,11 @@ class ShortCircuitConditionCfgPass:
 
         return None
 
+    def _falls_into(self, block: BasicBlock, address: int) -> bool:
+        following = self._fallthrough(block)
+
+        return following is not None and following.address == address
+
     def _case_chain_has_another_body(self, block, successor, target: int) -> bool:
         """Does the `case` chain these two tests belong to jump anywhere else?
 
@@ -1293,7 +1332,8 @@ class ShortCircuitConditionCfgPass:
             if not same_subject(following):
                 break
 
-            if following.terminator.target != target:
+            # A test that falls into the body (`15 !== t` jumping to END) is the end of this `||`, not another body.
+            if following.terminator.target != target and not self._falls_into(following, target):
                 return True
 
             current = following
