@@ -559,7 +559,13 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
             return sibling.source_block.address
 
         held = self.graph.root.covered_blocks
-        first = min(b.address for b in inside)
+        # Synthetic blocks (a `break`/`continue` the structurers made, address -1) have no place in the CFG order.
+        real = [b.address for b in inside if b.address >= 0]
+
+        if not real:
+            return None
+
+        first = min(real)
         tests = [
             b for b in self.cfg.blocks
             if b not in held
