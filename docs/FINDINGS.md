@@ -159,6 +159,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-19 | after F-281 (an `\|\|` over copies dead in a try function; a copy-only loop test's break) | 54 | 46 | n/a | n/a | 1226 passed |
 | 2026-11-19 | after F-282 (the retry with the fewest `goto`s replaces the first attempt) | 54 | 46 | n/a | n/a | 1227 passed |
 | 2026-11-19 | after F-283 (a crossed `\|\|` of tag tests inside a loop) | 54 | 44 | n/a | n/a | 1228 passed |
+| 2026-11-19 | after F-284 (a crossed `&&` whose setup copy is already substituted) | 52 | 44 | n/a | n/a | 1230 passed |
 
 - The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
   columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1

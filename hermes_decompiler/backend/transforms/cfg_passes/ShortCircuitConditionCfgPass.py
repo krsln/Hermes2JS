@@ -856,15 +856,26 @@ class ShortCircuitConditionCfgPass:
         ):
             return False
 
-        # Only a comparison that takes the copy as a plain operand, once (`r9 === r8.length`).
-        if not (
+        # The test no longer mentions the copy (an earlier link of the setup took its value: 96/2153
+        # `r7 = r1; r5 = r7 & 42; if (0 !== r5)`), or it is a comparison taking the copy once as a plain operand
+        # (`r9 === r8`).
+        mentions = sum(1 for n in probe.walk() if isinstance(n, Identifier) and n.name == f"r{register}")
+
+        if mentions > 1 or (
+                mentions == 1
+                and not (
                 isinstance(probe, BinaryExpression)
-                and sum(1 for n in probe.walk() if isinstance(n, Identifier) and n.name == f"r{register}") == 1
                 and any(
             isinstance(side, Identifier) and side.name == f"r{register}" for side in (probe.left, probe.right))
                 # A comparison with a constant is a link of a `case` chain, which SwitchStructurer wants apart.
                 and not any(isinstance(n, (Literal, UndefinedLiteral)) for n in (probe.left, probe.right))
+        )
         ):
+            return False
+
+        # A copy the test no longer mentions, in a register both exits write, is the join's value register (`r6 = e` / `r6 = e.message` of a ternary,
+        # 96/13916): the copy is one arm's value, whatever the test says. Folding it away leaves the chain half folded.
+        if mentions == 0 and all(any(i.dest_reg == register for i in b.instructions) for b in exits):
             return False
 
         return all(self._dead_on_entry(b, register, set()) for b in exits) and all(

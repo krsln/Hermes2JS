@@ -38,7 +38,7 @@ def test_a_dead_copy_in_front_of_a_test_no_longer_nests_the_else():
 
     # The three tests are one `||` now (the dead copy fed the middle one): no `else` nest and no copy.
     assert "goto" not in code
-    assert "if (!param1 || (!param2 || Object.keys(param2).length === 0)) {" in code
+    assert "if (!param1 || !param2 || Object.keys(param2).length === 0) {" in code
     assert "r1 = param2;" not in code
 
 

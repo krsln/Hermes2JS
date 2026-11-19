@@ -1,0 +1,87 @@
+
+=> [Function #13916 "listener" of 308 bytes]: 2 params, frame size=22, strict=1, exc handler=1, debug info=0  @ offset 0x0024b306
+  [Exception handlers: [start=0xc1, end=0xce, target=0xd0] ]
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 5>
+==> 00000002: <LoadParam>: <Reg8: 6, UInt8: 1>
+==> 00000005: <LoadConstUndefined>: <Reg8: 0>
+==> 00000007: <LoadConstUndefined>: <Reg8: 2>
+==> 00000009: <LoadConstUndefined>: <Reg8: 1>
+==> 0000000b: <GetEnvironment>: <Reg8: 3, UInt8: 1>
+==> 0000000e: <LoadFromEnvironment>: <Reg8: 7, Reg8: 3, UInt8: 2>
+==> 00000012: <JmpTrue>: <Addr8: 5, Reg8: 7>  # Address: 00000017
+==> 00000015: <Ret>: <Reg8: 0>
+==> 00000017: <LoadFromEnvironment>: <Reg8: 7, Reg8: 3, UInt8: 0>
+==> 0000001b: <GetByIdShort>: <Reg8: 8, Reg8: 7, UInt8: 1, string_id: 93>  # String: 'current' (Identifier)
+==> 00000020: <Mov>: <Reg8: 2, Reg8: 8>
+==> 00000023: <LoadConstUndefined>: <Reg8: 7>
+==> 00000025: <JmpFalse>: <Addr8: 15, Reg8: 8>  # Address: 00000034
+==> 00000028: <LoadFromEnvironment>: <Reg8: 9, Reg8: 3, UInt8: 17>
+==> 0000002c: <Mov>: <Reg8: 8, Reg8: 6>
+==> 0000002f: <Call2>: <Reg8: 7, Reg8: 9, Reg8: 0, Reg8: 8>
+==> 00000034: <Mov>: <Reg8: 8, Reg8: 2>
+==> 00000037: <JmpFalseLong>: <Addr32: 249, Reg8: 8>  # Address: 00000130
+==> 0000003d: <JmpFalseLong>: <Addr32: 243, Reg8: 7>  # Address: 00000130
+==> 00000043: <LoadFromEnvironment>: <Reg8: 9, Reg8: 3, UInt8: 1>
+==> 00000047: <GetEnvironment>: <Reg8: 8, UInt8: 2>
+==> 0000004a: <LoadFromEnvironment>: <Reg8: 8, Reg8: 8, UInt8: 6>
+==> 0000004e: <GetById>: <Reg8: 11, Reg8: 8, UInt8: 2, string_id: 14408>  # String: 'extractExpoPathFromURL' (Identifier)
+==> 00000054: <LoadFromEnvironment>: <Reg8: 10, Reg8: 3, UInt8: 3>
+==> 00000058: <Mov>: <Reg8: 8, Reg8: 6>
+==> 0000005b: <Call3>: <Reg8: 8, Reg8: 11, Reg8: 0, Reg8: 10, Reg8: 8>
+==> 00000061: <Call2>: <Reg8: 8, Reg8: 9, Reg8: 0, Reg8: 8>
+==> 00000066: <Mov>: <Reg8: 9, Reg8: 2>
+==> 00000069: <GetById>: <Reg8: 8, Reg8: 9, UInt8: 3, string_id: 17667>  # String: 'getRootState' (Identifier)
+==> 0000006f: <Call1>: <Reg8: 8, Reg8: 8, Reg8: 9>
+==> 00000073: <StoreToEnvironment>: <Reg8: 5, UInt8: 0, Reg8: 8>
+==> 00000077: <GetByIdShort>: <Reg8: 9, Reg8: 7, UInt8: 4, string_id: 219>  # String: 'routes' (Identifier)
+==> 0000007c: <GetById>: <Reg8: 8, Reg8: 9, UInt8: 5, string_id: 8230>  # String: 'some' (Identifier)
+==> 00000082: <CreateClosure>: <Reg8: 5, Reg8: 5, function_id: 13917>  # Function: [#13917  of 46 bytes]: 2 params @ offset 0x0024b43a
+==> 00000087: <Call2>: <Reg8: 5, Reg8: 8, Reg8: 9, Reg8: 5>
+==> 0000008c: <JmpTrueLong>: <Addr32: 166, Reg8: 5>  # Address: 00000132
+==> 00000092: <LoadFromEnvironment>: <Reg8: 8, Reg8: 3, UInt8: 16>
+==> 00000096: <GetByIdShort>: <Reg8: 5, Reg8: 8, UInt8: 1, string_id: 93>  # String: 'current' (Identifier)
+==> 0000009b: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 13>
+==> 0000009f: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 1, string_id: 93>  # String: 'current' (Identifier)
+==> 000000a4: <Call3>: <Reg8: 3, Reg8: 5, Reg8: 8, Reg8: 7, Reg8: 3>
+==> 000000aa: <Mov>: <Reg8: 1, Reg8: 3>
+==> 000000ad: <JStrictNotEqual>: <Addr8: 20, Reg8: 3, Reg8: 0>  # Address: 000000c1
+==> 000000b1: <Mov>: <Reg8: 5, Reg8: 2>
+==> 000000b4: <GetById>: <Reg8: 3, Reg8: 5, UInt8: 6, string_id: 17085>  # String: 'resetRoot' (Identifier)
+==> 000000ba: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 5, Reg8: 7>
+==> 000000bf: <Jmp>: <Addr8: 113>  # Address: 00000130
+==> 000000c1: <Mov>: <Reg8: 3, Reg8: 2>
+==> 000000c4: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 7, string_id: 119>  # String: 'dispatch' (Identifier)
+==> 000000c9: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000ce: <Jmp>: <Addr8: 98>  # Address: 00000130
+==> 000000d0: <Catch>: <Reg8: 5>
+==> 000000d2: <Mov>: <Reg8: 4, Reg8: 5>
+==> 000000d5: <GetGlobalObject>: <Reg8: 1>
+==> 000000d7: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 8, string_id: 99>  # String: 'console' (Identifier)
+==> 000000dd: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 9, string_id: 131>  # String: 'warn' (Identifier)
+==> 000000e2: <Mov>: <Reg8: 7, Reg8: 6>
+==> 000000e5: <TypeOf>: <Reg8: 6, Reg8: 5>
+==> 000000e8: <LoadConstString>: <Reg8: 5, string_id: 7532>  # String: 'object' (Identifier)
+==> 000000ec: <JStrictNotEqual>: <Addr8: 27, Reg8: 6, Reg8: 5>  # Address: 00000107
+==> 000000f0: <Mov>: <Reg8: 6, Reg8: 4>
+==> 000000f3: <LoadConstNull>: <Reg8: 5>
+==> 000000f5: <JEqual>: <Addr8: 18, Reg8: 6, Reg8: 5>  # Address: 00000107
+==> 000000f9: <Mov>: <Reg8: 6, Reg8: 4>
+==> 000000fc: <LoadConstString>: <Reg8: 5, string_id: 174>  # String: 'message' (Identifier)
+==> 00000100: <IsIn>: <Reg8: 5, Reg8: 5, Reg8: 6>
+==> 00000104: <JmpTrue>: <Addr8: 8, Reg8: 5>  # Address: 0000010c
+==> 00000107: <Mov>: <Reg8: 6, Reg8: 4>
+==> 0000010a: <Jmp>: <Addr8: 7>  # Address: 00000111
+==> 0000010c: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 10, string_id: 174>  # String: 'message' (Identifier)
+==> 00000111: <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 11, string_id: 14>  # String: 'HermesInternal' (Identifier)
+==> 00000117: <GetByIdShort>: <Reg8: 5, Reg8: 1, UInt8: 12, string_id: 96>  # String: 'concat' (Identifier)
+==> 0000011c: <LoadConstString>: <Reg8: 4, string_id: 1830>  # String: "An error occurred when trying to handle the link '" (String)
+==> 00000120: <LoadConstString>: <Reg8: 1, string_id: 1220>  # String: "': " (String)
+==> 00000124: <Call4>: <Reg8: 1, Reg8: 5, Reg8: 4, Reg8: 7, Reg8: 1, Reg8: 6>
+==> 0000012b: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000130: <Ret>: <Reg8: 0>
+==> 00000132: <Ret>: <Reg8: 0>
+
+
