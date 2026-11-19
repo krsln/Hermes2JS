@@ -601,6 +601,8 @@ class ShortCircuitConditionCfgPass:
                         and not self._copy_feeds_the_test(successor, instruction, probe, setup[position + 1:])
                         and not self._copy_is_the_call_receiver(instruction, probe, setup[position + 1:])
                         and not self._copy_is_private_to_the_block(successor, instruction, setup[position + 1:])
+                        and not self._copy_dies_with_the_test(successor, instruction, setup[position + 1:], exits,
+                                                              probe)
                         # A crossed test whose copy only the test reads: the exits copy the register on into
                         # registers nobody reads (`r1 = r22` at every `continue`), which liveness sees through.
                         and not (relaxed and self._copy_dead_by_liveness(instruction, exits))
@@ -694,7 +696,12 @@ class ShortCircuitConditionCfgPass:
         `captureCommitPhaseError`, React's `Ya`): every read is a copy into a register that is
         written again before anything real reads it, so dropping one copy loses nothing. Followed
         forward from the copy with the set of registers still carrying its value."""
-        if self.cfg.exception_handlers:
+        # A handler is entered by an edge the CFG does not have: the copies it could still see must be dead
+        # there too (98/2474: a `try`/`finally` function whose `||` of two length tests reuses r9/r8).
+        if self.cfg.exception_handlers and not all(
+                self._dead_on_entry(handler, copy_instruction.dest_reg, set())
+                for handler in self._handlers_reached(block, copy_instruction.dest_reg)
+        ):
             return False
 
         start = block.instructions.index(copy_instruction) + 1
@@ -798,6 +805,37 @@ class ShortCircuitConditionCfgPass:
                     break
 
         return True
+
+    def _copy_dies_with_the_test(
+            self, successor: BasicBlock, copy_instruction, later: list, exits: list, probe
+    ) -> bool:
+        """`r9 = r12` whose register nothing reads once the test is over: written before any read on every
+        path from both exits and from every handler the test can still be inside of, and the source is not
+        rewritten after it. `_copy_is_private_to_the_block` asks the same flow-insensitively (any block that
+        reads the register before writing it fails it, including a loop's own tests that read the value an
+        earlier block of the loop set: 98/2474 `r5 === a.length || r12 === b.length` before the loops)."""
+        source = copy_instruction.value
+        register = copy_instruction.dest_reg
+
+        if successor in self._loop_blocks or not isinstance(source, Identifier) or any(
+                i.dest_reg is not None and f"r{i.dest_reg}" == source.name for i in later
+        ):
+            return False
+
+        # Only a comparison that takes the copy as a plain operand, once (`r9 === r8.length`).
+        if not (
+                isinstance(probe, BinaryExpression)
+                and sum(1 for n in probe.walk() if isinstance(n, Identifier) and n.name == f"r{register}") == 1
+                and any(
+            isinstance(side, Identifier) and side.name == f"r{register}" for side in (probe.left, probe.right))
+                # A comparison with a constant is a link of a `case` chain, which SwitchStructurer wants apart.
+                and not any(isinstance(n, (Literal, UndefinedLiteral)) for n in (probe.left, probe.right))
+        ):
+            return False
+
+        return all(self._dead_on_entry(b, register, set()) for b in exits) and all(
+            self._dead_on_entry(b, register, set()) for b in self._handlers_reached(successor, register)
+        )
 
     @classmethod
     def _read_before_any_effect(cls, node, name: str) -> bool:

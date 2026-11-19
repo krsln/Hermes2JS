@@ -713,7 +713,18 @@ class LoopBreakStructurer(RegionStructurer):
         # sharing its block's address it would shadow that block in the address lookups (98/10142 `BezierEasing`:
         # the `if` jumping to the block no longer found it). The others keep the address; the output of
         # 98/3265 `dispatchEvent` and 98/8192 `inc` depends on the shadowing.
-        break_block = BasicBlock(new_id, address=-1 if forwarded else block.address)
+        # A block left holding only plain copies (`r8 = r12` ahead of the exit test) is shadowed by its own break
+        # too: the `if` of the test before it then ends at the copies and leaves the break outside, so the
+        # guarded copy is all the loop's first test covers (98/2474: `if (1 <= r8) { r8 = r12; }` then the
+        # second test's `break`). A block with real work in front of the test keeps its address (98/2211).
+        copies_only = (
+                block is not loop.header_block
+                and bool(block.instructions)
+                and all(
+            getattr(getattr(i, "entry", None), "opcode", None) in ("Mov", "MovLong") for i in block.instructions)
+        )
+
+        break_block = BasicBlock(new_id, address=-1 if forwarded or copies_only else block.address)
 
         entry = OpcodeEntry(bytecode="<synthetic>: BreakStatement", hex_address="")
         break_block.instructions.append(OpcodeResult(entry, statement=BreakStatement(label=None)))
