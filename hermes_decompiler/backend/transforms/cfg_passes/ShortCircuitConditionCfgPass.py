@@ -318,6 +318,7 @@ class ShortCircuitConditionCfgPass:
         arm = self._arm_of(block, branch)
         end_block = next((x for x in successor.successors if x.address == next_branch.target), None)
         sunk: list = []
+        already: list = []
 
         if not self._is_inlined_setup_block(successor):
             if end_block is None or arm in self._loop_headers:
@@ -326,6 +327,12 @@ class ShortCircuitConditionCfgPass:
             # Join copies (`Mov r4, r3`) the arm overwrites anyway only matter
             # on the way to END: they move onto that edge (see `_sink_copies`).
             sunk = self._copies_for_the_end_edge(successor, arm, end_block)
+
+            # A copy the path into the test already made (`r0 = r3; r28 = r18;` ahead of the first test,
+            # repeated between the two tests with nothing written in between) needs no edge copy: the
+            # register still holds the value on the way to END (98/4238 `computeWindowedRenderLimits`).
+            already = [i for i in sunk if self._copy_already_made(block, i)]
+            sunk = [i for i in sunk if i not in already]
 
             # A constant the test reads AND END reads (`r1 = 0; ... a[r1]` in the
             # test, `a[r1]` again in END): the test takes the value, END gets its
@@ -342,7 +349,7 @@ class ShortCircuitConditionCfgPass:
             # value itself when nothing reads the register afterwards.
             self._kept_effects = []
             second = self._fold_pure_setup(
-                successor, second, [arm, end_block], skip=sunk, rematerialized=constants, end_reads=True,
+                successor, second, [arm, end_block], skip=[*sunk, *already], rematerialized=constants, end_reads=True,
             )
 
             if second is None:
@@ -350,7 +357,7 @@ class ShortCircuitConditionCfgPass:
 
             sunk = sorted([*sunk, *constants], key=lambda i: i.address)
 
-        if self._setup_feeds_a_join(successor, arm, ignore={i.dest_reg for i in sunk}):
+        if self._setup_feeds_a_join(successor, arm, ignore={i.dest_reg for i in [*sunk, *already]}):
             return False
 
         edge = None
@@ -391,6 +398,42 @@ class ShortCircuitConditionCfgPass:
         self._kept_effects = []
 
         return True
+
+    def _copy_already_made(self, block: BasicBlock, copy_instruction) -> bool:
+        """Did every path into `block` (walking back through single predecessors) already run the same
+        `Mov rD, rS`, with neither register written since?"""
+        if copy_instruction.entry.opcode not in ("Mov", "MovLong"):
+            return False
+
+        destination = copy_instruction.dest_reg
+        sources = self._source_registers(copy_instruction)
+
+        if destination is None or len(sources) != 1:
+            return False
+
+        current = block
+
+        for _ in range(6):
+            for instruction in reversed(current.instructions):
+                if instruction.terminator is not None or instruction.dest_reg is None:
+                    continue
+
+                if (
+                        instruction.dest_reg == destination
+                        and instruction.entry.opcode in ("Mov", "MovLong")
+                        and self._source_registers(instruction) == sources
+                ):
+                    return True
+
+                if instruction.dest_reg == destination or instruction.dest_reg in sources:
+                    return False
+
+            if len(current.predecessors) != 1:
+                return False
+
+            current = current.predecessors[0]
+
+        return False
 
     def _copies_for_the_end_edge(self, successor: BasicBlock, arm: BasicBlock, end_block: BasicBlock) -> list:
         """The `Mov`s of the second test block that only END reads: dead on entry

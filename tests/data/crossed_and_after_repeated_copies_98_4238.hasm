@@ -1,0 +1,269 @@
+
+=> [Function #4238 "computeWindowedRenderLimits" of 1034 bytes]: 7 params, frame size=44, strict=1, exc handler=0, debug info=0  @ offset 0x0019cd0b
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 20, UInt8: 1>
+==> 00000003: <GetById>: <Reg8: 14, Reg8: 20, UInt8: 0, string_id: 7591>  # String: 'getItemCount' (Identifier)
+==> 00000009: <GetByIdShort>: <Reg8: 13, Reg8: 20, UInt8: 1, string_id: 13>  # String: 'data' (Identifier)
+==> 0000000e: <Call2>: <Reg8: 14, Reg8: 14, Reg8: 20, Reg8: 13>
+==> 00000013: <LoadConstZero>: <Reg8: 5>
+==> 00000015: <JStrictEqualLong>: <Addr32: 1005, Reg8: 14, Reg8: 5>  # Address: 00000402
+==> 0000001c: <LoadParam>: <Reg8: 15, UInt8: 6>
+==> 0000001f: <GetByIdShort>: <Reg8: 22, Reg8: 15, UInt8: 2, string_id: 192>  # String: 'offset' (Identifier)
+==> 00000024: <GetById>: <Reg8: 13, Reg8: 15, UInt8: 3, string_id: 10971>  # String: 'velocity' (Identifier)
+==> 0000002a: <GetById>: <Reg8: 16, Reg8: 15, UInt8: 4, string_id: 7810>  # String: 'visibleLength' (Identifier)
+==> 00000030: <GetById>: <Reg8: 19, Reg8: 15, UInt8: 5, string_id: 16323>  # String: 'zoomScale' (Identifier)
+==> 00000036: <LoadConstUndefined>: <Reg8: 9>
+==> 00000038: <JStrictNotEqual>: <Addr8: 7, Reg8: 19, Reg8: 9>  # Address: 0000003f
+==> 0000003c: <LoadConstUInt8>: <Reg8: 19, UInt8: 1>
+==> 0000003f: <LoadParam>: <Reg8: 17, UInt8: 3>
+==> 00000042: <GetGlobalObject>: <Reg8: 15>
+==> 00000044: <TryGetById>: <Reg8: 21, Reg8: 15, UInt8: 6, string_id: 19>  # String: 'Math' (Identifier)
+==> 0000004a: <GetByIdShort>: <Reg8: 18, Reg8: 21, UInt8: 7, string_id: 128>  # String: 'max' (Identifier)
+==> 0000004f: <Call3>: <Reg8: 23, Reg8: 18, Reg8: 21, Reg8: 5, Reg8: 22>
+==> 00000055: <Add>: <Reg8: 22, Reg8: 23, Reg8: 16>
+==> 00000059: <LoadConstUInt8>: <Reg8: 4, UInt8: 1>
+==> 0000005c: <Sub>: <Reg8: 2, Reg8: 17, Reg8: 4>
+==> 00000060: <Mul>: <Reg8: 1, Reg8: 2, Reg8: 16>
+==> 00000064: <Greater>: <Reg8: 6, Reg8: 13, Reg8: 4>
+==> 00000068: <LoadConstString>: <Reg8: 27, string_id: 2846>  # String: 'after' (String)
+==> 0000006c: <Mov>: <Reg8: 26, Reg8: 27>
+==> 0000006f: <JmpTrue>: <Addr8: 27, Reg8: 6>  # Address: 0000008a
+==> 00000072: <LoadConstInt>: <Reg8: 2, Imm32: -1>
+==> 00000078: <Less>: <Reg8: 6, Reg8: 13, Reg8: 2>
+==> 0000007c: <LoadConstString>: <Reg8: 13, string_id: 6761>  # String: 'none' (Identifier)
+==> 00000080: <JmpFalse>: <Addr8: 7, Reg8: 6>  # Address: 00000087
+==> 00000083: <LoadConstString>: <Reg8: 13, string_id: 1524>  # String: 'before' (String)
+==> 00000087: <Mov>: <Reg8: 26, Reg8: 13>
+==> 0000008a: <LoadParam>: <Reg8: 17, UInt8: 2>
+==> 0000008d: <LoadParam>: <Reg8: 18, UInt8: 5>
+==> 00000090: <TryGetById>: <Reg8: 16, Reg8: 15, UInt8: 6, string_id: 19>  # String: 'Math' (Identifier)
+==> 00000096: <GetByIdShort>: <Reg8: 13, Reg8: 16, UInt8: 7, string_id: 128>  # String: 'max' (Identifier)
+==> 0000009b: <LoadConstDouble>: <Reg8: 2, Double: 0.5>
+==> 000000a5: <MulN>: <Reg8: 2, Reg8: 2, Reg8: 1>
+==> 000000a9: <Sub>: <Reg8: 1, Reg8: 23, Reg8: 2>
+==> 000000ad: <Call3>: <Reg8: 24, Reg8: 13, Reg8: 16, Reg8: 5, Reg8: 1>
+==> 000000b3: <TryGetById>: <Reg8: 21, Reg8: 15, UInt8: 6, string_id: 19>  # String: 'Math' (Identifier)
+==> 000000b9: <GetByIdShort>: <Reg8: 16, Reg8: 21, UInt8: 7, string_id: 128>  # String: 'max' (Identifier)
+==> 000000be: <Add>: <Reg8: 13, Reg8: 22, Reg8: 2>
+==> 000000c2: <Call3>: <Reg8: 21, Reg8: 16, Reg8: 21, Reg8: 5, Reg8: 13>
+==> 000000c8: <GetById>: <Reg8: 13, Reg8: 18, UInt8: 8, string_id: 17122>  # String: 'getCellMetricsApprox' (Identifier)
+==> 000000ce: <Sub>: <Reg8: 2, Reg8: 14, Reg8: 4>
+==> 000000d2: <Call3>: <Reg8: 13, Reg8: 13, Reg8: 18, Reg8: 2, Reg8: 20>
+==> 000000d8: <GetByIdShort>: <Reg8: 13, Reg8: 13, UInt8: 2, string_id: 192>  # String: 'offset' (Identifier)
+==> 000000dd: <Mul>: <Reg8: 13, Reg8: 13, Reg8: 19>
+==> 000000e1: <JLessLong>: <Addr32: 756, Reg8: 13, Reg8: 24>  # Address: 000003d5
+==> 000000e8: <GetParentEnvironment>: <Reg8: 25, UInt8: 0>
+==> 000000eb: <LoadFromEnvironment>: <Reg8: 16, Reg8: 25, UInt8: 1>
+==> 000000ef: <NewArray>: <Reg8: 13, UInt16: 4>
+==> 000000f3: <DefineOwnInDenseArray>: <Reg8: 13, Reg8: 24, UInt8: 0>
+==> 000000f7: <DefineOwnInDenseArray>: <Reg8: 13, Reg8: 23, UInt8: 1>
+==> 000000fb: <DefineOwnInDenseArray>: <Reg8: 13, Reg8: 22, UInt8: 2>
+==> 000000ff: <DefineOwnInDenseArray>: <Reg8: 13, Reg8: 21, UInt8: 3>
+==> 00000103: <LoadConstUndefined>: <Reg8: 36>
+==> 00000105: <Mov>: <Reg8: 35, Reg8: 13>
+==> 00000108: <Mov>: <Reg8: 34, Reg8: 20>
+==> 0000010b: <Mov>: <Reg8: 33, Reg8: 18>
+==> 0000010e: <Mov>: <Reg8: 32, Reg8: 19>
+==> 00000111: <Call>: <Reg8: 13, Reg8: 16, UInt8: 5>
+==> 00000115: <Mov>: <Reg8: 18, Reg8: 13>
+==> 00000118: <IteratorBegin>: <Reg8: 16, Reg8: 18>
+==> 0000011b: <Mov>: <Reg8: 13, Reg8: 18>
+==> 0000011e: <IteratorNext>: <Reg8: 19, Reg8: 16, Reg8: 13>
+==> 00000122: <Mov>: <Reg8: 13, Reg8: 16>
+==> 00000125: <StrictEq>: <Reg8: 6, Reg8: 13, Reg8: 9>
+==> 00000129: <LoadConstUndefined>: <Reg8: 13>
+==> 0000012b: <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 00000131
+==> 0000012e: <Mov>: <Reg8: 13, Reg8: 19>
+==> 00000131: <LoadConstUndefined>: <Reg8: 21>
+==> 00000133: <JmpTrue>: <Addr8: 31, Reg8: 6>  # Address: 00000152
+==> 00000136: <Mov>: <Reg8: 19, Reg8: 18>
+==> 00000139: <IteratorNext>: <Reg8: 19, Reg8: 16, Reg8: 19>
+==> 0000013d: <Mov>: <Reg8: 20, Reg8: 16>
+==> 00000140: <StrictEq>: <Reg8: 8, Reg8: 20, Reg8: 9>
+==> 00000144: <LoadConstUndefined>: <Reg8: 21>
+==> 00000146: <Mov>: <Reg8: 6, Reg8: 8>
+==> 00000149: <JmpTrue>: <Addr8: 9, Reg8: 8>  # Address: 00000152
+==> 0000014c: <Mov>: <Reg8: 21, Reg8: 19>
+==> 0000014f: <Mov>: <Reg8: 6, Reg8: 8>
+==> 00000152: <LoadConstUndefined>: <Reg8: 20>
+==> 00000154: <JmpTrue>: <Addr8: 31, Reg8: 6>  # Address: 00000173
+==> 00000157: <Mov>: <Reg8: 19, Reg8: 18>
+==> 0000015a: <IteratorNext>: <Reg8: 19, Reg8: 16, Reg8: 19>
+==> 0000015e: <Mov>: <Reg8: 22, Reg8: 16>
+==> 00000161: <StrictEq>: <Reg8: 8, Reg8: 22, Reg8: 9>
+==> 00000165: <LoadConstUndefined>: <Reg8: 20>
+==> 00000167: <Mov>: <Reg8: 6, Reg8: 8>
+==> 0000016a: <JmpTrue>: <Addr8: 9, Reg8: 8>  # Address: 00000173
+==> 0000016d: <Mov>: <Reg8: 20, Reg8: 19>
+==> 00000170: <Mov>: <Reg8: 6, Reg8: 8>
+==> 00000173: <LoadConstUndefined>: <Reg8: 23>
+==> 00000175: <JmpTrue>: <Addr8: 28, Reg8: 6>  # Address: 00000191
+==> 00000178: <IteratorNext>: <Reg8: 18, Reg8: 16, Reg8: 18>
+==> 0000017c: <Mov>: <Reg8: 19, Reg8: 16>
+==> 0000017f: <StrictEq>: <Reg8: 8, Reg8: 19, Reg8: 9>
+==> 00000183: <LoadConstUndefined>: <Reg8: 23>
+==> 00000185: <Mov>: <Reg8: 6, Reg8: 8>
+==> 00000188: <JmpTrue>: <Addr8: 9, Reg8: 8>  # Address: 00000191
+==> 0000018b: <Mov>: <Reg8: 23, Reg8: 18>
+==> 0000018e: <Mov>: <Reg8: 6, Reg8: 8>
+==> 00000191: <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 00000197
+==> 00000194: <IteratorClose>: <Reg8: 16, UInt8: 0>
+==> 00000197: <LoadConstNull>: <Reg8: 6>
+==> 00000199: <Eq>: <Reg8: 8, Reg8: 13, Reg8: 6>
+==> 0000019d: <LoadConstZero>: <Reg8: 24>
+==> 0000019f: <JmpTrue>: <Addr8: 6, Reg8: 8>  # Address: 000001a5
+==> 000001a2: <Mov>: <Reg8: 24, Reg8: 13>
+==> 000001a5: <JNotEqual>: <Addr8: 21, Reg8: 21, Reg8: 6>  # Address: 000001ba
+==> 000001a9: <TryGetById>: <Reg8: 16, Reg8: 15, UInt8: 6, string_id: 19>  # String: 'Math' (Identifier)
+==> 000001af: <GetByIdShort>: <Reg8: 13, Reg8: 16, UInt8: 7, string_id: 128>  # String: 'max' (Identifier)
+==> 000001b4: <Call3>: <Reg8: 21, Reg8: 13, Reg8: 16, Reg8: 5, Reg8: 24>
+==> 000001ba: <JNotEqual>: <Addr8: 8, Reg8: 23, Reg8: 6>  # Address: 000001c2
+==> 000001be: <Sub>: <Reg8: 23, Reg8: 14, Reg8: 4>
+==> 000001c2: <JNotEqual>: <Addr8: 29, Reg8: 20, Reg8: 6>  # Address: 000001df
+==> 000001c6: <TryGetById>: <Reg8: 16, Reg8: 15, UInt8: 6, string_id: 19>  # String: 'Math' (Identifier)
+==> 000001cc: <GetByIdShort>: <Reg8: 13, Reg8: 16, UInt8: 9, string_id: 184>  # String: 'min' (Identifier)
+==> 000001d1: <Add>: <Reg8: 18, Reg8: 21, Reg8: 17>
+==> 000001d5: <Sub>: <Reg8: 2, Reg8: 18, Reg8: 4>
+==> 000001d9: <Call3>: <Reg8: 20, Reg8: 13, Reg8: 16, Reg8: 23, Reg8: 2>
+==> 000001df: <LoadParam>: <Reg8: 19, UInt8: 4>
+==> 000001e2: <NewObjectWithBuffer>: <Reg8: 22, UInt16: 1108, UInt16: 17356>  # Object: {'first': null, 'last': null}
+==> 000001e8: <PutOwnBySlotIdx>: <Reg8: 22, Reg8: 21, UInt8: 0>
+==> 000001ec: <PutOwnBySlotIdx>: <Reg8: 22, Reg8: 20, UInt8: 1>
+==> 000001f0: <GetByIdShort>: <Reg8: 16, Reg8: 22, UInt8: 10, string_id: 175>  # String: 'last' (Identifier)
+==> 000001f5: <GetByIdShort>: <Reg8: 13, Reg8: 22, UInt8: 11, string_id: 143>  # String: 'first' (Identifier)
+==> 000001fa: <Sub>: <Reg8: 13, Reg8: 16, Reg8: 13>
+==> 000001fe: <Add>: <Reg8: 2, Reg8: 13, Reg8: 4>
+==> 00000202: <TryGetById>: <Reg8: 16, Reg8: 15, UInt8: 6, string_id: 19>  # String: 'Math' (Identifier)
+==> 00000208: <GetByIdShort>: <Reg8: 13, Reg8: 16, UInt8: 7, string_id: 128>  # String: 'max' (Identifier)
+==> 0000020d: <TryGetById>: <Reg8: 30, Reg8: 15, UInt8: 6, string_id: 19>  # String: 'Math' (Identifier)
+==> 00000213: <GetByIdShort>: <Reg8: 29, Reg8: 30, UInt8: 9, string_id: 184>  # String: 'min' (Identifier)
+==> 00000218: <GetByIdShort>: <Reg8: 28, Reg8: 22, UInt8: 10, string_id: 175>  # String: 'last' (Identifier)
+==> 0000021d: <GetByIdShort>: <Reg8: 18, Reg8: 19, UInt8: 10, string_id: 175>  # String: 'last' (Identifier)
+==> 00000222: <Call3>: <Reg8: 18, Reg8: 29, Reg8: 30, Reg8: 28, Reg8: 18>
+==> 00000228: <Add>: <Reg8: 28, Reg8: 4, Reg8: 18>
+==> 0000022c: <TryGetById>: <Reg8: 31, Reg8: 15, UInt8: 6, string_id: 19>  # String: 'Math' (Identifier)
+==> 00000232: <GetByIdShort>: <Reg8: 30, Reg8: 31, UInt8: 7, string_id: 128>  # String: 'max' (Identifier)
+==> 00000237: <GetByIdShort>: <Reg8: 29, Reg8: 22, UInt8: 11, string_id: 143>  # String: 'first' (Identifier)
+==> 0000023c: <GetByIdShort>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 143>  # String: 'first' (Identifier)
+==> 00000241: <Call3>: <Reg8: 18, Reg8: 30, Reg8: 31, Reg8: 29, Reg8: 18>
+==> 00000247: <Sub>: <Reg8: 1, Reg8: 28, Reg8: 18>
+==> 0000024b: <Call3>: <Reg8: 13, Reg8: 13, Reg8: 16, Reg8: 5, Reg8: 1>
+==> 00000251: <Sub>: <Reg8: 2, Reg8: 2, Reg8: 13>
+==> 00000255: <LoadConstString>: <Reg8: 13, string_id: 1524>  # String: 'before' (String)
+==> 00000259: <Mov>: <Reg8: 3, Reg8: 2>
+==> 0000025c: <Mov>: <Reg8: 16, Reg8: 20>
+==> 0000025f: <Mov>: <Reg8: 18, Reg8: 21>
+==> 00000262: <JNotLessEqual>: <Addr8: 11, Reg8: 18, Reg8: 24>  # Address: 0000026d
+==> 00000266: <JGreaterEqualLong>: <Addr32: 236, Reg8: 16, Reg8: 23>  # Address: 00000352
+==> 0000026d: <GreaterEq>: <Reg8: 11, Reg8: 3, Reg8: 17>
+==> 00000271: <LoadFromEnvironment>: <Reg8: 29, Reg8: 25, UInt8: 0>
+==> 00000275: <GetById>: <Reg8: 28, Reg8: 29, UInt8: 12, string_id: 8126>  # String: 'fixVirtualizeListCollapseWindowSize' (Identifier)
+==> 0000027b: <Call1>: <Reg8: 28, Reg8: 28, Reg8: 29>
+==> 0000027f: <GetByIdShort>: <Reg8: 29, Reg8: 19, UInt8: 11, string_id: 143>  # String: 'first' (Identifier)
+==> 00000284: <LessEq>: <Reg8: 9, Reg8: 18, Reg8: 29>
+==> 00000288: <JmpTrue>: <Addr8: 41, Reg8: 28>  # Address: 000002b1
+==> 0000028b: <Mov>: <Reg8: 8, Reg8: 9>
+==> 0000028e: <JmpTrue>: <Addr8: 12, Reg8: 9>  # Address: 0000029a
+==> 00000291: <GetByIdShort>: <Reg8: 28, Reg8: 19, UInt8: 10, string_id: 175>  # String: 'last' (Identifier)
+==> 00000296: <Greater>: <Reg8: 8, Reg8: 18, Reg8: 28>
+==> 0000029a: <GetByIdShort>: <Reg8: 28, Reg8: 19, UInt8: 10, string_id: 175>  # String: 'last' (Identifier)
+==> 0000029f: <GreaterEq>: <Reg8: 6, Reg8: 16, Reg8: 28>
+==> 000002a3: <JmpTrue>: <Addr8: 12, Reg8: 6>  # Address: 000002af
+==> 000002a6: <GetByIdShort>: <Reg8: 28, Reg8: 19, UInt8: 11, string_id: 143>  # String: 'first' (Identifier)
+==> 000002ab: <Less>: <Reg8: 6, Reg8: 16, Reg8: 28>
+==> 000002af: <Jmp>: <Addr8: 14>  # Address: 000002bd
+==> 000002b1: <GetByIdShort>: <Reg8: 28, Reg8: 19, UInt8: 10, string_id: 175>  # String: 'last' (Identifier)
+==> 000002b6: <GreaterEq>: <Reg8: 6, Reg8: 16, Reg8: 28>
+==> 000002ba: <Mov>: <Reg8: 8, Reg8: 9>
+==> 000002bd: <Greater>: <Reg8: 9, Reg8: 18, Reg8: 24>
+==> 000002c1: <JmpFalse>: <Addr8: 15, Reg8: 9>  # Address: 000002d0
+==> 000002c4: <Not>: <Reg8: 7, Reg8: 11>
+==> 000002c7: <JmpFalse>: <Addr8: 6, Reg8: 11>  # Address: 000002cd
+==> 000002ca: <Not>: <Reg8: 7, Reg8: 8>
+==> 000002cd: <Mov>: <Reg8: 9, Reg8: 7>
+==> 000002d0: <Less>: <Reg8: 7, Reg8: 16, Reg8: 23>
+==> 000002d4: <JmpFalse>: <Addr8: 15, Reg8: 7>  # Address: 000002e3
+==> 000002d7: <Not>: <Reg8: 10, Reg8: 11>
+==> 000002da: <JmpFalse>: <Addr8: 6, Reg8: 11>  # Address: 000002e0
+==> 000002dd: <Not>: <Reg8: 10, Reg8: 6>
+==> 000002e0: <Mov>: <Reg8: 7, Reg8: 10>
+==> 000002e3: <JmpFalse>: <Addr8: 9, Reg8: 11>  # Address: 000002ec
+==> 000002e6: <JmpTrue>: <Addr8: 6, Reg8: 9>  # Address: 000002ec
+==> 000002e9: <JmpFalse>: <Addr8: 105, Reg8: 7>  # Address: 00000352
+==> 000002ec: <Mov>: <Reg8: 0, Reg8: 3>
+==> 000002ef: <Mov>: <Reg8: 28, Reg8: 18>
+==> 000002f2: <JmpFalse>: <Addr8: 35, Reg8: 9>  # Address: 00000315
+==> 000002f5: <JStrictNotEqual>: <Addr8: 16, Reg8: 26, Reg8: 27>  # Address: 00000305
+==> 000002f9: <JmpFalse>: <Addr8: 12, Reg8: 7>  # Address: 00000305
+==> 000002fc: <Mov>: <Reg8: 0, Reg8: 3>
+==> 000002ff: <Mov>: <Reg8: 28, Reg8: 18>
+==> 00000302: <JmpTrue>: <Addr8: 19, Reg8: 6>  # Address: 00000315
+==> 00000305: <Mov>: <Reg8: 1, Reg8: 3>
+==> 00000308: <JmpFalse>: <Addr8: 7, Reg8: 8>  # Address: 0000030f
+==> 0000030b: <AddN>: <Reg8: 1, Reg8: 3, Reg8: 4>
+==> 0000030f: <Dec>: <Reg8: 28, Reg8: 18>
+==> 00000312: <Mov>: <Reg8: 0, Reg8: 1>
+==> 00000315: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000318: <Mov>: <Reg8: 20, Reg8: 16>
+==> 0000031b: <Mov>: <Reg8: 21, Reg8: 28>
+==> 0000031e: <JmpFalseLong>: <Addr32: -197, Reg8: 7>  # Address: 00000259
+==> 00000324: <JStrictNotEqual>: <Addr8: 22, Reg8: 26, Reg8: 13>  # Address: 0000033a
+==> 00000328: <JmpFalse>: <Addr8: 18, Reg8: 9>  # Address: 0000033a
+==> 0000032b: <Mov>: <Reg8: 2, Reg8: 0>
+==> 0000032e: <Mov>: <Reg8: 20, Reg8: 16>
+==> 00000331: <Mov>: <Reg8: 21, Reg8: 28>
+==> 00000334: <JmpTrueLong>: <Addr32: -219, Reg8: 8>  # Address: 00000259
+==> 0000033a: <Mov>: <Reg8: 1, Reg8: 0>
+==> 0000033d: <JmpFalse>: <Addr8: 7, Reg8: 6>  # Address: 00000344
+==> 00000340: <AddN>: <Reg8: 1, Reg8: 0, Reg8: 4>
+==> 00000344: <Inc>: <Reg8: 20, Reg8: 16>
+==> 00000347: <Mov>: <Reg8: 2, Reg8: 1>
+==> 0000034a: <Mov>: <Reg8: 21, Reg8: 28>
+==> 0000034d: <JmpLong>: <Addr32: -244>  # Address: 00000259
+==> 00000352: <JNotGreaterEqual>: <Addr8: 38, Reg8: 16, Reg8: 18>  # Address: 00000378
+==> 00000356: <JNotGreaterEqual>: <Addr8: 34, Reg8: 18, Reg8: 5>  # Address: 00000378
+==> 0000035a: <JNotLess>: <Addr8: 30, Reg8: 16, Reg8: 14>  # Address: 00000378
+==> 0000035e: <JNotGreaterEqual>: <Addr8: 26, Reg8: 18, Reg8: 24>  # Address: 00000378
+==> 00000362: <JNotLessEqual>: <Addr8: 22, Reg8: 16, Reg8: 23>  # Address: 00000378
+==> 00000366: <GetByIdShort>: <Reg8: 13, Reg8: 22, UInt8: 11, string_id: 143>  # String: 'first' (Identifier)
+==> 0000036b: <JNotLessEqual>: <Addr8: 13, Reg8: 18, Reg8: 13>  # Address: 00000378
+==> 0000036f: <GetByIdShort>: <Reg8: 13, Reg8: 22, UInt8: 10, string_id: 175>  # String: 'last' (Identifier)
+==> 00000374: <JGreaterEqual>: <Addr8: 81, Reg8: 16, Reg8: 13>  # Address: 000003c5
+==> 00000378: <TryGetById>: <Reg8: 20, Reg8: 15, UInt8: 13, string_id: 9>  # String: 'Error' (Identifier)
+==> 0000037e: <TryGetById>: <Reg8: 21, Reg8: 15, UInt8: 14, string_id: 17>  # String: 'JSON' (Identifier)
+==> 00000384: <GetByIdShort>: <Reg8: 19, Reg8: 21, UInt8: 15, string_id: 234>  # String: 'stringify' (Identifier)
+==> 00000389: <NewObjectWithBuffer>: <Reg8: 13, UInt16: 1109, UInt16: 17985>  # Object: {'first': null, 'last': null, 'itemCount': null, 'overscanFirst': null, 'overscanLast': null, 'visible': null}
+==> 0000038f: <PutOwnBySlotIdx>: <Reg8: 13, Reg8: 18, UInt8: 0>
+==> 00000393: <PutOwnBySlotIdx>: <Reg8: 13, Reg8: 16, UInt8: 1>
+==> 00000397: <PutOwnBySlotIdx>: <Reg8: 13, Reg8: 14, UInt8: 2>
+==> 0000039b: <PutOwnBySlotIdx>: <Reg8: 13, Reg8: 24, UInt8: 3>
+==> 0000039f: <PutOwnBySlotIdx>: <Reg8: 13, Reg8: 23, UInt8: 4>
+==> 000003a3: <PutOwnBySlotIdx>: <Reg8: 13, Reg8: 22, UInt8: 5>
+==> 000003a7: <Call2>: <Reg8: 19, Reg8: 19, Reg8: 21, Reg8: 13>
+==> 000003ac: <LoadConstString>: <Reg8: 13, string_id: 1250>  # String: 'Bad window calculation ' (String)
+==> 000003b0: <Add>: <Reg8: 35, Reg8: 13, Reg8: 19>
+==> 000003b4: <CreateThisForNew>: <Reg8: 19, Reg8: 20, UInt8: 16>
+==> 000003b8: <Mov>: <Reg8: 36, Reg8: 19>
+==> 000003bb: <Construct>: <Reg8: 13, Reg8: 20, UInt8: 2>
+==> 000003bf: <SelectObject>: <Reg8: 13, Reg8: 19, Reg8: 13>
+==> 000003c3: <Throw>: <Reg8: 13>
+==> 000003c5: <NewObjectWithBuffer>: <Reg8: 13, UInt16: 1108, UInt16: 17356>  # Object: {'first': null, 'last': null}
+==> 000003cb: <PutOwnBySlotIdx>: <Reg8: 13, Reg8: 18, UInt8: 0>
+==> 000003cf: <PutOwnBySlotIdx>: <Reg8: 13, Reg8: 16, UInt8: 1>
+==> 000003d3: <Ret>: <Reg8: 13>
+==> 000003d5: <NewObjectWithBuffer>: <Reg8: 13, UInt16: 1108, UInt16: 17356>  # Object: {'first': null, 'last': null}
+==> 000003db: <TryGetById>: <Reg8: 16, Reg8: 15, UInt8: 6, string_id: 19>  # String: 'Math' (Identifier)
+==> 000003e1: <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 7, string_id: 128>  # String: 'max' (Identifier)
+==> 000003e6: <Sub>: <Reg8: 2, Reg8: 14, Reg8: 4>
+==> 000003ea: <Sub>: <Reg8: 2, Reg8: 2, Reg8: 17>
+==> 000003ee: <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 5, Reg8: 2>
+==> 000003f4: <PutOwnBySlotIdx>: <Reg8: 13, Reg8: 15, UInt8: 0>
+==> 000003f8: <Sub>: <Reg8: 4, Reg8: 14, Reg8: 4>
+==> 000003fc: <PutOwnBySlotIdx>: <Reg8: 13, Reg8: 4, UInt8: 1>
+==> 00000400: <Ret>: <Reg8: 13>
+==> 00000402: <NewObjectWithBuffer>: <Reg8: 13, UInt16: 1108, UInt16: 46849>  # Object: {'first': 0, 'last': 4294967295}
+==> 00000408: <Ret>: <Reg8: 13>
+
+
