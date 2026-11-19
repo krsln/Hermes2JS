@@ -490,6 +490,17 @@ class HermesAnalysis:
                 # a wrong tree says nothing: keep the retry that loses no path.
                 chosen = min(whole, key=lambda r: sum("goto label_" in line for line in r[0]))
 
+            if chosen is first and not first_lost and self._has_goto(first[0]) and whole:
+                # No retry is `goto`-free: the one with the fewest `goto`s still beats the first attempt when it
+                # has fewer (98/2474: the copies of the shared `return ""` of levels 1+ remove `label_899`).
+                def gotos(result) -> int:
+                    return sum("goto label_" in line for line in result[0])
+
+                best = min(whole, key=gotos)
+
+                if gotos(best) < gotos(first):
+                    chosen = best
+
         lines, reason, _, _, records = chosen  # (lines, reason, failed, ok, records)
         # Only the attempt that is used speaks: the other one's warnings
         # (unstructured blocks, ...) describe output nobody sees.

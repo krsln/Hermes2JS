@@ -9,6 +9,7 @@ block holds only copies (`r8 = r12` ahead of `if (!(0 <= r8)) break;`) shadowed 
 test then guarded the copy alone and the break ran on its own, outside it.
 """
 
+import re
 from pathlib import Path
 
 from hermes_decompiler.Decompiler import Decompiler
@@ -32,5 +33,5 @@ def test_the_or_of_the_two_length_tests_is_one_condition():
 def test_the_first_test_of_the_loop_guards_the_whole_body():
     out = _render()
 
-    assert "if (1 <= r8) {\n                                        r8 = r12;\n                                    }\n" not in out
-    assert "if (1 <= r8) {\n                                        r8 = r12;\n                                        if (!(0 <= r8)) {" in out
+    assert not re.search(r"if \(1 <= r8\) \{\s*r8 = r12;\s*\}", out)
+    assert re.search(r"if \(1 <= r8\) \{\s*r8 = r12;\s*if \(!\(0 <= r8\)\) \{\s*break;", out)
