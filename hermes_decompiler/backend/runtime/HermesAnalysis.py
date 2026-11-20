@@ -9,7 +9,7 @@ from hermes_decompiler.backend.transforms.shared import may_alias, read_members,
 from hermes_decompiler.backend.transforms.cfg_passes import (
     ArrayDestructuringCfgPass, EnvArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass,
     ConstantEdgeThreadingCfgPass, DecidedTestThreadingCfgPass, SharedReturnDuplicationCfgPass,
-    SharedTailDuplicationCfgPass,
+    TerminalTailRegionCopyCfgPass, SharedTailDuplicationCfgPass,
     TestConstantSinkCfgPass, FallThroughLayoutCfgPass,
     generator_dispatch,
 )
@@ -452,6 +452,10 @@ class HermesAnalysis:
     # wanted with it (the fold needs the layout the threading gives).
     _THREADING_RUNG = 12
 
+    # And one more: rung 10's copies plus a copy of a shared tail that only returns, throws or continues, for the jumpers
+    # that reach it (98/2330, 96/7888). Last for the same reason: it only touches what nothing else structured.
+    _TAIL_COPY_RUNG = 13
+
     def generate_js(
             self,
             verbose: bool = False,
@@ -478,7 +482,8 @@ class HermesAnalysis:
             # retries; there a retry only wins when it is `goto`-free and loses fewer paths.
             whole = []
 
-            for level in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, self._FOLD_GUARDS_RUNG, self._THREADING_RUNG):
+            for level in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, self._FOLD_GUARDS_RUNG, self._THREADING_RUNG,
+                          self._TAIL_COPY_RUNG):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if not retry[3]:
                     continue
@@ -664,6 +669,9 @@ class HermesAnalysis:
             ).run()
             if duplicate_returns == self._THREADING_RUNG:
                 ConstantEdgeThreadingCfgPass(cfg).run()
+
+            if duplicate_returns == self._TAIL_COPY_RUNG:
+                TerminalTailRegionCopyCfgPass(cfg).run()
 
             SharedTailDuplicationCfgPass(
                 cfg, regions=duplicate_returns >= 3, per_predecessor=duplicate_returns >= 5,

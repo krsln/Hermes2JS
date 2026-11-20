@@ -3,6 +3,7 @@
 from . import _generator_dispatch as generator_dispatch
 from .ArrayDestructuringCfgPass import ArrayDestructuringCfgPass
 from .ConstantEdgeThreadingCfgPass import ConstantEdgeThreadingCfgPass
+from .TerminalTailRegionCopyCfgPass import TerminalTailRegionCopyCfgPass
 from .DecidedTestThreadingCfgPass import DecidedTestThreadingCfgPass
 from .EnvArrayDestructuringCfgPass import EnvArrayDestructuringCfgPass
 from .GeneratorStateDispatchCfgPass import GeneratorStateDispatchCfgPass
@@ -15,6 +16,7 @@ from .ValueConditionFoldCfgPass import ValueConditionFoldCfgPass
 
 __all__ = [
     "ConstantEdgeThreadingCfgPass",
+    "TerminalTailRegionCopyCfgPass",
     "DecidedTestThreadingCfgPass",
     "ArrayDestructuringCfgPass",
     "EnvArrayDestructuringCfgPass",
