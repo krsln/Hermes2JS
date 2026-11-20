@@ -1,0 +1,107 @@
+
+=> [Function #3508 "toQueryPair" of 446 bytes]: 2 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x0018c96d
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 4, UInt8: 1>
+==> 00000003: <GetGlobalObject>: <Reg8: 6>
+==> 00000005: <TryGetById>: <Reg8: 7, Reg8: 6, UInt8: 0, string_id: 3>  # String: 'Array' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 5, Reg8: 7, UInt8: 1, string_id: 2>  # String: 'isArray' (Identifier)
+==> 00000010: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 7, Reg8: 4>
+==> 00000015: <JmpTrueLong>: <Addr32: 315, Reg8: 5>  # Address: 00000150
+==> 0000001b: <LoadConstNull>: <Reg8: 2>
+==> 0000001d: <Neq>: <Reg8: 3, Reg8: 2, Reg8: 4>
+==> 00000021: <LoadConstUndefined>: <Reg8: 1>
+==> 00000023: <LoadConstUndefined>: <Reg8: 8>
+==> 00000025: <JmpFalse>: <Addr8: 76, Reg8: 3>  # Address: 00000071
+==> 00000028: <LoadConstUndefined>: <Reg8: 8>
+==> 0000002a: <JmpTypeOfIs>: <Addr32: 71, Reg8: 4, UInt16: 253>  # Address: 00000071
+==> 00000032: <TryGetById>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 35>  # String: 'Symbol' (Identifier)
+==> 00000038: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 8628>  # String: 'iterator' (Identifier)
+==> 0000003e: <GetByVal>: <Reg8: 5, Reg8: 4, Reg8: 5>
+==> 00000042: <LoadConstUndefined>: <Reg8: 8>
+==> 00000044: <JmpTypeOfIs>: <Addr32: 45, Reg8: 5, UInt16: 383>  # Address: 00000071
+==> 0000004c: <TryGetById>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 35>  # String: 'Symbol' (Identifier)
+==> 00000052: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 8628>  # String: 'iterator' (Identifier)
+==> 00000058: <GetByVal>: <Reg8: 5, Reg8: 4, Reg8: 5>
+==> 0000005c: <Call1>: <Reg8: 5, Reg8: 5, Reg8: 4>
+==> 00000060: <JmpFalseLong>: <Addr32: 213, Reg8: 5>  # Address: 00000135
+==> 00000066: <Mov>: <Reg8: 8, Reg8: 5>
+==> 00000069: <JmpTypeOfIs>: <Addr32: 204, Reg8: 8, UInt16: 253>  # Address: 00000135
+==> 00000071: <JEqualLong>: <Addr32: 235, Reg8: 2, Reg8: 8>  # Address: 0000015c
+==> 00000078: <GetByIdShort>: <Reg8: 5, Reg8: 8, UInt8: 4, string_id: 62>  # String: 'next' (Identifier)
+==> 0000007d: <Call1>: <Reg8: 5, Reg8: 5, Reg8: 8>
+==> 00000081: <JmpTypeOfIs>: <Addr32: 153, Reg8: 5, UInt16: 253>  # Address: 0000011a
+==> 00000089: <JEqualLong>: <Addr32: 145, Reg8: 2, Reg8: 5>  # Address: 0000011a
+==> 00000090: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 4, string_id: 62>  # String: 'next' (Identifier)
+==> 00000095: <Call1>: <Reg8: 7, Reg8: 7, Reg8: 8>
+==> 00000099: <JmpTypeOfIs>: <Addr32: 102, Reg8: 7, UInt16: 253>  # Address: 000000ff
+==> 000000a1: <JEqual>: <Addr8: 94, Reg8: 2, Reg8: 7>  # Address: 000000ff
+==> 000000a5: <GetByIdShort>: <Reg8: 8, Reg8: 5, UInt8: 5, string_id: 124>  # String: 'done' (Identifier)
+==> 000000aa: <JmpTrueLong>: <Addr32: 178, Reg8: 8>  # Address: 0000015c
+==> 000000b0: <GetByIdShort>: <Reg8: 8, Reg8: 7, UInt8: 5, string_id: 124>  # String: 'done' (Identifier)
+==> 000000b5: <JmpTrueLong>: <Addr32: 167, Reg8: 8>  # Address: 0000015c
+==> 000000bb: <GetByIdShort>: <Reg8: 9, Reg8: 5, UInt8: 6, string_id: 211>  # String: 'value' (Identifier)
+==> 000000c0: <Mov>: <Reg8: 8, Reg8: 9>
+==> 000000c3: <JmpTypeOfIs>: <Addr32: 19, Reg8: 8, UInt16: 4>  # Address: 000000d6
+==> 000000cb: <TryGetById>: <Reg8: 5, Reg8: 6, UInt8: 7, string_id: 33>  # String: 'String' (Identifier)
+==> 000000d1: <Call2>: <Reg8: 8, Reg8: 5, Reg8: 1, Reg8: 9>
+==> 000000d6: <NewArray>: <Reg8: 5, UInt16: 2>
+==> 000000da: <DefineOwnInDenseArray>: <Reg8: 5, Reg8: 8, UInt8: 0>
+==> 000000de: <GetByIdShort>: <Reg8: 9, Reg8: 7, UInt8: 6, string_id: 211>  # String: 'value' (Identifier)
+==> 000000e3: <Mov>: <Reg8: 7, Reg8: 9>
+==> 000000e6: <JmpTypeOfIs>: <Addr32: 19, Reg8: 7, UInt16: 4>  # Address: 000000f9
+==> 000000ee: <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 7, string_id: 33>  # String: 'String' (Identifier)
+==> 000000f4: <Call2>: <Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 9>
+==> 000000f9: <DefineOwnInDenseArray>: <Reg8: 5, Reg8: 7, UInt8: 1>
+==> 000000fd: <Ret>: <Reg8: 5>
+==> 000000ff: <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 8, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 00000105: <CreateThisForNew>: <Reg8: 7, Reg8: 8, UInt8: 9>
+==> 00000109: <LoadConstString>: <Reg8: 10, string_id: 4200>  # String: 'The provided value is not an object' (String)
+==> 0000010d: <Mov>: <Reg8: 11, Reg8: 7>
+==> 00000110: <Construct>: <Reg8: 5, Reg8: 8, UInt8: 2>
+==> 00000114: <SelectObject>: <Reg8: 5, Reg8: 7, Reg8: 5>
+==> 00000118: <Throw>: <Reg8: 5>
+==> 0000011a: <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 8, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 00000120: <CreateThisForNew>: <Reg8: 7, Reg8: 8, UInt8: 9>
+==> 00000124: <LoadConstString>: <Reg8: 10, string_id: 4200>  # String: 'The provided value is not an object' (String)
+==> 00000128: <Mov>: <Reg8: 11, Reg8: 7>
+==> 0000012b: <Construct>: <Reg8: 5, Reg8: 8, UInt8: 2>
+==> 0000012f: <SelectObject>: <Reg8: 5, Reg8: 7, Reg8: 5>
+==> 00000133: <Throw>: <Reg8: 5>
+==> 00000135: <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 8, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 0000013b: <CreateThisForNew>: <Reg8: 7, Reg8: 8, UInt8: 9>
+==> 0000013f: <LoadConstString>: <Reg8: 10, string_id: 590>  # String: 'Result of the Symbol.iterator method is not an object' (String)
+==> 00000143: <Mov>: <Reg8: 11, Reg8: 7>
+==> 00000146: <Construct>: <Reg8: 5, Reg8: 8, UInt8: 2>
+==> 0000014a: <SelectObject>: <Reg8: 5, Reg8: 7, Reg8: 5>
+==> 0000014e: <Throw>: <Reg8: 5>
+==> 00000150: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 10, string_id: 177>  # String: 'length' (Identifier)
+==> 00000155: <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
+==> 00000158: <JStrictEqual>: <Addr8: 31, Reg8: 0, Reg8: 5>  # Address: 00000177
+==> 0000015c: <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 8, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 00000162: <CreateThisForNew>: <Reg8: 7, Reg8: 8, UInt8: 9>
+==> 00000166: <LoadConstString>: <Reg8: 10, string_id: 2985>  # String: 'Each query pair must be an iterable [name, value] tuple' (String)
+==> 0000016a: <Mov>: <Reg8: 11, Reg8: 7>
+==> 0000016d: <Construct>: <Reg8: 5, Reg8: 8, UInt8: 2>
+==> 00000171: <SelectObject>: <Reg8: 5, Reg8: 7, Reg8: 5>
+==> 00000175: <Throw>: <Reg8: 5>
+==> 00000177: <GetByIndex>: <Reg8: 8, Reg8: 4, UInt8: 0>
+==> 0000017b: <Mov>: <Reg8: 5, Reg8: 8>
+==> 0000017e: <JmpTypeOfIs>: <Addr32: 21, Reg8: 5, UInt16: 4>  # Address: 00000193
+==> 00000186: <TryGetById>: <Reg8: 7, Reg8: 6, UInt8: 7, string_id: 33>  # String: 'String' (Identifier)
+==> 0000018c: <LoadConstUndefined>: <Reg8: 1>
+==> 0000018e: <Call2>: <Reg8: 5, Reg8: 7, Reg8: 1, Reg8: 8>
+==> 00000193: <LoadConstZero>: <Reg8: 0>
+==> 00000195: <PutByValStrict>: <Reg8: 4, Reg8: 0, Reg8: 5>
+==> 00000199: <GetByIndex>: <Reg8: 7, Reg8: 4, UInt8: 1>
+==> 0000019d: <Mov>: <Reg8: 5, Reg8: 7>
+==> 000001a0: <JmpTypeOfIs>: <Addr32: 21, Reg8: 5, UInt16: 4>  # Address: 000001b5
+==> 000001a8: <TryGetById>: <Reg8: 6, Reg8: 6, UInt8: 7, string_id: 33>  # String: 'String' (Identifier)
+==> 000001ae: <LoadConstUndefined>: <Reg8: 1>
+==> 000001b0: <Call2>: <Reg8: 5, Reg8: 6, Reg8: 1, Reg8: 7>
+==> 000001b5: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 000001b8: <PutByValStrict>: <Reg8: 4, Reg8: 0, Reg8: 5>
+==> 000001bc: <Ret>: <Reg8: 4>
+
+

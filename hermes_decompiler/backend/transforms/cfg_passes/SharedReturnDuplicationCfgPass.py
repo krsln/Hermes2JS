@@ -100,7 +100,7 @@ class SharedReturnDuplicationCfgPass:
                 # `return true`): the last jumper keeps the original.
                 if len(jumpers) < 2:
                     continue
-                jumpers = jumpers[:-1]
+                jumpers = jumpers[1:]
 
             for pred in jumpers:
                 self._give_private_copy(pred, block)
