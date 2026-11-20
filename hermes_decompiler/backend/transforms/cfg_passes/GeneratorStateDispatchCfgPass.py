@@ -32,10 +32,10 @@ knows how to handle.
 
 from __future__ import annotations
 
-import copy
 import dataclasses
 import re
 
+from hermes_decompiler.backend.transforms.cfg_passes._instruction_clone import clone_instruction
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.cfg_passes._generator_dispatch import (
     GeneratorDispatch, SuspendSite, _operands, _STORE_ENV_HANDLERS, _LOAD_ENV_HANDLERS, _LOAD_CONST_HANDLERS,
@@ -653,12 +653,7 @@ class GeneratorStateDispatchCfgPass:
                 terminator = dataclasses.replace(terminator, target=mapping.get(terminator.target, terminator.target))
 
             for instruction in original.instructions:
-                duplicate = copy.copy(instruction)
-                duplicate.value = copy.deepcopy(instruction.value)
-                duplicate.statement = copy.deepcopy(instruction.statement)
-                if instruction.terminator is not None:
-                    duplicate.terminator = terminator
-                clone.instructions.append(duplicate)
+                clone.instructions.append(clone_instruction(instruction, terminator=terminator))
 
             clone.terminator = terminator
             clone.successors = [clones.get(s, s) for s in original.successors]

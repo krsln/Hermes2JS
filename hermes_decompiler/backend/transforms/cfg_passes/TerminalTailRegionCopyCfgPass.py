@@ -17,6 +17,7 @@ from __future__ import annotations
 import copy
 import dataclasses
 
+from hermes_decompiler.backend.transforms.cfg_passes._instruction_clone import clone_instruction
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.ir.terminators import (
     TerminatorConditionalBranch,
@@ -159,14 +160,7 @@ class TerminalTailRegionCopyCfgPass:
             clone = BasicBlock(next_id + offset, next_address + offset)
 
             for instruction in block.instructions:
-                duplicate = copy.copy(instruction)
-                duplicate.value = copy.deepcopy(instruction.value)
-                duplicate.statement = copy.deepcopy(instruction.statement)
-
-                if instruction.terminator is not None:
-                    duplicate.terminator = copy.copy(instruction.terminator)
-
-                clone.instructions.append(duplicate)
+                clone.instructions.append(clone_instruction(instruction))
 
             if block.terminator is not None and block.instructions and (
                     block.instructions[-1].terminator is block.terminator

@@ -26,6 +26,7 @@ import dataclasses
 import re
 from collections import deque
 
+from hermes_decompiler.backend.transforms.cfg_passes._instruction_clone import clone_instruction
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.shared._absorb import substitute_register
 from hermes_decompiler.backend.transforms.shared._purity import TRIVIAL_NODE_TYPES
@@ -345,15 +346,7 @@ class SharedReturnDuplicationCfgPass:
 
         clone = BasicBlock(new_id, new_address)
         for instruction in block.instructions:
-            duplicate = copy.copy(instruction)
-            # Passes tell writers apart by the identity of the value they
-            # hold: a copy sharing the node is folded together with the
-            # original (96/12456: `r1 = []` vanished from the copy).
-            duplicate.value = copy.deepcopy(instruction.value)
-            duplicate.statement = copy.deepcopy(instruction.statement)
-            if instruction.terminator is not None:
-                duplicate.terminator = copy.copy(instruction.terminator)
-            clone.instructions.append(duplicate)
+            clone.instructions.append(clone_instruction(instruction))
         clone.terminator = clone.instructions[-1].terminator
 
         if self.cfg.exception_handlers:

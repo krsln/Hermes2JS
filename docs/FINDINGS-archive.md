@@ -487,3 +487,123 @@ Recorded during the round. `pathdefs` came from a survey tool that is not in the
 - **F-289 `(f1(x) && a(x) > 0) || (f2(x) && b(x) > 0) || h(x) > 0` as a condition kept `r0 = true; if (c) goto J;` (96/155 `Pe`, ReadableByteStreamControllerShouldCallPull inlined; F-271's first function; the table's 96 count 49 -> 48).** The bytecode loads `true` into the join's register before each `&&` link's jump, and `J` is a lone `if (!r0)` that the last link also reaches with `r0 = h(x) > 0`. New `ConstantEdgeThreadingCfgPass`: an edge whose block ends `r0 = <literal>; if (c) goto J` with `J` a lone test of `r0` (other entries too) jumps straight to the side `J` decides, when `r0` is dead on that side and on the fall-through, and the load is dropped; a join left with only its fall-through block is fused into it (so the last link's setup and its test are one block again). The existing `ShortCircuitConditionCfgPass` then folds the three links, calls inlined in evaluation order (it already accepts ONE effect per setup block). It runs on its own last rung (`_THREADING_RUNG = 12`: rung 10's layout plus the pass, no guard fold): at rungs 6-10 it restyled 98/11353 and others and at rung 11 the guard fold changes the layout the fold needs; as the last rung it only touches functions every earlier rung left with a `goto`. One side effect: 98/2619 `beginWork` (already invalid) went from 6 `goto`s to 5 (fewest-gotos selection) with an unassigned read the compare flags as worse. Test: `tests/test_or_of_call_result_and_links_with_constants_on_the_jump_edges.py` (`call_result_and_chain_with_constant_edges_96_155.hasm`; fails without the pass). 98/9594 stays open (F-271).
 
 - **F-291 (was F-201) `if (X) { A; if (c) goto T } REST; T: ...` with a tail `T` that never runs on kept `if (c) goto label_N;` (98/2330 `accumulateDifferences`, 96/7888 `anonymous`; the table's counts 96: 48 -> 47, 98: 42 -> 41; exactly these two files changed).** `T` is reached by the jump of the `X` test and by falling out of the `c` test (which jumps over it to `TAIL`), and it only returns, throws or continues the loop: neither arm of `X` owns it, so the structurers kept one way in as a `goto` (earlier tries, all reverted: a copy for the faller, moving `T` behind `END`, `relocate_terminal_tails`, teaching `_DominanceIfBuilder` about `continue`; none altered a file). The fix is on the CFG, not in the structurer: new `TerminalTailRegionCopyCfgPass` gives the JUMPERS their own copy of the whole closed region (up to 24 blocks / 150 instructions, loops inside it allowed, every exit a return, a throw or a back edge to the loop head the tail sits in, no way in but onto the first block) laid out behind the last block; the test that falls into `T` keeps the original. Both arms of `X` then structure as plain `if`/`else` (the tail's text appears once per arm, as with the return copies). Last rung (`_TAIL_COPY_RUNG = 13`, rung 10's copies, no threading): rung 12 (F-289) is a different fix and its CFG is not what this one needs (together they undid 96/155). Test: `tests/test_shared_tail_that_only_returns_gets_a_copy_for_the_jumpers.py` (`terminal_tail_shared_with_a_guard_in_loop_98_2330.hasm`, `terminal_tail_shared_with_a_guard_96_7888.hasm`; both fail without the pass).
+
+## Appendix: measurement rows 2026-10-17 to 2026-11-09
+
+Moved from the table in `FINDINGS.md` (same columns; the baseline row `2026-10-16` stays there).
+
+| Date | Change | goto 96 | goto 98 | pathdefs 96 | pathdefs 98 | Tests |
+|------|--------|---------|---------|-------------|-------------|-------|
+| 2026-10-24 | after F-136 | 299 | 336 | 463 | 681 | 1019 passed |
+| 2026-10-25 | after F-138 (join guard), F-144, F-141, F-33, F-32 | 299 | 335 | 462 | 681 | 1031 passed |
+| 2026-10-25 | after F-31 (dead copies, part) | 299 | 335 | 462 | 682 | 1034 passed |
+| 2026-10-25 | after F-146 (`new` identity) | 298 | 335 | 459 | 682 | 1037 passed |
+| 2026-10-25 | after F-147 (`new` read twice) | 298 | 335 | 459 | 682 | 1038 passed |
+| 2026-10-25 | after F-137 (folded `undefined` at a join) | 298 | 335 | 459 | 682 | 1039 passed |
+| 2026-10-26 | after F-149 (loop latch with a terminal exit) | 298 | 334 | 460 | 683 | 1042 passed |
+| 2026-10-26 | after F-140 (stale folded ternary in a test) | 298 | 334 | 459 | 683 | 1043 passed |
+| 2026-10-26 | after F-140 (copy read on a path the write cannot reach) | 298 | 334 | 459 | 683 | 1044 passed |
+| 2026-10-26 | after F-150 (merge repair and the other arm) | 298 | 334 | 457 | 683 | 1045 passed |
+| 2026-10-26 | after F-151 (BooleanChain and the other arm) | 298 | 334 | 457 | 683 | 1045 passed |
+| 2026-10-27 | after F-143 (dominator tree cached), 98 now WITH 98/2619 | 298 | 335 | 457 | 684 | 1046 passed |
+| 2026-10-27 | after F-152 (case chain: same value only) | 298 | 335 | 456 | 684 | 1047 passed |
+| 2026-10-28 | after F-154 (retries for a tree that lost a path; closes F-148) | 298 | 335 | 457 | 684 | 1049 passed |
+| 2026-10-28 | after F-153 part (level 5: a copy of a shared tail per way in) | 298 | 335 | 457 | 684 | 1050 passed |
+| 2026-10-28 | after F-10(a) (shared return of different constants) | 297 | 335 | 457 | 684 | 1050 passed |
+| 2026-10-28 | after F-155 (an arm that runs into the branch target, in a retry) | 287 | 326 | 456 | 683 | 1052 passed |
+| 2026-10-28 | after F-156 (try `return` beside a catch jump) | 287 | 326 | 456 | 683 | 1053 passed |
+| 2026-10-29 | after F-157 (arm runs into the target, first attempt) | 284 | 325 | n/a | n/a | 1054 passed |
+| 2026-10-29 | after F-158 (a `jmp` to a shared return takes the return along) | 278 | 317 | n/a | n/a | 1055 passed |
+| 2026-10-29 | after F-159 (arm's last test jumps onto the tail, falls into a return) | 274 | 315 | n/a | n/a | 1056 passed |
+| 2026-10-29 | after F-161 (merged test no longer a predecessor of a return copy) | 273 | 314 | n/a | n/a | 1057 passed |
+| 2026-10-29 | after F-162 (own-value return copies, level 5) | 268 | 303 | n/a | n/a | 1059 passed |
+| 2026-10-29 | after F-163 (an `if` arm's jump to the join is dropped) | 249 | 269 | n/a | n/a | 1060 passed |
+| 2026-10-29 | after F-164 (try exit jump to an emptied finally copy; closes F-11) | 248 | 268 | n/a | n/a | 1061 passed |
+| 2026-10-29 | after F-165 (try exit jump to an `if` join / out of an `if` arm) | 244 | 265 | n/a | n/a | 1062 passed |
+| 2026-10-29 | after F-166 (`for-of` whose try covers only the body; break out of a top-tested loop) | 242 | 263 | n/a | n/a | 1064 passed |
+| 2026-10-29 | after F-167 (iterator close copies inside a recognized `for-of`) | 242 | 263 | n/a | n/a | 1066 passed |
+| 2026-10-30 | after F-168 (exits in the gaps of a merged try range) | 240 | 259 | n/a | n/a | 1068 passed |
+| 2026-10-30 | after F-169 (short-circuit folds inside loop bodies) | 232 | 244 | n/a | n/a | 1071 passed |
+| 2026-10-30 | after F-170 (arm with one private `return`, test past its first block) | 228 | 240 | n/a | n/a | 1074 passed |
+| 2026-10-30 | after F-171 (a lossless retry with a `goto` beats a first attempt that loses a path) | 229 | 242 | n/a | n/a | 1076 passed |
+| 2026-10-30 | after F-172 (a bottom-tested loop's header branch is an ordinary in-body test) | 217 | 231 | n/a | n/a | 1078 passed |
+| 2026-10-31 | after F-173 (a repoint that doubles a pure chain head keeps one) | 217 | 231 | n/a | n/a | 1080 passed |
+| 2026-10-31 | after F-174 (a shared `throw` of up to 16 instructions is copied per jumper) | 215 | 230 | n/a | n/a | 1082 passed |
+| 2026-10-31 | after F-175 (a parameter's register rewritten in a loop keeps its name) | 215 | 230 | n/a | n/a | 1083 passed |
+| 2026-10-31 | after F-176 (a property read before a loop and rewritten in it keeps its register) | 215 | 230 | n/a | n/a | 1085 passed |
+| 2026-10-31 | after F-177 (a `case` that runs into the next one prints no `break`) | 215 | 230 | n/a | n/a | 1087 passed |
+| 2026-10-31 | after F-178 (the lost-edge scan knows a `return undefined` that carries its `Ret` statement) | 215 | 230 | n/a | n/a | 1088 passed |
+| 2026-10-31 | after F-179 (a `case` jump left to a `switch` that did not come is restored as `\|\|`) | 215 | 230 | n/a | n/a | 1090 passed |
+| 2026-10-31 | after F-180 (the tests after a restored `case` jump join the same `\|\|`) | 198 | 218 | n/a | n/a | 1090 passed |
+| 2026-10-31 | after F-181 (an arm that re-tests the same constant makes the branch target the join) | 193 | 217 | n/a | n/a | 1092 passed |
+| 2026-11-01 | after F-182 (a guard that jumps past a `throw` inside a freshly built arm folds) | 193 | 213 | n/a | n/a | 1096 passed |
+| 2026-11-01 | after F-183 (a `typeof` test whose arm's own test falls into its target) | 193 | 211 | n/a | n/a | 1098 passed |
+| 2026-11-01 | after F-185 (a test jumping to the then arm's entry joins its condition as `\|\|`) | 193 | 210 | n/a | n/a | 1101 passed |
+| 2026-11-01 | after F-186 (a shared tail the test skips by jumping to the block behind it) | 192 | 207 | n/a | n/a | 1104 passed |
+| 2026-11-01 | after F-187 (an arm that ends in a `Jmp` to the join runs into it) | 190 | 202 | n/a | n/a | 1105 passed |
+| 2026-11-02 | after F-188 (a test the try body and the catch both reach ends the catch) | 189 | 201 | n/a | n/a | 1106 passed |
+| 2026-11-02 | after F-189 (a longer shared `return` only jumps reach is copied on the last rung) | 188 | 198 | n/a | n/a | 1108 passed |
+| 2026-11-02 | after F-191 (a for-of over a parameter is recognized) | 182 | 190 | n/a | n/a | 1110 passed |
+| 2026-11-02 | after F-192 (a for-of binding the body assigns is a `let`) | 182 | 190 | n/a | n/a | 1110 passed |
+| 2026-11-02 | after F-193 (a shared tail is copied in a function with a `try` when nothing it touches is protected) | 173 | 189 | n/a | n/a | 1112 passed |
+| 2026-11-02 | after F-194 (the later of two tests that jump to one short tail gets its own copy, last rung) | 171 | 184 | n/a | n/a | 1114 passed |
+| 2026-11-03 | after F-195 (a shared tail inside a try range is copied when its ways in are under the same handlers) | 167 | 179 | n/a | n/a | 1116 passed |
+| 2026-11-03 | after F-196 (the later of two tests that jump to a `return`/`throw` tail gets its own copy, last rung) | 166 | 177 | n/a | n/a | 1118 passed |
+| 2026-11-03 | after F-197 (a guard whose `return` exit no sequence holds becomes `if (c) { return }`) | 165 | 172 | n/a | n/a | 1119 passed |
+| 2026-11-03 | after F-198 (a `break` to the join behind a loop exit that only jumps on) | 165 | 171 | n/a | n/a | 1120 passed |
+| 2026-11-03 | after F-200 (`if (c) continue` in a loop with no test and no update) | 161 | 167 | n/a | n/a | 1122 passed |
+| 2026-11-03 | after F-202 (a guard's function-ending tail taken from the end of a loop body / `else` arm) | 158 | 164 | n/a | n/a | 1124 passed |
+| 2026-11-03 | after F-203 (the crossed `a \|\| b` fold rematerializes an environment load END reads) | 158 | 161 | n/a | n/a | 1125 passed |
+| 2026-11-04 | after F-204 (a suspend point whose resume pair is followed by `Mov`s; `SaveGenerator` is kept) | 154 | 161 | n/a | n/a | 1127 passed |
+| 2026-11-04 | after F-205 (a resume guard with the rest of the loop body behind it; the yield is what the `Ret` returns) | 153 | 161 | n/a | n/a | 1130 passed |
+| 2026-11-05 | after F-199 (`if (c) goto T; REST` at the end of an arm, T what runs when the arm is done) | 150 | 159 | n/a | n/a | 1132 passed |
+| 2026-11-05 | after F-206 (a handler counts as running from inside its try range when the shared `return` is copied) | 142 | 153 | n/a | n/a | 1134 passed |
+| 2026-11-06 | after F-208 (`GuardExit` pulls an exit held by its own sequence when code runs between) | 141 | 147 | n/a | n/a | 1135 passed |
+| 2026-11-06 | after F-209 (`IfTailMerge` keeps a `throw` that something jumps to; a correctness fix, 21 files) | 141 | 147 | n/a | n/a | 1137 passed |
+| 2026-11-06 | after F-210 (the `typeof` kept in a register makes the target a join; `IfTailMerge` keeps a `return` that a test ending its sequence jumps to) | 139 | 147 | n/a | n/a | 1139 passed |
+| 2026-11-06 | after F-211 (an arm with several private exits; `IfTailMerge` keeps every `return` a pending test jumps to) | 138 | 146 | n/a | n/a | 1140 passed |
+| 2026-11-06 | after F-212 (an arm that throws unless its test jumps to the returning body the guard skips to) | 138 | 144 | n/a | n/a | 1141 passed |
+| 2026-11-07 | after F-213 (a `catch` that falls out into the code after the `try`; join `Mov` after an arm's copy) | 136 | 142 | n/a | n/a | 1144 passed |
+| 2026-11-07 | after F-214 (iterator-cleanup handler that closes a copy of the iterator) | 136 | 141 | n/a | n/a | 1145 passed |
+| 2026-11-07 | after F-215 (iterator destructuring with object-pattern and slot-store targets) | 136 | 139 | n/a | n/a | 1147 passed |
+| 2026-11-07 | after F-216 (a copy that the same block writes again no longer blocks the fold of a test's setup) | 126 | 136 | n/a | n/a | 1148 passed |
+| 2026-11-07 | after F-218 (a tail a fall-through also enters is copied on the last rung when every path reads the same) | 126 | 134 | n/a | n/a | 1149 passed |
+| 2026-11-07 | after F-220 (a constant test whose arm leaves only by private returns and falls into the target is an `if`, not an `else`) | 123 | 132 | n/a | n/a | 1150 passed |
+| 2026-11-07 | after F-221 (`a?.b` tested in a folds: the jump to M keeps the head's own value) | 122 | 131 | n/a | n/a | 1151 passed |
+| 2026-11-07 | after F-222 (an arm falling into the target after a test whose taken side is a closed region of returns) | 116 | 129 | n/a | n/a | 1152 passed |
+| 2026-11-07 | after F-223 (both arms of a test enter one block though an arm also leaves through a `throw`) | 116 | 127 | n/a | n/a | 1153 passed |
+| 2026-11-07 | after F-224 (a raw branch condition counts as a read in `DeadMovEliminationPass`; no output with a structured branch changes) | 116 | 127 | n/a | n/a | 1154 passed |
+| 2026-11-08 | after F-225 (a copy that only feeds the test folds into `a \|\| b`) | 115 | 126 | n/a | n/a | 1155 passed |
+| 2026-11-08 | after F-226 (a long shared tail is copied on the last rung) | 115 | 121 | n/a | n/a | 1157 passed |
+| 2026-11-08 | after F-227 (a test's hoisted constant moves onto its edge) | 115 | 120 | n/a | n/a | 1159 passed |
+| 2026-11-08 | after F-228 (`__getClosureEnvironment__` is a pure callee) | 115 | 118 | n/a | n/a | 1161 passed |
+| 2026-11-08 | after F-229 (a jump to a loop block finds the block, not its bare `break`) | 109 | 108 | n/a | n/a | 1162 passed |
+| 2026-11-08 | after F-230 (a conditional's fall-through stays behind it; return tail up to 12) | 106 | 107 | n/a | n/a | 1164 passed |
+| 2026-11-08 | after F-231 (a yielded value computed in an earlier block) | 106 | 106 | n/a | n/a | 1165 passed |
+| 2026-11-09 | after F-232 (iterator destructuring into member targets, each store in its own `try`) | 106 | 105 | n/a | n/a | 1166 passed |
+| 2026-11-09 | after F-233 (a destructured closure variable also kept in a register is restored from its slot) | 106 | 105 | n/a | n/a | 1167 passed |
+| 2026-11-09 | after F-234 (iterator destructuring whose fetch reads the source register without a copy) | 106 | 105 | n/a | n/a | 1168 passed |
+| 2026-11-09 | after F-235 (dead `GetIterator` in front of a for-of) | 106 | 105 | n/a | n/a | 1169 passed |
+| 2026-11-09 | after F-236 (the environment a destructuring writes into is created mid-chain) | 106 | 105 | n/a | n/a | 1170 passed |
+| 2026-11-09 | after F-237 (no source copy and the `undefined` loaded inside the check) | 106 | 105 | n/a | n/a | 1171 passed |
+| 2026-11-09 | after F-238 (a shared-tail region with another way's leaf among its blocks) | 102 | 103 | n/a | n/a | 1172 passed |
+
+Notes that went with these rows (moved from `FINDINGS.md`):
+
+- The 2026-10-25 to 2026-10-26 rows decompile 98 without 98/2619 (F-143: it stalled), so their 98
+  columns are not exactly comparable with the 2026-10-27 row, which includes it (+1 `goto` file, +1
+  `pathdefs`). F-32 is printer-only: it changed 499 files in 96 and 650 in
+  98 and moved neither `goto` nor `pathdefs`. The F-31 row changed 59 files in 96 and 34 in 98, only by
+  removing lines (plus the restructured 96/12298); its `pathdefs` +1 in 98 is 98/1753 `previousSibling`, where
+  the removed `r5 = r6` is overwritten by the destructuring on the next line (audit noise).
+- Both rows were measured with the same scripts: the first by checking out `29c4aff` and decompiling
+  both bundles in full, the second on the current tree. Reading the `pathdefs` change: the
+  per-file comparison (`compare_outputs.py`) finds about as many files with more unassigned reads
+  (96: 39, 98: 71) as with fewer (96: 38, 98: 61), so the check is noise-dominated at this level (not triaged per file); the totals are flat for 96 (+2) and
+  better for 98 (-18).
+- Distribution of the remaining `goto` files on 2026-11-06 (F-209, rough text heuristics, +/- 10): 96 had 141 files  about 47
+  with a single `if (c) goto L` (the best next target), 57 not matching a shape, 18 generator/async
+  (`await`, `yield`, `.next(`), 11 with six or more `goto`s (the CSS parsers `parseRadialGradientCSSString`,
+  `describeNativeComponentFrame`), 8 with a `goto` as the last statement of a `try` body. 98 has 147:
+  36 single `if (c) goto L`, 42 other, 39 generator/async, 15 with six or more, 15 with a `try`-exit `goto`
+  (`generatorTryFinallyTest`, `downloadAsync`, `fetchLoader`, `_openBrowserAndWaitAndroidAsync`).

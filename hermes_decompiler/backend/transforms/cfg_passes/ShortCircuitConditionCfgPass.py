@@ -4,6 +4,7 @@ import copy
 import dataclasses
 import re
 
+from hermes_decompiler.backend.transforms.cfg_passes._instruction_clone import clone_instruction
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir import LogicalOperator, Node
@@ -553,9 +554,7 @@ class ShortCircuitConditionCfgPass:
         edge = BasicBlock(max(b.id for b in blocks) + 1, end_block.address - 1)
 
         for instruction in copies:
-            duplicate = copy.copy(instruction)
-            duplicate.value = copy.deepcopy(instruction.value)
-            edge.instructions.append(duplicate)
+            edge.instructions.append(clone_instruction(instruction, statement=False))
 
         if last.terminator is None:
             last.terminator = TerminatorJump(target=end_block.address)
@@ -1493,9 +1492,7 @@ class ShortCircuitConditionCfgPass:
         copies = []
 
         for instruction in rematerialize:
-            duplicate = copy.copy(instruction)
-            duplicate.value = copy.deepcopy(instruction.value)
-            copies.append(duplicate)
+            copies.append(clone_instruction(instruction, statement=False))
 
         successor.instructions.clear()
 

@@ -30,6 +30,7 @@ from __future__ import annotations
 import copy
 import dataclasses
 
+from hermes_decompiler.backend.transforms.cfg_passes._instruction_clone import clone_instruction
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.shared import repoint_node
 from hermes_decompiler.ir.expressions import Identifier
@@ -197,13 +198,7 @@ class SharedTailDuplicationCfgPass:
         clone.tail_copy = True  # read by `UnfoldedMergeRepairPass`: its instructions keep the original's addresses
 
         for instruction in tail.instructions:
-            duplicate = copy.copy(instruction)
-            # Passes tell writers apart by the identity of the value they hold.
-            duplicate.value = copy.deepcopy(instruction.value)
-            duplicate.statement = copy.deepcopy(instruction.statement)
-            if instruction.terminator is not None:
-                duplicate.terminator = copy.copy(instruction.terminator)
-            clone.instructions.append(duplicate)
+            clone.instructions.append(clone_instruction(instruction))
 
         if tail.instructions and tail.instructions[-1].terminator is tail.terminator:
             clone.terminator = clone.instructions[-1].terminator
@@ -372,12 +367,7 @@ class SharedTailDuplicationCfgPass:
                 )
 
             for instruction in block.instructions:
-                duplicate = copy.copy(instruction)
-                duplicate.value = copy.deepcopy(instruction.value, memo)
-                duplicate.statement = copy.deepcopy(instruction.statement, memo)
-                if instruction.terminator is not None:
-                    duplicate.terminator = retargeted
-                clone.instructions.append(duplicate)
+                clone.instructions.append(clone_instruction(instruction, terminator=retargeted, memo=memo))
 
             if retargeted is not None:
                 clone.terminator = retargeted
@@ -441,12 +431,8 @@ class SharedTailDuplicationCfgPass:
         clone.tail_copy = True  # read by `UnfoldedMergeRepairPass`: its instructions keep the original's addresses
 
         for instruction in tail.instructions:
-            duplicate = copy.copy(instruction)
-            duplicate.value = copy.deepcopy(instruction.value)
-            duplicate.statement = copy.deepcopy(instruction.statement)
-            duplicate.terminator = copy.copy(
-                instruction.terminator) if exits and instruction.terminator is not None else None
-            clone.instructions.append(duplicate)
+            clone.instructions.append(
+                clone_instruction(instruction) if exits else clone_instruction(instruction, terminator=None))
 
         clone.predecessors = [second]
 
@@ -519,11 +505,7 @@ class SharedTailDuplicationCfgPass:
             clone.tail_copy = True
 
             for instruction in tail.instructions:
-                duplicate = copy.copy(instruction)
-                duplicate.value = copy.deepcopy(instruction.value)
-                duplicate.statement = copy.deepcopy(instruction.statement)
-                duplicate.terminator = None
-                clone.instructions.append(duplicate)
+                clone.instructions.append(clone_instruction(instruction, terminator=None))
 
             clone.terminator = TerminatorJump(target=end.address)
             clone.successors = [end]
