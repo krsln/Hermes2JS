@@ -8,7 +8,8 @@ from hermes_decompiler.backend.transforms import StructuralAnalyzer
 from hermes_decompiler.backend.transforms.shared import may_alias, read_members, stored_member
 from hermes_decompiler.backend.transforms.cfg_passes import (
     ArrayDestructuringCfgPass, EnvArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass,
-    DecidedTestThreadingCfgPass, SharedReturnDuplicationCfgPass, SharedTailDuplicationCfgPass,
+    ConstantEdgeThreadingCfgPass, DecidedTestThreadingCfgPass, SharedReturnDuplicationCfgPass,
+    SharedTailDuplicationCfgPass,
     TestConstantSinkCfgPass, FallThroughLayoutCfgPass,
     generator_dispatch,
 )
@@ -446,6 +447,11 @@ class HermesAnalysis:
     # the guard fold matches (96/1351), so it gets a rung of its own.
     _FOLD_GUARDS_RUNG = 11
 
+    # Beyond the last: rung 10's copies plus `ConstantEdgeThreadingCfgPass` (96/155). It only runs for a function every
+    # earlier rung left with a `goto`, so nothing already goto-free is restyled; the guard fold of rung 11 is not
+    # wanted with it (the fold needs the layout the threading gives).
+    _THREADING_RUNG = 12
+
     def generate_js(
             self,
             verbose: bool = False,
@@ -472,7 +478,7 @@ class HermesAnalysis:
             # retries; there a retry only wins when it is `goto`-free and loses fewer paths.
             whole = []
 
-            for level in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, self._FOLD_GUARDS_RUNG):
+            for level in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, self._FOLD_GUARDS_RUNG, self._THREADING_RUNG):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if not retry[3]:
                     continue
@@ -656,6 +662,9 @@ class HermesAnalysis:
             SharedReturnDuplicationCfgPass(
                 cfg, widen=duplicate_returns >= 2, statements=duplicate_returns >= 4, own_values=duplicate_returns >= 5
             ).run()
+            if duplicate_returns == self._THREADING_RUNG:
+                ConstantEdgeThreadingCfgPass(cfg).run()
+
             SharedTailDuplicationCfgPass(
                 cfg, regions=duplicate_returns >= 3, per_predecessor=duplicate_returns >= 5,
                 large=duplicate_returns >= 6,

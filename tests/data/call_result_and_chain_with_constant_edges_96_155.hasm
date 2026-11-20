@@ -1,0 +1,62 @@
+
+=> [Function #155 "Pe" of 204 bytes]: 2 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x000fb6a1
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 2>
+==> 00000002: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000005: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
+==> 00000009: <GetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 10311>  # String: '_controlledReadableByteStream' (Identifier)
+==> 0000000f: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 2>  # String: '_state' (Identifier)
+==> 00000014: <LoadConstString>: <Reg8: 3, string_id: 7339>  # String: 'readable' (Identifier)
+==> 00000018: <LoadConstFalse>: <Reg8: 0>
+==> 0000001a: <JStrictNotEqual>: <Addr8: 110, Reg8: 3, Reg8: 5>  # Address: 00000088
+==> 0000001e: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 15387>  # String: '_closeRequested' (Identifier)
+==> 00000024: <LoadConstFalse>: <Reg8: 0>
+==> 00000026: <JmpTrue>: <Addr8: 98, Reg8: 3>  # Address: 00000088
+==> 00000029: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 9049>  # String: '_started' (Identifier)
+==> 0000002f: <LoadConstFalse>: <Reg8: 0>
+==> 00000031: <JmpFalse>: <Addr8: 87, Reg8: 3>  # Address: 00000088
+==> 00000034: <GetEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000037: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 73>
+==> 0000003b: <LoadConstUndefined>: <Reg8: 4>
+==> 0000003d: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 4, Reg8: 6>
+==> 00000042: <JmpFalse>: <Addr8: 23, Reg8: 5>  # Address: 00000059
+==> 00000045: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 72>
+==> 00000049: <Call2>: <Reg8: 7, Reg8: 5, Reg8: 4, Reg8: 6>
+==> 0000004e: <LoadConstZero>: <Reg8: 5>
+==> 00000050: <Greater>: <Reg8: 5, Reg8: 7, Reg8: 5>
+==> 00000054: <LoadConstTrue>: <Reg8: 0>
+==> 00000056: <JmpTrue>: <Addr8: 50, Reg8: 5>  # Address: 00000088
+==> 00000059: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 125>
+==> 0000005d: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 4, Reg8: 6>
+==> 00000062: <JmpFalse>: <Addr8: 23, Reg8: 5>  # Address: 00000079
+==> 00000065: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 124>
+==> 00000069: <Call2>: <Reg8: 6, Reg8: 5, Reg8: 4, Reg8: 6>
+==> 0000006e: <LoadConstZero>: <Reg8: 5>
+==> 00000070: <Greater>: <Reg8: 5, Reg8: 6, Reg8: 5>
+==> 00000074: <LoadConstTrue>: <Reg8: 0>
+==> 00000076: <JmpTrue>: <Addr8: 18, Reg8: 5>  # Address: 00000088
+==> 00000079: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 115>
+==> 0000007d: <Call2>: <Reg8: 4, Reg8: 3, Reg8: 4, Reg8: 1>
+==> 00000082: <LoadConstZero>: <Reg8: 3>
+==> 00000084: <Greater>: <Reg8: 0, Reg8: 4, Reg8: 3>
+==> 00000088: <JmpFalse>: <Addr8: 64, Reg8: 0>  # Address: 000000c8
+==> 0000008b: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 5, string_id: 11954>  # String: '_pulling' (Identifier)
+==> 00000091: <LoadConstTrue>: <Reg8: 0>
+==> 00000093: <JmpTrue>: <Addr8: 47, Reg8: 3>  # Address: 000000c2
+==> 00000096: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 11954>  # String: '_pulling' (Identifier)
+==> 0000009c: <GetEnvironment>: <Reg8: 3, UInt8: 0>
+==> 0000009f: <LoadFromEnvironment>: <Reg8: 6, Reg8: 3, UInt8: 45>
+==> 000000a3: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 14025>  # String: '_pullAlgorithm' (Identifier)
+==> 000000a9: <Call1>: <Reg8: 5, Reg8: 3, Reg8: 1>
+==> 000000ad: <LoadConstUndefined>: <Reg8: 4>
+==> 000000af: <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 156>  # Function: [#156  of 52 bytes]: 1 params @ offset 0x000fb76d
+==> 000000b4: <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 157>  # Function: [#157  of 29 bytes]: 2 params @ offset 0x000fb7a1
+==> 000000b9: <Call4>: <Reg8: 2, Reg8: 6, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 2>
+==> 000000c0: <Jmp>: <Addr8: 8>  # Address: 000000c8
+==> 000000c2: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 13802>  # String: '_pullAgain' (Identifier)
+==> 000000c8: <LoadConstUndefined>: <Reg8: 0>
+==> 000000ca: <Ret>: <Reg8: 0>
+
+
