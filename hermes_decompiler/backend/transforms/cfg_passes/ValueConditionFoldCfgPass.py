@@ -31,7 +31,7 @@ from __future__ import annotations
 import copy
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
-from hermes_decompiler.backend.transforms.shared import has_side_effects, negate_condition
+from hermes_decompiler.backend.transforms.shared import has_side_effects, is_dead_on_entry, negate_condition
 from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, CallExpression, ConditionalExpression, Identifier
 from hermes_decompiler.ir.expressions import MemberExpression
@@ -176,7 +176,7 @@ class ValueConditionFoldCfgPass:
             return False
 
         for reg in dropped:
-            if not all(_Liveness._dead_on_entry(s, reg, set()) for s in successors):
+            if not all(is_dead_on_entry(s, reg, set()) for s in successors):
                 return False
 
         self._rewrite(head, m, register, value, region)
@@ -331,7 +331,7 @@ class ValueConditionFoldCfgPass:
         # (98/6004 returned it).
         if target is m and (
                 len(defs) != 1
-                or not all(_Liveness._dead_on_entry(s, register, set()) for s in m.successors)
+                or not all(is_dead_on_entry(s, register, set()) for s in m.successors)
         ):
             return None
 

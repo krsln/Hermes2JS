@@ -7,6 +7,7 @@ from ._reaching_definition import resolve_identifier, is_bare_register
 from ._repoint import *
 from ._resolved_equal import resolved_structural_equal
 from ._structural_key import structural_key
+from ._liveness import is_dead_on_entry, mentions_register, reads_operand, OPERAND_REGISTER_RE
 from ._memory import may_alias, read_members, stored_member
 
 __all__ = [
@@ -20,4 +21,5 @@ __all__ = [
     "structural_key", "may_alias", "read_members", "stored_member",
     "resolve_identifier", "is_bare_register",
     "resolved_structural_equal",
+    "is_dead_on_entry", "mentions_register", "reads_operand", "OPERAND_REGISTER_RE",
 ]

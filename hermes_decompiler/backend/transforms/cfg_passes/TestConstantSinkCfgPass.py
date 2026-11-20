@@ -31,7 +31,7 @@ from hermes_decompiler.backend.transforms.shared._repoint import repoint_referen
 from hermes_decompiler.ir.expressions import Identifier, Literal
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorReturn, \
     TerminatorThrow
-from .ShortCircuitConditionCfgPass import ShortCircuitConditionCfgPass as _Liveness
+from hermes_decompiler.backend.transforms.shared import is_dead_on_entry, mentions_register, reads_operand
 
 
 class TestConstantSinkCfgPass:
@@ -79,7 +79,7 @@ class TestConstantSinkCfgPass:
         loads = [
             i for i in block.instructions
             if i.terminator is None and i.dest_reg is not None and isinstance(i.value, Literal)
-            and i.statement is None
+               and i.statement is None
         ]
 
         for load in reversed(loads):
@@ -92,7 +92,7 @@ class TestConstantSinkCfgPass:
             if any(self._reads(i, register) for i in later):
                 continue
 
-            if not _Liveness._dead_on_entry(fall, register, set()):
+            if not is_dead_on_entry(fall, register, set()):
                 continue
 
             return taken, load
@@ -107,8 +107,8 @@ class TestConstantSinkCfgPass:
             getattr(instruction.terminator, "value", None),
         ]
 
-        return _Liveness._reads_operand(instruction, register) or any(
-            n is not None and _Liveness._mentions(n, name) for n in nodes
+        return reads_operand(instruction, register) or any(
+            n is not None and mentions_register(n, name) for n in nodes
         )
 
     def _sink(self, members: list) -> bool:

@@ -1,4 +1,15 @@
-.PHONY: prepare-96 prepare-98 decompile-96 decompile-98
+.PHONY: prepare-96 prepare-98 decompile-96 decompile-98 test lint
+
+# The test suite (about a minute).
+test:
+	python -m pytest -q
+
+# No linter is a dependency: every module must at least compile, and ruff or pyflakes runs when installed.
+lint:
+	python -m compileall -q hermes_decompiler scripts tests
+	@if python -m ruff --version >/dev/null 2>&1; then python -m ruff check hermes_decompiler scripts; \
+	elif python -m pyflakes --version >/dev/null 2>&1; then python -m pyflakes hermes_decompiler scripts; \
+	else echo "ruff/pyflakes not installed: compile check only"; fi
 
 # hermes-disassembler | hermes-dec
 DISASSEMBLER ?= hermes-disassembler

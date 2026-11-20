@@ -1,3 +1,4 @@
+import dataclasses
 import logging
 import re
 from typing import Any
@@ -35,6 +36,27 @@ class _RecordBuffer(logging.Handler):
 
     def emit(self, record: logging.LogRecord) -> None:
         self.records.append(record)
+
+
+@dataclasses.dataclass(frozen=True)
+class _Rung:
+    """The passes and limits one retry level of `HermesAnalysis._generate_js` switches on (all off: the first try)."""
+
+    copies: bool = False  # duplicate shared returns/tails for their jumpers at all
+    widen: bool = False
+    regions: bool = False
+    statements: bool = False
+    own_values: bool = False
+    per_predecessor: bool = False
+    large: bool = False
+    decided_threading: bool = False  # DecidedTestThreadingCfgPass
+    constant_sink: bool = False  # TestConstantSinkCfgPass
+    relocate_terminal_tails: bool = False
+    bridge_everywhere: bool = False
+    sibling_loop_exits: bool = False  # LoopBreakStructurer: one exit a `break`, others to the same block
+    fold_guards: bool = False  # GuardIntoConditionRegionPass
+    edge_threading: bool = False  # ConstantEdgeThreadingCfgPass
+    tail_copy: bool = False  # TerminalTailRegionCopyCfgPass
 
 
 class HermesAnalysis:
@@ -456,6 +478,23 @@ class HermesAnalysis:
     # that reach it (98/2330, 96/7888). Last for the same reason: it only touches what nothing else structured.
     _TAIL_COPY_RUNG = 13
 
+    @classmethod
+    def _rung(cls, level) -> "_Rung":
+        """What retry `level` (False for the first attempt, then 1..13) switches on; see `_Rung`."""
+        if not level:
+            return _Rung()
+
+        # The guard fold, threading and tail-copy rungs rebuild a layout of their own on top of rung 1 or 10.
+        base = 1 if level == cls._FOLD_GUARDS_RUNG else min(level, 10)
+
+        return _Rung(
+            copies=True, widen=base >= 2, regions=base >= 3, statements=base >= 4, own_values=base >= 5,
+            per_predecessor=base >= 5, large=base >= 6, decided_threading=base >= 6, constant_sink=base >= 7,
+            bridge_everywhere=base >= 8, sibling_loop_exits=base >= 9, relocate_terminal_tails=base >= 10,
+            fold_guards=level == cls._FOLD_GUARDS_RUNG, edge_threading=level == cls._THREADING_RUNG,
+            tail_copy=level == cls._TAIL_COPY_RUNG,
+        )
+
     def generate_js(
             self,
             verbose: bool = False,
@@ -580,10 +619,7 @@ class HermesAnalysis:
         # method stays safe to call more than once against the same
         # `HermesAnalysis` - e.g. `Decompiler.render()` called for both
         # `raw=True` and `raw=False` output from one `build_context()`.
-        fold_guards = duplicate_returns == self._FOLD_GUARDS_RUNG
-
-        if fold_guards:
-            duplicate_returns = 1
+        rung = self._rung(duplicate_returns)
 
         results = [result.clone() for result in self.results]
 
@@ -663,35 +699,34 @@ class HermesAnalysis:
         cfg.unresolved_dispatch = bool(unresolved_dispatch_reason and unresolved_dispatch_reason[1])
         ArrayDestructuringCfgPass(cfg).run()
         EnvArrayDestructuringCfgPass(cfg).run()
-        if duplicate_returns:
+        if rung.copies:
             SharedReturnDuplicationCfgPass(
-                cfg, widen=duplicate_returns >= 2, statements=duplicate_returns >= 4, own_values=duplicate_returns >= 5
+                cfg, widen=rung.widen, statements=rung.statements, own_values=rung.own_values
             ).run()
-            if duplicate_returns == self._THREADING_RUNG:
+            if rung.edge_threading:
                 ConstantEdgeThreadingCfgPass(cfg).run()
 
-            if duplicate_returns == self._TAIL_COPY_RUNG:
+            if rung.tail_copy:
                 TerminalTailRegionCopyCfgPass(cfg).run()
 
             SharedTailDuplicationCfgPass(
-                cfg, regions=duplicate_returns >= 3, per_predecessor=duplicate_returns >= 5,
-                large=duplicate_returns >= 6,
+                cfg, regions=rung.regions, per_predecessor=rung.per_predecessor, large=rung.large,
             ).run()
 
-            if duplicate_returns >= 6:
+            if rung.decided_threading:
                 DecidedTestThreadingCfgPass(cfg).run()
 
-            if duplicate_returns >= 7:
+            if rung.constant_sink:
                 TestConstantSinkCfgPass(cfg).run()
 
             FallThroughLayoutCfgPass(cfg).run()
 
-        if duplicate_returns and duplicate_returns >= 10:
+        if rung.relocate_terminal_tails:
             FallThroughLayoutCfgPass(cfg).relocate_terminal_tails()
-        FallThroughLayoutCfgPass(cfg).bridge_remaining(everywhere=bool(duplicate_returns) and duplicate_returns >= 8)
+        FallThroughLayoutCfgPass(cfg).bridge_remaining(everywhere=rung.bridge_everywhere)
         # The last rung also lets one loop exit be a `break` while others leave for the same block (LoopBreakStructurer).
-        cfg.sibling_loop_exits = bool(duplicate_returns) and duplicate_returns >= 9
-        cfg.fold_arm_guards = fold_guards
+        cfg.sibling_loop_exits = rung.sibling_loop_exits
+        cfg.fold_arm_guards = rung.fold_guards
         cfg.verify()
         cfg.compute_dominators()
         cfg.compute_post_dominators()

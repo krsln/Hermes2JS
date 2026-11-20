@@ -18,7 +18,7 @@ import dataclasses
 from hermes_decompiler.backend.analysis.cfg import CFG
 from hermes_decompiler.ir.expressions import Identifier, Literal, UnaryExpression
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
-from .ShortCircuitConditionCfgPass import ShortCircuitConditionCfgPass as _Liveness
+from hermes_decompiler.backend.transforms.shared import is_dead_on_entry, mentions_register, reads_operand
 
 
 class ConstantEdgeThreadingCfgPass:
@@ -122,7 +122,7 @@ class ConstantEdgeThreadingCfgPass:
         if any(self._reads(i, register) for i in later):
             return None
 
-        if not _Liveness._dead_on_entry(fall, register, set()):
+        if not is_dead_on_entry(fall, register, set()):
             return None
 
         taken_of_join = next((s for s in join.successors if s.address == join_branch.target), None)
@@ -135,7 +135,7 @@ class ConstantEdgeThreadingCfgPass:
         condition_holds = truthy != negated
         decided = taken_of_join if condition_holds else fall_of_join
 
-        if decided in (block, join) or not _Liveness._dead_on_entry(decided, register, set()):
+        if decided in (block, join) or not is_dead_on_entry(decided, register, set()):
             return None
 
         block.instructions.remove(load)
@@ -157,6 +157,6 @@ class ConstantEdgeThreadingCfgPass:
             getattr(instruction.terminator, "value", None),
         ]
 
-        return _Liveness._reads_operand(instruction, register) or any(
-            n is not None and _Liveness._mentions(n, name) for n in nodes
+        return reads_operand(instruction, register) or any(
+            n is not None and mentions_register(n, name) for n in nodes
         )

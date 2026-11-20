@@ -15,6 +15,7 @@ from hermes_decompiler.ir.expressions import (
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.backend.transforms.shared import (
     negate_condition, TRIVIAL_NODE_TYPES, has_side_effects, keep_call_this_unbound, substitute_register,
+    is_dead_on_entry, mentions_register, reads_operand, OPERAND_REGISTER_RE,
 )
 
 
@@ -448,17 +449,17 @@ class ShortCircuitConditionCfgPass:
                     instruction.dest_reg is None
                     or instruction.value is None
                     or instruction.statement is not None
-                    or not self._dead_on_entry(arm, instruction.dest_reg, set())
-                    or not all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in self._handlers())
+                    or not is_dead_on_entry(arm, instruction.dest_reg, set())
+                    or not all(is_dead_on_entry(b, instruction.dest_reg, set()) for b in self._handlers())
             ):
                 continue
 
             if instruction.entry.opcode in ("Mov", "MovLong"):
                 if not any(
                         other is not instruction and (
-                                self._reads_operand(other, instruction.dest_reg)
+                                reads_operand(other, instruction.dest_reg)
                                 or (other.value is not None
-                                    and self._mentions(other.value, f"r{instruction.dest_reg}"))
+                                    and mentions_register(other.value, f"r{instruction.dest_reg}"))
                         )
                         for other in successor.instructions
                 ):
@@ -480,7 +481,7 @@ class ShortCircuitConditionCfgPass:
                     # (a handler counts only where the register still holds the test's value on the way to its
                     # protected range: a `for-of` after END writes the iterator first, 96/11000)
                     or not all(
-                self._dead_on_entry(h, d, set()) for d in self._written(successor)
+                is_dead_on_entry(h, d, set()) for d in self._written(successor)
                 for h in self._handlers_reached(successor, d))
             ):
                 return []
@@ -506,8 +507,8 @@ class ShortCircuitConditionCfgPass:
                     # The block's LAST write of the register is what END reads (96/3450: `r2 = env[3]; r6 = r2.status;
                     # r2 = 200`); the earlier ones only feed the test.
                     or [i for i in successor.instructions if i.dest_reg == instruction.dest_reg][-1] is not instruction
-                    or not self._dead_on_entry(arm, instruction.dest_reg, set())
-                    or self._dead_on_entry(end_block, instruction.dest_reg, set())
+                    or not is_dead_on_entry(arm, instruction.dest_reg, set())
+                    or is_dead_on_entry(end_block, instruction.dest_reg, set())
             ):
                 continue
 
@@ -594,7 +595,7 @@ class ShortCircuitConditionCfgPass:
 
         register = effects[0].dest_reg
 
-        if self._dead_on_entry(exits[1], register, set()) or not self._dead_on_entry(exits[0], register, set()):
+        if is_dead_on_entry(exits[1], register, set()) or not is_dead_on_entry(exits[0], register, set()):
             return False
 
         # END must read the register BY NAME: a read the frontend already inlined from an earlier write
@@ -605,8 +606,8 @@ class ShortCircuitConditionCfgPass:
             nodes = [instruction.value, instruction.statement, getattr(instruction.terminator, "condition", None),
                      getattr(instruction.terminator, "value", None)]
 
-            if self._reads_operand(instruction, register):
-                return any(n is not None and self._mentions(n, name) for n in nodes)
+            if reads_operand(instruction, register):
+                return any(n is not None and mentions_register(n, name) for n in nodes)
 
             if instruction.dest_reg == register and instruction.terminator is None:
                 return False
@@ -626,7 +627,7 @@ class ShortCircuitConditionCfgPass:
         effect_seen = False
         assigned: set[int] = set()  # effects whose register END reads: kept as `(rN = value)` in the test
         relaxed = end_reads and self._effect_read_by_end(setup, exits)
-        dead = self._dead_for_fold if relaxed else self._dead_on_entry
+        dead = self._dead_for_fold if relaxed else is_dead_on_entry
         probe = condition  # what the later instructions have made of it (only to count uses)
 
         for position in range(len(setup) - 1, -1, -1):
@@ -649,8 +650,8 @@ class ShortCircuitConditionCfgPass:
                 # an assignment inside the condition, `(r19 = f(x)) != null`; the other exit must not read it.
                 if (
                         relaxed and instruction.dest_reg is not None
-                        and not all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in exits)
-                        and all(self._dead_on_entry(b, instruction.dest_reg, set()) for b in exits[:1])
+                        and not all(is_dead_on_entry(b, instruction.dest_reg, set()) for b in exits)
+                        and all(is_dead_on_entry(b, instruction.dest_reg, set()) for b in exits[:1])
                 ):
                     assigned.add(id(instruction))
                     self._kept_effects.append(instruction)
@@ -775,7 +776,7 @@ class ShortCircuitConditionCfgPass:
         # A handler is entered by an edge the CFG does not have: the copies it could still see must be dead
         # there too (98/2474: a `try`/`finally` function whose `||` of two length tests reuses r9/r8).
         if self.cfg.exception_handlers and not all(
-                self._dead_on_entry(handler, copy_instruction.dest_reg, set())
+                is_dead_on_entry(handler, copy_instruction.dest_reg, set())
                 for handler in self._handlers_reached(block, copy_instruction.dest_reg)
         ):
             return False
@@ -792,8 +793,8 @@ class ShortCircuitConditionCfgPass:
                 getattr(instruction.terminator, "value", None),
             ]
 
-            return self._reads_operand(instruction, register) or any(
-                n is not None and self._mentions(n, name) for n in nodes)
+            return reads_operand(instruction, register) or any(
+                n is not None and mentions_register(n, name) for n in nodes)
 
         def walk(current: BasicBlock, index: int, carried: frozenset) -> bool:
             for instruction in current.instructions[index:]:
@@ -872,8 +873,8 @@ class ShortCircuitConditionCfgPass:
             # A block that writes the register before it reads it does not see the copy (`r6 = 'function'` in
             # the next test, 96/1998 `updateActionStateImpl`).
             for other in block.instructions:
-                if self._reads_operand(other, register) or (
-                        other.value is not None and self._mentions(other.value, name)
+                if reads_operand(other, register) or (
+                        other.value is not None and mentions_register(other.value, name)
                 ):
                     return False
 
@@ -920,8 +921,8 @@ class ShortCircuitConditionCfgPass:
         if mentions == 0 and all(any(i.dest_reg == register for i in b.instructions) for b in exits):
             return False
 
-        return all(self._dead_on_entry(b, register, set()) for b in exits) and all(
-            self._dead_on_entry(b, register, set()) for b in self._handlers_reached(successor, register)
+        return all(is_dead_on_entry(b, register, set()) for b in exits) and all(
+            is_dead_on_entry(b, register, set()) for b in self._handlers_reached(successor, register)
         )
 
     @classmethod
@@ -998,7 +999,7 @@ class ShortCircuitConditionCfgPass:
     def _source_registers(cls, instruction) -> set:
         """The registers the BYTECODE instruction reads (its operands after the destination)."""
         entry = getattr(instruction, "entry", None)
-        operands = [int(m) for m in cls._OPERAND_RE.findall(getattr(entry, "args", "") or "")]
+        operands = [int(m) for m in OPERAND_REGISTER_RE.findall(getattr(entry, "args", "") or "")]
 
         if instruction.dest_reg is not None and operands and operands[0] == instruction.dest_reg:
             operands = operands[1:]
@@ -1099,37 +1100,6 @@ class ShortCircuitConditionCfgPass:
         return bool(previous.instructions) and getattr(
             getattr(previous.instructions[-1], "entry", None), "opcode", None) == "SaveGenerator"
 
-    @classmethod
-    def _dead_on_entry(cls, block: BasicBlock, register: int, visited: set) -> bool:
-        """True if no path from the start of `block` reads `rN` before writing it."""
-        if block in visited:
-            return True
-
-        visited.add(block)
-        name = f"r{register}"
-
-        for instruction in block.instructions:
-            # The bytecode operands are the reads at THIS point. A name inside an
-            # inlined value is only where the value was defined (a join read
-            # prints the arm's copy: `r2[0] = r3` for a read of r1), so names count
-            # only where no operands describe the instruction: a condition merged
-            # from several tests, or an instruction a pass made.
-            described = bool(
-                getattr(getattr(instruction, "entry", None), "args", "")) and instruction.terminator is None
-            nodes = [] if described else [
-                instruction.value, instruction.statement, getattr(instruction.terminator, "condition", None),
-                getattr(instruction.terminator, "value", None),
-            ]
-
-            if any(n is not None and cls._mentions(n, name) for n in nodes) or cls._reads_operand(instruction,
-                                                                                                  register):
-                return False
-
-            if instruction.dest_reg == register and instruction.terminator is None:
-                return True
-
-        return all(cls._dead_on_entry(succ, register, visited) for succ in block.successors)
-
     def _live_in(self) -> dict:
         """Registers live on entry to each block (by block id), where a plain copy `Mov d <- s` reads `s` only
         if `d` is live after it. Loop-carried leftovers of the register allocator (`r1 = r22` at every
@@ -1145,7 +1115,7 @@ class ShortCircuitConditionCfgPass:
             args = getattr(entry, "args", "") or ""
 
             if args:
-                operands = [int(m) for m in self._OPERAND_RE.findall(args)]
+                operands = [int(m) for m in OPERAND_REGISTER_RE.findall(args)]
 
                 if instruction.dest_reg is not None and operands and operands[0] == instruction.dest_reg:
                     operands = operands[1:]
@@ -1219,33 +1189,10 @@ class ShortCircuitConditionCfgPass:
 
     def _dead_for_fold(self, block: BasicBlock, register: int, visited: set) -> bool:
         """`_dead_on_entry`, or - when a path only copies the register into registers nobody reads - dead by liveness."""
-        if self._dead_on_entry(block, register, visited):
+        if is_dead_on_entry(block, register, visited):
             return True
 
         return register not in self._live_in().get(block.id, {register})
-
-    _OPERAND_RE = re.compile(r"Reg(?:8|32):\s*(\d+)")
-
-    @classmethod
-    def _reads_operand(cls, instruction, register: int) -> bool:
-        """Does the BYTECODE instruction read `rN`? Readers were linearly inlined
-        before any control flow was known, so a read of a join register may no
-        longer name it in the printed tree; the operands still do. The first
-        operand of a writing instruction is its destination."""
-        entry = getattr(instruction, "entry", None)
-        operands = [int(m) for m in cls._OPERAND_RE.findall(getattr(entry, "args", "") or "")]
-
-        if instruction.dest_reg is not None and operands and operands[0] == instruction.dest_reg:
-            operands = operands[1:]
-
-        return register in operands
-
-    @classmethod
-    def _mentions(cls, node, name: str) -> bool:
-        if isinstance(node, Identifier):
-            return node.name == name
-
-        return isinstance(node, Node) and any(isinstance(n, Identifier) and n.name == name for n in node.walk())
 
     @staticmethod
     def _is_inlined_setup_block(block: BasicBlock) -> bool:
@@ -1278,7 +1225,7 @@ class ShortCircuitConditionCfgPass:
 
         if end_block is not None:
             # Only a register the exit goes on to read is a join.
-            written = {r for r in written if not cls._dead_on_entry(end_block, r, set())}
+            written = {r for r in written if not is_dead_on_entry(end_block, r, set())}
 
         return (
                 end_block is not None
@@ -1414,7 +1361,7 @@ class ShortCircuitConditionCfgPass:
         subject = cls._compared_constant(condition)
 
         return subject is not None and any(
-            i.terminator is None and i.dest_reg is not None and cls._mentions(subject, f"r{i.dest_reg}")
+            i.terminator is None and i.dest_reg is not None and mentions_register(subject, f"r{i.dest_reg}")
             for i in block.instructions
         )
 
