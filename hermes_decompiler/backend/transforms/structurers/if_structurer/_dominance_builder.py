@@ -210,8 +210,8 @@ class _DominanceIfBuilder(RegionStructurer):
         """The block `LoopBreakStructurer` made for an `if (c) break;`: it keeps its branch block's address but is
         no node of the dominator tree, so it follows the item before it like an address-less block."""
         return (
-                len(block.instructions) == 1
-                and getattr(block.instructions[0].entry, "bytecode", "") == "<synthetic>: BreakStatement"
+            len(block.instructions) == 1
+            and getattr(block.instructions[0].entry, "bytecode", "") == "<synthetic>: BreakStatement"
         )
 
     def _convert(self, region: SequenceRegion, block: BasicBlock) -> bool:
@@ -320,18 +320,7 @@ class _DominanceIfBuilder(RegionStructurer):
             # chain (`switchTest`) needs `has_else` at every link.
             merge_block = goto_block
 
-        if (
-                merge_block is None
-                and goto_block is not None
-                and goto_block.successors
-                and not self.cfg.dominator_tree.dominates(block, goto_block)
-                and any(
-            not self.cfg.dominator_tree.dominates(block, pred)
-            for pred in goto_block.predecessors
-            if pred is not block
-        )
-                and self._in_handler(block)
-        ):
+        if merge_block is None and self._is_entered_from_outside_its_handler(block, goto_block):
             # Code of a `catch` that something outside the handler jumps into is the code after the
             # `try`, not an `else` arm of the catch's own test (98/6705: the `if (!(e instanceof Error))`
             # guard falls out of the catch into what the `try` body also jumps to).
@@ -375,53 +364,9 @@ class _DominanceIfBuilder(RegionStructurer):
         # merge point (or end of region) is reached.
         # -------------------------------------------------------------
 
-        dominators = self.cfg.dominator_tree
-
-        then_items: list = []
-        else_items: list = []
-
-        index = then_start
-        boundary = len(region.children)
-        last_side: list | None = None
-
-        while index < len(region.children):
-
-            item = region.children[index]
-
-            if item is merge_block:
-                boundary = index
-                break
-
-            rep = representative_block(item)
-
-            if rep is not None and last_side is not None and (rep.address < 0 or self._is_break_stub(rep)):
-                # A region made only of synthetic blocks (`if (c) break;`
-                # after the loop structurers ran) has no node in the
-                # dominator tree. It stays with the item it follows:
-                # that item's conditional branch is what it replaced.
-                last_side.append(item)
-
-            elif dominators.dominates(then_entry, rep):
-                then_items.append(item)
-                last_side = then_items
-
-            elif has_else and dominators.dominates(else_entry, rep):
-                else_items.append(item)
-                last_side = else_items
-
-            else:
-                # Neither side dominates - this is the true merge
-                # point. `merge_block` is only a heuristic shortcut for
-                # finding it in advance and can legitimately differ,
-                # e.g., when a break (or other loop-exit edge) already
-                # carved out into its own region bypasses the merge on
-                # the raw CFG. Safe to stop here regardless, since
-                # `then_root` always self-dominates and is guaranteed
-                # to already be in `then_items` by this point.
-                boundary = index
-                break
-
-            index += 1
+        then_items, else_items, boundary = self._classify_by_dominance(
+            region, then_start, then_entry, else_entry, has_else, merge_block
+        )
 
         if has_else and not else_items:
             # else_root dominates itself and must have been classified
@@ -483,6 +428,73 @@ class _DominanceIfBuilder(RegionStructurer):
     # Reachability fallback (see `_convert`'s own comment)
     # -------------------------------------------------------------
 
+    def _classify_by_dominance(self, region, then_start, then_entry, else_entry, has_else, merge_block):
+        """Sort `region.children[then_start:]` into the fall-through arm and the branch-target arm by dominance,
+        up to the merge point (or the end of the region): `(then_items, else_items, boundary)`."""
+        dominators = self.cfg.dominator_tree
+
+        then_items: list = []
+        else_items: list = []
+
+        index = then_start
+        boundary = len(region.children)
+        last_side: list | None = None
+
+        while index < len(region.children):
+
+            item = region.children[index]
+
+            if item is merge_block:
+                boundary = index
+                break
+
+            rep = representative_block(item)
+
+            if rep is not None and last_side is not None and (rep.address < 0 or self._is_break_stub(rep)):
+                # A region made only of synthetic blocks (`if (c) break;`
+                # after the loop structurers ran) has no node in the
+                # dominator tree. It stays with the item it follows:
+                # that item's conditional branch is what it replaced.
+                last_side.append(item)
+
+            elif dominators.dominates(then_entry, rep):
+                then_items.append(item)
+                last_side = then_items
+
+            elif has_else and dominators.dominates(else_entry, rep):
+                else_items.append(item)
+                last_side = else_items
+
+            else:
+                # Neither side dominates - this is the true merge
+                # point. `merge_block` is only a heuristic shortcut for
+                # finding it in advance and can legitimately differ,
+                # e.g., when a break (or other loop-exit edge) already
+                # carved out into its own region bypasses the merge on
+                # the raw CFG. Safe to stop here regardless, since
+                # `then_root` always self-dominates and is guaranteed
+                # to already be in `then_items` by this point.
+                boundary = index
+                break
+
+            index += 1
+
+        return then_items, else_items, boundary
+
+    def _is_entered_from_outside_its_handler(self, block: BasicBlock, goto_block: BasicBlock | None) -> bool:
+        """Is the target of a `catch`'s own test also jumped into from outside the handler? Then it is the code
+        after the `try`, not an `else` arm of the test (98/6705)."""
+        if goto_block is None or not goto_block.successors:
+            return False
+
+        dominators = self.cfg.dominator_tree
+
+        return (
+            not dominators.dominates(block, goto_block)
+            and any(not dominators.dominates(block, pred) for pred in goto_block.predecessors if pred is not block)
+            and self._in_handler(block)
+        )
+
     def _arm_joins_the_target(self, region, then_start, then_root, then_entry, goto_block, merge_block, block,
                               branch) -> bool:
         """Is the branch target the join of the fall-through arm (so no `else` arm, and `merge_block` becomes it)?
@@ -495,94 +507,94 @@ class _DominanceIfBuilder(RegionStructurer):
                 goto_block is not None
                 and goto_block is not merge_block
                 and (
-                        self._arm_leaves_the_region(region, then_start, goto_block)
-                        or (
-                            # Only once shared returns were given private copies:
-                            # until then the arm's own exit can still be the block
-                            # the else side owns, and a join would drop it silently.
-                                getattr(self.cfg, "duplicated_returns", False)
-                                and merge_block is None
-                                and self._arm_tests_into(then_entry, goto_block)
-                        )
-                        or (
-                            # `if (a) { if (b) return x; else goto tail } tail`: the arm's
-                            # own test jumps to the code the outer branch skips to, and
-                            # that code goes on (no exit block): it is the join.
-                                merge_block is None
-                                and goto_block.successors
-                                and not self._reaches_itself(then_entry)
-                                and (
-                                        self._arm_tests_into(then_entry, goto_block)
-                                        or self._arm_runs_into(then_entry, goto_block, block)
-                                )
-                        )
-                        or (
-                            # `if (a) { ...; x(); } return null` where the branch skips to a
-                            # shared `return` and the arm's last block runs on into it: the
-                            # `return` follows the `if`; as an `else` arm it would leave the
-                            # arm's end without it.
-                                merge_block is None
-                                and not goto_block.successors
-                                and isinstance(goto_block.terminator, TerminatorReturn)
-                                and self._arm_runs_into(then_entry, goto_block, block, outside_loops=True)
-                        )
-                        or (
-                            # `if (a) { ...; if (!ok) throw e; } return body`: the arm's own test jumps to
-                            # a `return` that is a whole body (98/9633: the object built after the
-                            # `signal` check), and the arm ends in a `throw` otherwise. The body follows
-                            # the `if`; as an `else` arm it would be reached by a `goto` from the test.
-                                merge_block is None
-                                and not goto_block.successors
-                                and isinstance(goto_block.terminator, TerminatorReturn)
-                                and len(goto_block.instructions) > 2
-                                and not self._reaches_itself(then_entry)
-                                and self._arm_tests_into(then_entry, goto_block)
-                        )
-                        or (
-                            # `if (n > 0) { for (...) { ... } } tail`: the loop the guard
-                            # skips ends into the very code the guard jumps to (its exit
-                            # edge is the one of `tail`), so `tail` follows the `if`.
-                            # Other exits of the loop (a `return`, a `break` elsewhere)
-                            # make the post-dominator a later block, which hides it.
-                                isinstance(then_root, LoopRegion)
-                                and goto_block.successors
-                                and self._arm_runs_into_after_loop(then_entry, goto_block, block)
-                        )
-                        or (
-                            # `if (a) goto T; ...; if (b) goto T; return x; T: <body>; return y`: the arm's
-                            # last test jumps to the branch target and falls into a lone `return`; the
-                            # body follows the `if` (96/8976: the `typeof r === "number"` re-test).
-                                merge_block is None
-                                and isinstance(goto_block.terminator, TerminatorReturn)
-                                and goto_block.instructions
-                                and self._arm_tests_into_past_a_return(then_entry, goto_block, branch.condition)
-                        )
-                        or (
-                            # Only once the shared returns were copied (a retry): the arm's other exits
-                            # are real `return`s then, so an arm that runs on into the branch target
-                            # leaves the target after the `if`, not in an `else` arm that would print it
-                            # on the branch's own path only (98/10128, 96/11046: the loop tail entered by
-                            # the `is()` test and fallen into by the last check).
-                                (
-                                        not is_constant_comparison(branch.condition)
-                                        or self._arm_retests_constant(then_entry, goto_block, branch.condition)
-                                        or self._arm_falls_into_after_private_returns(then_entry, goto_block, block)
-                                )
-                                and goto_block.successors
-                                and self._arm_falls_into(
-                            then_entry, goto_block, block,
-                            exits_must_return=not getattr(self.cfg, "duplicated_returns", False),
-                        )
-                        )
-                        or (
-                            # `if (a) { if (b) return x; } tail`: the arm's guard
-                            # falls through into the very code the outer branch
-                            # jumps to, which only ends the function, so no
-                            # post-dominator exists to say it is a join.
-                                merge_block is None
-                                and self._arm_guard_falls_into(region, then_entry, goto_block, block)
+                self._arm_leaves_the_region(region, then_start, goto_block)
+                or (
+                        # Only once shared returns were given private copies:
+                        # until then the arm's own exit can still be the block
+                        # the else side owns, and a join would drop it silently.
+                        getattr(self.cfg, "duplicated_returns", False)
+                        and merge_block is None
+                        and self._arm_tests_into(then_entry, goto_block)
+                )
+                or (
+                        # `if (a) { if (b) return x; else goto tail } tail`: the arm's
+                        # own test jumps to the code the outer branch skips to, and
+                        # that code goes on (no exit block): it is the join.
+                        merge_block is None
+                        and goto_block.successors
+                        and not self._reaches_itself(then_entry)
+                        and (
+                                self._arm_tests_into(then_entry, goto_block)
+                                or self._arm_runs_into(then_entry, goto_block, block)
                         )
                 )
+                or (
+                        # `if (a) { ...; x(); } return null` where the branch skips to a
+                        # shared `return` and the arm's last block runs on into it: the
+                        # `return` follows the `if`; as an `else` arm it would leave the
+                        # arm's end without it.
+                        merge_block is None
+                        and not goto_block.successors
+                        and isinstance(goto_block.terminator, TerminatorReturn)
+                        and self._arm_runs_into(then_entry, goto_block, block, outside_loops=True)
+                )
+                or (
+                        # `if (a) { ...; if (!ok) throw e; } return body`: the arm's own test jumps to
+                        # a `return` that is a whole body (98/9633: the object built after the
+                        # `signal` check), and the arm ends in a `throw` otherwise. The body follows
+                        # the `if`; as an `else` arm it would be reached by a `goto` from the test.
+                        merge_block is None
+                        and not goto_block.successors
+                        and isinstance(goto_block.terminator, TerminatorReturn)
+                        and len(goto_block.instructions) > 2
+                        and not self._reaches_itself(then_entry)
+                        and self._arm_tests_into(then_entry, goto_block)
+                )
+                or (
+                        # `if (n > 0) { for (...) { ... } } tail`: the loop the guard
+                        # skips ends into the very code the guard jumps to (its exit
+                        # edge is the one of `tail`), so `tail` follows the `if`.
+                        # Other exits of the loop (a `return`, a `break` elsewhere)
+                        # make the post-dominator a later block, which hides it.
+                        isinstance(then_root, LoopRegion)
+                        and goto_block.successors
+                        and self._arm_runs_into_after_loop(then_entry, goto_block, block)
+                )
+                or (
+                        # `if (a) goto T; ...; if (b) goto T; return x; T: <body>; return y`: the arm's
+                        # last test jumps to the branch target and falls into a lone `return`; the
+                        # body follows the `if` (96/8976: the `typeof r === "number"` re-test).
+                        merge_block is None
+                        and isinstance(goto_block.terminator, TerminatorReturn)
+                        and goto_block.instructions
+                        and self._arm_tests_into_past_a_return(then_entry, goto_block, branch.condition)
+                )
+                or (
+                        # Only once the shared returns were copied (a retry): the arm's other exits
+                        # are real `return`s then, so an arm that runs on into the branch target
+                        # leaves the target after the `if`, not in an `else` arm that would print it
+                        # on the branch's own path only (98/10128, 96/11046: the loop tail entered by
+                        # the `is()` test and fallen into by the last check).
+                        (
+                                not is_constant_comparison(branch.condition)
+                                or self._arm_retests_constant(then_entry, goto_block, branch.condition)
+                                or self._arm_falls_into_after_private_returns(then_entry, goto_block, block)
+                        )
+                        and goto_block.successors
+                        and self._arm_falls_into(
+                    then_entry, goto_block, block,
+                    exits_must_return=not getattr(self.cfg, "duplicated_returns", False),
+                )
+                )
+                or (
+                        # `if (a) { if (b) return x; } tail`: the arm's guard
+                        # falls through into the very code the outer branch
+                        # jumps to, which only ends the function, so no
+                        # post-dominator exists to say it is a join.
+                        merge_block is None
+                        and self._arm_guard_falls_into(region, then_entry, goto_block, block)
+                )
+        )
                 and any(
             pred is not block and self.cfg.dominator_tree.dominates(then_entry, pred)
             for pred in goto_block.predecessors
