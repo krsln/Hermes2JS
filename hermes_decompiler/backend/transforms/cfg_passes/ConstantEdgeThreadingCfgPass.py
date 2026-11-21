@@ -13,17 +13,20 @@ structurer see as an ordinary shared tail instead of a value no test can own (96
 
 from __future__ import annotations
 
+import copy
 import dataclasses
 
-from hermes_decompiler.backend.analysis.cfg import CFG
+from hermes_decompiler.backend.analysis.cfg import CFG, BasicBlock
 from hermes_decompiler.ir.expressions import Identifier, Literal, UnaryExpression
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorReturn
+from hermes_decompiler.backend.transforms.cfg_passes._instruction_clone import clone_instruction
 from hermes_decompiler.backend.transforms.shared import is_dead_on_entry, mentions_register, reads_operand
 
 
 class ConstantEdgeThreadingCfgPass:
     def __init__(self, cfg: CFG):
         self.cfg = cfg
+        self._constants: dict | None = None
 
     def run(self) -> int:
         if self.cfg.exception_handlers:
@@ -105,9 +108,11 @@ class ConstantEdgeThreadingCfgPass:
             return None
 
         register, negated = test
+        constants = self._constant_registers()
         loads = [
             i for i in block.instructions
-            if i.terminator is None and i.dest_reg == register and isinstance(i.value, Literal) and i.statement is None
+            if i.terminator is None and i.dest_reg == register and i.statement is None
+               and self._literal_of(i.value, constants) is not None
         ]
 
         if not loads:
@@ -131,14 +136,26 @@ class ConstantEdgeThreadingCfgPass:
         if taken_of_join is None or fall_of_join is None or taken_of_join is fall_of_join:
             return None
 
-        truthy = bool(load.value.value)
+        truthy = bool(self._literal_of(load.value, constants).value)
         condition_holds = truthy != negated
         decided = taken_of_join if condition_holds else fall_of_join
 
-        if decided in (block, join) or not is_dead_on_entry(decided, register, set()):
+        if decided in (block, join):
             return None
 
+        returned = None
+
+        if not is_dead_on_entry(decided, register, set()):
+            # `J`'s side is a lone `return rN`: this edge returns the constant itself (98/5730 `sortRoutes`).
+            returned = self._lone_return_of(decided, register)
+
+            if returned is None:
+                return None
+
         block.instructions.remove(load)
+
+        if returned is not None:
+            decided = self._returning_literal(decided, self._literal_of(load.value, constants))
 
         retargeted = dataclasses.replace(terminator, target=decided.address)
         block.instructions[-1].terminator = retargeted
@@ -148,6 +165,66 @@ class ConstantEdgeThreadingCfgPass:
         decided.predecessors.append(block)
 
         return join
+
+    @staticmethod
+    def _lone_return_of(block, register: int):
+        """The block's one instruction if it is `return rN` and nothing else."""
+        if len(block.instructions) != 1 or block.successors:
+            return None
+
+        instruction = block.instructions[0]
+        terminator = instruction.terminator
+
+        if not isinstance(terminator, TerminatorReturn) or instruction.terminator is not block.terminator:
+            return None
+
+        value = terminator.value
+
+        return instruction if isinstance(value, Identifier) and value.name == f"r{register}" else None
+
+    def _returning_literal(self, original, literal):
+        """A block of its own that returns `literal`, the copy of the lone `return rN` block `original`."""
+        blocks = self.cfg.blocks
+        clone = BasicBlock(max(b.id for b in blocks) + 1, max(b.address for b in blocks) + 1)
+        returned = dataclasses.replace(original.terminator, value=copy.deepcopy(literal))
+        duplicate = clone_instruction(original.instructions[0], terminator=returned)
+        duplicate.value = copy.deepcopy(literal)
+        duplicate.statement = dataclasses.replace(original.instructions[0].statement, argument=copy.deepcopy(literal))
+        clone.instructions.append(duplicate)
+        clone.terminator = returned
+        blocks.append(clone)
+
+        return clone
+
+    def _constant_registers(self) -> dict:
+        """Registers written once in the whole function, by a literal load: `r4 = 1` ahead of a loop, copied into
+        a join register on each edge (`r0 = r4`, 98/5730 `sortRoutes`)."""
+        if self._constants is None:
+            writes: dict = {}
+
+            for block in self.cfg.blocks:
+                for instruction in block.instructions:
+                    if instruction.terminator is None and instruction.dest_reg is not None:
+                        writes.setdefault(instruction.dest_reg, []).append(instruction)
+
+            self._constants = {
+                register: instructions[0].value for register, instructions in writes.items()
+                if len(instructions) == 1 and isinstance(instructions[0].value, Literal)
+                   and instructions[0].statement is None
+            }
+
+        return self._constants
+
+    @staticmethod
+    def _literal_of(value, constants: dict):
+        """The literal `value` is, or names through a register that only ever holds one."""
+        if isinstance(value, Literal):
+            return value
+
+        if isinstance(value, Identifier) and value.name[:1] == "r" and value.name[1:].isdigit():
+            return constants.get(int(value.name[1:]))
+
+        return None
 
     @staticmethod
     def _reads(instruction, register: int) -> bool:

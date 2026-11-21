@@ -1,0 +1,132 @@
+
+=> [Function #5730 "sortRoutes" of 498 bytes]: 3 params, frame size=25, strict=1, exc handler=0, debug info=0  @ offset 0x001bab38
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 10, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 11, UInt8: 2>
+==> 00000006: <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 0000000b: <JmpFalse>: <Addr8: 16, Reg8: 12>  # Address: 0000001b
+==> 0000000e: <GetByIdShort>: <Reg8: 12, Reg8: 11, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 00000013: <JmpTrue>: <Addr8: 8, Reg8: 12>  # Address: 0000001b
+==> 00000016: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 00000019: <Ret>: <Reg8: 0>
+==> 0000001b: <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 00000020: <JmpTrue>: <Addr8: 19, Reg8: 12>  # Address: 00000033
+==> 00000023: <GetByIdShort>: <Reg8: 12, Reg8: 11, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 00000028: <JmpFalse>: <Addr8: 11, Reg8: 12>  # Address: 00000033
+==> 0000002b: <LoadConstInt>: <Reg8: 0, Imm32: -1>
+==> 00000031: <Ret>: <Reg8: 0>
+==> 00000033: <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 00000038: <JmpFalse>: <Addr8: 14, Reg8: 12>  # Address: 00000046
+==> 0000003b: <GetByIdShort>: <Reg8: 12, Reg8: 11, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 00000040: <JmpTrueLong>: <Addr32: 144, Reg8: 12>  # Address: 000000d0
+==> 00000046: <GetParentEnvironment>: <Reg8: 12, UInt8: 0>
+==> 00000049: <GetByIdShort>: <Reg8: 13, Reg8: 10, UInt8: 1, string_id: 221>  # String: 'route' (Identifier)
+==> 0000004e: <LoadConstString>: <Reg8: 14, string_id: 164>  # String: 'index' (Identifier)
+==> 00000052: <StrictEq>: <Reg8: 8, Reg8: 13, Reg8: 14>
+==> 00000056: <JmpTrue>: <Addr8: 31, Reg8: 8>  # Address: 00000075
+==> 00000059: <LoadFromEnvironment>: <Reg8: 13, Reg8: 12, UInt8: 0>
+==> 0000005d: <GetById>: <Reg8: 15, Reg8: 13, UInt8: 2, string_id: 17632>  # String: 'matchGroupName' (Identifier)
+==> 00000063: <GetByIdShort>: <Reg8: 13, Reg8: 10, UInt8: 1, string_id: 221>  # String: 'route' (Identifier)
+==> 00000068: <LoadConstUndefined>: <Reg8: 7>
+==> 0000006a: <Call2>: <Reg8: 13, Reg8: 15, Reg8: 7, Reg8: 13>
+==> 0000006f: <LoadConstNull>: <Reg8: 7>
+==> 00000071: <Neq>: <Reg8: 8, Reg8: 13, Reg8: 7>
+==> 00000075: <GetByIdShort>: <Reg8: 13, Reg8: 11, UInt8: 1, string_id: 221>  # String: 'route' (Identifier)
+==> 0000007a: <StrictEq>: <Reg8: 7, Reg8: 13, Reg8: 14>
+==> 0000007e: <JmpTrue>: <Addr8: 31, Reg8: 7>  # Address: 0000009d
+==> 00000081: <LoadFromEnvironment>: <Reg8: 12, Reg8: 12, UInt8: 0>
+==> 00000085: <GetById>: <Reg8: 13, Reg8: 12, UInt8: 2, string_id: 17632>  # String: 'matchGroupName' (Identifier)
+==> 0000008b: <GetByIdShort>: <Reg8: 12, Reg8: 11, UInt8: 1, string_id: 221>  # String: 'route' (Identifier)
+==> 00000090: <LoadConstUndefined>: <Reg8: 9>
+==> 00000092: <Call2>: <Reg8: 12, Reg8: 13, Reg8: 9, Reg8: 12>
+==> 00000097: <LoadConstNull>: <Reg8: 9>
+==> 00000099: <Neq>: <Reg8: 7, Reg8: 12, Reg8: 9>
+==> 0000009d: <JmpFalse>: <Addr8: 14, Reg8: 8>  # Address: 000000ab
+==> 000000a0: <JmpTrue>: <Addr8: 11, Reg8: 7>  # Address: 000000ab
+==> 000000a3: <LoadConstInt>: <Reg8: 0, Imm32: -1>
+==> 000000a9: <Ret>: <Reg8: 0>
+==> 000000ab: <JmpTrue>: <Addr8: 11, Reg8: 8>  # Address: 000000b6
+==> 000000ae: <JmpFalse>: <Addr8: 8, Reg8: 7>  # Address: 000000b6
+==> 000000b1: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 000000b4: <Ret>: <Reg8: 0>
+==> 000000b6: <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 1, string_id: 221>  # String: 'route' (Identifier)
+==> 000000bb: <GetByIdShort>: <Reg8: 13, Reg8: 12, UInt8: 3, string_id: 177>  # String: 'length' (Identifier)
+==> 000000c0: <GetByIdShort>: <Reg8: 12, Reg8: 11, UInt8: 1, string_id: 221>  # String: 'route' (Identifier)
+==> 000000c5: <GetByIdShort>: <Reg8: 12, Reg8: 12, UInt8: 3, string_id: 177>  # String: 'length' (Identifier)
+==> 000000ca: <Sub>: <Reg8: 12, Reg8: 13, Reg8: 12>
+==> 000000ce: <Ret>: <Reg8: 12>
+==> 000000d0: <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 000000d5: <GetByIdShort>: <Reg8: 13, Reg8: 12, UInt8: 3, string_id: 177>  # String: 'length' (Identifier)
+==> 000000da: <GetByIdShort>: <Reg8: 12, Reg8: 11, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 000000df: <GetByIdShort>: <Reg8: 12, Reg8: 12, UInt8: 3, string_id: 177>  # String: 'length' (Identifier)
+==> 000000e4: <JStrictNotEqualLong>: <Addr32: 244, Reg8: 13, Reg8: 12>  # Address: 000001d8
+==> 000000eb: <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 000000f0: <GetByIdShort>: <Reg8: 12, Reg8: 12, UInt8: 3, string_id: 177>  # String: 'length' (Identifier)
+==> 000000f5: <LoadConstZero>: <Reg8: 3>
+==> 000000f7: <Less>: <Reg8: 7, Reg8: 3, Reg8: 12>
+==> 000000fb: <LoadConstUInt8>: <Reg8: 4, UInt8: 1>
+==> 000000fe: <LoadConstInt>: <Reg8: 5, Imm32: -1>
+==> 00000104: <LoadConstZero>: <Reg8: 2>
+==> 00000106: <JmpFalseLong>: <Addr32: 204, Reg8: 7>  # Address: 000001d2
+==> 0000010c: <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 00000111: <GetByVal>: <Reg8: 13, Reg8: 12, Reg8: 2>
+==> 00000115: <GetByIdShort>: <Reg8: 12, Reg8: 11, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 0000011a: <GetByVal>: <Reg8: 12, Reg8: 12, Reg8: 2>
+==> 0000011e: <GetById>: <Reg8: 14, Reg8: 13, UInt8: 4, string_id: 8017>  # String: 'notFound' (Identifier)
+==> 00000124: <Mov>: <Reg8: 6, Reg8: 2>
+==> 00000127: <JmpFalse>: <Addr8: 61, Reg8: 14>  # Address: 00000164
+==> 0000012a: <GetById>: <Reg8: 14, Reg8: 12, UInt8: 4, string_id: 8017>  # String: 'notFound' (Identifier)
+==> 00000130: <JmpFalse>: <Addr8: 52, Reg8: 14>  # Address: 00000164
+==> 00000133: <GetById>: <Reg8: 14, Reg8: 13, UInt8: 5, string_id: 7309>  # String: 'deep' (Identifier)
+==> 00000139: <JmpFalse>: <Addr8: 15, Reg8: 14>  # Address: 00000148
+==> 0000013c: <GetById>: <Reg8: 14, Reg8: 12, UInt8: 5, string_id: 7309>  # String: 'deep' (Identifier)
+==> 00000142: <Mov>: <Reg8: 0, Reg8: 4>
+==> 00000145: <JmpFalse>: <Addr8: 28, Reg8: 14>  # Address: 00000161
+==> 00000148: <GetById>: <Reg8: 14, Reg8: 13, UInt8: 5, string_id: 7309>  # String: 'deep' (Identifier)
+==> 0000014e: <LoadConstZero>: <Reg8: 0>
+==> 00000150: <JmpTrue>: <Addr8: 17, Reg8: 14>  # Address: 00000161
+==> 00000153: <GetById>: <Reg8: 14, Reg8: 12, UInt8: 5, string_id: 7309>  # String: 'deep' (Identifier)
+==> 00000159: <LoadConstZero>: <Reg8: 0>
+==> 0000015b: <JmpFalse>: <Addr8: 6, Reg8: 14>  # Address: 00000161
+==> 0000015e: <Mov>: <Reg8: 0, Reg8: 5>
+==> 00000161: <JmpTrue>: <Addr8: 117, Reg8: 0>  # Address: 000001d6
+==> 00000164: <GetById>: <Reg8: 14, Reg8: 13, UInt8: 4, string_id: 8017>  # String: 'notFound' (Identifier)
+==> 0000016a: <JmpFalse>: <Addr8: 14, Reg8: 14>  # Address: 00000178
+==> 0000016d: <GetById>: <Reg8: 14, Reg8: 12, UInt8: 4, string_id: 8017>  # String: 'notFound' (Identifier)
+==> 00000173: <JmpTrue>: <Addr8: 5, Reg8: 14>  # Address: 00000178
+==> 00000176: <Ret>: <Reg8: 4>
+==> 00000178: <GetById>: <Reg8: 14, Reg8: 13, UInt8: 4, string_id: 8017>  # String: 'notFound' (Identifier)
+==> 0000017e: <JmpTrue>: <Addr8: 14, Reg8: 14>  # Address: 0000018c
+==> 00000181: <GetById>: <Reg8: 14, Reg8: 12, UInt8: 4, string_id: 8017>  # String: 'notFound' (Identifier)
+==> 00000187: <JmpFalse>: <Addr8: 5, Reg8: 14>  # Address: 0000018c
+==> 0000018a: <Ret>: <Reg8: 5>
+==> 0000018c: <GetById>: <Reg8: 14, Reg8: 13, UInt8: 5, string_id: 7309>  # String: 'deep' (Identifier)
+==> 00000192: <JmpFalse>: <Addr8: 15, Reg8: 14>  # Address: 000001a1
+==> 00000195: <GetById>: <Reg8: 14, Reg8: 12, UInt8: 5, string_id: 7309>  # String: 'deep' (Identifier)
+==> 0000019b: <Mov>: <Reg8: 1, Reg8: 4>
+==> 0000019e: <JmpFalse>: <Addr8: 28, Reg8: 14>  # Address: 000001ba
+==> 000001a1: <GetById>: <Reg8: 13, Reg8: 13, UInt8: 5, string_id: 7309>  # String: 'deep' (Identifier)
+==> 000001a7: <LoadConstZero>: <Reg8: 1>
+==> 000001a9: <JmpTrue>: <Addr8: 17, Reg8: 13>  # Address: 000001ba
+==> 000001ac: <GetById>: <Reg8: 12, Reg8: 12, UInt8: 5, string_id: 7309>  # String: 'deep' (Identifier)
+==> 000001b2: <LoadConstZero>: <Reg8: 1>
+==> 000001b4: <JmpFalse>: <Addr8: 6, Reg8: 12>  # Address: 000001ba
+==> 000001b7: <Mov>: <Reg8: 1, Reg8: 5>
+==> 000001ba: <JmpTrue>: <Addr8: 26, Reg8: 1>  # Address: 000001d4
+==> 000001bd: <AddN>: <Reg8: 2, Reg8: 6, Reg8: 4>
+==> 000001c1: <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 000001c6: <GetByIdShort>: <Reg8: 12, Reg8: 12, UInt8: 3, string_id: 177>  # String: 'length' (Identifier)
+==> 000001cb: <JLessLong>: <Addr32: -191, Reg8: 2, Reg8: 12>  # Address: 0000010c
+==> 000001d2: <Ret>: <Reg8: 3>
+==> 000001d4: <Ret>: <Reg8: 1>
+==> 000001d6: <Ret>: <Reg8: 0>
+==> 000001d8: <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 000001dd: <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 3, string_id: 177>  # String: 'length' (Identifier)
+==> 000001e2: <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 0, string_id: 129>  # String: 'dynamic' (Identifier)
+==> 000001e7: <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 3, string_id: 177>  # String: 'length' (Identifier)
+==> 000001ec: <Sub>: <Reg8: 10, Reg8: 11, Reg8: 10>
+==> 000001f0: <Ret>: <Reg8: 10>
+
+
