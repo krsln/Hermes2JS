@@ -138,6 +138,20 @@ class InductionVariableNamingPass(RegionPass, RegionVisitor):
 
         return False
 
+    def _read_after_the_loop(self, node: LoopRegion, register: int) -> bool:
+        """True when an enclosing loop tests `rN`, which the inner loop leaves behind for it."""
+        # An enclosing loop's own test was folded out of its latch block: the block reads nothing any more.
+        ancestor = node.parent
+
+        while ancestor is not None:
+            if isinstance(ancestor, LoopRegion) and ancestor.condition is not None \
+                    and self._reads(ancestor.condition, f"r{register}"):
+                return True
+
+            ancestor = ancestor.parent
+
+        return False
+
     def _maybe_rename(self, node: LoopRegion) -> bool:
         if node.loop_kind != LoopKind.FOR:
             return False
@@ -165,6 +179,11 @@ class InductionVariableNamingPass(RegionPass, RegionVisitor):
         # same register after the counter's last read): `i = ...; i[458](...)`
         # would call the wrong thing.
         if self._body_writes(node, old_name):
+            return False
+
+        # Code behind the loop reads the register (98/2632: the enclosing `do { } while (null !== r1)`
+        # tests what the inner loop's update left in it): `i` would never hold that value.
+        if self._read_after_the_loop(node, int(old_name[1:])):
             return False
 
         new_name = self._NAMES[self._depth]
