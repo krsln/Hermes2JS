@@ -20,5 +20,6 @@ def test_the_or_of_two_calls_is_one_condition():
     out = Decompiler.render(Decompiler.build_context(hasm, 12172, strict=False), verbose=False, raw=False)
 
     assert "goto label" not in out
-    assert '!r11 && !r10.includes("perspective")' in out
-    assert 'if (typeof r11 === "number")' in out
+    # Since F-297 the receiver copy is folded away on every crossed pair, so both tests and the `typeof` check make
+    # one `if`.
+    assert 'if ((r11 || r10.includes("perspective")) && typeof r9 === "number") {' in out

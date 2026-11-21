@@ -682,7 +682,7 @@ class ShortCircuitConditionCfgPass:
                                                               probe)
                         # A crossed test whose copy only the test reads: the exits copy the register on into
                         # registers nobody reads (`r1 = r22` at every `continue`), which liveness sees through.
-                        and not (relaxed and self._copy_dead_by_liveness(instruction, exits))
+                        and not ((relaxed or end_reads) and self._copy_dead_by_liveness(instruction, exits))
                         and not dead_copy)
                     or not (
                     # The global object is the same on every path and every reader

@@ -20,4 +20,5 @@ def test_the_three_tests_are_one_condition_before_the_for_of():
     out = Decompiler.render(Decompiler.build_context(hasm, 11000, strict=False), verbose=False, raw=False)
 
     assert "goto" not in out
-    assert "if (r3 !== null && param1.value === undefined) {" in out
+    # Since F-297 the copy `r3 = param1` is folded into the test (it is dead for both exits).
+    assert 'if (r2 === "object" && (param1 !== null && param1.value === undefined)) {' in out
