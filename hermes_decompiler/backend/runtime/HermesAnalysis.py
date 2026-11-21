@@ -478,21 +478,24 @@ class HermesAnalysis:
     # that reach it (98/2330, 96/7888). Last for the same reason: it only touches what nothing else structured.
     _TAIL_COPY_RUNG = 13
 
+    # The same pass on rung 1's layout: rung 10's copies leave a `goto` into a block the copies then split (98/9589).
+    _TAIL_COPY_PLAIN_RUNG = 14
+
     @classmethod
     def _rung(cls, level) -> "_Rung":
-        """What retry `level` (False for the first attempt, then 1..13) switches on; see `_Rung`."""
+        """What retry `level` (False for the first attempt, then 1..14) switches on; see `_Rung`."""
         if not level:
             return _Rung()
 
         # The guard fold, threading and tail-copy rungs rebuild a layout of their own on top of rung 1 or 10.
-        base = 1 if level == cls._FOLD_GUARDS_RUNG else min(level, 10)
+        base = 1 if level in (cls._FOLD_GUARDS_RUNG, cls._TAIL_COPY_PLAIN_RUNG) else min(level, 10)
 
         return _Rung(
             copies=True, widen=base >= 2, regions=base >= 3, statements=base >= 4, own_values=base >= 5,
             per_predecessor=base >= 5, large=base >= 6, decided_threading=base >= 6, constant_sink=base >= 7,
             bridge_everywhere=base >= 8, sibling_loop_exits=base >= 9, relocate_terminal_tails=base >= 10,
             fold_guards=level == cls._FOLD_GUARDS_RUNG, edge_threading=level == cls._THREADING_RUNG,
-            tail_copy=level == cls._TAIL_COPY_RUNG,
+            tail_copy=level in (cls._TAIL_COPY_RUNG, cls._TAIL_COPY_PLAIN_RUNG),
         )
 
     def generate_js(
@@ -522,7 +525,7 @@ class HermesAnalysis:
             whole = []
 
             for level in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, self._FOLD_GUARDS_RUNG, self._THREADING_RUNG,
-                          self._TAIL_COPY_RUNG):
+                          self._TAIL_COPY_RUNG, self._TAIL_COPY_PLAIN_RUNG):
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if not retry[3]:
                     continue

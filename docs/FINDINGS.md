@@ -73,6 +73,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-20 | after F-289 (constant edge threaded past a lone register test, rung 12) | 48 | 42 | n/a | n/a | 1234 passed |
 | 2026-11-20 | after F-291 (a shared tail that only returns, throws or continues is copied for its jumpers, rung 13) | 47 | 41 | n/a | n/a | 1236 passed |
 | 2026-11-21 | after F-293 (arms that `break` still form an `if`; no `continue` into a latch that prints statements) | 47 | 40 | n/a | n/a | 1237 passed |
+| 2026-11-21 | after F-294 (tail copy on rung 1's layout, rung 14) | 47 | 39 | n/a | n/a | 1238 passed |
 
 - Rows from 2026-10-17 to 2026-11-09 and the notes that explain them (the 98/2619 comparability, F-31/F-32 and the first two `pathdefs` rows) are in the archive appendix "measurement rows".
 - `goto`: number of functions whose output still contains `goto label_N`.
@@ -80,7 +81,7 @@ row; a row is only added when all of its columns were measured on the same tree.
   (`scripts/audit/definite_assignment.py`, piped through `cut -d: -f1 | sort -u | wc -l`). It is a
   rough check (for-of/for-in heads and switch arms give false positives), so compare rows, not
   absolute values.
-- Where the remaining `goto` files sit (2026-11-21, after F-293, counted on the printed code): 96 has 47 `goto` files, 17 with a single `goto`, 29 with two to five, 1 with six or more, 5 generator/async (`await`, `yield`, `.next(`); 98 has 40, 14 single, 18 with two to five, 8 with six or more, 4 generator/async. Every open entry in "Open: `goto` remains" names its functions; none of the single-`goto` files is left without one.
+- Where the remaining `goto` files sit (2026-11-21, after F-294, counted on the printed code): 96 has 47 `goto` files, 17 with a single `goto`, 29 with two to five, 1 with six or more, 5 generator/async (`await`, `yield`, `.next(`); 98 has 39, 13 single, 18 with two to five, 8 with six or more, 4 generator/async. Every open entry in "Open: `goto` remains" names its functions; none of the single-`goto` files is left without one.
 - Older notes recorded `pathdefs` of 160 (96) and 193 (98) from a survey tool that is not in the
   repository; those numbers are not comparable with this column and were dropped. The per-change
   history of the `goto` count up to F-123 is in the archive appendix.
