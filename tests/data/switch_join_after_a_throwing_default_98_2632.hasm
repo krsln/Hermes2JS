@@ -1,0 +1,108 @@
+
+=> [Function #2632 "commitBeforeMutationEffects" of 439 bytes]: 3 params, frame size=28, strict=1, exc handler=1, debug info=0  @ offset 0x00174fe2
+  [Exception handlers: [start=0xa6, end=0xcf, target=0xcf] ]
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 9, UInt8: 0>
+==> 00000003: <LoadParam>: <Reg8: 1, UInt8: 2>
+==> 00000006: <Mov>: <Reg8: 8, Reg8: 1>
+==> 00000009: <StoreToEnvironmentL>: <Reg8: 9, UInt16: 267, Reg8: 1>
+==> 0000000e: <LoadConstNull>: <Reg8: 7>
+==> 00000010: <LoadConstInt>: <Reg8: 6, Imm32: 1024>
+==> 00000016: <LoadConstZero>: <Reg8: 5>
+==> 00000018: <LoadConstUInt8>: <Reg8: 4, UInt8: 1>
+==> 0000001b: <LoadConstUInt8>: <Reg8: 3, UInt8: 4>
+==> 0000001e: <LoadConstUndefined>: <Reg8: 0>
+==> 00000020: <LoadConstInt>: <Reg8: 2, Imm32: 1028>
+==> 00000026: <JStrictEqualLong>: <Addr32: 399, Reg8: 7, Reg8: 1>  # Address: 000001b5
+==> 0000002d: <LoadFromEnvironmentL>: <Reg8: 11, Reg8: 9, UInt16: 267>
+==> 00000032: <GetByIdShort>: <Reg8: 8, Reg8: 11, UInt8: 0, string_id: 99>  # String: 'child' (Identifier)
+==> 00000037: <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 1, string_id: 236>  # String: 'subtreeFlags' (Identifier)
+==> 0000003c: <BitAnd>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000040: <JStrictEqual>: <Addr8: 14, Reg8: 5, Reg8: 1>  # Address: 0000004e
+==> 00000044: <Mov>: <Reg8: 1, Reg8: 8>
+==> 00000047: <JStrictNotEqualLong>: <Addr32: 342, Reg8: 7, Reg8: 1>  # Address: 0000019d
+==> 0000004e: <LoadFromEnvironmentL>: <Reg8: 1, Reg8: 9, UInt16: 267>
+==> 00000053: <JStrictEqualLong>: <Addr32: 347, Reg8: 7, Reg8: 1>  # Address: 000001ae
+==> 0000005a: <LoadFromEnvironmentL>: <Reg8: 12, Reg8: 9, UInt16: 267>
+==> 0000005f: <GetByIdShort>: <Reg8: 10, Reg8: 12, UInt8: 2, string_id: 81>  # String: 'alternate' (Identifier)
+==> 00000064: <GetByIdShort>: <Reg8: 8, Reg8: 12, UInt8: 3, string_id: 144>  # String: 'flags' (Identifier)
+==> 00000069: <GetByIdShort>: <Reg8: 13, Reg8: 12, UInt8: 4, string_id: 194>  # String: 'tag' (Identifier)
+==> 0000006e: <UIntSwitchImm>: <Reg8: 13, UInt32: 329, Addr32: 215, UInt32: 0, UInt32: 27>  # Address: 00000145  # Jump table: [000000e4, 00000080, 00000145, 00000150, 00000150, 00000150, 00000150, 00000145, 00000145, 00000145, 00000145, 00000150, 00000145, 00000145, 00000145, 00000150, 00000145, 00000150, 00000145, 00000145, 00000145, 00000145, 00000145, 00000145, 00000145, 00000145, 00000150, 00000150]
+==> 00000080: <Mov>: <Reg8: 13, Reg8: 8>
+==> 00000083: <BitAnd>: <Reg8: 13, Reg8: 13, Reg8: 6>
+==> 00000087: <JStrictEqualLong>: <Addr32: 201, Reg8: 5, Reg8: 13>  # Address: 00000150
+==> 0000008e: <JStrictEqualLong>: <Addr32: 194, Reg8: 7, Reg8: 10>  # Address: 00000150
+==> 00000095: <LoadConstUndefined>: <Reg8: 8>
+==> 00000097: <GetByIdShort>: <Reg8: 16, Reg8: 10, UInt8: 5, string_id: 171>  # String: 'memoizedProps' (Identifier)
+==> 0000009c: <GetByIdShort>: <Reg8: 15, Reg8: 10, UInt8: 6, string_id: 182>  # String: 'memoizedState' (Identifier)
+==> 000000a1: <GetByIdShort>: <Reg8: 13, Reg8: 12, UInt8: 7, string_id: 233>  # String: 'stateNode' (Identifier)
+==> 000000a6: <LoadFromEnvironment>: <Reg8: 14, Reg8: 9, UInt8: 231>
+==> 000000aa: <GetByIdShort>: <Reg8: 10, Reg8: 12, UInt8: 8, string_id: 1>  # String: 'type' (Identifier)
+==> 000000af: <Call3>: <Reg8: 14, Reg8: 14, Reg8: 5, Reg8: 10, Reg8: 16>
+==> 000000b5: <GetById>: <Reg8: 10, Reg8: 13, UInt8: 9, string_id: 17209>  # String: 'getSnapshotBeforeUpdate' (Identifier)
+==> 000000bb: <Call3>: <Reg8: 10, Reg8: 10, Reg8: 13, Reg8: 14, Reg8: 15>
+==> 000000c1: <Mov>: <Reg8: 8, Reg8: 10>
+==> 000000c4: <PutByIdStrict>: <Reg8: 13, Reg8: 10, UInt8: 0, string_id: 15011>  # String: '__reactInternalSnapshotBeforeUpdate' (Identifier)
+==> 000000ca: <JmpLong>: <Addr32: 134>  # Address: 00000150
+==> 000000cf: <Catch>: <Reg8: 14>
+==> 000000d1: <LoadFromEnvironmentL>: <Reg8: 13, Reg8: 9, UInt16: 353>
+==> 000000d6: <GetByIdShort>: <Reg8: 10, Reg8: 12, UInt8: 10, string_id: 136>  # String: 'return' (Identifier)
+==> 000000db: <Call4>: <Reg8: 10, Reg8: 13, Reg8: 5, Reg8: 12, Reg8: 10, Reg8: 14>
+==> 000000e2: <Jmp>: <Addr8: 110>  # Address: 00000150
+==> 000000e4: <Mov>: <Reg8: 10, Reg8: 8>
+==> 000000e7: <BitAnd>: <Reg8: 10, Reg8: 10, Reg8: 3>
+==> 000000eb: <JStrictEqual>: <Addr8: 101, Reg8: 5, Reg8: 10>  # Address: 00000150
+==> 000000ef: <GetByIdShort>: <Reg8: 13, Reg8: 12, UInt8: 11, string_id: 215>  # String: 'updateQueue' (Identifier)
+==> 000000f4: <Mov>: <Reg8: 8, Reg8: 13>
+==> 000000f7: <LoadConstNull>: <Reg8: 10>
+==> 000000f9: <JStrictEqual>: <Addr8: 13, Reg8: 10, Reg8: 13>  # Address: 00000106
+==> 000000fd: <Mov>: <Reg8: 13, Reg8: 8>
+==> 00000100: <GetById>: <Reg8: 10, Reg8: 13, UInt8: 12, string_id: 7455>  # String: 'events' (Identifier)
+==> 00000106: <Mov>: <Reg8: 8, Reg8: 10>
+==> 00000109: <JStrictEqual>: <Addr8: 71, Reg8: 7, Reg8: 10>  # Address: 00000150
+==> 0000010d: <Mov>: <Reg8: 10, Reg8: 8>
+==> 00000110: <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 13, string_id: 177>  # String: 'length' (Identifier)
+==> 00000115: <Less>: <Reg8: 10, Reg8: 5, Reg8: 10>
+==> 00000119: <LoadConstZero>: <Reg8: 13>
+==> 0000011b: <JmpFalse>: <Addr8: 53, Reg8: 10>  # Address: 00000150
+==> 0000011e: <Mov>: <Reg8: 10, Reg8: 8>
+==> 00000121: <GetByVal>: <Reg8: 14, Reg8: 10, Reg8: 13>
+==> 00000125: <GetByIdShort>: <Reg8: 15, Reg8: 14, UInt8: 14, string_id: 161>  # String: 'ref' (Identifier)
+==> 0000012a: <GetById>: <Reg8: 14, Reg8: 14, UInt8: 15, string_id: 7926>  # String: 'nextImpl' (Identifier)
+==> 00000130: <PutByIdStrict>: <Reg8: 15, Reg8: 14, UInt8: 1, string_id: 8481>  # String: 'impl' (Identifier)
+==> 00000136: <AddN>: <Reg8: 13, Reg8: 13, Reg8: 4>
+==> 0000013a: <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 13, string_id: 177>  # String: 'length' (Identifier)
+==> 0000013f: <JLess>: <Addr8: -33, Reg8: 13, Reg8: 10>  # Address: 0000011e
+==> 00000143: <Jmp>: <Addr8: 13>  # Address: 00000150
+==> 00000145: <Mov>: <Reg8: 10, Reg8: 8>
+==> 00000148: <BitAnd>: <Reg8: 10, Reg8: 10, Reg8: 6>
+==> 0000014c: <JStrictNotEqual>: <Addr8: 62, Reg8: 5, Reg8: 10>  # Address: 0000018a
+==> 00000150: <GetByIdShort>: <Reg8: 10, Reg8: 12, UInt8: 16, string_id: 229>  # String: 'sibling' (Identifier)
+==> 00000155: <Mov>: <Reg8: 8, Reg8: 10>
+==> 00000158: <JStrictNotEqual>: <Addr8: 26, Reg8: 7, Reg8: 10>  # Address: 00000172
+==> 0000015c: <GetByIdShort>: <Reg8: 10, Reg8: 12, UInt8: 10, string_id: 136>  # String: 'return' (Identifier)
+==> 00000161: <StoreToEnvironmentL>: <Reg8: 9, UInt16: 267, Reg8: 10>
+==> 00000166: <Mov>: <Reg8: 1, Reg8: 10>
+==> 00000169: <JStrictNotEqualLong>: <Addr32: -271, Reg8: 7, Reg8: 1>  # Address: 0000005a
+==> 00000170: <Jmp>: <Addr8: 62>  # Address: 000001ae
+==> 00000172: <Mov>: <Reg8: 10, Reg8: 8>
+==> 00000175: <GetByIdShort>: <Reg8: 12, Reg8: 12, UInt8: 10, string_id: 136>  # String: 'return' (Identifier)
+==> 0000017a: <PutByIdStrict>: <Reg8: 10, Reg8: 12, UInt8: 2, string_id: 136>  # String: 'return' (Identifier)
+==> 00000180: <StoreToEnvironmentL>: <Reg8: 9, UInt16: 267, Reg8: 10>
+==> 00000185: <Mov>: <Reg8: 1, Reg8: 10>
+==> 00000188: <Jmp>: <Addr8: 38>  # Address: 000001ae
+==> 0000018a: <GetGlobalObject>: <Reg8: 10>
+==> 0000018c: <TryGetById>: <Reg8: 12, Reg8: 10, UInt8: 17, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000192: <LoadConstString>: <Reg8: 10, string_id: 4236>  # String: 'This unit of work tag should not have side-effects. This error is likely caused by a bug in React. Please file an issue.' (String)
+==> 00000196: <Call2>: <Reg8: 10, Reg8: 12, Reg8: 0, Reg8: 10>
+==> 0000019b: <Throw>: <Reg8: 10>
+==> 0000019d: <Mov>: <Reg8: 10, Reg8: 8>
+==> 000001a0: <PutByIdStrict>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 136>  # String: 'return' (Identifier)
+==> 000001a6: <StoreToEnvironmentL>: <Reg8: 9, UInt16: 267, Reg8: 10>
+==> 000001ab: <Mov>: <Reg8: 1, Reg8: 10>
+==> 000001ae: <JStrictNotEqualLong>: <Addr32: -385, Reg8: 7, Reg8: 1>  # Address: 0000002d
+==> 000001b5: <Ret>: <Reg8: 0>
+
+

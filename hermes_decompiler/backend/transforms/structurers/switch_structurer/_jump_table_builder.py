@@ -26,6 +26,44 @@ class _JumpTableSwitchBuilder:
         self.graph = graph
         self.cfg = cfg
 
+    def _shared_tail_item(self, region, header, resolved, default_item, target_of):
+        """The code behind the switch, when no post-dominator names it (98/2632).
+
+        A `default:` that can `throw` leaves the header without an immediate post-dominator, so the join
+        looked like one more case body (`case 3: case 4: ... <the code after the switch>`) and the other arms
+        ended in a `break` that skipped it. The join is the LAST item of the layout, a jump table target, and
+        the other arms (at least two of them, the default counting) all jump into it from their own blocks."""
+        items = [item for _, item in resolved]
+
+        if default_item is not None:
+            items.append(default_item)
+
+        try:
+            positions = {id(i): region.children.index(i) for i in items}
+        except ValueError:
+            return None
+
+        if len(items) < 3:
+            return None
+
+        last = max(items, key=lambda i: positions[id(i)])
+
+        if last is default_item or id(last) not in target_of:
+            return None
+
+        entry = target_of[id(last)]
+        first_index = min(positions.values())
+        last_index = positions[id(last)]
+        jumpers = 0
+
+        for item in region.children[first_index:last_index]:
+            blocks = [item] if isinstance(item, BasicBlock) else list(getattr(item, "covered_blocks", ()))
+
+            if any(entry in block.successors for block in blocks):
+                jumpers += 1
+
+        return last if jumpers >= 2 else None
+
     def try_build(self, region: SequenceRegion, header: BasicBlock) -> bool:
         """Try to fold `header`'s jump table into a SwitchRegion in place.
 
@@ -112,6 +150,12 @@ class _JumpTableSwitchBuilder:
 
                 if merge_item is not None:
                     end_boundary = region.children.index(merge_item)
+
+        if merge_item is None:
+            merge_item = self._shared_tail_item(region, header, resolved, default_item, target_of)
+
+            if merge_item is not None:
+                end_boundary = region.children.index(merge_item)
 
         if default_item is not None and default_item is merge_item:
             # no `default:` arm: the default jumps straight to the code behind the switch
