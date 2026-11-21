@@ -494,16 +494,24 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                 # for it anyway.
                 loop.loop_kind = LoopKind.DO_WHILE
                 loop.update_block = None
-                loop.continue_target = latch
+                loop.continue_target = self._continue_target_of_do_while(latch)
                 self._inline_condition_operands(loop, loop.condition_block)
                 return True
 
         if self._consume_guard(latch, loop, LoopKind.DO_WHILE, update_block=None):
-            loop.continue_target = latch
+            loop.continue_target = self._continue_target_of_do_while(latch)
             self._inline_condition_operands(loop, loop.condition_block)
             return True
 
         return False
+
+    @staticmethod
+    def _continue_target_of_do_while(latch: BasicBlock) -> BasicBlock | None:
+        """The latch, unless it still holds statements: `continue` runs the `while` test and nothing else, so a
+        jump to a latch that prints `r1 = r1 + 1;` ahead of it is no `continue` (98/10170)."""
+        printed = [i for i in latch.instructions if i.value is not None or i.statement is not None]
+
+        return None if printed else latch
 
     def _inline_condition_operands(self, loop: LoopRegion, block: BasicBlock | None,
                                    induction_reg: int | None = None) -> None:

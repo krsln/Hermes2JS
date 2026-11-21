@@ -23,4 +23,6 @@ def test_a_shared_label_guard_joins_the_condition():
     out = _render("guard_into_condition_96_1351.hasm", 1351)
 
     assert "goto label" not in out
-    assert 'if ("left" !== r32 && "right" !== r32) {' in out
+    # Since F-293 the loop's `break`s are taken inside an `if` arm, so an earlier rung than the guard fold gets the
+    # `switch` (`case "left": case "right":`) without a `goto`.
+    assert 'case "left":\n                    case "right":' in out

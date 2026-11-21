@@ -205,6 +205,15 @@ class _DominanceIfBuilder(RegionStructurer):
 
     # -------------------------------------------------------------
 
+    @staticmethod
+    def _is_break_stub(block: BasicBlock) -> bool:
+        """The block `LoopBreakStructurer` made for an `if (c) break;`: it keeps its branch block's address but is
+        no node of the dominator tree, so it follows the item before it like an address-less block."""
+        return (
+                len(block.instructions) == 1
+                and getattr(block.instructions[0].entry, "bytecode", "") == "<synthetic>: BreakStatement"
+        )
+
     def _convert(self, region: SequenceRegion, block: BasicBlock) -> bool:
         """Try to convert `block` into an IfRegion; return success.
 
@@ -479,7 +488,7 @@ class _DominanceIfBuilder(RegionStructurer):
 
             rep = representative_block(item)
 
-            if rep is not None and rep.address < 0 and last_side is not None:
+            if rep is not None and last_side is not None and (rep.address < 0 or self._is_break_stub(rep)):
                 # A region made only of synthetic blocks (`if (c) break;`
                 # after the loop structurers ran) has no node in the
                 # dominator tree. It stays with the item it follows:

@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion
+from hermes_decompiler.backend.regions.LoopKind import LoopKind
 from hermes_decompiler.ir.statements import ContinueStatement
-from hermes_decompiler.ir.terminators import TerminatorJump
+from hermes_decompiler.backend.transforms.shared import has_side_effects
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from ._base import RegionPass
 
 
@@ -62,6 +64,8 @@ class LoopContinueRegionPass(RegionPass, RegionVisitor):
         target = loop.continue_target
 
         if target is None:
+            self._drop_jumps_into_the_latch_statements(loop)
+
             return
 
         covered = loop.body.covered_blocks
@@ -82,6 +86,62 @@ class LoopContinueRegionPass(RegionPass, RegionVisitor):
                 continue
 
             self._convert(block, terminator)
+
+    def _drop_jumps_into_the_latch_statements(self, loop: LoopRegion) -> None:
+        """A `do-while` whose latch prints statements ahead of the `while` test has no `continue` target.
+
+        A jump to that latch from the tail of an `if` arm, with nothing after the `if`s up to the end of the body,
+        is the fall-through into those statements (a conditional one too, when its test has no effect): it is dropped (98/10170, 96/12323). Elsewhere it stays a `goto`.
+        """
+        latch = loop.condition_block
+
+        if loop.loop_kind is not LoopKind.DO_WHILE or latch is None:
+            return
+
+        for block in list(loop.body.covered_blocks):
+            terminator = block.terminator
+
+            if (
+                    block is latch
+                    or not isinstance(terminator, (TerminatorJump, TerminatorConditionalBranch))
+                    or terminator.target != latch.address
+                    or isinstance(terminator, TerminatorConditionalBranch) and has_side_effects(terminator.condition)
+                    or not block.instructions
+                    or block.instructions[-1].terminator is not terminator
+                    or not self._is_tail_of_body(block, loop, latch)
+            ):
+                continue
+
+            block.instructions.pop()
+            block.terminator = None
+
+    def _is_tail_of_body(self, block: BasicBlock, loop: LoopRegion, latch: BasicBlock) -> bool:
+        """Is `block` the last thing run in its arm, and every `if` holding it the last item of the body (bar the
+        latch, which the body ends with)?"""
+        node = block
+        region = self.graph.owner(block)
+
+        while region is not None:
+            if region is loop:
+                return False
+
+            if region.__class__.__name__ not in ("SequenceRegion", "IfRegion"):
+                return False
+
+            children = getattr(region, "children", None)
+
+            if children is not None:
+                rest = children[:-1] if region is loop.body and children and children[-1] is latch else children
+
+                if not rest or rest[-1] is not node:
+                    return False
+
+            if region is loop.body:
+                return True
+
+            node, region = region, getattr(region, "parent", None)
+
+        return False
 
     # ------------------------------------------------------------------
     # Structural validation
