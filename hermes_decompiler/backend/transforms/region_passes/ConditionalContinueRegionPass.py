@@ -4,7 +4,7 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import IfRegion, LoopRegion, RegionVisitor, SequenceRegion
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.statements import ContinueStatement
-from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.backend.transforms.shared._negation import negate_condition
 from ._base import RegionPass
 
@@ -49,13 +49,13 @@ class ConditionalContinueRegionPass(RegionPass, RegionVisitor):
 
         # A second latch: an empty block that only falls into the continue
         # target (`cloneObjectProperties`: `if (k !== K || o.k === undefined)
-        # {...} else continue;` jumps to its own copy of the back edge).
+        # {...} else continue;` jumps to its own copy of the back edge), or a block that is
+        # nothing but the jump back (98/4271 `render`: `JmpLong` to the header, a second copy
+        # next to the normal latch).
         targets = {target.address} | {
             b.address
             for b in self.cfg.blocks
-            if not b.instructions
-               and b.terminator is None
-               and list(b.successors) == [target]
+            if list(b.successors) == [target] and self._is_a_bare_back_edge(b)
         }
 
         for block in list(loop.body.covered_blocks):
@@ -72,6 +72,17 @@ class ConditionalContinueRegionPass(RegionPass, RegionVisitor):
                 continue
 
             self._convert(block, branch)
+
+    @staticmethod
+    def _is_a_bare_back_edge(block: BasicBlock) -> bool:
+        if not block.instructions:
+            return block.terminator is None
+
+        return (
+                len(block.instructions) == 1
+                and block.instructions[0].statement is None
+                and isinstance(block.instructions[0].terminator, TerminatorJump)
+        )
 
     def _owned_directly_by(self, loop: LoopRegion, block: BasicBlock) -> bool:
         region = self.graph.owner(block)

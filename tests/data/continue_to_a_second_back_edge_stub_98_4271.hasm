@@ -1,0 +1,414 @@
+
+=> [Function #4271 "render" of 1880 bytes]: 1 params, frame size=41, strict=1, exc handler=1, debug info=0  @ offset 0x0019e5fe
+  [Exception handlers: [start=0x2a3, end=0x3e4, target=0x3e4] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 6, UInt8: 0>
+==> 00000003: <GetParentEnvironment>: <Reg8: 4, UInt8: 0>
+==> 00000006: <LoadConstUndefined>: <Reg8: 3>
+==> 00000008: <LoadConstUndefined>: <Reg8: 19>
+==> 0000000a: <GetById>: <Reg8: 1, Reg8: 6, UInt8: 0, string_id: 15118>  # String: '_checkProps' (Identifier)
+==> 00000010: <GetByIdShort>: <Reg8: 0, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000015: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 6, Reg8: 0>
+==> 0000001a: <GetByIdShort>: <Reg8: 0, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 0000001f: <GetById>: <Reg8: 15, Reg8: 0, UInt8: 2, string_id: 10463>  # String: 'ListEmptyComponent' (Identifier)
+==> 00000025: <GetById>: <Reg8: 12, Reg8: 0, UInt8: 3, string_id: 13201>  # String: 'ListFooterComponent' (Identifier)
+==> 0000002b: <GetById>: <Reg8: 14, Reg8: 0, UInt8: 4, string_id: 11193>  # String: 'ListHeaderComponent' (Identifier)
+==> 00000031: <GetByIdShort>: <Reg8: 0, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000036: <GetByIdShort>: <Reg8: 13, Reg8: 0, UInt8: 5, string_id: 13>  # String: 'data' (Identifier)
+==> 0000003b: <GetById>: <Reg8: 8, Reg8: 0, UInt8: 6, string_id: 12748>  # String: 'horizontal' (Identifier)
+==> 00000041: <GetByIdShort>: <Reg8: 0, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000046: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 7, string_id: 17459>  # String: 'inverted' (Identifier)
+==> 0000004c: <LoadConstNull>: <Reg8: 2>
+==> 0000004e: <LoadConstNull>: <Reg8: 11>
+==> 00000050: <JmpFalse>: <Addr8: 53, Reg8: 0>  # Address: 00000085
+==> 00000053: <LoadFromEnvironment>: <Reg8: 0, Reg8: 4, UInt8: 9>
+==> 00000057: <GetById>: <Reg8: 1, Reg8: 0, UInt8: 8, string_id: 8322>  # String: 'horizontalOrDefault' (Identifier)
+==> 0000005d: <GetByIdShort>: <Reg8: 0, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000062: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 6, string_id: 12748>  # String: 'horizontal' (Identifier)
+==> 00000068: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 3, Reg8: 0>
+==> 0000006d: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 21>
+==> 00000071: <JmpTrue>: <Addr8: 11, Reg8: 0>  # Address: 0000007c
+==> 00000074: <GetById>: <Reg8: 0, Reg8: 1, UInt8: 9, string_id: 16646>  # String: 'verticallyInverted' (Identifier)
+==> 0000007a: <Jmp>: <Addr8: 8>  # Address: 00000082
+==> 0000007c: <GetById>: <Reg8: 0, Reg8: 1, UInt8: 10, string_id: 10936>  # String: 'horizontallyInverted' (Identifier)
+==> 00000082: <Mov>: <Reg8: 11, Reg8: 0>
+==> 00000085: <NewArray>: <Reg8: 10, UInt16: 0>
+==> 00000089: <GetGlobalObject>: <Reg8: 7>
+==> 0000008b: <TryGetById>: <Reg8: 9, Reg8: 7, UInt8: 11, string_id: 31>  # String: 'Set' (Identifier)
+==> 00000091: <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000096: <GetById>: <Reg8: 32, Reg8: 1, UInt8: 12, string_id: 17917>  # String: 'stickyHeaderIndices' (Identifier)
+==> 0000009c: <CreateThisForNew>: <Reg8: 5, Reg8: 9, UInt8: 13>
+==> 000000a0: <Mov>: <Reg8: 33, Reg8: 5>
+==> 000000a3: <Construct>: <Reg8: 1, Reg8: 9, UInt8: 2>
+==> 000000a7: <SelectObject>: <Reg8: 18, Reg8: 5, Reg8: 1>
+==> 000000ab: <NewArray>: <Reg8: 1, UInt16: 0>
+==> 000000af: <JmpFalseLong>: <Addr32: 219, Reg8: 14>  # Address: 0000018a
+==> 000000b5: <GetByIdShort>: <Reg8: 5, Reg8: 18, UInt8: 14, string_id: 11>  # String: 'has' (Identifier)
+==> 000000ba: <LoadConstZero>: <Reg8: 9>
+==> 000000bc: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 18, Reg8: 9>
+==> 000000c1: <JmpFalse>: <Addr8: 13, Reg8: 5>  # Address: 000000ce
+==> 000000c4: <GetByIdShort>: <Reg8: 5, Reg8: 1, UInt8: 15, string_id: 88>  # String: 'push' (Identifier)
+==> 000000c9: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 1, Reg8: 9>
+==> 000000ce: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 13>
+==> 000000d2: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 16, string_id: 17566>  # String: 'isValidElement' (Identifier)
+==> 000000d8: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 3, Reg8: 14>
+==> 000000dd: <Mov>: <Reg8: 22, Reg8: 14>
+==> 000000e0: <JmpTrue>: <Addr8: 23, Reg8: 5>  # Address: 000000f7
+==> 000000e3: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 17>
+==> 000000e7: <Mov>: <Reg8: 0, Reg8: 5>
+==> 000000ea: <GetByIdShort>: <Reg8: 9, Reg8: 5, UInt8: 17, string_id: 168>  # String: 'jsx' (Identifier)
+==> 000000ef: <NewObject>: <Reg8: 5>
+==> 000000f1: <Call3>: <Reg8: 22, Reg8: 9, Reg8: 3, Reg8: 14, Reg8: 5>
+==> 000000f7: <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 15, string_id: 88>  # String: 'push' (Identifier)
+==> 000000fc: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 17>
+==> 00000100: <Mov>: <Reg8: 0, Reg8: 5>
+==> 00000103: <GetByIdShort>: <Reg8: 17, Reg8: 5, UInt8: 17, string_id: 168>  # String: 'jsx' (Identifier)
+==> 00000108: <LoadFromEnvironment>: <Reg8: 14, Reg8: 4, UInt8: 8>
+==> 0000010c: <GetById>: <Reg8: 16, Reg8: 14, UInt8: 18, string_id: 14907>  # String: 'VirtualizedListCellContextProvider' (Identifier)
+==> 00000112: <NewObjectWithBuffer>: <Reg8: 14, UInt16: 1123, UInt16: 17356>  # Object: {'cellKey': null, 'children': null}
+==> 00000118: <GetById>: <Reg8: 20, Reg8: 6, UInt8: 19, string_id: 15219>  # String: '_getCellKey' (Identifier)
+==> 0000011e: <Call1>: <Reg8: 21, Reg8: 20, Reg8: 6>
+==> 00000122: <LoadConstString>: <Reg8: 20, string_id: 2061>  # String: '-header' (String)
+==> 00000126: <Add>: <Reg8: 20, Reg8: 21, Reg8: 20>
+==> 0000012a: <PutOwnBySlotIdx>: <Reg8: 14, Reg8: 20, UInt8: 0>
+==> 0000012e: <GetByIdShort>: <Reg8: 21, Reg8: 5, UInt8: 17, string_id: 168>  # String: 'jsx' (Identifier)
+==> 00000133: <LoadFromEnvironment>: <Reg8: 23, Reg8: 4, UInt8: 15>
+==> 00000137: <GetByIdShort>: <Reg8: 20, Reg8: 23, UInt8: 20, string_id: 41>  # String: 'View' (Identifier)
+==> 0000013c: <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1124, UInt16: 18062>  # Object: {'collapsable': false, 'onLayout': null, 'style': null, 'children': null}
+==> 00000142: <GetById>: <Reg8: 24, Reg8: 6, UInt8: 21, string_id: 12091>  # String: '_onLayoutHeader' (Identifier)
+==> 00000148: <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 24, UInt8: 1>
+==> 0000014c: <GetByIdShort>: <Reg8: 25, Reg8: 23, UInt8: 22, string_id: 34>  # String: 'StyleSheet' (Identifier)
+==> 00000151: <GetById>: <Reg8: 24, Reg8: 25, UInt8: 23, string_id: 6958>  # String: 'compose' (Identifier)
+==> 00000157: <GetByIdShort>: <Reg8: 23, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 0000015c: <GetById>: <Reg8: 23, Reg8: 23, UInt8: 24, string_id: 11194>  # String: 'ListHeaderComponentStyle' (Identifier)
+==> 00000162: <Call3>: <Reg8: 23, Reg8: 24, Reg8: 25, Reg8: 11, Reg8: 23>
+==> 00000168: <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 23, UInt8: 2>
+==> 0000016c: <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 22, UInt8: 3>
+==> 00000170: <Call3>: <Reg8: 5, Reg8: 21, Reg8: 3, Reg8: 20, Reg8: 5>
+==> 00000176: <PutOwnBySlotIdx>: <Reg8: 14, Reg8: 5, UInt8: 1>
+==> 0000017a: <LoadConstString>: <Reg8: 5, string_id: 1713>  # String: '$header' (String)
+==> 0000017e: <Call4>: <Reg8: 5, Reg8: 17, Reg8: 3, Reg8: 16, Reg8: 14, Reg8: 5>
+==> 00000185: <Call2>: <Reg8: 5, Reg8: 9, Reg8: 10, Reg8: 5>
+==> 0000018a: <GetByIdShort>: <Reg8: 9, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 0000018f: <GetById>: <Reg8: 5, Reg8: 9, UInt8: 25, string_id: 7591>  # String: 'getItemCount' (Identifier)
+==> 00000195: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 9, Reg8: 13>
+==> 0000019a: <LoadConstZero>: <Reg8: 9>
+==> 0000019c: <JStrictNotEqualLong>: <Addr32: 141, Reg8: 5, Reg8: 9>  # Address: 00000229
+==> 000001a3: <JmpFalseLong>: <Addr32: 134, Reg8: 15>  # Address: 00000229
+==> 000001a9: <LoadFromEnvironment>: <Reg8: 13, Reg8: 4, UInt8: 13>
+==> 000001ad: <GetById>: <Reg8: 13, Reg8: 13, UInt8: 16, string_id: 17566>  # String: 'isValidElement' (Identifier)
+==> 000001b3: <Call2>: <Reg8: 13, Reg8: 13, Reg8: 3, Reg8: 15>
+==> 000001b8: <Mov>: <Reg8: 20, Reg8: 15>
+==> 000001bb: <JmpTrue>: <Addr8: 23, Reg8: 13>  # Address: 000001d2
+==> 000001be: <LoadFromEnvironment>: <Reg8: 13, Reg8: 4, UInt8: 17>
+==> 000001c2: <Mov>: <Reg8: 0, Reg8: 13>
+==> 000001c5: <GetByIdShort>: <Reg8: 14, Reg8: 13, UInt8: 17, string_id: 168>  # String: 'jsx' (Identifier)
+==> 000001ca: <NewObject>: <Reg8: 13>
+==> 000001cc: <Call3>: <Reg8: 20, Reg8: 14, Reg8: 3, Reg8: 15, Reg8: 13>
+==> 000001d2: <GetByIdShort>: <Reg8: 14, Reg8: 10, UInt8: 15, string_id: 88>  # String: 'push' (Identifier)
+==> 000001d7: <LoadFromEnvironment>: <Reg8: 13, Reg8: 4, UInt8: 17>
+==> 000001db: <Mov>: <Reg8: 0, Reg8: 13>
+==> 000001de: <GetByIdShort>: <Reg8: 17, Reg8: 13, UInt8: 17, string_id: 168>  # String: 'jsx' (Identifier)
+==> 000001e3: <LoadFromEnvironment>: <Reg8: 13, Reg8: 4, UInt8: 8>
+==> 000001e7: <GetById>: <Reg8: 16, Reg8: 13, UInt8: 18, string_id: 14907>  # String: 'VirtualizedListCellContextProvider' (Identifier)
+==> 000001ed: <NewObjectWithBuffer>: <Reg8: 15, UInt16: 1123, UInt16: 17356>  # Object: {'cellKey': null, 'children': null}
+==> 000001f3: <GetById>: <Reg8: 13, Reg8: 6, UInt8: 19, string_id: 15219>  # String: '_getCellKey' (Identifier)
+==> 000001f9: <Call1>: <Reg8: 21, Reg8: 13, Reg8: 6>
+==> 000001fd: <LoadConstString>: <Reg8: 13, string_id: 1791>  # String: '-empty' (String)
+==> 00000201: <Add>: <Reg8: 13, Reg8: 21, Reg8: 13>
+==> 00000205: <PutOwnBySlotIdx>: <Reg8: 15, Reg8: 13, UInt8: 0>
+==> 00000209: <GetById>: <Reg8: 13, Reg8: 6, UInt8: 26, string_id: 15467>  # String: '_renderEmptyComponent' (Identifier)
+==> 0000020f: <Call3>: <Reg8: 13, Reg8: 13, Reg8: 6, Reg8: 20, Reg8: 11>
+==> 00000215: <PutOwnBySlotIdx>: <Reg8: 15, Reg8: 13, UInt8: 1>
+==> 00000219: <LoadConstString>: <Reg8: 13, string_id: 1709>  # String: '$empty' (String)
+==> 0000021d: <Call4>: <Reg8: 13, Reg8: 17, Reg8: 3, Reg8: 16, Reg8: 15, Reg8: 13>
+==> 00000224: <Call2>: <Reg8: 13, Reg8: 14, Reg8: 10, Reg8: 13>
+==> 00000229: <JNotGreaterLong>: <Addr32: 510, Reg8: 5, Reg8: 9>  # Address: 00000427
+==> 00000230: <LoadConstFalse>: <Reg8: 13>
+==> 00000232: <StoreNPToEnvironment>: <Reg8: 4, UInt8: 19, Reg8: 13>
+==> 00000236: <LoadConstString>: <Reg8: 13, string_id: 6457>  # String: '' (Identifier)
+==> 0000023a: <StoreToEnvironment>: <Reg8: 4, UInt8: 20, Reg8: 13>
+==> 0000023e: <GetById>: <Reg8: 13, Reg8: 6, UInt8: 27, string_id: 15241>  # String: '_getSpacerKey' (Identifier)
+==> 00000244: <Not>: <Reg8: 8, Reg8: 8>
+==> 00000247: <Call2>: <Reg8: 17, Reg8: 13, Reg8: 6, Reg8: 8>
+==> 0000024c: <GetByIdShort>: <Reg8: 8, Reg8: 6, UInt8: 28, string_id: 71>  # String: 'state' (Identifier)
+==> 00000251: <GetById>: <Reg8: 13, Reg8: 8, UInt8: 29, string_id: 17265>  # String: 'renderMask' (Identifier)
+==> 00000257: <GetById>: <Reg8: 8, Reg8: 13, UInt8: 30, string_id: 9144>  # String: 'enumerateRegions' (Identifier)
+==> 0000025d: <Call1>: <Reg8: 8, Reg8: 8, Reg8: 13>
+==> 00000261: <GetByIdShort>: <Reg8: 13, Reg8: 8, UInt8: 31, string_id: 177>  # String: 'length' (Identifier)
+==> 00000266: <LoadConstUInt8>: <Reg8: 16, UInt8: 1>
+==> 00000269: <Sub>: <Reg8: 13, Reg8: 13, Reg8: 16>
+==> 0000026d: <GetByVal>: <Reg8: 13, Reg8: 8, Reg8: 13>
+==> 00000271: <Eq>: <Reg8: 15, Reg8: 13, Reg8: 2>
+==> 00000275: <LoadConstUndefined>: <Reg8: 14>
+==> 00000277: <JmpTrue>: <Addr8: 9, Reg8: 15>  # Address: 00000280
+==> 0000027a: <GetById>: <Reg8: 14, Reg8: 13, UInt8: 32, string_id: 17549>  # String: 'isSpacer' (Identifier)
+==> 00000280: <LoadConstNull>: <Reg8: 15>
+==> 00000282: <JmpFalse>: <Addr8: 6, Reg8: 14>  # Address: 00000288
+==> 00000285: <Mov>: <Reg8: 15, Reg8: 13>
+==> 00000288: <Mov>: <Reg8: 14, Reg8: 8>
+==> 0000028b: <IteratorBegin>: <Reg8: 13, Reg8: 14>
+==> 0000028e: <LoadConstString>: <Reg8: 8, string_id: 1680>  # String: '$spacer-' (String)
+==> 00000292: <Mov>: <Reg8: 20, Reg8: 14>
+==> 00000295: <IteratorNext>: <Reg8: 20, Reg8: 13, Reg8: 20>
+==> 00000299: <Mov>: <Reg8: 21, Reg8: 13>
+==> 0000029c: <JStrictEqualLong>: <Addr32: 335, Reg8: 21, Reg8: 3>  # Address: 000003eb
+==> 000002a3: <Mov>: <Reg8: 19, Reg8: 20>
+==> 000002a6: <GetById>: <Reg8: 20, Reg8: 20, UInt8: 32, string_id: 17549>  # String: 'isSpacer' (Identifier)
+==> 000002ac: <JmpTrue>: <Addr8: 46, Reg8: 20>  # Address: 000002da
+==> 000002af: <GetById>: <Reg8: 22, Reg8: 6, UInt8: 33, string_id: 9037>  # String: '_pushCells' (Identifier)
+==> 000002b5: <Mov>: <Reg8: 20, Reg8: 19>
+==> 000002b8: <GetByIdShort>: <Reg8: 29, Reg8: 20, UInt8: 34, string_id: 143>  # String: 'first' (Identifier)
+==> 000002bd: <GetByIdShort>: <Reg8: 28, Reg8: 20, UInt8: 35, string_id: 175>  # String: 'last' (Identifier)
+==> 000002c2: <Mov>: <Reg8: 33, Reg8: 6>
+==> 000002c5: <Mov>: <Reg8: 32, Reg8: 10>
+==> 000002c8: <Mov>: <Reg8: 31, Reg8: 1>
+==> 000002cb: <Mov>: <Reg8: 30, Reg8: 18>
+==> 000002ce: <Mov>: <Reg8: 27, Reg8: 11>
+==> 000002d1: <Call>: <Reg8: 20, Reg8: 22, UInt8: 7>
+==> 000002d5: <JmpLong>: <Addr32: 261>  # Address: 000003da
+==> 000002da: <GetByIdShort>: <Reg8: 20, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 000002df: <GetById>: <Reg8: 20, Reg8: 20, UInt8: 36, string_id: 11756>  # String: 'disableVirtualization' (Identifier)
+==> 000002e5: <JmpTrueLong>: <Addr32: 250, Reg8: 20>  # Address: 000003df
+==> 000002eb: <Mov>: <Reg8: 20, Reg8: 19>
+==> 000002ee: <StrictEq>: <Reg8: 20, Reg8: 20, Reg8: 15>
+==> 000002f2: <JmpFalse>: <Addr8: 17, Reg8: 20>  # Address: 00000303
+==> 000002f5: <GetByIdShort>: <Reg8: 21, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 000002fa: <GetById>: <Reg8: 21, Reg8: 21, UInt8: 37, string_id: 9811>  # String: 'getItemLayout' (Identifier)
+==> 00000300: <Not>: <Reg8: 20, Reg8: 21>
+==> 00000303: <JmpTrue>: <Addr8: 13, Reg8: 20>  # Address: 00000310
+==> 00000306: <Mov>: <Reg8: 20, Reg8: 19>
+==> 00000309: <GetByIdShort>: <Reg8: 25, Reg8: 20, UInt8: 35, string_id: 175>  # String: 'last' (Identifier)
+==> 0000030e: <Jmp>: <Addr8: 51>  # Address: 00000341
+==> 00000310: <LoadFromEnvironment>: <Reg8: 20, Reg8: 4, UInt8: 0>
+==> 00000314: <GetByIdShort>: <Reg8: 23, Reg8: 20, UInt8: 38, string_id: 115>  # String: 'default' (Identifier)
+==> 00000319: <Mov>: <Reg8: 20, Reg8: 19>
+==> 0000031c: <GetByIdShort>: <Reg8: 21, Reg8: 20, UInt8: 34, string_id: 143>  # String: 'first' (Identifier)
+==> 00000321: <Sub>: <Reg8: 22, Reg8: 21, Reg8: 16>
+==> 00000325: <GetByIdShort>: <Reg8: 21, Reg8: 20, UInt8: 35, string_id: 175>  # String: 'last' (Identifier)
+==> 0000032a: <GetById>: <Reg8: 24, Reg8: 6, UInt8: 39, string_id: 11117>  # String: '_listMetrics' (Identifier)
+==> 00000330: <GetById>: <Reg8: 20, Reg8: 24, UInt8: 40, string_id: 12453>  # String: 'getHighestMeasuredCellIndex' (Identifier)
+==> 00000336: <Call1>: <Reg8: 20, Reg8: 20, Reg8: 24>
+==> 0000033a: <Call4>: <Reg8: 25, Reg8: 23, Reg8: 3, Reg8: 22, Reg8: 21, Reg8: 20>
+==> 00000341: <GetById>: <Reg8: 24, Reg8: 6, UInt8: 39, string_id: 11117>  # String: '_listMetrics' (Identifier)
+==> 00000347: <GetById>: <Reg8: 23, Reg8: 24, UInt8: 41, string_id: 17122>  # String: 'getCellMetricsApprox' (Identifier)
+==> 0000034d: <Mov>: <Reg8: 20, Reg8: 19>
+==> 00000350: <GetByIdShort>: <Reg8: 22, Reg8: 20, UInt8: 34, string_id: 143>  # String: 'first' (Identifier)
+==> 00000355: <GetByIdShort>: <Reg8: 21, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 0000035a: <Call3>: <Reg8: 21, Reg8: 23, Reg8: 24, Reg8: 22, Reg8: 21>
+==> 00000360: <GetById>: <Reg8: 24, Reg8: 6, UInt8: 39, string_id: 11117>  # String: '_listMetrics' (Identifier)
+==> 00000366: <GetById>: <Reg8: 23, Reg8: 24, UInt8: 41, string_id: 17122>  # String: 'getCellMetricsApprox' (Identifier)
+==> 0000036c: <GetByIdShort>: <Reg8: 22, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000371: <Call3>: <Reg8: 22, Reg8: 23, Reg8: 24, Reg8: 25, Reg8: 22>
+==> 00000377: <GetByIdShort>: <Reg8: 23, Reg8: 22, UInt8: 42, string_id: 192>  # String: 'offset' (Identifier)
+==> 0000037c: <GetByIdShort>: <Reg8: 22, Reg8: 22, UInt8: 31, string_id: 177>  # String: 'length' (Identifier)
+==> 00000381: <Add>: <Reg8: 22, Reg8: 23, Reg8: 22>
+==> 00000385: <GetByIdShort>: <Reg8: 21, Reg8: 21, UInt8: 42, string_id: 192>  # String: 'offset' (Identifier)
+==> 0000038a: <Sub>: <Reg8: 26, Reg8: 22, Reg8: 21>
+==> 0000038e: <GetByIdShort>: <Reg8: 21, Reg8: 10, UInt8: 15, string_id: 88>  # String: 'push' (Identifier)
+==> 00000393: <LoadFromEnvironment>: <Reg8: 22, Reg8: 4, UInt8: 17>
+==> 00000397: <Mov>: <Reg8: 0, Reg8: 22>
+==> 0000039a: <GetByIdShort>: <Reg8: 24, Reg8: 22, UInt8: 17, string_id: 168>  # String: 'jsx' (Identifier)
+==> 0000039f: <LoadFromEnvironment>: <Reg8: 22, Reg8: 4, UInt8: 15>
+==> 000003a3: <GetByIdShort>: <Reg8: 23, Reg8: 22, UInt8: 20, string_id: 41>  # String: 'View' (Identifier)
+==> 000003a8: <NewObjectWithBuffer>: <Reg8: 22, UInt16: 167, UInt16: 20>  # Object: {'style': null}
+==> 000003ae: <NewObject>: <Reg8: 25>
+==> 000003b0: <DefineOwnByVal>: <Reg8: 25, Reg8: 26, Reg8: 17, UInt8: 1>
+==> 000003b5: <PutOwnBySlotIdx>: <Reg8: 22, Reg8: 25, UInt8: 0>
+==> 000003b9: <GetByIdShort>: <Reg8: 25, Reg8: 20, UInt8: 34, string_id: 143>  # String: 'first' (Identifier)
+==> 000003be: <TryGetById>: <Reg8: 20, Reg8: 7, UInt8: 43, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 000003c4: <GetByIdShort>: <Reg8: 20, Reg8: 20, UInt8: 44, string_id: 105>  # String: 'concat' (Identifier)
+==> 000003c9: <Call2>: <Reg8: 20, Reg8: 20, Reg8: 8, Reg8: 25>
+==> 000003ce: <Call4>: <Reg8: 20, Reg8: 24, Reg8: 3, Reg8: 23, Reg8: 22, Reg8: 20>
+==> 000003d5: <Call2>: <Reg8: 20, Reg8: 21, Reg8: 10, Reg8: 20>
+==> 000003da: <JmpLong>: <Addr32: -328>  # Address: 00000292
+==> 000003df: <JmpLong>: <Addr32: -333>  # Address: 00000292
+==> 000003e4: <Catch>: <Reg8: 8>
+==> 000003e6: <IteratorClose>: <Reg8: 13, UInt8: 1>
+==> 000003e9: <Throw>: <Reg8: 8>
+==> 000003eb: <GetById>: <Reg8: 8, Reg8: 6, UInt8: 45, string_id: 15262>  # String: '_hasWarned' (Identifier)
+==> 000003f1: <GetByIdShort>: <Reg8: 8, Reg8: 8, UInt8: 46, string_id: 173>  # String: 'keys' (Identifier)
+==> 000003f6: <JmpTrue>: <Addr8: 49, Reg8: 8>  # Address: 00000427
+==> 000003f9: <LoadFromEnvironment>: <Reg8: 8, Reg8: 4, UInt8: 19>
+==> 000003fd: <JmpFalse>: <Addr8: 42, Reg8: 8>  # Address: 00000427
+==> 00000400: <TryGetById>: <Reg8: 14, Reg8: 7, UInt8: 47, string_id: 108>  # String: 'console' (Identifier)
+==> 00000406: <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 48, string_id: 253>  # String: 'warn' (Identifier)
+==> 0000040b: <LoadFromEnvironment>: <Reg8: 8, Reg8: 4, UInt8: 20>
+==> 0000040f: <LoadConstString>: <Reg8: 7, string_id: 680>  # String: 'VirtualizedList: missing keys for items, make sure to specify a key or id property on each item or provide a custom keyExtractor.' (String)
+==> 00000413: <Call3>: <Reg8: 7, Reg8: 13, Reg8: 14, Reg8: 7, Reg8: 8>
+==> 00000419: <GetById>: <Reg8: 8, Reg8: 6, UInt8: 45, string_id: 15262>  # String: '_hasWarned' (Identifier)
+==> 0000041f: <LoadConstTrue>: <Reg8: 7>
+==> 00000421: <PutByIdStrict>: <Reg8: 8, Reg8: 7, UInt8: 0, string_id: 173>  # String: 'keys' (Identifier)
+==> 00000427: <JmpFalseLong>: <Addr32: 186, Reg8: 12>  # Address: 000004e1
+==> 0000042d: <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 13>
+==> 00000431: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 16, string_id: 17566>  # String: 'isValidElement' (Identifier)
+==> 00000437: <Call2>: <Reg8: 7, Reg8: 7, Reg8: 3, Reg8: 12>
+==> 0000043c: <Mov>: <Reg8: 17, Reg8: 12>
+==> 0000043f: <JmpTrue>: <Addr8: 23, Reg8: 7>  # Address: 00000456
+==> 00000442: <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 17>
+==> 00000446: <Mov>: <Reg8: 0, Reg8: 7>
+==> 00000449: <GetByIdShort>: <Reg8: 8, Reg8: 7, UInt8: 17, string_id: 168>  # String: 'jsx' (Identifier)
+==> 0000044e: <NewObject>: <Reg8: 7>
+==> 00000450: <Call3>: <Reg8: 17, Reg8: 8, Reg8: 3, Reg8: 12, Reg8: 7>
+==> 00000456: <GetByIdShort>: <Reg8: 8, Reg8: 10, UInt8: 15, string_id: 88>  # String: 'push' (Identifier)
+==> 0000045b: <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 17>
+==> 0000045f: <Mov>: <Reg8: 0, Reg8: 7>
+==> 00000462: <GetByIdShort>: <Reg8: 14, Reg8: 7, UInt8: 17, string_id: 168>  # String: 'jsx' (Identifier)
+==> 00000467: <LoadFromEnvironment>: <Reg8: 12, Reg8: 4, UInt8: 8>
+==> 0000046b: <GetById>: <Reg8: 13, Reg8: 12, UInt8: 18, string_id: 14907>  # String: 'VirtualizedListCellContextProvider' (Identifier)
+==> 00000471: <NewObjectWithBuffer>: <Reg8: 12, UInt16: 1123, UInt16: 17356>  # Object: {'cellKey': null, 'children': null}
+==> 00000477: <GetById>: <Reg8: 15, Reg8: 6, UInt8: 49, string_id: 15227>  # String: '_getFooterCellKey' (Identifier)
+==> 0000047d: <Call1>: <Reg8: 15, Reg8: 15, Reg8: 6>
+==> 00000481: <PutOwnBySlotIdx>: <Reg8: 12, Reg8: 15, UInt8: 0>
+==> 00000485: <GetByIdShort>: <Reg8: 16, Reg8: 7, UInt8: 17, string_id: 168>  # String: 'jsx' (Identifier)
+==> 0000048a: <LoadFromEnvironment>: <Reg8: 18, Reg8: 4, UInt8: 15>
+==> 0000048e: <GetByIdShort>: <Reg8: 15, Reg8: 18, UInt8: 20, string_id: 41>  # String: 'View' (Identifier)
+==> 00000493: <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1051, UInt16: 17424>  # Object: {'onLayout': null, 'style': null, 'children': null}
+==> 00000499: <GetById>: <Reg8: 19, Reg8: 6, UInt8: 50, string_id: 11312>  # String: '_onLayoutFooter' (Identifier)
+==> 0000049f: <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 19, UInt8: 0>
+==> 000004a3: <GetByIdShort>: <Reg8: 20, Reg8: 18, UInt8: 22, string_id: 34>  # String: 'StyleSheet' (Identifier)
+==> 000004a8: <GetById>: <Reg8: 19, Reg8: 20, UInt8: 23, string_id: 6958>  # String: 'compose' (Identifier)
+==> 000004ae: <GetByIdShort>: <Reg8: 18, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 000004b3: <GetById>: <Reg8: 18, Reg8: 18, UInt8: 51, string_id: 13202>  # String: 'ListFooterComponentStyle' (Identifier)
+==> 000004b9: <Call3>: <Reg8: 18, Reg8: 19, Reg8: 20, Reg8: 11, Reg8: 18>
+==> 000004bf: <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 18, UInt8: 1>
+==> 000004c3: <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 17, UInt8: 2>
+==> 000004c7: <Call3>: <Reg8: 7, Reg8: 16, Reg8: 3, Reg8: 15, Reg8: 7>
+==> 000004cd: <PutOwnBySlotIdx>: <Reg8: 12, Reg8: 7, UInt8: 1>
+==> 000004d1: <LoadConstString>: <Reg8: 7, string_id: 428>  # String: '$footer' (String)
+==> 000004d5: <Call4>: <Reg8: 7, Reg8: 14, Reg8: 3, Reg8: 13, Reg8: 12, Reg8: 7>
+==> 000004dc: <Call2>: <Reg8: 7, Reg8: 8, Reg8: 10, Reg8: 7>
+==> 000004e1: <NewObject>: <Reg8: 8>
+==> 000004e3: <GetByIdShort>: <Reg8: 31, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 000004e8: <Mov>: <Reg8: 32, Reg8: 8>
+==> 000004eb: <CallBuiltin>: <Reg8: 7, UInt8: 46, UInt8: 3>  # Built-in function: [#46 copyDataProperties]
+==> 000004ef: <GetById>: <Reg8: 7, Reg8: 6, UInt8: 52, string_id: 9768>  # String: '_onContentSizeChange' (Identifier)
+==> 000004f5: <DefineOwnById>: <Reg8: 8, Reg8: 7, UInt8: 1, string_id: 9769>  # String: 'onContentSizeChange' (Identifier)
+==> 000004fb: <GetById>: <Reg8: 7, Reg8: 6, UInt8: 53, string_id: 7202>  # String: '_onLayout' (Identifier)
+==> 00000501: <DefineOwnById>: <Reg8: 8, Reg8: 7, UInt8: 2, string_id: 193>  # String: 'onLayout' (Identifier)
+==> 00000507: <GetById>: <Reg8: 7, Reg8: 6, UInt8: 54, string_id: 14109>  # String: '_onScroll' (Identifier)
+==> 0000050d: <DefineOwnById>: <Reg8: 8, Reg8: 7, UInt8: 3, string_id: 9022>  # String: 'onScroll' (Identifier)
+==> 00000513: <GetById>: <Reg8: 7, Reg8: 6, UInt8: 55, string_id: 14110>  # String: '_onScrollBeginDrag' (Identifier)
+==> 00000519: <DefineOwnById>: <Reg8: 8, Reg8: 7, UInt8: 4, string_id: 13067>  # String: 'onScrollBeginDrag' (Identifier)
+==> 0000051f: <GetById>: <Reg8: 7, Reg8: 6, UInt8: 56, string_id: 13277>  # String: '_onScrollEndDrag' (Identifier)
+==> 00000525: <DefineOwnById>: <Reg8: 8, Reg8: 7, UInt8: 5, string_id: 13069>  # String: 'onScrollEndDrag' (Identifier)
+==> 0000052b: <GetById>: <Reg8: 7, Reg8: 6, UInt8: 57, string_id: 11805>  # String: '_onMomentumScrollBegin' (Identifier)
+==> 00000531: <DefineOwnById>: <Reg8: 8, Reg8: 7, UInt8: 6, string_id: 13070>  # String: 'onMomentumScrollBegin' (Identifier)
+==> 00000537: <GetById>: <Reg8: 7, Reg8: 6, UInt8: 58, string_id: 14108>  # String: '_onMomentumScrollEnd' (Identifier)
+==> 0000053d: <DefineOwnById>: <Reg8: 8, Reg8: 7, UInt8: 7, string_id: 13071>  # String: 'onMomentumScrollEnd' (Identifier)
+==> 00000543: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000548: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 59, string_id: 11938>  # String: 'scrollEventThrottle' (Identifier)
+==> 0000054e: <JNotEqual>: <Addr8: 14, Reg8: 7, Reg8: 2>  # Address: 0000055c
+==> 00000552: <LoadConstDouble>: <Reg8: 7, Double: 0.0001>
+==> 0000055c: <DefineOwnById>: <Reg8: 8, Reg8: 7, UInt8: 8, string_id: 11938>  # String: 'scrollEventThrottle' (Identifier)
+==> 00000562: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000567: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 60, string_id: 17458>  # String: 'invertStickyHeaders' (Identifier)
+==> 0000056d: <JStrictNotEqual>: <Addr8: 17, Reg8: 7, Reg8: 3>  # Address: 0000057e
+==> 00000571: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000576: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 7, string_id: 17459>  # String: 'inverted' (Identifier)
+==> 0000057c: <Jmp>: <Addr8: 13>  # Address: 00000589
+==> 0000057e: <GetByIdShort>: <Reg8: 12, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000583: <GetById>: <Reg8: 7, Reg8: 12, UInt8: 60, string_id: 17458>  # String: 'invertStickyHeaders' (Identifier)
+==> 00000589: <DefineOwnById>: <Reg8: 8, Reg8: 7, UInt8: 9, string_id: 17458>  # String: 'invertStickyHeaders' (Identifier)
+==> 0000058f: <DefineOwnById>: <Reg8: 8, Reg8: 1, UInt8: 10, string_id: 17917>  # String: 'stickyHeaderIndices' (Identifier)
+==> 00000595: <JmpTrue>: <Addr8: 15, Reg8: 11>  # Address: 000005a4
+==> 00000598: <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 0000059d: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 61, string_id: 235>  # String: 'style' (Identifier)
+==> 000005a2: <Jmp>: <Addr8: 27>  # Address: 000005bd
+==> 000005a4: <NewArray>: <Reg8: 7, UInt16: 2>
+==> 000005a8: <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 11, UInt8: 0>
+==> 000005ac: <GetByIdShort>: <Reg8: 11, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 000005b1: <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 61, string_id: 235>  # String: 'style' (Identifier)
+==> 000005b6: <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 11, UInt8: 1>
+==> 000005ba: <Mov>: <Reg8: 1, Reg8: 7>
+==> 000005bd: <DefineOwnById>: <Reg8: 8, Reg8: 1, UInt8: 11, string_id: 235>  # String: 'style' (Identifier)
+==> 000005c3: <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 000005c8: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 7, string_id: 17459>  # String: 'inverted' (Identifier)
+==> 000005ce: <DefineOwnById>: <Reg8: 8, Reg8: 1, UInt8: 12, string_id: 10861>  # String: 'isInvertedVirtualizedList' (Identifier)
+==> 000005d4: <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 000005d9: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 62, string_id: 13856>  # String: 'maintainVisibleContentPosition' (Identifier)
+==> 000005df: <Neq>: <Reg8: 2, Reg8: 1, Reg8: 2>
+==> 000005e3: <LoadConstUndefined>: <Reg8: 1>
+==> 000005e5: <JmpFalse>: <Addr8: 72, Reg8: 2>  # Address: 0000062d
+==> 000005e8: <NewObject>: <Reg8: 2>
+==> 000005ea: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 000005ef: <GetById>: <Reg8: 31, Reg8: 7, UInt8: 62, string_id: 13856>  # String: 'maintainVisibleContentPosition' (Identifier)
+==> 000005f5: <Mov>: <Reg8: 32, Reg8: 2>
+==> 000005f8: <CallBuiltin>: <Reg8: 7, UInt8: 46, UInt8: 3>  # Built-in function: [#46 copyDataProperties]
+==> 000005fc: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000601: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 62, string_id: 13856>  # String: 'maintainVisibleContentPosition' (Identifier)
+==> 00000607: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 63, string_id: 17656>  # String: 'minIndexForVisible' (Identifier)
+==> 0000060d: <GetByIdShort>: <Reg8: 11, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000612: <GetById>: <Reg8: 11, Reg8: 11, UInt8: 4, string_id: 11193>  # String: 'ListHeaderComponent' (Identifier)
+==> 00000618: <LoadConstZero>: <Reg8: 9>
+==> 0000061a: <JmpFalse>: <Addr8: 6, Reg8: 11>  # Address: 00000620
+==> 0000061d: <LoadConstUInt8>: <Reg8: 9, UInt8: 1>
+==> 00000620: <Add>: <Reg8: 7, Reg8: 7, Reg8: 9>
+==> 00000624: <DefineOwnById>: <Reg8: 2, Reg8: 7, UInt8: 13, string_id: 17656>  # String: 'minIndexForVisible' (Identifier)
+==> 0000062a: <Mov>: <Reg8: 1, Reg8: 2>
+==> 0000062d: <DefineOwnById>: <Reg8: 8, Reg8: 1, UInt8: 14, string_id: 13856>  # String: 'maintainVisibleContentPosition' (Identifier)
+==> 00000633: <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 28, string_id: 71>  # String: 'state' (Identifier)
+==> 00000638: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 64, string_id: 8958>  # String: 'cellsAroundViewport' (Identifier)
+==> 0000063e: <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 35, string_id: 175>  # String: 'last' (Identifier)
+==> 00000643: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 00000646: <Sub>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 0000064a: <Less>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 0000064e: <PutByIdStrict>: <Reg8: 6, Reg8: 1, UInt8: 15, string_id: 13881>  # String: '_hasMore' (Identifier)
+==> 00000654: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 17>
+==> 00000658: <Mov>: <Reg8: 0, Reg8: 1>
+==> 0000065b: <GetByIdShort>: <Reg8: 5, Reg8: 1, UInt8: 17, string_id: 168>  # String: 'jsx' (Identifier)
+==> 00000660: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 8>
+==> 00000664: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 65, string_id: 14908>  # String: 'VirtualizedListContextProvider' (Identifier)
+==> 0000066a: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 1028, UInt16: 17356>  # Object: {'value': null, 'children': null}
+==> 00000670: <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1125, UInt16: 17985>  # Object: {'cellKey': null, 'getScrollMetrics': null, 'horizontal': null, 'getOutermostParentListRef': null, 'registerAsNestedChild': null, 'unregisterAsNestedChild': null}
+==> 00000676: <GetById>: <Reg8: 9, Reg8: 6, UInt8: 66, string_id: 15237>  # String: '_getScrollMetrics' (Identifier)
+==> 0000067c: <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 9, UInt8: 1>
+==> 00000680: <LoadFromEnvironment>: <Reg8: 9, Reg8: 4, UInt8: 9>
+==> 00000684: <GetById>: <Reg8: 11, Reg8: 9, UInt8: 8, string_id: 8322>  # String: 'horizontalOrDefault' (Identifier)
+==> 0000068a: <GetByIdShort>: <Reg8: 9, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 0000068f: <GetById>: <Reg8: 9, Reg8: 9, UInt8: 6, string_id: 12748>  # String: 'horizontal' (Identifier)
+==> 00000695: <Call2>: <Reg8: 9, Reg8: 11, Reg8: 3, Reg8: 9>
+==> 0000069a: <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 9, UInt8: 2>
+==> 0000069e: <GetById>: <Reg8: 9, Reg8: 6, UInt8: 67, string_id: 12486>  # String: '_getOutermostParentListRef' (Identifier)
+==> 000006a4: <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 9, UInt8: 3>
+==> 000006a8: <GetById>: <Reg8: 9, Reg8: 6, UInt8: 68, string_id: 10824>  # String: '_registerAsNestedChild' (Identifier)
+==> 000006ae: <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 9, UInt8: 4>
+==> 000006b2: <GetById>: <Reg8: 9, Reg8: 6, UInt8: 69, string_id: 15575>  # String: '_unregisterAsNestedChild' (Identifier)
+==> 000006b8: <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 9, UInt8: 5>
+==> 000006bc: <PutOwnBySlotIdx>: <Reg8: 1, Reg8: 7, UInt8: 0>
+==> 000006c0: <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 13>
+==> 000006c4: <GetById>: <Reg8: 9, Reg8: 7, UInt8: 70, string_id: 16471>  # String: 'cloneElement' (Identifier)
+==> 000006ca: <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 000006cf: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 71, string_id: 14423>  # String: 'renderScrollComponent' (Identifier)
+==> 000006d5: <JmpTrue>: <Addr8: 9, Reg8: 7>  # Address: 000006de
+==> 000006d8: <GetById>: <Reg8: 7, Reg8: 6, UInt8: 72, string_id: 15173>  # String: '_defaultRenderScrollComponent' (Identifier)
+==> 000006de: <Call2>: <Reg8: 8, Reg8: 7, Reg8: 3, Reg8: 8>
+==> 000006e3: <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1030, UInt16: 20>  # Object: {'ref': null}
+==> 000006e9: <GetById>: <Reg8: 11, Reg8: 6, UInt8: 73, string_id: 9884>  # String: '_captureScrollRef' (Identifier)
+==> 000006ef: <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 11, UInt8: 0>
+==> 000006f3: <Call4>: <Reg8: 7, Reg8: 9, Reg8: 3, Reg8: 8, Reg8: 7, Reg8: 10>
+==> 000006fa: <PutOwnBySlotIdx>: <Reg8: 1, Reg8: 7, UInt8: 1>
+==> 000006fe: <Call3>: <Reg8: 5, Reg8: 5, Reg8: 3, Reg8: 2, Reg8: 1>
+==> 00000704: <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 1, string_id: 210>  # String: 'props' (Identifier)
+==> 00000709: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 74, string_id: 9697>  # String: 'debug' (Identifier)
+==> 0000070f: <JmpTrue>: <Addr8: 5, Reg8: 1>  # Address: 00000714
+==> 00000712: <Ret>: <Reg8: 5>
+==> 00000714: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 75, string_id: 169>  # String: 'jsxs' (Identifier)
+==> 00000719: <LoadFromEnvironment>: <Reg8: 0, Reg8: 4, UInt8: 15>
+==> 0000071d: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 20, string_id: 41>  # String: 'View' (Identifier)
+==> 00000722: <NewObjectWithBuffer>: <Reg8: 0, UInt16: 1056, UInt16: 17356>  # Object: {'style': null, 'children': null}
+==> 00000728: <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 21>
+==> 0000072c: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 74, string_id: 9697>  # String: 'debug' (Identifier)
+==> 00000732: <PutOwnBySlotIdx>: <Reg8: 0, Reg8: 4, UInt8: 0>
+==> 00000736: <NewArray>: <Reg8: 4, UInt16: 2>
+==> 0000073a: <DefineOwnInDenseArray>: <Reg8: 4, Reg8: 5, UInt8: 0>
+==> 0000073e: <GetById>: <Reg8: 5, Reg8: 6, UInt8: 76, string_id: 15464>  # String: '_renderDebugOverlay' (Identifier)
+==> 00000744: <Call1>: <Reg8: 5, Reg8: 5, Reg8: 6>
+==> 00000748: <DefineOwnInDenseArray>: <Reg8: 4, Reg8: 5, UInt8: 1>
+==> 0000074c: <PutOwnBySlotIdx>: <Reg8: 0, Reg8: 4, UInt8: 1>
+==> 00000750: <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 0>
+==> 00000756: <Ret>: <Reg8: 0>
+
+

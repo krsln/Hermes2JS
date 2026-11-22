@@ -81,6 +81,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-21 | after F-300 (`continue` stubs behind a shared tail: rung 15) | 42 | 35 | n/a | n/a | 1245 passed |
 | 2026-11-22 | after F-301 (labeled blocks for the jumps no rung structures) | 15 | 11 | n/a | n/a | 1248 passed |
 | 2026-11-22 | after F-302 (a labeled block may close in front of an `if` whose test block is not printed) | 11 | 7 | n/a | n/a | 1249 passed |
+| 2026-11-22 | after F-303 (a branch to a second copy of the back edge is a `continue`) | 10 | 6 | n/a | n/a | 1251 passed |
 
 - Rows from 2026-10-17 to 2026-11-09 and the notes that explain them (the 98/2619 comparability, F-31/F-32 and the first two `pathdefs` rows) are in the archive appendix "measurement rows".
 - `goto`: number of functions whose output still contains `goto label_N`.
@@ -88,7 +89,7 @@ row; a row is only added when all of its columns were measured on the same tree.
   (`scripts/audit/definite_assignment.py`, piped through `cut -d: -f1 | sort -u | wc -l`). It is a
   rough check (for-of/for-in heads and switch arms give false positives), so compare rows, not
   absolute values.
-- Where the remaining `goto` files sit (2026-11-22, after F-302, counted on the printed code): 96 has 11 `goto` files, 1 with a single `goto`, 8 with two to five, 0 with six or more, 2 generator/async (`await`, `yield`, `.next(`; counted apart from the others); 98 has 7, 2 single, 1 with two to five, 3 with six or more, 1 generator/async. What is left is the jumps `label_N: { ... }` cannot express: a target that is not the start of a later sibling of an ancestor of the jump (backward or into an arm), e.g. 96/5374 `render`, 98/2614 `updateClassComponent` (its target 910 is inside an arm), 98/4271 `render`, 98/2671 `completeUnitOfWork` (16), 98/3523 `parseURL` (11).
+- Where the remaining `goto` files sit (2026-11-22, after F-303, counted on the printed code): 96 has 10 `goto` files, 0 with a single `goto`, 8 with two to five, 0 with six or more, 2 generator/async (`await`, `yield`, `.next(`; counted apart from the others); 98 has 6, 1 single, 1 with two to five, 3 with six or more, 1 generator/async. What is left is the jumps `label_N: { ... }` cannot express: a target that is not the start of a later sibling of an ancestor of the jump (backward or into an arm), e.g. 98/2614 `updateClassComponent` (its target 910 is inside an arm), 98/2671 `completeUnitOfWork` (16), 98/3523 `parseURL` (11).
 - Older notes recorded `pathdefs` of 160 (96) and 193 (98) from a survey tool that is not in the
   repository; those numbers are not comparable with this column and were dropped. The per-change
   history of the `goto` count up to F-123 is in the archive appendix.
