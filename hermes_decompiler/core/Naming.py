@@ -22,15 +22,24 @@ __all__ = ["to_js_identifier"]
 # ARE otherwise valid characters, just not in the leading position).
 _INVALID_CHAR = re.compile(r'[^A-Za-z0-9_$]')
 
+# Words that cannot name a function or be read as a variable (a class method called `return`, `delete`, `catch`,
+# `in`, `with` ... compiles to a function of that name). Strict-mode future words are included because the output
+# may be run in strict mode.
+_RESERVED = frozenset(
+    "break case catch class const continue debugger default delete do else enum export extends false finally for "
+    "function if import in instanceof new null return super switch this throw true try typeof var void while with "
+    "yield let static implements interface package private protected public await".split()
+)
+
 
 def to_js_identifier(name: str) -> str:
     """Best-effort rewrite of `name` into a syntactically valid JS identifier.
 
     A no-op for any name that's already a valid identifier (every
     ordinary source-derived name from the function table). Only
-    rewrites the cases that aren't - currently just Hermes's own
-    `?anon_0_...` synthesized-name marker - by replacing each invalid
-    character with `_` and guarding against a leading digit.
+    rewrites the cases that aren't - Hermes's own `?anon_0_...` synthesized-name
+    marker (each invalid character becomes `_`, a leading digit is guarded)
+    and a reserved word (`return` -> `return_`).
     """
     if not name:
         return "anonymous"
@@ -39,6 +48,9 @@ def to_js_identifier(name: str) -> str:
 
     if sanitized[:1].isdigit():
         sanitized = f'_{sanitized}'
+
+    if sanitized in _RESERVED:
+        sanitized = f'{sanitized}_'
 
     # Sanitizing could in principle empty the string out entirely (a
     # name made up of nothing but invalid characters) - fall back

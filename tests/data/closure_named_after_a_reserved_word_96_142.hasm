@@ -1,0 +1,22 @@
+
+=> [Function #142 "" of 54 bytes]: 2 params, frame size=3, strict=1, exc handler=0, debug info=0  @ offset 0x000fb2a4
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000005: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 1>
+==> 00000009: <NewObject>: <Reg8: 1>
+==> 0000000b: <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 143>  # Function: [#143 next of 50 bytes]: 1 params @ offset 0x000fb2da
+==> 00000010: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 2, string_id: 182>  # String: 'next' (Identifier)
+==> 00000014: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 144>  # Function: [#144 return of 189 bytes]: 2 params @ offset 0x000fb30c
+==> 00000019: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 0, string_id: 214>  # String: 'return' (Identifier)
+==> 0000001d: <NewObject>: <Reg8: 0>
+==> 0000001f: <PutNewOwnById>: <Reg8: 0, Reg8: 1, string_id: 8913>  # String: 'iterator' (Identifier)
+==> 00000024: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 1, string_id: 182>  # String: 'next' (Identifier)
+==> 00000029: <PutNewOwnById>: <Reg8: 0, Reg8: 1, string_id: 17787>  # String: 'nextMethod' (Identifier)
+==> 0000002e: <LoadConstFalse>: <Reg8: 1>
+==> 00000030: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 121>  # String: 'done' (Identifier)
+==> 00000034: <Ret>: <Reg8: 0>
+
+
