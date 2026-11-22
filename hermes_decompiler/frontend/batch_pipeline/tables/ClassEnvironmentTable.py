@@ -35,6 +35,17 @@ _CREATE_CLOSURE_RE = re.compile(
 )
 
 
+# `<Opcode>: <Reg8: N, ...` - the opcodes whose FIRST register operand is the one they write. A write to a register
+# ends what the scan knew about it (`LoadParam r1` after `CreateClosure r1`: the register no longer holds the
+# helper, so a later `Call2 r1, r1, ...` is not a call of the class factory - 98/570 stored `requireNativeModule(..)`
+# under the name of a class).
+_WRITES_FIRST_REGISTER_RE = re.compile(
+    r"<(?:Load|Get|Mov|New|Create|Call|Construct|TypeOf|Add|Sub|Mul|Div|Mod|Inc|Dec|Not|Neg|BitNot|To|Select|"
+    r"CoerceThis|Catch|Is|Eq|Neq|Less|Greater|StrictEq|StrictNeq|LShift|RShift|URshift|BitAnd|BitOr|BitXor|"
+    r"ReifyArguments)\w*>:\s*<Reg8:\s*(\d+)"
+)
+
+
 class ClassEnvironmentTable:
     """
     Batch-level `(owning function id, slot) -> real class name` lookup,
@@ -202,8 +213,19 @@ class ClassEnvironmentTable:
                 dest_reg, callee_reg = int(match.group(1)), int(match.group(2))
                 helper_id = pending_helper.get(callee_reg)
 
+                pending_helper.pop(dest_reg, None)
+                pending_names.pop(dest_reg, None)
+
                 if helper_id is not None:
                     pending_names[dest_reg] = named_result_of[helper_id]
+
+                continue
+
+            match = _WRITES_FIRST_REGISTER_RE.search(line)
+            if match:
+                written = int(match.group(1))
+                pending_helper.pop(written, None)
+                pending_names.pop(written, None)
 
                 continue
 
