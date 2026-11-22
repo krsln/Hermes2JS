@@ -1,0 +1,27 @@
+
+=> [Function #570 "" of 85 bytes]: 8 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x00117103
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 3, UInt8: 6>
+==> 00000006: <GetGlobalObject>: <Reg8: 1>
+==> 00000008: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 23>  # String: 'Object' (Identifier)
+==> 0000000e: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 116>  # String: 'defineProperty' (Identifier)
+==> 00000013: <LoadConstString>: <Reg8: 4, string_id: 46>  # String: '__esModule' (Identifier)
+==> 00000017: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 25, UInt16: 17297>  # Object: {'value': true}
+==> 0000001d: <Call4>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 3, Reg8: 4, Reg8: 1>
+==> 00000024: <CreateClosure>: <Reg8: 1, Reg8: 2, function_id: 5052>  # Function: [#5052 downloadAsync of 32 bytes]: 4 params @ offset 0x001ad96e
+==> 00000029: <PutByIdStrict>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 8345>  # String: 'downloadAsync' (Identifier)
+==> 0000002f: <LoadParam>: <Reg8: 1, UInt8: 7>
+==> 00000032: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 0>
+==> 00000036: <LoadConstUndefined>: <Reg8: 0>
+==> 00000038: <LoadParam>: <Reg8: 1, UInt8: 2>
+==> 0000003b: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 3>
+==> 00000040: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 10384>  # String: 'requireNativeModule' (Identifier)
+==> 00000046: <LoadConstString>: <Reg8: 1, string_id: 3148>  # String: 'ExpoAsset' (String)
+==> 0000004a: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 0000004f: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
+==> 00000053: <Ret>: <Reg8: 0>
+
+
