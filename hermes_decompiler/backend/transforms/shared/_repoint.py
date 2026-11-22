@@ -28,7 +28,7 @@ import dataclasses
 from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
-from hermes_decompiler.ir.expressions import BinaryExpression, Identifier
+from hermes_decompiler.ir.expressions import AssignmentExpression, BinaryExpression, Identifier, MemberExpression
 from ._purity import TRIVIAL_NODE_TYPES, has_side_effects
 
 __all__ = ["repoint_node", "repoint_references", "sibling_arm_instructions", "reclaim_definition",
@@ -81,7 +81,17 @@ def repoint_node(node, old_expr, new_expr, *, structural: bool = True):
         value = getattr(node, field.name)
 
         if isinstance(value, Node):
-            new_value, changed = repoint_node(value, old_expr, new_expr, structural=structural)
+            # The member an assignment WRITES (`this.mode = r1.mode || this.mode || null`) is a target, not a read
+            # of the folded value that happens to print the same (96/3440 `Request`): only its operands are read.
+            if (
+                    field.name == "left"
+                    and isinstance(node, AssignmentExpression)
+                    and isinstance(value, MemberExpression)
+                    and value is not old_expr
+            ):
+                new_value, changed = _repoint_operands(value, old_expr, new_expr, structural)
+            else:
+                new_value, changed = repoint_node(value, old_expr, new_expr, structural=structural)
 
             if changed:
                 updates[field.name] = new_value
@@ -105,6 +115,25 @@ def repoint_node(node, old_expr, new_expr, *, structural: bool = True):
         return node, False
 
     return _drop_repeated_operand(dataclasses.replace(node, **updates)), True
+
+
+def _repoint_operands(member, old_expr, new_expr, structural: bool):
+    """`repoint_node` over a written member's object and property, never the member itself."""
+    updates = {}
+
+    for field in dataclasses.fields(member):
+        value = getattr(member, field.name)
+
+        if isinstance(value, Node):
+            new_value, changed = repoint_node(value, old_expr, new_expr, structural=structural)
+
+            if changed:
+                updates[field.name] = new_value
+
+    if not updates:
+        return member, False
+
+    return dataclasses.replace(member, **updates), True
 
 
 def _drop_repeated_operand(node):
