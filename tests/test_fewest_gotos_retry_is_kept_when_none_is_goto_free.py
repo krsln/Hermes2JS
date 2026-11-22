@@ -3,6 +3,9 @@
 The first attempt leaves the shared `return ""` as `if (r4[7]) goto label_899;`; the retries that copy the shared
 return per jumper remove it, but three other `goto`s keep every attempt invalid, so the first attempt used to win
 with all four.
+
+Since F-301 the `goto`s that stay after every rung print as `label_N: { ... break label_N; ... }`: the retry that
+copies the shared return is still the attempt that is printed (three jumps out of nested arms, no `label_899`).
 """
 
 from pathlib import Path
@@ -17,4 +20,5 @@ def test_the_retry_with_fewer_gotos_wins_when_every_attempt_has_some():
     out = Decompiler.render(Decompiler.build_context(hasm, 2474, strict=False), verbose=False, raw=False)
 
     assert "label_899" not in out
-    assert sum("goto label_" in line and not line.startswith("//") for line in out.splitlines()) == 3
+    assert "goto" not in out
+    assert sum("break label_" in line for line in out.splitlines()) == 3

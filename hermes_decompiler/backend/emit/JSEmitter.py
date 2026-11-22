@@ -17,5 +17,5 @@ class JSEmitter:
     def __init__(self, verbose: bool = False):
         self.printer = Printer(verbose=verbose)
 
-    def emit(self, root: SequenceRegion) -> list[str]:
-        return self.printer.print_region(root)
+    def emit(self, root: SequenceRegion, *, labeled_exits: bool = False) -> list[str]:
+        return self.printer.print_region(root, labeled_exits=labeled_exits)

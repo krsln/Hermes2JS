@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
 from hermes_decompiler.backend.transforms.shared import prints_definition
 from hermes_decompiler.backend.regions import (
     SequenceRegion,
@@ -23,6 +24,7 @@ from hermes_decompiler.ir.expressions import (
     YieldExpression,
 )
 from .ExpressionPrinter import ExpressionPrinter
+from ._labeled_exits import LabeledExitPlan
 from .StatementPrinter import StatementPrinter
 from ._PrinterContext import PrinterContext
 
@@ -48,10 +50,13 @@ class RegionPrinter:
         self.ctx = context
         self.expressions = expressions
         self.statements = statements
+        self.labeled_exits = False
+        self._plan: LabeledExitPlan | None = None
 
     def print(self, region) -> list[str]:
         """Render one structured region tree."""
         self.ctx.reset()
+        self._plan = LabeledExitPlan.build(region) if self.labeled_exits else None
 
         lines: list[str] = []
 
@@ -122,6 +127,12 @@ class RegionPrinter:
                 continue
 
             if instruction.terminator is not None:
+                label = self._plan.breaks.get(id(instruction.terminator)) if self._plan else None
+
+                if label is not None:
+                    self.ctx.write(lines, self._labeled_break(instruction.terminator, label))
+                    continue
+
                 self.ctx.write(lines, self.statements.print(instruction.terminator))
                 continue
 
@@ -181,8 +192,35 @@ class RegionPrinter:
     # ------------------------------------------------------------------
 
     def _emit_sequence(self, region: SequenceRegion, lines: list[str]) -> None:
-        for child in region.children:
+        plan = self._plan
+
+        if plan is None or id(region) not in plan.sequences:
+            for child in region.children:
+                self._emit_region(child, lines)
+
+            return
+
+        depth = self.ctx.indent
+
+        for index, child in enumerate(region.children):
+            for label in plan.opens.get((id(region), index), ()):
+                self.ctx.write(lines, f"{label}: {{")
+                self.ctx.indent += 1
+
             self._emit_region(child, lines)
+
+            for _ in range(plan.closes.get((id(region), index), 0)):
+                self.ctx.indent -= 1
+                self.ctx.write(lines, "}")
+
+        self.ctx.indent = depth
+
+    def _labeled_break(self, terminator, label: str) -> str:
+        """`break label_N;` for a jump the plan wrapped in a labeled block (`_labeled_exits`)."""
+        if isinstance(terminator, TerminatorConditionalBranch):
+            return f"if ({self.expressions.print(terminator.condition)}) break {label};"
+
+        return f"break {label};"
 
     # ------------------------------------------------------------------
     # if
@@ -323,12 +361,14 @@ class RegionPrinter:
 
         return True
 
-    @classmethod
-    def _extract_single_if(cls, body: Region) -> IfRegion | None:
+    def _extract_single_if(self, body: Region) -> IfRegion | None:
         if isinstance(body, IfRegion):
             return body
 
         if not isinstance(body, SequenceRegion):
+            return None
+
+        if self._plan is not None and id(body) in self._plan.sequences:
             return None
 
         # Allow a pure prefix (const/param loads) before the single
@@ -336,7 +376,7 @@ class RegionPrinter:
         meaningful = [
             child
             for child in body.children
-            if not cls._is_skippable_prefix(child)
+            if not self._is_skippable_prefix(child)
         ]
 
         if len(meaningful) == 1:

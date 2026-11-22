@@ -79,6 +79,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-21 | after F-298 (the join behind a jump-table `switch` whose `default:` throws) | 43 | 36 | n/a | n/a | 1242 passed |
 | 2026-11-21 | after F-299 (an inner `for` keeps the register the enclosing loop tests) | 43 | 36 | n/a | n/a | 1243 passed |
 | 2026-11-21 | after F-300 (`continue` stubs behind a shared tail: rung 15) | 42 | 35 | n/a | n/a | 1245 passed |
+| 2026-11-22 | after F-301 (labeled blocks for the jumps no rung structures) | 15 | 11 | n/a | n/a | 1248 passed |
 
 - Rows from 2026-10-17 to 2026-11-09 and the notes that explain them (the 98/2619 comparability, F-31/F-32 and the first two `pathdefs` rows) are in the archive appendix "measurement rows".
 - `goto`: number of functions whose output still contains `goto label_N`.
@@ -86,7 +87,7 @@ row; a row is only added when all of its columns were measured on the same tree.
   (`scripts/audit/definite_assignment.py`, piped through `cut -d: -f1 | sort -u | wc -l`). It is a
   rough check (for-of/for-in heads and switch arms give false positives), so compare rows, not
   absolute values.
-- Where the remaining `goto` files sit (2026-11-21, after F-300, counted on the printed code): 96 has 42 `goto` files, 14 with a single `goto`, 23 with two to five, 0 with six or more, 5 generator/async (`await`, `yield`, `.next(`; counted apart from the others); 98 has 35, 13 single, 13 with two to five, 5 with six or more, 4 generator/async. Every open entry in "Open: `goto` remains" names its functions; none of the single-`goto` files is left without one.
+- Where the remaining `goto` files sit (2026-11-22, after F-301, counted on the printed code): 96 has 15 `goto` files, 2 with a single `goto`, 11 with two to five, 0 with six or more, 2 generator/async (`await`, `yield`, `.next(`; counted apart from the others); 98 has 11, 4 single, 3 with two to five, 3 with six or more, 1 generator/async. What is left is the jumps `label_N: { ... }` cannot express: a target that is not the start of a later sibling of an ancestor of the jump (backward or into an arm), e.g. 96/4124 `parseIPv6`, 96/5374 `render`, 98/2614 `updateClassComponent`, 98/2671 `completeUnitOfWork` (16). Every open entry in "Open: `goto` remains" names its functions; none of the single-`goto` files is left without one.
 - Older notes recorded `pathdefs` of 160 (96) and 193 (98) from a survey tool that is not in the
   repository; those numbers are not comparable with this column and were dropped. The per-change
   history of the `goto` count up to F-123 is in the archive appendix.

@@ -47,8 +47,10 @@ class Printer:
         """Whether verbose emission is enabled."""
         return self._context.verbose
 
-    def print_region(self, region) -> list[str]:
-        """Render a structured region tree."""
+    def print_region(self, region, *, labeled_exits: bool = False) -> list[str]:
+        """Render a structured region tree (`labeled_exits`: see `_labeled_exits`)."""
+        self._regions.labeled_exits = labeled_exits
+
         return self._regions.print(region)
 
     def print_expression(self, node) -> str:

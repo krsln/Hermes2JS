@@ -513,6 +513,7 @@ class HermesAnalysis:
         first = self._attempt(verbose, raw, creator_facts, duplicate_returns=False)
         first_lost = self._lost_edges
         chosen = first
+        levels = {id(first): False}
 
         if not raw and (self._has_goto(first[0]) or first_lost):
             # A `return` block shared between early exits in different `if`
@@ -540,6 +541,7 @@ class HermesAnalysis:
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if not retry[3]:
                     continue
+                levels[id(retry)] = level
                 if self._has_goto(retry[0]):
                     if not self._lost_edges:
                         whole.append(retry)
@@ -565,6 +567,15 @@ class HermesAnalysis:
                 if gotos(best) < gotos(first):
                     chosen = best
 
+        if not raw and self._has_goto(chosen[0]):
+            # What no rung structures prints as a labeled block with `break label_N;` (`_labeled_exits`): the same
+            # tree, the same rung, only the jumps that stay are written in a form JavaScript has.
+            labeled = self._attempt(verbose, raw, creator_facts, duplicate_returns=levels[id(chosen)],
+                                    labeled_exits=True)
+
+            if labeled[3] and not self._has_goto(labeled[0]):
+                chosen = labeled
+
         lines, reason, _, _, records = chosen  # (lines, reason, failed, ok, records)
         # Only the attempt that is used speaks: the other one's warnings
         # (unstructured blocks, ...) describe output nobody sees.
@@ -576,7 +587,7 @@ class HermesAnalysis:
 
         return self._warn_if_invalid_js(lines, reason)
 
-    def _attempt(self, verbose, raw, creator_facts, duplicate_returns):
+    def _attempt(self, verbose, raw, creator_facts, duplicate_returns, labeled_exits=False):
         """One `_generate_js` run with its log records held back.
 
         Returns `(lines, reason, failed, ok, records)`; an exception inside
@@ -595,7 +606,7 @@ class HermesAnalysis:
         failure = None
 
         try:
-            lines, reason = self._generate_js(verbose, raw, creator_facts, duplicate_returns)
+            lines, reason = self._generate_js(verbose, raw, creator_facts, duplicate_returns, labeled_exits)
             return lines, reason, False, True, handler.records
         except Exception as error:
             if not duplicate_returns:
@@ -623,6 +634,7 @@ class HermesAnalysis:
             raw: bool,
             creator_facts: CreatorFacts | None,
             duplicate_returns: int,
+            labeled_exits: bool = False,
     ) -> tuple[list[str], tuple[str, bool] | None]:
         # Clone every result before handing it to the CFG/structuring
         # passes below: those passes routinely reassign an OpcodeResult's
@@ -765,7 +777,7 @@ class HermesAnalysis:
             root = StructuralAnalyzer(cfg).build()
             self._lost_edges = getattr(cfg, "lost_edges", 0)
 
-        lines = JSEmitter(verbose).emit(root)
+        lines = JSEmitter(verbose).emit(root, labeled_exits=labeled_exits)
 
         if raw:
             # The raw renderer's whole point is the unstructured form -
