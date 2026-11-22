@@ -1,0 +1,83 @@
+
+=> [Function #6672 "?anon_0_" of 279 bytes]: 1 params, frame size=19, strict=1, exc handler=1, debug info=0  @ offset 0x001a119b
+  [Exception handlers: [start=0x33, end=0x83, target=0xad] [start=0x33, end=0x83, target=0xca] [start=0xad, end=0xca, target=0xca] ]
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <LoadParam>: <Reg8: 1, UInt8: 0>
+==> 00000004: <CreateEnvironment>: <Reg8: 2>
+==> 00000006: <ResumeGenerator>: <Reg8: 0, Reg8: 3>
+==> 00000009: <JmpTrueLong>: <Addr32: 267, Reg8: 3>  # Address: 00000114
+==> 0000000f: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
+==> 00000013: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 8300>  # String: 'downloaded' (Identifier)
+==> 00000019: <JmpTrueLong>: <Addr32: 248, Reg8: 3>  # Address: 00000111
+==> 0000001f: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 9544>  # String: 'downloading' (Identifier)
+==> 00000025: <JmpTrueLong>: <Addr32: 187, Reg8: 3>  # Address: 000000e0
+==> 0000002b: <LoadConstTrue>: <Reg8: 4>
+==> 0000002d: <PutById>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 9544>  # String: 'downloading' (Identifier)
+==> 00000033: <GetEnvironment>: <Reg8: 3, UInt8: 3>
+==> 00000036: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 6>
+==> 0000003a: <GetById>: <Reg8: 8, Reg8: 3, UInt8: 3, string_id: 11430>  # String: 'downloadAsync' (Identifier)
+==> 00000040: <GetByIdShort>: <Reg8: 7, Reg8: 1, UInt8: 4, string_id: 181>  # String: 'uri' (Identifier)
+==> 00000045: <GetByIdShort>: <Reg8: 6, Reg8: 1, UInt8: 5, string_id: 155>  # String: 'hash' (Identifier)
+==> 0000004a: <GetByIdShort>: <Reg8: 5, Reg8: 1, UInt8: 6, string_id: 1>  # String: 'type' (Identifier)
+==> 0000004f: <LoadConstUndefined>: <Reg8: 3>
+==> 00000051: <Call4>: <Reg8: 3, Reg8: 8, Reg8: 3, Reg8: 7, Reg8: 6, Reg8: 5>
+==> 00000058: <SaveGenerator>: <Addr8: 4>  # Address: 0000005c
+==> 0000005a: <Ret>: <Reg8: 3>
+==> 0000005c: <ResumeGenerator>: <Reg8: 3, Reg8: 5>
+==> 0000005f: <JmpTrue>: <Addr8: 57, Reg8: 5>  # Address: 00000098
+==> 00000062: <PutById>: <Reg8: 1, Reg8: 3, UInt8: 2, string_id: 11604>  # String: 'localUri' (Identifier)
+==> 00000068: <PutById>: <Reg8: 1, Reg8: 4, UInt8: 3, string_id: 8300>  # String: 'downloaded' (Identifier)
+==> 0000006e: <GetById>: <Reg8: 6, Reg8: 1, UInt8: 7, string_id: 15453>  # String: '_downloadCallbacks' (Identifier)
+==> 00000074: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 8, string_id: 144>  # String: 'forEach' (Identifier)
+==> 00000079: <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 6674>  # Function: [#6674  of 17 bytes]: 2 params @ offset 0x001a12df
+==> 0000007e: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 00000083: <LoadConstFalse>: <Reg8: 4>
+==> 00000085: <PutById>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 9544>  # String: 'downloading' (Identifier)
+==> 0000008b: <NewArray>: <Reg8: 4, UInt16: 0>
+==> 0000008f: <PutById>: <Reg8: 1, Reg8: 4, UInt8: 4, string_id: 15453>  # String: '_downloadCallbacks' (Identifier)
+==> 00000095: <CompleteGenerator>: <>
+==> 00000096: <Ret>: <Reg8: 1>
+==> 00000098: <LoadConstFalse>: <Reg8: 4>
+==> 0000009a: <PutById>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 9544>  # String: 'downloading' (Identifier)
+==> 000000a0: <NewArray>: <Reg8: 4, UInt16: 0>
+==> 000000a4: <PutById>: <Reg8: 1, Reg8: 4, UInt8: 4, string_id: 15453>  # String: '_downloadCallbacks' (Identifier)
+==> 000000aa: <CompleteGenerator>: <>
+==> 000000ab: <Ret>: <Reg8: 3>
+==> 000000ad: <Catch>: <Reg8: 3>
+==> 000000af: <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 3>
+==> 000000b3: <GetById>: <Reg8: 6, Reg8: 1, UInt8: 7, string_id: 15453>  # String: '_downloadCallbacks' (Identifier)
+==> 000000b9: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 8, string_id: 144>  # String: 'forEach' (Identifier)
+==> 000000be: <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 6675>  # Function: [#6675  of 25 bytes]: 2 params @ offset 0x001a12f0
+==> 000000c3: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 000000c8: <Throw>: <Reg8: 3>
+==> 000000ca: <Catch>: <Reg8: 3>
+==> 000000cc: <LoadConstFalse>: <Reg8: 4>
+==> 000000ce: <PutById>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 9544>  # String: 'downloading' (Identifier)
+==> 000000d4: <NewArray>: <Reg8: 4, UInt16: 0>
+==> 000000d8: <PutById>: <Reg8: 1, Reg8: 4, UInt8: 4, string_id: 15453>  # String: '_downloadCallbacks' (Identifier)
+==> 000000de: <Throw>: <Reg8: 3>
+==> 000000e0: <GetGlobalObject>: <Reg8: 3>
+==> 000000e2: <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 9, string_id: 27>  # String: 'Promise' (Identifier)
+==> 000000e8: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 10, string_id: 206>  # String: 'prototype' (Identifier)
+==> 000000ed: <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
+==> 000000f1: <CreateClosure>: <Reg8: 11, Reg8: 2, function_id: 6673>  # Function: [#6673  of 45 bytes]: 3 params @ offset 0x001a12b2
+==> 000000f6: <Mov>: <Reg8: 12, Reg8: 3>
+==> 000000f9: <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
+==> 000000fd: <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
+==> 00000101: <SaveGenerator>: <Addr8: 4>  # Address: 00000105
+==> 00000103: <Ret>: <Reg8: 2>
+==> 00000105: <ResumeGenerator>: <Reg8: 2, Reg8: 3>
+==> 00000108: <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 0000010e
+==> 0000010b: <CompleteGenerator>: <>
+==> 0000010c: <Ret>: <Reg8: 1>
+==> 0000010e: <CompleteGenerator>: <>
+==> 0000010f: <Ret>: <Reg8: 2>
+==> 00000111: <CompleteGenerator>: <>
+==> 00000112: <Ret>: <Reg8: 1>
+==> 00000114: <CompleteGenerator>: <>
+==> 00000115: <Ret>: <Reg8: 0>
+
+

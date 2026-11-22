@@ -7,6 +7,7 @@ from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceR
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import AwaitExpression, Identifier, YieldExpression
+from hermes_decompiler.backend.transforms.shared._repoint import repoint_references
 from ._base import RegionPass
 
 logger = get_logger(__name__)
@@ -225,6 +226,7 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
             return False
 
         resumed_reg = resume_block.instructions[pair_at].dest_reg
+        resumed_placeholder = resume_block.instructions[pair_at].value
 
         # The guard's `then` arm is a lone terminal `Ret`, so everything that runs after
         # the guard is its other arm, wherever the structurer put it: in `else_body`, or
@@ -290,6 +292,17 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
             for instruction in other_tail
         )
 
+        # A consumer that inlined the placeholder before the fold (a single-use value, 96/6672
+        # `this.localUri = <resumed>`) reads the resumed value without naming its register.
+        resumed_is_read = resumed_is_read or (
+                (
+                        if_region.else_body is not None
+                        and self._register_is_referenced(if_region.else_body, resumed_reg, resumed_placeholder)
+                )
+                or self._children_reference(trailing_siblings, resumed_reg, resumed_placeholder)
+                or any(self._expression_references(i.value, resumed_placeholder) for i in other_tail)
+        )
+
         # One copy of the resumed value and nothing else reading its own
         # register: the yield binds the copy's register directly
         # (`r2 = await call()`), the copy itself is gone. Otherwise the yield
@@ -304,6 +317,15 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
             instruction.value = Identifier(name=f"r{resumed_reg}")
 
         resumed_is_used = resumed_is_read or bool(value_copies) or bind_reg != resumed_reg
+
+        if resumed_is_used:
+            # A reader that took the resumed register's definition before this fold (a single-use value
+            # inlined into its consumer, 96/6672 `this.localUri = <resumed>`) holds the placeholder itself
+            # (`await yield`, not valid JavaScript): it reads the register the yield binds now.
+            repoint_references(
+                self.cfg, self.graph.root, resumed_placeholder, Identifier(name=f"r{bind_reg}"),
+                min_block_id=0, exclude=set(), structural=False,
+            )
 
         if resumed_is_used and yield_block is None:
             # The entry-point resume (right after StartGenerator, with
@@ -552,22 +574,22 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
     # Safety: is the resumed value actually read downstream?
     # ------------------------------------------------------------------
 
-    def _register_is_referenced(self, region: SequenceRegion, register: int | None) -> bool:
+    def _register_is_referenced(self, region: SequenceRegion, register: int | None, node=None) -> bool:
         if register is None:
             return False
 
-        finder = _RegisterReferenceFinder(f"r{register}")
+        finder = _RegisterReferenceFinder(f"r{register}" if node is None else node)
         finder.visit(region)
 
         return finder.found
 
     @staticmethod
-    def _children_reference(children: list, register: int | None) -> bool:
+    def _children_reference(children: list, register: int | None, node=None) -> bool:
         """Like `_register_is_referenced`, for the siblings behind a guard."""
         if register is None or not children:
             return False
 
-        finder = _RegisterReferenceFinder(f"r{register}")
+        finder = _RegisterReferenceFinder(f"r{register}" if node is None else node)
 
         for child in children:
             if finder.found:
@@ -584,7 +606,11 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
         if expr is None:
             return False
 
-        if isinstance(expr, Identifier):
+        if not isinstance(name, str):
+            # A node: the resume placeholder a reader inlined before the fold (matched by identity).
+            if expr is name:
+                return True
+        elif isinstance(expr, Identifier):
             return expr.name == name
 
         return any(
