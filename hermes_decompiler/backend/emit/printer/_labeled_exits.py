@@ -24,6 +24,8 @@ from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, Termin
 class LabeledExitPlan:
     """Which sequences open or close a labeled block, and which jumps print as `break`."""
 
+    _printed: set = set()
+
     def __init__(self) -> None:
         # (id(sequence), child index) -> labels opened in front of that child, outermost first
         self.opens: dict[tuple[int, int], list[str]] = {}
@@ -40,6 +42,7 @@ class LabeledExitPlan:
     def build(cls, root) -> "LabeledExitPlan":
         plan = cls()
         jumps: list[tuple[object, int, list[tuple[SequenceRegion, int]]]] = []
+        cls._printed = set()
         cls._collect(root, [], jumps)
 
         # (sequence, target address) -> [first child, target child, terminators]
@@ -104,6 +107,7 @@ class LabeledExitPlan:
                 here = [*stack, (node, index)]
 
                 if isinstance(child, BasicBlock):
+                    cls._printed.add(child)
                     cls._collect_block(child, here, jumps)
                 else:
                     cls._collect(child, here, jumps)
@@ -170,5 +174,13 @@ class LabeledExitPlan:
 
                 return header.address if header is not None and header.address >= 0 else None
 
-            # An `if`'s own test block is usually the sibling printed in front of it: not a place to land.
+            # An `if` whose test block is not printed anywhere else (its branch became the `if`) starts at that
+            # block: 98/5415 lands in front of `if (r27) { ... }`. A test block that is also a sibling in front of
+            # it is not a place to land: the sibling is.
+            if isinstance(node, IfRegion):
+                source = getattr(node, "source_block", None)
+
+                if source is not None and source.address >= 0 and source not in cls._printed:
+                    return source.address
+
             return None

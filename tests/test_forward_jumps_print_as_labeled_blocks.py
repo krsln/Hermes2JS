@@ -45,3 +45,15 @@ def test_blocks_that_only_overlap_in_part_are_nested():
 
     assert ranges[1][:2] == [0, 4]
     assert ranges[0][:2] == [0, 2]
+
+
+def test_a_jump_to_the_test_of_a_later_if_lands_in_front_of_that_if():
+    # 98/5415 `getPatternParts`: the `default:` arm of a `switch` jumps to the test block of the `if (r27)` behind it,
+    # which is not printed as a block of its own: the `if` itself is the later sibling the label closes in front of.
+    hasm = (_DATA / "labeled_break_to_an_if_test_98_5415.hasm").read_text(encoding="utf-8")
+    out = Decompiler.render(Decompiler.build_context(hasm, 0, strict=False), verbose=False, raw=False)
+
+    assert "goto" not in out
+    assert "if (r30) break label_737;" in out
+    assert out.index("label_737: {") < out.index("switch (r31)")
+    assert out.index("if (r27) {") > out.index("break label_737;")

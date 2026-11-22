@@ -1,0 +1,292 @@
+
+=> [Function #5415 "getPatternParts" of 1150 bytes]: 2 params, frame size=49, strict=1, exc handler=1, debug info=0  @ offset 0x001b336c
+  [Exception handlers: [start=0x3b8, end=0x448, target=0x448] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 7>
+==> 00000005: <LoadConstUndefined>: <Reg8: 8>
+==> 00000007: <LoadConstUndefined>: <Reg8: 4>
+==> 00000009: <NewArray>: <Reg8: 0, UInt16: 0>
+==> 0000000d: <NewObjectWithBuffer>: <Reg8: 21, UInt16: 1282, UInt16: 18890>  # Object: {'segment': ''}
+==> 00000013: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 00000018: <LoadConstZero>: <Reg8: 1>
+==> 0000001a: <LessEq>: <Reg8: 2, Reg8: 1, Reg8: 2>
+==> 0000001e: <LoadConstUInt8>: <Reg8: 19, UInt8: 1>
+==> 00000021: <LoadConstString>: <Reg8: 18, string_id: 6457>  # String: '' (Identifier)
+==> 00000025: <LoadConstTrue>: <Reg8: 17>
+==> 00000027: <LoadConstString>: <Reg8: 16, string_id: 7425>  # String: ':' (Identifier)
+==> 0000002b: <LoadConstNull>: <Reg8: 15>
+==> 0000002d: <LoadConstString>: <Reg8: 14, string_id: 503>  # String: '/' (String)
+==> 00000031: <LoadConstString>: <Reg8: 13, string_id: 1865>  # String: '?' (String)
+==> 00000035: <LoadConstString>: <Reg8: 12, string_id: 870>  # String: ')' (String)
+==> 00000039: <LoadConstString>: <Reg8: 11, string_id: 1069>  # String: '(' (String)
+==> 0000003d: <LoadConstZero>: <Reg8: 10>
+==> 0000003f: <LoadConstZero>: <Reg8: 9>
+==> 00000041: <LoadConstFalse>: <Reg8: 6>
+==> 00000043: <LoadConstFalse>: <Reg8: 5>
+==> 00000045: <LoadConstFalse>: <Reg8: 1>
+==> 00000047: <JmpFalseLong>: <Addr32: 810, Reg8: 2>  # Address: 00000371
+==> 0000004d: <GetByVal>: <Reg8: 31, Reg8: 3, Reg8: 10>
+==> 00000051: <Mov>: <Reg8: 2, Reg8: 10>
+==> 00000054: <Mov>: <Reg8: 34, Reg8: 9>
+==> 00000057: <Mov>: <Reg8: 33, Reg8: 6>
+==> 0000005a: <Mov>: <Reg8: 30, Reg8: 5>
+==> 0000005d: <Mov>: <Reg8: 32, Reg8: 21>
+==> 00000060: <JEqual>: <Addr8: 20, Reg8: 31, Reg8: 15>  # Address: 00000074
+==> 00000064: <GetById>: <Reg8: 22, Reg8: 32, UInt8: 1, string_id: 7233>  # String: 'segment' (Identifier)
+==> 0000006a: <Add>: <Reg8: 22, Reg8: 22, Reg8: 31>
+==> 0000006e: <PutByIdStrict>: <Reg8: 32, Reg8: 22, UInt8: 0, string_id: 7233>  # String: 'segment' (Identifier)
+==> 00000074: <JStrictEqualLong>: <Addr32: 540, Reg8: 31, Reg8: 16>  # Address: 00000290
+==> 0000007b: <JStrictEqualLong>: <Addr32: 456, Reg8: 31, Reg8: 11>  # Address: 00000243
+==> 00000082: <JStrictEqualLong>: <Addr32: 348, Reg8: 31, Reg8: 12>  # Address: 000001de
+==> 00000089: <JStrictEqualLong>: <Addr32: 265, Reg8: 31, Reg8: 13>  # Address: 00000192
+==> 00000090: <JEqual>: <Addr8: 41, Reg8: 31, Reg8: 15>  # Address: 000000b9
+==> 00000094: <Mov>: <Reg8: 29, Reg8: 34>
+==> 00000097: <Mov>: <Reg8: 28, Reg8: 33>
+==> 0000009a: <Mov>: <Reg8: 27, Reg8: 30>
+==> 0000009d: <Mov>: <Reg8: 22, Reg8: 32>
+==> 000000a0: <JStrictNotEqualLong>: <Addr32: 577, Reg8: 31, Reg8: 14>  # Address: 000002e1
+==> 000000a7: <Mov>: <Reg8: 29, Reg8: 34>
+==> 000000aa: <Mov>: <Reg8: 28, Reg8: 33>
+==> 000000ad: <Mov>: <Reg8: 27, Reg8: 30>
+==> 000000b0: <Mov>: <Reg8: 22, Reg8: 32>
+==> 000000b3: <JmpTrueLong>: <Addr32: 558, Reg8: 30>  # Address: 000002e1
+==> 000000b9: <GetById>: <Reg8: 25, Reg8: 32, UInt8: 1, string_id: 7233>  # String: 'segment' (Identifier)
+==> 000000bf: <GetByIdShort>: <Reg8: 24, Reg8: 25, UInt8: 2, string_id: 217>  # String: 'replace' (Identifier)
+==> 000000c4: <CreateRegExp>: <Reg8: 23, string_id: 1712, string_id: 6457, UInt32: 0>  # String: '\\/$' (String)  # String: '' (Identifier)
+==> 000000d2: <Call3>: <Reg8: 23, Reg8: 24, Reg8: 25, Reg8: 23, Reg8: 18>
+==> 000000d8: <PutByIdStrict>: <Reg8: 32, Reg8: 23, UInt8: 0, string_id: 7233>  # String: 'segment' (Identifier)
+==> 000000de: <GetById>: <Reg8: 35, Reg8: 32, UInt8: 1, string_id: 7233>  # String: 'segment' (Identifier)
+==> 000000e4: <Mov>: <Reg8: 26, Reg8: 34>
+==> 000000e7: <LoadConstFalse>: <Reg8: 25>
+==> 000000e9: <Mov>: <Reg8: 23, Reg8: 30>
+==> 000000ec: <Mov>: <Reg8: 24, Reg8: 32>
+==> 000000ef: <JStrictEqualLong>: <Addr32: 611, Reg8: 35, Reg8: 18>  # Address: 00000352
+==> 000000f6: <GetById>: <Reg8: 35, Reg8: 32, UInt8: 3, string_id: 7215>  # String: 'param' (Identifier)
+==> 000000fc: <JmpFalse>: <Addr8: 40, Reg8: 35>  # Address: 00000124
+==> 000000ff: <GetById>: <Reg8: 37, Reg8: 32, UInt8: 3, string_id: 7215>  # String: 'param' (Identifier)
+==> 00000105: <GetByIdShort>: <Reg8: 36, Reg8: 37, UInt8: 2, string_id: 217>  # String: 'replace' (Identifier)
+==> 0000010a: <CreateRegExp>: <Reg8: 35, string_id: 2248, string_id: 6457, UInt32: 83>  # String: '^:' (String)  # String: '' (Identifier)
+==> 00000118: <Call3>: <Reg8: 35, Reg8: 36, Reg8: 37, Reg8: 35, Reg8: 18>
+==> 0000011e: <PutByIdStrict>: <Reg8: 32, Reg8: 35, UInt8: 1, string_id: 7215>  # String: 'param' (Identifier)
+==> 00000124: <GetById>: <Reg8: 35, Reg8: 32, UInt8: 4, string_id: 12408>  # String: 'regex' (Identifier)
+==> 0000012a: <JmpFalse>: <Addr8: 65, Reg8: 35>  # Address: 0000016b
+==> 0000012d: <GetById>: <Reg8: 37, Reg8: 32, UInt8: 4, string_id: 12408>  # String: 'regex' (Identifier)
+==> 00000133: <GetByIdShort>: <Reg8: 36, Reg8: 37, UInt8: 2, string_id: 217>  # String: 'replace' (Identifier)
+==> 00000138: <CreateRegExp>: <Reg8: 35, string_id: 4580, string_id: 6457, UInt32: 84>  # String: '^\\(' (String)  # String: '' (Identifier)
+==> 00000146: <Call3>: <Reg8: 37, Reg8: 36, Reg8: 37, Reg8: 35, Reg8: 18>
+==> 0000014c: <GetByIdShort>: <Reg8: 36, Reg8: 37, UInt8: 2, string_id: 217>  # String: 'replace' (Identifier)
+==> 00000151: <CreateRegExp>: <Reg8: 35, string_id: 4583, string_id: 6457, UInt32: 85>  # String: '\\)$' (String)  # String: '' (Identifier)
+==> 0000015f: <Call3>: <Reg8: 35, Reg8: 36, Reg8: 37, Reg8: 35, Reg8: 18>
+==> 00000165: <PutByIdStrict>: <Reg8: 32, Reg8: 35, UInt8: 2, string_id: 12408>  # String: 'regex' (Identifier)
+==> 0000016b: <GetByIdShort>: <Reg8: 35, Reg8: 0, UInt8: 5, string_id: 88>  # String: 'push' (Identifier)
+==> 00000170: <Call2>: <Reg8: 35, Reg8: 35, Reg8: 0, Reg8: 32>
+==> 00000175: <Mov>: <Reg8: 1, Reg8: 30>
+==> 00000178: <JEqualLong>: <Addr32: 505, Reg8: 31, Reg8: 15>  # Address: 00000371
+==> 0000017f: <NewObjectWithBuffer>: <Reg8: 22, UInt16: 1282, UInt16: 18890>  # Object: {'segment': ''}
+==> 00000185: <Mov>: <Reg8: 29, Reg8: 34>
+==> 00000188: <LoadConstFalse>: <Reg8: 28>
+==> 0000018a: <Mov>: <Reg8: 27, Reg8: 30>
+==> 0000018d: <JmpLong>: <Addr32: 340>  # Address: 000002e1
+==> 00000192: <GetById>: <Reg8: 35, Reg8: 32, UInt8: 3, string_id: 7215>  # String: 'param' (Identifier)
+==> 00000198: <JmpTrue>: <Addr8: 48, Reg8: 35>  # Address: 000001c8
+==> 0000019b: <GetGlobalObject>: <Reg8: 35>
+==> 0000019d: <TryGetById>: <Reg8: 37, Reg8: 35, UInt8: 6, string_id: 9>  # String: 'Error' (Identifier)
+==> 000001a3: <TryGetById>: <Reg8: 35, Reg8: 35, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 000001a9: <GetByIdShort>: <Reg8: 36, Reg8: 35, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 000001ae: <LoadConstString>: <Reg8: 35, string_id: 971>  # String: "Encountered '?' without preceding ':' in path: " (String)
+==> 000001b2: <Call2>: <Reg8: 40, Reg8: 36, Reg8: 35, Reg8: 3>
+==> 000001b7: <CreateThisForNew>: <Reg8: 36, Reg8: 37, UInt8: 9>
+==> 000001bb: <Mov>: <Reg8: 41, Reg8: 36>
+==> 000001be: <Construct>: <Reg8: 35, Reg8: 37, UInt8: 2>
+==> 000001c2: <SelectObject>: <Reg8: 35, Reg8: 36, Reg8: 35>
+==> 000001c6: <Throw>: <Reg8: 35>
+==> 000001c8: <PutByIdStrict>: <Reg8: 32, Reg8: 17, UInt8: 3, string_id: 11021>  # String: 'optional' (Identifier)
+==> 000001ce: <Mov>: <Reg8: 29, Reg8: 34>
+==> 000001d1: <LoadConstFalse>: <Reg8: 28>
+==> 000001d3: <Mov>: <Reg8: 27, Reg8: 30>
+==> 000001d6: <Mov>: <Reg8: 22, Reg8: 32>
+==> 000001d9: <JmpLong>: <Addr32: 264>  # Address: 000002e1
+==> 000001de: <JmpFalse>: <Addr8: 6, Reg8: 33>  # Address: 000001e4
+==> 000001e1: <JmpTrue>: <Addr8: 48, Reg8: 30>  # Address: 00000211
+==> 000001e4: <GetGlobalObject>: <Reg8: 35>
+==> 000001e6: <TryGetById>: <Reg8: 37, Reg8: 35, UInt8: 6, string_id: 9>  # String: 'Error' (Identifier)
+==> 000001ec: <TryGetById>: <Reg8: 35, Reg8: 35, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 000001f2: <GetByIdShort>: <Reg8: 36, Reg8: 35, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 000001f7: <LoadConstString>: <Reg8: 35, string_id: 1314>  # String: "Encountered ')' without preceding '(' in path: " (String)
+==> 000001fb: <Call2>: <Reg8: 40, Reg8: 36, Reg8: 35, Reg8: 3>
+==> 00000200: <CreateThisForNew>: <Reg8: 36, Reg8: 37, UInt8: 9>
+==> 00000204: <Mov>: <Reg8: 41, Reg8: 36>
+==> 00000207: <Construct>: <Reg8: 35, Reg8: 37, UInt8: 2>
+==> 0000020b: <SelectObject>: <Reg8: 35, Reg8: 36, Reg8: 35>
+==> 0000020f: <Throw>: <Reg8: 35>
+==> 00000211: <Mov>: <Reg8: 29, Reg8: 34>
+==> 00000214: <LoadConstFalse>: <Reg8: 28>
+==> 00000216: <LoadConstFalse>: <Reg8: 27>
+==> 00000218: <Mov>: <Reg8: 22, Reg8: 32>
+==> 0000021b: <JmpFalseLong>: <Addr32: 198, Reg8: 34>  # Address: 000002e1
+==> 00000221: <SubN>: <Reg8: 29, Reg8: 34, Reg8: 19>
+==> 00000225: <GetById>: <Reg8: 36, Reg8: 32, UInt8: 4, string_id: 12408>  # String: 'regex' (Identifier)
+==> 0000022b: <Add>: <Reg8: 36, Reg8: 36, Reg8: 31>
+==> 0000022f: <PutByIdStrict>: <Reg8: 32, Reg8: 36, UInt8: 2, string_id: 12408>  # String: 'regex' (Identifier)
+==> 00000235: <Mov>: <Reg8: 28, Reg8: 33>
+==> 00000238: <Mov>: <Reg8: 27, Reg8: 30>
+==> 0000023b: <Mov>: <Reg8: 22, Reg8: 32>
+==> 0000023e: <JmpLong>: <Addr32: 163>  # Address: 000002e1
+==> 00000243: <JmpTrue>: <Addr8: 48, Reg8: 33>  # Address: 00000273
+==> 00000246: <GetGlobalObject>: <Reg8: 35>
+==> 00000248: <TryGetById>: <Reg8: 37, Reg8: 35, UInt8: 6, string_id: 9>  # String: 'Error' (Identifier)
+==> 0000024e: <TryGetById>: <Reg8: 35, Reg8: 35, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000254: <GetByIdShort>: <Reg8: 36, Reg8: 35, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000259: <LoadConstString>: <Reg8: 35, string_id: 1309>  # String: "Encountered '(' without preceding ':' in path: " (String)
+==> 0000025d: <Call2>: <Reg8: 40, Reg8: 36, Reg8: 35, Reg8: 3>
+==> 00000262: <CreateThisForNew>: <Reg8: 36, Reg8: 37, UInt8: 9>
+==> 00000266: <Mov>: <Reg8: 41, Reg8: 36>
+==> 00000269: <Construct>: <Reg8: 35, Reg8: 37, UInt8: 2>
+==> 0000026d: <SelectObject>: <Reg8: 35, Reg8: 36, Reg8: 35>
+==> 00000271: <Throw>: <Reg8: 35>
+==> 00000273: <Mov>: <Reg8: 29, Reg8: 34>
+==> 00000276: <Mov>: <Reg8: 28, Reg8: 33>
+==> 00000279: <LoadConstTrue>: <Reg8: 27>
+==> 0000027b: <Mov>: <Reg8: 22, Reg8: 32>
+==> 0000027e: <JmpFalse>: <Addr8: 99, Reg8: 30>  # Address: 000002e1
+==> 00000281: <AddN>: <Reg8: 29, Reg8: 34, Reg8: 19>
+==> 00000285: <Mov>: <Reg8: 28, Reg8: 33>
+==> 00000288: <Mov>: <Reg8: 27, Reg8: 30>
+==> 0000028b: <Mov>: <Reg8: 22, Reg8: 32>
+==> 0000028e: <Jmp>: <Addr8: 83>  # Address: 000002e1
+==> 00000290: <GetById>: <Reg8: 35, Reg8: 32, UInt8: 1, string_id: 7233>  # String: 'segment' (Identifier)
+==> 00000296: <Mov>: <Reg8: 29, Reg8: 34>
+==> 00000299: <LoadConstTrue>: <Reg8: 28>
+==> 0000029b: <Mov>: <Reg8: 27, Reg8: 30>
+==> 0000029e: <Mov>: <Reg8: 22, Reg8: 32>
+==> 000002a1: <JStrictEqual>: <Addr8: 64, Reg8: 35, Reg8: 16>  # Address: 000002e1
+==> 000002a5: <Mov>: <Reg8: 29, Reg8: 34>
+==> 000002a8: <Mov>: <Reg8: 28, Reg8: 33>
+==> 000002ab: <Mov>: <Reg8: 27, Reg8: 30>
+==> 000002ae: <Mov>: <Reg8: 22, Reg8: 32>
+==> 000002b1: <JmpTrue>: <Addr8: 48, Reg8: 30>  # Address: 000002e1
+==> 000002b4: <GetGlobalObject>: <Reg8: 30>
+==> 000002b6: <TryGetById>: <Reg8: 33, Reg8: 30, UInt8: 6, string_id: 9>  # String: 'Error' (Identifier)
+==> 000002bc: <TryGetById>: <Reg8: 30, Reg8: 30, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 000002c2: <GetByIdShort>: <Reg8: 32, Reg8: 30, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 000002c7: <LoadConstString>: <Reg8: 30, string_id: 1327>  # String: "Encountered ':' in the middle of a segment in path: " (String)
+==> 000002cb: <Call2>: <Reg8: 40, Reg8: 32, Reg8: 30, Reg8: 3>
+==> 000002d0: <CreateThisForNew>: <Reg8: 32, Reg8: 33, UInt8: 9>
+==> 000002d4: <Mov>: <Reg8: 41, Reg8: 32>
+==> 000002d7: <Construct>: <Reg8: 30, Reg8: 33, UInt8: 2>
+==> 000002db: <SelectObject>: <Reg8: 30, Reg8: 32, Reg8: 30>
+==> 000002df: <Throw>: <Reg8: 30>
+==> 000002e1: <JmpFalse>: <Addr8: 37, Reg8: 27>  # Address: 00000306
+==> 000002e4: <GetById>: <Reg8: 30, Reg8: 22, UInt8: 4, string_id: 12408>  # String: 'regex' (Identifier)
+==> 000002ea: <JmpTrue>: <Addr8: 6, Reg8: 30>  # Address: 000002f0
+==> 000002ed: <Mov>: <Reg8: 30, Reg8: 18>
+==> 000002f0: <PutByIdStrict>: <Reg8: 22, Reg8: 30, UInt8: 2, string_id: 12408>  # String: 'regex' (Identifier)
+==> 000002f6: <GetById>: <Reg8: 30, Reg8: 22, UInt8: 4, string_id: 12408>  # String: 'regex' (Identifier)
+==> 000002fc: <Add>: <Reg8: 30, Reg8: 30, Reg8: 31>
+==> 00000300: <PutByIdStrict>: <Reg8: 22, Reg8: 30, UInt8: 2, string_id: 12408>  # String: 'regex' (Identifier)
+==> 00000306: <Mov>: <Reg8: 26, Reg8: 29>
+==> 00000309: <Mov>: <Reg8: 23, Reg8: 27>
+==> 0000030c: <Mov>: <Reg8: 24, Reg8: 22>
+==> 0000030f: <Mov>: <Reg8: 25, Reg8: 28>
+==> 00000312: <JmpFalse>: <Addr8: 64, Reg8: 25>  # Address: 00000352
+==> 00000315: <Mov>: <Reg8: 26, Reg8: 29>
+==> 00000318: <Mov>: <Reg8: 25, Reg8: 28>
+==> 0000031b: <Mov>: <Reg8: 23, Reg8: 27>
+==> 0000031e: <Mov>: <Reg8: 24, Reg8: 22>
+==> 00000321: <JmpTrue>: <Addr8: 49, Reg8: 27>  # Address: 00000352
+==> 00000324: <GetById>: <Reg8: 30, Reg8: 22, UInt8: 3, string_id: 7215>  # String: 'param' (Identifier)
+==> 0000032a: <JmpTrue>: <Addr8: 6, Reg8: 30>  # Address: 00000330
+==> 0000032d: <Mov>: <Reg8: 30, Reg8: 18>
+==> 00000330: <PutByIdStrict>: <Reg8: 22, Reg8: 30, UInt8: 1, string_id: 7215>  # String: 'param' (Identifier)
+==> 00000336: <GetById>: <Reg8: 30, Reg8: 22, UInt8: 3, string_id: 7215>  # String: 'param' (Identifier)
+==> 0000033c: <Add>: <Reg8: 30, Reg8: 30, Reg8: 31>
+==> 00000340: <PutByIdStrict>: <Reg8: 22, Reg8: 30, UInt8: 1, string_id: 7215>  # String: 'param' (Identifier)
+==> 00000346: <Mov>: <Reg8: 26, Reg8: 29>
+==> 00000349: <Mov>: <Reg8: 25, Reg8: 28>
+==> 0000034c: <Mov>: <Reg8: 23, Reg8: 27>
+==> 0000034f: <Mov>: <Reg8: 24, Reg8: 22>
+==> 00000352: <AddN>: <Reg8: 10, Reg8: 2, Reg8: 19>
+==> 00000356: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 0, string_id: 177>  # String: 'length' (Identifier)
+==> 0000035b: <Mov>: <Reg8: 9, Reg8: 26>
+==> 0000035e: <Mov>: <Reg8: 6, Reg8: 25>
+==> 00000361: <Mov>: <Reg8: 5, Reg8: 23>
+==> 00000364: <Mov>: <Reg8: 21, Reg8: 24>
+==> 00000367: <Mov>: <Reg8: 1, Reg8: 5>
+==> 0000036a: <JLessEqualLong>: <Addr32: -797, Reg8: 10, Reg8: 2>  # Address: 0000004d
+==> 00000371: <JmpTrueLong>: <Addr32: 224, Reg8: 1>  # Address: 00000451
+==> 00000377: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 10, string_id: 126>  # String: 'map' (Identifier)
+==> 0000037c: <CreateClosure>: <Reg8: 1, Reg8: 7, function_id: 10758>  # Function: [#10758  of 11 bytes]: 2 params @ offset 0x0021df9e
+==> 00000381: <Call2>: <Reg8: 6, Reg8: 2, Reg8: 0, Reg8: 1>
+==> 00000386: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 11, string_id: 142>  # String: 'filter' (Identifier)
+==> 0000038b: <GetGlobalObject>: <Reg8: 1>
+==> 0000038d: <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 12, string_id: 5>  # String: 'Boolean' (Identifier)
+==> 00000393: <Call2>: <Reg8: 6, Reg8: 5, Reg8: 6, Reg8: 2>
+==> 00000398: <GetByIdShort>: <Reg8: 2, Reg8: 6, UInt8: 13, string_id: 137>  # String: 'entries' (Identifier)
+==> 0000039d: <Call1>: <Reg8: 9, Reg8: 2, Reg8: 6>
+==> 000003a1: <Mov>: <Reg8: 5, Reg8: 9>
+==> 000003a4: <IteratorBegin>: <Reg8: 2, Reg8: 5>
+==> 000003a7: <Mov>: <Reg8: 9, Reg8: 5>
+==> 000003aa: <IteratorNext>: <Reg8: 10, Reg8: 2, Reg8: 9>
+==> 000003ae: <Mov>: <Reg8: 9, Reg8: 2>
+==> 000003b1: <JStrictEqualLong>: <Addr32: 158, Reg8: 9, Reg8: 7>  # Address: 0000044f
+==> 000003b8: <Mov>: <Reg8: 12, Reg8: 10>
+==> 000003bb: <IteratorBegin>: <Reg8: 9, Reg8: 12>
+==> 000003be: <Mov>: <Reg8: 10, Reg8: 12>
+==> 000003c1: <IteratorNext>: <Reg8: 13, Reg8: 9, Reg8: 10>
+==> 000003c5: <Mov>: <Reg8: 10, Reg8: 9>
+==> 000003c8: <StrictEq>: <Reg8: 10, Reg8: 10, Reg8: 7>
+==> 000003cc: <LoadConstUndefined>: <Reg8: 11>
+==> 000003ce: <JmpTrue>: <Addr8: 6, Reg8: 10>  # Address: 000003d4
+==> 000003d1: <Mov>: <Reg8: 11, Reg8: 13>
+==> 000003d4: <Mov>: <Reg8: 8, Reg8: 11>
+==> 000003d7: <LoadConstUndefined>: <Reg8: 11>
+==> 000003d9: <JmpTrue>: <Addr8: 28, Reg8: 10>  # Address: 000003f5
+==> 000003dc: <IteratorNext>: <Reg8: 13, Reg8: 9, Reg8: 12>
+==> 000003e0: <Mov>: <Reg8: 12, Reg8: 9>
+==> 000003e3: <StrictEq>: <Reg8: 12, Reg8: 12, Reg8: 7>
+==> 000003e7: <LoadConstUndefined>: <Reg8: 11>
+==> 000003e9: <Mov>: <Reg8: 10, Reg8: 12>
+==> 000003ec: <JmpTrue>: <Addr8: 9, Reg8: 12>  # Address: 000003f5
+==> 000003ef: <Mov>: <Reg8: 11, Reg8: 13>
+==> 000003f2: <Mov>: <Reg8: 10, Reg8: 12>
+==> 000003f5: <Mov>: <Reg8: 4, Reg8: 11>
+==> 000003f8: <JmpTrue>: <Addr8: 6, Reg8: 10>  # Address: 000003fe
+==> 000003fb: <IteratorClose>: <Reg8: 9, UInt8: 0>
+==> 000003fe: <GetByIdShort>: <Reg8: 10, Reg8: 6, UInt8: 14, string_id: 165>  # String: 'indexOf' (Identifier)
+==> 00000403: <Mov>: <Reg8: 9, Reg8: 4>
+==> 00000406: <Call2>: <Reg8: 10, Reg8: 10, Reg8: 6, Reg8: 9>
+==> 0000040b: <Mov>: <Reg8: 9, Reg8: 8>
+==> 0000040e: <JStrictNotEqual>: <Addr8: 6, Reg8: 10, Reg8: 9>  # Address: 00000414
+==> 00000412: <Jmp>: <Addr8: -107>  # Address: 000003a7
+==> 00000414: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 6, string_id: 9>  # String: 'Error' (Identifier)
+==> 0000041a: <Mov>: <Reg8: 7, Reg8: 4>
+==> 0000041d: <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000423: <GetByIdShort>: <Reg8: 6, Reg8: 1, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000428: <LoadConstString>: <Reg8: 4, string_id: 743>  # String: "' found in path: " (String)
+==> 0000042c: <LoadConstString>: <Reg8: 1, string_id: 424>  # String: "Duplicate param name '" (String)
+==> 00000430: <Call4>: <Reg8: 40, Reg8: 6, Reg8: 1, Reg8: 7, Reg8: 4, Reg8: 3>
+==> 00000437: <CreateThisForNew>: <Reg8: 4, Reg8: 5, UInt8: 9>
+==> 0000043b: <Mov>: <Reg8: 41, Reg8: 4>
+==> 0000043e: <Construct>: <Reg8: 1, Reg8: 5, UInt8: 2>
+==> 00000442: <SelectObject>: <Reg8: 1, Reg8: 4, Reg8: 1>
+==> 00000446: <Throw>: <Reg8: 1>
+==> 00000448: <Catch>: <Reg8: 1>
+==> 0000044a: <IteratorClose>: <Reg8: 2, UInt8: 1>
+==> 0000044d: <Throw>: <Reg8: 1>
+==> 0000044f: <Ret>: <Reg8: 0>
+==> 00000451: <GetGlobalObject>: <Reg8: 0>
+==> 00000453: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 6, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000459: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 7, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 0000045f: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 8, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000464: <LoadConstString>: <Reg8: 0, string_id: 1259>  # String: "Could not find closing ')' in path: " (String)
+==> 00000468: <Call2>: <Reg8: 40, Reg8: 1, Reg8: 0, Reg8: 3>
+==> 0000046d: <CreateThisForNew>: <Reg8: 1, Reg8: 2, UInt8: 9>
+==> 00000471: <Mov>: <Reg8: 41, Reg8: 1>
+==> 00000474: <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
+==> 00000478: <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 0000047c: <Throw>: <Reg8: 0>
+
+
