@@ -114,18 +114,23 @@ class FallThroughLayoutCfgPass:
 
         return False
 
-    def relocate_terminal_tails(self) -> int:
+    def relocate_terminal_tails(self, loop_stubs: bool = False) -> int:
         """`if (c) goto TAIL` where the code behind TAIL is entered by this branch alone and never comes back
         (every path ends in a `return`/`throw`), and the compiler laid it out after the function's closing return
         (98/12534 `pipeTo`: the `signal.aborted` branch, `abortAlgorithm(); return;` inlined at the very end).
 
         It is an `if (c) { tail }`: the tail moves right behind the branch, which is inverted to jump over it to the
-        code it used to fall into. The tail's own blocks keep their order, so their fall-throughs stay intact."""
+        code it used to fall into. The tail's own blocks keep their order, so their fall-throughs stay intact.
+
+        With `loop_stubs` a tail may also end in the jump back to the loop header (a `continue`), and a branch inside
+        one `try` (the `for ... of` iterator close) may move it: 98/8045 lays the `transitionDuration` and
+        `transitionDelay` stores behind the shared `timing function` code the tests fall through to."""
         # A branch or tail a handler guards or starts at stays where it is; the rest of a function that has
         # handlers moves like any other (96/3448: the abort test sits before the `try`).
         if self.cfg.exception_handlers and getattr(self.cfg, "unresolved_dispatch", False):
             return 0
 
+        handler_blocks = {handler["handler_block"] for handler in self.cfg.exception_handlers}
         protected = {
             block
             for handler in self.cfg.exception_handlers
@@ -133,12 +138,27 @@ class FallThroughLayoutCfgPass:
         }
 
         moved = 0
+        relocated: list[BasicBlock] = []
+
+        # A branch whose fall-through only leads on to a relocated one moves with it (the nest stays readable), which
+        # takes a later round: the inner branch has to be placed first.
+        for _ in range(4 if loop_stubs else 1):
+            before = moved
+            moved += self._relocate_round(loop_stubs, handler_blocks, protected, relocated)
+
+            if moved == before:
+                break
+
+        return moved
+
+    def _relocate_round(self, loop_stubs, handler_blocks, protected, relocated) -> int:
+        moved = 0
 
         for block in list(self.cfg.blocks):
             if not isinstance(block.terminator, TerminatorConditionalBranch) or len(block.successors) != 2:
                 continue
 
-            if block in protected:
+            if block in (handler_blocks if loop_stubs else protected):
                 continue
 
             taken, fall = block.successors
@@ -148,9 +168,24 @@ class FallThroughLayoutCfgPass:
             if taken is block or fall is block or blocks.index(taken) <= at + 1 or taken.predecessors != [block]:
                 continue
 
-            tail = self._closed_tail(taken, block)
+            tail = self._closed_tail(taken, block, loop_stubs)
 
-            if tail is None or fall in tail or blocks.index(fall) != at + 1 or tail & protected:
+            if tail is None or fall in tail or blocks.index(fall) != at + 1:
+                continue
+
+            # Only a stub that sits behind code ANOTHER branch also enters: the structurer reads that code as the
+            # fall-through arm's join and has no place for the stub (a lone fall-through nests the stub fine).
+            # A test that falls into this branch and jumps to the same code is the first half of `a && b`: the
+            # short-circuit fold reads that layout as it is.
+            if loop_stubs and (
+                    (len(fall.predecessors) < 2 and fall not in relocated)
+                    or any(pred is not block and block in pred.successors for pred in fall.predecessors)
+            ):
+                continue
+
+            # Inside one `try` the move changes nothing for the handler: the branch, the tail and the code it
+            # falls into are guarded by the same handlers (the `for ... of` iterator close of 98/8045).
+            if tail & protected and not (loop_stubs and self._same_guards(block, tail)):
                 continue
 
             tail_blocks = [b for b in blocks if b in tail]
@@ -161,6 +196,11 @@ class FallThroughLayoutCfgPass:
             at = blocks.index(block)
             blocks[at + 1:at + 1] = tail_blocks
 
+            if loop_stubs:
+                # A loop body is ordered by block id; `follows` keeps the moved stub behind its branch there too.
+                for tail_block in tail_blocks:
+                    tail_block.follows = block
+
             terminator = dataclasses.replace(
                 block.terminator, condition=negate_condition(block.terminator.condition), target=fall.address
             )
@@ -168,12 +208,23 @@ class FallThroughLayoutCfgPass:
             if block.instructions:
                 block.instructions[-1].terminator = terminator
             block.successors = [fall, taken]
+            relocated.append(block)
             moved += 1
 
         return moved
 
+    def _same_guards(self, branch: BasicBlock, tail: set[BasicBlock]) -> bool:
+        """Every block of `tail`, and the block the branch falls into, sits in the `try` blocks of exactly the
+        handlers the branch does."""
+        fall = branch.successors[1]
+
+        return all(
+            all((b in handler["try_blocks"]) == (branch in handler["try_blocks"]) for b in (*tail, fall))
+            for handler in self.cfg.exception_handlers
+        )
+
     @staticmethod
-    def _closed_tail(entry: BasicBlock, branch: BasicBlock) -> set[BasicBlock] | None:
+    def _closed_tail(entry: BasicBlock, branch: BasicBlock, loop_stubs: bool = False) -> set[BasicBlock] | None:
         """The blocks reached from `entry`, when nothing else enters them and they all end the function."""
         tail: set[BasicBlock] = set()
         stack = [entry]
@@ -191,6 +242,12 @@ class FallThroughLayoutCfgPass:
 
             if not block.successors and not isinstance(block.terminator, (TerminatorReturn, TerminatorThrow)):
                 return None
+
+            # A stub that ends in the jump back to the loop header (`continue`) closes the tail as well: it never
+            # runs into the code the branch falls into (98/8045: the `transitionDelay` store).
+            if loop_stubs and isinstance(block.terminator, TerminatorJump) and block.successors \
+                    and block.successors[0].address <= branch.address and block.successors[0] not in tail:
+                continue
 
             stack.extend(block.successors)
 

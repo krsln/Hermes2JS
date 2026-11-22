@@ -529,6 +529,32 @@ class _DominanceIfBuilder(RegionStructurer):
                         )
                 )
                 or (
+                        # The stubs of a loop body were laid out behind the arm's tests (the `loop_stubs` rung): a
+                        # test of the arm that jumps to the branch target says the target follows the `if`, the
+                        # arm's other paths all `continue` (98/8045). Without that layout a loop body is always on a
+                        # cycle and this reading is left to the clauses above.
+                        getattr(self.cfg, "loop_stubs", False)
+                        and merge_block is None
+                        and goto_block.successors
+                        and any(
+                            pred is not block
+                            and isinstance(pred.terminator, TerminatorConditionalBranch)
+                            and pred.terminator.target == goto_block.address
+                            and self.cfg.dominator_tree.dominates(then_entry, pred)
+                            for pred in goto_block.predecessors
+                        )
+                )
+                or (
+                        # The arm is one such stub: it only jumps back to the loop header, so the branch target
+                        # follows the `if` however many other tests enter it.
+                        getattr(self.cfg, "loop_stubs", False)
+                        and merge_block is None
+                        and len(then_entry.successors) == 1
+                        and isinstance(then_entry.terminator, TerminatorJump)
+                        and then_entry.successors[0].address <= then_entry.address
+                        and then_entry.predecessors == [block]
+                )
+                or (
                         # `if (a) { ...; x(); } return null` where the branch skips to a
                         # shared `return` and the arm's last block runs on into it: the
                         # `return` follows the `if`; as an `else` arm it would leave the

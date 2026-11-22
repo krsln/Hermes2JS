@@ -57,6 +57,7 @@ class _Rung:
     fold_guards: bool = False  # GuardIntoConditionRegionPass
     edge_threading: bool = False  # ConstantEdgeThreadingCfgPass
     tail_copy: bool = False  # TerminalTailRegionCopyCfgPass
+    loop_stubs: bool = False  # FallThroughLayoutCfgPass.relocate_terminal_tails(loop_stubs=True)
 
 
 class HermesAnalysis:
@@ -481,14 +482,18 @@ class HermesAnalysis:
     # The same pass on rung 1's layout: rung 10's copies leave a `goto` into a block the copies then split (98/9589).
     _TAIL_COPY_PLAIN_RUNG = 14
 
+    # Rung 1's layout with the `continue` stubs of an arm moved behind their tests, inside a `for ... of`'s `try` too
+    # (98/8045: the shared tail the tests fall through to sits between the arm and its stubs).
+    _LOOP_STUBS_RUNG = 15
+
     @classmethod
     def _rung(cls, level) -> "_Rung":
-        """What retry `level` (False for the first attempt, then 1..14) switches on; see `_Rung`."""
+        """What retry `level` (False for the first attempt, then 1..15) switches on; see `_Rung`."""
         if not level:
             return _Rung()
 
         # The guard fold, threading and tail-copy rungs rebuild a layout of their own on top of rung 1 or 10.
-        base = 1 if level in (cls._FOLD_GUARDS_RUNG, cls._TAIL_COPY_PLAIN_RUNG) else min(level, 10)
+        base = 1 if level in (cls._FOLD_GUARDS_RUNG, cls._TAIL_COPY_PLAIN_RUNG, cls._LOOP_STUBS_RUNG) else min(level, 10)
 
         return _Rung(
             copies=True, widen=base >= 2, regions=base >= 3, statements=base >= 4, own_values=base >= 5,
@@ -496,6 +501,7 @@ class HermesAnalysis:
             bridge_everywhere=base >= 8, sibling_loop_exits=base >= 9, relocate_terminal_tails=base >= 10,
             fold_guards=level == cls._FOLD_GUARDS_RUNG, edge_threading=level == cls._THREADING_RUNG,
             tail_copy=level in (cls._TAIL_COPY_RUNG, cls._TAIL_COPY_PLAIN_RUNG),
+            loop_stubs=level == cls._LOOP_STUBS_RUNG,
         )
 
     def generate_js(
@@ -525,7 +531,12 @@ class HermesAnalysis:
             whole = []
 
             for level in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, self._FOLD_GUARDS_RUNG, self._THREADING_RUNG,
-                          self._TAIL_COPY_RUNG, self._TAIL_COPY_PLAIN_RUNG):
+                          self._TAIL_COPY_RUNG, self._TAIL_COPY_PLAIN_RUNG, self._LOOP_STUBS_RUNG):
+                if level == self._LOOP_STUBS_RUNG and not self._has_goto(first[0]):
+                    # It only removes a `goto`: a tree that merely loses a path by the audit keeps its shape
+                    # (98/7633 `resolveTransition`).
+                    continue
+
                 retry = self._attempt(verbose, raw, creator_facts, duplicate_returns=level)
                 if not retry[3]:
                     continue
@@ -724,12 +735,13 @@ class HermesAnalysis:
 
             FallThroughLayoutCfgPass(cfg).run()
 
-        if rung.relocate_terminal_tails:
-            FallThroughLayoutCfgPass(cfg).relocate_terminal_tails()
+        if rung.relocate_terminal_tails or rung.loop_stubs:
+            FallThroughLayoutCfgPass(cfg).relocate_terminal_tails(loop_stubs=rung.loop_stubs)
         FallThroughLayoutCfgPass(cfg).bridge_remaining(everywhere=rung.bridge_everywhere)
         # The last rung also lets one loop exit be a `break` while others leave for the same block (LoopBreakStructurer).
         cfg.sibling_loop_exits = rung.sibling_loop_exits
         cfg.fold_arm_guards = rung.fold_guards
+        cfg.loop_stubs = rung.loop_stubs
         cfg.verify()
         cfg.compute_dominators()
         cfg.compute_post_dominators()
