@@ -158,6 +158,8 @@ The output is valid but still contains `goto label_N` (or a raw-jump warning); t
 
 The output contains no `goto` (so it does not show in the `goto` count), but it is wrong, misleading or needlessly unreadable. In id order.
 
+- **F-304 Babel's `for (... of ...)` helper compiles to overlapping handler ranges that `TryStructurer` prints as wrong code (96/775 `_iterableToArrayLimit`; 2 `goto`s: `label_298`, `label_388`).** The function has six exception handlers whose ranges overlap and chain (`[0x6c,0x128)->0x180` and `->0x1dc`, `[0x12a,0x157)->0x171`, `[0x180,0x184)->0x1dc`, `[0x184,0x1b3)->0x1cd`, `[0x1de,0x20a)->0x224`): the compiler copies the `finally` code (`if (!r5 && null != r4.return) { r4.return() ... }`) onto the normal, the `throw` and the `return` paths, and each copy has its own handler. The printed `try` tree is not equivalent: one `catch` is empty, another throws `r0` (a register that holds the iterator result), a `catch` body is followed by an unreachable second `try`, and the two exits of the first `try` stay `goto`s. This is a restructuring of the handler nest (what one `try`/`catch`/`finally` owns), not a missing label; it needs its own design before a fix. Found while looking for the next `goto` candidate on 2026-11-22; nothing is changed for it yet.
+
 - **F-13 Loops with two latches.** The "expected exactly one latch" warning: 13 functions in 96, 22 in 98.
 - **F-14 `for-of` generator unrolling.** The loop stays as an unrolled generator.
 - **F-15 Shared tail returns.** 96/10216.
