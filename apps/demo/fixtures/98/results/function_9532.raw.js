@@ -20,9 +20,9 @@ function Dog(param1, param2) {
     r0 = Reflect.construct(r3, [param1, "Woof"], new.target);
     // CODE → addr: 32 | <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
     // CODE → addr: 36 | <LoadConstEmpty>: <Reg8: 1>
-    // USED → r1 = /* empty */;
+    // USED → r1 = undefined /* empty */;
     // CODE → addr: 38 | <ThrowIfThisInitialized>: <Reg8: 1>
-    __throwIfThisInitialized__(/* empty */);
+    __throwIfThisInitialized__(undefined /* empty */);
     // CODE → addr: 40 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → addr: 42 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 108>  # String: 'console' (Identifier)

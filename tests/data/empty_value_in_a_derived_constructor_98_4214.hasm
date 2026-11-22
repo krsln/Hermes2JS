@@ -1,0 +1,68 @@
+
+=> [Function #4214 "FlatList" of 279 bytes]: 2 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x0019c65c
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000003: <CreateFunctionEnvironment>: <Reg8: 2, UInt8: 1>
+==> 00000006: <LoadConstEmpty>: <Reg8: 4>
+==> 00000008: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 4>
+==> 0000000c: <GetNewTarget>: <Reg8: 7>
+==> 0000000e: <LoadFromEnvironment>: <Reg8: 1, Reg8: 3, UInt8: 12>
+==> 00000012: <LoadParentNoTraps>: <Reg8: 6, Reg8: 1>
+==> 00000015: <CreateThisForSuper>: <Reg8: 5, Reg8: 6, Reg8: 7, UInt8: 0>
+==> 0000001a: <LoadParam>: <Reg8: 9, UInt8: 1>
+==> 0000001d: <Mov>: <Reg8: 10, Reg8: 5>
+==> 00000020: <CallWithNewTarget>: <Reg8: 1, Reg8: 6, Reg8: 7, UInt8: 2>
+==> 00000025: <SelectObject>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 00000029: <ThrowIfThisInitialized>: <Reg8: 4>
+==> 0000002b: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
+==> 0000002f: <CreateFunctionEnvironment>: <Reg8: 4, UInt8: 1>
+==> 00000032: <StoreToEnvironment>: <Reg8: 4, UInt8: 0, Reg8: 1>
+==> 00000036: <NewArray>: <Reg8: 5, UInt16: 0>
+==> 0000003a: <DefineOwnById>: <Reg8: 1, Reg8: 5, UInt8: 0, string_id: 15601>  # String: '_virtualizedListPairs' (Identifier)
+==> 00000040: <CreateClosure>: <Reg8: 5, Reg8: 4, function_id: 10177>  # Function: [#10177 _captureRef of 20 bytes]: 2 params @ offset 0x00213350
+==> 00000045: <DefineOwnById>: <Reg8: 1, Reg8: 5, UInt8: 1, string_id: 11769>  # String: '_captureRef' (Identifier)
+==> 0000004b: <CreateClosure>: <Reg8: 5, Reg8: 4, function_id: 10178>  # Function: [#10178 _getItem of 103 bytes]: 3 params @ offset 0x00213364
+==> 00000050: <DefineOwnById>: <Reg8: 1, Reg8: 5, UInt8: 2, string_id: 15231>  # String: '_getItem' (Identifier)
+==> 00000056: <CreateClosure>: <Reg8: 5, Reg8: 4, function_id: 10179>  # Function: [#10179 _getItemCount of 108 bytes]: 2 params @ offset 0x002133cb
+==> 0000005b: <DefineOwnById>: <Reg8: 1, Reg8: 5, UInt8: 3, string_id: 15232>  # String: '_getItemCount' (Identifier)
+==> 00000061: <CreateClosure>: <Reg8: 4, Reg8: 4, function_id: 10180>  # Function: [#10180 _keyExtractor of 159 bytes]: 3 params @ offset 0x00213437
+==> 00000066: <DefineOwnById>: <Reg8: 1, Reg8: 4, UInt8: 4, string_id: 10272>  # String: '_keyExtractor' (Identifier)
+==> 0000006c: <CreateClosure>: <Reg8: 4, Reg8: 3, function_id: 10181>  # Function: [#10181 _renderer of 84 bytes]: 6 params @ offset 0x002134d6
+==> 00000071: <DefineOwnById>: <Reg8: 1, Reg8: 4, UInt8: 5, string_id: 15470>  # String: '_renderer' (Identifier)
+==> 00000077: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 2>
+==> 0000007b: <GetByIdShort>: <Reg8: 4, Reg8: 3, UInt8: 1, string_id: 115>  # String: 'default' (Identifier)
+==> 00000080: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 15470>  # String: '_renderer' (Identifier)
+==> 00000086: <LoadConstUndefined>: <Reg8: 0>
+==> 00000088: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
+==> 0000008d: <DefineOwnById>: <Reg8: 1, Reg8: 3, UInt8: 6, string_id: 13957>  # String: '_memoizedRenderer' (Identifier)
+==> 00000093: <GetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 15118>  # String: '_checkProps' (Identifier)
+==> 00000099: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 210>  # String: 'props' (Identifier)
+==> 0000009e: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 3>
+==> 000000a3: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 210>  # String: 'props' (Identifier)
+==> 000000a8: <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 8981>  # String: 'viewabilityConfigCallbackPairs' (Identifier)
+==> 000000ae: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 210>  # String: 'props' (Identifier)
+==> 000000b3: <JmpTrue>: <Addr8: 71, Reg8: 4>  # Address: 000000fa
+==> 000000b6: <GetById>: <Reg8: 4, Reg8: 3, UInt8: 6, string_id: 8973>  # String: 'onViewableItemsChanged' (Identifier)
+==> 000000bc: <JmpFalse>: <Addr8: 89, Reg8: 4>  # Address: 00000115
+==> 000000bf: <GetById>: <Reg8: 6, Reg8: 1, UInt8: 7, string_id: 15601>  # String: '_virtualizedListPairs' (Identifier)
+==> 000000c5: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 8, string_id: 88>  # String: 'push' (Identifier)
+==> 000000ca: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 1106, UInt16: 17356>  # Object: {'viewabilityConfig': null, 'onViewableItemsChanged': null}
+==> 000000d0: <GetByIdShort>: <Reg8: 7, Reg8: 1, UInt8: 4, string_id: 210>  # String: 'props' (Identifier)
+==> 000000d5: <GetById>: <Reg8: 7, Reg8: 7, UInt8: 9, string_id: 8977>  # String: 'viewabilityConfig' (Identifier)
+==> 000000db: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 7, UInt8: 0>
+==> 000000df: <GetById>: <Reg8: 8, Reg8: 1, UInt8: 10, string_id: 15156>  # String: '_createOnViewableItemsChanged' (Identifier)
+==> 000000e5: <CreateClosure>: <Reg8: 7, Reg8: 2, function_id: 10183>  # Function: [#10183  of 88 bytes]: 1 params @ offset 0x0021355e
+==> 000000ea: <Call2>: <Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 7>
+==> 000000ef: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 7, UInt8: 1>
+==> 000000f3: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 000000f8: <Jmp>: <Addr8: 29>  # Address: 00000115
+==> 000000fa: <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 8981>  # String: 'viewabilityConfigCallbackPairs' (Identifier)
+==> 00000100: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 126>  # String: 'map' (Identifier)
+==> 00000105: <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 10182>  # Function: [#10182  of 52 bytes]: 2 params @ offset 0x0021352a
+==> 0000010a: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000010f: <PutByIdStrict>: <Reg8: 1, Reg8: 2, UInt8: 0, string_id: 15601>  # String: '_virtualizedListPairs' (Identifier)
+==> 00000115: <Ret>: <Reg8: 1>
+
+

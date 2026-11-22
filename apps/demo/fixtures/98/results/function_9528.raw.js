@@ -85,9 +85,9 @@ function classTest() {
     // CODE → addr:181 | <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
     r3 = r2;
     // CODE → addr:185 | <LoadConstEmpty>: <Reg8: 2>
-    // USED → r2 = /* empty */;
+    // USED → r2 = undefined /* empty */;
     // CODE → addr:187 | <ThrowIfThisInitialized>: <Reg8: 2>
-    __throwIfThisInitialized__(/* empty */);
+    __throwIfThisInitialized__(undefined /* empty */);
     // CODE → addr:189 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
     // CODE → addr:195 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

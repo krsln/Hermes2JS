@@ -40,9 +40,9 @@ function create(param1) {
     r0 = Reflect.construct(r3, [param1, "Woof"], r5);
     // CODE → addr: 76 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
     // CODE → addr: 80 | <LoadConstEmpty>: <Reg8: 2>
-    // USED → r2 = /* empty */;
+    // USED → r2 = undefined /* empty */;
     // CODE → addr: 82 | <ThrowIfThisInitialized>: <Reg8: 2>
-    __throwIfThisInitialized__(/* empty */);
+    __throwIfThisInitialized__(undefined /* empty */);
     // CODE → addr: 84 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr: 90 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

@@ -87,7 +87,9 @@ class LoadConstEmpty(LoadConstZero):
     # JS literal - it isn't `undefined` at the engine level, even though
     # source-visible reads of it usually coerce to `undefined`. Kept as
     # an explicit marker rather than silently lying with UndefinedLiteral.
-    VALUE = RawExpression(source="/* empty */")
+    # The marker is printed AFTER `undefined`: a bare comment is not an
+    # expression (`x = /* empty */;`, `f(/* empty */)` do not parse).
+    VALUE = RawExpression(source="undefined /* empty */")
 
 
 # ---------------------------------------------------------------------------
