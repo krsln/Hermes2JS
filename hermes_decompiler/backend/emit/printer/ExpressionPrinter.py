@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from typing import Any
 
 from hermes_decompiler.ir import precedence
@@ -40,6 +41,8 @@ from hermes_decompiler.ir.expressions import (
 from hermes_decompiler.ir.Operators import LogicalOperator, UnaryOperator
 from hermes_decompiler.backend.transforms.shared import negate_for_display
 from ._PrinterVisitor import PrinterVisitor
+
+_IDENTIFIER = re.compile(r"#?(?:[^\W\d]|\$)[\w$]*")
 
 __all__ = [
     "ExpressionPrinter",
@@ -230,6 +233,11 @@ class ExpressionPrinter(PrinterVisitor):
             return f"Reflect.get({obj}, {prop}, {receiver})"
 
         access = "?." if node.optional else ""
+
+        # A property name that is not an identifier (`@@iterator`, `@@nativeEmitterSubscription@@`: names Hermes
+        # and the polyfills use) cannot follow a dot: `obj["@@iterator"]` is the same access and parses.
+        if not node.computed and isinstance(node.prop, Identifier) and not _IDENTIFIER.fullmatch(node.prop.name):
+            return f"{obj}{access}[{json.dumps(node.prop.name)}]"
 
         if node.computed:
             return f"{obj}{access}[{prop}]"

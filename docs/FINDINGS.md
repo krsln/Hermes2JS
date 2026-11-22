@@ -82,6 +82,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-22 | after F-301 (labeled blocks for the jumps no rung structures) | 15 | 11 | n/a | n/a | 1248 passed |
 | 2026-11-22 | after F-302 (a labeled block may close in front of an `if` whose test block is not printed) | 11 | 7 | n/a | n/a | 1249 passed |
 | 2026-11-22 | after F-303 (a branch to a second copy of the back edge is a `continue`) | 10 | 6 | n/a | n/a | 1251 passed |
+| 2026-11-22 | after F-305 (a property name that is not an identifier prints in brackets) | 10 | 6 | n/a | n/a | 1260 passed |
 
 - Rows from 2026-10-17 to 2026-11-09 and the notes that explain them (the 98/2619 comparability, F-31/F-32 and the first two `pathdefs` rows) are in the archive appendix "measurement rows".
 - `goto`: number of functions whose output still contains `goto label_N`.
