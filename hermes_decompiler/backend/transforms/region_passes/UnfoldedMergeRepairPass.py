@@ -3,13 +3,12 @@ from __future__ import annotations
 import re
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
-from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, LoopRegion
+from hermes_decompiler.backend.regions import RegionVisitor, IfRegion
 from hermes_decompiler.backend.transforms.shared import (
     has_side_effects, repoint_references, reclaim_definition, TRIVIAL_NODE_TYPES, prints_definition,
     substitute_register,
 )
-from hermes_decompiler.backend.transforms.shared._repoint import _contains, _reads_register_by_name, \
-    sibling_arm_instructions
+from hermes_decompiler.backend.transforms.shared._repoint import RegisterReadIndex, sibling_arm_instructions
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import ConditionalExpression, Identifier, StringLiteral, ThisPlaceholder
@@ -156,8 +155,14 @@ class UnfoldedMergeRepairPass(RegionPass):
         # The flow as it was before the structurers rewrote the edges (`FlowSnapshot`).
         self._snapshot = snapshot
 
-    def run(self) -> None:
+    def _drop_indexes(self) -> None:
+        """Forget what was indexed about the tree: a repair rewrote nodes."""
         self._index = None
+        self._read_index = None
+
+    def run(self) -> None:
+        self._drop_indexes()
+        self._tail_copies = None
         self._sibling_body = None
         self._made: set[int] = set()  # ids of the replacement identifiers this pass created
 
@@ -221,7 +226,7 @@ class UnfoldedMergeRepairPass(RegionPass):
         # already says `rN`.
         if is_last and not has_side_effects(write.value) and self._named_after_the_if(write, region_blocks):
             write.definition_used = False
-            self._index = None
+            self._drop_indexes()
             logger.debug("unfolded merge: r%s written in an arm is named after the if", write.dest_reg)
             # The arm's write prints now, so the path that skips the arm needs
             # the default it left (`r1 = len >= 0` that the `if`'s own test
@@ -312,7 +317,7 @@ class UnfoldedMergeRepairPass(RegionPass):
             reader_value=reader_value if other_arm or reaches is not None else None,
         )
 
-        self._index = None
+        self._drop_indexes()
         write.definition_used = False
         logger.debug("unfolded merge: r%s written in one arm is read after the if", write.dest_reg)
 
@@ -384,7 +389,7 @@ class UnfoldedMergeRepairPass(RegionPass):
             structural=False, reader_value=reader_value,
         )
 
-        self._index = None
+        self._drop_indexes()
         logger.debug("unfolded merge: copies of printed r%s after the if read the register", write.dest_reg)
 
     def _reader_reachability(self, write, strict: bool = False):
@@ -513,7 +518,7 @@ class UnfoldedMergeRepairPass(RegionPass):
             source = self._MOV_SOURCE_RE.match(instruction.entry.args)
             instruction.value = Identifier(name=f"r{int(source.group(1))}")
 
-        self._index = None
+        self._drop_indexes()
         write.definition_used = False
         logger.debug("unfolded merge: r%s read by Mov after the if", write.dest_reg)
         self._reprint_default(if_region, write)
@@ -568,7 +573,7 @@ class UnfoldedMergeRepairPass(RegionPass):
                 changed = True
 
         if changed:
-            self._index = None
+            self._drop_indexes()
             logger.debug("unfolded merge: Mov of printed r%s after the if reads the register", write.dest_reg)
 
     _REGISTER_NAME_RE = re.compile(r"r\d+")
@@ -646,7 +651,7 @@ class UnfoldedMergeRepairPass(RegionPass):
                         changed = True
 
         if changed:
-            self._index = None
+            self._drop_indexes()
             logger.debug("unfolded merge: readers of the alias of printed r%s after the if read the register",
                          write.dest_reg)
 
@@ -674,22 +679,29 @@ class UnfoldedMergeRepairPass(RegionPass):
         # A COPY of a tail (SharedTailDuplicationCfgPass) keeps its original's instruction addresses, so the
         # copy on the other path reads `r3` "after" this arm by address. Only what the arm can reach reads
         # its value (98/8193: the copy's `r1 = r3` kept the original's `r1 = r3` from being repointed).
-        reachable = set(region_blocks)
-        todo = list(region_blocks)
+        cut_off = ()
 
-        while todo:
-            block = todo.pop()
+        if self._tail_copies is None:
+            self._tail_copies = tuple(b for b in self.cfg.blocks if getattr(b, "tail_copy", False))
 
-            for successor in [*block.successors, *self._snapshot_handlers(block)]:
-                if successor not in reachable:
-                    reachable.add(successor)
-                    todo.append(successor)
+        if self._tail_copies:
+            reachable = set(region_blocks)
+            todo = list(region_blocks)
 
-        cut_off = tuple(b for b in self.cfg.blocks if b not in reachable and getattr(b, "tail_copy", False))
+            while todo:
+                block = todo.pop()
 
-        return _reads_register_by_name(
-            self.cfg, write.dest_reg, end, root=self.graph.root, ignore_blocks=(*region_blocks, *cut_off)
-        )
+                for successor in [*block.successors, *self._snapshot_handlers(block)]:
+                    if successor not in reachable:
+                        reachable.add(successor)
+                        todo.append(successor)
+
+            cut_off = tuple(b for b in self._tail_copies if b not in reachable)
+
+        if self._read_index is None:
+            self._read_index = RegisterReadIndex(self.cfg, self.graph.root)
+
+        return self._read_index.reads(write.dest_reg, end, ignore_blocks=(*region_blocks, *cut_off))
 
     def _snapshot_handlers(self, block) -> list:
         """The catch entries a block of a try range can run into (edges the CFG does not carry)."""
@@ -778,7 +790,7 @@ class UnfoldedMergeRepairPass(RegionPass):
                     and _always_assigns(if_region.else_body, write.dest_reg)
             ):
                 default.definition_used = False
-                self._index = None
+                self._drop_indexes()
 
             return
 

@@ -23,6 +23,7 @@ Consumers live in more places than the instruction list:
 
 from __future__ import annotations
 
+import bisect
 import dataclasses
 
 from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion
@@ -520,6 +521,91 @@ def reclaim_definition(cfg, root, last, old_value, arm_result, *, ignore_blocks,
     last.definition_used = False
 
     return True
+
+
+class RegisterReadIndex:
+    """`_reads_register_by_name` for many queries over one unchanged tree.
+
+    The plain function walks every instruction and region of the function on each call; a pass that asks it for
+    every write it looks at (`UnfoldedMergeRepairPass`: thousands of times in a 98/3523 `parseURL`) spends nearly
+    all of its time there. The events (what each instruction and each region test holds, in bytecode order) and
+    the register names every held node mentions are built once; a query only scans the events behind
+    `after_address`. The owner drops the index whenever it rewrites a node, exactly as for the plain function.
+    """
+
+    def __init__(self, cfg, root) -> None:
+        events = []
+
+        for block in cfg.blocks:
+            for instr in block.instructions:
+                events.append((instr.address, 1, instr.address, block,
+                               (instr.value, instr.statement, instr.terminator), instr.dest_reg))
+
+        collector = _RegionCollector()
+        collector.visit(root)
+
+        for region in collector.regions:
+            condition = getattr(region, "condition", None)
+            covered = region.covered_blocks if condition is not None else None
+
+            if covered:
+                start = min(block.address for block in covered)
+                events.append((start - 0.5, 0, start, None, (condition,), None))
+
+        events.sort(key=lambda event: event[:2])
+        self._events = events
+        self._keys = [event[0] for event in events]
+        self._names: dict[int, frozenset] = {}
+
+    def _names_in(self, node) -> frozenset:
+        cached = self._names.get(id(node))
+
+        if cached is not None:
+            return cached
+
+        names: set = set()
+        stack = [node]
+
+        while stack:
+            current = stack.pop()
+
+            if isinstance(current, Identifier):
+                names.add(current.name)
+                continue
+
+            if not dataclasses.is_dataclass(current):
+                continue
+
+            for field in dataclasses.fields(current):
+                value = getattr(current, field.name)
+
+                for child in (value if isinstance(value, tuple) else (value,)):
+                    if child is not None and not isinstance(child, (str, int, float, bool)):
+                        stack.append(child)
+
+        result = frozenset(names)
+        self._names[id(node)] = result
+
+        return result
+
+    def reads(self, register: int, after_address: int, ignore_blocks=()) -> bool:
+        name = f"r{register}"
+        ignored = {id(block) for block in ignore_blocks}
+
+        for index in range(bisect.bisect_right(self._keys, after_address - 1), len(self._events)):
+            _, _, above, block, held_nodes, dest_reg = self._events[index]
+
+            if above <= after_address or (block is not None and id(block) in ignored):
+                continue
+
+            for held in held_nodes:
+                if held is not None and name in self._names_in(held):
+                    return True
+
+            if dest_reg == register:
+                return False
+
+        return False
 
 
 def _reads_register_by_name(
