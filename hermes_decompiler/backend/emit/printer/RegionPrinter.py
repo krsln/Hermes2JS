@@ -24,6 +24,7 @@ from hermes_decompiler.ir.expressions import (
     YieldExpression,
 )
 from .ExpressionPrinter import ExpressionPrinter
+from hermes_decompiler.backend.transforms.shared._negation import negate_condition
 from ._labeled_exits import LabeledExitPlan
 from .StatementPrinter import StatementPrinter
 from ._PrinterContext import PrinterContext
@@ -232,6 +233,10 @@ class RegionPrinter:
         nested IfRegion, we emit a flat `else if` cascade instead of
         nested braces – matching the original source style.
         """
+        if not _chain and self._plan is not None and id(region) in self._plan.crossed:
+            self._emit_crossed_if(region, lines)
+            return
+
         condition = self.expressions.print(region.condition)
 
         if _chain:
@@ -251,6 +256,9 @@ class RegionPrinter:
         # contains exactly one IfRegion (and nothing else).
         nested = self._extract_single_if(else_body)
 
+        if nested is not None and self._plan is not None and id(nested) in self._plan.crossed:
+            nested = None
+
         if nested is not None:
             self._emit_if(nested, lines, _chain=True)
             return
@@ -260,6 +268,32 @@ class RegionPrinter:
 
         with self.ctx.indented():
             self._emit_region(else_body, lines)
+
+        self.ctx.write(lines, "}")
+
+    def _emit_crossed_if(self, region: IfRegion, lines: list[str]) -> None:
+        """An `if` whose one arm jumps onto the first block of the other (`_labeled_exits`)."""
+        jumping_is_then, label, join = self._plan.crossed[id(region)]
+        jumper = region.then_body if jumping_is_then else region.else_body
+        other = region.else_body if jumping_is_then else region.then_body
+        condition = region.condition if jumping_is_then else negate_condition(region.condition)
+
+        self.ctx.write(lines, f"{join}: {{")
+
+        with self.ctx.indented():
+            self.ctx.write(lines, f"{label}: {{")
+
+            with self.ctx.indented():
+                self.ctx.write(lines, f"if ({self.expressions.print(condition)}) {{")
+
+                with self.ctx.indented():
+                    self._emit_region(jumper, lines)
+                    self.ctx.write(lines, f"break {join};")
+
+                self.ctx.write(lines, "}")
+
+            self.ctx.write(lines, "}")
+            self._emit_region(other, lines)
 
         self.ctx.write(lines, "}")
 

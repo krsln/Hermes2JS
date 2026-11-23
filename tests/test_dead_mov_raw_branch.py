@@ -8,6 +8,7 @@ values: the copy `r18 = r12` right before the test looked unread (`r18` is writt
 and `if (r18) goto` tested the value of the first test instead of `r12`.
 """
 
+import re
 from pathlib import Path
 
 import pytest
@@ -25,4 +26,5 @@ def test_a_raw_branch_keeps_the_copy_it_reads(monkeypatch: pytest.MonkeyPatch):
     out = Decompiler.render(Decompiler.build_context(hasm, 11466, strict=False), verbose=False, raw=False)
     code = "\n".join(line for line in out.split("\n") if not line.strip().startswith("//"))
 
-    assert "r18 = r12;\n            if (r18) goto" in code
+    # The jump is a `goto` or, once the last resort labels it (F-314), a `break label_N`: either way it reads the copy.
+    assert re.search(r"r18 = r12;\n\s+if \(r18\) (goto|break) ", code)

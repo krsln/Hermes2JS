@@ -34,9 +34,15 @@ class LabeledExitPlan:
         # id(terminator) -> label
         self.breaks: dict[int, str] = {}
         self.sequences: set[int] = set()
+        # id(IfRegion) -> (the arm that jumps is the `then` arm, label of the jump target, label of the join)
+        self.crossed: dict[int, tuple[bool, str, str]] = {}
 
     def __bool__(self) -> bool:
         return bool(self.breaks)
+
+    def labels(self) -> set[str]:
+        return {label for opened in self.opens.values() for label in opened} | {
+            label for _, label, _ in self.crossed.values()}
 
     @classmethod
     def build(cls, root) -> "LabeledExitPlan":
@@ -82,7 +88,52 @@ class LabeledExitPlan:
                 for terminator in terminators:
                     plan.breaks[id(terminator)] = label
 
+        cls._cross_arm(root, plan)
+
         return plan
+
+    @classmethod
+    def _cross_arm(cls, node, plan: "LabeledExitPlan") -> None:
+        """Jumps from one arm of an `if` onto the first block of the OTHER arm (98/2775: a loop in the `else`
+        arm leaves into the code of the `then` arm). No sibling follows the jump, so:
+
+            join: { target: { if (<the jumping arm runs>) { arm; break join; } } other arm }
+
+        a jump onto the other arm becomes `break target;`, the end of the jumping arm `break join;`."""
+        if isinstance(node, BasicBlock):
+            return
+
+        if isinstance(node, SequenceRegion):
+            for child in node.children:
+                cls._cross_arm(child, plan)
+
+            return
+
+        if isinstance(node, IfRegion) and node.else_body is not None:
+            for jumping_is_then, jumper, other in (
+                    (True, node.then_body, node.else_body), (False, node.else_body, node.then_body)):
+                address = cls._leading_address(other)
+
+                if address is None or f"label_{address}" in plan.labels():
+                    continue
+
+                jumps: list = []
+                cls._collect(jumper, [], jumps)
+                mine = [t for t, target, _ in jumps if target == address and id(t) not in plan.breaks]
+
+                if not mine:
+                    continue
+
+                label = f"label_{address}"
+
+                for terminator in mine:
+                    plan.breaks[id(terminator)] = label
+
+                plan.crossed[id(node)] = (jumping_is_then, label, f"{label}_end")
+                break
+
+        for child in cls._children(node):
+            cls._cross_arm(child, plan)
 
     @staticmethod
     def _nest(ranges: list[list]) -> None:
