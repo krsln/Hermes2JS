@@ -12,6 +12,7 @@ from ._base import RegionPass
 
 logger = get_logger(__name__)
 
+_RETURN_PROTOCOL_HANDLERS = frozenset({"IteratorClose", "CompleteGenerator", "Ret"})
 _RESUME_FLAG_NAME = "__resumeIsReturn"
 _SAVE_GENERATOR_HANDLERS = ("SaveGenerator", "SaveGeneratorLong")
 _RESUME_GENERATOR_HANDLER = "ResumeGenerator"
@@ -344,7 +345,14 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
 
         new_children = list(region.children[:index])
 
-        if yield_block is not None and len(yield_block.instructions) >= 2:
+        if yield_block is not None and (
+                len(yield_block.instructions) >= 2
+                # The save alone: the value it yields was computed in the block before it
+                # (96/3625, `IteratorNext r4` then the save and `Ret r4`). Not when that value is an
+                # `await` of an async function (96/8157: the call was printed as `await`, the save is its
+                # own suspend, there is no `yield` to print).
+                or self._is_a_plain_yield_of(self._yielded_reg.get(id(yield_block.instructions[-1])))
+        ):
             save_instruction = yield_block.instructions[-1]
             before_save = yield_block.instructions[:-1]
 
@@ -353,7 +361,7 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
             # right before the save (96/718: `r1 = param1[r3]; Mov r2, r3; Save; Ret r1`,
             # the `Mov` keeps the loop counter for the code after the resume).
             yielded_reg = self._yielded_reg.get(id(save_instruction))
-            value_instruction = before_save[-1]
+            value_instruction = before_save[-1] if before_save else None
 
             if yielded_reg is not None:
                 value_instruction = next(
@@ -504,6 +512,25 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
                 and value.argument.argument is None
         )
 
+    def _is_a_plain_yield_of(self, register: int | None) -> bool:
+        """True when `register` is yielded in a function that awaits nothing (a plain generator).
+
+        An async function or async generator suspends for its `await`s through the same save/resume pair, and
+        telling a `yield` from an `await` there takes the function's kind, which this pass does not see
+        (96/8157, 96/14940: `yield r5` for what is an `await`): those keep the old output.
+        """
+        if register is None:
+            return False
+
+        for block in self.cfg.blocks:
+            for instruction in block.instructions or []:
+                value = instruction.value
+
+                if isinstance(value, AwaitExpression) and not isinstance(value.argument, YieldExpression):
+                    return False
+
+        return True
+
     def _suspends_on_a_real_await(self, yield_block) -> bool:
         """True when the save in `yield_block` suspends on a Call-derived `await`.
 
@@ -565,10 +592,15 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
 
         then_block = then_children[0]
 
-        return (
-                isinstance(then_block, BasicBlock)
-                and [i.handler for i in then_block.instructions] == ["Ret"]
-        )
+        if not isinstance(then_block, BasicBlock) or not then_block.instructions:
+            return False
+
+        handlers = [i.handler for i in then_block.instructions]
+
+        # What a `for (x of it) yield x;` runs when the generator is returned from the yield: close the
+        # iterators it holds (`r5.return()`, printed from `IteratorClose`), then leave (96/3625
+        # `generateValues`). The loop closes them itself in the source, so the arm is the return protocol.
+        return handlers[-1] == "Ret" and all(h in _RETURN_PROTOCOL_HANDLERS for h in handlers)
 
     # ------------------------------------------------------------------
     # Safety: is the resumed value actually read downstream?
