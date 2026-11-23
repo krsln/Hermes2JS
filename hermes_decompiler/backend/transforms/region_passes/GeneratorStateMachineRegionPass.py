@@ -327,6 +327,12 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
                 self.cfg, self.graph.root, resumed_placeholder, Identifier(name=f"r{bind_reg}"),
                 min_block_id=0, exclude=set(), structural=False,
             )
+            # The same placeholder inside a COPY (an object literal built from it, 96/12207 `{ src: <resumed> }`).
+            # Each resume point's placeholder carries its own address, so the match cannot reach the next one.
+            repoint_references(
+                self.cfg, self.graph.root, resumed_placeholder, Identifier(name=f"r{bind_reg}"),
+                min_block_id=0, exclude=set(), structural=True,
+            )
 
         if resumed_is_used and yield_block is None:
             # The entry-point resume (right after StartGenerator, with

@@ -39,6 +39,10 @@ class YieldExpression(Expression):
 
     argument: Expression | None = None
     delegate: bool = False
+    # The address of the `ResumeGenerator` this is the placeholder of (None for a real `yield`): two
+    # placeholders of one function differ by it, so a copy of one (an object literal built from the
+    # resumed value) is told from the placeholder of the NEXT resume point.
+    resume_at: int | None = None
 
     @property
     def children(self) -> tuple[Node, ...]:

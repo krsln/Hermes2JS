@@ -27,7 +27,7 @@ class ResumeGenerator(OpcodeHandler):
         dest_reg, flag_reg = map(int, match.groups())
 
         # value = await yield;   (normal next / return value)
-        expression = AwaitExpression(argument=YieldExpression())
+        expression = AwaitExpression(argument=YieldExpression(resume_at=ctx.entry.address))
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
