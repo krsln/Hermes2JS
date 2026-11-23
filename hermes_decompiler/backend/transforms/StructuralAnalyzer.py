@@ -12,6 +12,7 @@ from hermes_decompiler.backend.transforms.region_passes import (
     ConditionalExpressionRegionPass,
     UnfoldedMergeRepairPass,
     ConditionalContinueRegionPass,
+    LoopExitBreakRegionPass,
     GuardExitRegionPass,
     GuardIntoConditionRegionPass,
     LoopCarriedDefinitionPass,
@@ -113,6 +114,8 @@ class StructuralAnalyzer:
             self.cfg.compute_dominators()
             self.cfg.compute_post_dominators()
             self.cfg.compute_loops()
+
+        self.cfg.loop_analysis.include_protected_blocks()
 
         flow = FlowSnapshot(self.cfg)
 
@@ -217,6 +220,9 @@ class StructuralAnalyzer:
         # Converts residual unconditional jumps to the loop latch into
         # a `continue` statement. This requires the final If/Loop nesting.
         LoopContinueRegionPass(graph, self.cfg).run()
+
+        # `while (true) { try { ...; break } catch { } }`: the way out of the body is a jump to the code after the loop.
+        LoopExitBreakRegionPass(graph, self.cfg).run()
 
         # `if (c) continue;` compiled as a conditional branch back to the loop.
         ConditionalContinueRegionPass(graph, self.cfg).run()

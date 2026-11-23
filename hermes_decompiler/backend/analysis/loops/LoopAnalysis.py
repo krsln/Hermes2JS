@@ -52,6 +52,42 @@ class LoopAnalysis:
         self._compute_exits()
         self._compute_nesting()
 
+    def include_protected_blocks(self) -> None:
+        """
+        Make the blocks a `catch` loop is protected by members of that loop.
+
+        `while (true) { try { A } catch { B } }` has its back edge from the catch, and the edge from a protected
+        block to the catch is implicit, so the natural loop is only the header and the catch while the body `A`,
+        which can reach the catch (and so the header) by throwing, stays outside it. A block protected by a handler
+        whose catch block is a loop member is on a cycle of that loop.
+
+        Run after the CFG passes (StructuralAnalyzer): they fold the tests of that body by the natural shape of
+        the loop. The loops that grew are remembered in `self.loops_around_a_try` (header addresses): the body's
+        way out is then a jump to the code after the loop, which `LoopExitBreakRegionPass` turns into `break`.
+        """
+
+        handlers = getattr(self.cfg, "exception_handlers", None) or []
+        self.loops_around_a_try = set()
+
+        for loop in self.loops.values():
+            changed = True
+
+            while changed:
+                changed = False
+
+                for handler in handlers:
+                    if handler.get("handler_block") not in loop.members:
+                        continue
+
+                    for block in handler.get("try_blocks", ()):
+                        if block not in loop.members:
+                            loop.members.add(block)
+                            changed = True
+                            self.loops_around_a_try.add(loop.header.address)
+
+        self._compute_exits()
+        self._compute_nesting()
+
     def _merge_back_edge(self, header: BasicBlock, tail: BasicBlock) -> None:
         """
         Merge a back edge into the natural loop for its header.
