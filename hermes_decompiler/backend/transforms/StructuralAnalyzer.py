@@ -97,12 +97,13 @@ class StructuralAnalyzer:
         # this pass performs can no longer be expressed as a simple
         # CFG edit.
         # A value diamond that is only tested becomes one test block first.
-        ValueConditionFoldCfgPass(self.cfg).run()
+        # Counted BEFORE the fold: it removes blocks too, and the analyses below must be redone for them.
         blocks_before = len(self.cfg.blocks)
+        ValueConditionFoldCfgPass(self.cfg).run()
         ShortCircuitConditionCfgPass(self.cfg).run()
 
         if len(self.cfg.blocks) != blocks_before:
-            # A merged-away test block that sat in a loop is still a member of the
+            # A folded-away or merged-away test block that sat in a loop is still a member of the
             # loop (and a node of the dominator trees) the analyses found earlier.
             alive = set(self.cfg.blocks)
 
