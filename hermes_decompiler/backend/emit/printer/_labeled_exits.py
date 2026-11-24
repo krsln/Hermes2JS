@@ -36,6 +36,8 @@ class LabeledExitPlan:
         self.sequences: set[int] = set()
         # id(IfRegion) -> (the arm that jumps is the `then` arm, label of the jump target, label of the join)
         self.crossed: dict[int, tuple[bool, str, str, bool]] = {}
+        # id(IfRegion) -> index of the first child of the other arm that the jumps land on (0: its start)
+        self.crossed_at: dict[int, int] = {}
 
     def __bool__(self) -> bool:
         return bool(self.breaks)
@@ -109,17 +111,31 @@ class LabeledExitPlan:
         return plan
 
     @staticmethod
+    def _landing(arm, target: int) -> int | None:
+        """The index of the child of the arm whose first block is `target`."""
+        for position, child in enumerate(arm.children):
+            if LabeledExitPlan._leading_address(child) == target:
+                return position
+
+        return None
+
+    @staticmethod
     def _arm_leading(node, target: int):
-        """The arm of an `if` with an else whose first block is `target`: True for the `then` arm, False for the
-        `else` arm, None for neither."""
-        if not isinstance(node, IfRegion) or node.else_body is None:
+        """(is the `then` arm, index of the child) when a child of one arm of an `if` starts at `target`, else
+        None. The `else` arm needs an `else`; a `then` arm without one is entered as well (a jump over its test)."""
+        if not isinstance(node, IfRegion):
             return None
 
-        if LabeledExitPlan._leading_address(node.then_body) == target:
-            return True
+        position = LabeledExitPlan._landing(node.then_body, target)
 
-        if LabeledExitPlan._leading_address(node.else_body) == target:
-            return False
+        if position is not None:
+            return True, position
+
+        if node.else_body is not None:
+            position = LabeledExitPlan._landing(node.else_body, target)
+
+            if position is not None:
+                return False, position
 
         return None
 
@@ -142,7 +158,13 @@ class LabeledExitPlan:
                 continue
 
             region = sequence.children[index]
-            target_is_then = cls._arm_leading(region, target)
+            target_is_then, position = cls._arm_leading(region, target)
+
+            if position:
+                arm = region.then_body if target_is_then else region.else_body
+                plan.crossed_at[id(region)] = position
+                plan.sequences.add(id(arm))
+                plan.closes[(id(arm), position - 1)] = plan.closes.get((id(arm), position - 1), 0) + 1
 
             plan.sequences.add(sequence_id)
             plan.opens.setdefault((sequence_id, start), []).extend([join, label])
@@ -172,25 +194,39 @@ class LabeledExitPlan:
         if isinstance(node, IfRegion) and node.else_body is not None:
             for jumping_is_then, jumper, other in (
                     (True, node.then_body, node.else_body), (False, node.else_body, node.then_body)):
-                address = cls._leading_address(other)
+                landings = {}
 
-                if address is None or f"label_{address}" in plan.labels():
-                    continue
+                for position, child in enumerate(other.children):
+                    address = cls._leading_address(child)
+
+                    if address is not None:
+                        landings.setdefault(address, position)
 
                 jumps: list = []
                 cls._collect(jumper, [], jumps)
-                mine = [t for t, target, _ in jumps if target == address and id(t) not in plan.breaks]
 
-                if not mine:
-                    continue
+                for address, position in landings.items():
+                    mine = [t for t, target, _ in jumps if target == address and id(t) not in plan.breaks]
 
-                label = f"label_{address}"
+                    if not mine or f"label_{address}" in plan.labels():
+                        continue
 
-                for terminator in mine:
-                    plan.breaks[id(terminator)] = label
+                    label = f"label_{address}"
 
-                plan.crossed[id(node)] = (jumping_is_then, label, f"{label}_end", False)
-                break
+                    for terminator in mine:
+                        plan.breaks[id(terminator)] = label
+
+                    plan.crossed[id(node)] = (jumping_is_then, label, f"{label}_end", False)
+
+                    if position:
+                        plan.crossed_at[id(node)] = position
+                        plan.sequences.add(id(other))
+                        plan.closes[(id(other), position - 1)] = plan.closes.get((id(other), position - 1), 0) + 1
+
+                    break
+
+                if id(node) in plan.crossed:
+                    break
 
         for child in cls._children(node):
             cls._cross_arm(child, plan)

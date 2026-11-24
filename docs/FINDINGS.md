@@ -96,6 +96,7 @@ row; a row is only added when all of its columns were measured on the same tree.
 | 2026-11-23 | after F-314 (a jump from one arm of an `if` onto the first block of the other prints as a labeled block, last rung) | 3 | 4 | n/a | n/a | 1295 passed |
 | 2026-11-24 | after F-314 remainder (a jump onto one arm of a later sibling `if` prints as a labeled block, last rung) | 1 | 4 | n/a | n/a | 1297 passed |
 | 2026-11-24 | after F-321 (a jump table whose default is the code behind the switch: the switch is followed by that code) | 1 | 2 | n/a | n/a | 1299 passed |
+| 2026-11-24 | after F-322 (a jump into the middle of an arm of an `if`, last rung) | 1 | 1 | n/a | n/a | 1301 passed |
 
 - Rows from 2026-10-17 to 2026-11-09 and the notes that explain them (the 98/2619 comparability, F-31/F-32 and the first two `pathdefs` rows) are in the archive appendix "measurement rows".
 - `goto`: number of functions whose output still contains `goto label_N`.
@@ -103,7 +104,7 @@ row; a row is only added when all of its columns were measured on the same tree.
   (`scripts/audit/definite_assignment.py`, piped through `cut -d: -f1 | sort -u | wc -l`). It is a
   rough check (for-of/for-in heads and switch arms give false positives), so compare rows, not
   absolute values.
-- Where the remaining `goto` files sit (2026-11-24, after F-321, counted on the printed code): 96 has 1 `goto` file, a generator/async one (775, 3 gotos); 98 has 2: 3523 `parseURL` (12) and 12100 (6, generator/async). 98/2671 `completeUnitOfWork` and 98/2672 `unwindUnitOfWork` are `goto`-free now.
+- Where the remaining `goto` files sit (2026-11-24, after F-322, counted on the printed code): 96 has 1 `goto` file, a generator/async one (775, 3 gotos); 98 has 1, also generator/async (12100, 6 gotos). Every other function is `goto`-free.
 - Older notes recorded `pathdefs` of 160 (96) and 193 (98) from a survey tool that is not in the
   repository; those numbers are not comparable with this column and were dropped. The per-change
   history of the `goto` count up to F-123 is in the archive appendix.

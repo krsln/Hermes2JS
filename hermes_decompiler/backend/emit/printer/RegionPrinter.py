@@ -280,6 +280,35 @@ class RegionPrinter:
 
         if inline:
             # `join` and `label` were opened in front of the code that jumps (the sequence prints them).
+            if jumper is None:
+                self.ctx.write(lines, f"if ({self.expressions.print(condition)}) break {join};")
+            else:
+                self.ctx.write(lines, f"if ({self.expressions.print(condition)}) {{")
+
+                with self.ctx.indented():
+                    self._emit_region(jumper, lines)
+                    self.ctx.write(lines, f"break {join};")
+
+                self.ctx.write(lines, "}")
+
+            if id(region) in self._plan.crossed_at:
+                # the landing is in the middle of the arm: the arm's own sequence closes the labeled block
+                self._emit_region(other, lines)
+                self.ctx.indent -= 1
+                return
+
+            self.ctx.indent -= 1
+            self.ctx.write(lines, "}")
+            self._emit_region(other, lines)
+            return
+
+        if id(region) in self._plan.crossed_at:
+            # the jumps land in the middle of the other arm: the part in front of the landing goes into the labeled
+            # block (its sequence closes it), the rest follows it
+            self.ctx.write(lines, f"{join}: {{")
+            self.ctx.indent += 1
+            self.ctx.write(lines, f"{label}: {{")
+            self.ctx.indent += 1
             self.ctx.write(lines, f"if ({self.expressions.print(condition)}) {{")
 
             with self.ctx.indented():
@@ -287,9 +316,9 @@ class RegionPrinter:
                 self.ctx.write(lines, f"break {join};")
 
             self.ctx.write(lines, "}")
-            self.ctx.indent -= 1
-            self.ctx.write(lines, "}")
             self._emit_region(other, lines)
+            self.ctx.indent -= 2
+            self.ctx.write(lines, "}")
             return
 
         self.ctx.write(lines, f"{join}: {{")
