@@ -297,11 +297,59 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             self._dominators = dominators
 
         return any(
-            w.dest_reg == last.dest_reg and w is not arm_result and w is not last
+            w is not arm_result and w is not last
             and not w.definition_used
             and dominators.dominates(wb, reader_block) and w.address < branch.address
-            for wb in self.cfg.blocks for w in wb.instructions
+            for w, wb in self._writers_of(last.dest_reg)
         )
+
+    def _instruction_owner(self) -> dict:
+        """Instruction -> its block. Rebuilt when an instruction was added or removed since."""
+        size = sum(len(blk.instructions) for blk in self.cfg.blocks)
+        cached = getattr(self, "_owner_cache", None)
+
+        if cached is None or cached[0] != size:
+            cached = (size, {i: blk for blk in self.cfg.blocks for i in blk.instructions})
+            self._owner_cache = cached
+
+        return cached[1]
+
+    def _reach(self, origin, forward: bool) -> set:
+        """The blocks reachable from `origin` along the successors (`forward`) or the predecessors."""
+        cache = self.__dict__.setdefault("_reach_cache", {})
+        key = (origin, forward)
+
+        if key not in cache:
+            seen, todo = {origin}, [origin]
+
+            while todo:
+                block = todo.pop()
+
+                for nxt in (block.successors if forward else block.predecessors):
+                    if nxt not in seen:
+                        seen.add(nxt)
+                        todo.append(nxt)
+
+            cache[key] = seen
+
+        return cache[key]
+
+    def _writers_of(self, register) -> list:
+        """(instruction, block) of every instruction that defines `register`; rebuilt like the owner map."""
+        size = sum(len(blk.instructions) for blk in self.cfg.blocks)
+        cached = getattr(self, "_writer_cache", None)
+
+        if cached is None or cached[0] != size:
+            index: dict = {}
+
+            for wb in self.cfg.blocks:
+                for w in wb.instructions:
+                    index.setdefault(w.dest_reg, []).append((w, wb))
+
+            cached = (size, index)
+            self._writer_cache = cached
+
+        return cached[1].get(register, [])
 
     def _redefined_between(self, test, branch, reader, last, registers=None, ignore=None, folded=False) -> bool:
         """Does an instruction between the branch (where `test` is read) and
@@ -317,23 +365,16 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
 
         # Only a definition that can run between the two matters: its block is
         # reachable from the branch and reaches the reader.
-        owner = {i: blk for blk in self.cfg.blocks for i in blk.instructions}
+        owner = self._instruction_owner()
         start, end = owner.get(branch), owner.get(reader)
 
         if start is None or end is None:
             return False
 
-        def closure(origin, step):
-            seen, todo = {origin}, [origin]
-            while todo:
-                for nxt in step(todo.pop()):
-                    if nxt not in seen:
-                        seen.add(nxt)
-                        todo.append(nxt)
-            return seen
-
-        forward = closure(start, lambda b: b.successors)
-        backward = closure(end, lambda b: b.predecessors)
+        # The CFG's edges do not change while this pass runs: a block's reach is the same on every call
+        # (98/2619 `beginWork`: 180 000 calls rebuilt it, two thirds of the render time).
+        forward = self._reach(start, forward=True)
+        backward = self._reach(end, forward=False)
 
         for blk in forward & backward:
             for i in blk.instructions:
