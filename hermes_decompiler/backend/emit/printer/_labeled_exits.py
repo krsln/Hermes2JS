@@ -35,14 +35,15 @@ class LabeledExitPlan:
         self.breaks: dict[int, str] = {}
         self.sequences: set[int] = set()
         # id(IfRegion) -> (the arm that jumps is the `then` arm, label of the jump target, label of the join)
-        self.crossed: dict[int, tuple[bool, str, str]] = {}
+        self.crossed: dict[int, tuple[bool, str, str, bool]] = {}
 
     def __bool__(self) -> bool:
         return bool(self.breaks)
 
     def labels(self) -> set[str]:
         return {label for opened in self.opens.values() for label in opened} | {
-            label for _, label, _ in self.crossed.values()}
+            label for _, label, _, _ in self.crossed.values()} | {
+            join for _, _, join, _ in self.crossed.values()}
 
     @classmethod
     def build(cls, root) -> "LabeledExitPlan":
@@ -54,6 +55,8 @@ class LabeledExitPlan:
         # (sequence, target address) -> [first child, target child, terminators]
         wanted: dict[tuple[int, int], list] = {}
         sequences: dict[int, SequenceRegion] = {}
+        # (sequence, index of a later `if`, address of the first block of one of its arms) -> [first child, ...]
+        split_wanted: dict[tuple[int, int, int], list] = {}
 
         for terminator, target, stack in jumps:
             for sequence, index in reversed(stack):
@@ -64,6 +67,18 @@ class LabeledExitPlan:
                 )
 
                 if found is None:
+                    split = next(
+                        (j for j in range(index + 1, len(sequence.children))
+                         if cls._arm_leading(sequence.children[j], target) is not None),
+                        None,
+                    )
+
+                    if split is not None:
+                        entry = split_wanted.setdefault((id(sequence), split, target), [index, sequence, []])
+                        entry[0] = min(entry[0], index)
+                        entry[2].append(terminator)
+                        break
+
                     continue
 
                 entry = wanted.setdefault((id(sequence), target), [index, found, []])
@@ -88,9 +103,54 @@ class LabeledExitPlan:
                 for terminator in terminators:
                     plan.breaks[id(terminator)] = label
 
+        cls._split_if(plan, split_wanted, by_sequence)
         cls._cross_arm(root, plan)
 
         return plan
+
+    @staticmethod
+    def _arm_leading(node, target: int):
+        """The arm of an `if` with an else whose first block is `target`: True for the `then` arm, False for the
+        `else` arm, None for neither."""
+        if not isinstance(node, IfRegion) or node.else_body is None:
+            return None
+
+        if LabeledExitPlan._leading_address(node.then_body) == target:
+            return True
+
+        if LabeledExitPlan._leading_address(node.else_body) == target:
+            return False
+
+        return None
+
+    @classmethod
+    def _split_if(cls, plan: "LabeledExitPlan", split_wanted: dict, by_sequence: dict) -> None:
+        """A jump that lands on the first block of one ARM of a later sibling `if` (96/2141: `goto 413`, the `then`
+        arm of the `if (r16)` behind the code that jumps). The jumping code and the test of the `if` go into the
+        labeled block, the other arm leaves the whole by `break join`:
+
+            join: { target: { <code>; if (<the other arm runs>) { other arm; break join; } } this arm }"""
+        for (sequence_id, index, target), (start, sequence, terminators) in split_wanted.items():
+            ranges = by_sequence.get(sequence_id, [])
+            label = f"label_{target}"
+            join = f"{label}_end"
+
+            if label in plan.labels() or join in plan.labels():
+                continue
+
+            if any(r[0] < start <= r[1] < index or start < r[0] <= index < r[1] for r in ranges):
+                continue
+
+            region = sequence.children[index]
+            target_is_then = cls._arm_leading(region, target)
+
+            plan.sequences.add(sequence_id)
+            plan.opens.setdefault((sequence_id, start), []).extend([join, label])
+            plan.closes[(sequence_id, index)] = plan.closes.get((sequence_id, index), 0) + 1
+            plan.crossed[id(region)] = (not target_is_then, label, join, True)
+
+            for terminator in terminators:
+                plan.breaks[id(terminator)] = label
 
     @classmethod
     def _cross_arm(cls, node, plan: "LabeledExitPlan") -> None:
@@ -129,7 +189,7 @@ class LabeledExitPlan:
                 for terminator in mine:
                     plan.breaks[id(terminator)] = label
 
-                plan.crossed[id(node)] = (jumping_is_then, label, f"{label}_end")
+                plan.crossed[id(node)] = (jumping_is_then, label, f"{label}_end", False)
                 break
 
         for child in cls._children(node):

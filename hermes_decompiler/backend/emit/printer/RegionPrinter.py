@@ -273,10 +273,24 @@ class RegionPrinter:
 
     def _emit_crossed_if(self, region: IfRegion, lines: list[str]) -> None:
         """An `if` whose one arm jumps onto the first block of the other (`_labeled_exits`)."""
-        jumping_is_then, label, join = self._plan.crossed[id(region)]
+        jumping_is_then, label, join, inline = self._plan.crossed[id(region)]
         jumper = region.then_body if jumping_is_then else region.else_body
         other = region.else_body if jumping_is_then else region.then_body
         condition = region.condition if jumping_is_then else negate_condition(region.condition)
+
+        if inline:
+            # `join` and `label` were opened in front of the code that jumps (the sequence prints them).
+            self.ctx.write(lines, f"if ({self.expressions.print(condition)}) {{")
+
+            with self.ctx.indented():
+                self._emit_region(jumper, lines)
+                self.ctx.write(lines, f"break {join};")
+
+            self.ctx.write(lines, "}")
+            self.ctx.indent -= 1
+            self.ctx.write(lines, "}")
+            self._emit_region(other, lines)
+            return
 
         self.ctx.write(lines, f"{join}: {{")
 
