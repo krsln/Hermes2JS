@@ -6,7 +6,8 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceRegion
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import AwaitExpression, Identifier, YieldExpression
+from hermes_decompiler.ir.expressions import AwaitExpression, Identifier, UnaryExpression, YieldExpression
+from hermes_decompiler.ir.expressions.Operations import UnaryOperator
 from hermes_decompiler.backend.transforms.shared._repoint import repoint_references
 from ._base import RegionPass
 
@@ -171,6 +172,9 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
             if not (isinstance(child, BasicBlock) and not child.instructions)
         ]
 
+        for child in region.children:
+            self._normalize_guard(child)
+
         index = 0
 
         while index < len(region.children):
@@ -181,6 +185,28 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
                 continue
 
             index += 1
+
+    def _normalize_guard(self, node) -> None:
+        """`if (!__resumeIsReturn) { body } else { landing pad }` is the guard with its arms the other way round
+        (96/14945: the structurer made the larger arm the `then`, behind a long jump): swap them when the pad
+        then fits the guard, so the fold below sees the one shape it knows."""
+        if not isinstance(node, IfRegion) or node.else_body is None:
+            return
+
+        condition = node.condition
+
+        if not (
+                isinstance(condition, UnaryExpression)
+                and condition.operator == UnaryOperator.LOGICAL_NOT
+                and isinstance(condition.operand, Identifier)
+                and condition.operand.name == _RESUME_FLAG_NAME
+        ):
+            return
+
+        node.condition, node.then_body, node.else_body = condition.operand, node.else_body, node.then_body
+
+        if not self._is_resume_guard(node, True):
+            node.condition, node.then_body, node.else_body = condition, node.else_body, node.then_body
 
     # ------------------------------------------------------------------
     # Main pattern

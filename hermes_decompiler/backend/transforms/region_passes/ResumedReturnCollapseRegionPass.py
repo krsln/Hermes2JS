@@ -53,6 +53,9 @@ class ResumedReturnCollapseRegionPass(RegionPass, RegionVisitor):
         if returned is None or returned != self._returned_register(guard.else_body):
             return False
 
+        if not self._same(guard.then_body, guard.else_body):
+            return False
+
         previous = sequence.children[before]
         body = previous.try_body if isinstance(previous, TryRegion) else None
 
@@ -65,9 +68,8 @@ class ResumedReturnCollapseRegionPass(RegionPass, RegionVisitor):
         if len(pair) != 2 or not self._is_the_placeholder(pair[0], returned) or not self._is_the_flag(pair[1]):
             return False
 
+        # The block stays, empty: the code in front of it may end in a jump onto its address (96/14945).
         resume.instructions = []
-        body.children = body.children[:-1]
-        body.invalidate_coverage()
 
         kept = guard.then_body.children
 
@@ -79,25 +81,65 @@ class ResumedReturnCollapseRegionPass(RegionPass, RegionVisitor):
 
         return True
 
+    @classmethod
+    def _returned_register(cls, arm) -> str | None:
+        """`rN` when every `return` in the arm returns the same register (and there is one)."""
+        names: set[str | None] = set()
+
+        if not cls._collect_returns(arm, names) or len(names) != 1:
+            return None
+
+        return next(iter(names))
+
+    @classmethod
+    def _collect_returns(cls, node, names: set) -> bool:
+        """Adds the register of each `return rN;` below `node`; False for a region this pass does not read."""
+        if isinstance(node, BasicBlock):
+            for instruction in node.instructions:
+                if isinstance(instruction.statement, ReturnStatement):
+                    value = instruction.value
+                    names.add(value.name if isinstance(value, Identifier) else None)
+
+            return True
+
+        if isinstance(node, SequenceRegion):
+            return all(cls._collect_returns(child, names) for child in node.children)
+
+        if isinstance(node, IfRegion):
+            return (
+                cls._collect_returns(node.then_body, names)
+                and (node.else_body is None or cls._collect_returns(node.else_body, names))
+            )
+
+        return False
+
     @staticmethod
-    def _returned_register(arm) -> str | None:
-        """`rN` when the arm is one block that only runs `return rN;`."""
-        if not isinstance(arm, SequenceRegion) or len(arm.children) != 1:
-            return None
+    def _same_node(a, b) -> bool:
+        if a is None or b is None:
+            return a is b
 
-        block = arm.children[0]
+        return a.structurally_equal(b)
 
-        if not isinstance(block, BasicBlock) or len(block.instructions) != 1:
-            return None
+    @classmethod
+    def _same(cls, a, b) -> bool:
+        """Do two arms run the same instructions (the copies of a `finally` body)?"""
+        if isinstance(a, BasicBlock) and isinstance(b, BasicBlock):
+            return len(a.instructions) == len(b.instructions) and all(
+                x.dest_reg == y.dest_reg and cls._same_node(x.value, y.value)
+                and cls._same_node(x.statement, y.statement)
+                for x, y in zip(a.instructions, b.instructions)
+            )
 
-        instruction = block.instructions[0]
+        if isinstance(a, SequenceRegion) and isinstance(b, SequenceRegion):
+            return len(a.children) == len(b.children) and all(cls._same(x, y) for x, y in zip(a.children, b.children))
 
-        if not isinstance(instruction.statement, ReturnStatement):
-            return None
+        if isinstance(a, IfRegion) and isinstance(b, IfRegion):
+            if not cls._same_node(a.condition, b.condition) or (a.else_body is None) != (b.else_body is None):
+                return False
 
-        value = instruction.value
+            return cls._same(a.then_body, b.then_body) and (a.else_body is None or cls._same(a.else_body, b.else_body))
 
-        return value.name if isinstance(value, Identifier) else None
+        return False
 
     @staticmethod
     def _is_the_placeholder(instruction, register: str) -> bool:

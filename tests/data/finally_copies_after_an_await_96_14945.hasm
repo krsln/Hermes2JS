@@ -1,0 +1,101 @@
+
+=> [Function #14945 "?anon_0_" of 350 bytes]: 3 params, frame size=18, strict=1, exc handler=1, debug info=0  @ offset 0x002649ff
+  [Exception handlers: [start=0x4a, end=0x86, target=0xe6] ]
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 2>
+==> 00000004: <JmpTrueLong>: <Addr32: 343, Reg8: 2>  # Address: 0000015b
+==> 0000000a: <LoadConstUndefined>: <Reg8: 3>
+==> 0000000c: <LoadConstUndefined>: <Reg8: 5>
+==> 0000000e: <LoadParam>: <Reg8: 7, UInt8: 1>
+==> 00000011: <LoadParam>: <Reg8: 6, UInt8: 2>
+==> 00000014: <LoadConstUndefined>: <Reg8: 1>
+==> 00000016: <GetArgumentsLength>: <Reg8: 2, Reg8: 5>
+==> 00000019: <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
+==> 0000001c: <JNotGreater>: <Addr8: 12, Reg8: 2, Reg8: 4>  # Address: 00000028
+==> 00000020: <GetArgumentsPropByVal>: <Reg8: 2, Reg8: 4, Reg8: 5>
+==> 00000024: <JStrictNotEqual>: <Addr8: 8, Reg8: 2, Reg8: 3>  # Address: 0000002c
+==> 00000028: <NewObject>: <Reg8: 2>
+==> 0000002a: <Jmp>: <Addr8: 6>  # Address: 00000030
+==> 0000002c: <GetArgumentsPropByVal>: <Reg8: 2, Reg8: 4, Reg8: 5>
+==> 00000030: <Mov>: <Reg8: 1, Reg8: 2>
+==> 00000033: <GetEnvironment>: <Reg8: 2, UInt8: 2>
+==> 00000036: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 5>
+==> 0000003a: <JmpTrueLong>: <Addr32: 255, Reg8: 4>  # Address: 00000139
+==> 00000040: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 6>
+==> 00000044: <JmpTrueLong>: <Addr32: 211, Reg8: 4>  # Address: 00000117
+==> 0000004a: <GetGlobalObject>: <Reg8: 4>
+==> 0000004c: <TryGetById>: <Reg8: 5, Reg8: 4, UInt8: 1, string_id: 27>  # String: 'Promise' (Identifier)
+==> 00000052: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 10394>  # String: 'race' (Identifier)
+==> 00000058: <LoadFromEnvironment>: <Reg8: 8, Reg8: 2, UInt8: 18>
+==> 0000005c: <Call3>: <Reg8: 7, Reg8: 8, Reg8: 3, Reg8: 7, Reg8: 1>
+==> 00000062: <NewArray>: <Reg8: 1, UInt16: 2>
+==> 00000066: <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 0>
+==> 0000006a: <LoadFromEnvironment>: <Reg8: 7, Reg8: 2, UInt8: 23>
+==> 0000006e: <Call2>: <Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 6>
+==> 00000073: <PutOwnByIndex>: <Reg8: 1, Reg8: 6, UInt8: 1>
+==> 00000077: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1>
+==> 0000007c: <SaveGenerator>: <Addr8: 4>  # Address: 00000080
+==> 0000007e: <Ret>: <Reg8: 1>
+==> 00000080: <ResumeGenerator>: <Reg8: 1, Reg8: 4>
+==> 00000083: <JmpTrue>: <Addr8: 51, Reg8: 4>  # Address: 000000b6
+==> 00000086: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 3>
+==> 0000008a: <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 0000008f: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 4, string_id: 12670>  # String: 'dismissBrowser' (Identifier)
+==> 00000095: <JmpFalse>: <Addr8: 22, Reg8: 4>  # Address: 000000ab
+==> 00000098: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 3>
+==> 0000009c: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 000000a1: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 4, string_id: 12670>  # String: 'dismissBrowser' (Identifier)
+==> 000000a7: <Call1>: <Reg8: 4, Reg8: 4, Reg8: 5>
+==> 000000ab: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 22>
+==> 000000af: <Call1>: <Reg8: 4, Reg8: 4, Reg8: 3>
+==> 000000b3: <CompleteGenerator>: <>
+==> 000000b4: <Ret>: <Reg8: 1>
+==> 000000b6: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 3>
+==> 000000ba: <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 000000bf: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 4, string_id: 12670>  # String: 'dismissBrowser' (Identifier)
+==> 000000c5: <JmpFalse>: <Addr8: 22, Reg8: 4>  # Address: 000000db
+==> 000000c8: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 3>
+==> 000000cc: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 000000d1: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 4, string_id: 12670>  # String: 'dismissBrowser' (Identifier)
+==> 000000d7: <Call1>: <Reg8: 4, Reg8: 4, Reg8: 5>
+==> 000000db: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 22>
+==> 000000df: <Call1>: <Reg8: 4, Reg8: 4, Reg8: 3>
+==> 000000e3: <CompleteGenerator>: <>
+==> 000000e4: <Ret>: <Reg8: 1>
+==> 000000e6: <Catch>: <Reg8: 1>
+==> 000000e8: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 3>
+==> 000000ec: <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 000000f1: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 4, string_id: 12670>  # String: 'dismissBrowser' (Identifier)
+==> 000000f7: <JmpFalse>: <Addr8: 22, Reg8: 4>  # Address: 0000010d
+==> 000000fa: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 3>
+==> 000000fe: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 00000103: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 4, string_id: 12670>  # String: 'dismissBrowser' (Identifier)
+==> 00000109: <Call1>: <Reg8: 4, Reg8: 4, Reg8: 5>
+==> 0000010d: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 22>
+==> 00000111: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 00000115: <Throw>: <Reg8: 1>
+==> 00000117: <GetGlobalObject>: <Reg8: 1>
+==> 00000119: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 5, string_id: 12>  # String: 'Error' (Identifier)
+==> 0000011f: <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 6, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000124: <CreateThis>: <Reg8: 2, Reg8: 1, Reg8: 3>
+==> 00000128: <LoadConstString>: <Reg8: 10, string_id: 3063>  # String: 'WebBrowser is already open, only one can be open at a time' (String)
+==> 0000012c: <Mov>: <Reg8: 11, Reg8: 2>
+==> 0000012f: <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
+==> 00000133: <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 00000137: <Throw>: <Reg8: 1>
+==> 00000139: <GetGlobalObject>: <Reg8: 1>
+==> 0000013b: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 5, string_id: 12>  # String: 'Error' (Identifier)
+==> 00000141: <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 6, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000146: <CreateThis>: <Reg8: 2, Reg8: 1, Reg8: 3>
+==> 0000014a: <LoadConstString>: <Reg8: 10, string_id: 1140>  # String: "The WebBrowser's auth session is in an invalid state with a redirect handler set when it should not be" (String)
+==> 0000014e: <Mov>: <Reg8: 11, Reg8: 2>
+==> 00000151: <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
+==> 00000155: <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 00000159: <Throw>: <Reg8: 1>
+==> 0000015b: <CompleteGenerator>: <>
+==> 0000015c: <Ret>: <Reg8: 0>
+
+
