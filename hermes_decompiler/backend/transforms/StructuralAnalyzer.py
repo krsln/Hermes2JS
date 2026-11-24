@@ -23,6 +23,7 @@ from hermes_decompiler.backend.transforms.region_passes import (
     FlowSnapshot,
     ForEachRegionPass,
     GeneratorStateMachineRegionPass,
+    ResumedReturnCollapseRegionPass,
     InductionVariableNamingPass,
     IfTailMergeRegionPass,
     LoopConditionRegionPass,
@@ -275,6 +276,7 @@ class StructuralAnalyzer:
         # and the identity-sensitive-expression check in
         # `_resolve_register`.
         GeneratorStateMachineRegionPass(graph, self.cfg).run()
+        ResumedReturnCollapseRegionPass(graph, self.cfg).run()
 
         # Folds a bare `return rN;`/`throw rN;` (see Ret.py/Throw.py's
         # own opcode-handler docstrings) back into its defining

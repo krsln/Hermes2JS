@@ -1,0 +1,72 @@
+
+=> [Function #12653 "?anon_0_" of 226 bytes]: 2 params, frame size=18, strict=1, exc handler=1, debug info=0  @ offset 0x0022b167
+  [Exception handlers: [start=0x8d, end=0xa4, target=0xaa] ]
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000004: <JmpTrueLong>: <Addr32: 219, Reg8: 1>  # Address: 000000df
+==> 0000000a: <LoadConstUndefined>: <Reg8: 6>
+==> 0000000c: <LoadConstUndefined>: <Reg8: 3>
+==> 0000000e: <GetEnvironment>: <Reg8: 1, UInt8: 2>
+==> 00000011: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 2>
+==> 00000015: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000018: <Call2>: <Reg8: 5, Reg8: 2, Reg8: 6, Reg8: 1>
+==> 0000001d: <GetGlobalObject>: <Reg8: 2>
+==> 0000001f: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 8311>  # String: 'fetch' (Identifier)
+==> 00000025: <NewObject>: <Reg8: 1>
+==> 00000027: <NewObject>: <Reg8: 7>
+==> 00000029: <LoadConstString>: <Reg8: 8, string_id: 416>  # String: 'application/json' (String)
+==> 0000002d: <PutNewOwnById>: <Reg8: 7, Reg8: 8, string_id: 14803>  # String: 'Accept' (Identifier)
+==> 00000032: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 7, string_id: 156>  # String: 'headers' (Identifier)
+==> 00000036: <Call3>: <Reg8: 1, Reg8: 4, Reg8: 6, Reg8: 5, Reg8: 1>
+==> 0000003c: <SaveGenerator>: <Addr8: 4>  # Address: 00000040
+==> 0000003e: <Ret>: <Reg8: 1>
+==> 00000040: <ResumeGenerator>: <Reg8: 1, Reg8: 4>
+==> 00000043: <JmpTrueLong>: <Addr32: 153, Reg8: 4>  # Address: 000000dc
+==> 00000049: <Mov>: <Reg8: 3, Reg8: 1>
+==> 0000004c: <GetById>: <Reg8: 4, Reg8: 1, UInt8: 2, string_id: 7458>  # String: 'ok' (Identifier)
+==> 00000052: <JmpTrue>: <Addr8: 59, Reg8: 4>  # Address: 0000008d
+==> 00000055: <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
+==> 0000005b: <Mov>: <Reg8: 4, Reg8: 3>
+==> 0000005e: <GetByIdShort>: <Reg8: 7, Reg8: 4, UInt8: 4, string_id: 235>  # String: 'status' (Identifier)
+==> 00000063: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'HermesInternal' (Identifier)
+==> 00000069: <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 6, string_id: 96>  # String: 'concat' (Identifier)
+==> 0000006e: <LoadConstString>: <Reg8: 4, string_id: 1460>  # String: 'Failed to fetch loader data: ' (String)
+==> 00000072: <Call2>: <Reg8: 10, Reg8: 5, Reg8: 4, Reg8: 7>
+==> 00000077: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 7, string_id: 206>  # String: 'prototype' (Identifier)
+==> 0000007c: <CreateThis>: <Reg8: 5, Reg8: 5, Reg8: 6>
+==> 00000080: <Mov>: <Reg8: 11, Reg8: 5>
+==> 00000083: <Construct>: <Reg8: 4, Reg8: 6, UInt8: 2>
+==> 00000087: <SelectObject>: <Reg8: 4, Reg8: 5, Reg8: 4>
+==> 0000008b: <Throw>: <Reg8: 4>
+==> 0000008d: <Mov>: <Reg8: 4, Reg8: 3>
+==> 00000090: <GetById>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 9822>  # String: 'json' (Identifier)
+==> 00000096: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 4>
+==> 0000009a: <SaveGenerator>: <Addr8: 4>  # Address: 0000009e
+==> 0000009c: <Ret>: <Reg8: 3>
+==> 0000009e: <ResumeGenerator>: <Reg8: 3, Reg8: 4>
+==> 000000a1: <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 000000a7
+==> 000000a4: <CompleteGenerator>: <>
+==> 000000a5: <Ret>: <Reg8: 3>
+==> 000000a7: <CompleteGenerator>: <>
+==> 000000a8: <Ret>: <Reg8: 3>
+==> 000000aa: <Catch>: <Reg8: 5>
+==> 000000ac: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
+==> 000000b2: <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'HermesInternal' (Identifier)
+==> 000000b8: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 6, string_id: 96>  # String: 'concat' (Identifier)
+==> 000000bd: <LoadConstString>: <Reg8: 2, string_id: 1480>  # String: 'Failed to parse loader data: ' (String)
+==> 000000c1: <Call2>: <Reg8: 10, Reg8: 3, Reg8: 2, Reg8: 5>
+==> 000000c6: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 7, string_id: 206>  # String: 'prototype' (Identifier)
+==> 000000cb: <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
+==> 000000cf: <Mov>: <Reg8: 11, Reg8: 3>
+==> 000000d2: <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
+==> 000000d6: <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
+==> 000000da: <Throw>: <Reg8: 2>
+==> 000000dc: <CompleteGenerator>: <>
+==> 000000dd: <Ret>: <Reg8: 1>
+==> 000000df: <CompleteGenerator>: <>
+==> 000000e0: <Ret>: <Reg8: 0>
+
+

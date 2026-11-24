@@ -11,6 +11,7 @@ from .ForEachRegionPass import ForEachRegionPass
 from .GuardExitRegionPass import GuardExitRegionPass
 from .GuardIntoConditionRegionPass import GuardIntoConditionRegionPass
 from .GeneratorStateMachineRegionPass import GeneratorStateMachineRegionPass
+from .ResumedReturnCollapseRegionPass import ResumedReturnCollapseRegionPass
 from .IfTailMergeRegionPass import IfTailMergeRegionPass
 from .InductionVariableNamingPass import InductionVariableNamingPass
 from .LoopConditionRegionPass import LoopConditionRegionPass
@@ -38,6 +39,7 @@ __all__ = [
     "GuardExitRegionPass",
     "GuardIntoConditionRegionPass",
     "GeneratorStateMachineRegionPass",
+    "ResumedReturnCollapseRegionPass",
     "IfTailMergeRegionPass",
     "InductionVariableNamingPass",
     "LoopConditionRegionPass",
