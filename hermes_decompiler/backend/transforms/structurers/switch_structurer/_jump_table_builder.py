@@ -26,7 +26,7 @@ class _JumpTableSwitchBuilder:
         self.graph = graph
         self.cfg = cfg
 
-    def _shared_tail_item(self, region, header, resolved, default_item, target_of):
+    def _shared_tail_item(self, region, header, resolved, default_item, target_of, default_block=None):
         """The code behind the switch, when no post-dominator names it (98/2632).
 
         A `default:` that can `throw` leaves the header without an immediate post-dominator, so the join
@@ -48,10 +48,15 @@ class _JumpTableSwitchBuilder:
 
         last = max(items, key=lambda i: positions[id(i)])
 
-        if last is default_item or id(last) not in target_of:
+        if last is default_item and default_block is not None:
+            # The default target IS the code behind the switch (98/2672: `UIntSwitchImm` whose default is the
+            # test the other arms jump to): nothing follows it, so no arm of the layout is a `default:`.
+            entry = default_block
+        elif last is default_item or id(last) not in target_of:
             return None
+        else:
+            entry = target_of[id(last)]
 
-        entry = target_of[id(last)]
         first_index = min(positions.values())
         last_index = positions[id(last)]
         jumpers = 0
@@ -121,6 +126,7 @@ class _JumpTableSwitchBuilder:
             target_of[id(item)] = target_block
 
         default_item = None
+        default_block = None
 
         # `is not None`, not truthiness: a default target at address 0
         # is a legitimate address, not "no default".
@@ -130,6 +136,11 @@ class _JumpTableSwitchBuilder:
 
             if default_block is not None:
                 default_item = self.graph.find_covering_item(region, default_block)
+
+                if default_item is None:
+                    # an `if` already built from the default's code: its test block is only its `source_block`
+                    default_item = next(
+                        (i for i in region.children if getattr(i, "source_block", None) is default_block), None)
 
         end_boundary = len(region.children)
         merge_item = None
@@ -152,7 +163,7 @@ class _JumpTableSwitchBuilder:
                     end_boundary = region.children.index(merge_item)
 
         if merge_item is None:
-            merge_item = self._shared_tail_item(region, header, resolved, default_item, target_of)
+            merge_item = self._shared_tail_item(region, header, resolved, default_item, target_of, default_block)
 
             if merge_item is not None:
                 end_boundary = region.children.index(merge_item)

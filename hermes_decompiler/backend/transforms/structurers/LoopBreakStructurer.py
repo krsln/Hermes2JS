@@ -793,6 +793,9 @@ class LoopBreakStructurer(RegionStructurer):
         if_region.then_body = then_body
         if_region.else_body = None
 
+        # `block`'s own branch became this `if`: a jump table that lands on `block` finds the `if` (98/2672)
+        if_region.source_block = block
+
         insert_at = loop.body.children.index(block) + 1
         self.graph.insert_at(loop.body, insert_at, if_region)
 
