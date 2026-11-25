@@ -1,0 +1,74 @@
+
+=> [Function #5651 "useThenable" of 241 bytes]: 2 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x001b9278
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 6, Reg8: 2, UInt8: 2>
+==> 00000007: <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 0, string_id: 251>  # String: 'useState' (Identifier)
+==> 0000000c: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 0000000f: <Call2>: <Reg8: 4, Reg8: 3, Reg8: 6, Reg8: 2>
+==> 00000014: <Mov>: <Reg8: 3, Reg8: 4>
+==> 00000017: <IteratorBegin>: <Reg8: 2, Reg8: 3>
+==> 0000001a: <IteratorNext>: <Reg8: 3, Reg8: 2, Reg8: 3>
+==> 0000001e: <Mov>: <Reg8: 4, Reg8: 2>
+==> 00000021: <LoadConstUndefined>: <Reg8: 7>
+==> 00000023: <StrictEq>: <Reg8: 0, Reg8: 4, Reg8: 7>
+==> 00000027: <LoadConstUndefined>: <Reg8: 8>
+==> 00000029: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 0000002f
+==> 0000002c: <Mov>: <Reg8: 8, Reg8: 3>
+==> 0000002f: <CreateTopLevelEnvironment>: <Reg8: 3, UInt32: 4>
+==> 00000035: <StoreToEnvironment>: <Reg8: 3, UInt8: 0, Reg8: 8>
+==> 00000039: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 0000003f
+==> 0000003c: <IteratorClose>: <Reg8: 2, UInt8: 0>
+==> 0000003f: <NewArrayWithBuffer>: <Reg8: 2, UInt16: 2, UInt16: 1, UInt16: 69>  # Array: [false]
+==> 00000047: <DefineOwnByIndex>: <Reg8: 2, Reg8: 7, UInt8: 1>
+==> 0000004b: <StoreToEnvironment>: <Reg8: 3, UInt8: 1, Reg8: 2>
+==> 0000004f: <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 1, string_id: 239>  # String: 'then' (Identifier)
+==> 00000054: <CreateClosure>: <Reg8: 2, Reg8: 3, function_id: 10987>  # Function: [#10987  of 26 bytes]: 2 params @ offset 0x002215d9
+==> 00000059: <Call2>: <Reg8: 2, Reg8: 4, Reg8: 8, Reg8: 2>
+==> 0000005e: <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 0, string_id: 251>  # String: 'useState' (Identifier)
+==> 00000063: <LoadFromEnvironment>: <Reg8: 2, Reg8: 3, UInt8: 1>
+==> 00000067: <Call2>: <Reg8: 2, Reg8: 4, Reg8: 6, Reg8: 2>
+==> 0000006c: <Mov>: <Reg8: 9, Reg8: 2>
+==> 0000006f: <IteratorBegin>: <Reg8: 4, Reg8: 9>
+==> 00000072: <Mov>: <Reg8: 2, Reg8: 9>
+==> 00000075: <IteratorNext>: <Reg8: 5, Reg8: 4, Reg8: 2>
+==> 00000079: <Mov>: <Reg8: 2, Reg8: 4>
+==> 0000007c: <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 7>
+==> 00000080: <LoadConstUndefined>: <Reg8: 2>
+==> 00000082: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000088
+==> 00000085: <Mov>: <Reg8: 2, Reg8: 5>
+==> 00000088: <LoadConstUndefined>: <Reg8: 5>
+==> 0000008a: <JmpTrue>: <Addr8: 28, Reg8: 0>  # Address: 000000a6
+==> 0000008d: <IteratorNext>: <Reg8: 9, Reg8: 4, Reg8: 9>
+==> 00000091: <Mov>: <Reg8: 10, Reg8: 4>
+==> 00000094: <StrictEq>: <Reg8: 1, Reg8: 10, Reg8: 7>
+==> 00000098: <LoadConstUndefined>: <Reg8: 5>
+==> 0000009a: <Mov>: <Reg8: 0, Reg8: 1>
+==> 0000009d: <JmpTrue>: <Addr8: 9, Reg8: 1>  # Address: 000000a6
+==> 000000a0: <Mov>: <Reg8: 5, Reg8: 9>
+==> 000000a3: <Mov>: <Reg8: 0, Reg8: 1>
+==> 000000a6: <StoreToEnvironment>: <Reg8: 3, UInt8: 2, Reg8: 5>
+==> 000000aa: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 000000b0
+==> 000000ad: <IteratorClose>: <Reg8: 4, UInt8: 0>
+==> 000000b0: <Mov>: <Reg8: 5, Reg8: 2>
+==> 000000b3: <IteratorBegin>: <Reg8: 4, Reg8: 5>
+==> 000000b6: <IteratorNext>: <Reg8: 5, Reg8: 4, Reg8: 5>
+==> 000000ba: <Mov>: <Reg8: 9, Reg8: 4>
+==> 000000bd: <StrictEq>: <Reg8: 0, Reg8: 9, Reg8: 7>
+==> 000000c1: <LoadConstUndefined>: <Reg8: 7>
+==> 000000c3: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 000000c9
+==> 000000c6: <Mov>: <Reg8: 7, Reg8: 5>
+==> 000000c9: <StoreToEnvironment>: <Reg8: 3, UInt8: 3, Reg8: 7>
+==> 000000cd: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 000000d3
+==> 000000d0: <IteratorClose>: <Reg8: 4, UInt8: 0>
+==> 000000d3: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 249>  # String: 'useEffect' (Identifier)
+==> 000000d8: <NewArray>: <Reg8: 4, UInt16: 2>
+==> 000000dc: <DefineOwnInDenseArray>: <Reg8: 4, Reg8: 8, UInt8: 0>
+==> 000000e0: <DefineOwnInDenseArray>: <Reg8: 4, Reg8: 7, UInt8: 1>
+==> 000000e4: <CreateClosure>: <Reg8: 3, Reg8: 3, function_id: 10988>  # Function: [#10988  of 37 bytes]: 1 params @ offset 0x002215f3
+==> 000000e9: <Call3>: <Reg8: 3, Reg8: 5, Reg8: 6, Reg8: 3, Reg8: 4>
+==> 000000ef: <Ret>: <Reg8: 2>
+
+

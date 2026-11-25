@@ -183,9 +183,7 @@ class ArrayDestructuringCfgPass:
         # A moved creation writes its register before the chain: nothing the pattern keeps may live there.
         for created in ctx.hoist:
             kept = {*leaves, *(t for t, _ in ((r, None) for r in _object_temps(items))), *(r for r, _ in ctx.fetched)}
-            source = head.instructions[begin_index].value.arguments[0]
-
-            if created.dest_reg in kept or _mentions_register(source, created.dest_reg):
+            if created.dest_reg in kept:
                 return None
 
         return items, drop, join, kept_undefined, removed_handlers, cleanup, restores, ctx.hoist
@@ -1018,7 +1016,11 @@ class ArrayDestructuringCfgPass:
         hoisted_ids = {id(i) for i in hoist}
         removed -= hoisted_ids
         before = head.instructions[:begin_index]
-        head.instructions = before + hoist + [begin] + keep + silent + restored
+        # (A creation that overwrites the register the source is read from runs after the pattern: 98/5651.)
+        if any(_mentions_register(source, created.dest_reg) for created in hoist):
+            head.instructions = before + [begin] + hoist + keep + silent + restored
+        else:
+            head.instructions = before + hoist + [begin] + keep + silent + restored
         head.terminator = TerminatorJump(target=join.address)
 
         for successor in list(head.successors):
