@@ -1,0 +1,21 @@
+
+=> [Function #9900 "" of 44 bytes]: 2 params, frame size=5, strict=1, exc handler=0, debug info=0  @ offset 0x0020d23a
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <IteratorBegin>: <Reg8: 1, Reg8: 2>
+==> 00000006: <IteratorNext>: <Reg8: 3, Reg8: 1, Reg8: 2>
+==> 0000000a: <Mov>: <Reg8: 4, Reg8: 1>
+==> 0000000d: <LoadConstUndefined>: <Reg8: 2>
+==> 0000000f: <StrictEq>: <Reg8: 0, Reg8: 4, Reg8: 2>
+==> 00000013: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000019
+==> 00000016: <Mov>: <Reg8: 2, Reg8: 3>
+==> 00000019: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 0000001f
+==> 0000001c: <IteratorClose>: <Reg8: 1, UInt8: 0>
+==> 0000001f: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000022: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
+==> 00000026: <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 1>
+==> 0000002a: <Ret>: <Reg8: 0>
+
+

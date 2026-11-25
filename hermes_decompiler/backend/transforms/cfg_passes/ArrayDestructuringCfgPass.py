@@ -40,6 +40,7 @@ from dataclasses import dataclass
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.cfg_passes._generator_dispatch import _operands
+from hermes_decompiler.backend.transforms.shared._repoint import _repoint_terminator, repoint_node
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import ArrayExpression, AssignmentExpression, CallExpression, Identifier, \
     MemberExpression, NumericLiteral
@@ -408,6 +409,11 @@ class ArrayDestructuringCfgPass:
             # Both: the source needs no copy, and the `undefined` is loaded in the middle of the check.
             kept_undefined = tail[2]
             tail = [None, *tail[:2], *tail[3:]]
+        elif top and shapes == ["IteratorNext", "Mov", "LoadConstUndefined", "StrictEq", "JmpTrue"]:
+            # A single element: the one `undefined` is both what the check compares with and the element's
+            # own initial value, and the source needs no copy (98/9900).
+            kept_undefined = tail[2]
+            tail = [None, tail[0], tail[1], tail[3], tail[2], tail[4]]
         elif shapes == expected[1:]:
             # The fetch reads the source register itself (it already holds it): no `Mov t <- src`.
             tail = [None, *tail]
@@ -978,8 +984,15 @@ class ArrayDestructuringCfgPass:
         # Each element keeps a silent definition (`rN = rN` prints nothing)
         # so reaching-definition lookups still see the register written here.
         silent = []
+        copies: list[tuple[object, int]] = []
         for leaf in _leaves(items):
             result = leaf.result
+
+            # What the frontend read through `Mov e <- v` is the fetched register's own node (98/9900:
+            # `return r2 === r1` printed `r3 === r1`); the register the element lands in is what is read now.
+            if isinstance(result.value, Identifier) and result.value.name != f"r{leaf.reg}":
+                copies.append((result.value, leaf.reg))
+
             result.dest_reg = leaf.reg
             result.value = Identifier(name=f"r{leaf.reg}")
             result.definition_used = False
@@ -1038,6 +1051,30 @@ class ArrayDestructuringCfgPass:
 
         for register, definitions in list(self.cfg.reg_definitions.items()):
             self.cfg.reg_definitions[register] = [d for d in definitions if id(d[2]) not in removed]
+
+        self._read_the_targets(copies, {id(begin), *(id(r) for r in silent)})
+
+    def _read_the_targets(self, copies, own: set[int]) -> None:
+        """Reads that hold the very node of a dropped `Mov e <- v` now read `e`."""
+        for old, register in copies:
+            new = Identifier(name=f"r{register}")
+
+            for block in self.cfg.blocks:
+                for instruction in block.instructions:
+                    if id(instruction) in own:
+                        continue
+
+                    for field in ("value", "statement"):
+                        node = getattr(instruction, field, None)
+
+                        if node is not None:
+                            replaced, changed = repoint_node(node, old, new, structural=False)
+
+                            if changed:
+                                setattr(instruction, field, replaced)
+
+                if block.terminator is not None:
+                    block.terminator = _repoint_terminator(block.terminator, old, new, structural=False)
 
 
 @dataclass(slots=True)
