@@ -24,7 +24,7 @@ from hermes_decompiler.ir.expressions import (
     UnaryExpression, UndefinedLiteral,
 )
 from hermes_decompiler.ir.expressions.Collections import SpreadElement
-from hermes_decompiler.ir.statements import BreakStatement
+from hermes_decompiler.ir.statements import BreakStatement, ContinueStatement
 from hermes_decompiler.ir.terminators import TerminatorReturn, TerminatorThrow
 from ._base import RegionPass
 
@@ -48,6 +48,11 @@ def _is_plain_register_copy(instr) -> bool:
             is_bare_register(value)
             or (isinstance(value, Identifier) and re.fullmatch(r"param\d+", value.name) is not None)
     )
+
+
+def _prints_nothing(item) -> bool:
+    """A block with no statement and no value: only its jump is left."""
+    return isinstance(item, BasicBlock) and all(i.statement is None and i.value is None for i in item.instructions)
 
 
 class ForEachRegionPass(RegionPass, RegionVisitor):
@@ -182,6 +187,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
             self._strip_inline_closes(loop, raw_iterator_ref)
 
         self._drop_iterator_setup(iterator_expr)
+        self._drop_exit_test(loop)
         self._fold_binding_pattern(loop)
 
     def _try_recognize_for_of_bare(self, loop: LoopRegion) -> None:
@@ -283,7 +289,74 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         self._strip_inline_closes(loop, raw_iterator_ref)
 
         self._drop_iterator_setup(iterator_expr)
+        self._drop_exit_test(loop)
         self._fold_binding_pattern(loop)
+
+    def _drop_exit_test(self, loop: LoopRegion) -> None:
+        """`for (x of xs) { if (rN === undefined) continue outer; ... }` -> the `if` goes.
+
+        When the loop is the last thing in the body of an enclosing loop, the iterator's done test jumps to that
+        loop's latch, so it is printed as a labeled `continue`, not as the loop's own condition (96/10393 `dfs`,
+        96/1303 `processColorStops`). A `for-of` ends by itself and falls into the same latch, so the test is
+        noise (and reads a register the body sets only after it). Only when nothing follows the loop on the way
+        up to that enclosing loop."""
+        body = loop.body
+
+        for child in body.children[:3]:
+            if not isinstance(child, IfRegion):
+                continue
+
+            condition = child.condition
+
+            if not (
+                    child.else_body is None
+                    and isinstance(condition, BinaryExpression)
+                    and condition.operator == BinaryOperator.STRICT_EQUAL
+                    and isinstance(condition.left, Identifier)
+                    and isinstance(condition.right, UndefinedLiteral)
+                    and len(child.then_body.children) == 1
+                    and isinstance(child.then_body.children[0], BasicBlock)
+            ):
+                return
+
+            statements = [i.statement for i in child.then_body.children[0].instructions if i.statement is not None]
+
+            if not (len(statements) == 1 and isinstance(statements[0], ContinueStatement)):
+                return
+
+            target = self._enclosing_loop_it_ends(loop)
+            if target is None or statements[0].label is None or statements[0].label.name != getattr(target.label, "name", target.label):
+                return
+
+            body.children.remove(child)
+            body.invalidate_coverage()
+
+            return
+
+    @staticmethod
+    def _enclosing_loop_it_ends(loop: LoopRegion):
+        """The loop whose body `loop` is the very last thing of (through `if`/`try` arms), else None."""
+        node = loop
+
+        while True:
+            parent = getattr(node, "parent", None)
+
+            if parent is None:
+                return None
+
+            if isinstance(parent, SequenceRegion):
+                if node not in parent.children:
+                    return None
+
+                # (a trailing block that only jumps back to the header prints nothing)
+                after = parent.children[parent.children.index(node) + 1:]
+
+                if any(not _prints_nothing(item) for item in after):
+                    return None
+            elif isinstance(parent, LoopRegion):
+                return parent if parent.body is node else None
+
+            node = parent
 
     def _fold_binding_pattern(self, loop: LoopRegion) -> None:
         """`for (const x of xs) { [a, b] = x; ... }` -> `for (const [a, b] of xs)`.

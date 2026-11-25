@@ -156,7 +156,7 @@ class _HandlerBuilder:
         # (no loop on the path, an unrecognized container, an empty
         # extent) returns `None` and falls straight through to the
         # ordinary path below, unchanged.
-        loop_home = self._find_loop_nested_home(start_repr, start_block, handler["end"])
+        loop_home = self._find_loop_nested_home(start_repr, start_block, handler["end"], handler["try_blocks"])
 
         if loop_home is None:
             loop_home = self._find_guard_home(start_repr, start_block, handler)
@@ -437,6 +437,7 @@ class _HandlerBuilder:
             start_repr,
             start_block: BasicBlock,
             handler_end: int,
+            try_blocks=None,
     ) -> tuple[SequenceRegion, int, int] | None:
         """If `start_repr` routes down to `start_block` through a
         `LoopRegion` (optionally via one or more `IfRegion` wrappers
@@ -467,6 +468,19 @@ class _HandlerBuilder:
 
                 if child is None:
                     return None
+
+                # The range may sit in a loop nested deeper in that child (an inner `for-of` behind an `if`, inside
+                # the outer loop's body, 96/10393 `dfs`): the deepest loop that holds every protected block owns it.
+                if (
+                        try_blocks
+                        and child is not start_block
+                        and isinstance(child, (IfRegion, LoopRegion))
+                        and all(block in child.covered_blocks for block in try_blocks)
+                ):
+                    deeper = self._find_loop_nested_home(child, start_block, handler_end, try_blocks)
+
+                    if deeper is not None:
+                        return deeper
 
                 body_start_idx = body.children.index(child)
                 latches = set(node.latches)
