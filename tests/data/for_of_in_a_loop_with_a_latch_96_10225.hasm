@@ -1,0 +1,81 @@
+
+=> [Function #10225 "callback" of 271 bytes]: 2 params, frame size=23, strict=1, exc handler=1, debug info=0  @ offset 0x001f0d9c
+  [Exception handlers: [start=0xbb, end=0xc8, target=0xca] [start=0xe5, end=0xf2, target=0xf4] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadConstUndefined>: <Reg8: 0>
+==> 00000002: <LoadConstUndefined>: <Reg8: 7>
+==> 00000004: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000007: <JmpTrueLong>: <Addr32: 262, Reg8: 1>  # Address: 0000010d
+==> 0000000d: <GetEnvironment>: <Reg8: 1, UInt8: 1>
+==> 00000010: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 3>
+==> 00000014: <NewArray>: <Reg8: 1, UInt16: 1>
+==> 00000018: <PutOwnByIndex>: <Reg8: 1, Reg8: 2, UInt8: 0>
+==> 0000001c: <Mov>: <Reg8: 7, Reg8: 1>
+==> 0000001f: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 1, string_id: 169>  # String: 'length' (Identifier)
+==> 00000024: <LoadConstZero>: <Reg8: 6>
+==> 00000026: <Greater>: <Reg8: 1, Reg8: 1, Reg8: 6>
+==> 0000002a: <GetGlobalObject>: <Reg8: 5>
+==> 0000002c: <LoadConstFalse>: <Reg8: 4>
+==> 0000002e: <LoadConstString>: <Reg8: 3, string_id: 7532>  # String: 'object' (Identifier)
+==> 00000032: <LoadConstUndefined>: <Reg8: 2>
+==> 00000034: <JmpFalseLong>: <Addr32: 217, Reg8: 1>  # Address: 0000010d
+==> 0000003a: <Mov>: <Reg8: 8, Reg8: 7>
+==> 0000003d: <GetByIdShort>: <Reg8: 1, Reg8: 8, UInt8: 2, string_id: 199>  # String: 'pop' (Identifier)
+==> 00000042: <Call1>: <Reg8: 11, Reg8: 1, Reg8: 8>
+==> 00000046: <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 3, string_id: 6>  # String: 'Array' (Identifier)
+==> 0000004c: <GetByIdShort>: <Reg8: 1, Reg8: 8, UInt8: 4, string_id: 5>  # String: 'isArray' (Identifier)
+==> 00000051: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 8, Reg8: 11>
+==> 00000056: <Mov>: <Reg8: 10, Reg8: 2>
+==> 00000059: <JmpTrue>: <Addr8: 120, Reg8: 1>  # Address: 000000d1
+==> 0000005c: <TypeOf>: <Reg8: 1, Reg8: 11>
+==> 0000005f: <JStrictNotEqual>: <Addr8: 14, Reg8: 1, Reg8: 3>  # Address: 0000006d
+==> 00000063: <GetById>: <Reg8: 1, Reg8: 11, UInt8: 5, string_id: 7866>  # String: 'onStart' (Identifier)
+==> 00000069: <JStrictEqual>: <Addr8: 45, Reg8: 1, Reg8: 0>  # Address: 00000096
+==> 0000006d: <GetById>: <Reg8: 1, Reg8: 11, UInt8: 6, string_id: 10411>  # String: 'finished' (Identifier)
+==> 00000073: <Mov>: <Reg8: 8, Reg8: 11>
+==> 00000076: <JmpTrueLong>: <Addr32: 133, Reg8: 1>  # Address: 000000fb
+==> 0000007c: <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 7, string_id: 84>  # String: 'callback' (Identifier)
+==> 00000081: <Mov>: <Reg8: 8, Reg8: 11>
+==> 00000084: <JmpFalse>: <Addr8: 119, Reg8: 1>  # Address: 000000fb
+==> 00000087: <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 7, string_id: 84>  # String: 'callback' (Identifier)
+==> 0000008c: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 4>
+==> 00000091: <Mov>: <Reg8: 8, Reg8: 11>
+==> 00000094: <Jmp>: <Addr8: 103>  # Address: 000000fb
+==> 00000096: <TryGetById>: <Reg8: 9, Reg8: 5, UInt8: 8, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000009c: <GetById>: <Reg8: 1, Reg8: 9, UInt8: 9, string_id: 8322>  # String: 'values' (Identifier)
+==> 000000a2: <Call2>: <Reg8: 12, Reg8: 1, Reg8: 9, Reg8: 11>
+==> 000000a7: <Mov>: <Reg8: 1, Reg8: 12>
+==> 000000aa: <IteratorBegin>: <Reg8: 9, Reg8: 1>
+==> 000000ad: <IteratorNext>: <Reg8: 14, Reg8: 9, Reg8: 1>
+==> 000000b1: <Mov>: <Reg8: 12, Reg8: 9>
+==> 000000b4: <Mov>: <Reg8: 8, Reg8: 10>
+==> 000000b7: <JStrictEqual>: <Addr8: 68, Reg8: 12, Reg8: 0>  # Address: 000000fb
+==> 000000bb: <Mov>: <Reg8: 13, Reg8: 7>
+==> 000000be: <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 10, string_id: 207>  # String: 'push' (Identifier)
+==> 000000c3: <Call2>: <Reg8: 12, Reg8: 12, Reg8: 13, Reg8: 14>
+==> 000000c8: <Jmp>: <Addr8: -27>  # Address: 000000ad
+==> 000000ca: <Catch>: <Reg8: 1>
+==> 000000cc: <IteratorClose>: <Reg8: 9, UInt8: 1>
+==> 000000cf: <Throw>: <Reg8: 1>
+==> 000000d1: <Mov>: <Reg8: 1, Reg8: 11>
+==> 000000d4: <IteratorBegin>: <Reg8: 9, Reg8: 1>
+==> 000000d7: <IteratorNext>: <Reg8: 13, Reg8: 9, Reg8: 1>
+==> 000000db: <Mov>: <Reg8: 11, Reg8: 9>
+==> 000000de: <Mov>: <Reg8: 8, Reg8: 10>
+==> 000000e1: <JStrictEqual>: <Addr8: 26, Reg8: 11, Reg8: 0>  # Address: 000000fb
+==> 000000e5: <Mov>: <Reg8: 12, Reg8: 7>
+==> 000000e8: <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 10, string_id: 207>  # String: 'push' (Identifier)
+==> 000000ed: <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 13>
+==> 000000f2: <Jmp>: <Addr8: -27>  # Address: 000000d7
+==> 000000f4: <Catch>: <Reg8: 1>
+==> 000000f6: <IteratorClose>: <Reg8: 9, UInt8: 1>
+==> 000000f9: <Throw>: <Reg8: 1>
+==> 000000fb: <Mov>: <Reg8: 1, Reg8: 7>
+==> 000000fe: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 1, string_id: 169>  # String: 'length' (Identifier)
+==> 00000103: <Mov>: <Reg8: 2, Reg8: 8>
+==> 00000106: <JGreaterLong>: <Addr32: -204, Reg8: 1, Reg8: 6>  # Address: 0000003a
+==> 0000010d: <Ret>: <Reg8: 0>
+
+
