@@ -1,9 +1,11 @@
+import re
+
 from hermes_decompiler.backend.runtime import HermesAnalysis
 from hermes_decompiler.core.Exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.handlers import HandlerLoader, OpcodeHandler, OpcodeContext
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.ir.expressions import AwaitExpression, Expression, RawExpression
+from hermes_decompiler.ir.expressions import AwaitExpression, Expression, Identifier, RawExpression
 
 logger = get_logger(__name__)
 
@@ -13,6 +15,9 @@ logger = get_logger(__name__)
 # side effect did - see that method for why it's no longer done here at
 # import time.
 _handlers_loaded = False
+
+
+_LEAVING_OPCODES = frozenset({"Ret", "Throw", "Jmp", "JmpLong"})
 
 
 class OpcodeDispatcher:
@@ -149,6 +154,12 @@ class OpcodeDispatcher:
             batch_tables=None,
     ) -> None:
         dispatcher = OpcodeDispatcher(analysis, function_id=function_id, batch_tables=batch_tables)
+        # Only a generator's resume guard (`if (__resumeIsReturn) <copy of the finally>; return`) lays a dead-end
+        # arm in front of a jump target on purpose; elsewhere the join logic below stays as it was.
+        analysis.is_generator_body = any(entry.opcode == "ResumeGenerator" for entry in entries)
+        sources = OpcodeDispatcher._lone_forward_sources(entries) if analysis.is_generator_body else {}
+
+        guards: set[int] = set()
 
         for i, entry in enumerate(entries):
 
@@ -156,6 +167,17 @@ class OpcodeDispatcher:
                 result = OpcodeResult(entry, value=RawExpression(source=f"// Unparsed: {entry.bytecode}"))
                 analysis.add_result(result)
                 continue
+
+            if sources and entry.target_address is not None and OpcodeDispatcher._tests_the_resume_flag(entry, analysis):
+                guards.add(entry.address)
+
+            if (
+                    i
+                    and entry.address in sources
+                    and sources[entry.address] in guards
+                    and entries[i - 1].opcode in _LEAVING_OPCODES
+            ):
+                OpcodeDispatcher._forget_the_dead_end_arm(analysis, sources[entry.address], entry.address)
 
             analysis.current_address = entry.address
             analysis.current_entry = entry
@@ -179,6 +201,44 @@ class OpcodeDispatcher:
                     raise
                 result = OpcodeResult(entry, value=RawExpression(source=f"// Error: {e.cause}"))
                 analysis.add_result(result)
+
+    @staticmethod
+    def _lone_forward_sources(entries: list[OpcodeEntry]) -> dict[int, int]:
+        """target address -> the jump's address, for a target that exactly one forward jump reaches."""
+        found: dict[int, list[int]] = {}
+
+        for entry in entries:
+            if entry.target_address is not None and entry.target_address > entry.address:
+                found.setdefault(entry.target_address, []).append(entry.address)
+
+        return {target: jumps[0] for target, jumps in found.items() if len(jumps) == 1}
+
+    @staticmethod
+    def _tests_the_resume_flag(entry: OpcodeEntry, analysis: HermesAnalysis) -> bool:
+        """`JmpTrue <Addr>, rN` where `rN` holds the flag `ResumeGenerator` set (a generator's return test)."""
+        if entry.opcode not in ("JmpTrue", "JmpTrueLong", "JmpFalse", "JmpFalseLong"):
+            return False
+
+        registers = re.findall(r"Reg(?:8|32):\s*(\d+)", entry.args)
+        state = analysis.get_register_state(int(registers[-1])) if registers else None
+
+        return state is not None and isinstance(state.value, Identifier) and state.value.name == "__resumeIsReturn"
+
+    @staticmethod
+    def _forget_the_dead_end_arm(analysis: HermesAnalysis, jump: int, target: int) -> None:
+        """The code between a forward jump and its target ends in a `Ret`/`Throw`/`Jmp`, so nothing it wrote
+        reaches the target: there the registers hold what they held at the jump (96/8059, `Mov r2, r1` in the
+        fall-through arm, `r2` read in the arm the jump goes to)."""
+        for name, state in list(analysis.registers.items()):
+            if not jump < state.definition.address < target or state.handler != "Mov":
+                continue
+
+            before = [s for s in analysis.history.get(name, ()) if s.definition.address <= jump]
+
+            if before:
+                analysis.registers[name] = before[-1]
+            else:
+                pass
 
     @staticmethod
     def _handle_generator_await(analysis: HermesAnalysis) -> None:

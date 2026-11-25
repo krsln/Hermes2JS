@@ -249,8 +249,15 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
 
         if_region = self._child_at(region, index + offset + 1)
 
+        keep_guard = False
+
         if not self._is_resume_guard(if_region, self._suspends_on_a_real_await(yield_block)):
-            return False
+            # `try { yield x } finally { cleanup }`: the return arm runs the cleanup's own copy before it
+            # leaves, so it is code, not the protocol (96/8059). The yield still folds; the test stays.
+            if yield_block is None or not self._is_a_resume_test(if_region):
+                return False
+
+            keep_guard = True
 
         resumed_reg = resume_block.instructions[pair_at].dest_reg
         resumed_placeholder = resume_block.instructions[pair_at].value
@@ -311,7 +318,7 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
         # statement of a loop iteration) - there's nothing after it to
         # check (the trailing_siblings guard above confirms this
         # holds), which is fine; treat it the same as "not referenced".
-        resumed_is_read = (
+        resumed_is_read = keep_guard or (
                                   if_region.else_body is not None
                                   and self._register_is_referenced(if_region.else_body, resumed_reg)
                           ) or self._children_reference(trailing_siblings, resumed_reg) or any(
@@ -371,7 +378,7 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
         # Same real-CFG-predecessor concern as resume_block/dead_ret
         # above - the early-return landing pad is dropped entirely
         # (never appended to new_children), so clear it too.
-        for child in if_region.then_body.children:
+        for child in ([] if keep_guard else if_region.then_body.children):
             if isinstance(child, BasicBlock):
                 child.instructions = []
 
@@ -419,7 +426,7 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
                 # Save; Ret r2`, then `r3 = r2 + 1`) must stay defined. The resume
                 # overwrites its own register, nothing reads the old value there.
                 read_behind = yielded_reg not in (resumed_reg, bind_reg) and (
-                        (
+                        keep_guard or (
                                 if_region.else_body is not None
                                 and self._register_is_referenced(if_region.else_body, yielded_reg)
                         )
@@ -478,7 +485,9 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
         if resume_block.instructions:
             new_children.append(resume_block)
 
-        if if_region.else_body is not None:
+        if keep_guard:
+            new_children.append(if_region)
+        elif if_region.else_body is not None:
             new_children.extend(if_region.else_body.children)
 
         new_children.extend(trailing_siblings)
@@ -584,6 +593,14 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
         value = value_instruction.value if value_instruction is not None else None
 
         return isinstance(value, AwaitExpression) and not isinstance(value.argument, YieldExpression)
+
+    @staticmethod
+    def _is_a_resume_test(node) -> bool:
+        return (
+                isinstance(node, IfRegion)
+                and isinstance(node.condition, Identifier)
+                and node.condition.name == _RESUME_FLAG_NAME
+        )
 
     @staticmethod
     def _is_resume_guard(node, dead_return_arm: bool = False) -> bool:

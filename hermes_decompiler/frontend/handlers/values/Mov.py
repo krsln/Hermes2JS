@@ -1,6 +1,6 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import Identifier, NewExpression
+from hermes_decompiler.ir.expressions import Identifier, NewExpression, UndefinedLiteral
 
 
 # Reg8, Reg8 (total size 2)
@@ -26,6 +26,12 @@ class Mov(OpcodeHandler):
             expression = self.get_register_reference(ctx.analysis, src_reg)
         else:
             expression = self.get_register_expression(ctx.analysis, src_reg, keep_placeholder=True)
+
+        if isinstance(expression, UndefinedLiteral) and getattr(ctx.analysis, 'is_generator_body', False):
+            # Its own node: a repair that follows one write's value by identity must not find the register
+            # the constant was loaded into (96/8059, `Mov r6, r2` of `r2 = undefined`). Generators only: elsewhere the
+            # join repairs rely on the shared node (96/3206 `send`, `r21 = r7`).
+            expression = UndefinedLiteral()
 
         if (
                 src is not None

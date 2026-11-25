@@ -1,0 +1,53 @@
+
+=> [Function #8059 "?anon_0_" of 152 bytes]: 1 params, frame size=16, strict=1, exc handler=1, debug info=0  @ offset 0x001c1326
+  [Exception handlers: [start=0xe, end=0x22, target=0x6c] ]
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000004: <JmpTrueLong>: <Addr32: 145, Reg8: 1>  # Address: 00000095
+==> 0000000a: <LoadConstUndefined>: <Reg8: 4>
+==> 0000000c: <LoadConstUndefined>: <Reg8: 2>
+==> 0000000e: <GetEnvironment>: <Reg8: 3, UInt8: 3>
+==> 00000011: <LoadFromEnvironment>: <Reg8: 1, Reg8: 3, UInt8: 0>
+==> 00000015: <SaveGenerator>: <Addr8: 4>  # Address: 00000019
+==> 00000017: <Ret>: <Reg8: 1>
+==> 00000019: <ResumeGenerator>: <Reg8: 1, Reg8: 5>
+==> 0000001c: <JmpTrue>: <Addr8: 43, Reg8: 5>  # Address: 00000047
+==> 0000001f: <Mov>: <Reg8: 2, Reg8: 1>
+==> 00000022: <GetEnvironment>: <Reg8: 5, UInt8: 2>
+==> 00000025: <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 0>
+==> 00000029: <JmpTrue>: <Addr8: 27, Reg8: 5>  # Address: 00000044
+==> 0000002c: <LoadFromEnvironment>: <Reg8: 6, Reg8: 3, UInt8: 2>
+==> 00000030: <Mov>: <Reg8: 7, Reg8: 2>
+==> 00000033: <NewArrayWithBuffer>: <Reg8: 5, UInt16: 2, UInt16: 1, UInt16: 18847>  # Array: [true]
+==> 0000003b: <PutOwnByIndex>: <Reg8: 5, Reg8: 7, UInt8: 1>
+==> 0000003f: <Call2>: <Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 5>
+==> 00000044: <CompleteGenerator>: <>
+==> 00000045: <Ret>: <Reg8: 4>
+==> 00000047: <GetEnvironment>: <Reg8: 5, UInt8: 2>
+==> 0000004a: <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 0>
+==> 0000004e: <JmpTrue>: <Addr8: 27, Reg8: 5>  # Address: 00000069
+==> 00000051: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 2>
+==> 00000055: <Mov>: <Reg8: 6, Reg8: 2>
+==> 00000058: <NewArrayWithBuffer>: <Reg8: 3, UInt16: 2, UInt16: 1, UInt16: 18847>  # Array: [true]
+==> 00000060: <PutOwnByIndex>: <Reg8: 3, Reg8: 6, UInt8: 1>
+==> 00000064: <Call2>: <Reg8: 3, Reg8: 5, Reg8: 4, Reg8: 3>
+==> 00000069: <CompleteGenerator>: <>
+==> 0000006a: <Ret>: <Reg8: 1>
+==> 0000006c: <Catch>: <Reg8: 1>
+==> 0000006e: <GetEnvironment>: <Reg8: 3, UInt8: 2>
+==> 00000071: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 0>
+==> 00000075: <JmpTrue>: <Addr8: 30, Reg8: 3>  # Address: 00000093
+==> 00000078: <GetEnvironment>: <Reg8: 3, UInt8: 3>
+==> 0000007b: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 2>
+==> 0000007f: <Mov>: <Reg8: 5, Reg8: 2>
+==> 00000082: <NewArrayWithBuffer>: <Reg8: 2, UInt16: 2, UInt16: 1, UInt16: 18847>  # Array: [true]
+==> 0000008a: <PutOwnByIndex>: <Reg8: 2, Reg8: 5, UInt8: 1>
+==> 0000008e: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000093: <Throw>: <Reg8: 1>
+==> 00000095: <CompleteGenerator>: <>
+==> 00000096: <Ret>: <Reg8: 0>
+
+
