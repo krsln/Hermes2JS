@@ -1,0 +1,50 @@
+
+=> [Function #13334 "findInMenu" of 133 bytes]: 3 params, frame size=22, strict=1, exc handler=1, debug info=0  @ offset 0x00257a1b
+  [Exception handlers: [start=0x33, end=0x57, target=0x7c] [start=0x5f, end=0x74, target=0x7c] ]
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 9, UInt8: 0>
+==> 00000003: <LoadParam>: <Reg8: 7, UInt8: 2>
+==> 00000006: <LoadConstUndefined>: <Reg8: 0>
+==> 00000008: <LoadConstUndefined>: <Reg8: 8>
+==> 0000000a: <LoadConstUndefined>: <Reg8: 1>
+==> 0000000c: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 0000000f: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 0, string_id: 7679>  # String: 'items' (Identifier)
+==> 00000015: <Mov>: <Reg8: 6, Reg8: 3>
+==> 00000018: <IteratorBegin>: <Reg8: 2, Reg8: 6>
+==> 0000001b: <LoadConstZero>: <Reg8: 5>
+==> 0000001d: <LoadConstString>: <Reg8: 4, string_id: 15772>  # String: 'menuId' (Identifier)
+==> 00000021: <LoadConstString>: <Reg8: 3, string_id: 7679>  # String: 'items' (Identifier)
+==> 00000025: <Mov>: <Reg8: 10, Reg8: 6>
+==> 00000028: <IteratorNext>: <Reg8: 10, Reg8: 2, Reg8: 10>
+==> 0000002c: <Mov>: <Reg8: 11, Reg8: 2>
+==> 0000002f: <JStrictEqual>: <Addr8: 84, Reg8: 11, Reg8: 0>  # Address: 00000083
+==> 00000033: <Mov>: <Reg8: 8, Reg8: 10>
+==> 00000036: <IsIn>: <Reg8: 10, Reg8: 3, Reg8: 10>
+==> 0000003a: <JmpTrue>: <Addr8: 37, Reg8: 10>  # Address: 0000005f
+==> 0000003d: <Mov>: <Reg8: 10, Reg8: 8>
+==> 00000040: <IsIn>: <Reg8: 10, Reg8: 4, Reg8: 10>
+==> 00000044: <JmpFalse>: <Addr8: 46, Reg8: 10>  # Address: 00000072
+==> 00000047: <Mov>: <Reg8: 10, Reg8: 8>
+==> 0000004a: <GetById>: <Reg8: 10, Reg8: 10, UInt8: 1, string_id: 15772>  # String: 'menuId' (Identifier)
+==> 00000050: <JStrictNotEqual>: <Addr8: 34, Reg8: 10, Reg8: 7>  # Address: 00000072
+==> 00000054: <Mov>: <Reg8: 10, Reg8: 8>
+==> 00000057: <Mov>: <Reg8: 11, Reg8: 2>
+==> 0000005a: <IteratorClose>: <Reg8: 11, UInt8: 0>
+==> 0000005d: <Ret>: <Reg8: 10>
+==> 0000005f: <LoadFromEnvironment>: <Reg8: 11, Reg8: 9, UInt8: 0>
+==> 00000063: <Mov>: <Reg8: 10, Reg8: 8>
+==> 00000066: <Call3>: <Reg8: 10, Reg8: 11, Reg8: 5, Reg8: 10, Reg8: 7>
+==> 0000006c: <Mov>: <Reg8: 1, Reg8: 10>
+==> 0000006f: <JmpTrue>: <Addr8: 5, Reg8: 10>  # Address: 00000074
+==> 00000072: <Jmp>: <Addr8: -77>  # Address: 00000025
+==> 00000074: <Mov>: <Reg8: 3, Reg8: 2>
+==> 00000077: <IteratorClose>: <Reg8: 3, UInt8: 0>
+==> 0000007a: <Ret>: <Reg8: 1>
+==> 0000007c: <Catch>: <Reg8: 1>
+==> 0000007e: <IteratorClose>: <Reg8: 2, UInt8: 1>
+==> 00000081: <Throw>: <Reg8: 1>
+==> 00000083: <Ret>: <Reg8: 0>
+
+

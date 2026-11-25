@@ -15,7 +15,7 @@ from hermes_decompiler.backend.regions import (
 from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
 from hermes_decompiler.backend.transforms.shared import structural_key
 from hermes_decompiler.backend.transforms.shared import resolve_identifier as _shared_resolve_identifier
-from hermes_decompiler.backend.transforms.shared import is_bare_register
+from hermes_decompiler.backend.transforms.shared import is_bare_register, mentions_register, reads_operand
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Expression
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
@@ -873,10 +873,36 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
                         and copy.value.name == iterator_ref.name
                         and copy.dest_reg is not None
                         and self._is_close_call(close, Identifier(name=f"r{copy.dest_reg}"))
-                        and len(rest) == 1
-                        and isinstance(rest[0].statement, BreakStatement)
+                        and (
+                                (len(rest) == 1 and isinstance(rest[0].statement, BreakStatement))
+                                or isinstance(block.terminator, TerminatorReturn)
+                        )
                 ):
                     del instructions[index - 1:index + 1]
+
+            # `r11 = r2; return r8;`: the copy is what is left of such a close once the close itself is gone
+            # (98/13334 `findInMenu`). Nothing after it reads the scratch register.
+            if isinstance(block.terminator, TerminatorReturn):
+                for index in range(len(instructions) - 1, -1, -1):
+                    copy = instructions[index]
+
+                    if not (
+                            _is_plain_register_copy(copy)
+                            and isinstance(copy.value, Identifier)
+                            and isinstance(iterator_ref, Identifier)
+                            and copy.value.name == iterator_ref.name
+                            and copy.dest_reg is not None
+                    ):
+                        continue
+
+                    name = f"r{copy.dest_reg}"
+                    later = instructions[index + 1:]
+
+                    if any(reads_operand(i, copy.dest_reg) for i in later) or mentions_register(
+                            getattr(block.terminator, "value", None), name):
+                        continue
+
+                    del instructions[index]
 
     @staticmethod
     def _strip_instruction(block: BasicBlock, instr) -> None:
