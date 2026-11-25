@@ -202,6 +202,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
         condition = loop.condition
 
+        # (or the test stayed in the body as `if (rN === undefined) continue outer;`, see `_drop_exit_test`)
         if not (
                 isinstance(condition, UnaryExpression)
                 and condition.operator == UnaryOperator.LOGICAL_NOT
@@ -209,7 +210,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
                 and condition.operand.operator == BinaryOperator.STRICT_EQUAL
                 and isinstance(condition.operand.left, Identifier)
                 and isinstance(condition.operand.right, UndefinedLiteral)
-        ):
+        ) and not (condition is None and self._exit_test(loop) is not None):
             return
 
         next_call, next_instr, header_block = self._match_header_call(loop, "next")
@@ -232,6 +233,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         self._strip_next_call_scaffold(header_block, next_instr)
         self._strip_inline_closes(loop, raw_iterator_ref)
         self._drop_iterator_setup(iterator_expr)
+        self._drop_exit_test(loop)
         self._fold_binding_pattern(loop)
 
     def _try_recognize_for_of_with_inner_try(self, loop: LoopRegion) -> None:
@@ -300,9 +302,15 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         96/1303 `processColorStops`). A `for-of` ends by itself and falls into the same latch, so the test is
         noise (and reads a register the body sets only after it). Only when nothing follows the loop on the way
         up to that enclosing loop."""
-        body = loop.body
+        child = self._exit_test(loop)
 
-        for child in body.children[:3]:
+        if child is not None:
+            loop.body.children.remove(child)
+            loop.body.invalidate_coverage()
+
+    def _exit_test(self, loop: LoopRegion):
+        """The `if (rN === undefined) continue outer;` among the first children of `loop`'s body, or None."""
+        for child in loop.body.children[:3]:
             if not isinstance(child, IfRegion):
                 continue
 
@@ -317,21 +325,21 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
                     and len(child.then_body.children) == 1
                     and isinstance(child.then_body.children[0], BasicBlock)
             ):
-                return
+                return None
 
             statements = [i.statement for i in child.then_body.children[0].instructions if i.statement is not None]
 
             if not (len(statements) == 1 and isinstance(statements[0], ContinueStatement)):
-                return
+                return None
 
             target = self._enclosing_loop_it_ends(loop)
+
             if target is None or statements[0].label is None or statements[0].label.name != getattr(target.label, "name", target.label):
-                return
+                return None
 
-            body.children.remove(child)
-            body.invalidate_coverage()
+            return child
 
-            return
+        return None
 
     @staticmethod
     def _enclosing_loop_it_ends(loop: LoopRegion):

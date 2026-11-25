@@ -1,0 +1,45 @@
+
+=> [Function #3625 "?anon_0_generateValues" of 99 bytes]: 2 params, frame size=15, strict=1, exc handler=1, debug info=0  @ offset 0x0015bfc6
+  [Exception handlers: [start=0x38, end=0x42, target=0x4d] [start=0x27, end=0x47, target=0x56] [start=0x4d, end=0x54, target=0x56] ]
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000004: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000007: <JmpTrue>: <Addr8: 89, Reg8: 1>  # Address: 00000060
+==> 0000000a: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 8322>  # String: 'values' (Identifier)
+==> 00000010: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000014: <Mov>: <Reg8: 2, Reg8: 1>
+==> 00000017: <IteratorBegin>: <Reg8: 3, Reg8: 2>
+==> 0000001a: <LoadConstUndefined>: <Reg8: 1>
+==> 0000001c: <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 2>
+==> 00000020: <Mov>: <Reg8: 5, Reg8: 3>
+==> 00000023: <JStrictEqual>: <Addr8: 58, Reg8: 5, Reg8: 1>  # Address: 0000005d
+==> 00000027: <Mov>: <Reg8: 6, Reg8: 4>
+==> 0000002a: <IteratorBegin>: <Reg8: 5, Reg8: 6>
+==> 0000002d: <IteratorNext>: <Reg8: 4, Reg8: 5, Reg8: 6>
+==> 00000031: <Mov>: <Reg8: 7, Reg8: 5>
+==> 00000034: <JStrictEqual>: <Addr8: 32, Reg8: 7, Reg8: 1>  # Address: 00000054
+==> 00000038: <SaveGenerator>: <Addr8: 4>  # Address: 0000003c
+==> 0000003a: <Ret>: <Reg8: 4>
+==> 0000003c: <ResumeGenerator>: <Reg8: 4, Reg8: 7>
+==> 0000003f: <JmpTrue>: <Addr8: 5, Reg8: 7>  # Address: 00000044
+==> 00000042: <Jmp>: <Addr8: -21>  # Address: 0000002d
+==> 00000044: <IteratorClose>: <Reg8: 5, UInt8: 0>
+==> 00000047: <IteratorClose>: <Reg8: 3, UInt8: 0>
+==> 0000004a: <CompleteGenerator>: <>
+==> 0000004b: <Ret>: <Reg8: 4>
+==> 0000004d: <Catch>: <Reg8: 4>
+==> 0000004f: <IteratorClose>: <Reg8: 5, UInt8: 1>
+==> 00000052: <Throw>: <Reg8: 4>
+==> 00000054: <Jmp>: <Addr8: -56>  # Address: 0000001c
+==> 00000056: <Catch>: <Reg8: 2>
+==> 00000058: <IteratorClose>: <Reg8: 3, UInt8: 1>
+==> 0000005b: <Throw>: <Reg8: 2>
+==> 0000005d: <CompleteGenerator>: <>
+==> 0000005e: <Ret>: <Reg8: 1>
+==> 00000060: <CompleteGenerator>: <>
+==> 00000061: <Ret>: <Reg8: 0>
+
+
