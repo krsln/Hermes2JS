@@ -196,7 +196,7 @@ The output contains no `goto` (so it does not show in the `goto` count), but it 
   the operands for redefinition produced unassigned reads in 96/2200, 98/2930 and 98/2614 and was
   dropped); (b) the last `Mov r1, r3; Ret r1` is a join of two paths and prints `return r1`, which is
   wrong when `displayName` is truthy (widening the join guard to two paths broke 17 tests); (c) four
-  `goto`s remain (F-10 cluster).
+  `goto`s remain (F-10 cluster). **Tried 2026-11-25 for (a), dropped:** in `BooleanChainRegionPass` a copy of the chain read after a register it names was written again now reads the chain's register (`"" !== r4`); tests passed, but the check (any printed write to a named register between the chain and the reader) is too wide: 16 other files in 96 gained an extra `rN = a || b;` line or lost an inlined `||` (`computeFrame`, `now`, `serialize`, `TabsScreen`, `render`), and 1801 still had two garbage copies (`r1 = "ForwardRef(" + (r2.displayName ...`, behind `Mov r4, r3`, where the register to read is `r3`, not `r4`). A fix needs the writes to be on a path from the chain to the reader (not a sibling arm) and the copy chain `r4 -> r3` followed.
 - **F-139 Messy `for-in` (partly fixed).** 96/1339 `parseDropShadow`. The null-guard scaffold is gone
   (F-144); what is left are loop-carried `Mov`s in the for-in header that need copy propagation. About
   18 functions in 96 and 20 in 98 still print an unrecognized `HermesPropertyIterator`.
