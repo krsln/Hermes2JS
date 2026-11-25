@@ -607,9 +607,11 @@ class _HandlerBuilder:
 
             # A latch right at the start means the try wraps the whole loop
             # (the ordinary path); returning no extent sends it there.
+            # (Not when the range starts at the last block of a body that has more in front of it, and that block
+            # only jumps back: the loop's own test sits in front, the try cannot wrap the loop, 96/10225.)
             if index == start_idx and (
                     item in latches if isinstance(item, BasicBlock) else latches & item.covered_blocks
-            ):
+            ) and not (start_idx > 0 and isinstance(item, BasicBlock) and isinstance(item.terminator, TerminatorJump)):
                 break
 
             if isinstance(item, BasicBlock):

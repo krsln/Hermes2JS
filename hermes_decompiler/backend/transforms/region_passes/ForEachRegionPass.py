@@ -358,6 +358,19 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
                 # (a trailing block that only jumps back to the header prints nothing)
                 after = parent.children[parent.children.index(node) + 1:]
+                owner = getattr(parent, "parent", None)
+
+                # In the enclosing loop's own body, its latch is where the `continue` lands: what stands from the
+                # latch on runs on the fall-through too (96/10225: `r1 = r7; r2 = r8;` before the loop test).
+                if isinstance(owner, LoopRegion) and owner.body is parent:
+                    latches = set(owner.latches)
+
+                    for position, item in enumerate(after):
+                        blocks = {item} if isinstance(item, BasicBlock) else set(getattr(item, "covered_blocks", ()))
+
+                        if blocks & latches:
+                            after = after[:position]
+                            break
 
                 if any(not _prints_nothing(item) for item in after):
                     return None
