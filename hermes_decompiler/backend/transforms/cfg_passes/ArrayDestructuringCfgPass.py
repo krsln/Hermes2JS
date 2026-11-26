@@ -404,6 +404,8 @@ class ArrayDestructuringCfgPass:
         # unless an earlier block already holds it; that load outlives the
         # chain (the function's own `return undefined` often reads it).
         kept_undefined = None
+        # The load is only the `undefined` the checks compare with; it is no element's initial value.
+        shared_undefined = False
 
         if top and shapes == ["Mov", "IteratorNext", "Mov", "LoadConstUndefined", *expected[3:]]:
             kept_undefined = tail[3]
@@ -426,6 +428,12 @@ class ArrayDestructuringCfgPass:
             # own initial value, and the source needs no copy (98/9900).
             kept_undefined = tail[2]
             tail = [None, tail[0], tail[1], tail[3], tail[2], tail[4]]
+        elif top and shapes == ["Mov", "IteratorNext", "Mov", "LoadConstUndefined", "StrictEq", "JmpTrue"]:
+            # The same one `undefined`, loaded between the fetch and the check, with the source copied first
+            # (a leading hole: `[, a, b] = x`, 98/7996).
+            kept_undefined = tail[3]
+            tail = [tail[0], tail[1], tail[2], tail[4], tail[3], tail[5]]
+            shared_undefined = True
         elif shapes == expected[1:]:
             # The fetch reads the source register itself (it already holds it): no `Mov t <- src`.
             tail = [None, *tail]
@@ -459,6 +467,10 @@ class ArrayDestructuringCfgPass:
         taken, fall = branch
         aliases = {flag}
         items: list[_Elem] = []
+
+        if shared_undefined and (_handlers(fall) == ["Mov", "JStrictNotEqual"] or (
+                _handlers(fall) == ["Mov"] and _operands(fall.instructions[0]) == [e1, v1])):
+            return None
 
         if _handlers(fall) == ["Mov", "JStrictNotEqual"]:
             # Element 1 with a default: the done path goes straight to the
@@ -496,7 +508,7 @@ class ArrayDestructuringCfgPass:
             # Element 1 is a hole: this block's tail is element 2's head.
             items.append(_Elem("hole"))
             prev_tmp = None
-            cur_block, cur_insts = head, [undef_e, jmp]
+            cur_block, cur_insts = head, [jmp] if shared_undefined else [undef_e, jmp]
 
         # Element 1's copy `Mov e1 <- v1` may be folded away, the store then reads v1 itself.
         first_value = v1

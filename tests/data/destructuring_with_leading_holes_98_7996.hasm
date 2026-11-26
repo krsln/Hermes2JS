@@ -1,0 +1,78 @@
+
+=> [Function #7996 "C" of 235 bytes]: 3 params, frame size=23, strict=1, exc handler=0, debug info=0  @ offset 0x001e717f
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 00000003: <Mov>: <Reg8: 10, Reg8: 4>
+==> 00000006: <IteratorBegin>: <Reg8: 5, Reg8: 10>
+==> 00000009: <Mov>: <Reg8: 6, Reg8: 10>
+==> 0000000c: <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
+==> 00000010: <Mov>: <Reg8: 6, Reg8: 5>
+==> 00000013: <LoadConstUndefined>: <Reg8: 2>
+==> 00000015: <StrictEq>: <Reg8: 1, Reg8: 6, Reg8: 2>
+==> 00000019: <JmpTrue>: <Addr8: 17, Reg8: 1>  # Address: 0000002a
+==> 0000001c: <Mov>: <Reg8: 6, Reg8: 10>
+==> 0000001f: <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
+==> 00000023: <Mov>: <Reg8: 6, Reg8: 5>
+==> 00000026: <StrictEq>: <Reg8: 1, Reg8: 6, Reg8: 2>
+==> 0000002a: <LoadConstUndefined>: <Reg8: 9>
+==> 0000002c: <JmpTrue>: <Addr8: 31, Reg8: 1>  # Address: 0000004b
+==> 0000002f: <Mov>: <Reg8: 6, Reg8: 10>
+==> 00000032: <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
+==> 00000036: <Mov>: <Reg8: 7, Reg8: 5>
+==> 00000039: <StrictEq>: <Reg8: 3, Reg8: 7, Reg8: 2>
+==> 0000003d: <LoadConstUndefined>: <Reg8: 9>
+==> 0000003f: <Mov>: <Reg8: 1, Reg8: 3>
+==> 00000042: <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 0000004b
+==> 00000045: <Mov>: <Reg8: 9, Reg8: 6>
+==> 00000048: <Mov>: <Reg8: 1, Reg8: 3>
+==> 0000004b: <LoadConstUndefined>: <Reg8: 8>
+==> 0000004d: <JmpTrue>: <Addr8: 31, Reg8: 1>  # Address: 0000006c
+==> 00000050: <Mov>: <Reg8: 6, Reg8: 10>
+==> 00000053: <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
+==> 00000057: <Mov>: <Reg8: 7, Reg8: 5>
+==> 0000005a: <StrictEq>: <Reg8: 3, Reg8: 7, Reg8: 2>
+==> 0000005e: <LoadConstUndefined>: <Reg8: 8>
+==> 00000060: <Mov>: <Reg8: 1, Reg8: 3>
+==> 00000063: <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 0000006c
+==> 00000066: <Mov>: <Reg8: 8, Reg8: 6>
+==> 00000069: <Mov>: <Reg8: 1, Reg8: 3>
+==> 0000006c: <LoadConstUndefined>: <Reg8: 7>
+==> 0000006e: <JmpTrue>: <Addr8: 31, Reg8: 1>  # Address: 0000008d
+==> 00000071: <Mov>: <Reg8: 6, Reg8: 10>
+==> 00000074: <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
+==> 00000078: <Mov>: <Reg8: 11, Reg8: 5>
+==> 0000007b: <StrictEq>: <Reg8: 3, Reg8: 11, Reg8: 2>
+==> 0000007f: <LoadConstUndefined>: <Reg8: 7>
+==> 00000081: <Mov>: <Reg8: 1, Reg8: 3>
+==> 00000084: <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 0000008d
+==> 00000087: <Mov>: <Reg8: 7, Reg8: 6>
+==> 0000008a: <Mov>: <Reg8: 1, Reg8: 3>
+==> 0000008d: <LoadConstUndefined>: <Reg8: 6>
+==> 0000008f: <JmpTrue>: <Addr8: 28, Reg8: 1>  # Address: 000000ab
+==> 00000092: <IteratorNext>: <Reg8: 10, Reg8: 5, Reg8: 10>
+==> 00000096: <Mov>: <Reg8: 11, Reg8: 5>
+==> 00000099: <StrictEq>: <Reg8: 3, Reg8: 11, Reg8: 2>
+==> 0000009d: <LoadConstUndefined>: <Reg8: 6>
+==> 0000009f: <Mov>: <Reg8: 1, Reg8: 3>
+==> 000000a2: <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 000000ab
+==> 000000a5: <Mov>: <Reg8: 6, Reg8: 10>
+==> 000000a8: <Mov>: <Reg8: 1, Reg8: 3>
+==> 000000ab: <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 000000b1
+==> 000000ae: <IteratorClose>: <Reg8: 5, UInt8: 0>
+==> 000000b1: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 000000b4: <PutByIdStrict>: <Reg8: 5, Reg8: 9, UInt8: 0, string_id: 12559>  # String: 'lastCubicCtrlX' (Identifier)
+==> 000000ba: <PutByIdStrict>: <Reg8: 5, Reg8: 8, UInt8: 1, string_id: 12171>  # String: 'lastCubicCtrlY' (Identifier)
+==> 000000c0: <PutByIdStrict>: <Reg8: 5, Reg8: 7, UInt8: 2, string_id: 9328>  # String: 'curX' (Identifier)
+==> 000000c6: <PutByIdStrict>: <Reg8: 5, Reg8: 6, UInt8: 3, string_id: 16711>  # String: 'curY' (Identifier)
+==> 000000cc: <NewArrayWithBuffer>: <Reg8: 5, UInt16: 1, UInt16: 1, UInt16: 38342>  # Array: ['C']
+==> 000000d4: <LoadConstUInt8>: <Reg8: 12, UInt8: 1>
+==> 000000d7: <Mov>: <Reg8: 14, Reg8: 5>
+==> 000000da: <Mov>: <Reg8: 13, Reg8: 4>
+==> 000000dd: <CallBuiltin>: <Reg8: 0, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+==> 000000e1: <NewArray>: <Reg8: 4, UInt16: 1>
+==> 000000e5: <DefineOwnInDenseArray>: <Reg8: 4, Reg8: 5, UInt8: 0>
+==> 000000e9: <Ret>: <Reg8: 4>
+
+
