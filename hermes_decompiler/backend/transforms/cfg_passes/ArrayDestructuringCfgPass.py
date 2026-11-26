@@ -426,6 +426,7 @@ class ArrayDestructuringCfgPass:
         kept_undefined = None
         # The load is only the `undefined` the checks compare with; it is no element's initial value.
         shared_undefined = False
+        flag_copy = None
 
         if top and shapes == ["Mov", "IteratorNext", "Mov", "LoadConstUndefined", *expected[3:]]:
             kept_undefined = tail[3]
@@ -454,6 +455,11 @@ class ArrayDestructuringCfgPass:
             kept_undefined = tail[3]
             tail = [tail[0], tail[1], tail[2], tail[4], tail[3], tail[5]]
             shared_undefined = True
+        elif top and shapes == ["Mov", "IteratorNext", "Mov", "StrictEq", "Mov", "JmpTrue"]:
+            # A leading hole has no initial value to load: the check's result is copied into the flag register
+            # the later checks use instead (98/13555: `[, , a, b] = x`).
+            shared_undefined = True
+            flag_copy = tail[4]
         elif shapes == expected[1:]:
             # The fetch reads the source register itself (it already holds it): no `Mov t <- src`.
             tail = [None, *tail]
@@ -467,6 +473,12 @@ class ArrayDestructuringCfgPass:
         e = _operands(eq)
         u = _operands(undef_e)
         j = _operands(jmp)
+
+        if flag_copy is not None:
+            u = u[:1]  # `Mov flag' <- flag`: its destination is the flag register the later checks use
+
+            if _operands(flag_copy)[1:] != [_operands(eq)[0]]:
+                return None
 
         if len(t) != 2 or len(n) != 3 or len(x) != 2 or len(e) != 3 or len(u) != 1 or len(j) != 2:
             return None
@@ -485,7 +497,7 @@ class ArrayDestructuringCfgPass:
             return None
 
         taken, fall = branch
-        aliases = {flag}
+        aliases = {flag, e1} if flag_copy is not None else {flag}
         items: list[_Elem] = []
 
         if shared_undefined and (_handlers(fall) == ["Mov", "JStrictNotEqual"] or (
