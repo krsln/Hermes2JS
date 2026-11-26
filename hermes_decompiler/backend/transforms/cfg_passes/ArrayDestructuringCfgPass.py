@@ -542,6 +542,22 @@ class ArrayDestructuringCfgPass:
             insts = list(cur_insts)
             peeled = None
 
+            # Binding patterns whose targets are all copied at the very end (`[x, y, z] = ...` into outer
+            # variables, 98/11846 and 98/13553): the last block holds `Mov target <- tmp` for every element,
+            # last element first, and the close block repeats them after the `IteratorClose`.
+            if prev_tmp is not None and ctx.peeled_form is not True and not ctx.late:
+                late = self._late_copies(insts, items)
+
+                if late is not None:
+                    ctx.late = late
+                    insts = insts[:len(insts) - 1 - len(late)] + insts[-1:]
+
+                    for leaf, mov in zip([i for i in items if i.kind == "reg"], reversed(late)):
+                        leaf.reg = _operands(mov)[0]
+                        leaf.result = mov
+
+                    ctx.peeled_form = False
+
             # Binding patterns (`const [a, b] = x`, `for (const [k, v] of m)`)
             # fill temporaries and copy each into its target at the next
             # element boundary: `Mov target <- tmp` leads that block. All
@@ -729,6 +745,23 @@ class ArrayDestructuringCfgPass:
 
             fall_handlers = _handlers(fall)
 
+            if ctx.late and undef_inst is None:
+                # The close block repeats the copies after the close: `IteratorClose it; Mov...; [Jmp]`.
+                body = fall.instructions
+
+                if (
+                        len(body) >= 1 + len(ctx.late) and body[0].handler == "IteratorClose"
+                        and _operands(body[0])[:1] == [it]
+                        and all(a.handler == "Mov" and _operands(a) == _operands(b)
+                                for a, b in zip(body[1:1 + len(ctx.late)], ctx.late))
+                        and all(i.handler.startswith("Jmp") for i in body[1 + len(ctx.late):])
+                        and _only_successor(fall) is taken
+                ):
+                    ctx.drop.extend([*own, fall])
+                    return items, taken, kept_undefined
+
+                return None
+
             if undef_inst is None and fall_handlers in (["IteratorClose"], ["Mov", "IteratorClose"]):
                 # Close check: JmpTrue f -> J ; fall -> [Mov tmp <- it] IteratorClose -> J.
                 close = fall.instructions[-1]
@@ -872,6 +905,35 @@ class ArrayDestructuringCfgPass:
             ctx.drop.extend([*own, fall, assign, *extra])
             prev_tmp = ek
             cur_block, cur_insts = after, list(after.instructions)
+
+    @staticmethod
+    def _late_copies(insts, items):
+        """The `Mov target <- tmp` run in front of the closing jump when it holds one copy per element, the last
+        element first, into registers that are no element's temporary; else None."""
+        regs = [i for i in items if i.kind == "reg" and i.default is None]
+
+        if len(regs) < 2 or len(regs) != len([i for i in items if i.kind != "hole"]) or len(insts) < len(regs) + 1:
+            return None
+
+        if insts[-1].handler not in _JMP_TRUE:
+            return None
+
+        run = insts[len(insts) - 1 - len(regs):-1]
+        temps = {i.reg for i in regs}
+        targets = []
+
+        for mov, leaf in zip(run, reversed(regs)):
+            ops = _operands(mov)
+
+            if mov.handler != "Mov" or len(ops) != 2 or ops[1] != leaf.reg or ops[0] in temps:
+                return None
+
+            targets.append(ops[0])
+
+        if len(set(targets)) != len(targets):
+            return None
+
+        return run
 
     def _compare_block(self, block: BasicBlock, ek: int, undef_reg: int, flags: set[int]):
         """
@@ -1148,6 +1210,7 @@ class _Ctx:
         self.drop: list[BasicBlock] = []
         self.iterators: set[int] = set()
         self.peeled_form: bool | None = None
+        self.late: list = []  # the closing run of `Mov target <- tmp` copies (see `_late_copies`)
         self.hoist: list = []  # environment creations that move in front of the pattern
         self.scratch: list[int] = []  # registers an object-rest sequence wrote: dead after the pattern
         self.slot_copies: list[tuple[int, object]] = []  # (register holding the value of a slot, the slot)
