@@ -920,8 +920,21 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
                     name = f"r{copy.dest_reg}"
                     later = instructions[index + 1:]
 
-                    if any(reads_operand(i, copy.dest_reg) for i in later) or mentions_register(
-                            getattr(block.terminator, "value", None), name):
+                    # `r8 = r1; r8 = false; return r8;`: the scratch register is written again before anything
+                    # reads it, so the copy holds nothing (98/8004 `deepEqual`).
+                    overwritten = False
+
+                    for item in later:
+                        if reads_operand(item, copy.dest_reg):
+                            break
+
+                        if item.dest_reg == copy.dest_reg:
+                            overwritten = True
+                            break
+
+                    if not overwritten and (
+                            any(reads_operand(i, copy.dest_reg) for i in later) or mentions_register(
+                            getattr(block.terminator, "value", None), name)):
                         continue
 
                     del instructions[index]
