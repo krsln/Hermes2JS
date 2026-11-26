@@ -432,6 +432,13 @@ class _HandlerBuilder:
 
     # -------------------------------------------------------------
 
+    @staticmethod
+    def _is_jump_only(block: BasicBlock) -> bool:
+        """A block that holds nothing but a jump: the `continue` trampoline of a loop, which sits in whatever
+        region the jump's target belongs to and so may lie outside the region that holds the rest of a range
+        (98/8056: the `continue` out of an inner `for-of`'s body)."""
+        return all(str(instr.handler).startswith("Jmp") for instr in block.instructions)
+
     def _find_loop_nested_home(
             self,
             start_repr,
@@ -475,7 +482,9 @@ class _HandlerBuilder:
                         try_blocks
                         and child is not start_block
                         and isinstance(child, (IfRegion, LoopRegion))
-                        and all(block in child.covered_blocks for block in try_blocks)
+                        and all(
+                            block in child.covered_blocks or self._is_jump_only(block) for block in try_blocks
+                        )
                 ):
                     deeper = self._find_loop_nested_home(child, start_block, handler_end, try_blocks)
 
