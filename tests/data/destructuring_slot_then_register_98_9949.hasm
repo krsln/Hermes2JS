@@ -1,0 +1,38 @@
+
+=> [Function #9949 "" of 104 bytes]: 2 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x0020e7a6
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 6, UInt8: 1>
+==> 00000003: <IteratorBegin>: <Reg8: 4, Reg8: 6>
+==> 00000006: <Mov>: <Reg8: 3, Reg8: 6>
+==> 00000009: <IteratorNext>: <Reg8: 3, Reg8: 4, Reg8: 3>
+==> 0000000d: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000010: <LoadConstUndefined>: <Reg8: 1>
+==> 00000012: <StrictEq>: <Reg8: 0, Reg8: 5, Reg8: 1>
+==> 00000016: <LoadConstUndefined>: <Reg8: 5>
+==> 00000018: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 0000001e
+==> 0000001b: <Mov>: <Reg8: 5, Reg8: 3>
+==> 0000001e: <CreateFunctionEnvironment>: <Reg8: 3, UInt8: 1>
+==> 00000021: <StoreToEnvironment>: <Reg8: 3, UInt8: 0, Reg8: 5>
+==> 00000025: <LoadConstUndefined>: <Reg8: 5>
+==> 00000027: <JmpTrue>: <Addr8: 28, Reg8: 0>  # Address: 00000043
+==> 0000002a: <IteratorNext>: <Reg8: 6, Reg8: 4, Reg8: 6>
+==> 0000002e: <Mov>: <Reg8: 7, Reg8: 4>
+==> 00000031: <StrictEq>: <Reg8: 2, Reg8: 7, Reg8: 1>
+==> 00000035: <LoadConstUndefined>: <Reg8: 5>
+==> 00000037: <Mov>: <Reg8: 0, Reg8: 2>
+==> 0000003a: <JmpTrue>: <Addr8: 9, Reg8: 2>  # Address: 00000043
+==> 0000003d: <Mov>: <Reg8: 5, Reg8: 6>
+==> 00000040: <Mov>: <Reg8: 0, Reg8: 2>
+==> 00000043: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000049
+==> 00000046: <IteratorClose>: <Reg8: 4, UInt8: 0>
+==> 00000049: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 0, string_id: 126>  # String: 'map' (Identifier)
+==> 0000004e: <CreateClosure>: <Reg8: 3, Reg8: 3, function_id: 12722>  # Function: [#12722  of 118 bytes]: 2 params @ offset 0x0024d44a
+==> 00000053: <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000058: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 167>  # String: 'join' (Identifier)
+==> 0000005d: <LoadConstString>: <Reg8: 3, string_id: 609>  # String: '&' (String)
+==> 00000061: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000066: <Ret>: <Reg8: 3>
+
+

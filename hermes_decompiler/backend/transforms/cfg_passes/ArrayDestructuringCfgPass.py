@@ -150,7 +150,21 @@ class ArrayDestructuringCfgPass:
         slots = {item.temp: item.default for item in _targets(items) if _is_env_slot(item.default)}
         restores: dict[int, object] = {}
 
+        # An element stored into an environment slot fetched its value into a register that a LATER element
+        # then takes as its own target (98/9949: `[__environment__[0], r5] = x`): that register ends up holding
+        # the later element, so there is nothing of the first to restore.
+        superseded = {
+            item.temp
+            for position, item in enumerate(items)
+            if item.kind == "target"
+            for later in items[position + 1:]
+            if later.kind in ("reg", "rest") and later.reg == item.temp
+        }
+
         for temp in _object_temps(items):
+            if temp in superseded:
+                continue
+
             if temp in leaves:
                 return None
 
