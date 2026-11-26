@@ -437,7 +437,10 @@ class LoopBreakStructurer(RegionStructurer):
     # Shape E: a several-block exit body that only ends the function
     # -------------------------------------------------------------
 
-    def _terminal_region(self, loop: LoopRegion, block: BasicBlock, exit_block: BasicBlock) -> list | None:
+    def _terminal_region(
+            self, loop: LoopRegion, block: BasicBlock, exit_block: BasicBlock, merge: int | None = None,
+            leaves: list | None = None,
+    ) -> list | None:
         """The blocks of an exit body that is entered only through `exit_block` and never leaves again.
 
         Every block's predecessors lie inside the body (`exit_block`'s is `block`), every successor too,
@@ -451,6 +454,13 @@ class LoopBreakStructurer(RegionStructurer):
         seen: set = set()
         stack = [exit_block]
 
+        address_to_block = self._address_to_block_map(loop) if merge is not None else {}
+
+        def lands_on_merge(candidate: BasicBlock) -> bool:
+            return merge is not None and self._chase_trampoline_address(
+                candidate.address, covered, address_to_block
+            ) == merge
+
         while stack:
             current = stack.pop()
 
@@ -462,7 +472,7 @@ class LoopBreakStructurer(RegionStructurer):
 
             seen.add(current)
             region.append(current)
-            stack.extend(current.successors)
+            stack.extend(s for s in current.successors if not lands_on_merge(s))
 
         for member in region:
             allowed = seen | {block} if member is exit_block else seen
@@ -473,17 +483,62 @@ class LoopBreakStructurer(RegionStructurer):
             if not member.successors and not isinstance(member.terminator, (TerminatorReturn, TerminatorThrow)):
                 return None
 
+            # A leaf that rejoins the loop's own merge (Shape F): an unconditional jump or a fallthrough to it
+            # only; the caller turns each into a `break`.
+            if leaves is not None and member.successors and all(lands_on_merge(s) for s in member.successors):
+                if len(member.successors) != 1 or not (
+                        member.terminator is None or isinstance(member.terminator, TerminatorJump)
+                ):
+                    return None
+
+                leaves.append(member)
+            elif any(lands_on_merge(s) for s in member.successors):
+                return None
+
         return region
 
     def _convert_terminal_region(self, loop, block, branch, exit_block, condition) -> bool:
         """Shape E: splice a several-block, function-ending exit body in as `if (cond) { ... }`."""
         region = self._terminal_region(loop, block, exit_block)
+        leaves: list = []
+
+        if region is None:
+            # Shape F: the body may also end by rejoining the loop's natural merge (each such end is a `break`).
+            merge = self._natural_loop_merge(loop)
+
+            if merge is not None:
+                region = self._terminal_region(loop, block, exit_block, merge, leaves)
 
         if region is None or len(region) < 2:
             return False
 
+        if any(
+                leaf.terminator is not None and not (leaf.instructions and leaf.instructions[-1].terminator is leaf.terminator)
+                for leaf in leaves
+        ):
+            return False
+
         if not self._strip_block_branch(block, branch):
             return False
+
+        for leaf in leaves:
+            if leaf.terminator is not None:
+                last = leaf.instructions[-1] if leaf.instructions else None
+
+                if last is None or last.terminator is not leaf.terminator:
+                    raise StructurerInvariantError(
+                        f"LoopBreakStructurer: block {leaf.id}'s jump is not its last instruction's terminator"
+                    )
+
+                last.terminator = None
+                last.value = None
+                last.statement = BreakStatement(label=None)
+                leaf.terminator = None
+            else:
+                from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+
+                entry = OpcodeEntry(bytecode="<synthetic>: BreakStatement", hex_address="")
+                leaf.instructions.append(OpcodeResult(entry, statement=BreakStatement(label=None)))
 
         owner_children = self.graph.owner(exit_block).children
         ordered = sorted(region, key=lambda b: owner_children.index(b))

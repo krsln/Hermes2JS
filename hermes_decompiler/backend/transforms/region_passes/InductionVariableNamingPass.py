@@ -15,6 +15,27 @@ from hermes_decompiler.ir.expressions import AssignmentExpression, Identifier
 from ._base import RegionPass
 
 
+class _IfTests(RegionVisitor):
+    """The tests of the `if`s under a region, each keyed by the address of the block it replaced."""
+
+    def __init__(self):
+        self.found: list = []
+
+    def visit_IfRegion(self, node: IfRegion) -> None:
+        if node.condition is not None:
+            source = node.source_block
+
+            if source is not None:
+                key = source.address
+            else:
+                blocks = [b.address for b in node.then_body.covered_blocks]
+                key = min(blocks) - 1 if blocks else 0
+
+            self.found.append((key, node.condition))
+
+        super().visit_IfRegion(node)
+
+
 class InductionVariableNamingPass(RegionPass, RegionVisitor):
     """Renames a `for` loop's own induction register to a short,
     conventional name (`i`, `j`, `k`, ...) instead of leaving Hermes'
@@ -101,8 +122,27 @@ class InductionVariableNamingPass(RegionPass, RegionVisitor):
 
         overwritten = False
 
-        for block in sorted(node.body.covered_blocks, key=lambda b: b.address):
-            for instruction in block.instructions:
+        # The test of an `if` is no instruction any more: it is read right after the block it replaced (96/1931 `reconcileChildFibersImpl`:
+        # `r7 = r3.type; if (r7 === r8) {...}` inside a loop that counts with r7).
+        tests = _IfTests()
+        tests.visit(node.body)
+        pending = sorted(tests.found, key=lambda pair: pair[0])
+        ordered = sorted(node.body.covered_blocks, key=lambda b: b.address)
+
+        for position, block in enumerate(ordered):
+            following = ordered[position + 1].address if position + 1 < len(ordered) else float("inf")
+
+            for instruction in [*block.instructions, None]:
+                if instruction is None:
+                    # the tests whose block ended here
+                    while pending and pending[0][0] < following:
+                        _, test = pending.pop(0)
+
+                        if overwritten and cls._reads(test, name):
+                            return True
+
+                    continue
+
                 parts = [instruction.value, instruction.statement, instruction.terminator]
 
                 if overwritten and any(cls._reads(part, name) for part in parts if part is not None):
