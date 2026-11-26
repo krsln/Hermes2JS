@@ -456,6 +456,17 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
         loop.loop_binding = f"[{', '.join(names)}]"
 
+    def _printed_blocks(self):
+        """The blocks the region tree still prints, as a `cfg`-like view for `_reads_register_by_name`.
+
+        A copy whose value was inlined into its uses prints nothing and is left out."""
+        return SimpleNamespace(blocks=[
+            SimpleNamespace(instructions=[
+                i for i in b.instructions if not (i.handler == "Mov" and i.definition_used)
+            ])
+            for b in self.cfg.blocks if b in self.graph.root.covered_blocks
+        ])
+
     def _drop_iterator_setup(self, iterator_expr) -> None:
         """Remove the `rN = GetIterator(src)` the for-of now stands for.
 
@@ -469,12 +480,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         # only blocks the region tree still covers can read the register. A copy of the iterator
         # (`Mov y <- it`) whose value was inlined into its uses prints nothing; the uses that carry the
         # name are visible on their own (98/4310: the loop header's done-check copy).
-        live = SimpleNamespace(blocks=[
-            SimpleNamespace(instructions=[
-                i for i in b.instructions if not (i.handler == "Mov" and i.definition_used)
-            ])
-            for b in self.cfg.blocks if b in self.graph.root.covered_blocks
-        ])
+        live = self._printed_blocks()
 
         for block in self.cfg.blocks:
             for instr in block.instructions:
@@ -859,6 +865,22 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
                 if before_break or before_return:
                     del instructions[index]
+
+                    # `r4 = r5; r5.return(); break;`: the copy fed nothing but the close (98/5913), and
+                    # left in place it keeps the iterator register looking read.
+                    if index > 0:
+                        copy = instructions[index - 1]
+
+                        if (
+                                _is_plain_register_copy(copy)
+                                and isinstance(copy.value, Identifier)
+                                and isinstance(iterator_ref, Identifier)
+                                and copy.value.name == iterator_ref.name
+                                and copy.dest_reg is not None
+                                and not any(reads_operand(i, copy.dest_reg) for i in instructions[index:])
+                                and not _reads_register_by_name(self._printed_blocks(), copy.dest_reg, copy.address)
+                        ):
+                            del instructions[index - 1]
 
                     continue
 
