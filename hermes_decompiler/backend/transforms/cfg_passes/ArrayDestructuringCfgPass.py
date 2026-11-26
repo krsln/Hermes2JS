@@ -72,9 +72,22 @@ def _only_successor(block: BasicBlock) -> BasicBlock | None:
 class ArrayDestructuringCfgPass:
     def __init__(self, cfg: CFG):
         self.cfg = cfg
+        self._env_names: frozenset = frozenset()  # ids of environment slot expressions
+
+    def _environment_stores(self) -> frozenset:
+        """Ids of the slot expressions the environment stores write: a member of an environment that a
+        `StoreToEnvironment` names is a plain variable slot, whichever register holds the environment
+        (98/13030: `r4 = createEnvironment(); ... r4[0] = r6`)."""
+        return frozenset(
+            id(instr.value.left)
+            for block in self.cfg.blocks
+            for instr in block.instructions
+            if instr.handler == "StoreToEnvironment" and isinstance(instr.value, AssignmentExpression)
+        )
 
     def run(self) -> int:
         applied = 0
+        self._env_names = self._environment_stores()
 
         for block in list(self.cfg.blocks):
             if block not in self.cfg.blocks:
@@ -147,7 +160,7 @@ class ArrayDestructuringCfgPass:
         # A register that is still read afterwards (a closure variable also kept in a register) is
         # restored from the environment slot the element was stored into: a slot is a plain variable, so
         # reading it back yields the stored value. Any other target would be read twice, so it declines.
-        slots = {item.temp: item.default for item in _targets(items) if _is_env_slot(item.default)}
+        slots = {item.temp: item.default for item in _targets(items) if _is_env_slot(item.default, self._env_names)}
         restores: dict[int, object] = {}
 
         # An element stored into an environment slot fetched its value into a register that a LATER element
@@ -187,9 +200,16 @@ class ArrayDestructuringCfgPass:
                 restores[register] = slot
 
         # A store that read the fetch register itself leaves no copy of the value behind (98/3759).
+        # A later slot element that ends up in that very register leaves it holding the later element
+        # (98/13030: `[r4[0], r4[1]] = x`, both fetched through r7), restored with its own slot below.
+        later_targets = {item.temp for item in items[1:] if item.kind == "target"}
+
         for register, slot in ctx.fetched:
+            if register in later_targets:
+                continue
+
             if register not in leaves and not self._dead_after(join, register, dropped_ids):
-                if not _is_env_slot(slot):
+                if not _is_env_slot(slot, self._env_names):
                     return None
 
                 restores[register] = slot
@@ -242,7 +262,7 @@ class ArrayDestructuringCfgPass:
         scratch = [new.dest_reg, null.dest_reg, keys.dest_reg, copy_of.dest_reg]
         store = _plain_store(later[0], rest_reg) if later else None
 
-        if store is not None and _is_env_slot(store):
+        if store is not None and _is_env_slot(store, self._env_names):
             ctx.scratch.extend(scratch)
             ctx.slot_copies.extend((r, store) for r in (rest_reg, *copies))
 
@@ -591,7 +611,7 @@ class ArrayDestructuringCfgPass:
                     if after and (
                             store := _plain_store(after[0], leaf.reg) or _plain_store_of_read(after[0], prev_tmp, read,
                                                                                               leaf.reg)
-                    ) is not None and _is_env_slot(store):
+                    ) is not None and _is_env_slot(store, self._env_names):
                         leaf.slot = store
                         ctx.slot_copies.append((leaf.reg, store))
                         ctx.slot_copies.extend((_operands(c)[0], store) for c in insts[:copies])
@@ -1240,13 +1260,13 @@ def _targets(items):
             yield item
 
 
-def _is_env_slot(expression) -> bool:
+def _is_env_slot(expression, environments: frozenset = frozenset()) -> bool:
     return (
             isinstance(expression, MemberExpression)
             and expression.computed
             and not expression.optional
             and isinstance(expression.obj, Identifier)
-            and expression.obj.name == "__environment__"
+            and (expression.obj.name == "__environment__" or id(expression) in environments)
             and isinstance(expression.prop, NumericLiteral)
     )
 
