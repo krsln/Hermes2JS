@@ -304,7 +304,13 @@ class UnfoldedMergeRepairPass(RegionPass):
         if not isinstance(old_value, TRIVIAL_NODE_TYPES) or isinstance(old_value, StringLiteral):
             reaches = self._reader_reachability(write, strict=isinstance(old_value, StringLiteral))
 
+        self._pinned_feeders = []
+        stale_copies = self._copies_after_a_rewrite(write, old_value)
+
         def reader_value(reader):
+            if id(reader) in stale_copies:
+                return stale_copies[id(reader)]
+
             if reader in other_arm or (reaches is not None and not reaches(reader)):
                 return old_value
 
@@ -314,14 +320,58 @@ class UnfoldedMergeRepairPass(RegionPass):
             self.cfg, self.graph.root, old_value, replacement,
             min_block_id=min(b.id for b in arm_blocks),
             exclude=arm_set,
-            reader_value=reader_value if other_arm or reaches is not None else None,
+            reader_value=reader_value if other_arm or reaches is not None or stale_copies else None,
         )
+
+        # A feeder that kept a computed value (not a bare register now) would print it a second time.
+        for feeder, pinned, used in self._pinned_feeders:
+            if not isinstance(feeder.value, Identifier):
+                feeder.definition_pinned, feeder.definition_used = pinned, used
 
         self._drop_indexes()
         write.definition_used = False
         logger.debug("unfolded merge: r%s written in one arm is read after the if", write.dest_reg)
 
         self._reprint_default(if_region, write)
+
+    def _copies_after_a_rewrite(self, write, value) -> dict:
+        """Copies of a reader's register (`Mov r11, r7` ... `Mov r13, r11`) that run after
+        the join register was written again: the copy holds the join value the reader took,
+        and `r7` now names something else (96/5569 `render`: the iterator `IteratorBegin`
+        put in `r7`, read as the section-header flag). They read the register they copy
+        (`r11`), which therefore has to print: the reader's own `Mov` is kept as a statement.
+        Returns `{id(copy): Identifier}`."""
+        register = write.dest_reg
+        instructions = [i for b in self.cfg.blocks for i in b.instructions]
+        holders = [i for i in instructions if i.value is value and i is not write]
+        readers = [i for i in holders if self._is_reader_mov_of(i, write)]
+
+        if not readers:
+            return {}
+
+        chained = self._chained_reader_movs(readers, holders)
+        rewrites = [i.address for i in instructions if i.dest_reg == register and i is not write and i.value is not value]
+        found: dict = {}
+        sources = readers + chained
+
+        for copy in chained:
+            source = self._MOV_SOURCE_RE.match(copy.entry.args)
+            feeders = [i for i in sources if i is not copy and i.dest_reg == int(source.group(1)) and i.address < copy.address]
+
+            if not feeders:
+                continue
+
+            feeder = max(feeders, key=lambda i: i.address)
+
+            if not any(feeder.address < address < copy.address for address in rewrites):
+                continue
+
+            found[id(copy)] = Identifier(name=f"r{feeder.dest_reg}")
+            self._pinned_feeders.append((feeder, feeder.definition_pinned, feeder.definition_used))
+            feeder.definition_pinned = True
+            feeder.definition_used = False
+
+        return found
 
     def _default_prints(self, write, region_blocks) -> bool:
         """Is the register assigned on the path that skips the arm? The copy is
