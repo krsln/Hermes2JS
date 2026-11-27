@@ -1,0 +1,32 @@
+
+=> [Function #6517 "log" of 92 bytes]: 2 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x001cc9cf
+
+Bytecode listing:
+
+==> 00000000: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 00000003: <Mov>: <Reg8: 9, Reg8: 0>
+==> 00000006: <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 copyRestArgs]
+==> 0000000a: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 0000000d: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
+==> 00000011: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 0, string_id: 6854>  # String: 'featureFlags' (Identifier)
+==> 00000017: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 1, string_id: 6593>  # String: 'stable' (Identifier)
+==> 0000001d: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 2, string_id: 8871>  # String: 'debugLogging' (Identifier)
+==> 00000023: <JmpFalse>: <Addr8: 53, Reg8: 2>  # Address: 00000058
+==> 00000026: <LoadParam>: <Reg8: 6, UInt8: 1>
+==> 00000029: <GetGlobalObject>: <Reg8: 2>
+==> 0000002b: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 3, string_id: 108>  # String: 'console' (Identifier)
+==> 00000031: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 4, string_id: 178>  # String: 'log' (Identifier)
+==> 00000036: <NewArray>: <Reg8: 2, UInt16: 1>
+==> 0000003a: <DefineOwnInDenseArray>: <Reg8: 2, Reg8: 6, UInt8: 0>
+==> 0000003e: <Mov>: <Reg8: 9, Reg8: 2>
+==> 00000041: <Mov>: <Reg8: 8, Reg8: 5>
+==> 00000044: <Mov>: <Reg8: 7, Reg8: 0>
+==> 00000047: <CallBuiltin>: <Reg8: 0, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+==> 0000004b: <Mov>: <Reg8: 9, Reg8: 3>
+==> 0000004e: <Mov>: <Reg8: 8, Reg8: 2>
+==> 00000051: <Mov>: <Reg8: 7, Reg8: 4>
+==> 00000054: <CallBuiltin>: <Reg8: 2, UInt8: 49, UInt8: 4>  # Built-in function: [#49 apply]
+==> 00000058: <LoadConstUndefined>: <Reg8: 1>
+==> 0000005a: <Ret>: <Reg8: 1>
+
+

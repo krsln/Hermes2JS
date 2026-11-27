@@ -164,7 +164,13 @@ class RegionPrinter:
                 # if not is_discarded_call:
                 #     rendered = f"r{instruction.dest_reg} = {rendered}"
 
-                if not instruction.definition_used and rendered.startswith("console.log"):
+                # A bare `console.log` read (`r3 = console.log`, later passed to `apply`) is a value
+                # somebody names; only the discarded CALL prints without its register (98/6517 `log`).
+                if (
+                        not instruction.definition_used
+                        and isinstance(instruction.value, CallExpression)
+                        and rendered.startswith("console.log")
+                ):
                     pass
                 else:
                     rendered = f"r{instruction.dest_reg} = {rendered}"
