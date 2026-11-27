@@ -1,0 +1,126 @@
+
+=> [Function #3382 "normalizeRootMargin" of 477 bytes]: 2 params, frame size=22, strict=1, exc handler=1, debug info=0  @ offset 0x00189e37
+  [Exception handlers: [start=0x7c, end=0xc3, target=0xc3] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 5>
+==> 00000005: <LoadConstUndefined>: <Reg8: 6>
+==> 00000007: <LoadConstNull>: <Reg8: 0>
+==> 00000009: <JEqualLong>: <Addr32: 462, Reg8: 2, Reg8: 0>  # Address: 000001d7
+==> 00000010: <LoadConstString>: <Reg8: 0, string_id: 6457>  # String: '' (Identifier)
+==> 00000014: <JStrictEqualLong>: <Addr32: 451, Reg8: 2, Reg8: 0>  # Address: 000001d7
+==> 0000001b: <JmpTypeOfIs>: <Addr32: 415, Reg8: 2, UInt16: 507>  # Address: 000001ba
+==> 00000023: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 0, string_id: 201>  # String: 'trim' (Identifier)
+==> 00000028: <Call1>: <Reg8: 2, Reg8: 1, Reg8: 2>
+==> 0000002c: <JStrictEqualLong>: <Addr32: 392, Reg8: 2, Reg8: 0>  # Address: 000001b4
+==> 00000033: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 230>  # String: 'split' (Identifier)
+==> 00000038: <CreateRegExp>: <Reg8: 0, string_id: 1908, string_id: 6457, UInt32: 18>  # String: '\\s+' (String)  # String: '' (Identifier)
+==> 00000046: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 0000004b: <GetByIdShort>: <Reg8: 0, Reg8: 1, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+==> 00000050: <LoadConstUInt8>: <Reg8: 3, UInt8: 4>
+==> 00000053: <JGreaterLong>: <Addr32: 324, Reg8: 0, Reg8: 3>  # Address: 00000197
+==> 0000005a: <CreateRegExp>: <Reg8: 4, string_id: 4669, string_id: 6457, UInt32: 70>  # String: '^-?\\d+(\\.\\d+)?(px|%)$' (String)  # String: '' (Identifier)
+==> 00000068: <Mov>: <Reg8: 0, Reg8: 1>
+==> 0000006b: <IteratorBegin>: <Reg8: 2, Reg8: 0>
+==> 0000006e: <Mov>: <Reg8: 7, Reg8: 0>
+==> 00000071: <IteratorNext>: <Reg8: 8, Reg8: 2, Reg8: 7>
+==> 00000075: <Mov>: <Reg8: 7, Reg8: 2>
+==> 00000078: <JStrictEqual>: <Addr8: 82, Reg8: 7, Reg8: 5>  # Address: 000000ca
+==> 0000007c: <Mov>: <Reg8: 6, Reg8: 8>
+==> 0000007f: <GetByIdShort>: <Reg8: 7, Reg8: 4, UInt8: 3, string_id: 47>  # String: 'test' (Identifier)
+==> 00000084: <Call2>: <Reg8: 7, Reg8: 7, Reg8: 4, Reg8: 8>
+==> 00000089: <JmpTrue>: <Addr8: 56, Reg8: 7>  # Address: 000000c1
+==> 0000008c: <GetGlobalObject>: <Reg8: 7>
+==> 0000008e: <TryGetById>: <Reg8: 9, Reg8: 7, UInt8: 4, string_id: 14878>  # String: 'SyntaxError' (Identifier)
+==> 00000094: <Mov>: <Reg8: 11, Reg8: 6>
+==> 00000097: <TryGetById>: <Reg8: 7, Reg8: 7, UInt8: 5, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 0000009d: <GetByIdShort>: <Reg8: 10, Reg8: 7, UInt8: 6, string_id: 105>  # String: 'concat' (Identifier)
+==> 000000a2: <LoadConstString>: <Reg8: 8, string_id: 1770>  # String: "' is not a valid length. Only 'px' and '%' units are allowed." (String)
+==> 000000a6: <LoadConstString>: <Reg8: 7, string_id: 1808>  # String: "Failed to construct 'IntersectionObserver': Failed to parse rootMargin: '" (String)
+==> 000000aa: <Call3>: <Reg8: 13, Reg8: 10, Reg8: 7, Reg8: 11, Reg8: 8>
+==> 000000b0: <CreateThisForNew>: <Reg8: 8, Reg8: 9, UInt8: 7>
+==> 000000b4: <Mov>: <Reg8: 14, Reg8: 8>
+==> 000000b7: <Construct>: <Reg8: 7, Reg8: 9, UInt8: 2>
+==> 000000bb: <SelectObject>: <Reg8: 7, Reg8: 8, Reg8: 7>
+==> 000000bf: <Throw>: <Reg8: 7>
+==> 000000c1: <Jmp>: <Addr8: -83>  # Address: 0000006e
+==> 000000c3: <Catch>: <Reg8: 0>
+==> 000000c5: <IteratorClose>: <Reg8: 2, UInt8: 1>
+==> 000000c8: <Throw>: <Reg8: 0>
+==> 000000ca: <GetByIdShort>: <Reg8: 0, Reg8: 1, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+==> 000000cf: <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
+==> 000000d2: <JStrictEqualLong>: <Addr32: 142, Reg8: 2, Reg8: 0>  # Address: 00000160
+==> 000000d9: <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
+==> 000000dc: <JStrictEqual>: <Addr8: 91, Reg8: 2, Reg8: 0>  # Address: 00000137
+==> 000000e0: <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
+==> 000000e3: <JStrictEqual>: <Addr8: 43, Reg8: 2, Reg8: 0>  # Address: 0000010e
+==> 000000e7: <Mov>: <Reg8: 2, Reg8: 1>
+==> 000000ea: <JStrictEqualLong>: <Addr32: 157, Reg8: 3, Reg8: 0>  # Address: 00000187
+==> 000000f1: <GetGlobalObject>: <Reg8: 0>
+==> 000000f3: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 4, string_id: 14878>  # String: 'SyntaxError' (Identifier)
+==> 000000f9: <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 7>
+==> 000000fd: <LoadConstString>: <Reg8: 13, string_id: 3176>  # String: "Failed to construct 'IntersectionObserver': Failed to parse rootMargin." (String)
+==> 00000101: <Mov>: <Reg8: 14, Reg8: 3>
+==> 00000104: <Construct>: <Reg8: 0, Reg8: 4, UInt8: 2>
+==> 00000108: <SelectObject>: <Reg8: 0, Reg8: 3, Reg8: 0>
+==> 0000010c: <Throw>: <Reg8: 0>
+==> 0000010e: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 0>
+==> 00000112: <NewArray>: <Reg8: 0, UInt16: 4>
+==> 00000116: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 0>
+==> 0000011a: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 1>
+==> 0000011e: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 1>
+==> 00000122: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 2>
+==> 00000126: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 2>
+==> 0000012a: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 1>
+==> 0000012e: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 3>
+==> 00000132: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000135: <Jmp>: <Addr8: 82>  # Address: 00000187
+==> 00000137: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 0>
+==> 0000013b: <NewArray>: <Reg8: 0, UInt16: 4>
+==> 0000013f: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 0>
+==> 00000143: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 1>
+==> 00000147: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 1>
+==> 0000014b: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 0>
+==> 0000014f: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 2>
+==> 00000153: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 1>
+==> 00000157: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 3>
+==> 0000015b: <Mov>: <Reg8: 2, Reg8: 0>
+==> 0000015e: <Jmp>: <Addr8: 41>  # Address: 00000187
+==> 00000160: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 0>
+==> 00000164: <NewArray>: <Reg8: 0, UInt16: 4>
+==> 00000168: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 0>
+==> 0000016c: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 0>
+==> 00000170: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 1>
+==> 00000174: <GetByIndex>: <Reg8: 3, Reg8: 1, UInt8: 0>
+==> 00000178: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 3, UInt8: 2>
+==> 0000017c: <GetByIndex>: <Reg8: 1, Reg8: 1, UInt8: 0>
+==> 00000180: <DefineOwnInDenseArray>: <Reg8: 0, Reg8: 1, UInt8: 3>
+==> 00000184: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000187: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 8, string_id: 167>  # String: 'join' (Identifier)
+==> 0000018c: <LoadConstString>: <Reg8: 0, string_id: 831>  # String: ' ' (String)
+==> 00000190: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000195: <Ret>: <Reg8: 0>
+==> 00000197: <GetGlobalObject>: <Reg8: 0>
+==> 00000199: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 14878>  # String: 'SyntaxError' (Identifier)
+==> 0000019f: <CreateThisForNew>: <Reg8: 1, Reg8: 2, UInt8: 7>
+==> 000001a3: <LoadConstString>: <Reg8: 13, string_id: 1968>  # String: "Failed to construct 'IntersectionObserver': Failed to parse rootMargin: Too many values (expected 1-4)." (String)
+==> 000001a7: <Mov>: <Reg8: 14, Reg8: 1>
+==> 000001aa: <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
+==> 000001ae: <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 000001b2: <Throw>: <Reg8: 0>
+==> 000001b4: <LoadConstString>: <Reg8: 0, string_id: 2042>  # String: '0px 0px 0px 0px' (String)
+==> 000001b8: <Ret>: <Reg8: 0>
+==> 000001ba: <GetGlobalObject>: <Reg8: 0>
+==> 000001bc: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 9, string_id: 8>  # String: 'TypeError' (Identifier)
+==> 000001c2: <CreateThisForNew>: <Reg8: 1, Reg8: 2, UInt8: 7>
+==> 000001c6: <LoadConstString>: <Reg8: 13, string_id: 3179>  # String: "Failed to construct 'IntersectionObserver': Failed to read the 'rootMargin' property from 'IntersectionObserverInit': The provided value is not of type 'string'." (String)
+==> 000001ca: <Mov>: <Reg8: 14, Reg8: 1>
+==> 000001cd: <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
+==> 000001d1: <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 000001d5: <Throw>: <Reg8: 0>
+==> 000001d7: <LoadConstString>: <Reg8: 0, string_id: 2042>  # String: '0px 0px 0px 0px' (String)
+==> 000001db: <Ret>: <Reg8: 0>
+
+

@@ -43,10 +43,6 @@ async function _anon_0_asyncTryCatchTest() {
             // ──────────────── Block 9 ──────────────── 
             // CODE → addr:158 | <TryGetById>: <Reg8: 18, Reg8: 15, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
             // USED → r18 = Error;
-            // CODE → addr:164 | <CreateThisForNew>: <Reg8: 19, Reg8: 18, UInt8: 3>
-            r19 = CreateThisForNew(Error);
-            // CODE → addr:168 | <Mov>: <Reg8: 24, Reg8: 19>
-            r24 = r19;
             // CODE → addr:171 | <Mov>: <Reg8: 23, Reg8: 9>
             r23 = "post-await failure";
             // CODE → addr:174 | <Construct>: <Reg8: 18, Reg8: 18, UInt8: 2>

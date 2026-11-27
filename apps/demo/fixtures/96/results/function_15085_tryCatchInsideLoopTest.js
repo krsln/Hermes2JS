@@ -43,12 +43,8 @@ function tryCatchInsideLoopTest(param1) {
                     // USED → r9 = Error;
                     // CODE → addr:107 | <GetByIdShort>: <Reg8: 2, Reg8: 9, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
                     // USED → r2 = Error.prototype;
-                    // CODE → addr:112 | <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 9>
-                    r3 = CreateThis(Error.prototype);
                     // CODE → addr:116 | <LoadConstString>: <Reg8: 12, string_id: 839>  # String: 'negative value' (String)
                     // USED → r12 = "negative value";
-                    // CODE → addr:120 | <Mov>: <Reg8: 13, Reg8: 3>
-                    r13 = r3;
                     // CODE → addr:123 | <Construct>: <Reg8: 2, Reg8: 9, UInt8: 2>
                     // USED → r2 = new Error("negative value");
                     // CODE → addr:127 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>

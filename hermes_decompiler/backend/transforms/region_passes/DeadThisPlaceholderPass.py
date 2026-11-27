@@ -89,3 +89,63 @@ class DeadThisPlaceholderPass(RegionPass):
             if mentions.get(f"r{instr.dest_reg}", 0) == 0:
                 block.instructions.remove(instr)
                 logger.debug("dropped dead this-placeholder r%s", instr.dest_reg)
+                continue
+
+            copies = self._dead_copies_before_the_exit(block, instr)
+
+            if copies is not None:
+                for dead in (instr, *copies):
+                    block.instructions.remove(dead)
+
+                logger.debug("dropped dead this-placeholder r%s and %d copies", instr.dest_reg, len(copies))
+
+    @staticmethod
+    def _count(node, name: str) -> int:
+        found: dict[str, int] = {}
+        _names(node, found)
+
+        return found.get(name, 0)
+
+    def _dead_copies_before_the_exit(self, block, instr):
+        """The copies of a placeholder in a block that ends the function (`throw new Error(..)` after
+        `r23 = CreateThisForNew(Error); r32 = r23`, 98/12932): the register is reused elsewhere, so the
+        function-wide mention count cannot clear it, but inside an exit block nothing reads it after the
+        copies. Returns the plain copies to drop, or None when anything else reads the placeholder or a copy."""
+        if block.successors:
+            return None
+
+        name = f"r{instr.dest_reg}"
+        following = block.instructions[block.instructions.index(instr) + 1:]
+        copies = []
+
+        for position, other in enumerate(following):
+            readers = sum(self._count(held, name) for held in (other.value, other.statement, other.terminator))
+
+            if readers:
+                plain = (
+                        isinstance(other.value, Identifier) and other.value.name == name
+                        and other.statement is None and other.terminator is None
+                        and other.dest_reg is not None and other.dest_reg != instr.dest_reg
+                )
+
+                if not plain:
+                    return None
+
+                copy_name = f"r{other.dest_reg}"
+
+                for later in following[position + 1:]:
+                    if any(self._count(held, copy_name) for held in (later.value, later.statement, later.terminator)):
+                        return None
+
+                if self._count(block.terminator, copy_name):
+                    return None
+
+                copies.append(other)
+
+            elif other.dest_reg == instr.dest_reg:
+                break
+
+        if self._count(block.terminator, name):
+            return None
+
+        return copies
