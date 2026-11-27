@@ -324,8 +324,12 @@ class OpcodeHandler(ABC):
                         not isinstance(value, MemberExpression)
                         and (
                                 not (isinstance(value, Identifier) and not cls._is_register_alias(value))
+                                # A copy of a parameter (`Mov r20, r15`) is the parameter's name too, and as stale
+                                # once the loop rewrites the copy (98/9777: `r20 = r21.sibling` ends the body)
                                 or (state.handler in ("LoadParam", "LoadParamLong")
                                     and analysis.is_rewritten_in_loop(reg))
+                                or (state.handler == "Mov"
+                                    and analysis.is_rewritten_in_loop(reg, state.definition.address))
                         )
                 )
                 # A member read defined before the loop and rewritten inside it

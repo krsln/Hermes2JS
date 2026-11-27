@@ -26,5 +26,6 @@ def test_no_goto_is_left():
 def test_the_folded_test_is_not_followed_by_its_dead_copy():
     out = _render()
 
-    assert "r16 = r23[0] && param2 && null === r25.alternate" in out
+    assert "r16 = r23[0] && r15 && null === r25.alternate" in out
     assert "r16 = param2;" not in out
+    assert "r16 = r15;" not in out

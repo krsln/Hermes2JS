@@ -1,0 +1,46 @@
+
+=> [Function #8694 "saveSnapshot" of 177 bytes]: 2 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x001f2fad
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000003: <GetById>: <Reg8: 2, Reg8: 5, UInt8: 0, string_id: 17118>  # String: 'getBoundingClientRect' (Identifier)
+==> 00000009: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 0000000d: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 1815, UInt16: 17475>  # Object: {'top': null, 'left': null, 'width': null, 'height': null, 'scrollOffsets': null}
+==> 00000013: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 75>  # String: 'top' (Identifier)
+==> 00000018: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 3, UInt8: 0>
+==> 0000001c: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 76>  # String: 'left' (Identifier)
+==> 00000021: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 3, UInt8: 1>
+==> 00000025: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 14>  # String: 'width' (Identifier)
+==> 0000002a: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 3, UInt8: 2>
+==> 0000002e: <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 4, string_id: 15>  # String: 'height' (Identifier)
+==> 00000033: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 2, UInt8: 3>
+==> 00000037: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1816, UInt16: 18893>  # Object: {'scrollTopOffset': 0, 'scrollLeftOffset': 0}
+==> 0000003d: <LoadConstZero>: <Reg8: 0>
+==> 0000003f: <Mov>: <Reg8: 2, Reg8: 5>
+==> 00000042: <JmpFalse>: <Addr8: 79, Reg8: 2>  # Address: 00000091
+==> 00000045: <GetById>: <Reg8: 7, Reg8: 2, UInt8: 5, string_id: 13088>  # String: 'scrollTop' (Identifier)
+==> 0000004b: <Mov>: <Reg8: 6, Reg8: 2>
+==> 0000004e: <JStrictEqual>: <Addr8: 26, Reg8: 7, Reg8: 0>  # Address: 00000068
+==> 00000052: <GetById>: <Reg8: 7, Reg8: 3, UInt8: 6, string_id: 12369>  # String: 'scrollTopOffset' (Identifier)
+==> 00000058: <JStrictNotEqual>: <Addr8: 16, Reg8: 7, Reg8: 0>  # Address: 00000068
+==> 0000005c: <GetById>: <Reg8: 7, Reg8: 6, UInt8: 5, string_id: 13088>  # String: 'scrollTop' (Identifier)
+==> 00000062: <PutByIdStrict>: <Reg8: 3, Reg8: 7, UInt8: 0, string_id: 12369>  # String: 'scrollTopOffset' (Identifier)
+==> 00000068: <GetById>: <Reg8: 7, Reg8: 6, UInt8: 7, string_id: 13087>  # String: 'scrollLeft' (Identifier)
+==> 0000006e: <JStrictEqual>: <Addr8: 26, Reg8: 7, Reg8: 0>  # Address: 00000088
+==> 00000072: <GetById>: <Reg8: 7, Reg8: 3, UInt8: 8, string_id: 9920>  # String: 'scrollLeftOffset' (Identifier)
+==> 00000078: <JStrictNotEqual>: <Addr8: 16, Reg8: 7, Reg8: 0>  # Address: 00000088
+==> 0000007c: <GetById>: <Reg8: 7, Reg8: 6, UInt8: 7, string_id: 13087>  # String: 'scrollLeft' (Identifier)
+==> 00000082: <PutByIdStrict>: <Reg8: 3, Reg8: 7, UInt8: 1, string_id: 9920>  # String: 'scrollLeftOffset' (Identifier)
+==> 00000088: <GetById>: <Reg8: 2, Reg8: 6, UInt8: 9, string_id: 9280>  # String: 'parentElement' (Identifier)
+==> 0000008e: <JmpTrue>: <Addr8: -73, Reg8: 2>  # Address: 00000045
+==> 00000091: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000094: <PutOwnBySlotIdx>: <Reg8: 4, Reg8: 3, UInt8: 4>
+==> 00000098: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 7>
+==> 0000009c: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 10, string_id: 15583>  # String: 'snapshots' (Identifier)
+==> 000000a2: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 11, string_id: 55>  # String: 'set' (Identifier)
+==> 000000a7: <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
+==> 000000ad: <LoadConstUndefined>: <Reg8: 1>
+==> 000000af: <Ret>: <Reg8: 1>
+
+
