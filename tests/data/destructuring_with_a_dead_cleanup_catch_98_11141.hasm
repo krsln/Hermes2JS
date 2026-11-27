@@ -1,0 +1,33 @@
+
+=> [Function #11141 "" of 76 bytes]: 2 params, frame size=6, strict=1, exc handler=0, debug info=0  @ offset 0x00221e0a
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000003: <IteratorBegin>: <Reg8: 1, Reg8: 3>
+==> 00000006: <Mov>: <Reg8: 0, Reg8: 3>
+==> 00000009: <IteratorNext>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 0000000d: <Mov>: <Reg8: 0, Reg8: 1>
+==> 00000010: <LoadConstUndefined>: <Reg8: 5>
+==> 00000012: <StrictEq>: <Reg8: 0, Reg8: 0, Reg8: 5>
+==> 00000016: <LoadConstUndefined>: <Reg8: 2>
+==> 00000018: <JmpTrue>: <Addr8: 28, Reg8: 0>  # Address: 00000034
+==> 0000001b: <IteratorNext>: <Reg8: 4, Reg8: 1, Reg8: 3>
+==> 0000001f: <Mov>: <Reg8: 3, Reg8: 1>
+==> 00000022: <StrictEq>: <Reg8: 3, Reg8: 3, Reg8: 5>
+==> 00000026: <LoadConstUndefined>: <Reg8: 2>
+==> 00000028: <Mov>: <Reg8: 0, Reg8: 3>
+==> 0000002b: <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 00000034
+==> 0000002e: <Mov>: <Reg8: 2, Reg8: 4>
+==> 00000031: <Mov>: <Reg8: 0, Reg8: 3>
+==> 00000034: <JmpTrue>: <Addr8: 9, Reg8: 0>  # Address: 0000003d
+==> 00000037: <Mov>: <Reg8: 0, Reg8: 1>
+==> 0000003a: <IteratorClose>: <Reg8: 0, UInt8: 0>
+==> 0000003d: <LoadConstNull>: <Reg8: 0>
+==> 0000003f: <Neq>: <Reg8: 0, Reg8: 2, Reg8: 0>
+==> 00000043: <Ret>: <Reg8: 0>
+==> 00000045: <Catch>: <Reg8: 0>
+==> 00000047: <IteratorClose>: <Reg8: 1, UInt8: 1>
+==> 0000004a: <Throw>: <Reg8: 0>
+
+

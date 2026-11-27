@@ -340,39 +340,40 @@ class ArrayDestructuringCfgPass:
 
             remaining.append(handler)
 
-        if chain:
-            remaining_handler_blocks = {h["handler_block"].id for h in remaining}
-            entry = self.cfg.blocks[0] if self.cfg.blocks else None
+        # With no handler entry at all (`exc handler=0`, 98/11141) the cleanup `Catch` block is dead from the
+        # start and still prints after the `return`: it goes the same way.
+        remaining_handler_blocks = {h["handler_block"].id for h in remaining}
+        entry = self.cfg.blocks[0] if self.cfg.blocks else None
 
-            # Dead catch blocks that only feed the cleanup (no handler entry
-            # points at them any more) go with it.
-            for block in self.cfg.blocks:
-                if (
-                        block.id in dropped_ids or block.id in chain or block is entry
-                        or block.id in remaining_handler_blocks or block.predecessors
-                        or not block.instructions or block.instructions[0].handler != "Catch"
-                        or not _cleanup_vocabulary(block, ctx.iterators)
-                ):
-                    continue
+        # Dead catch blocks that only feed the cleanup (no handler entry
+        # points at them any more) go with it.
+        for block in self.cfg.blocks:
+            if (
+                    block.id in dropped_ids or block.id in chain or block is entry
+                    or block.id in remaining_handler_blocks or block.predecessors
+                    or not block.instructions or block.instructions[0].handler != "Catch"
+                    or not _cleanup_vocabulary(block, ctx.iterators)
+            ):
+                continue
 
-                if all(s.id in chain for s in block.successors):
-                    chain[block.id] = block
+            if all(s.id in chain for s in block.successors):
+                chain[block.id] = block
 
-            for block in chain.values():
-                if any(p.id not in chain for p in block.predecessors):
-                    return None
+        for block in chain.values():
+            if any(p.id not in chain for p in block.predecessors):
+                return None
 
-            still: list = []
+        still: list = []
 
-            for handler in remaining:
-                covered = {b.id for b in handler["try_blocks"]}
+        for handler in remaining:
+            covered = {b.id for b in handler["try_blocks"]}
 
-                if handler["handler_block"].id in chain and covered <= dropped_ids | set(chain):
-                    removed.append(handler)
-                else:
-                    still.append(handler)
+            if handler["handler_block"].id in chain and covered <= dropped_ids | set(chain):
+                removed.append(handler)
+            else:
+                still.append(handler)
 
-            remaining = still
+        remaining = still
 
         # A chain inside a try (a for-of body, say) is fine as long as the
         # try covers all of it: the dropped blocks just leave the handler's
