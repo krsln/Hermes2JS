@@ -10,7 +10,7 @@ from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import (
     Expression, Identifier, RawExpression, ObjectExpression,
     ArrayExpression, Literal, CallExpression, MemberExpression, ThisPlaceholder, BinaryExpression, NewExpression,
-    UndefinedLiteral,
+    UndefinedLiteral, NullLiteral,
 )
 from .OpcodeTypes import OpcodeContext, ArgsPattern, OperandMode
 
@@ -183,6 +183,21 @@ class OpcodeHandler(ABC):
             state.materialize()
 
         return Identifier(name=f"r{reg}")
+
+    @classmethod
+    def get_member_base_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+        """The object of a member read or store. A member of a bare `null`/`undefined` always throws, so a
+        literal written on only some paths into a join cannot be what the read holds (`switch (typeof x) {
+        case "undefined": r14 = null; ... } r14.status = "pending"`, 98/2044): the base is the register."""
+        state = analysis.get_register_state(reg)
+
+        if state is not None and isinstance(state.value, (NullLiteral, UndefinedLiteral)) and analysis.is_join_value(state):
+            state.mark_read()
+            cls._restore_folded_constants(analysis, state)
+            state.materialize()
+            return Identifier(name=f"r{reg}")
+
+        return cls.get_register_expression(analysis, reg)
 
     @classmethod
     def get_register_expression(

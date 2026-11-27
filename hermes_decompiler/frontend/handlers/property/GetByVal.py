@@ -23,7 +23,7 @@ class GetByVal(OpcodeHandler):
         # register is rewritten by a statement that stays (`r1 = env[0];
         # r0 = env[1]; r0 = r1[r0]` is `r1[r0]`, not `r0[0][r0]`).
         index = self.get_register_reference(ctx.analysis, prop_reg)
-        obj = self.get_register_expression(ctx.analysis, base_reg)
+        obj = self.get_member_base_expression(ctx.analysis, base_reg)
 
         expression = MemberExpression(obj=obj, prop=index, computed=True)
 
@@ -57,7 +57,7 @@ class GetByValWithReceiver(OpcodeHandler):
 
         dest_reg, base_reg, prop_reg, receiver_reg = map(int, match.groups())
 
-        obj = self.get_register_expression(ctx.analysis, base_reg)
+        obj = self.get_member_base_expression(ctx.analysis, base_reg)
         index = self.get_register_reference(ctx.analysis, prop_reg)
         receiver = self.get_register_expression(ctx.analysis, receiver_reg)
 
