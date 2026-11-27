@@ -426,6 +426,13 @@ def _preceding_reader(region):
         if instructions:
             return instructions[-1]
 
+        # A region before it (the `if` whose arm wrote what this test reads, 98/3490): the test runs after
+        # that region, so what stands there is its last instruction by address.
+        covered = [i for b in getattr(child, "covered_blocks", None) or () for i in b.instructions]
+
+        if covered:
+            return max(covered, key=lambda i: i.address)
+
     return None
 
 

@@ -11,7 +11,9 @@ from hermes_decompiler.backend.transforms.shared import (
 from hermes_decompiler.backend.transforms.shared._repoint import RegisterReadIndex, sibling_arm_instructions
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
-from hermes_decompiler.ir.expressions import ConditionalExpression, Identifier, StringLiteral, ThisPlaceholder
+from hermes_decompiler.ir.expressions import (
+    ConditionalExpression, Identifier, NullLiteral, StringLiteral, ThisPlaceholder,
+)
 from hermes_decompiler.ir.terminators import TerminatorReturn, TerminatorThrow
 from ._base import RegionPass
 
@@ -409,12 +411,15 @@ class UnfoldedMergeRepairPass(RegionPass):
                 not is_last
                 or isinstance(write.value, ThisPlaceholder)
                 or has_side_effects(write.value)
-                or not self._read_after_the_if(write, region_blocks)
+                # A `null` is often read by a condition (`if (r6 === null)`), which no block holds.
+                or (not isinstance(write.value, NullLiteral) and not self._read_after_the_if(write, region_blocks))
                 or not self._default_prints(write, region_blocks)
         ):
             return
 
-        if isinstance(write.value, TRIVIAL_NODE_TYPES):
+        # A `null` load makes its own node (`python_literal`), so a reader holding THAT node is a reader of this
+        # write (98/3490 `r6 = null` in an arm, `null === null` after it) and takes the register like any value.
+        if isinstance(write.value, TRIVIAL_NODE_TYPES) and not isinstance(write.value, NullLiteral):
             self._repoint_movs_of_printed_write(write, arm_blocks, region_blocks)
             self._repoint_alias_readers_of_printed_write(write, arm_blocks, region_blocks)
             return
