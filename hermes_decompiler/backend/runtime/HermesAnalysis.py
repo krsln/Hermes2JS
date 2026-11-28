@@ -373,6 +373,22 @@ class HermesAnalysis:
             and any(start < address < end < current for start, end in self.skip_ranges)
         )
 
+    def is_join_passed(self, state: RegisterState) -> bool:
+        """The definition is a one-path write whose skipped span ended BEFORE the current read, and the
+        definition before it is the parameter: the join is behind us, so the register holds a merge of the two and the arm's value alone
+        is not what it holds (`LoadParam r18; if (undefined === r18) r18 = null; ...; read r18`, 98/12637)."""
+        current = self.current_address
+
+        if current is None or state.version == 0:
+            return False
+
+        address = state.definition.address
+        earlier = self.history.get(state.definition.name, ())[state.version - 1]
+
+        return earlier.handler in ("LoadParam", "LoadParamLong") and any(
+            start < address < end < current for start, end in self.skip_ranges
+        )
+
     def is_nested_join_value(self, state: RegisterState) -> bool:
         """The definition sits inside two or more forward jumps that all end at or
         before the current read, and an earlier definition exists: three or more
