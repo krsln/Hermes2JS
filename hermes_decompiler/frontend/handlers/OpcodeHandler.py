@@ -339,6 +339,14 @@ class OpcodeHandler(ABC):
                 analysis.is_unsafe_loop_register(reg, state.definition.address):
             state.mark_read()
             state.materialize()
+            # The loop rewrites this register further down: that write is what the next iteration reads here, so it
+            # has to print (98/8694 `saveSnapshot`: `r2 = r6.parentElement` folded into `while (r6.parentElement)`).
+            if (
+                    analysis.current_address is not None
+                    and isinstance(value, Identifier) and not cls._is_register_alias(value)
+            ):
+                analysis.loop_top_reads.append((f"r{reg}", analysis.current_address))
+
             return Identifier(name=f"r{reg}")
 
         # if it has been read at least once before

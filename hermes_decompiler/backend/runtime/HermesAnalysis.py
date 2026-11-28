@@ -104,6 +104,9 @@ class HermesAnalysis:
         # which comes after the read of an older value that mentions the same
         # register; this is what lets that earlier read know (`F-01`).
         self.printed_definitions: frozenset[tuple[str, int]] = frozenset()
+        # Bare reads in a loop of a register the loop rewrites below the read (`(name, address)`): a write of that
+        # register further down the same loop is what the read sees on the next iteration, so it prints.
+        self.loop_top_reads: list[tuple[str, int]] = []
         # Every definition of each register, in order. `RegisterState.version`
         # is the index into this list, so `history[name][v + 1:]` is exactly
         # what redefined version `v` (see `stale_kind`).
@@ -157,6 +160,13 @@ class HermesAnalysis:
         )
         self.registers[result.name] = state
         self.history.setdefault(result.name, []).append(state)
+
+        if any(
+                name == result.name and read < result.address
+                and any(start <= read and result.address <= end for start, end in self.loop_ranges)
+                for name, read in self.loop_top_reads
+        ):
+            state.materialize()
 
     def _log_store(self, result: OpcodeResult) -> None:
         member = stored_member(result.value)
