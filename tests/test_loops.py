@@ -1106,3 +1106,26 @@ def test_the_output_parses_2(tmp_path: Path):
     done = subprocess.run(["node", "--check", str(path)], capture_output=True, text=True)
 
     assert done.returncode == 0, done.stderr
+
+
+# ----------------------------------------------------------------------------------------------------
+# loop_guard_reads_the_moved_initializer
+#
+# `Mov r2, param1; if (null !== r2) { for (r2 = param1; null !== r2; ...) }` (loop inversion): the copy moves into the
+# `for` header and the guard in front of the loop kept reading `r2`, which nothing assigned before it
+# (`if (null !== r2)`). The guard reads the initializer's value (96/1957 `findFirstSuspended`, 96/1872, 98/2541).
+# ----------------------------------------------------------------------------------------------------
+
+
+def _render_loop_guard() -> str:
+    hasm = (_DATA / "loop_guard_reads_the_moved_initializer_96_1957.hasm").read_text(encoding="utf-8")
+
+    return Decompiler.render(Decompiler.build_context(hasm, 0, strict=False), verbose=False, raw=False)
+
+
+def test_the_guard_reads_the_parameter_the_loop_starts_from():
+    out = _render_loop_guard()
+
+    assert "if (null !== param1) {" in out
+    assert "for (i = param1; null !== i;" in out
+    assert "r2" not in out.split("for (")[0]

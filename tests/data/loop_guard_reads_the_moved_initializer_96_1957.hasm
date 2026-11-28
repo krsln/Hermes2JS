@@ -1,0 +1,89 @@
+
+=> [Function #1957 "findFirstSuspended" of 333 bytes]: 2 params, frame size=29, strict=1, exc handler=0, debug info=0  @ offset 0x00126204
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 14, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 13>
+==> 00000005: <LoadConstNull>: <Reg8: 1>
+==> 00000007: <GetEnvironment>: <Reg8: 12, UInt8: 0>
+==> 0000000a: <LoadConstUInt8>: <Reg8: 11, UInt8: 128>
+==> 0000000d: <LoadConstZero>: <Reg8: 10>
+==> 0000000f: <LoadConstString>: <Reg8: 9, string_id: 759>  # String: 'together' (String)
+==> 00000013: <LoadConstString>: <Reg8: 8, string_id: 5189>  # String: 'unstable_legacy-backwards' (String)
+==> 00000017: <LoadConstString>: <Reg8: 7, string_id: 5190>  # String: 'backwards' (String)
+==> 0000001b: <LoadConstString>: <Reg8: 6, string_id: 1537>  # String: 'forwards' (String)
+==> 0000001f: <LoadConstUInt8>: <Reg8: 5, UInt8: 19>
+==> 00000022: <LoadConstUInt8>: <Reg8: 4, UInt8: 13>
+==> 00000025: <LoadConstUndefined>: <Reg8: 3>
+==> 00000027: <Mov>: <Reg8: 2, Reg8: 14>
+==> 0000002a: <JStrictEqualLong>: <Addr32: 287, Reg8: 1, Reg8: 2>  # Address: 00000149
+==> 00000031: <GetByIdShort>: <Reg8: 15, Reg8: 2, UInt8: 1, string_id: 187>  # String: 'tag' (Identifier)
+==> 00000036: <Mov>: <Reg8: 0, Reg8: 2>
+==> 00000039: <Mov>: <Reg8: 19, Reg8: 3>
+==> 0000003c: <JStrictEqualLong>: <Addr32: 130, Reg8: 4, Reg8: 15>  # Address: 000000be
+==> 00000043: <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 1, string_id: 187>  # String: 'tag' (Identifier)
+==> 00000048: <JStrictNotEqual>: <Addr8: 64, Reg8: 5, Reg8: 15>  # Address: 00000088
+==> 0000004c: <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 2, string_id: 45>  # String: 'memoizedProps' (Identifier)
+==> 00000051: <GetById>: <Reg8: 15, Reg8: 15, UInt8: 3, string_id: 8638>  # String: 'revealOrder' (Identifier)
+==> 00000057: <JStrictEqual>: <Addr8: 85, Reg8: 6, Reg8: 15>  # Address: 000000ac
+==> 0000005b: <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 2, string_id: 45>  # String: 'memoizedProps' (Identifier)
+==> 00000060: <GetById>: <Reg8: 15, Reg8: 15, UInt8: 3, string_id: 8638>  # String: 'revealOrder' (Identifier)
+==> 00000066: <JStrictEqual>: <Addr8: 70, Reg8: 7, Reg8: 15>  # Address: 000000ac
+==> 0000006a: <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 2, string_id: 45>  # String: 'memoizedProps' (Identifier)
+==> 0000006f: <GetById>: <Reg8: 15, Reg8: 15, UInt8: 3, string_id: 8638>  # String: 'revealOrder' (Identifier)
+==> 00000075: <JStrictEqual>: <Addr8: 55, Reg8: 8, Reg8: 15>  # Address: 000000ac
+==> 00000079: <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 2, string_id: 45>  # String: 'memoizedProps' (Identifier)
+==> 0000007e: <GetById>: <Reg8: 15, Reg8: 15, UInt8: 3, string_id: 8638>  # String: 'revealOrder' (Identifier)
+==> 00000084: <JStrictEqual>: <Addr8: 40, Reg8: 9, Reg8: 15>  # Address: 000000ac
+==> 00000088: <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 4, string_id: 87>  # String: 'child' (Identifier)
+==> 0000008d: <Mov>: <Reg8: 17, Reg8: 19>
+==> 00000090: <JStrictEqual>: <Addr8: 84, Reg8: 1, Reg8: 15>  # Address: 000000e4
+==> 00000094: <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 4, string_id: 87>  # String: 'child' (Identifier)
+==> 00000099: <PutById>: <Reg8: 15, Reg8: 0, UInt8: 1, string_id: 214>  # String: 'return' (Identifier)
+==> 0000009f: <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 4, string_id: 87>  # String: 'child' (Identifier)
+==> 000000a4: <Mov>: <Reg8: 16, Reg8: 19>
+==> 000000a7: <JmpLong>: <Addr32: 145>  # Address: 00000138
+==> 000000ac: <GetByIdShort>: <Reg8: 18, Reg8: 0, UInt8: 5, string_id: 139>  # String: 'flags' (Identifier)
+==> 000000b1: <BitAnd>: <Reg8: 18, Reg8: 18, Reg8: 11>
+==> 000000b5: <Mov>: <Reg8: 17, Reg8: 19>
+==> 000000b8: <JStrictEqual>: <Addr8: 44, Reg8: 10, Reg8: 18>  # Address: 000000e4
+==> 000000bc: <Ret>: <Reg8: 0>
+==> 000000be: <GetByIdShort>: <Reg8: 18, Reg8: 0, UInt8: 6, string_id: 173>  # String: 'memoizedState' (Identifier)
+==> 000000c3: <Mov>: <Reg8: 17, Reg8: 18>
+==> 000000c6: <JStrictEqual>: <Addr8: 30, Reg8: 1, Reg8: 18>  # Address: 000000e4
+==> 000000ca: <GetById>: <Reg8: 19, Reg8: 18, UInt8: 7, string_id: 8857>  # String: 'dehydrated' (Identifier)
+==> 000000d0: <JStrictEqual>: <Addr8: 123, Reg8: 1, Reg8: 19>  # Address: 0000014b
+==> 000000d4: <LoadFromEnvironmentL>: <Reg8: 19, Reg8: 12, UInt16: 508>
+==> 000000d9: <Call1>: <Reg8: 20, Reg8: 19, Reg8: 13>
+==> 000000dd: <Call1>: <Reg8: 19, Reg8: 19, Reg8: 13>
+==> 000000e1: <Mov>: <Reg8: 17, Reg8: 18>
+==> 000000e4: <JStrictEqual>: <Addr8: 101, Reg8: 0, Reg8: 14>  # Address: 00000149
+==> 000000e8: <GetByIdShort>: <Reg8: 19, Reg8: 0, UInt8: 8, string_id: 225>  # String: 'sibling' (Identifier)
+==> 000000ed: <Mov>: <Reg8: 20, Reg8: 0>
+==> 000000f0: <Mov>: <Reg8: 18, Reg8: 20>
+==> 000000f3: <JStrictNotEqual>: <Addr8: 45, Reg8: 1, Reg8: 19>  # Address: 00000120
+==> 000000f7: <GetByIdShort>: <Reg8: 21, Reg8: 20, UInt8: 9, string_id: 214>  # String: 'return' (Identifier)
+==> 000000fc: <Mov>: <Reg8: 19, Reg8: 20>
+==> 000000ff: <JStrictEqual>: <Addr8: 72, Reg8: 1, Reg8: 21>  # Address: 00000147
+==> 00000103: <GetByIdShort>: <Reg8: 21, Reg8: 19, UInt8: 9, string_id: 214>  # String: 'return' (Identifier)
+==> 00000108: <JStrictEqual>: <Addr8: 63, Reg8: 21, Reg8: 14>  # Address: 00000147
+==> 0000010c: <GetByIdShort>: <Reg8: 21, Reg8: 19, UInt8: 9, string_id: 214>  # String: 'return' (Identifier)
+==> 00000111: <GetByIdShort>: <Reg8: 19, Reg8: 21, UInt8: 8, string_id: 225>  # String: 'sibling' (Identifier)
+==> 00000116: <Mov>: <Reg8: 20, Reg8: 21>
+==> 00000119: <Mov>: <Reg8: 18, Reg8: 20>
+==> 0000011c: <JStrictEqual>: <Addr8: -37, Reg8: 1, Reg8: 19>  # Address: 000000f7
+==> 00000120: <GetByIdShort>: <Reg8: 20, Reg8: 18, UInt8: 8, string_id: 225>  # String: 'sibling' (Identifier)
+==> 00000125: <GetByIdShort>: <Reg8: 19, Reg8: 18, UInt8: 9, string_id: 214>  # String: 'return' (Identifier)
+==> 0000012a: <PutById>: <Reg8: 20, Reg8: 19, UInt8: 1, string_id: 214>  # String: 'return' (Identifier)
+==> 00000130: <GetByIdShort>: <Reg8: 15, Reg8: 18, UInt8: 8, string_id: 225>  # String: 'sibling' (Identifier)
+==> 00000135: <Mov>: <Reg8: 16, Reg8: 17>
+==> 00000138: <Mov>: <Reg8: 2, Reg8: 15>
+==> 0000013b: <Mov>: <Reg8: 3, Reg8: 16>
+==> 0000013e: <JStrictNotEqualLong>: <Addr32: -269, Reg8: 1, Reg8: 2>  # Address: 00000031
+==> 00000145: <Jmp>: <Addr8: 4>  # Address: 00000149
+==> 00000147: <Ret>: <Reg8: 1>
+==> 00000149: <Ret>: <Reg8: 1>
+==> 0000014b: <Ret>: <Reg8: 0>
+
+

@@ -37,6 +37,20 @@ _SAFE_INIT_VALUE_TYPES = (
 )
 
 
+class _IfRegionsOf(RegionVisitor):
+    """The `if` regions that replaced the conditional branch of one block."""
+
+    def __init__(self, block: BasicBlock) -> None:
+        self.block = block
+        self.found: list[IfRegion] = []
+
+    def visit_IfRegion(self, node: IfRegion) -> None:
+        if node.source_block is self.block:
+            self.found.append(node)
+
+        super().visit_IfRegion(node)
+
+
 class LoopConditionRegionPass(RegionPass, RegionVisitor):
     """Extracts the loop condition and classifies the physical loop shape.
 
@@ -1200,8 +1214,23 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                 )
 
                 predecessor.instructions.remove(instruction)
+                self._substitute_in_guard(predecessor, f"r{induction_reg}", instruction.value)
 
             return
+
+    def _substitute_in_guard(self, predecessor: BasicBlock, name: str, value: Expression) -> None:
+        """The `if` that tests the register in the block the initializer was taken out of reads the value now.
+
+        `Mov r2, param1; if (null !== r2) { for (r2 = param1; null !== r2; ...) }` (loop inversion): the copy moved
+        into the `for` header and the guard in front of the loop kept reading `r2`, which nothing assigned before
+        it (96/1957 `findFirstSuspended`).
+        """
+        guards = _IfRegionsOf(predecessor)
+        guards.visit(self.graph.root)
+
+        for region in guards.found:
+            if region.condition is not None:
+                region.condition = substitute_register(region.condition, name, value)
 
     def _infer_induction_register(
             self,
