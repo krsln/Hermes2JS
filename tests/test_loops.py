@@ -1129,3 +1129,19 @@ def test_the_guard_reads_the_parameter_the_loop_starts_from():
     assert "if (null !== param1) {" in out
     assert "for (i = param1; null !== i;" in out
     assert "r2" not in out.split("for (")[0]
+
+
+# ----------------------------------------------------------------------------------------------------
+# switch_discriminant_on_the_loop_register
+#
+# The `for` induction register is renamed to i/j/k last; the `switch` discriminant read it (`switch (r6.tag)`) and kept
+# the old name (96/2111, 2112, 2615, 2616, 98/2642, 2643).
+# ----------------------------------------------------------------------------------------------------
+
+
+def test_the_switch_discriminant_follows_the_induction_rename():
+    hasm = (_DATA / "switch_discriminant_on_the_loop_register_96_2111.hasm").read_text(encoding="utf-8")
+    out = Decompiler.render(Decompiler.build_context(hasm, 0, strict=False), verbose=False, raw=False)
+
+    assert "switch (i.tag) {" in out
+    assert "r6.tag" not in out

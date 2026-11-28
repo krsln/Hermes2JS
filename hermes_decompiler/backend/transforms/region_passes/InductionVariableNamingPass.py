@@ -338,6 +338,12 @@ class _RegisterRenamer(RegionVisitor):
         super().visit_IfRegion(node)
 
     def visit_SwitchRegion(self, node: SwitchRegion) -> None:
+        # What the `switch` selects on is read like any condition (`switch (i.tag)`, 96/2111).
+        if node.discriminant is not None:
+            node.discriminant = InductionVariableNamingPass._rename_expr(
+                node.discriminant, self.old_name, self.new_name,
+            )
+
         for case in node.cases:
             case.tests = [
                 InductionVariableNamingPass._rename_expr(test, self.old_name, self.new_name)
@@ -356,5 +362,9 @@ class _RegisterRenamer(RegionVisitor):
             node.initializer = InductionVariableNamingPass._rename_expr(
                 node.initializer, self.old_name, self.new_name,
             )
+
+        # An inner `for (x of i.children)` reads the counter in what it iterates.
+        if getattr(node, "iterable", None) is not None:
+            node.iterable = InductionVariableNamingPass._rename_expr(node.iterable, self.old_name, self.new_name)
 
         super().visit_LoopRegion(node)
