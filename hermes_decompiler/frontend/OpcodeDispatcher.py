@@ -91,6 +91,7 @@ class OpcodeDispatcher:
         # Shared by both passes below.
         loop_ranges = OpcodeDispatcher.compute_loop_ranges(entries)
         skip_ranges = OpcodeDispatcher.compute_skip_ranges(entries)
+        default_null_writes = OpcodeDispatcher.compute_default_null_writes(entries)
 
         # --- Pass 1 (scratch, discarded) ---------------------------------
         # Runs the exact same dispatch as the real pass, on a throwaway
@@ -105,6 +106,7 @@ class OpcodeDispatcher:
         scratch = HermesAnalysis(metadata=analysis.metadata)
         scratch.loop_ranges = loop_ranges
         scratch.skip_ranges = skip_ranges
+        scratch.default_null_writes = default_null_writes
         OpcodeDispatcher._run_pass(
             entries, scratch, strict=False, function_id=function_id, batch_tables=batch_tables,
         )
@@ -139,6 +141,7 @@ class OpcodeDispatcher:
         # harvested above - see `HermesAnalysis.defined_and_used_in_same_loop`.
         analysis.loop_ranges = loop_ranges
         analysis.skip_ranges = skip_ranges
+        analysis.default_null_writes = default_null_writes
         analysis.loop_carried_writes = loop_carried_writes
         OpcodeDispatcher._run_pass(
             entries, analysis, strict=strict, function_id=function_id, batch_tables=batch_tables,
@@ -262,6 +265,27 @@ class OpcodeDispatcher:
 
         if prev.handler.startswith("Call") and isinstance(prev.value, Expression):
             prev.value = AwaitExpression(argument=prev.value)
+
+    @staticmethod
+    def compute_default_null_writes(entries: list[OpcodeEntry]) -> set[int]:
+        """
+        Addresses of `LoadConstNull R` that directly follow a forward conditional jump over it which tests `R`
+        (`if (R === undefined) R = null` / `if (R == null) R = null`): a default, whose value is `null` on one path
+        and what `R` held on the other (`HermesAnalysis.is_join_passed` is the reader).
+        """
+        writes: set[int] = set()
+
+        for jump, load, following in zip(entries, entries[1:], entries[2:]):
+            if load.opcode != "LoadConstNull" or jump.target_address != following.address:
+                continue
+
+            target = re.findall(r"Reg\d+: (\d+)", load.args)
+            tested = re.findall(r"Reg\d+: (\d+)", jump.args)
+
+            if target and target[0] in tested:
+                writes.add(load.address)
+
+        return writes
 
     @staticmethod
     def compute_skip_ranges(entries: list[OpcodeEntry]) -> list[tuple[int, int]]:

@@ -100,6 +100,8 @@ class HermesAnalysis:
         # strictly inside one is skipped on the path that takes the jump, so
         # a write there is conditional (see `_is_phi_write`).
         self.skip_ranges: list[tuple[int, int]] = []
+        # `LoadConstNull R` addresses that default `R` after a jump testing it (`if (R == null) R = null`).
+        self.default_null_writes: set[int] = set()
         # `(register name, address)` of every definition that the scratch pass
         # (see `OpcodeDispatcher.dispatch_all`) left PRINTED as a statement of
         # its own (pinned by a bare read, or never folded away). Whether a
@@ -388,7 +390,7 @@ class HermesAnalysis:
         address = state.definition.address
         earlier = self.history.get(state.definition.name, ())[state.version - 1]
 
-        return earlier.handler in _MEMBER_OR_PARAMETER_LOADS and any(
+        return (address in self.default_null_writes or earlier.handler in _MEMBER_OR_PARAMETER_LOADS) and any(
             start < address < end < current for start, end in self.skip_ranges
         )
 
