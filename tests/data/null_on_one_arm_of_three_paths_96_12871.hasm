@@ -1,0 +1,259 @@
+
+=> [Function #12871 "Color" of 1083 bytes]: 3 params, frame size=23, strict=0, exc handler=0, debug info=0  @ offset 0x00230991
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 5, UInt8: 2>
+==> 00000006: <LoadThisNS>: <Reg8: 2>
+==> 00000008: <GetEnvironment>: <Reg8: 4, UInt8: 0>
+==> 0000000b: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 6>
+==> 0000000f: <InstanceOf>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 00000013: <JmpTrue>: <Addr8: 35, Reg8: 1>  # Address: 00000036
+==> 00000016: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 6>
+==> 0000001a: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 206>  # String: 'prototype' (Identifier)
+==> 0000001f: <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 1>
+==> 00000023: <Mov>: <Reg8: 16, Reg8: 3>
+==> 00000026: <Mov>: <Reg8: 15, Reg8: 0>
+==> 00000029: <Mov>: <Reg8: 14, Reg8: 5>
+==> 0000002c: <Construct>: <Reg8: 1, Reg8: 1, UInt8: 3>
+==> 00000030: <SelectObject>: <Reg8: 1, Reg8: 3, Reg8: 1>
+==> 00000034: <Ret>: <Reg8: 1>
+==> 00000036: <Mov>: <Reg8: 3, Reg8: 5>
+==> 00000039: <JmpFalse>: <Addr8: 19, Reg8: 5>  # Address: 0000004c
+==> 0000003c: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 3>
+==> 00000040: <IsIn>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 00000044: <Mov>: <Reg8: 3, Reg8: 5>
+==> 00000047: <JmpFalse>: <Addr8: 5, Reg8: 1>  # Address: 0000004c
+==> 0000004a: <LoadConstNull>: <Reg8: 3>
+==> 0000004c: <JmpFalse>: <Addr8: 52, Reg8: 3>  # Address: 00000080
+==> 0000004f: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 2>
+==> 00000053: <IsIn>: <Reg8: 1, Reg8: 3, Reg8: 1>
+==> 00000057: <JmpTrue>: <Addr8: 41, Reg8: 1>  # Address: 00000080
+==> 0000005a: <GetGlobalObject>: <Reg8: 1>
+==> 0000005c: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 2, string_id: 12>  # String: 'Error' (Identifier)
+==> 00000062: <LoadConstString>: <Reg8: 1, string_id: 4240>  # String: 'Unknown model: ' (String)
+==> 00000066: <Add>: <Reg8: 15, Reg8: 1, Reg8: 3>
+==> 0000006a: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 206>  # String: 'prototype' (Identifier)
+==> 0000006f: <CreateThis>: <Reg8: 5, Reg8: 5, Reg8: 6>
+==> 00000073: <Mov>: <Reg8: 16, Reg8: 5>
+==> 00000076: <Construct>: <Reg8: 1, Reg8: 6, UInt8: 2>
+==> 0000007a: <SelectObject>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 0000007e: <Throw>: <Reg8: 1>
+==> 00000080: <LoadConstNull>: <Reg8: 1>
+==> 00000082: <JEqualLong>: <Addr32: 729, Reg8: 0, Reg8: 1>  # Address: 0000035b
+==> 00000089: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 6>
+==> 0000008d: <InstanceOf>: <Reg8: 5, Reg8: 0, Reg8: 5>
+==> 00000091: <JmpTrueLong>: <Addr32: 664, Reg8: 5>  # Address: 00000329
+==> 00000097: <TypeOf>: <Reg8: 5, Reg8: 0>
+==> 0000009a: <LoadConstString>: <Reg8: 6, string_id: 7961>  # String: 'string' (Identifier)
+==> 0000009e: <JStrictEqualLong>: <Addr32: 499, Reg8: 5, Reg8: 6>  # Address: 00000291
+==> 000000a5: <GetByIdShort>: <Reg8: 6, Reg8: 0, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+==> 000000aa: <LoadConstZero>: <Reg8: 7>
+==> 000000ac: <JGreaterLong>: <Addr32: 371, Reg8: 6, Reg8: 7>  # Address: 0000021f
+==> 000000b3: <LoadConstString>: <Reg8: 10, string_id: 7552>  # String: 'number' (Identifier)
+==> 000000b7: <JStrictEqualLong>: <Addr32: 285, Reg8: 5, Reg8: 10>  # Address: 000001d4
+==> 000000be: <LoadConstUInt8>: <Reg8: 11, UInt8: 1>
+==> 000000c1: <PutById>: <Reg8: 2, Reg8: 11, UInt8: 1, string_id: 7647>  # String: 'valpha' (Identifier)
+==> 000000c7: <GetGlobalObject>: <Reg8: 5>
+==> 000000c9: <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 4, string_id: 24>  # String: 'Object' (Identifier)
+==> 000000cf: <GetByIdShort>: <Reg8: 6, Reg8: 8, UInt8: 5, string_id: 118>  # String: 'keys' (Identifier)
+==> 000000d4: <Call2>: <Reg8: 8, Reg8: 6, Reg8: 8, Reg8: 0>
+==> 000000d9: <LoadConstString>: <Reg8: 12, string_id: 8720>  # String: 'alpha' (Identifier)
+==> 000000dd: <IsIn>: <Reg8: 6, Reg8: 12, Reg8: 0>
+==> 000000e1: <JmpFalse>: <Addr8: 52, Reg8: 6>  # Address: 00000115
+==> 000000e4: <GetById>: <Reg8: 9, Reg8: 8, UInt8: 6, string_id: 13199>  # String: 'splice' (Identifier)
+==> 000000ea: <GetByIdShort>: <Reg8: 6, Reg8: 8, UInt8: 7, string_id: 162>  # String: 'indexOf' (Identifier)
+==> 000000ef: <Call2>: <Reg8: 6, Reg8: 6, Reg8: 8, Reg8: 12>
+==> 000000f4: <Call3>: <Reg8: 6, Reg8: 9, Reg8: 8, Reg8: 6, Reg8: 11>
+==> 000000fa: <GetById>: <Reg8: 6, Reg8: 0, UInt8: 8, string_id: 8720>  # String: 'alpha' (Identifier)
+==> 00000100: <TypeOf>: <Reg8: 9, Reg8: 6>
+==> 00000103: <LoadConstZero>: <Reg8: 6>
+==> 00000105: <JStrictNotEqual>: <Addr8: 10, Reg8: 9, Reg8: 10>  # Address: 0000010f
+==> 00000109: <GetById>: <Reg8: 6, Reg8: 0, UInt8: 8, string_id: 8720>  # String: 'alpha' (Identifier)
+==> 0000010f: <PutById>: <Reg8: 2, Reg8: 6, UInt8: 1, string_id: 7647>  # String: 'valpha' (Identifier)
+==> 00000115: <GetById>: <Reg8: 6, Reg8: 8, UInt8: 9, string_id: 7576>  # String: 'sort' (Identifier)
+==> 0000011b: <Call1>: <Reg8: 9, Reg8: 6, Reg8: 8>
+==> 0000011f: <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 10, string_id: 165>  # String: 'join' (Identifier)
+==> 00000124: <LoadConstString>: <Reg8: 6, string_id: 7163>  # String: '' (Identifier)
+==> 00000128: <Call2>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 6>
+==> 0000012d: <LoadFromEnvironment>: <Reg8: 8, Reg8: 4, UInt8: 4>
+==> 00000131: <IsIn>: <Reg8: 8, Reg8: 6, Reg8: 8>
+==> 00000135: <JmpTrue>: <Addr8: 55, Reg8: 8>  # Address: 0000016c
+==> 00000138: <TryGetById>: <Reg8: 9, Reg8: 5, UInt8: 2, string_id: 12>  # String: 'Error' (Identifier)
+==> 0000013e: <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 11, string_id: 19>  # String: 'JSON' (Identifier)
+==> 00000144: <GetByIdShort>: <Reg8: 5, Reg8: 8, UInt8: 12, string_id: 236>  # String: 'stringify' (Identifier)
+==> 00000149: <Call2>: <Reg8: 8, Reg8: 5, Reg8: 8, Reg8: 0>
+==> 0000014e: <LoadConstString>: <Reg8: 5, string_id: 4218>  # String: 'Unable to parse color from object: ' (String)
+==> 00000152: <Add>: <Reg8: 15, Reg8: 5, Reg8: 8>
+==> 00000156: <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 206>  # String: 'prototype' (Identifier)
+==> 0000015b: <CreateThis>: <Reg8: 8, Reg8: 8, Reg8: 9>
+==> 0000015f: <Mov>: <Reg8: 16, Reg8: 8>
+==> 00000162: <Construct>: <Reg8: 5, Reg8: 9, UInt8: 2>
+==> 00000166: <SelectObject>: <Reg8: 5, Reg8: 8, Reg8: 5>
+==> 0000016a: <Throw>: <Reg8: 5>
+==> 0000016c: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 4>
+==> 00000170: <GetByVal>: <Reg8: 5, Reg8: 5, Reg8: 6>
+==> 00000174: <PutById>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 10600>  # String: 'model' (Identifier)
+==> 0000017a: <LoadFromEnvironment>: <Reg8: 6, Reg8: 4, UInt8: 2>
+==> 0000017e: <GetById>: <Reg8: 5, Reg8: 2, UInt8: 13, string_id: 10600>  # String: 'model' (Identifier)
+==> 00000184: <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
+==> 00000188: <GetById>: <Reg8: 9, Reg8: 5, UInt8: 14, string_id: 14046>  # String: 'labels' (Identifier)
+==> 0000018e: <NewArray>: <Reg8: 5, UInt16: 0>
+==> 00000192: <GetByIdShort>: <Reg8: 6, Reg8: 9, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+==> 00000197: <Less>: <Reg8: 6, Reg8: 7, Reg8: 6>
+==> 0000019b: <LoadConstZero>: <Reg8: 8>
+==> 0000019d: <JmpFalse>: <Addr8: 33, Reg8: 6>  # Address: 000001be
+==> 000001a0: <GetByIdShort>: <Reg8: 10, Reg8: 5, UInt8: 15, string_id: 207>  # String: 'push' (Identifier)
+==> 000001a5: <GetByVal>: <Reg8: 6, Reg8: 9, Reg8: 8>
+==> 000001a9: <GetByVal>: <Reg8: 6, Reg8: 0, Reg8: 6>
+==> 000001ad: <Call2>: <Reg8: 6, Reg8: 10, Reg8: 5, Reg8: 6>
+==> 000001b2: <Inc>: <Reg8: 8, Reg8: 8>
+==> 000001b5: <GetByIdShort>: <Reg8: 6, Reg8: 9, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+==> 000001ba: <JLess>: <Addr8: -26, Reg8: 8, Reg8: 6>  # Address: 000001a0
+==> 000001be: <LoadFromEnvironment>: <Reg8: 8, Reg8: 4, UInt8: 10>
+==> 000001c2: <LoadConstUndefined>: <Reg8: 6>
+==> 000001c4: <Call2>: <Reg8: 6, Reg8: 8, Reg8: 6, Reg8: 5>
+==> 000001c9: <PutById>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 95>  # String: 'color' (Identifier)
+==> 000001cf: <JmpLong>: <Addr32: 429>  # Address: 0000037c
+==> 000001d4: <LoadConstString>: <Reg8: 5, string_id: 215>  # String: 'rgb' (Identifier)
+==> 000001d8: <PutById>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 10600>  # String: 'model' (Identifier)
+==> 000001de: <LoadConstUInt8>: <Reg8: 5, UInt8: 16>
+==> 000001e1: <RShift>: <Reg8: 8, Reg8: 0, Reg8: 5>
+==> 000001e5: <NewArray>: <Reg8: 5, UInt16: 3>
+==> 000001e9: <LoadConstUInt8>: <Reg8: 6, UInt8: 255>
+==> 000001ec: <BitAnd>: <Reg8: 8, Reg8: 8, Reg8: 6>
+==> 000001f0: <PutOwnByIndex>: <Reg8: 5, Reg8: 8, UInt8: 0>
+==> 000001f4: <LoadConstUInt8>: <Reg8: 8, UInt8: 8>
+==> 000001f7: <RShift>: <Reg8: 8, Reg8: 0, Reg8: 8>
+==> 000001fb: <BitAnd>: <Reg8: 8, Reg8: 8, Reg8: 6>
+==> 000001ff: <PutOwnByIndex>: <Reg8: 5, Reg8: 8, UInt8: 1>
+==> 00000203: <BitAnd>: <Reg8: 6, Reg8: 0, Reg8: 6>
+==> 00000207: <PutOwnByIndex>: <Reg8: 5, Reg8: 6, UInt8: 2>
+==> 0000020b: <PutById>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 95>  # String: 'color' (Identifier)
+==> 00000211: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 00000214: <PutById>: <Reg8: 2, Reg8: 5, UInt8: 1, string_id: 7647>  # String: 'valpha' (Identifier)
+==> 0000021a: <JmpLong>: <Addr32: 354>  # Address: 0000037c
+==> 0000021f: <JmpTrue>: <Addr8: 7, Reg8: 3>  # Address: 00000226
+==> 00000222: <LoadConstString>: <Reg8: 3, string_id: 215>  # String: 'rgb' (Identifier)
+==> 00000226: <PutById>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 10600>  # String: 'model' (Identifier)
+==> 0000022c: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 2>
+==> 00000230: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 13, string_id: 10600>  # String: 'model' (Identifier)
+==> 00000236: <GetByVal>: <Reg8: 3, Reg8: 5, Reg8: 3>
+==> 0000023a: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 16, string_id: 14048>  # String: 'channels' (Identifier)
+==> 00000240: <GetGlobalObject>: <Reg8: 3>
+==> 00000242: <TryGetById>: <Reg8: 3, Reg8: 3, UInt8: 17, string_id: 6>  # String: 'Array' (Identifier)
+==> 00000248: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 1, string_id: 206>  # String: 'prototype' (Identifier)
+==> 0000024d: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 18, string_id: 227>  # String: 'slice' (Identifier)
+==> 00000252: <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 19, string_id: 83>  # String: 'call' (Identifier)
+==> 00000257: <Call4>: <Reg8: 3, Reg8: 3, Reg8: 6, Reg8: 0, Reg8: 7, Reg8: 5>
+==> 0000025e: <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 10>
+==> 00000262: <LoadConstUndefined>: <Reg8: 6>
+==> 00000264: <Call3>: <Reg8: 6, Reg8: 7, Reg8: 6, Reg8: 3, Reg8: 5>
+==> 0000026a: <PutById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 95>  # String: 'color' (Identifier)
+==> 00000270: <GetByVal>: <Reg8: 6, Reg8: 0, Reg8: 5>
+==> 00000274: <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
+==> 00000277: <TypeOf>: <Reg8: 7, Reg8: 6>
+==> 0000027a: <LoadConstString>: <Reg8: 6, string_id: 7552>  # String: 'number' (Identifier)
+==> 0000027e: <JStrictNotEqual>: <Addr8: 8, Reg8: 7, Reg8: 6>  # Address: 00000286
+==> 00000282: <GetByVal>: <Reg8: 3, Reg8: 0, Reg8: 5>
+==> 00000286: <PutById>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 7647>  # String: 'valpha' (Identifier)
+==> 0000028c: <JmpLong>: <Addr32: 240>  # Address: 0000037c
+==> 00000291: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 1>
+==> 00000295: <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 20, string_id: 50>  # String: 'get' (Identifier)
+==> 0000029a: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 5, Reg8: 0>
+==> 0000029f: <JStrictEqual>: <Addr8: 100, Reg8: 3, Reg8: 1>  # Address: 00000303
+==> 000002a3: <GetById>: <Reg8: 1, Reg8: 3, UInt8: 13, string_id: 10600>  # String: 'model' (Identifier)
+==> 000002a9: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 10600>  # String: 'model' (Identifier)
+==> 000002af: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 2>
+==> 000002b3: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 13, string_id: 10600>  # String: 'model' (Identifier)
+==> 000002b9: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 000002bd: <GetById>: <Reg8: 5, Reg8: 1, UInt8: 16, string_id: 14048>  # String: 'channels' (Identifier)
+==> 000002c3: <GetByIdShort>: <Reg8: 7, Reg8: 3, UInt8: 21, string_id: 205>  # String: 'value' (Identifier)
+==> 000002c8: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 18, string_id: 227>  # String: 'slice' (Identifier)
+==> 000002cd: <LoadConstZero>: <Reg8: 1>
+==> 000002cf: <Call3>: <Reg8: 1, Reg8: 6, Reg8: 7, Reg8: 1, Reg8: 5>
+==> 000002d5: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 95>  # String: 'color' (Identifier)
+==> 000002db: <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 21, string_id: 205>  # String: 'value' (Identifier)
+==> 000002e0: <GetByVal>: <Reg8: 6, Reg8: 1, Reg8: 5>
+==> 000002e4: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 000002e7: <TypeOf>: <Reg8: 7, Reg8: 6>
+==> 000002ea: <LoadConstString>: <Reg8: 6, string_id: 7552>  # String: 'number' (Identifier)
+==> 000002ee: <JStrictNotEqual>: <Addr8: 13, Reg8: 7, Reg8: 6>  # Address: 000002fb
+==> 000002f2: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 21, string_id: 205>  # String: 'value' (Identifier)
+==> 000002f7: <GetByVal>: <Reg8: 1, Reg8: 3, Reg8: 5>
+==> 000002fb: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 7647>  # String: 'valpha' (Identifier)
+==> 00000301: <Jmp>: <Addr8: 123>  # Address: 0000037c
+==> 00000303: <GetGlobalObject>: <Reg8: 1>
+==> 00000305: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 2, string_id: 12>  # String: 'Error' (Identifier)
+==> 0000030b: <LoadConstString>: <Reg8: 1, string_id: 4219>  # String: 'Unable to parse color from string: ' (String)
+==> 0000030f: <Add>: <Reg8: 15, Reg8: 1, Reg8: 0>
+==> 00000313: <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 1, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000318: <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 5>
+==> 0000031c: <Mov>: <Reg8: 16, Reg8: 3>
+==> 0000031f: <Construct>: <Reg8: 1, Reg8: 5, UInt8: 2>
+==> 00000323: <SelectObject>: <Reg8: 1, Reg8: 3, Reg8: 1>
+==> 00000327: <Throw>: <Reg8: 1>
+==> 00000329: <GetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 10600>  # String: 'model' (Identifier)
+==> 0000032f: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 10600>  # String: 'model' (Identifier)
+==> 00000335: <GetByIdShort>: <Reg8: 14, Reg8: 0, UInt8: 22, string_id: 95>  # String: 'color' (Identifier)
+==> 0000033a: <NewArray>: <Reg8: 1, UInt16: 0>
+==> 0000033e: <LoadConstZero>: <Reg8: 13>
+==> 00000340: <Mov>: <Reg8: 15, Reg8: 1>
+==> 00000343: <CallBuiltin>: <Reg8: 3, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
+==> 00000347: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 95>  # String: 'color' (Identifier)
+==> 0000034d: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 23, string_id: 7647>  # String: 'valpha' (Identifier)
+==> 00000353: <PutById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 7647>  # String: 'valpha' (Identifier)
+==> 00000359: <Jmp>: <Addr8: 35>  # Address: 0000037c
+==> 0000035b: <LoadConstString>: <Reg8: 0, string_id: 215>  # String: 'rgb' (Identifier)
+==> 0000035f: <PutById>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 10600>  # String: 'model' (Identifier)
+==> 00000365: <NewArrayWithBuffer>: <Reg8: 0, UInt16: 3, UInt16: 3, UInt16: 20591>  # Array: [0, 0, 0]
+==> 0000036d: <PutById>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 95>  # String: 'color' (Identifier)
+==> 00000373: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 00000376: <PutById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 7647>  # String: 'valpha' (Identifier)
+==> 0000037c: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 5>
+==> 00000380: <GetById>: <Reg8: 0, Reg8: 2, UInt8: 13, string_id: 10600>  # String: 'model' (Identifier)
+==> 00000386: <GetByVal>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 0000038a: <JmpFalse>: <Addr8: 88, Reg8: 0>  # Address: 000003e2
+==> 0000038d: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 2>
+==> 00000391: <GetById>: <Reg8: 0, Reg8: 2, UInt8: 13, string_id: 10600>  # String: 'model' (Identifier)
+==> 00000397: <GetByVal>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 0000039b: <GetById>: <Reg8: 3, Reg8: 0, UInt8: 16, string_id: 14048>  # String: 'channels' (Identifier)
+==> 000003a1: <LoadConstZero>: <Reg8: 1>
+==> 000003a3: <Less>: <Reg8: 5, Reg8: 1, Reg8: 3>
+==> 000003a7: <LoadConstUndefined>: <Reg8: 0>
+==> 000003a9: <JmpFalse>: <Addr8: 57, Reg8: 5>  # Address: 000003e2
+==> 000003ac: <LoadFromEnvironment>: <Reg8: 6, Reg8: 4, UInt8: 5>
+==> 000003b0: <GetById>: <Reg8: 5, Reg8: 2, UInt8: 13, string_id: 10600>  # String: 'model' (Identifier)
+==> 000003b6: <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
+==> 000003ba: <GetByVal>: <Reg8: 8, Reg8: 5, Reg8: 1>
+==> 000003be: <Mov>: <Reg8: 5, Reg8: 1>
+==> 000003c1: <JmpFalse>: <Addr8: 26, Reg8: 8>  # Address: 000003db
+==> 000003c4: <GetByIdShort>: <Reg8: 7, Reg8: 2, UInt8: 22, string_id: 95>  # String: 'color' (Identifier)
+==> 000003c9: <GetByIdShort>: <Reg8: 6, Reg8: 2, UInt8: 22, string_id: 95>  # String: 'color' (Identifier)
+==> 000003ce: <GetByVal>: <Reg8: 6, Reg8: 6, Reg8: 5>
+==> 000003d2: <Call2>: <Reg8: 6, Reg8: 8, Reg8: 0, Reg8: 6>
+==> 000003d7: <PutByVal>: <Reg8: 7, Reg8: 5, Reg8: 6>
+==> 000003db: <Inc>: <Reg8: 1, Reg8: 5>
+==> 000003de: <JLess>: <Addr8: -50, Reg8: 1, Reg8: 3>  # Address: 000003ac
+==> 000003e2: <GetGlobalObject>: <Reg8: 0>
+==> 000003e4: <TryGetById>: <Reg8: 5, Reg8: 0, UInt8: 24, string_id: 21>  # String: 'Math' (Identifier)
+==> 000003ea: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 25, string_id: 126>  # String: 'max' (Identifier)
+==> 000003ef: <TryGetById>: <Reg8: 7, Reg8: 0, UInt8: 24, string_id: 21>  # String: 'Math' (Identifier)
+==> 000003f5: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 26, string_id: 113>  # String: 'min' (Identifier)
+==> 000003fa: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 23, string_id: 7647>  # String: 'valpha' (Identifier)
+==> 00000400: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 00000403: <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 1, Reg8: 3>
+==> 00000409: <LoadConstZero>: <Reg8: 1>
+==> 0000040b: <Call3>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 3>
+==> 00000411: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 7647>  # String: 'valpha' (Identifier)
+==> 00000417: <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000041d: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 27, string_id: 9330>  # String: 'freeze' (Identifier)
+==> 00000423: <JmpFalse>: <Addr8: 20, Reg8: 1>  # Address: 00000437
+==> 00000426: <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000042c: <GetById>: <Reg8: 0, Reg8: 1, UInt8: 27, string_id: 9330>  # String: 'freeze' (Identifier)
+==> 00000432: <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>
+==> 00000437: <LoadConstUndefined>: <Reg8: 0>
+==> 00000439: <Ret>: <Reg8: 0>
+
+

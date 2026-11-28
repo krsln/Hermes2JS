@@ -281,7 +281,7 @@ class OpcodeHandler(ABC):
         # A `null` that two jumps meet on and a third skips (`switch (typeof p) { case "undefined": case "boolean":
         # r14 = null }` after `Mov r14, p`: 98/2044 `mapIntoArray`): the read sees `null` on those paths and the
         # copy on the other, so it names the register. A plain `a || null` is skipped by one jump only.
-        if isinstance(value, NullLiteral) and analysis.is_null_met_by_jumps(state):
+        if isinstance(value, NullLiteral) and (analysis.is_null_met_by_jumps(state) or analysis.is_nested_join_value(state)):
             state.mark_read()
             state.materialize()
 
