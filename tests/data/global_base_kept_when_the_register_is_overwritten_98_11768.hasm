@@ -1,0 +1,91 @@
+
+=> [Function #11768 "" of 323 bytes]: 2 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x0022e921
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 4, UInt8: 1>
+==> 00000003: <IteratorBegin>: <Reg8: 3, Reg8: 4>
+==> 00000006: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000009: <IteratorNext>: <Reg8: 5, Reg8: 3, Reg8: 5>
+==> 0000000d: <Mov>: <Reg8: 6, Reg8: 3>
+==> 00000010: <LoadConstUndefined>: <Reg8: 1>
+==> 00000012: <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 1>
+==> 00000016: <LoadConstUndefined>: <Reg8: 6>
+==> 00000018: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 0000001e
+==> 0000001b: <Mov>: <Reg8: 6, Reg8: 5>
+==> 0000001e: <LoadConstUndefined>: <Reg8: 5>
+==> 00000020: <JmpTrue>: <Addr8: 28, Reg8: 0>  # Address: 0000003c
+==> 00000023: <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
+==> 00000027: <Mov>: <Reg8: 7, Reg8: 3>
+==> 0000002a: <StrictEq>: <Reg8: 2, Reg8: 7, Reg8: 1>
+==> 0000002e: <LoadConstUndefined>: <Reg8: 5>
+==> 00000030: <Mov>: <Reg8: 0, Reg8: 2>
+==> 00000033: <JmpTrue>: <Addr8: 9, Reg8: 2>  # Address: 0000003c
+==> 00000036: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000039: <Mov>: <Reg8: 0, Reg8: 2>
+==> 0000003c: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000042
+==> 0000003f: <IteratorClose>: <Reg8: 3, UInt8: 0>
+==> 00000042: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000045: <LoadConstString>: <Reg8: 4, string_id: 14689>  # String: 'iconTintColorNormal' (Identifier)
+==> 00000049: <JStrictEqualLong>: <Addr32: 206, Reg8: 4, Reg8: 6>  # Address: 00000117
+==> 00000050: <LoadConstString>: <Reg8: 4, string_id: 14692>  # String: 'iconTintColorPressed' (Identifier)
+==> 00000054: <JStrictEqualLong>: <Addr32: 195, Reg8: 4, Reg8: 6>  # Address: 00000117
+==> 0000005b: <LoadConstString>: <Reg8: 4, string_id: 10355>  # String: 'iconTintColorFocused' (Identifier)
+==> 0000005f: <JStrictEqualLong>: <Addr32: 184, Reg8: 4, Reg8: 6>  # Address: 00000117
+==> 00000066: <LoadConstString>: <Reg8: 4, string_id: 7887>  # String: 'iconTintColorDisabled' (Identifier)
+==> 0000006a: <JStrictEqualLong>: <Addr32: 173, Reg8: 4, Reg8: 6>  # Address: 00000117
+==> 00000071: <LoadConstString>: <Reg8: 4, string_id: 162>  # String: 'icon' (Identifier)
+==> 00000075: <JStrictEqual>: <Addr8: 97, Reg8: 4, Reg8: 6>  # Address: 000000d6
+==> 00000079: <JmpTypeOfIs>: <Addr32: 62, Reg8: 5, UInt16: 253>  # Address: 000000b7
+==> 00000081: <LoadConstNull>: <Reg8: 0>
+==> 00000083: <JStrictEqual>: <Addr8: 52, Reg8: 5, Reg8: 0>  # Address: 000000b7
+==> 00000087: <GetGlobalObject>: <Reg8: 4>
+==> 00000089: <TryGetById>: <Reg8: 8, Reg8: 4, UInt8: 0, string_id: 3>  # String: 'Array' (Identifier)
+==> 0000008f: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 2>  # String: 'isArray' (Identifier)
+==> 00000094: <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 5>
+==> 00000099: <JmpTrue>: <Addr8: 30, Reg8: 7>  # Address: 000000b7
+==> 0000009c: <TryGetById>: <Reg8: 8, Reg8: 4, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 000000a2: <CreateThisForNew>: <Reg8: 7, Reg8: 8, UInt8: 3>
+==> 000000a6: <LoadConstString>: <Reg8: 9, string_id: 4468>  # String: '[RNScreens] Unexpected nested object.' (String)
+==> 000000aa: <Mov>: <Reg8: 10, Reg8: 7>
+==> 000000ad: <Construct>: <Reg8: 4, Reg8: 8, UInt8: 2>
+==> 000000b1: <SelectObject>: <Reg8: 4, Reg8: 7, Reg8: 4>
+==> 000000b5: <Throw>: <Reg8: 4>
+==> 000000b7: <NewArray>: <Reg8: 7, UInt16: 2>
+==> 000000bb: <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 6, UInt8: 0>
+==> 000000bf: <LoadConstNull>: <Reg8: 4>
+==> 000000c1: <JStrictEqual>: <Addr8: 7, Reg8: 5, Reg8: 1>  # Address: 000000c8
+==> 000000c5: <Mov>: <Reg8: 4, Reg8: 5>
+==> 000000c8: <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 4, UInt8: 1>
+==> 000000cc: <NewArray>: <Reg8: 4, UInt16: 1>
+==> 000000d0: <DefineOwnInDenseArray>: <Reg8: 4, Reg8: 7, UInt8: 0>
+==> 000000d4: <Ret>: <Reg8: 4>
+==> 000000d6: <JStrictEqual>: <Addr8: 39, Reg8: 5, Reg8: 1>  # Address: 000000fd
+==> 000000da: <GetGlobalObject>: <Reg8: 4>
+==> 000000dc: <TryGetById>: <Reg8: 8, Reg8: 4, UInt8: 4, string_id: 23>  # String: 'Object' (Identifier)
+==> 000000e2: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 5, string_id: 137>  # String: 'entries' (Identifier)
+==> 000000e7: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 5>
+==> 000000eb: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 6, string_id: 17769>  # String: 'parseAndroidIconToNativeProps' (Identifier)
+==> 000000f1: <Call2>: <Reg8: 4, Reg8: 4, Reg8: 1, Reg8: 5>
+==> 000000f6: <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
+==> 000000fb: <Ret>: <Reg8: 4>
+==> 000000fd: <GetGlobalObject>: <Reg8: 4>
+==> 000000ff: <TryGetById>: <Reg8: 8, Reg8: 4, UInt8: 4, string_id: 23>  # String: 'Object' (Identifier)
+==> 00000105: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 5, string_id: 137>  # String: 'entries' (Identifier)
+==> 0000010a: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 2117, UInt16: 17356>  # Object: {'imageIconResource': null, 'drawableIconResourceName': null}
+==> 00000110: <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
+==> 00000115: <Ret>: <Reg8: 4>
+==> 00000117: <NewArray>: <Reg8: 4, UInt16: 2>
+==> 0000011b: <DefineOwnInDenseArray>: <Reg8: 4, Reg8: 6, UInt8: 0>
+==> 0000011f: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 1>
+==> 00000123: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 7, string_id: 209>  # String: 'processColor' (Identifier)
+==> 00000128: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 1, Reg8: 5>
+==> 0000012d: <LoadConstNull>: <Reg8: 1>
+==> 0000012f: <JNotEqual>: <Addr8: 6, Reg8: 3, Reg8: 1>  # Address: 00000135
+==> 00000133: <LoadConstNull>: <Reg8: 3>
+==> 00000135: <DefineOwnInDenseArray>: <Reg8: 4, Reg8: 3, UInt8: 1>
+==> 00000139: <NewArray>: <Reg8: 3, UInt16: 1>
+==> 0000013d: <DefineOwnInDenseArray>: <Reg8: 3, Reg8: 4, UInt8: 0>
+==> 00000141: <Ret>: <Reg8: 3>
+
+

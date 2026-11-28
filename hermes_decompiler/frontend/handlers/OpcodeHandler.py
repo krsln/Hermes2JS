@@ -431,7 +431,10 @@ class OpcodeHandler(ABC):
                 state.mark_read()
                 state.mark_used()
 
-                return state.value
+                # A node of its own: the register's printed write holds `state.value` and a pass that repoints the
+                # readers of that node would turn this member's base into the register (98/11768 `r4.Object.entries`
+                # for `globalThis.Object.entries` after `r4` is overwritten).
+                return dataclasses.replace(state.value)
 
             logger.warning(
                 "resolve_get_by_argument | Cannot inline get-by-argument value: handler=%s value=%r",
