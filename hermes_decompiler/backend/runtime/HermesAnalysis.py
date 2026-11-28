@@ -355,6 +355,24 @@ class HermesAnalysis:
         a merge of the two, so the arm's value alone is not what it holds."""
         return state.version > 0 and self._is_phi_write(state)
 
+    def is_null_met_by_jumps(self, state: RegisterState) -> bool:
+        """The definition is the landing point of a forward jump AND sits inside the span another forward jump
+        skips, and the definition before it is a copy (`Mov`): a read AFTER the span (not the join a `?:` folds) merges the landed paths (`null`) with the
+        skipping one (the earlier copy)."""
+        current = self.current_address
+
+        if current is None or state.version == 0:
+            return False
+
+        address = state.definition.address
+        earlier = self.history.get(state.definition.name, ())[state.version - 1]
+
+        return (
+            earlier.handler == "Mov"
+            and any(start < earlier.definition.address < end == address for start, end in self.skip_ranges)
+            and any(start < address < end < current for start, end in self.skip_ranges)
+        )
+
     def is_nested_join_value(self, state: RegisterState) -> bool:
         """The definition sits inside two or more forward jumps that all end at or
         before the current read, and an earlier definition exists: three or more

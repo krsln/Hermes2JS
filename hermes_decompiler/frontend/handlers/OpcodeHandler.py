@@ -278,6 +278,18 @@ class OpcodeHandler(ABC):
             cls._restore_folded_constants(analysis, state)
             return Identifier(name=f"r{reg}")
 
+        # A `null` that two jumps meet on and a third skips (`switch (typeof p) { case "undefined": case "boolean":
+        # r14 = null }` after `Mov r14, p`: 98/2044 `mapIntoArray`): the read sees `null` on those paths and the
+        # copy on the other, so it names the register. A plain `a || null` is skipped by one jump only.
+        if isinstance(value, NullLiteral) and analysis.is_null_met_by_jumps(state):
+            state.mark_read()
+            state.materialize()
+
+            for earlier in analysis.history.get(state.definition.name, ())[:state.version]:
+                earlier.materialize()
+
+            return Identifier(name=f"r{reg}")
+
         # Try-boundary guard: a read that can throw stays where the `try` put it, so the
         # reader outside the range reads the register (98/13768 `typeof p.aborted`).
         if analysis.crosses_try_boundary(state) and any(isinstance(node, MemberExpression) for node in value.walk()):
