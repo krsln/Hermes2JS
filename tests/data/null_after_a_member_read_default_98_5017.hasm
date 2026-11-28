@@ -1,0 +1,53 @@
+
+=> [Function #5017 "Asset" of 215 bytes]: 2 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x001ac960
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000003: <GetByIdShort>: <Reg8: 9, Reg8: 3, UInt8: 0, string_id: 187>  # String: 'name' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 7, Reg8: 3, UInt8: 1, string_id: 1>  # String: 'type' (Identifier)
+==> 0000000d: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 2, string_id: 157>  # String: 'hash' (Identifier)
+==> 00000012: <LoadConstUndefined>: <Reg8: 0>
+==> 00000014: <JStrictNotEqual>: <Addr8: 6, Reg8: 6, Reg8: 0>  # Address: 0000001a
+==> 00000018: <LoadConstNull>: <Reg8: 6>
+==> 0000001a: <GetById>: <Reg8: 8, Reg8: 3, UInt8: 3, string_id: 7193>  # String: 'uri' (Identifier)
+==> 00000020: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 4, string_id: 14>  # String: 'width' (Identifier)
+==> 00000025: <GetByIdShort>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 15>  # String: 'height' (Identifier)
+==> 0000002a: <GetNewTarget>: <Reg8: 3>
+==> 0000002c: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 6, string_id: 212>  # String: 'prototype' (Identifier)
+==> 00000031: <NewObjectWithBufferAndParent>: <Reg8: 3, Reg8: 3, UInt32: 1234, UInt32: 17291>
+==> 0000003c: <NewArray>: <Reg8: 10, UInt16: 0>
+==> 00000040: <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 10, UInt8: 6>
+==> 00000044: <PutByIdStrict>: <Reg8: 3, Reg8: 9, UInt8: 0, string_id: 187>  # String: 'name' (Identifier)
+==> 0000004a: <PutByIdStrict>: <Reg8: 3, Reg8: 7, UInt8: 1, string_id: 1>  # String: 'type' (Identifier)
+==> 00000050: <PutByIdStrict>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 157>  # String: 'hash' (Identifier)
+==> 00000056: <PutByIdStrict>: <Reg8: 3, Reg8: 8, UInt8: 3, string_id: 7193>  # String: 'uri' (Identifier)
+==> 0000005c: <JmpTypeOfIs>: <Addr32: 14, Reg8: 5, UInt16: 479>  # Address: 0000006a
+==> 00000064: <PutByIdStrict>: <Reg8: 3, Reg8: 5, UInt8: 4, string_id: 14>  # String: 'width' (Identifier)
+==> 0000006a: <JmpTypeOfIs>: <Addr32: 14, Reg8: 4, UInt16: 479>  # Address: 00000078
+==> 00000072: <PutByIdStrict>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 15>  # String: 'height' (Identifier)
+==> 00000078: <JmpFalse>: <Addr8: 93, Reg8: 6>  # Address: 000000d5
+==> 0000007b: <GetParentEnvironment>: <Reg8: 4, UInt8: 0>
+==> 0000007e: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 4>
+==> 00000082: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 7, string_id: 13513>  # String: 'getLocalAssetUri' (Identifier)
+==> 00000088: <Call3>: <Reg8: 5, Reg8: 5, Reg8: 0, Reg8: 6, Reg8: 7>
+==> 0000008e: <PutByIdStrict>: <Reg8: 3, Reg8: 5, UInt8: 6, string_id: 9525>  # String: 'localUri' (Identifier)
+==> 00000094: <GetById>: <Reg8: 7, Reg8: 3, UInt8: 8, string_id: 9525>  # String: 'localUri' (Identifier)
+==> 0000009a: <LoadConstNull>: <Reg8: 2>
+==> 0000009c: <Eq>: <Reg8: 1, Reg8: 7, Reg8: 2>
+==> 000000a0: <LoadConstUndefined>: <Reg8: 5>
+==> 000000a2: <JmpTrue>: <Addr8: 17, Reg8: 1>  # Address: 000000b3
+==> 000000a5: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 9, string_id: 232>  # String: 'startsWith' (Identifier)
+==> 000000aa: <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 7>
+==> 000000ae: <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 4>
+==> 000000b3: <GetById>: <Reg8: 4, Reg8: 3, UInt8: 8, string_id: 9525>  # String: 'localUri' (Identifier)
+==> 000000b9: <JmpTrue>: <Addr8: 16, Reg8: 5>  # Address: 000000c9
+==> 000000bc: <JmpFalse>: <Addr8: 25, Reg8: 4>  # Address: 000000d5
+==> 000000bf: <LoadConstTrue>: <Reg8: 1>
+==> 000000c1: <PutByIdStrict>: <Reg8: 3, Reg8: 1, UInt8: 7, string_id: 14943>  # String: 'downloaded' (Identifier)
+==> 000000c7: <Jmp>: <Addr8: 14>  # Address: 000000d5
+==> 000000c9: <PutByIdStrict>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 7193>  # String: 'uri' (Identifier)
+==> 000000cf: <PutByIdStrict>: <Reg8: 3, Reg8: 2, UInt8: 6, string_id: 9525>  # String: 'localUri' (Identifier)
+==> 000000d5: <Ret>: <Reg8: 3>
+
+

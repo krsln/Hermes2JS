@@ -60,6 +60,9 @@ class _Rung:
     loop_stubs: bool = False  # FallThroughLayoutCfgPass.relocate_terminal_tails(loop_stubs=True)
 
 
+_MEMBER_OR_PARAMETER_LOADS = frozenset({"LoadParam", "LoadParamLong", "GetById", "GetByIdShort", "GetByIdLong", "GetByVal"})
+
+
 class HermesAnalysis:
     metadata_list: list[dict[str, Any]]
     metadata: dict[str, Any]
@@ -385,7 +388,7 @@ class HermesAnalysis:
         address = state.definition.address
         earlier = self.history.get(state.definition.name, ())[state.version - 1]
 
-        return earlier.handler in ("LoadParam", "LoadParamLong") and any(
+        return earlier.handler in _MEMBER_OR_PARAMETER_LOADS and any(
             start < address < end < current for start, end in self.skip_ranges
         )
 
