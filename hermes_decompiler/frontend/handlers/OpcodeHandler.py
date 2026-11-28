@@ -184,6 +184,15 @@ class OpcodeHandler(ABC):
 
         return Identifier(name=f"r{reg}")
 
+    @staticmethod
+    def _null_is_a_merge(analysis: HermesAnalysis, state) -> bool:
+        """The `null` a read sees is only one path's value: a join of paths that carry other values (F-349, F-350,
+        F-351); the read names the register. Branch tests too (98/2671 `null !== null`)."""
+        return (
+            analysis.is_null_met_by_jumps(state) or analysis.is_nested_join_value(state)
+            or analysis.is_join_passed(state)
+        )
+
     @classmethod
     def get_member_base_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
         """The object of a member read or store. A member of a bare `null`/`undefined` always throws, so a
@@ -281,10 +290,7 @@ class OpcodeHandler(ABC):
         # A `null` that two jumps meet on and a third skips (`switch (typeof p) { case "undefined": case "boolean":
         # r14 = null }` after `Mov r14, p`: 98/2044 `mapIntoArray`): the read sees `null` on those paths and the
         # copy on the other, so it names the register. A plain `a || null` is skipped by one jump only.
-        if isinstance(value, NullLiteral) and (
-                analysis.is_null_met_by_jumps(state) or analysis.is_nested_join_value(state)
-                or analysis.is_join_passed(state)
-        ):
+        if isinstance(value, NullLiteral) and cls._null_is_a_merge(analysis, state):
             state.mark_read()
             state.materialize()
 
@@ -511,7 +517,7 @@ class OpcodeHandler(ABC):
         # definition being read).
         value = state.value
         # _CONDITION_ARGUMENT_INLINE_OPCODES
-        if analysis.may_inline(state) and not cls._parameter_is_rewritten(analysis, state,
+        if analysis.may_inline(state) and not (isinstance(value, NullLiteral) and cls._null_is_a_merge(analysis, state)) and not cls._parameter_is_rewritten(analysis, state,
                                                                           reg) and state.handler in frozenset({
             "LoadParam",
             "LoadConstZero",
