@@ -370,6 +370,10 @@ class HermesAnalysis:
             return False
 
         address = state.definition.address
+
+        if -address in self.default_null_writes:
+            return True
+
         earlier = self.history.get(state.definition.name, ())[state.version - 1]
 
         return (

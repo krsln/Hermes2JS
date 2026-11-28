@@ -271,11 +271,22 @@ class OpcodeDispatcher:
         """
         Addresses of `LoadConstNull R` that directly follow a forward conditional jump over it which tests `R`
         (`if (R === undefined) R = null` / `if (R == null) R = null`): a default, whose value is `null` on one path
-        and what `R` held on the other (`HermesAnalysis.is_join_passed` is the reader).
+        and what `R` held on the other (`HermesAnalysis.is_join_passed` is the reader). A `LoadConstNull` right behind a `Catch` is kept as the
+        negated address.
         """
         writes: set[int] = set()
+        # The target of the `Jmp` that ends the try body, by the address of the `Catch` behind it: the handler's body
+        # is what lies between the two.
+        before_catch = {
+            catch.address: previous.target_address
+            for previous, catch in zip(entries, entries[1:])
+            if catch.opcode == "Catch" and previous.opcode == "Jmp"
+        }
 
         for jump, load, following in zip(entries, entries[1:], entries[2:]):
+            if load.opcode == "LoadConstNull" and jump.opcode == "Catch" and before_catch.get(jump.address) == following.address:
+                writes.add(-load.address)  # a handler's `R = null`: the try body wrote `R` on the other path
+
             if load.opcode != "LoadConstNull" or jump.target_address != following.address:
                 continue
 

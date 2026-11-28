@@ -1,0 +1,36 @@
+
+=> [Function #6880 "" of 105 bytes]: 8 params, frame size=17, strict=1, exc handler=1, debug info=0  @ offset 0x001a588a
+  [Exception handlers: [start=0x4e, end=0x5d, target=0x5f] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 6>
+==> 00000003: <CreateEnvironment>: <Reg8: 2>
+==> 00000005: <GetGlobalObject>: <Reg8: 0>
+==> 00000007: <TryGetById>: <Reg8: 6, Reg8: 0, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000000d: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000012: <NewObject>: <Reg8: 4>
+==> 00000014: <LoadConstTrue>: <Reg8: 0>
+==> 00000016: <PutNewOwnByIdShort>: <Reg8: 4, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
+==> 0000001a: <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
+==> 0000001e: <Call4>: <Reg8: 0, Reg8: 5, Reg8: 6, Reg8: 3, Reg8: 0, Reg8: 4>
+==> 00000025: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 6881>  # Function: [#6881 isRunningInExpoGo of 15 bytes]: 1 params @ offset 0x001a58f3
+==> 0000002a: <PutById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 9632>  # String: 'isRunningInExpoGo' (Identifier)
+==> 00000030: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 6882>  # Function: [#6882 getExpoGoProjectConfig of 32 bytes]: 1 params @ offset 0x001a5902
+==> 00000035: <PutById>: <Reg8: 3, Reg8: 0, UInt8: 2, string_id: 13501>  # String: 'getExpoGoProjectConfig' (Identifier)
+==> 0000003b: <LoadParam>: <Reg8: 3, UInt8: 7>
+==> 0000003e: <LoadConstZero>: <Reg8: 0>
+==> 00000040: <GetByVal>: <Reg8: 4, Reg8: 3, Reg8: 0>
+==> 00000044: <LoadParam>: <Reg8: 3, UInt8: 2>
+==> 00000047: <LoadConstUndefined>: <Reg8: 0>
+==> 00000049: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 4>
+==> 0000004e: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 13915>  # String: 'requireNativeModule' (Identifier)
+==> 00000054: <LoadConstString>: <Reg8: 1, string_id: 8767>  # String: 'ExpoGo' (Identifier)
+==> 00000058: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 0000005d: <Jmp>: <Addr8: 6>  # Address: 00000063
+==> 0000005f: <Catch>: <Reg8: 3>
+==> 00000061: <LoadConstNull>: <Reg8: 1>
+==> 00000063: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
+==> 00000067: <Ret>: <Reg8: 0>
+
+
